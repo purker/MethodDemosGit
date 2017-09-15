@@ -1,0 +1,88 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>MethodDemos</groupId>
+	<artifactId>MethodDemos</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<!-- in Mavenordner von http://maven.icm.edu.pl/artifactory/repo/pl/edu/icm/cermine/cermine-tools/1.13-SNAPSHOT/ 
+			kopiert -->
+		<!-- <dependency> <groupId>pl.edu.icm.cermine</groupId> <artifactId>cermine-impl</artifactId> 
+			<version>1.13</version> </dependency> -->
+		<dependency>
+			<groupId>org.grobid</groupId>
+			<artifactId>grobid-core</artifactId>
+			<version>0.4.2-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+		<!-- Cermine uses 2.3 commons-io, Grobid 2.5 -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.5</version>
+		</dependency>
+		<!-- Cermine uses 11.0.1 guava Grobid 19.0 --><!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+		<!-- <dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>19.0</version>
+		</dependency> -->
+		<!-- lucene analyzers 3.6.1, core 3.6.1, analyzers common 4.5.1 with cermine -->
+		<!-- lucene analyzers 4.5.1, core 4.5.1, analyzers common gibts net mit 
+			grobid -->
+		<!-- https://mvnrepository.com/artifact/org.apache.lucene/lucene-core -->
+		<!-- <dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-core</artifactId>
+			<version>4.5.1</version>
+		</dependency> -->
+		<!-- https://mvnrepository.com/artifact/org.apache.lucene/lucene-analyzers-common -->
+		<!-- <dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-analyzers-common</artifactId>
+			<version>4.5.1</version>
+		</dependency> -->
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-exec -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-exec</artifactId>
+			<version>1.3</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/net.sf.saxon/saxon-dom -->
+		<dependency>
+			<groupId>net.sf.saxon</groupId>
+			<artifactId>saxon-dom</artifactId>
+			<version>8.7</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.CeON</groupId>
+			<artifactId>CERMINE</artifactId>
+			<version>cermine-parent-1.13</version>
+		</dependency>
+	</dependencies>
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
+	<!-- <scm> <connection>scm:git:git@github.com:CeON/CERMINE.git</connection> 
+		<developerConnection>scm:git:git@github.com:CeON/CERMINE.git</developerConnection> 
+		<url>https://github.com/CeON/CERMINE</url> <tag>cermine-parent-1.13</tag> 
+		</scm> -->
+</project>
