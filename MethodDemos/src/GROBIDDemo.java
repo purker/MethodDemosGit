@@ -16,13 +16,21 @@ import org.grobid.core.utilities.GrobidProperties;
  */
 public class GROBIDDemo extends AbstractDemo
 {
+	private static final String METHOD_NAME = "grobid";
+
+	private static final String GROBID_DIRECTORY = "C:/Users/Angela/git/";
+	private static final String pGrobidHome = GROBID_DIRECTORY + "grobid/grobid-home";
+	private static final String pGrobidProperties = GROBID_DIRECTORY + "grobid/grobid-home/config/grobid.properties";
+
 	boolean consolidateCitations = false;
 	boolean consolidateHeader = false;
 
-	public static void main(String[] args)
+	public static void main(String[] args) throws IOException
 	{
 		List<File> groundTruthFiles = Demos.getAllGroundTruthFiles().subList(0, 1);
-		new GROBIDDemo().runDemoInBatch("D:/TU/Masterarbeit/Papers/Methoden/", Demos.grobIdOutputDir.getPath());
+		new GROBIDDemo().runDemo(groundTruthFiles, Demos.grobIdOutputDir);
+		// new GROBIDDemo().runDemoInBatch("D:/TU/Masterarbeit/Papers/Methoden/", Demos.grobIdOutputDir.getPath());
+		// new GROBIDDemo().runDemoInBatch("D:/output/GroundTruth-subset", grobIdOutputDir.getPath());
 	}
 
 	public void runDemoInBatch(String inputDir, String outputDir)
@@ -31,10 +39,6 @@ public class GROBIDDemo extends AbstractDemo
 		boolean consolidateHeader = false;
 		try
 		{
-			String directory = "C:/Users/Angela/git/";
-			String pGrobidHome = directory + "grobid/grobid-home";
-			String pGrobidProperties = directory + "grobid/grobid-home/config/grobid.properties";
-
 			MockContext.setInitialContext(pGrobidHome, pGrobidProperties);
 			GrobidProperties.getInstance();
 
@@ -66,12 +70,6 @@ public class GROBIDDemo extends AbstractDemo
 	{
 		try
 		{
-			String homeDir = System.getProperty("user.home");
-
-			String directory = "C:/Users/Angela/git/";
-			String pGrobidHome = directory + "grobid/grobid-home";
-			String pGrobidProperties = directory + "grobid/grobid-home/config/grobid.properties";
-
 			MockContext.setInitialContext(pGrobidHome, pGrobidProperties);
 			GrobidProperties.getInstance();
 
@@ -98,5 +96,11 @@ public class GROBIDDemo extends AbstractDemo
 				e.printStackTrace();
 			}
 		}
+	}
+
+	@Override
+	String getMethodName()
+	{
+		return METHOD_NAME;
 	}
 }

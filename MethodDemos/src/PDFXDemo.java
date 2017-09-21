@@ -10,6 +10,8 @@ import utils.ExecUtil;
 
 public class PDFXDemo extends AbstractDemo
 {
+	private static final String METHOD_NAME = "pdfx";
+
 	// Usage:
 	// curl --data-binary @"/path/to/my.pdf" -H "Content-Type: application/pdf" -L "http://pdfx.cs.man.ac.uk"
 	// Example:
@@ -30,7 +32,13 @@ public class PDFXDemo extends AbstractDemo
 		commandWithParameters.set(3, "@\"" + inputFile.toString() + "\"");
 		commandWithParameters.add("\"" + outputFile.toString() + "\"");
 		String errorString = ExecUtil.exec(commandWithParameters);
+		log(getMethodName() + ": " + String.join(" ", commandWithParameters));
 		return errorString;
 	}
 
+	@Override
+	String getMethodName()
+	{
+		return METHOD_NAME;
+	}
 }

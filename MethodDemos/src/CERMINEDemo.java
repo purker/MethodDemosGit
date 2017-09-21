@@ -32,11 +32,18 @@ import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 
 public class CERMINEDemo extends AbstractDemo
 {
+	private static final String METHOD_NAME = "cermine";
+
 	private static final boolean EXTRACT_ZONES = true;
 	private static final boolean EXTRACT_IMAGES = true;
 	private static final boolean EXTRACT_TEXT = true;
 	private static final boolean EXTRACT_TRUEVIZ = true;
 	private static final boolean EXTRACT_JATS = true;
+
+	private static final String FILEEXTENSION_TEXT = ".txt";
+	private static final String FILEEXTENSION_TRUEVIZ = ".trueviz";
+	private static final String FILEEXTENSION_ZONES = ".zone";
+	private static final String FILEEXTENSION_IMAGES = ".images";
 
 	public static void main(String[] args) throws Exception
 	{
@@ -66,7 +73,7 @@ public class CERMINEDemo extends AbstractDemo
 			// adapted from ContentExtractor.main
 			if(EXTRACT_IMAGES)
 			{
-				File imagesOutputFolder = replaceFileExtension(outputFile, ".images");
+				File imagesOutputFolder = replaceFileExtension(outputFile, FILEEXTENSION_IMAGES);
 				List<BxImage> images = extractor.getImages(imagesOutputFolder.getPath());
 				FileUtils.forceMkdir(imagesOutputFolder);
 				for(BxImage image : images)
@@ -83,7 +90,7 @@ public class CERMINEDemo extends AbstractDemo
 				Element jats;
 				if(EXTRACT_IMAGES)
 				{
-					File imagesOutputFolder = replaceFileExtension(outputFile, ".images");
+					File imagesOutputFolder = replaceFileExtension(outputFile, FILEEXTENSION_IMAGES);
 					jats = extractor.getContentAsNLM(imagesOutputFolder.getPath());
 				}
 				else
@@ -91,8 +98,9 @@ public class CERMINEDemo extends AbstractDemo
 					jats = extractor.getContentAsNLM(null);
 				}
 				XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-				DocType dt = new DocType("article", "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN", "JATS-archivearticle1.dtd\n");
+				DocType dt = new DocType("article", "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN", "JATS-archivearticle1.dtd");
 				FileUtils.writeStringToFile(outputFile, outputter.outputString(dt), StandardCharsets.UTF_8);
+				FileUtils.writeStringToFile(outputFile, "\n", StandardCharsets.UTF_8, true);
 				FileUtils.writeStringToFile(outputFile, outputter.outputString(jats), StandardCharsets.UTF_8, true);
 			}
 
@@ -100,7 +108,7 @@ public class CERMINEDemo extends AbstractDemo
 			{
 				BxDocument doc = extractor.getBxDocumentWithSpecificLabels();
 				BxDocumentToTrueVizWriter writer = new BxDocumentToTrueVizWriter();
-				File truevizFile = replaceFileExtension(outputFile, "trueviz.txt");
+				File truevizFile = replaceFileExtension(outputFile, FILEEXTENSION_TRUEVIZ);
 				Writer fw = new OutputStreamWriter(new FileOutputStream(truevizFile), StandardCharsets.UTF_8);
 				writer.write(fw, Lists.newArrayList(doc), StandardCharsets.UTF_8);
 			}
@@ -109,14 +117,14 @@ public class CERMINEDemo extends AbstractDemo
 			{
 				Element text = extractor.getLabelledFullText();
 				XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
-				File zoneFile = replaceFileExtension(outputFile, ".zone.txt");
+				File zoneFile = replaceFileExtension(outputFile, FILEEXTENSION_ZONES);
 				FileUtils.writeStringToFile(zoneFile, outputter.outputString(text), StandardCharsets.UTF_8);
 			}
 
 			if(EXTRACT_TEXT)
 			{
 				String text = extractor.getRawFullText();
-				File txtFile = replaceFileExtension(outputFile, ".txt");
+				File txtFile = replaceFileExtension(outputFile, FILEEXTENSION_TEXT);
 				FileUtils.writeStringToFile(txtFile, text, StandardCharsets.UTF_8);
 			}
 			return null;
@@ -135,5 +143,11 @@ public class CERMINEDemo extends AbstractDemo
 	private File replaceFileExtension(String outputFile, String extension)
 	{
 		return replaceFileExtension(new File(outputFile), extension);
+	}
+
+	@Override
+	String getMethodName()
+	{
+		return METHOD_NAME;
 	}
 }
