@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<xml-bindings
+    xmlns="http://www.eclipse.org/eclipselink/xsds/persistence/oxm"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.eclipse.org/eclipselink/xsds/eclipselink_oxm_2_4.xsd"
+    package-name="mapping.result">
+    <xml-schema
+        namespace=""
+        element-form-default="UNSET"
+        prefix=""/>
+    <java-types>
+        <java-type name="Publication">
+            <xml-root-element name="article"/>
+            <!-- <xml-type prop-order="title"/> -->
+            <java-attributes>
+                <xml-element java-attribute="title" xml-path="/front/article-meta/title-group/article-title/text()"/>
+            	<xml-element java-attribute="abstractText" xml-path="/front/article-meta/abstract/text()"/>
+            	<xml-element java-attribute="authors" xml-path="/front/article-meta/contrib-group/contrib"/>
+            	<xml-element java-attribute="references" xml-path="/back/ref-list/ref"/>
+            	<xml-element java-attribute="affiliations" xml-path="/front/article-meta/contrib-group/aff"/>
+            	<xml-element java-attribute="sections" xml-path="/body/sec"/>
+            </java-attributes>
+        </java-type>
+        <java-type name="Author">
+            <xml-root-element name="contrib"/>
+            <!-- <xml-type prop-order="title"/> -->
+            <java-attributes>
+                <xml-element java-attribute="name" name="string-name"/>
+            	<xml-element java-attribute="email" name="email"/>
+            	<xml-attribute java-attribute="type" name="contrib-type"/>
+            </java-attributes>
+        </java-type>
+        <java-type name="Reference">
+            <xml-root-element name="ref"/>
+            <java-attributes>
+            	<xml-attribute java-attribute="id" name="id"/>
+                <xml-element java-attribute="title" xml-path="/mixed-citation/article-title/text()"/>
+                <xml-element java-attribute="source" xml-path="/mixed-citation/source/text()"/>
+                <xml-element java-attribute="authors" xml-path="/mixed-citation/string-name"/>
+                <xml-element java-attribute="volume" xml-path="/mixed-citation/volume/text()"/>
+                <xml-element java-attribute="issue" xml-path="/mixed-citation/issue/text()"/>
+                <xml-element java-attribute="pageFrom" xml-path="/mixed-citation/fpage/text()"/>
+                <xml-element java-attribute="pageTo" xml-path="/mixed-citation/lpage/text()"/>
+                <xml-element java-attribute="year" xml-path="/mixed-citation/year/text()"/>
+            	<xml-element java-attribute="month" xml-path="/mixed-citation/month/text()"/>
+                <xml-element java-attribute="day" xml-path="/mixed-citation/day/text()"/>
+            </java-attributes>
+        </java-type>
+        <java-type name="ReferenceAuthor">
+            <xml-root-element/>
+            <java-attributes>
+                <xml-element java-attribute="firstName" name="given-names"/>
+                <xml-element java-attribute="lastName" name="surname" />
+            </java-attributes>
+        </java-type>
+        <java-type name="Affiliation">
+            <xml-root-element/>
+            <java-attributes>
+                <xml-element java-attribute="institution" name="institution"/>
+                <xml-element java-attribute="country" name="country" />
+                <xml-element java-attribute="countryCode" xml-path="/country/@country" />
+            </java-attributes>
+        </java-type>
+        <java-type name="Section">
+            <xml-root-element name="sec"/>
+            <java-attributes>
+                <xml-attribute java-attribute="id" name="id"/>
+                <xml-element java-attribute="title" name="title" />
+                <xml-element java-attribute="referenceIds" xml-path="/p/xref/@rid" />
+            </java-attributes>
+        </java-type>
+    </java-types>
+</xml-bindings>

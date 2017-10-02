@@ -1,3 +1,4 @@
+package demos;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -48,7 +49,7 @@ public class CERMINEDemo extends AbstractDemo
 	public static void main(String[] args) throws Exception
 	{
 		List<File> groundTruthFiles = Demos.getAllGroundTruthFiles().subList(0, 1);
-		new CERMINEDemo().runDemo(Arrays.asList(new File("D:/output/GroundTruth-subset").listFiles()), Demos.cermineOutputDir);
+		new CERMINEDemo().runDemo(Arrays.asList(new File("D:/output/GroundTruth-subset/TUW-228620.pdf")), Demos.cermineOutputDir);
 
 		// ContentExtractor.main(new String[]
 		// {"-path", "D:/output/GroundTruth-subset"});// , "-outputs", "trueviz"});// , "-str", "D:/output/GroundTruth-subset/file.txt"});

@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<xml-bindings
+    xmlns="http://www.eclipse.org/eclipselink/xsds/persistence/oxm"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.eclipse.org/eclipselink/xsds/eclipselink_oxm_2_4.xsd"
+    package-name="mapping.result">
+    <xml-schema
+        namespace=""
+        element-form-default="UNSET"
+        prefix=""/>
+    <java-types>
+        <java-type name="Publication">
+            <xml-root-element name="article"/>
+            <!-- <xml-type prop-order="title"/> -->
+            <java-attributes>
+                <xml-element java-attribute="title" xml-path="/front/article-meta/title-group/article-title/text()"/>
+            	<xml-element java-attribute="abstractText" xml-path="/front/article-meta/abstract/text()"/>
+            	<xml-element java-attribute="authors" xml-path="/front/article-meta/contrib-group/contrib"/>
+            	<xml-element java-attribute="references" xml-path="/back/ref-list/ref/mixed-citation"/>
+            </java-attributes>
+        </java-type>
+        <java-type name="Author">
+            <xml-root-element name="contrib"/>
+            <!-- <xml-type prop-order="title"/> -->
+            <java-attributes>
+                <xml-element java-attribute="name" name="string-name"/>
+            	<xml-element java-attribute="email" name="email"/>
+            </java-attributes>
+        </java-type>
+        <java-type name="Reference">
+            <xml-root-element/>
+            <java-attributes>
+                <xml-element java-attribute="title" name="article-title"/>
+                <xml-element java-attribute="source" name="source" />
+                <xml-element java-attribute="authors" name="string-name" />
+                <xml-element java-attribute="volume" name="volume" />
+                <xml-element java-attribute="issue" name="issue" />
+                <xml-element java-attribute="pageFrom" name="fpage" />
+                <xml-element java-attribute="pageTo" name="lpage" />
+                <xml-element java-attribute="year" name="year" />
+            	<xml-element java-attribute="month" name="month"/>
+                <xml-element java-attribute="day" name="day" />
+            </java-attributes>
+        </java-type>
+        <java-type name="ReferenceAuthor">
+            <xml-root-element/>
+            <java-attributes>
+                <xml-element java-attribute="firstName" name="given-names"/>
+                <xml-element java-attribute="lastName" name="surname" />
+            </java-attributes>
+        </java-type>
+    </java-types>
+</xml-bindings>
