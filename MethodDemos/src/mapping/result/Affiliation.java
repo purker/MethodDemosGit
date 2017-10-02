@@ -2,9 +2,20 @@ package mapping.result;
 
 public class Affiliation
 {
+	private String id;
 	private String institution;
 	private String country;
 	private String countryCode;
+
+	public String getId()
+	{
+		return id;
+	}
+
+	public void setId(String id)
+	{
+		this.id = id;
+	}
 
 	public String getInstitution()
 	{

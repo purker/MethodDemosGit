@@ -5,39 +5,53 @@
     xsi:schemaLocation="http://www.eclipse.org/eclipselink/xsds/eclipselink_oxm_2_4.xsd"
     package-name="mapping.result">
     <xml-schema
-        namespace=""
-        element-form-default="UNSET"
+        namespace="http://www.tei-c.org/ns/1.0"
+        element-form-default="QUALIFIED"
         prefix=""/>
     <java-types>
         <java-type name="Publication">
-            <xml-root-element name="article"/>
+            <xml-root-element name="TEI"/>
             <!-- <xml-type prop-order="title"/> -->
             <java-attributes>
-                <xml-element java-attribute="title" xml-path="/front/article-meta/title-group/article-title/text()"/>
-            	<xml-element java-attribute="abstractText" xml-path="/front/article-meta/abstract/text()"/>
-            	<xml-element java-attribute="authors" xml-path="/front/article-meta/contrib-group/contrib"/>
-            	<xml-element java-attribute="references" xml-path="/back/ref-list/ref/mixed-citation"/>
+                <xml-element java-attribute="title" xml-path="/teiHeader/fileDesc/titleStmt/title/text()"/>
+            	<xml-element java-attribute="abstractText" xml-path="/teiHeader/profileDesc/abstract/p/text()"/>
+            	<xml-element java-attribute="authors" xml-path="/teiHeader/fileDesc/sourceDesc/biblStruct/analytic/author"/>
+            	<xml-element java-attribute="references" xml-path="/text/back/div[@type='references']/listBibl/biblStruct"/>
+            	<xml-element java-attribute="sections" xml-path="/text/body/div"/>
             </java-attributes>
         </java-type>
         <java-type name="Author">
-            <xml-root-element name="contrib"/>
+            <xml-root-element name="author"/>
             <!-- <xml-type prop-order="title"/> -->
             <java-attributes>
-                <xml-element java-attribute="name" name="string-name"/>
+                <xml-element java-attribute="firstName" xml-path="/persName/forename/text()"/>
+                <xml-element java-attribute="lastName" xml-path="/persName/surname/text()"/>
             	<xml-element java-attribute="email" name="email"/>
+            	<xml-attribute java-attribute="type" name="role"/>
+            	<xml-element java-attribute="affiliation" name="affiliation"/>
+            </java-attributes>
+        </java-type>        
+        <java-type name="Affiliation">
+            <xml-root-element name="affiliation"/>
+            <java-attributes>
+                <xml-attribute java-attribute="id" name="key"/>
+                <xml-element java-attribute="institution" name="orgName"/>
+                <xml-element java-attribute="country" xml-path="/address/country/text()" />
+                <xml-element java-attribute="countryCode" xml-path="/address/country/@key" />
             </java-attributes>
         </java-type>
         <java-type name="Reference">
-            <xml-root-element/>
+            <xml-root-element name="biblStruct" />
             <java-attributes>
-                <xml-element java-attribute="title" name="article-title"/>
-                <xml-element java-attribute="source" name="source" />
-                <xml-element java-attribute="authors" name="string-name" />
+                <xml-attribute java-attribute="id" name="xml:id"/>
+                <!-- <xml-element java-attribute="title" xml-path="/analytic/title/text()"/> -->
+                <xml-element java-attribute="source" name="/monogr/title" />
+                <xml-element java-attribute="authors" xml-path="/analytic/author" />
                 <xml-element java-attribute="volume" name="volume" />
                 <xml-element java-attribute="issue" name="issue" />
-                <xml-element java-attribute="pageFrom" name="fpage" />
-                <xml-element java-attribute="pageTo" name="lpage" />
-                <xml-element java-attribute="year" name="year" />
+                <xml-element java-attribute="pageFrom" xml-path="/monogr/impring/biblScope[unit='page']/@from" />
+                <xml-element java-attribute="pageTo" xml-path="/monogr/imprint/biblScope[unit='page']/@to" />
+                <xml-element java-attribute="year" name="monogr/imprint/date[type='publisehed]/@when" />
             	<xml-element java-attribute="month" name="month"/>
                 <xml-element java-attribute="day" name="day" />
             </java-attributes>
@@ -47,6 +61,13 @@
             <java-attributes>
                 <xml-element java-attribute="firstName" name="given-names"/>
                 <xml-element java-attribute="lastName" name="surname" />
+            </java-attributes>
+        </java-type>
+        <java-type name="Section">
+            <xml-root-element name="div"/>
+            <java-attributes>
+                <xml-element java-attribute="title" name="head" />
+                <xml-element java-attribute="referenceIds" xml-path="/p/ref/@target" />
             </java-attributes>
         </java-type>
     </java-types>

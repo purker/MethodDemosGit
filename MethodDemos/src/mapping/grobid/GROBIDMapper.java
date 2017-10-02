@@ -22,6 +22,7 @@ public class GROBIDMapper extends Mapper
 
 		grobidMapper.unmarshall(inputFile, outputFile);
 
+		grobidMapper.marshall();
 	}
 
 }

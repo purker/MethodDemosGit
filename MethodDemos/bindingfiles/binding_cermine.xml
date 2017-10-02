@@ -30,6 +30,14 @@
             	<xml-attribute java-attribute="type" name="contrib-type"/>
             </java-attributes>
         </java-type>
+        <java-type name="Affiliation">
+            <xml-root-element/>
+            <java-attributes>
+                <xml-element java-attribute="institution" name="institution"/>
+                <xml-element java-attribute="country" name="country" />
+                <xml-element java-attribute="countryCode" xml-path="/country/@country" />
+            </java-attributes>
+        </java-type>
         <java-type name="Reference">
             <xml-root-element name="ref"/>
             <java-attributes>
@@ -51,14 +59,6 @@
             <java-attributes>
                 <xml-element java-attribute="firstName" name="given-names"/>
                 <xml-element java-attribute="lastName" name="surname" />
-            </java-attributes>
-        </java-type>
-        <java-type name="Affiliation">
-            <xml-root-element/>
-            <java-attributes>
-                <xml-element java-attribute="institution" name="institution"/>
-                <xml-element java-attribute="country" name="country" />
-                <xml-element java-attribute="countryCode" xml-path="/country/@country" />
             </java-attributes>
         </java-type>
         <java-type name="Section">
