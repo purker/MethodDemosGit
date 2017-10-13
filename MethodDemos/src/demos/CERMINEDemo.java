@@ -147,7 +147,7 @@ public class CERMINEDemo extends AbstractDemo
 	}
 
 	@Override
-	String getMethodName()
+	protected String getMethodName()
 	{
 		return METHOD_NAME;
 	}

@@ -1,28 +1,23 @@
 package mapping.result;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class Publication extends BaseEntity
 {
 	private String title;
-
 	private String abstractText;
-
 	private List<Author> authors;
-
-	private List<Affiliation> affiliations;
+	private List<Affiliation> affiliations = new ArrayList<>();
 
 	private Long publicationYear;
 	private Date publicationDate; // if known
-
 	private String doi;
 
-	private List<Reference> references;
-
 	private List<Section> sections;
-
 	private List<CitationContext> citationContexts;
+	private List<Reference> references;
 
 	public String getTitle()
 	{

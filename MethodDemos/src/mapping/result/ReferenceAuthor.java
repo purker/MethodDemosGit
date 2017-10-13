@@ -1,18 +1,31 @@
 package mapping.result;
 
+import java.util.List;
+
 public class ReferenceAuthor extends BaseEntity
 {
-	private String firstName;
+	private String name; // if null, information in first and lastname
+	private List<String> firstNames;
 	private String lastName;
 
-	public String getFirstName()
+	public String getName()
 	{
-		return firstName;
+		return name;
 	}
 
-	public void setFirstName(String firstName)
+	public void setName(String name)
 	{
-		this.firstName = firstName;
+		this.name = name;
+	}
+
+	public List<String> getFirstNames()
+	{
+		return firstNames;
+	}
+
+	public void setFirstNames(List<String> firstNames)
+	{
+		this.firstNames = firstNames;
 	}
 
 	public String getLastName()

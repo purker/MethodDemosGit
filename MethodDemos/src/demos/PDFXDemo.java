@@ -1,9 +1,17 @@
 package demos;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 import org.apache.commons.exec.ExecuteException;
 
@@ -34,6 +42,25 @@ public class PDFXDemo extends AbstractDemo
 		commandWithParameters.add("\"" + outputFile.toString() + "\"");
 		String errorString = ExecUtil.exec(commandWithParameters);
 		log(getMethodName() + ": " + String.join(" ", commandWithParameters));
+
+		try
+		{
+			// transform to jats
+			File transformedFile = new File(outputFile.getParentFile(), outputFile.getName().replace(".xml", "-asJats.xml"));
+			TransformerFactory factory = TransformerFactory.newInstance();
+			Source xslt = new StreamSource(new File("docs/pdfx-to-nlm3_v1.2.xsl"));
+			Transformer transformer;
+
+			transformer = factory.newTransformer(xslt);
+
+			Source text = new StreamSource(outputFile);
+			transformer.transform(text, new StreamResult(transformedFile));
+		}
+		catch(TransformerException e)
+		{
+			e.printStackTrace();
+		}
+
 		return errorString;
 	}
 

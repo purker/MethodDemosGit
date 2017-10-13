@@ -1,4 +1,5 @@
 package demos;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import utils.ExecUtil;
 public class ParsCitDemo extends AbstractDemo
 {
 	private static final String METHOD_NAME = "parscit";
+	private static final boolean INPUT_IN_XML_FORMAT = true; // true=xml, false=txt
 
 	// "cmd.exe /c citeExtract.pl C:/Users/Angela/git/ParsCit/demodata/sample1.txt"
 	private static final String PARSCIT_HOME = "C:/Users/Angela/git/ParsCit/bin";
@@ -17,8 +19,8 @@ public class ParsCitDemo extends AbstractDemo
 
 	public static void main(String[] args) throws IOException
 	{
-		List<File> groundTruthFiles = Demos.getAllGroundTruthFilesAsTxt().subList(0, 1);
-		new ParsCitDemo().runDemo(groundTruthFiles, Demos.parsCitOutputDir);
+		// List<File> groundTruthFiles = Demos.getAllGroundTruthFilesAsTxt().subList(0, 1);
+		new ParsCitDemo().runDemo(Arrays.asList(new File("D:/output/GroundTruthsubset/TUW-139994.xml")), Demos.parsCitOutputDir);
 	}
 
 	@Override
@@ -28,6 +30,11 @@ public class ParsCitDemo extends AbstractDemo
 		// String in = "C:/Users/Angela/git/ParsCit/demodata/sample1.txt";
 
 		List<String> commandWithParameters = new ArrayList<>(command);
+		if(INPUT_IN_XML_FORMAT)
+		{
+			commandWithParameters.add("-i");
+			commandWithParameters.add("xml");
+		}
 		commandWithParameters.add(inputFile.toString());
 		commandWithParameters.add(outputFile.toString());
 		String err = ExecUtil.execInWorkingDir(new File(PARSCIT_HOME), commandWithParameters);
@@ -44,10 +51,11 @@ public class ParsCitDemo extends AbstractDemo
 	@Override
 	public String createOutputFileName(File inputFile)
 	{
+		// parscit-TUW-137078-omnipage-xstream.xml
 		String outputFileName = super.createOutputFileName(inputFile);
 
-		// remove "cermine-" from "cermine-TUW-137078"
-		outputFileName = outputFileName.substring(outputFileName.indexOf("-") + 1);
+		// remove "-omnipage" from "parscit-TUW-137078-omnipage-xstream.xml"
+		outputFileName = outputFileName.replace("-omnipage", "");
 		return outputFileName;
 	}
 }

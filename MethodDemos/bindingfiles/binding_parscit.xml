@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<xml-bindings
+    xmlns="http://www.eclipse.org/eclipselink/xsds/persistence/oxm"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.eclipse.org/eclipselink/xsds/eclipselink_oxm_2_4.xsd"
+    package-name="mapping.result">
+    <xml-schema
+        namespace=""
+        element-form-default="UNSET"
+        prefix=""/>
+    <java-types>
+        <java-type name="Publication">
+            <xml-root-element name="algorithms"/>
+            <!-- <xml-type prop-order="title abstractText authors affiliations publicationYear publicationDate doi sections citationContexts references"/> -->
+            <java-attributes>
+                <xml-element java-attribute="title" xml-path="/algorithm/variant/title/text()"/>
+            	<!-- <xml-element java-attribute="abstractText" xml-path="//bodyText[0]/text()"/> -->
+            	<xml-element java-attribute="authors" xml-path="/algorithm/variant/author"/>
+            	<xml-element java-attribute="sections" xml-path="/algorithm/variant/sectionHeader"/>
+            	<xml-element java-attribute="references" xml-path="/algorithm/citationList/citation[@valid='true']"/>
+            	<!-- <xml-any-element java-attribute="references" lax="true"/> -->
+            </java-attributes>
+        </java-type>
+        <java-type name="Author">
+            <xml-root-element name="author"/>
+            <!-- <xml-type prop-order="title"/> -->
+            <java-attributes>
+                <xml-any-element java-attribute="name" xml-mixed="true"/>
+            </java-attributes>
+        </java-type>
+        <!-- <java-type name="Affiliation">
+            <xml-root-element name="affiliation"/>
+            <java-attributes>
+                <xml-attribute java-attribute="id" name="key"/>
+                <xml-element java-attribute="institution" name="orgName"/>
+                <xml-element java-attribute="country" xml-path="/address/country/text()" />
+                <xml-element java-attribute="countryCode" xml-path="/address/country/@key" />
+            </java-attributes>
+        </java-type> -->
+		<java-type name="Section">
+            <xml-root-element name="sectionHeader"/>
+            <java-attributes>
+            	<xml-attribute java-attribute="type" name="genericHeader"/>
+            	<xml-any-element java-attribute="title" xml-mixed="true"/>
+            	<!-- <xml-value java-attribute="id"/> -->
+               <!--  <xml-element java-attribute="title" xml-path="/text()" /> -->
+                <!-- <xml-element java-attribute="referenceIds" xml-path="/p/ref[@type='bibr']/@target" /> -->
+            </java-attributes>
+        </java-type>
+        <java-type name="Reference">
+            <xml-root-element name="citation" />
+            <java-attributes>
+               <!--  <xml-attribute java-attribute="id" name="xml:id"/> -->
+                <xml-element java-attribute="title" name="title"/>
+                <xml-element java-attribute="source" name="booktitle" />
+                <!-- <xml-attribute java-attribute="type" xml-path="/monogr/title/@level" /> -->
+                <xml-element java-attribute="authors" xml-path="/authors/author" />
+                <xml-element java-attribute="volume" name="volume" />
+                <xml-element java-attribute="issue" name="issue" />
+                <!-- <xml-attribute java-attribute="pageFrom" xml-path="/monogr/imprint/biblScope[@unit='page']/@from" />
+                <xml-attribute java-attribute="pageTo" xml-path="/monogr/imprint/biblScope[@unit='page']/@to" />-->
+                <xml-element java-attribute="year" name="date" />
+            	<!-- <xml-element java-attribute="month" name="month"/>
+                <xml-element java-attribute="day" name="day" /> -->
+            </java-attributes>
+        </java-type>
+        <java-type name="ReferenceAuthor">
+            <xml-root-element name="author"/>
+            <java-attributes>
+                <xml-value java-attribute="name" xml-mixed="true"/>
+                <xml-transient java-attribute="firstNames" />
+                <xml-transient java-attribute="lastName" />
+            </java-attributes>
+        </java-type>
+    </java-types>
+</xml-bindings>

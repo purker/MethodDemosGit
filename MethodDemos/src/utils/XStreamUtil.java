@@ -14,7 +14,6 @@ public class XStreamUtil
 		try
 		{
 			XStream xStream = getXStream();
-			xStream.aliasPackage("", "mapping.result");
 			// xStream.setMode(XStream.ID_REFERENCES);
 			xStream.toXML(object, new FileOutputStream(file));
 		}
@@ -28,7 +27,9 @@ public class XStreamUtil
 	private static XStream getXStream()
 	{
 		XStream xStream = new XStream();
+		xStream.setMode(XStream.SINGLE_NODE_XPATH_ABSOLUTE_REFERENCES);
 		xStream.aliasPackage("", "jaxb");
+		xStream.aliasPackage("", "mapping.result");
 		return xStream;
 	}
 

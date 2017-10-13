@@ -6,6 +6,7 @@ public class Section
 {
 	private String id;
 	private String title;
+	private String type;
 	private List<String> referenceIds;
 
 	public String getId()
@@ -18,8 +19,6 @@ public class Section
 		this.id = id;
 	}
 
-	private List<Section> subsections;
-
 	public String getTitle()
 	{
 		return title;
@@ -30,14 +29,14 @@ public class Section
 		this.title = title;
 	}
 
-	public List<Section> getSubsections()
+	public String getType()
 	{
-		return subsections;
+		return type;
 	}
 
-	public void setSubsections(List<Section> subsections)
+	public void setType(String type)
 	{
-		this.subsections = subsections;
+		this.type = type;
 	}
 
 	public List<String> getReferenceIds()

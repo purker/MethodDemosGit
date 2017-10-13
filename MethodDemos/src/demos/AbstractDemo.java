@@ -1,4 +1,5 @@
 package demos;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -82,7 +83,6 @@ public abstract class AbstractDemo
 
 	public String createOutputFileName(File inputFile)
 	{
-
 		String inputFileName = FilenameUtils.removeExtension(inputFile.getName());
 		return inputFileName;
 	}

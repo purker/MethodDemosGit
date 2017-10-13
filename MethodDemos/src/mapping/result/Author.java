@@ -9,7 +9,6 @@ public class Author extends BaseEntity
 	private String email;
 
 	private String type;
-	private String affiliationId; // if null, information in affiliation
 	private Affiliation affiliation;
 
 	public String getName()
@@ -60,16 +59,6 @@ public class Author extends BaseEntity
 	public void setType(String type)
 	{
 		this.type = type;
-	}
-
-	public String getAffiliationId()
-	{
-		return affiliationId;
-	}
-
-	public void setAffiliationId(String affiliationId)
-	{
-		this.affiliationId = affiliationId;
 	}
 
 	public Affiliation getAffiliation()

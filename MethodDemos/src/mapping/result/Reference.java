@@ -8,6 +8,7 @@ public class Reference extends BaseEntity
 	private String id;
 	private String title;
 	private String source;
+	private String type; // book, colletion, inproceedings, ...
 
 	private List<ReferenceAuthor> authors;
 
@@ -49,6 +50,16 @@ public class Reference extends BaseEntity
 	public void setSource(String source)
 	{
 		this.source = source;
+	}
+
+	public String getType()
+	{
+		return type;
+	}
+
+	public void setType(String type)
+	{
+		this.type = type;
 	}
 
 	public List<ReferenceAuthor> getAuthors()

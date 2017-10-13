@@ -11,14 +11,14 @@
     <java-types>
         <java-type name="Publication">
             <xml-root-element name="article"/>
-            <!-- <xml-type prop-order="title"/> -->
+            <xml-type prop-order="title abstractText authors affiliations publicationYear publicationDate doi sections citationContexts references"/>
             <java-attributes>
                 <xml-element java-attribute="title" xml-path="/front/article-meta/title-group/article-title/text()"/>
-            	<xml-element java-attribute="abstractText" xml-path="/front/article-meta/abstract/text()"/>
+            	<xml-element java-attribute="abstractText" xml-path="/front/article-meta/abstract/p/text()"/>
             	<xml-element java-attribute="authors" xml-path="/front/article-meta/contrib-group/contrib"/>
-            	<xml-element java-attribute="references" xml-path="/back/ref-list/ref"/>
             	<xml-element java-attribute="affiliations" xml-path="/front/article-meta/contrib-group/aff"/>
             	<xml-element java-attribute="sections" xml-path="/body/sec"/>
+            	<xml-element java-attribute="references" xml-path="/back/ref-list/ref"/>
             </java-attributes>
         </java-type>
         <java-type name="Author">
@@ -28,11 +28,13 @@
                 <xml-element java-attribute="name" name="string-name"/>
             	<xml-element java-attribute="email" name="email"/>
             	<xml-attribute java-attribute="type" name="contrib-type"/>
+            	<xml-element java-attribute="affiliation" xml-path="/xref/@rid" xml-idref="true"/>
             </java-attributes>
         </java-type>
         <java-type name="Affiliation">
             <xml-root-element/>
             <java-attributes>
+            	<xml-attribute java-attribute="id" name="id" xml-id="true"/>
                 <xml-element java-attribute="institution" name="institution"/>
                 <xml-element java-attribute="country" name="country" />
                 <xml-element java-attribute="countryCode" xml-path="/country/@country" />

@@ -47,4 +47,40 @@ public class Affiliation
 		this.countryCode = countryCode;
 	}
 
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((country == null) ? 0 : country.hashCode());
+		result = prime * result + ((countryCode == null) ? 0 : countryCode.hashCode());
+		result = prime * result + ((institution == null) ? 0 : institution.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if(this == obj) return true;
+		if(obj == null) return false;
+		if(getClass() != obj.getClass()) return false;
+		Affiliation other = (Affiliation)obj;
+		if(country == null)
+		{
+			if(other.country != null) return false;
+		}
+		else if(!country.equals(other.country)) return false;
+		if(countryCode == null)
+		{
+			if(other.countryCode != null) return false;
+		}
+		else if(!countryCode.equals(other.countryCode)) return false;
+		if(institution == null)
+		{
+			if(other.institution != null) return false;
+		}
+		else if(!institution.equals(other.institution)) return false;
+		return true;
+	}
+
 }
