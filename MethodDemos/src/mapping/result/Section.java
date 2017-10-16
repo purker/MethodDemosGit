@@ -1,5 +1,6 @@
 package mapping.result;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Section
@@ -7,7 +8,8 @@ public class Section
 	private String id;
 	private String title;
 	private String type;
-	private List<String> referenceIds;
+	private SectionType typeEnum;
+	private List<String> referenceIds = new ArrayList<>();
 
 	public String getId()
 	{
@@ -37,6 +39,16 @@ public class Section
 	public void setType(String type)
 	{
 		this.type = type;
+	}
+
+	public SectionType getTypeEnum()
+	{
+		return typeEnum;
+	}
+
+	public void setTypeEnum(SectionType typeEnum)
+	{
+		this.typeEnum = typeEnum;
 	}
 
 	public List<String> getReferenceIds()

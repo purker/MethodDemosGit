@@ -1,8 +1,11 @@
 package mapping.cermine;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 import mapping.Mapper;
+import mapping.Worker;
 
 public class CermineMapper extends Mapper
 {
@@ -18,8 +21,8 @@ public class CermineMapper extends Mapper
 	public static void main(String[] args) throws Exception
 	{
 		CermineMapper cermineMapper = new CermineMapper();
-		File inputFile = new File("D:/output/all/cermine-TUW-137078.xml");
-		File outputFile = new File("D:/output/Cermine/cermine-TUW-137078-result.xml");
+		File inputFile = new File("D:\\output\\Cermine\\cermine-TUW-139794.xml");
+		File outputFile = new File("D:/output/Cermine/cermine-TUW-139794-result.xml");
 
 		cermineMapper.unmarshall(inputFile, outputFile);
 
@@ -38,4 +41,9 @@ public class CermineMapper extends Mapper
 		return true;
 	}
 
+	@Override
+	protected List<? extends Worker> getWorkers()
+	{
+		return Arrays.asList(new AuthorNameConcatenationWorker(), new ReferenceAuthorNameConcatenationWorker());
+	}
 }

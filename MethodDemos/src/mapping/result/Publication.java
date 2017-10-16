@@ -8,16 +8,16 @@ public class Publication extends BaseEntity
 {
 	private String title;
 	private String abstractText;
-	private List<Author> authors;
+	private List<Author> authors = new ArrayList<>();
 	private List<Affiliation> affiliations = new ArrayList<>();
 
 	private Long publicationYear;
 	private Date publicationDate; // if known
 	private String doi;
 
-	private List<Section> sections;
-	private List<CitationContext> citationContexts;
-	private List<Reference> references;
+	private List<Section> sections = new ArrayList<>();
+	private List<CitationContext> citationContexts = new ArrayList<>();
+	private List<Reference> references = new ArrayList<>();
 
 	public String getTitle()
 	{

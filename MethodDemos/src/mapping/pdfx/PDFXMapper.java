@@ -1,10 +1,8 @@
 package mapping.pdfx;
 
 import java.io.File;
-import java.util.List;
 
 import mapping.Mapper;
-import mapping.Worker;
 
 public class PDFXMapper extends Mapper
 {
@@ -20,8 +18,8 @@ public class PDFXMapper extends Mapper
 	public static void main(String[] args) throws Exception
 	{
 		PDFXMapper grobidMapper = new PDFXMapper();
-		File inputFile = new File("D:/output/all/pdfx-TUW-137078.xml");
-		File outputFile = new File("D:/output/all/pdfx-TUW-137078-xstreamobject.xml");
+		File inputFile = new File("D:/output/PDFX/pdfx-TUW-137078.xml");
+		File outputFile = new File("D:/output/PDFX/pdfx-TUW-137078-xstream.xml");
 
 		grobidMapper.unmarshall(inputFile, outputFile);
 
@@ -34,10 +32,4 @@ public class PDFXMapper extends Mapper
 		return METHOD_NAME;
 	}
 
-	@Override
-	protected List<? extends Worker> getWorkers()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

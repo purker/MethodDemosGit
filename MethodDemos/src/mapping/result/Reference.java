@@ -1,5 +1,6 @@
 package mapping.result;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -10,7 +11,7 @@ public class Reference extends BaseEntity
 	private String source;
 	private String type; // book, colletion, inproceedings, ...
 
-	private List<ReferenceAuthor> authors;
+	private List<ReferenceAuthor> authors = new ArrayList<>();
 
 	private String doi;
 

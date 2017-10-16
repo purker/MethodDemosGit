@@ -30,7 +30,7 @@ public class PDFXDemo extends AbstractDemo
 	public static void main(String[] args) throws ExecuteException, IOException
 	{
 		List<File> groundTruthFiles = Demos.getAllGroundTruthFiles().subList(0, 1);
-		new PDFXDemo().runDemo(groundTruthFiles, Demos.pdfxOutputDir);
+		new PDFXDemo().runDemo(Arrays.asList(new File("D:\\output\\GroundTruth\\BeiträgeausTagungsbänden\\TUW-137078.pdf")), Demos.pdfxOutputDir);
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class PDFXDemo extends AbstractDemo
 		try
 		{
 			// transform to jats
-			File transformedFile = new File(outputFile.getParentFile(), outputFile.getName().replace(".xml", "-asJats.xml"));
+			File transformedFile = new File(outputFile.getParentFile(), outputFile.getName().replace(".xml", ".xmljats"));
 			TransformerFactory factory = TransformerFactory.newInstance();
 			Source xslt = new StreamSource(new File("docs/pdfx-to-nlm3_v1.2.xsl"));
 			Transformer transformer;

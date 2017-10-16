@@ -7,6 +7,8 @@ import java.util.List;
 import mapping.AffiliationWorker;
 import mapping.Mapper;
 import mapping.Worker;
+import mapping.cermine.AuthorNameConcatenationWorker;
+import mapping.cermine.ReferenceAuthorNameConcatenationWorker;
 
 public class GROBIDMapper extends Mapper
 {
@@ -39,7 +41,7 @@ public class GROBIDMapper extends Mapper
 	@Override
 	protected List<? extends Worker> getWorkers()
 	{
-		return Arrays.asList(new AffiliationWorker());
+		return Arrays.asList(new AffiliationWorker(), new AuthorNameConcatenationWorker(), new ReferenceAuthorNameConcatenationWorker());
 	}
 
 }

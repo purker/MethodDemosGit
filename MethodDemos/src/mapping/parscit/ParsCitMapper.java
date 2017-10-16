@@ -1,6 +1,7 @@
 package mapping.parscit;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 
 import mapping.Mapper;
@@ -37,7 +38,6 @@ public class ParsCitMapper extends Mapper
 	@Override
 	protected List<? extends Worker> getWorkers()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return Arrays.asList(new SectionTypeNormalizerWorker());
 	}
 }

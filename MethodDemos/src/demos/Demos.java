@@ -21,7 +21,7 @@ import mapping.pdfx.PDFXMapper;
  */
 public class Demos
 {
-	private static final boolean USE_SPECIFIC_OUTPUTDIR = false;
+	private static final boolean USE_SPECIFIC_OUTPUTDIR = true;
 
 	public static File inputDir = new File("D:/output/GroundTruth");
 	// public static File inputDirTxt = new File("D:/output/Cermine");
@@ -42,17 +42,17 @@ public class Demos
 
 	private static void executeDemos() throws IOException, JAXBException
 	{
-		boolean runDemos = false;
-		boolean runCermineDemo = false;
-		boolean runGrobidDemo = false;
+		boolean runDemos = true;
+		boolean runCermineDemo = true;
+		boolean runGrobidDemo = true;
 		boolean runParsCitDemo = true;
-		boolean runPdfxDemo = false;
+		boolean runPdfxDemo = true;
 		boolean runCermineMapper = true;
 		boolean runGrobidMapper = true;
 		boolean runParsCitMapper = true;
 		boolean runPdfxMapper = true;
-		List<File> groundTruthFiles = getAllGroundTruthFiles().subList(0, 10);
-		List<File> groundTruthFilesOmnipage = getAllGroundTruthFilesAsOmnipage().subList(0, 10);
+		List<File> groundTruthFiles = getAllGroundTruthFiles();// .subList(0, 1);
+		List<File> groundTruthFilesOmnipage = getAllGroundTruthFilesAsOmnipage();// .subList(0, 11);
 
 		if(!USE_SPECIFIC_OUTPUTDIR)
 		{
