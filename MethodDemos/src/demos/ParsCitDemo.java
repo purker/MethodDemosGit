@@ -19,13 +19,19 @@ public class ParsCitDemo extends AbstractDemo
 
 	public static void main(String[] args) throws IOException
 	{
+		List<File> files = new ArrayList<>();
 		// List<File> groundTruthFiles = Demos.getAllGroundTruthFilesAsTxt().subList(0, 1);
-		new ParsCitDemo().runDemo(Arrays.asList(new File("D:/output/GroundTruthsubset/TUW-139994.xml")), Demos.parsCitOutputDir);
+
+		File inputFile = new File("D:/output/GroundTruth/Zeitschriftenartikel/TUW-205933-omnipage.xml");
+
+		files.add(inputFile);
+		new ParsCitDemo().runDemo(files, Demos.parsCitOutputDir);
 	}
 
 	@Override
 	String runDemo(File inputFile, File outputFile) throws IOException
 	{
+		// TODO if(outputFile.exists()) return null;
 		// execute cileExtract.pl command
 		// String in = "C:/Users/Angela/git/ParsCit/demodata/sample1.txt";
 

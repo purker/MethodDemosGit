@@ -6,10 +6,12 @@ import java.util.List;
 public class Section
 {
 	private String id;
+	private String level;
 	private String title;
 	private String type;
 	private SectionType typeEnum;
 	private List<String> referenceIds = new ArrayList<>();
+	private List<Reference> references = new ArrayList<>();
 
 	public String getId()
 	{
@@ -19,6 +21,16 @@ public class Section
 	public void setId(String id)
 	{
 		this.id = id;
+	}
+
+	public String getLevel()
+	{
+		return level;
+	}
+
+	public void setLevel(String level)
+	{
+		this.level = level;
 	}
 
 	public String getTitle()
@@ -59,6 +71,16 @@ public class Section
 	public void setReferenceIds(List<String> referenceIds)
 	{
 		this.referenceIds = referenceIds;
+	}
+
+	public List<Reference> getReferences()
+	{
+		return references;
+	}
+
+	public void setReferences(List<Reference> references)
+	{
+		this.references = references;
 	}
 
 }

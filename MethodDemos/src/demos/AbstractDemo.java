@@ -2,6 +2,7 @@ package demos;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.logging.FileHandler;
@@ -37,13 +38,39 @@ public abstract class AbstractDemo
 			try
 			{
 				log(getMethodName() + ": start processing file " + inputFile);
-				String errorString = runDemo(inputFile, outputFile);
 
-				// write result xml to outputfolder
-				if(errorString != null && !errorString.isEmpty())
+				// Lambda Runnable
+				// Runnable task = () ->
 				{
-					FileUtils.writeStringToFile(errorFile, errorString, StandardCharsets.UTF_8);
-				}
+					String errorString;
+					try
+					{
+						errorString = runDemo(inputFile, outputFile);
+						// write result xml to outputfolder
+						if(errorString != null && !errorString.isEmpty())
+						{
+							FileUtils.writeStringToFile(errorFile, errorString, StandardCharsets.UTF_8);
+						}
+					}
+					catch(Exception e)
+					{
+						e.printStackTrace();
+						try
+						{
+							e.printStackTrace(new PrintStream(errorFile));
+						}
+						catch(IOException e1)
+						{
+							System.err.println("Error writing errorFile for " + inputFile);
+							e.printStackTrace();
+						}
+					}
+
+				} ;
+
+				// start the thread
+				// new Thread(task).start();
+
 			}
 			finally
 			{

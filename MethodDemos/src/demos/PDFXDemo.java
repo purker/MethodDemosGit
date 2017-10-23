@@ -30,12 +30,23 @@ public class PDFXDemo extends AbstractDemo
 	public static void main(String[] args) throws ExecuteException, IOException
 	{
 		List<File> groundTruthFiles = Demos.getAllGroundTruthFiles().subList(0, 1);
-		new PDFXDemo().runDemo(Arrays.asList(new File("D:\\output\\GroundTruth\\BeiträgeausTagungsbänden\\TUW-137078.pdf")), Demos.pdfxOutputDir);
+
+		List<File> files = new ArrayList<File>();
+		// files.add(new File("D:\\output\\GroundTruth\\Diplom-undMasterarbeiten\\TUW-168482.pdf"));
+		files.add(new File("D:\\output\\GroundTruth\\Diplom-undMasterarbeiten\\TUW-194085.pdf"));
+		// files.add(new File("D:\\output\\GroundTruth\\Zeitschriftenartikel\\TUW-200959.pdf"));
+		// files.add(new File("D:\\output\\GroundTruth\\Diplom-undMasterarbeiten\\TUW-202034.pdf"));
+		files.add(new File("D:\\output\\GroundTruth\\Diplom-undMasterarbeiten\\TUW-226016.pdf"));
+		// files.addAll(Arrays.asList(new File("D:\\output\\GroundTruth\\Diplom-undMasterarbeiten").listFiles()));
+
+		new PDFXDemo().runDemo(files, Demos.pdfxOutputDir);
 	}
 
 	@Override
 	String runDemo(File inputFile, File outputFile) throws IOException
 	{
+		// TODO if(outputFile.exists()) return null;
+
 		// execute curl pdfx command
 		List<String> commandWithParameters = new ArrayList<>(command);
 		commandWithParameters.set(3, "@\"" + inputFile.toString() + "\"");

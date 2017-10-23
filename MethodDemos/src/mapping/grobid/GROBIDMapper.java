@@ -6,6 +6,7 @@ import java.util.List;
 
 import mapping.AffiliationWorker;
 import mapping.Mapper;
+import mapping.SectionReferenceWorker;
 import mapping.Worker;
 import mapping.cermine.AuthorNameConcatenationWorker;
 import mapping.cermine.ReferenceAuthorNameConcatenationWorker;
@@ -24,8 +25,8 @@ public class GROBIDMapper extends Mapper
 	public static void main(String[] args) throws Exception
 	{
 		GROBIDMapper grobidMapper = new GROBIDMapper();
-		File inputFile = new File("D:/output/all/grobid-TUW-137078.xml");
-		File outputFile = new File("D:/output/Grobid/grobid-TUW-137078-xstreamobject.xml");
+		File inputFile = new File("D:/output/Grobid/grobid-TUW-139769.xml");
+		File outputFile = new File(inputFile.getParentFile(), inputFile.getName().replace(".xml", "-xstream.xml"));
 
 		grobidMapper.unmarshall(inputFile, outputFile);
 
@@ -41,7 +42,7 @@ public class GROBIDMapper extends Mapper
 	@Override
 	protected List<? extends Worker> getWorkers()
 	{
-		return Arrays.asList(new AffiliationWorker(), new AuthorNameConcatenationWorker(), new ReferenceAuthorNameConcatenationWorker());
+		return Arrays.asList(new AffiliationWorker(), new AuthorNameConcatenationWorker(), new SectionReferenceWorker(true), new ReferenceAuthorNameConcatenationWorker());
 	}
 
 }

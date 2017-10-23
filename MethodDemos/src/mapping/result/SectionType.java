@@ -5,7 +5,12 @@ import java.util.List;
 
 public enum SectionType
 {
-	ABSTRACT(Arrays.asList("abstract")), METHOD(Arrays.asList("method")), CONCLUSIONS(Arrays.asList("conclusions")), REFERENCES(Arrays.asList("references"));
+	ABSTRACT(Arrays.asList("abstract")),
+	INTRODUCTION(Arrays.asList("deo:Introduction")),
+	BACKGROUND(Arrays.asList("deo:Background")),
+	METHOD(Arrays.asList("method", "DoCO:Section")),
+	CONCLUSIONS(Arrays.asList("conclusions", "deo:Conclusion")),
+	REFERENCES(Arrays.asList("references"));
 
 	private List<String> synonyms;
 

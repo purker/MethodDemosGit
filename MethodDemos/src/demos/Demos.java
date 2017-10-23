@@ -2,6 +2,7 @@ package demos;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,20 +38,27 @@ public class Demos
 
 	public static void main(String[] args) throws Exception
 	{
-		executeDemos();
+		ArrayList<String> filenames = new ArrayList<>();
+		List<File> files = getAllGroundTruthFiles();
+		for(File file : files)
+		{
+			System.out.println(file.getName().replaceFirst(".pdf", ""));
+		}
+
+		// executeDemos();
 	}
 
 	private static void executeDemos() throws IOException, JAXBException
 	{
-		boolean runDemos = true;
-		boolean runCermineDemo = true;
-		boolean runGrobidDemo = true;
-		boolean runParsCitDemo = true;
-		boolean runPdfxDemo = true;
-		boolean runCermineMapper = true;
+		boolean runDemos = false;
+		boolean runCermineDemo = false;
+		boolean runGrobidDemo = false;
+		boolean runParsCitDemo = false;
+		boolean runPdfxDemo = false;
+		boolean runCermineMapper = false;
 		boolean runGrobidMapper = true;
-		boolean runParsCitMapper = true;
-		boolean runPdfxMapper = true;
+		boolean runParsCitMapper = false;
+		boolean runPdfxMapper = false;
 		List<File> groundTruthFiles = getAllGroundTruthFiles();// .subList(0, 1);
 		List<File> groundTruthFilesOmnipage = getAllGroundTruthFilesAsOmnipage();// .subList(0, 11);
 
@@ -71,15 +79,15 @@ public class Demos
 		{
 			if(runDemos)
 			{
-				if(runCermineDemo) FileUtils.cleanDirectory(cermineOutputDir);
-				if(runGrobidDemo) FileUtils.cleanDirectory(grobIdOutputDir);
-				if(runParsCitDemo) FileUtils.cleanDirectory(parsCitOutputDir);
-				if(runPdfxDemo) FileUtils.cleanDirectory(pdfxOutputDir);
+				// if(runCermineDemo) FileUtils.cleanDirectory(cermineOutputDir);
+				// if(runGrobidDemo) FileUtils.cleanDirectory(grobIdOutputDir);
+				// if(runParsCitDemo) FileUtils.cleanDirectory(parsCitOutputDir);
+				// if(runPdfxDemo) FileUtils.cleanDirectory(pdfxOutputDir);
 			}
-			if(runCermineMapper) deleteResultAndErrorFiles(cermineOutputDir);
-			if(runGrobidMapper) deleteResultAndErrorFiles(grobIdOutputDir);
-			if(runParsCitMapper) deleteResultAndErrorFiles(parsCitOutputDir);
-			if(runPdfxMapper) deleteResultAndErrorFiles(pdfxOutputDir);
+			// if(runCermineMapper) deleteResultAndErrorFiles(cermineOutputDir);
+			// if(runGrobidMapper) deleteResultAndErrorFiles(grobIdOutputDir);
+			// if(runParsCitMapper) deleteResultAndErrorFiles(parsCitOutputDir);
+			// if(runPdfxMapper) deleteResultAndErrorFiles(pdfxOutputDir);
 		}
 
 		if(runDemos)

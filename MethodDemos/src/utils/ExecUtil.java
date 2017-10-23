@@ -19,8 +19,10 @@ public class ExecUtil
 	public static String execInWorkingDir(File workingDirectory, List<String> command) throws IOException
 	{
 		Process p = null;
-		// String[] drinks = new String[]
-		// {"cmd.exe", "/c", "C:/Users/Angela/git/ParsCit/bin/citeExtract.pl", "D:/output/GroundTruth/BeiträgeausTagungsbänden/TUW-137078.pdf"};// , "D:/output/ParsCit/TUW-137078.xml"};
+
+		// System.out.println("cd " + workingDirectory);
+		// System.out.println(command.stream().collect(Collectors.joining(" ")));
+
 		ProcessBuilder pb = new ProcessBuilder(command);
 		if(workingDirectory != null) pb.directory(workingDirectory);
 		p = pb.start();

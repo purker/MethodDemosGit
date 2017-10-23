@@ -1,8 +1,12 @@
 package mapping.pdfx;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 import mapping.Mapper;
+import mapping.Worker;
+import mapping.parscit.SectionTypeNormalizerWorker;
 
 public class PDFXMapper extends Mapper
 {
@@ -18,8 +22,8 @@ public class PDFXMapper extends Mapper
 	public static void main(String[] args) throws Exception
 	{
 		PDFXMapper grobidMapper = new PDFXMapper();
-		File inputFile = new File("D:/output/PDFX/pdfx-TUW-137078.xml");
-		File outputFile = new File("D:/output/PDFX/pdfx-TUW-137078-xstream.xml");
+		File inputFile = new File("D:/output/PDFX/pdfx-TUW-194561.xml");
+		File outputFile = new File("D:/output/PDFX/pdfx-TUW-194561-xstream.xml");
 
 		grobidMapper.unmarshall(inputFile, outputFile);
 
@@ -32,4 +36,9 @@ public class PDFXMapper extends Mapper
 		return METHOD_NAME;
 	}
 
+	@Override
+	protected List<? extends Worker> getWorkers()
+	{
+		return Arrays.asList(new SectionTypeNormalizerWorker());
+	}
 }
