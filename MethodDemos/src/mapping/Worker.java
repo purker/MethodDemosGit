@@ -1,8 +1,8 @@
 package mapping;
 
-import mapping.result.Publication;
+import mapping.result.AbstractPublication;
 
-public abstract class Worker
+public abstract class Worker<T extends AbstractPublication<?, ?, ?, ?, ?>>
 {
-	protected abstract void doWork(Publication publication);
+	protected abstract void doWork(T publication);
 }

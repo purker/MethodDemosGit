@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -16,12 +17,14 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.transform.stream.StreamSource;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.eclipse.persistence.jaxb.JAXBContext;
 import org.eclipse.persistence.jaxb.JAXBContextFactory;
 import org.eclipse.persistence.jaxb.JAXBContextProperties;
 import org.eclipse.persistence.jaxb.JAXBMarshaller;
 import org.eclipse.persistence.jaxb.JAXBUnmarshaller;
 
+import mapping.result.AbstractPublication;
 import mapping.result.Affiliation;
 import mapping.result.Author;
 import mapping.result.Publication;
@@ -32,20 +35,20 @@ import utils.XStreamUtil;
 /**
  * Converts xml output of Cermine to ResultPublication (with JAXB) and saves resulting pojo as xml (serialized with XStream, not JAXB)
  */
-public abstract class Mapper
+public abstract class Mapper<P extends AbstractPublication<?, ?, ?, ?, ?>>
 {
 	protected JAXBContext jc;
 	protected Boolean ignoreDTD = false;
 
-	public Mapper()
+	public Mapper(Class<?>[] clazzes)
 	{
 		Map<String, Object> properties = new HashMap<String, Object>(1);
 		properties.put(JAXBContextProperties.OXM_METADATA_SOURCE, getBindingFile());
 
 		try
 		{
-			jc = (JAXBContext)JAXBContextFactory.createContext(new Class[]
-			{Publication.class}, properties);
+			jc = (JAXBContext)JAXBContextFactory.createContext(clazzes, properties);
+			// jc = (JAXBContext)JAXBContextFactory.createContext("mapping.result", ObjectFactory.class.getClassLoader(), properties);
 		}
 		catch(JAXBException e)
 		{
@@ -53,7 +56,7 @@ public abstract class Mapper
 		}
 	}
 
-	protected List<? extends Worker> getWorkers()
+	protected List<Worker<?>> getWorkers()
 	{
 		return new ArrayList<>();
 	}
@@ -104,17 +107,17 @@ public abstract class Mapper
 	protected void unmarshall(File inputFileXML, File outputFileObjectAsXML) throws JAXBException, XMLStreamException
 	{
 		JAXBUnmarshaller unmarshaller = jc.createUnmarshaller();
-		Publication publication;
+		P publication;
 		if(getIgnoreDTD())
 		{
 			XMLInputFactory xif = XMLInputFactory.newFactory();
 			xif.setProperty(XMLInputFactory.SUPPORT_DTD, false);
 			XMLStreamReader xsr = xif.createXMLStreamReader(new StreamSource(inputFileXML));
-			publication = (Publication)unmarshaller.unmarshal(xsr);
+			publication = (P)unmarshaller.unmarshal(xsr);
 		}
 		else
 		{
-			publication = (Publication)unmarshaller.unmarshal(inputFileXML);
+			publication = (P)unmarshaller.unmarshal(inputFileXML);
 		}
 
 		for(Worker worker : getWorkers())
@@ -122,7 +125,8 @@ public abstract class Mapper
 			worker.doWork(publication);
 		}
 
-		XStreamUtil.convertToXmL(publication, outputFileObjectAsXML, System.out, false);
+		Publication p = castToPublication(publication);
+		XStreamUtil.convertToXmL(p, outputFileObjectAsXML, System.out, false);
 		// System.out.println(publication.getTitle());
 		// System.out.println(publication.getAuthors().get(0).getEmail());
 		// System.out.println(publication.getAuthors().get(0).getLastName());
@@ -154,6 +158,21 @@ public abstract class Mapper
 		// marshaller.setProperty(JAXBMarshaller.JAXB_FORMATTED_OUTPUT, true);
 		// marshaller.marshal(publication, System.out);
 
+	}
+
+	private Publication castToPublication(P publication)
+	{
+		Publication p = new Publication();
+		try
+		{
+			PropertyUtils.copyProperties(p, publication);
+		}
+		catch(IllegalAccessException | InvocationTargetException | NoSuchMethodException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return p;
 	}
 
 	/**

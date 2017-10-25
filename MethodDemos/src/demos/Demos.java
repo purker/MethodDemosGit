@@ -2,7 +2,6 @@ package demos;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,14 +37,7 @@ public class Demos
 
 	public static void main(String[] args) throws Exception
 	{
-		ArrayList<String> filenames = new ArrayList<>();
-		List<File> files = getAllGroundTruthFiles();
-		for(File file : files)
-		{
-			System.out.println(file.getName().replaceFirst(".pdf", ""));
-		}
-
-		// executeDemos();
+		executeDemos();
 	}
 
 	private static void executeDemos() throws IOException, JAXBException

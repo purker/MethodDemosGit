@@ -5,7 +5,7 @@ import mapping.result.Publication;
 import mapping.result.Section;
 import mapping.result.SectionType;
 
-public class SectionTypeNormalizerWorker extends Worker
+public class SectionTypeNormalizerWorker extends Worker<Publication>
 {
 
 	@Override

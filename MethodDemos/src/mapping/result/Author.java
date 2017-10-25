@@ -2,14 +2,14 @@ package mapping.result;
 
 public class Author extends BaseEntity
 {
-	private String name; // if null, information in first and lastname
-	private String firstName;
-	private String lastName;
+	protected String name; // if null, information in first and lastname
+	protected String firstName;
+	protected String lastName;
 
-	private String email;
+	protected String email;
 
-	private String type;
-	private Affiliation affiliation;
+	protected String type;
+	protected Affiliation affiliation;
 
 	public String getName()
 	{

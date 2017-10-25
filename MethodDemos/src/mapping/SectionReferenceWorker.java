@@ -4,11 +4,14 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import mapping.result.Publication;
-import mapping.result.Reference;
+import mapping.result.AbstractPublication;
+import mapping.result.Affiliation;
+import mapping.result.Author;
+import mapping.result.CitationContext;
+import mapping.result.AbstractReference;
 import mapping.result.Section;
 
-public class SectionReferenceWorker extends Worker
+public class SectionReferenceWorker extends Worker<AbstractPublication<Author, Affiliation, Section, CitationContext, AbstractReference>>
 {
 	private boolean replaceDiamond;
 
@@ -23,9 +26,9 @@ public class SectionReferenceWorker extends Worker
 	}
 
 	@Override
-	protected void doWork(Publication publication)
+	protected void doWork(AbstractPublication<Author, Affiliation, Section, CitationContext, AbstractReference> publication)
 	{
-		Map<String, Reference> referenceMap = publication.getReferences().stream().collect(Collectors.toMap(Reference::getId, Function.identity()));
+		Map<String, AbstractReference> referenceMap = publication.getReferences().stream().collect(Collectors.toMap(AbstractReference::getId, Function.identity()));
 
 		for(Section section : publication.getSections())
 		{
@@ -37,7 +40,7 @@ public class SectionReferenceWorker extends Worker
 					{
 						referenceId = referenceId.replaceFirst("#", "");
 					}
-					Reference reference = referenceMap.get(referenceId);
+					AbstractReference reference = referenceMap.get(referenceId);
 					section.getReferences().add(reference);
 				}
 			}

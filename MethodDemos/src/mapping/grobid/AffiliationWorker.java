@@ -1,11 +1,12 @@
-package mapping;
+package mapping.grobid;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import mapping.Worker;
 import mapping.result.Affiliation;
 import mapping.result.Author;
-import mapping.result.Publication;
+import mapping.result.GROBIDPublication;
 
 /**
  * Map authors with different affiliations to same affiliation if they are equal
@@ -20,10 +21,10 @@ import mapping.result.Publication;
  * author2.affiliation = aff0
  * </pre>
  */
-public class AffiliationWorker extends Worker
+public class AffiliationWorker extends Worker<GROBIDPublication>
 {
 	@Override
-	protected void doWork(Publication publication)
+	protected void doWork(GROBIDPublication publication)
 	{
 		Map<Affiliation, Affiliation> idMap = new HashMap<>(); // because there is no method for a set, to get element by equals
 		for(Author author : publication.getAuthors())

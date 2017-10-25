@@ -14,7 +14,7 @@ import org.eclipse.persistence.oxm.annotations.XmlPath;
 public class Export
 {
 	@XmlElement(name = "publikation")
-	private List<Publication> publications;
+	private List<AbstractPublication> publications;
 
 	@XmlPath(value = "statistik/anzahl_pubs/text()")
 	private Integer publicationCount;
@@ -42,12 +42,12 @@ public class Export
 		this.exportInfo = exportInfo;
 	}
 
-	public List<Publication> getPublications()
+	public List<AbstractPublication> getPublications()
 	{
 		return publications;
 	}
 
-	public void setPublications(List<Publication> publications)
+	public void setPublications(List<AbstractPublication> publications)
 	{
 		this.publications = publications;
 	}
