@@ -3,7 +3,7 @@ package mapping.result;
 public class CitationContext
 {
 	protected String context;
-	protected AbstractReference reference;
+	protected Reference reference;
 
 	public String getContext()
 	{
@@ -15,12 +15,12 @@ public class CitationContext
 		this.context = context;
 	}
 
-	public AbstractReference getReference()
+	public Reference getReference()
 	{
 		return reference;
 	}
 
-	public void setReference(AbstractReference reference)
+	public void setReference(Reference reference)
 	{
 		this.reference = reference;
 	}
