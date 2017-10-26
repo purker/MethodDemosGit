@@ -1,16 +1,16 @@
 package mapping.grobid;
 
 import mapping.Worker;
-import mapping.result.GROBIDPublication;
-import mapping.result.GROBIDReference;
+import mapping.result.Publication;
+import mapping.result.Reference;
 
-public class ReferencePageWorker extends Worker<GROBIDPublication>
+public class ReferencePageWorker extends Worker
 {
 
 	@Override
-	protected void doWork(GROBIDPublication publication)
+	protected void doWork(Publication publication)
 	{
-		for(GROBIDReference reference : publication.getReferences())
+		for(Reference reference : publication.getReferences())
 		{
 			if(reference.getPageSingle() != null)
 			{

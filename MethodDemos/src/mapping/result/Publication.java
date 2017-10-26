@@ -1,6 +1,122 @@
 package mapping.result;
 
-public class Publication extends AbstractPublication<Author, Affiliation, Section, CitationContext, Reference>
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+public class Publication extends BaseEntity
 {
+	private String title;
+	private String abstractText;
+	private List<Author> authors = new ArrayList<>();
+	private List<Affiliation> affiliations = new ArrayList<>();
+
+	private Long publicationYear;
+	private Date publicationDate; // if known
+	private String doi;
+
+	private List<Section> sections = new ArrayList<>();
+	private List<CitationContext> citationContexts = new ArrayList<>();
+	private List<Reference> references = new ArrayList<>();
+
+	public String getTitle()
+	{
+		return title;
+	}
+
+	public void setTitle(String title)
+	{
+		this.title = title;
+	}
+
+	public String getAbstractText()
+	{
+		return abstractText;
+	}
+
+	public void setAbstractText(String abstractText)
+	{
+		this.abstractText = abstractText;
+	}
+
+	public List<Author> getAuthors()
+	{
+		return authors;
+	}
+
+	public void setAuthors(List<Author> authors)
+	{
+		this.authors = authors;
+	}
+
+	public List<Affiliation> getAffiliations()
+	{
+		return affiliations;
+	}
+
+	public void setAffiliations(List<Affiliation> affiliations)
+	{
+		this.affiliations = affiliations;
+	}
+
+	public Long getPublicationYear()
+	{
+		return publicationYear;
+	}
+
+	public void setPublicationYear(Long publicationYear)
+	{
+		this.publicationYear = publicationYear;
+	}
+
+	public Date getPublicationDate()
+	{
+		return publicationDate;
+	}
+
+	public void setPublicationDate(Date publicationDate)
+	{
+		this.publicationDate = publicationDate;
+	}
+
+	public String getDoi()
+	{
+		return doi;
+	}
+
+	public void setDoi(String doi)
+	{
+		this.doi = doi;
+	}
+
+	public List<Reference> getReferences()
+	{
+		return references;
+	}
+
+	public void setReferences(List<Reference> references)
+	{
+		this.references = references;
+	}
+
+	public List<Section> getSections()
+	{
+		return sections;
+	}
+
+	public void setSections(List<Section> sections)
+	{
+		this.sections = sections;
+	}
+
+	public List<CitationContext> getCitationContexts()
+	{
+		return citationContexts;
+	}
+
+	public void setCitationContexts(List<CitationContext> citationContexts)
+	{
+		this.citationContexts = citationContexts;
+	}
 
 }

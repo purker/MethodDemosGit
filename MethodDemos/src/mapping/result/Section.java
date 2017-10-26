@@ -5,13 +5,13 @@ import java.util.List;
 
 public class Section
 {
-	protected String id;
-	protected String level;
-	protected String title;
-	protected String type;
-	protected SectionType typeEnum;
-	protected List<String> referenceIds = new ArrayList<>();
-	protected List<AbstractReference> references = new ArrayList<>();
+	private String id;
+	private String level;
+	private String title;
+	private String type;
+	private SectionType typeEnum;
+	private List<String> referenceIds = new ArrayList<>();
+	private List<Reference> references = new ArrayList<>();
 
 	public String getId()
 	{
@@ -73,12 +73,12 @@ public class Section
 		this.referenceIds = referenceIds;
 	}
 
-	public List<AbstractReference> getReferences()
+	public List<Reference> getReferences()
 	{
 		return references;
 	}
 
-	public void setReferences(List<AbstractReference> references)
+	public void setReferences(List<Reference> references)
 	{
 		this.references = references;
 	}

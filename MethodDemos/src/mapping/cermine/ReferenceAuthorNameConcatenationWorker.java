@@ -3,21 +3,17 @@ package mapping.cermine;
 import org.apache.commons.lang3.StringUtils;
 
 import mapping.Worker;
-import mapping.result.AbstractPublication;
-import mapping.result.Affiliation;
-import mapping.result.Author;
-import mapping.result.CitationContext;
-import mapping.result.AbstractReference;
+import mapping.result.Publication;
+import mapping.result.Reference;
 import mapping.result.ReferenceAuthor;
-import mapping.result.Section;
 
-public class ReferenceAuthorNameConcatenationWorker extends Worker<AbstractPublication<Author, Affiliation, Section, CitationContext, AbstractReference>>
+public class ReferenceAuthorNameConcatenationWorker extends Worker
 {
 
 	@Override
-	protected void doWork(AbstractPublication<Author, Affiliation, Section, CitationContext, AbstractReference> publication)
+	protected void doWork(Publication publication)
 	{
-		for(AbstractReference reference : publication.getReferences())
+		for(Reference reference : publication.getReferences())
 		{
 			for(ReferenceAuthor author : reference.getAuthors())
 			{

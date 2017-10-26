@@ -10,12 +10,6 @@ import mapping.Worker;
 
 public class CermineMapper extends Mapper
 {
-	public CermineMapper()
-	{
-		super(new Class[]
-		{CerminePublication.class});
-	}
-
 	private static final String METHOD_NAME = "cermine";
 	public static final String BINDINGFILE = "bindingfiles/binding_cermine.xml";
 
@@ -49,7 +43,7 @@ public class CermineMapper extends Mapper
 	}
 
 	@Override
-	protected List<Worker<?>> getWorkers()
+	protected List<? extends Worker> getWorkers()
 	{
 		return Arrays.asList(new AuthorNameConcatenationWorker(), new SectionReferenceWorker(), new ReferenceAuthorNameConcatenationWorker());
 	}

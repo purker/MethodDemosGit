@@ -9,16 +9,9 @@ import mapping.SectionReferenceWorker;
 import mapping.Worker;
 import mapping.cermine.AuthorNameConcatenationWorker;
 import mapping.cermine.ReferenceAuthorNameConcatenationWorker;
-import mapping.result.GROBIDPublication;
 
-public class GROBIDMapper extends Mapper<GROBIDPublication>
+public class GROBIDMapper extends Mapper
 {
-	public GROBIDMapper()
-	{
-		super(new Class[]
-		{GROBIDPublication.class});
-	}
-
 	private static final String METHOD_NAME = "grobid";
 	public static final String BINDINGFILE = "bindingfiles/binding_grobid.xml";
 
@@ -31,12 +24,12 @@ public class GROBIDMapper extends Mapper<GROBIDPublication>
 	public static void main(String[] args) throws Exception
 	{
 		GROBIDMapper grobidMapper = new GROBIDMapper();
-		File inputFile = new File("D:/output/Grobid/grobid-TUW-137078.xml");
+		File inputFile = new File("D:/output/Grobid/grobid-TUW-138547.xml");
 		File outputFile = new File(inputFile.getParentFile(), inputFile.getName().replace(".xml", "-xstream.xml"));
 
 		grobidMapper.unmarshall(inputFile, outputFile);
 
-		// grobidMapper.marshall();
+		grobidMapper.marshall();
 	}
 
 	@Override
@@ -46,7 +39,7 @@ public class GROBIDMapper extends Mapper<GROBIDPublication>
 	}
 
 	@Override
-	protected List<Worker<?>> getWorkers()
+	protected List<? extends Worker> getWorkers()
 	{
 		return Arrays.asList(new AffiliationWorker(), new AuthorNameConcatenationWorker(), new SectionReferenceWorker(true), new ReferenceAuthorNameConcatenationWorker(), new ReferencePageWorker());
 	}
