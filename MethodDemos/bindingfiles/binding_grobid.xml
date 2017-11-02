@@ -53,19 +53,23 @@
                 <xml-attribute java-attribute="id" name="xml:id"/>
                 <xml-element java-attribute="title" xml-path="/analytic/title/text()"/>
                 <xml-element java-attribute="source" xml-path="/monogr/title/text()" />
+                <xml-element java-attribute="location" xml-path="/monogr/imprint/pubPlace/text()" />
+                <xml-element java-attribute="publisher" xml-path="/monogr/imprint/publisher/text()" />
                 <xml-attribute java-attribute="type" xml-path="/monogr/title/@level" />
                 <xml-element java-attribute="authors" xml-path="/analytic/author/persName" />
                 <xml-element java-attribute="authors" xml-path="/monogr/author/persName" />
                 <xml-element java-attribute="volume" name="volume" />
                 <xml-element java-attribute="issue" name="issue" />
-                <xml-attribute java-attribute="pageFrom" xml-path="/monogr/imprint/biblScope[@unit='page']/@from" />
-                <xml-attribute java-attribute="pageTo" xml-path="/monogr/imprint/biblScope[@unit='page']/@to" />
-                <xml-element java-attribute="pageSingle" xml-path="/monogr/imprint/biblScope[@unit='page']/text()" />
-                <xml-element java-attribute="publicationString" name="/monogr/imprint/date[@type='published']/@when" />
+                <xml-element java-attribute="publicationDateString" name="/monogr/imprint/date[@type='published']/@when" />
+	           	<xml-transformation java-attribute="publicationDate">           		
+	           		<xml-write-transformer transformer-class="mapping.grobid.PageScopeWriteTransformer" xml-path="monogr/imprint/biblScope[@unit='page']/@from" />
+	           		<xml-write-transformer transformer-class="mapping.grobid.PageScopeWriteTransformer" xml-path="monogr/imprint/biblScope[@unit='page']/@to" />
+	           		<xml-write-transformer transformer-class="mapping.grobid.PageScopeWriteTransformer" xml-path="monogr/imprint/biblScope[@unit='page']/text()" />
+	           	</xml-transformation>
             </java-attributes>
         </java-type>
         <java-type name="ReferenceAuthor">
-            <xml-root-element name="author"/>
+            <xml-root-element name="persName"/>
             <java-attributes>
                 <xml-element java-attribute="firstNames" name="forename"/>
                 <xml-element java-attribute="lastName" name="surname" />

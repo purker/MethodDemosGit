@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
+import demos.Demos;
 import mapping.Mapper;
 import mapping.SectionReferenceWorker;
 import mapping.Worker;
@@ -11,6 +12,7 @@ import mapping.Worker;
 public class CermineMapper extends Mapper
 {
 	private static final String METHOD_NAME = "cermine";
+	private static final File DIRECTORY_NAME = Demos.cermineOutputDir;
 	public static final String BINDINGFILE = "bindingfiles/binding_cermine.xml";
 
 	@Override
@@ -45,6 +47,12 @@ public class CermineMapper extends Mapper
 	@Override
 	protected List<? extends Worker> getWorkers()
 	{
-		return Arrays.asList(new AuthorNameConcatenationWorker(), new SectionReferenceWorker(), new ReferenceAuthorNameConcatenationWorker());
+		return Arrays.asList(new SectionReferenceWorker(), new ReferenceAuthorNameConcatenationWorker());
+	}
+
+	@Override
+	protected File getDirectory()
+	{
+		return DIRECTORY_NAME;
 	}
 }

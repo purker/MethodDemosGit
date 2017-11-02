@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
+import demos.Demos;
 import mapping.Mapper;
 import mapping.Worker;
 import mapping.parscit.SectionTypeNormalizerWorker;
@@ -11,6 +12,7 @@ import mapping.parscit.SectionTypeNormalizerWorker;
 public class PDFXMapper extends Mapper
 {
 	private static final String METHOD_NAME = "pdfx";
+	private static final File DIRECTORY_NAME = Demos.pdfxOutputDir;
 	public static final String BINDINGFILE = "bindingfiles/binding_pdfx.xml";
 
 	@Override
@@ -40,5 +42,11 @@ public class PDFXMapper extends Mapper
 	protected List<? extends Worker> getWorkers()
 	{
 		return Arrays.asList(new SectionTypeNormalizerWorker());
+	}
+
+	@Override
+	protected File getDirectory()
+	{
+		return DIRECTORY_NAME;
 	}
 }

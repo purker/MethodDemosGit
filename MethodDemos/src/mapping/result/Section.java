@@ -11,7 +11,7 @@ public class Section
 	private String type;
 	private SectionType typeEnum;
 	private List<String> referenceIds = new ArrayList<>();
-	private List<Reference> references = new ArrayList<>();
+	// private List<Reference> references = new ArrayList<>();
 
 	public String getId()
 	{
@@ -73,14 +73,14 @@ public class Section
 		this.referenceIds = referenceIds;
 	}
 
-	public List<Reference> getReferences()
-	{
-		return references;
-	}
-
-	public void setReferences(List<Reference> references)
-	{
-		this.references = references;
-	}
+	// public List<Reference> getReferences()
+	// {
+	// return references;
+	// }
+	//
+	// public void setReferences(List<Reference> references)
+	// {
+	// this.references = references;
+	// }
 
 }

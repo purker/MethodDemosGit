@@ -4,12 +4,14 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
+import demos.Demos;
 import mapping.Mapper;
 import mapping.Worker;
 
 public class ParsCitMapper extends Mapper
 {
 	private static final String METHOD_NAME = "parscit";
+	private static final File DIRECTORY_NAME = Demos.parsCitOutputDir;
 	public static final String BINDINGFILE = "bindingfiles/binding_parscit.xml";
 
 	@Override
@@ -39,5 +41,11 @@ public class ParsCitMapper extends Mapper
 	protected List<? extends Worker> getWorkers()
 	{
 		return Arrays.asList(new SectionTypeNormalizerWorker());
+	}
+
+	@Override
+	protected File getDirectory()
+	{
+		return DIRECTORY_NAME;
 	}
 }

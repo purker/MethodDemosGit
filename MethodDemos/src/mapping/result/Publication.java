@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Publication extends BaseEntity
 {
+	private String id;
 	private String title;
 	private String abstractText;
 	private List<Author> authors = new ArrayList<>();
@@ -18,6 +19,16 @@ public class Publication extends BaseEntity
 	private List<Section> sections = new ArrayList<>();
 	private List<CitationContext> citationContexts = new ArrayList<>();
 	private List<Reference> references = new ArrayList<>();
+
+	public String getId()
+	{
+		return id;
+	}
+
+	public void setId(String id)
+	{
+		this.id = id;
+	}
 
 	public String getTitle()
 	{

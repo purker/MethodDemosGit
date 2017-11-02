@@ -1,6 +1,7 @@
 package mapping.result;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Reference extends BaseEntity
@@ -8,6 +9,8 @@ public class Reference extends BaseEntity
 	private String id;
 	private String title;
 	private String source;
+	private String location;
+	private String publisher;
 	private String type; // book, colletion, inproceedings, ...
 
 	private List<ReferenceAuthor> authors = new ArrayList<>();
@@ -16,15 +19,15 @@ public class Reference extends BaseEntity
 
 	private String volume;
 	private String issue;
+
 	private Long pageFrom;
 	private Long pageTo;
-	private Long pageSingle;
 
-	private String publicationString; // as in the extraction xml
+	private String publicationDateString; // as in the extraction xml
 	private Long publicationDay;
 	private Long publicationMonth;
 	private Long publicationYear; // if null, information found in date
-	private Long publicationDate;
+	private Date publicationDate;
 
 	public String getId()
 	{
@@ -54,6 +57,26 @@ public class Reference extends BaseEntity
 	public void setSource(String source)
 	{
 		this.source = source;
+	}
+
+	public String getLocation()
+	{
+		return location;
+	}
+
+	public void setLocation(String location)
+	{
+		this.location = location;
+	}
+
+	public String getPublisher()
+	{
+		return publisher;
+	}
+
+	public void setPublisher(String publisher)
+	{
+		this.publisher = publisher;
 	}
 
 	public String getType()
@@ -126,24 +149,14 @@ public class Reference extends BaseEntity
 		this.pageTo = pageTo;
 	}
 
-	public Long getPageSingle()
+	public String getPublicationDateString()
 	{
-		return pageSingle;
+		return publicationDateString;
 	}
 
-	public void setPageSingle(Long pageSingle)
+	public void setPublicationDateString(String publicationDateString)
 	{
-		this.pageSingle = pageSingle;
-	}
-
-	public String getPublicationString()
-	{
-		return publicationString;
-	}
-
-	public void setPublicationString(String publicationString)
-	{
-		this.publicationString = publicationString;
+		this.publicationDateString = publicationDateString;
 	}
 
 	public Long getPublicationDay()
@@ -176,12 +189,12 @@ public class Reference extends BaseEntity
 		this.publicationYear = publicationYear;
 	}
 
-	public Long getPublicationDate()
+	public Date getPublicationDate()
 	{
 		return publicationDate;
 	}
 
-	public void setPublicationDate(Long publicationDate)
+	public void setPublicationDate(Date publicationDate)
 	{
 		this.publicationDate = publicationDate;
 	}

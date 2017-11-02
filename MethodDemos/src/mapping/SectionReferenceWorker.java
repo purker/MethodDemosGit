@@ -1,16 +1,11 @@
 package mapping;
 
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
 import mapping.result.Publication;
-import mapping.result.Reference;
 import mapping.result.Section;
 
 public class SectionReferenceWorker extends Worker
 {
-	private boolean replaceDiamond;
+	protected boolean replaceDiamond;
 
 	public SectionReferenceWorker(boolean replaceDiamond)
 	{
@@ -25,7 +20,7 @@ public class SectionReferenceWorker extends Worker
 	@Override
 	protected void doWork(Publication publication)
 	{
-		Map<String, Reference> referenceMap = publication.getReferences().stream().collect(Collectors.toMap(Reference::getId, Function.identity()));
+		// Map<String, Reference> referenceMap = publication.getReferences().stream().collect(Collectors.toMap(Reference::getId, Function.identity()));
 
 		for(Section section : publication.getSections())
 		{
@@ -35,10 +30,10 @@ public class SectionReferenceWorker extends Worker
 				{
 					if(replaceDiamond)
 					{
-						referenceId = referenceId.replaceFirst("#", "");
+						referenceId = referenceId.replaceFirst("#b", "ref");
 					}
-					Reference reference = referenceMap.get(referenceId);
-					section.getReferences().add(reference);
+					// Reference reference = referenceMap.get(referenceId);
+					// section.getReferences().add(reference);
 				}
 			}
 		}

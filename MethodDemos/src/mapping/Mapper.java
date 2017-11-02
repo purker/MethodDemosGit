@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,8 @@ import org.eclipse.persistence.jaxb.JAXBContextFactory;
 import org.eclipse.persistence.jaxb.JAXBContextProperties;
 import org.eclipse.persistence.jaxb.JAXBMarshaller;
 import org.eclipse.persistence.jaxb.JAXBUnmarshaller;
+
+import com.google.common.base.CharMatcher;
 
 import mapping.result.Affiliation;
 import mapping.result.Author;
@@ -80,8 +83,10 @@ public abstract class Mapper
 	{
 		for(File inputFile : inputFilesXML)
 		{
-			File outputFile = new File(inputFile.getParentFile(), inputFile.getName().replace(".xml", "-xstream.xml"));
-			File errorFile = new File(inputFile.getParentFile(), inputFile.getName().replace(".xml", "-err.xml"));
+			// id="TUW-000000"
+			String id = getIdFromFileName(inputFile.getName());
+			File outputFile = getOutputFile(id);
+			File errorFile = getErrorFile(id);
 			try
 			{
 				unmarshall(inputFile, outputFile);
@@ -90,6 +95,7 @@ public abstract class Mapper
 			{
 				try
 				{
+					e.printStackTrace();
 					e.printStackTrace(new PrintStream(errorFile));
 				}
 				catch(IOException e1)
@@ -99,6 +105,22 @@ public abstract class Mapper
 				}
 			}
 		}
+	}
+
+	private String getIdFromFileName(String fileName)
+	{
+		String id = CharMatcher.DIGIT.retainFrom(fileName);
+		return "TUW-" + id;
+	}
+
+	private File getErrorFile(String id)
+	{
+		return new File(getDirectory(), getMethodName() + "-" + id + "-mapping.errxml");
+	}
+
+	private File getOutputFile(String id)
+	{
+		return new File(getDirectory(), getMethodName() + "-" + id + "-xstream.xml");
 	}
 
 	protected void unmarshall(File inputFileXML, File outputFileObjectAsXML) throws JAXBException, XMLStreamException
@@ -116,6 +138,7 @@ public abstract class Mapper
 		{
 			publication = (Publication)unmarshaller.unmarshal(inputFileXML);
 		}
+		publication.setId(inputFileXML.getName());
 
 		for(Worker worker : getWorkers())
 		{
@@ -123,37 +146,8 @@ public abstract class Mapper
 		}
 
 		XStreamUtil.convertToXmL(publication, outputFileObjectAsXML, System.out, false);
-		// System.out.println(publication.getTitle());
-		// System.out.println(publication.getAuthors().get(0).getEmail());
-		// System.out.println(publication.getAuthors().get(0).getLastName());
-		//
-		// System.out.println(ReflectionToStringBuilder.toString(publication, ToStringStyle.MULTI_LINE_STYLE));
-		System.out.println(publication);
-		// System.out.println(ReflectionToStringBuilder.toString(publication.getAuthors(), ToStringStyle.MULTI_LINE_STYLE));
-		// System.out.println(ReflectionToStringBuilder.toString(publication.getReferences(), ToStringStyle.MULTI_LINE_STYLE));
 
-		// publication.setTitle("blub");
-		// List<Author> authors = new ArrayList<>();
-		// Author a = new Author();
-		// a.setFirstName("bl");
-		// a.setLastName("last");
-		// a.setEmail("blub@cob");
-		//
-		// Reference r = new Reference();
-		// r.setTitle("referencetitle");
-		// r.setPageFrom(1L);
-		// r.setPageTo(2L);
-		//
-		// authors.add(a);
-		//
-		// publication.setAuthors(authors);
-		// publication.setReferences(Arrays.asList(r));
-		// TODO split name in lastname firstname
-
-		// JAXBMarshaller marshaller = jc.createMarshaller();
-		// marshaller.setProperty(JAXBMarshaller.JAXB_FORMATTED_OUTPUT, true);
-		// marshaller.marshal(publication, System.out);
-
+		// System.out.println(publication);
 	}
 
 	/**
@@ -192,6 +186,7 @@ public abstract class Mapper
 		reference.setTitle("referencetitle");
 		reference.setPageFrom(1L);
 		reference.setPageTo(2L);
+		reference.setPublicationDate(new Date());
 
 		publication.setReferences(Arrays.asList(reference));
 
@@ -204,6 +199,8 @@ public abstract class Mapper
 	protected abstract String getBindingFile();
 
 	protected abstract String getMethodName();
+
+	protected abstract File getDirectory();
 
 	public Boolean getIgnoreDTD()
 	{

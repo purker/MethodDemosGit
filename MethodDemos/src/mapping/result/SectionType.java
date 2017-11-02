@@ -6,11 +6,20 @@ import java.util.List;
 public enum SectionType
 {
 	ABSTRACT(Arrays.asList("abstract")),
-	INTRODUCTION(Arrays.asList("deo:Introduction")),
-	BACKGROUND(Arrays.asList("deo:Background")),
-	METHOD(Arrays.asList("method", "DoCO:Section")),
+	INTRODUCTION(Arrays.asList("deo:Introduction", "introduction")),
+	KEYWORDS(Arrays.asList("keywords", "general terms")),
+	MOTIVATION(Arrays.asList("deo:Motivation")),
+	BACKGROUND(Arrays.asList("deo:Background", "background")),
+	RELATEDWORK(Arrays.asList("related work", "deo:RelatedWork")),
+	METHOD(Arrays.asList("method", "DoCO:Section", "deo:Methods")),
+	RESULT(Arrays.asList("deo:Results")),
 	CONCLUSIONS(Arrays.asList("conclusions", "deo:Conclusion")),
-	REFERENCES(Arrays.asList("references"));
+	REFERENCES(Arrays.asList("references")),
+
+	ACKNOWLEDGEMENTS(Arrays.asList("deo:Acknowledgements")),
+	EVALUATION(Arrays.asList("evaluation", "deo:Evaluation")),
+	DISCUSSION(Arrays.asList("deo:Discussion")),
+	FUTUREWORK(Arrays.asList("deo:FutureWork"));
 
 	private List<String> synonyms;
 
@@ -23,7 +32,7 @@ public enum SectionType
 	{
 		for(SectionType sectionType : SectionType.values())
 		{
-			if(sectionType.synonyms.contains(synonym.toLowerCase()))
+			if(sectionType.synonyms.contains(synonym))
 			{
 				return sectionType;
 			}

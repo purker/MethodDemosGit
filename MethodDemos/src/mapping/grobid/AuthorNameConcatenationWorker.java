@@ -1,4 +1,4 @@
-package mapping.cermine;
+package mapping.grobid;
 
 import mapping.Worker;
 import mapping.result.Author;

@@ -34,7 +34,7 @@ public abstract class AbstractDemo
 
 			String outputFileName = createOutputFileName(inputFile);
 			File outputFile = new File(outputFolder, getFileNamePrefix() + outputFileName + ".xml");
-			File errorFile = new File(outputFolder, getFileNamePrefix() + outputFileName + ".err.txt");
+			File errorFile = new File(outputFolder, getFileNamePrefix() + outputFileName + "-demo.errtxt");
 			try
 			{
 				log(getMethodName() + ": start processing file " + inputFile);
