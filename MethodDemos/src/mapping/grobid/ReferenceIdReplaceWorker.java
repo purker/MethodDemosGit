@@ -15,22 +15,29 @@ import mapping.result.Section;
 public class ReferenceIdReplaceWorker extends Worker
 {
 	@Override
-	protected void doWork(Publication publication)
+	public void doWork(Publication publication)
 	{
-		for(Section section : publication.getSections())
+		try
 		{
-			List<String> newReferenceIds = new ArrayList<>();
-
-			for(String referenceId : section.getReferenceIds())
+			for(Section section : publication.getSections())
 			{
-				if(referenceId != null)
+				List<String> newReferenceIds = new ArrayList<>();
+
+				for(String referenceId : section.getReferenceIds())
 				{
-					newReferenceIds.add("ref" + (new Integer(referenceId.replaceFirst("#b", "")) + 1));
+					if(referenceId != null)
+					{
+						newReferenceIds.add("ref" + (new Integer(referenceId.replaceFirst("#b", "")) + 1));
+					}
 				}
+				section.setReferenceIds(newReferenceIds);
 			}
-			section.setReferenceIds(newReferenceIds);
+			List<Reference> references = publication.getReferences();
+			references.forEach(p -> p.setId("ref" + (new Integer(p.getId().replaceFirst("b", "")) + 1)));
 		}
-		List<Reference> references = publication.getReferences();
-		references.forEach(p -> p.setId("ref" + (new Integer(p.getId().replaceFirst("b", "")) + 1)));
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 }

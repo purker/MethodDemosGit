@@ -29,7 +29,8 @@ public class CermineMapper extends Mapper
 
 		cermineMapper.unmarshall(inputFile, outputFile);
 
-		cermineMapper.marshall();
+		// Publication publication = PublicationFactory.createPublication();
+		// cermineMapper.marshall(publication);
 	}
 
 	@Override

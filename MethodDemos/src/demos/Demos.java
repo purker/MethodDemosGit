@@ -27,7 +27,7 @@ public class Demos
 	// public static File inputDirTxt = new File("D:/output/methods/Cermine");
 
 	public static File cermineOutputDir = new File("D:/output/methods/cermine");
-	public static File grobIdOutputDir = new File("D:/output/methods/result");
+	public static File grobIdOutputDir = new File("D:/output/methods/grobid");
 	public static File parsCitOutputDir = new File("D:/output/methods/parscit");
 	public static File pdfxOutputDir = new File("D:/output/methods/pdfx");
 	public static File[] outputDirs =

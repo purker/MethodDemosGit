@@ -11,7 +11,7 @@ public class PageScopeReadTransformer extends AbstactAttributeTransformer<Refere
 	private static final long serialVersionUID = -5805592045562412135L;
 
 	@Override
-	public Object buildAttributeValueWithClassObject(Record record, Reference object, Session session)
+	public Object buildAttributeValueWithClassObject(Record record, Reference reference, Session session)
 	{
 		if(record == null) return null;
 
@@ -26,11 +26,7 @@ public class PageScopeReadTransformer extends AbstactAttributeTransformer<Refere
 					Long value = new Long(recordString);
 					if(field.getName().contains("from") || field.getName().contains("text"))
 					{
-						object.setPageFrom(value);
-					}
-					else if(field.getName().contains("to"))
-					{
-						object.setPageTo(value);
+						return value;
 					}
 				}
 				catch(NumberFormatException e)

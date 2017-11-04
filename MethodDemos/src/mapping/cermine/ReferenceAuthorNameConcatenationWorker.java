@@ -11,7 +11,7 @@ public class ReferenceAuthorNameConcatenationWorker extends Worker
 {
 
 	@Override
-	protected void doWork(Publication publication)
+	public void doWork(Publication publication)
 	{
 		for(Reference reference : publication.getReferences())
 		{
