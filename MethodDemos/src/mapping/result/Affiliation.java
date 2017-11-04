@@ -1,9 +1,12 @@
 package mapping.result;
 
-public class Affiliation
+public class Affiliation extends BaseEntity
 {
+	private static final long serialVersionUID = -3698496426249593692L;
+
 	protected String id;
 	protected String institution;
+	protected String institute;
 	protected String country;
 	protected String countryCode;
 
@@ -25,6 +28,16 @@ public class Affiliation
 	public void setInstitution(String institution)
 	{
 		this.institution = institution;
+	}
+
+	public String getInstitute()
+	{
+		return institute;
+	}
+
+	public void setInstitute(String institute)
+	{
+		this.institute = institute;
 	}
 
 	public String getCountry()
