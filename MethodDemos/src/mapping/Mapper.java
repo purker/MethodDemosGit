@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,11 +24,7 @@ import org.eclipse.persistence.jaxb.JAXBUnmarshaller;
 
 import com.google.common.base.CharMatcher;
 
-import mapping.result.Affiliation;
-import mapping.result.Author;
 import mapping.result.Publication;
-import mapping.result.Reference;
-import mapping.result.Section;
 import utils.XStreamUtil;
 
 /**
@@ -157,43 +152,11 @@ public abstract class Mapper
 	 * @param outputFileObjectAsXML
 	 * @throws JAXBException
 	 */
-	protected void marshall() throws JAXBException
+	protected void marshall(Publication publication) throws JAXBException
 	{
-		Publication publication = new Publication();
-
-		publication.setTitle("title");
-		Author author = new Author();
-		author.setFirstName("first");
-		author.setLastName("last");
-		author.setEmail("blub@cob");
-		author.setType("author");
-		publication.setAuthors(Arrays.asList(author));
-
-		Affiliation affiliation = new Affiliation();
-		affiliation.setInstitution("TU Wien");
-		affiliation.setCountry("Austria");
-		affiliation.setCountryCode("AT");
-		publication.setAffiliations(Arrays.asList(affiliation));
-
-		Section section = new Section();
-		// section.setId("id");
-		// section.setTitle("sectiontitle");
-		// section.setReferenceIds(Arrays.asList("referenceID"));
-		// section.setType("ref");
-		publication.setSections(Arrays.asList(section));
-
-		Reference reference = new Reference();
-		reference.setTitle("referencetitle");
-		reference.setPageFrom(1L);
-		reference.setPageTo(2L);
-		reference.setPublicationDate(new Date());
-
-		publication.setReferences(Arrays.asList(reference));
-
 		JAXBMarshaller marshaller = jc.createMarshaller();
 		marshaller.setProperty(JAXBMarshaller.JAXB_FORMATTED_OUTPUT, true);
 		marshaller.marshal(publication, System.out);
-
 	}
 
 	protected abstract String getBindingFile();
