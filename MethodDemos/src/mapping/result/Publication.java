@@ -6,9 +6,12 @@ import java.util.List;
 
 public class Publication extends BaseEntity
 {
+	private static final long serialVersionUID = 8605009499117151049L;
+
 	private String id;
 	private String title;
 	private String abstractText;
+	private String abstractTextGerman;
 	private List<Author> authors = new ArrayList<>();
 	private List<Affiliation> affiliations = new ArrayList<>();
 
@@ -48,6 +51,16 @@ public class Publication extends BaseEntity
 	public void setAbstractText(String abstractText)
 	{
 		this.abstractText = abstractText;
+	}
+
+	public String getAbstractTextGerman()
+	{
+		return abstractTextGerman;
+	}
+
+	public void setAbstractTextGerman(String abstractTextGerman)
+	{
+		this.abstractTextGerman = abstractTextGerman;
 	}
 
 	public List<Author> getAuthors()
