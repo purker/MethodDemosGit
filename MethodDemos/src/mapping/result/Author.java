@@ -2,6 +2,8 @@ package mapping.result;
 
 public class Author extends BaseEntity
 {
+	private static final long serialVersionUID = -7444267954223367935L;
+
 	protected String name; // if null, information in first and lastname
 	protected String firstName;
 	protected String lastName;

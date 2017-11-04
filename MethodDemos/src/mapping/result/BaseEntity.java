@@ -1,10 +1,13 @@
 package mapping.result;
 
+import java.io.Serializable;
+
 import org.apache.commons.lang3.builder.MultilineRecursiveToStringStyle;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
-public class BaseEntity
+public class BaseEntity implements Serializable
 {
+	private static final long serialVersionUID = -1315650541479592103L;
 
 	@Override
 	public String toString()
