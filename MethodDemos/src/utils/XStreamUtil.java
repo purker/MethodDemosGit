@@ -6,6 +6,14 @@ import java.io.FileOutputStream;
 import java.io.PrintStream;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+
+import mapping.result.Affiliation;
+import mapping.result.Author;
+import mapping.result.Publication;
+import mapping.result.Reference;
+import mapping.result.ReferenceAuthor;
+import mapping.result.Section;
 
 public class XStreamUtil
 {
@@ -26,10 +34,15 @@ public class XStreamUtil
 
 	private static XStream getXStream()
 	{
-		XStream xStream = new XStream();
+		XStream xStream = new XStream(new DomDriver("UTF-8"));
 		xStream.setMode(XStream.SINGLE_NODE_XPATH_ABSOLUTE_REFERENCES);
-		xStream.aliasPackage("", "jaxb");
-		xStream.aliasPackage("", "mapping.result");
+		// xStream.aliasPackage("", "jaxb");
+		xStream.alias("Publication", Publication.class);
+		xStream.alias("Author", Author.class);
+		xStream.alias("Affiliation", Affiliation.class);
+		xStream.alias("Section", Section.class);
+		xStream.alias("Reference", Reference.class);
+		xStream.alias("ReferenceAuthor", ReferenceAuthor.class);
 		return xStream;
 	}
 
@@ -37,5 +50,11 @@ public class XStreamUtil
 	{
 		XStream xStream = getXStream();
 		return clazz.cast(xStream.fromXML(file));
+	}
+
+	public static <T> T convertFromString(String string, Class<T> clazz)
+	{
+		XStream xStream = getXStream();
+		return clazz.cast(xStream.fromXML(string));
 	}
 }
