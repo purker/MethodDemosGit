@@ -42,8 +42,10 @@
         <java-type name="Section">
             <xml-root-element name="div"/>
             <java-attributes>
-                <xml-element java-attribute="title" name="head" />
-                <xml-element java-attribute="level" xml-path="/head/@n" />
+                <xml-attribute java-attribute="id" xml-transient="true"/>
+                <xml-element java-attribute="title" name="head"/>
+                <xml-attribute java-attribute="level" xml-path="/head/@n" />
+                <!-- <xml-element java-attribute="referenceIds" xml-path="/p/ref[@type='bibr']/text()" /> -->
                 <xml-element java-attribute="referenceIds" xml-path="/p/ref[@type='bibr']/@target" />
             </java-attributes>
         </java-type>
@@ -55,17 +57,18 @@
                 <xml-element java-attribute="source" xml-path="/monogr/title/text()" />
                 <xml-element java-attribute="location" xml-path="/monogr/imprint/pubPlace/text()" />
                 <xml-element java-attribute="publisher" xml-path="/monogr/imprint/publisher/text()" />
-                <xml-attribute java-attribute="type" xml-path="/monogr/title/@level" />
+                <xml-attribute java-attribute="type" xml-path="/monogr/title/@level" xml-transient="true"/>
                 <xml-element java-attribute="authors" xml-path="/analytic/author/persName" />
                 <xml-element java-attribute="authors" xml-path="/monogr/author/persName" />
                 <xml-element java-attribute="volume" name="volume" />
                 <xml-element java-attribute="issue" name="issue" />
-                <xml-element java-attribute="publicationDateString" name="/monogr/imprint/date[@type='published']/@when" />
-	           	<xml-transformation java-attribute="publicationDate">           		
+	           	<xml-transformation java-attribute="pageFrom">
+	           		<xml-read-transformer transformer-class="mapping.grobid.PageScopeReadTransformer" />
 	           		<xml-write-transformer transformer-class="mapping.grobid.PageScopeWriteTransformer" xml-path="monogr/imprint/biblScope[@unit='page']/@from" />
-	           		<xml-write-transformer transformer-class="mapping.grobid.PageScopeWriteTransformer" xml-path="monogr/imprint/biblScope[@unit='page']/@to" />
 	           		<xml-write-transformer transformer-class="mapping.grobid.PageScopeWriteTransformer" xml-path="monogr/imprint/biblScope[@unit='page']/text()" />
 	           	</xml-transformation>
+                <xml-attribute java-attribute="pageTo" xml-path="/monogr/imprint/biblScope[@unit='page']/@to" />
+                <xml-element java-attribute="publicationDateString" name="/monogr/imprint/date[@type='published']/@when" />
             </java-attributes>
         </java-type>
         <java-type name="ReferenceAuthor">
