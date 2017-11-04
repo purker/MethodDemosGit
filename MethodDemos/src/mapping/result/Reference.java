@@ -6,7 +6,10 @@ import java.util.List;
 
 public class Reference extends BaseEntity
 {
-	private String id;
+	private static final long serialVersionUID = -3747798923009051624L;
+
+	private String id; // normalized marker in form "ref1"
+	private String marker; // "[1]", "[Hun97]", if defined for this method
 	private String title;
 	private String source;
 	private String location;
@@ -17,6 +20,7 @@ public class Reference extends BaseEntity
 
 	private String doi;
 
+	private String edition;
 	private String volume;
 	private String issue;
 
@@ -37,6 +41,16 @@ public class Reference extends BaseEntity
 	public void setId(String id)
 	{
 		this.id = id;
+	}
+
+	public String getMarker()
+	{
+		return marker;
+	}
+
+	public void setMarker(String marker)
+	{
+		this.marker = marker;
 	}
 
 	public String getTitle()
@@ -97,6 +111,16 @@ public class Reference extends BaseEntity
 	public void setAuthors(List<ReferenceAuthor> authors)
 	{
 		this.authors = authors;
+	}
+
+	public String getEdition()
+	{
+		return edition;
+	}
+
+	public void setEdition(String edition)
+	{
+		this.edition = edition;
 	}
 
 	public String getDoi()
