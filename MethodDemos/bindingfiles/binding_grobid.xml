@@ -12,19 +12,20 @@
     	<java-type name="Publication">
             <xml-root-element name="TEI" />
             <java-attributes>
-                <xml-element java-attribute="title" xml-path="/teiHeader/fileDesc/titleStmt/title/text()"/>
-            	<xml-element java-attribute="abstractText" xml-path="/teiHeader/profileDesc/abstract/p/text()"/>
-            	<xml-element java-attribute="authors" xml-path="/teiHeader/fileDesc/sourceDesc/biblStruct/analytic/author"/>
-            	<xml-element java-attribute="sections" xml-path="/text/body/div"/>
-            	<xml-element java-attribute="references" xml-path="/text/back/div[@type='references']/listBibl/biblStruct"/>
+                <xml-element java-attribute="title" xml-path="teiHeader/fileDesc/titleStmt/title/text()"/>
+            	<xml-element java-attribute="abstractText" xml-path="teiHeader/profileDesc/abstract/p/text()"/>
+            	<xml-element java-attribute="authors" xml-path="teiHeader/fileDesc/sourceDesc/biblStruct/analytic/author"/>
+            	<xml-element java-attribute="sections" xml-path="text/body/div"/>
+            	<xml-element java-attribute="references" xml-path="text/back/div[@type='references']/listBibl/biblStruct"/>
             </java-attributes>
         </java-type>
         <java-type name="Author">
             <xml-root-element name="author"/>
-            <xml-type prop-order="firstName lastName name email type affiliation"/>
+            <xml-type prop-order="firstNames lastName email affiliation"/>
             <java-attributes>
-                <xml-element java-attribute="firstName" xml-path="/persName/forename/text()"/>
-                <xml-element java-attribute="lastName" xml-path="/persName/surname/text()"/>
+                <xml-element java-attribute="name" xml-transient="true"/>
+                <xml-element java-attribute="firstNames" xml-path="persName/forename/text()"/>
+                <xml-element java-attribute="lastName" xml-path="persName/surname/text()"/>
             	<xml-element java-attribute="email" name="email"/>
             	<xml-attribute java-attribute="type" name="role"/>
             	<xml-element java-attribute="affiliation" name="affiliation"/>
@@ -34,9 +35,10 @@
             <xml-root-element name="affiliation"/>
             <java-attributes>
                 <xml-attribute java-attribute="id" name="key"/>
-                <xml-element java-attribute="institution" name="orgName"/>
-                <xml-element java-attribute="country" xml-path="/address/country/text()" />
-                <xml-element java-attribute="countryCode" xml-path="/address/country/@key" />
+                <xml-element java-attribute="institution" xml-path="orgName[@type='institution']/text()" />
+	           	<xml-element java-attribute="department" xml-path="orgName[@type='department']/text()" />
+                <xml-element java-attribute="country" xml-path="address/country/text()" />
+                <xml-attribute java-attribute="countryCode" xml-path="address/country/@key" />
             </java-attributes>
         </java-type>
         <java-type name="Section">
@@ -44,30 +46,31 @@
             <java-attributes>
                 <xml-attribute java-attribute="id" xml-transient="true"/>
                 <xml-element java-attribute="title" name="head"/>
-                <xml-attribute java-attribute="level" xml-path="/head/@n" />
-                <!-- <xml-element java-attribute="referenceIds" xml-path="/p/ref[@type='bibr']/text()" /> -->
-                <xml-element java-attribute="referenceIds" xml-path="/p/ref[@type='bibr']/@target" />
+                <xml-attribute java-attribute="level" xml-path="head/@n" />
+                <!-- <xml-element java-attribute="referenceIds" xml-path="p/ref[@type='bibr']/text()" /> -->
+                <xml-element java-attribute="referenceIds" xml-path="p/ref[@type='bibr']/@target" />
             </java-attributes>
         </java-type>
         <java-type name="Reference">
             <xml-root-element name="biblStruct" />
             <java-attributes>
                 <xml-attribute java-attribute="id" name="xml:id"/>
-                <xml-element java-attribute="title" xml-path="/analytic/title/text()"/>
-                <xml-element java-attribute="source" xml-path="/monogr/title/text()" />
-                <xml-element java-attribute="location" xml-path="/monogr/imprint/pubPlace/text()" />
-                <xml-element java-attribute="publisher" xml-path="/monogr/imprint/publisher/text()" />
-                <xml-attribute java-attribute="type" xml-path="/monogr/title/@level" xml-transient="true"/>
-                <xml-element java-attribute="authors" xml-path="/analytic/author/persName" />
-                <xml-element java-attribute="authors" xml-path="/monogr/author/persName" />
-                <xml-element java-attribute="volume" name="volume" />
-                <xml-element java-attribute="issue" name="issue" />
+                <xml-element java-attribute="title" xml-path="analytic/title/text()"/>
+                <xml-element java-attribute="source" xml-path="monogr/title/text()" />
+                <xml-element java-attribute="location" xml-path="monogr/imprint/pubPlace/text()" />
+                <xml-element java-attribute="publisher" xml-path="monogr/imprint/publisher/text()" />
+                <xml-attribute java-attribute="type" xml-path="monogr/title/@level" xml-transient="true"/>
+                <xml-element java-attribute="authors" xml-path="analytic/author/persName" />
+                <xml-element java-attribute="authors" xml-path="monogr/author/persName" />
+                <xml-element java-attribute="volume" name="volume" xml-path="monogr/imprint/biblScope[@unit='volume']/text()" />
+                <xml-element java-attribute="issue" name="issue" xml-path="monogr/imprint/biblScope[@unit='issue']/text()"/>
+                <xml-element java-attribute="note" name="note" xml-path="note/text()"/>
 	           	<xml-transformation java-attribute="pageFrom">
 	           		<xml-read-transformer transformer-class="mapping.grobid.PageScopeReadTransformer" />
 	           		<xml-write-transformer transformer-class="mapping.grobid.PageScopeWriteTransformer" xml-path="monogr/imprint/biblScope[@unit='page']/@from" />
 	           		<xml-write-transformer transformer-class="mapping.grobid.PageScopeWriteTransformer" xml-path="monogr/imprint/biblScope[@unit='page']/text()" />
 	           	</xml-transformation>
-                <xml-attribute java-attribute="pageTo" xml-path="/monogr/imprint/biblScope[@unit='page']/@to" />
+                <xml-attribute java-attribute="pageTo" xml-path="monogr/imprint/biblScope[@unit='page']/@to" />
                 <xml-element java-attribute="publicationDateString" name="/monogr/imprint/date[@type='published']/@when" />
             </java-attributes>
         </java-type>
