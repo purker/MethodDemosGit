@@ -4,11 +4,11 @@ public class Affiliation extends BaseEntity
 {
 	private static final long serialVersionUID = -3698496426249593692L;
 
-	protected String id;
-	protected String institution;
-	protected String institute;
-	protected String country;
-	protected String countryCode;
+	private String id;
+	private String institution;
+	private String department;
+	private String country;
+	private String countryCode;
 
 	public String getId()
 	{
@@ -30,14 +30,14 @@ public class Affiliation extends BaseEntity
 		this.institution = institution;
 	}
 
-	public String getInstitute()
+	public String getDepartment()
 	{
-		return institute;
+		return department;
 	}
 
-	public void setInstitute(String institute)
+	public void setDepartment(String department)
 	{
-		this.institute = institute;
+		this.department = department;
 	}
 
 	public String getCountry()
@@ -67,10 +67,16 @@ public class Affiliation extends BaseEntity
 		int result = 1;
 		result = prime * result + ((country == null) ? 0 : country.hashCode());
 		result = prime * result + ((countryCode == null) ? 0 : countryCode.hashCode());
+		result = prime * result + ((department == null) ? 0 : department.hashCode());
 		result = prime * result + ((institution == null) ? 0 : institution.hashCode());
 		return result;
 	}
 
+	/*
+	 * On purpose without id
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj)
 	{
@@ -88,6 +94,11 @@ public class Affiliation extends BaseEntity
 			if(other.countryCode != null) return false;
 		}
 		else if(!countryCode.equals(other.countryCode)) return false;
+		if(department == null)
+		{
+			if(other.department != null) return false;
+		}
+		else if(!department.equals(other.department)) return false;
 		if(institution == null)
 		{
 			if(other.institution != null) return false;
@@ -95,5 +106,4 @@ public class Affiliation extends BaseEntity
 		else if(!institution.equals(other.institution)) return false;
 		return true;
 	}
-
 }
