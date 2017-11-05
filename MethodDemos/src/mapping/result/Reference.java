@@ -23,6 +23,7 @@ public class Reference extends BaseEntity
 	private String edition;
 	private String volume;
 	private String issue;
+	private String note;
 
 	private Long pageFrom;
 	private Long pageTo;
@@ -151,6 +152,16 @@ public class Reference extends BaseEntity
 	public void setIssue(String issue)
 	{
 		this.issue = issue;
+	}
+
+	public String getNote()
+	{
+		return note;
+	}
+
+	public void setNote(String note)
+	{
+		this.note = note;
 	}
 
 	public Long getPageFrom()
