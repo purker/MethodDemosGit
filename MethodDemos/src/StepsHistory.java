@@ -1,9 +1,14 @@
 import java.io.File;
 import java.io.IOException;
+import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.xml.bind.JAXBException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
@@ -12,6 +17,10 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 
 import org.apache.commons.io.FileUtils;
+import org.eclipse.persistence.jaxb.JAXBContext;
+import org.eclipse.persistence.jaxb.JAXBContextFactory;
+import org.eclipse.persistence.jaxb.JAXBContextProperties;
+import org.eclipse.persistence.jaxb.JAXBUnmarshaller;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -19,6 +28,7 @@ import demos.Demos;
 import factory.PublicationFactory;
 import mapping.cermine.ReferenceAuthorNameConcatenationWorker;
 import mapping.grobid.AuthorNameConcatenationWorker;
+import mapping.result.Affiliation;
 import mapping.result.Publication;
 import mapping.result.Reference;
 import utils.XStreamUtil;
@@ -49,7 +59,32 @@ public class StepsHistory
 
 		// setRefMarker(file5);
 
-		concatNames(file4);
+		// concatNames(file4);
+
+		xpathSampleStackoverflowQuestion();
+	}
+
+	private static void xpathSampleStackoverflowQuestion() throws UnsupportedEncodingException
+	{
+		String xml = "<affiliation key='aff0'>" + "	<orgName type='department'>Institut für Computer Graphik und Algorithmen</orgName>" + "	<orgName type='institution'>Technischen Universität Wien</orgName>" + "</affiliation>";
+		String binding = "<?xml version=\"1.0\"?><xml-bindings    xmlns=\"http://www.eclipse.org/eclipselink/xsds/persistence/oxm\"    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"    xsi:schemaLocation=\"http://www.eclipse.org/eclipselink/xsds/eclipselink_oxm_2_4.xsd\"    package-name=\"mapping.result\">    <xml-schema        namespace=\"\"        element-form-default=\"QUALIFIED\"        prefix=\"\"/>    <java-types>        <java-type name=\"Affiliation\">            <xml-root-element name=\"affiliation\"/>            <java-attributes>                <xml-attribute java-attribute=\"id\" name=\"key\"/>                <xml-element java-attribute=\"institution\" xml-path=\"orgName[@type='institution']/text()\" />	           	<xml-element java-attribute=\"department\" xml-path=\"orgName[@type='department']/text()\" />                <xml-element java-attribute=\"country\" xml-path=\"address/country/text()\" />                <xml-element java-attribute=\"countryCode\" xml-path=\"address/country/@key\" />            </java-attributes>        </java-type>    </java-types></xml-bindings>";
+
+		Map<String, Object> properties = new HashMap<String, Object>(1);
+		properties.put(JAXBContextProperties.OXM_METADATA_SOURCE, new StringReader(binding));
+
+		try
+		{
+			JAXBContext jc = (JAXBContext)JAXBContextFactory.createContext(new Class[]
+			{Publication.class}, properties);
+			JAXBUnmarshaller unmarshaller = jc.createUnmarshaller();
+			Affiliation affiliation = (Affiliation)unmarshaller.unmarshal(new StringReader(xml));
+			System.out.println(affiliation);
+		}
+		catch(JAXBException e)
+		{
+			e.printStackTrace();
+		}
+
 	}
 
 	private static void concatNames(File file42)
