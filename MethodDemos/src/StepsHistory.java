@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.DocumentBuilder;
@@ -23,6 +25,8 @@ import org.eclipse.persistence.jaxb.JAXBContextProperties;
 import org.eclipse.persistence.jaxb.JAXBUnmarshaller;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
+
+import com.itextpdf.text.pdf.PdfReader;
 
 import demos.Demos;
 import factory.PublicationFactory;
@@ -61,7 +65,31 @@ public class StepsHistory
 
 		// concatNames(file4);
 
-		xpathSampleStackoverflowQuestion();
+		// xpathSampleStackoverflowQuestion();
+
+		countPagesGroundTruth();
+	}
+
+	private static void countPagesGroundTruth() throws IOException
+	{
+		List<File> files = Demos.getAllGroundTruthFiles();
+		int pagesCount = 0;
+		Map<String, Integer> map = new TreeMap<>();
+
+		for(File file : files)
+		{
+			PdfReader reader = new PdfReader(file.getPath());
+			int pages = reader.getNumberOfPages();
+
+			map.put(file.getName(), pages);
+			pagesCount += pages;
+
+		}
+		for(Entry<String, Integer> entry : map.entrySet())
+		{
+			System.out.println(entry.getKey() + " " + entry.getValue());
+		}
+		System.out.println(pagesCount);
 	}
 
 	private static void xpathSampleStackoverflowQuestion() throws UnsupportedEncodingException
