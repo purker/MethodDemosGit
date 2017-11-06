@@ -10,16 +10,6 @@ public class ReferenceAuthor extends BaseEntity
 	private List<String> firstNames;
 	private String lastName;
 
-	public String getName()
-	{
-		return name;
-	}
-
-	public void setName(String name)
-	{
-		this.name = name;
-	}
-
 	public List<String> getFirstNames()
 	{
 		return firstNames;
