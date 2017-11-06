@@ -1,0 +1,1660 @@
+<Publication>
+  <id>grobid-TUW-139785.xml</id>
+  <title>Eine generische Bibliothek für Metaheuristiken und ihre Anwendung auf das Quadratic Assignment Problem</title>
+  <abstractText>In this master thesis a generic libray of efficient metaheuristics for combinatorial optimization is presented. In the version at hand classes that feature local search, simulated annealing, tabu search, guided local search and greedy randomized adaptive search procedure were implemeted. Most notably a generic implementation features the advantage that the problem dependent classes and methods only need to be realized once without targeting a specific algorithm because these parts of the sourcecode are shared among all present algorithms contained in EAlib. This main advantage is then exemplarily demonstrated with the quadratic assignment problem. The sourcecode of the QAP example can also be used as an commented reference for future problems. Concluding the experimental results of the individual metaheuristics reached with the presented implementation are presented.</abstractText>
+  <abstractTextGerman>In dieser Diplomarbeit wird eine generische Bibliothek von effizienten Metaheuristiken für kombinatorische Optimierungsprobleme vorgestellt. In der vorliegenden Eine generische Implementierung bietet vorallem den Vorteil das bei einem neuen zu lösendem Problem nur einige bestimmte problemabhängige Klassen und Methoden realisiert werden müssen ohne sich schon im Vorhinein einen speziellen Algorithmus festzulegen, da diese Klassen und Methoden von allen in der EAlib vorhanden Metaheuristiken verwendet werden. Die Vorteile dieser Bibliothek werden anschließend anhand des Quadratic Assignment Problems ausführlich dargestellt. Dieses Beispiel dient zusätzlich auch noch als kommentierte Referenz für zukünftige Problemimplentierungen. Abschließend werden die Resulate der Experimente mit den verschiedenen Metaheuristiken präsentiert.</abstractTextGerman>
+  <authors>
+    <Author>
+      <firstNames>
+        <string>Daniel</string>
+      </firstNames>
+      <lastName>Wagner</lastName>
+      <affiliation>
+        <id>aff0</id>
+        <institution>Technischen Universität Wien</institution>
+        <department>Institut für Computergraphik und Algorithmen 186</department>
+      </affiliation>
+    </Author>
+  </authors>
+  <affiliations>
+    <Affiliation reference="/Publication[1]/authors[1]/Author[1]/affiliation[1]"/>
+  </affiliations>
+  <sections>
+    <Section>
+      <level>1</level>
+      <title>Introduction</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>1.1</level>
+      <title>Motivation</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>1.2</level>
+      <title>Combinatorial Optimization and Metaheuristics</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>1.3</level>
+      <title>Guide to the thesis</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>2</level>
+      <title>Quadratic Assignment Problem</title>
+      <referenceIds>
+        <string>ref23</string>
+        <string>ref27</string>
+        <string>ref39</string>
+        <string>ref20</string>
+        <string>ref14</string>
+        <string>ref5</string>
+        <string>ref27</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>2.1</level>
+      <title>Problem Description</title>
+      <referenceIds>
+        <string>ref27</string>
+        <string>ref24</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>2.2</level>
+      <title>Formulations</title>
+      <referenceIds>
+        <string>ref27</string>
+        <string>ref9</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>2.2.1</level>
+      <title>Permutation Formulation</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>2.2.2</level>
+      <title>Integer Linear Programming</title>
+      <referenceIds>
+        <string>ref23</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>2.2.3</level>
+      <title>Trace Formulation</title>
+      <referenceIds>
+        <string>ref10</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>2.3</level>
+      <title>Lower Bounds</title>
+      <referenceIds>
+        <string>ref15</string>
+        <string>ref25</string>
+        <string>ref1</string>
+        <string>ref36</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>2.4</level>
+      <title>Solution Methods</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>2.4.1</level>
+      <title>Exact Algorithms</title>
+      <referenceIds>
+        <string>ref13</string>
+        <string>ref5</string>
+        <string>ref2</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>2.4.2</level>
+      <title>Heuristics</title>
+      <referenceIds>
+        <string>ref15</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>2.4.3</level>
+      <title>Metaheuristics</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>2.4.4</level>
+      <title>Research Trends</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>2.5</level>
+      <title>Applications</title>
+      <referenceIds>
+        <string>ref23</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>2.5.1</level>
+      <title>Steinberg Wiring Problem</title>
+      <referenceIds>
+        <string>ref40</string>
+        <string>ref6</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>2.5.2</level>
+      <title>Antenna Assembly Sequence Problem</title>
+      <referenceIds>
+        <string>ref33</string>
+        <string>ref33</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>3</level>
+      <title>Metaheuristics</title>
+      <referenceIds>
+        <string>ref16</string>
+        <string>ref19</string>
+        <string>ref4</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>3.1</level>
+      <title>Basic Local Search</title>
+      <referenceIds>
+        <string>ref28</string>
+        <string>ref29</string>
+        <string>ref30</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>3.2</level>
+      <title>Simulated Annealing</title>
+      <referenceIds>
+        <string>ref22</string>
+        <string>ref8</string>
+        <string>ref31</string>
+        <string>ref21</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>3.3</level>
+      <title>Tabu Search</title>
+      <referenceIds>
+        <string>ref16</string>
+        <string>ref41</string>
+        <string>ref3</string>
+        <string>ref17</string>
+        <string>ref18</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>3.4</level>
+      <title>Guided Local Search</title>
+      <referenceIds>
+        <string>ref43</string>
+        <string>ref44</string>
+        <string>ref32</string>
+        <string>ref44</string>
+        <string>ref42</string>
+        <string>ref45</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>3.5</level>
+      <title>Greedy Randomized Adaptive Search Procedure</title>
+      <referenceIds>
+        <string>ref11</string>
+        <string>ref12</string>
+        <string>ref12</string>
+        <string>ref26</string>
+        <string>ref37</string>
+        <string>ref38</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>4</level>
+      <title>Requirements</title>
+      <referenceIds>
+        <string>ref35</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>4.1</level>
+      <title>Functionality</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Local Search</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Simulated Annealing</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Tabu Search</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Guided Local Search</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Greedy Randomized Adaptive Search Procedure</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Example Problem</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Parameter Handling</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.2</level>
+      <title>Design</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.3</level>
+      <title>Usability</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>5</level>
+      <title>Implementation</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>5.1</level>
+      <title>Overview</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>5.2</level>
+      <title>Class reference</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>5.2.1</level>
+      <title>Class chromosome</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>5.2.2</level>
+      <title>Class ea_advbase</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>5.2.3</level>
+      <title>Class lsbase</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>5.2.4</level>
+      <title>Class localSearch</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>5.2.5</level>
+      <title>Class simulatedAnnealing</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>5.2.6</level>
+      <title>Class tabuSearch</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>5.2.7</level>
+      <title>Class guidedLS</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>5.2.8</level>
+      <title>Class GRASP</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>5.2.9</level>
+      <title>Class feature</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>5.2.10</level>
+      <title>Class tabuAttribute</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>5.2.11</level>
+      <title>Class tabulist</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>5.2.12</level>
+      <title>Class move and childs</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>5.2.13</level>
+      <title>Class qapChrom</title>
+      <referenceIds>
+        <string>ref26</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>5.2.14</level>
+      <title>Class qapInstance</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>5.2.15</level>
+      <title>Class qapFeature</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>5.2.16</level>
+      <title>Class qapTabuAttribute</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>5.2.17</level>
+      <title>Parameter handling</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>5.3</level>
+      <title>Usage</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>5.3.1</level>
+      <title>Interface aObjProvider</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>5.3.2</level>
+      <title>Interface tabulistProvider</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>5.3.4</level>
+      <title>Interface gcProvider</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>5.3.5</level>
+      <title>Interface tabuProvider</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>5.3.6</level>
+      <title>Parameters</title>
+      <referenceIds>
+        <string>ref7</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>6</level>
+      <title>Experimental Results</title>
+      <referenceIds>
+        <string>ref7</string>
+        <string>ref34</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>6.1</level>
+      <title>Test Cases</title>
+      <referenceIds>
+        <string>ref7</string>
+        <string>ref34</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>6.2</level>
+      <title>Test Setup and Procedure</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>6.3</level>
+      <title>Results</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>7</level>
+      <title>Conclusions</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>List of Algorithms</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>List of Figures</title>
+      <referenceIds>
+        <string>ref33</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <title>List of Tables</title>
+      <referenceIds/>
+    </Section>
+  </sections>
+  <citationContexts/>
+  <references>
+    <Reference>
+      <id>ref1</id>
+      <title>A New Bound for the Quadratic Assignment Problem Based on Convex Quadratic Programming</title>
+      <source>Mathematical Programming</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>K</string>
+            <string>M</string>
+          </firstNames>
+          <lastName>Anstreicher</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>N</string>
+            <string>W</string>
+          </firstNames>
+          <lastName>Brixius</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>89</volume>
+      <issue>3</issue>
+      <pageFrom>341</pageFrom>
+      <pageTo>357</pageTo>
+      <publicationDateString>2001</publicationDateString>
+      <publicationYear>2001</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref2</id>
+      <title>Solving large quadratic assignment problems on computational grids</title>
+      <source>Mathematical Programming</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>K</string>
+            <string>M</string>
+          </firstNames>
+          <lastName>Anstreicher</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>N</string>
+            <string>W</string>
+          </firstNames>
+          <lastName>Brixius</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>J.-P</string>
+          </firstNames>
+          <lastName>Goux</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>J</string>
+          </firstNames>
+          <lastName>Linderoth</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>91</volume>
+      <issue>3</issue>
+      <pageFrom>563</pageFrom>
+      <pageTo>588</pageTo>
+      <publicationDateString>2002-02</publicationDateString>
+      <publicationMonth>2</publicationMonth>
+      <publicationYear>2002</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref3</id>
+      <title>The reactive tabu search</title>
+      <source>ORSA Journal on Computing</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>R</string>
+          </firstNames>
+          <lastName>Battiti</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>G</string>
+          </firstNames>
+          <lastName>Tecchiolli</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>6</volume>
+      <issue>2</issue>
+      <pageFrom>126</pageFrom>
+      <pageTo>140</pageTo>
+      <publicationDateString>1994</publicationDateString>
+      <publicationYear>1994</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref4</id>
+      <title>Metaheuristics in combinatorial optimization: Overview and conceptual comparison</title>
+      <source>ACM Computing Surveys</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>C</string>
+          </firstNames>
+          <lastName>Blum</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A</string>
+          </firstNames>
+          <lastName>Roli</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>35</volume>
+      <issue>3</issue>
+      <pageFrom>268</pageFrom>
+      <pageTo>308</pageTo>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref5</id>
+      <title>Solving quadratic assignment problems using convex quadratic programming relaxations</title>
+      <source>Optimization Methods and Software</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>N</string>
+            <string>W</string>
+          </firstNames>
+          <lastName>Brixius</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>K</string>
+            <string>M</string>
+          </firstNames>
+          <lastName>Anstreicher</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>16</volume>
+      <pageFrom>49</pageFrom>
+      <pageTo>68</pageTo>
+      <publicationDateString>2001</publicationDateString>
+      <publicationYear>2001</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref6</id>
+      <title>The Steinberg Wiring Problem</title>
+			<source>In The Sharpest Cut: The Impact of Manfred Padberg and His Work</source>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>N</string>
+            <string>W</string>
+          </firstNames>
+          <lastName>Brixius</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>K</string>
+            <string>M</string>
+          </firstNames>
+          <lastName>Anstreicher</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2004-06</publicationDateString>
+      <publicationMonth>6</publicationMonth>
+      <publicationYear>2004</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref7</id>
+      <title>QAPLIB-A Quadratic Assignment Problem Library</title>
+      <source>Journal of Global Optimization</source>
+			<url>http://www.seas.upenn.edu/qaplib/</url>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>R</string>
+          </firstNames>
+          <lastName>Burkard</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>S</string>
+          </firstNames>
+          <lastName>Karisch</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>F</string>
+          </firstNames>
+          <lastName>Rendl</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>10</volume>
+      <pageFrom>391</pageFrom>
+      <pageTo>403</pageTo>
+      <publicationDateString>1997</publicationDateString>
+      <publicationYear>1997</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref8</id>
+      <title>Thermodynamical Approach to the Traveling Salesman Problem: An Efficient Simulation Algorithm</title>
+      <source>Journal of Optimization Theory and Applications</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>V</string>
+          </firstNames>
+          <lastName>Cerny</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>45</volume>
+      <issue>1</issue>
+      <pageFrom>41</pageFrom>
+      <pageTo>51</pageTo>
+      <publicationDateString>1985</publicationDateString>
+      <publicationYear>1985</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref9</id>
+			<title>A Survey of the Quadratic Assignment Problem, with Applications</title>
+      <source>The Moreahead Electronic Journal of Applicable Mathematics</source>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>C</string>
+            <string>W</string>
+          </firstNames>
+          <lastName>Commander</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>P</string>
+            <string>M</string>
+          </firstNames>
+          <lastName>Pardalos</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2003-04</publicationDateString>
+      <publicationMonth>4</publicationMonth>
+      <publicationYear>2003</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref10</id>
+      <title>The derivation of a greedy approximator for the Koopmans– Beckmann quadratic assigment problem</title>
+      <source>Proceedings of the 77-th Combinatorial Programming Conference (CP77)</source>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>C</string>
+          </firstNames>
+          <lastName>Edwards</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>55</pageFrom>
+      <pageTo>86</pageTo>
+      <publicationDateString>1977</publicationDateString>
+      <publicationYear>1977</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref11</id>
+      <title>A probabilistic heuristic for a computationally difficult set covering problem</title>
+      <source>Operations Research Letters</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>T</string>
+            <string>A</string>
+          </firstNames>
+          <lastName>Feo</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+            <string>G</string>
+						<string>C</string>
+          </firstNames>
+					<lastName>Resende</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>8</volume>
+      <pageFrom>67</pageFrom>
+      <pageTo>71</pageTo>
+      <publicationDateString>1989-04</publicationDateString>
+      <publicationMonth>4</publicationMonth>
+      <publicationYear>1989</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref12</id>
+      <title>Greedy Randomized Adaptive Search Procedures</title>
+      <source>Journal of Global Optimization</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>T</string>
+            <string>A</string>
+          </firstNames>
+          <lastName>Feo</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+            <string>G</string>
+						<string>C</string>
+          </firstNames>
+					<lastName>Resende</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>6</volume>
+      <issue>2</issue>
+      <pageFrom>109</pageFrom>
+      <pageTo>133</pageTo>
+      <publicationDateString>1995-03</publicationDateString>
+      <publicationMonth>3</publicationMonth>
+      <publicationYear>1995</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref13</id>
+      <title>Exact Solution of the Quadratic Assignment Problem</title>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Frazer</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1997-04</publicationDateString>
+      <publicationMonth>4</publicationMonth>
+      <publicationYear>1997</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref14</id>
+      <title>Computers and Intractability; A Guide to the Theory of NP-Completeness. A series of books in the mathematical sciences</title>
+      <location>New York, NY</location>
+      <publisher>Freeman and Company</publisher>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+            <string>R</string>
+          </firstNames>
+          <lastName>Garey</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>				
+          <firstNames>
+            <string>D</string>
+            <string>S</string>
+          </firstNames>
+          <lastName>Johnson</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1979</publicationDateString>
+      <publicationYear>1979</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref15</id>
+      <title>Optimal and Suboptimal Algorithms for the Quadratic Assignment Problem</title>
+      <source>SIAM Journal on Applied Mathematics</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>P</string>
+            <string>C</string>
+          </firstNames>
+          <lastName>Gilmore</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>10</volume>
+      <pageFrom>305</pageFrom>
+      <pageTo>313</pageTo>
+      <publicationDateString>1962</publicationDateString>
+      <publicationYear>1962</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref16</id>
+      <title>Future paths for integer programming and links to artificial intelligence</title>
+      <source>Computers and Operations Research</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>F</string>
+            <string>W</string>
+          </firstNames>
+          <lastName>Glover</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>13</volume>
+      <issue>5</issue>
+      <pageFrom>533</pageFrom>
+      <pageTo>549</pageTo>
+      <publicationDateString>1986-05</publicationDateString>
+      <publicationMonth>5</publicationMonth>
+      <publicationYear>1986</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref17</id>
+      <title>Tabu Search — Part I</title>
+      <source>ORSA Journal on Computing</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>F</string>
+            <string>W</string>
+          </firstNames>
+          <lastName>Glover</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>1</volume>
+      <issue>3</issue>
+      <pageFrom>190</pageFrom>
+      <pageTo>206</pageTo>
+      <publicationDateString>1989</publicationDateString>
+      <publicationYear>1989</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref18</id>
+      <title>Tabu Search — Part II</title>
+      <source>ORSA Journal on Computing</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>F</string>
+            <string>W</string>
+          </firstNames>
+          <lastName>Glover</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>2</volume>
+      <issue>1</issue>
+			<pageFrom>4</pageFrom>
+      <pageTo>32</pageTo>
+      <publicationDateString>1990</publicationDateString>
+      <publicationYear>1990</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref19</id>
+      <title>Handbook of Metaheuristics</title>
+      <source>International series in operations research and management science</source>
+      <publisher>Kluwer Academic Publishers</publisher>
+			<location>Boston Hardbound</location>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>F</string>
+            <string>W</string>
+          </firstNames>
+          <lastName>Glover</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>G</string>
+            <string>A</string>
+          </firstNames>
+          <lastName>Kochenberger</lastName>
+        </ReferenceAuthor>
+      </authors>
+			<volume>57</volume>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref20</id>
+      <title>Polynomial approximation algorithms for the TSP and the QAP with a factorial domination number</title>
+      <source>Discrete Applied Mathematics</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>G</string>
+          </firstNames>
+          <lastName>Gutin</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A</string>
+          </firstNames>
+          <lastName>Yeo</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>119</volume>
+      <pageFrom>1</pageFrom>
+      <pageTo>2</pageTo>
+      <publicationDateString>2002-06</publicationDateString>
+      <publicationMonth>6</publicationMonth>
+      <publicationYear>2002</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref21</id>
+			<title>The Theory and Practice of Simulated Annealing</title>
+      <source>Handbook of Metaheuristics</source>
+      <location>Boston Hardbound</location>
+      <publisher>Kluwer Academic Publishers</publisher>
+			<editor>F. W. Glover and G. A. Kochenberger</editor>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>D</string>
+          </firstNames>
+          <lastName>Henderson</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>S</string>
+            <string>H</string>
+          </firstNames>
+          <lastName>Jacobson</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <note>ch. . 10</note>
+      <pageFrom>287</pageFrom>
+      <pageTo>319</pageTo>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref22</id>
+      <title>Optimization by Simulated Annealing</title>
+      <source>Science</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>S</string>
+          </firstNames>
+          <lastName>Kirkpatrick</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>C</string>
+            <string>D</string>
+          </firstNames>
+          <lastName>Gelatt</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+            <string>P</string>
+          </firstNames>
+          <lastName>Vecchi</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>220</volume>
+			<issue>4598</issue>
+      <pageFrom>671</pageFrom>
+      <pageTo>680</pageTo>
+      <publicationDateString>1983-05</publicationDateString>
+      <publicationMonth>5</publicationMonth>
+      <publicationYear>1983</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref23</id>
+      <title>Assignment Problems and the Location of Economic Activities</title>
+      <source>Economethica Journal of the Econometric Society</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>T</string>
+            <string>C</string>
+          </firstNames>
+          <lastName>Koopmans</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Beckmann</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>25</volume>
+      <issue>1</issue>
+      <pageFrom>53</pageFrom>
+      <pageTo>76</pageTo>
+      <publicationDateString>1957-01</publicationDateString>
+      <publicationMonth>1</publicationMonth>
+      <publicationYear>1957</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref24</id>
+      <title>The Hungarian method for the assignment problem</title>
+      <source>Naval Research Logistics Quarterly</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>H</string>
+            <string>W</string>
+          </firstNames>
+          <lastName>Kuhn</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>2</volume>
+      <pageFrom>83</pageFrom>
+      <pageTo>97</pageTo>
+      <publicationDateString>1955</publicationDateString>
+      <publicationYear>1955</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref25</id>
+      <title>The Quadratic Assignment Problem</title>
+      <source>Management Science</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>E</string>
+            <string>L</string>
+          </firstNames>
+          <lastName>Lawler</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>9</volume>
+      <pageFrom>586</pageFrom>
+      <pageTo>599</pageTo>
+      <publicationDateString>1963</publicationDateString>
+      <publicationYear>1963</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref26</id>
+      <title>A Greedy Randomized Adaptive Search Procedure for the Quadratic Assignment Problem</title>
+      <source>Quadratic assignment and related problems</source>
+      <publisher>American Mathematical Society</publisher>
+			<editor>P. M. Pardalos and H. Wolkowicz</editor>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Y</string>
+          </firstNames>
+          <lastName>Li</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>P</string>
+            <string>M</string>
+          </firstNames>
+          <lastName>Pardalos</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+					<lastName>Resende</lastName>
+        </ReferenceAuthor>
+      </authors>
+			<volume>16</volume>
+      <pageFrom>237</pageFrom>
+      <pageTo>261</pageTo>
+      <publicationDateString>1994</publicationDateString>
+      <publicationYear>1994</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref27</id>
+      <title>An analytical Survey for the Quadratic Assignment Problem</title>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>E</string>
+            <string>M</string>
+          </firstNames>
+          <lastName>Loiola</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>N</string>
+            <string>M</string>
+            <string>M</string>
+          </firstNames>
+          <lastName>De Abreu</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>P</string>
+            <string>O</string>
+          </firstNames>
+          <lastName>Boaventura-Netto</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>P</string>
+          </firstNames>
+          <lastName>Hahn</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>T</string>
+          </firstNames>
+          <lastName>Querido</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref28</id>
+      <title>A Beginner&apos;s Introduction to Iterated Local Search</title>
+      <source>Proceedings of MIC&apos;2001—Meta–heuristics International Conference</source>
+			<location>Porto, Portugal</location>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>H</string>
+            <string>R</string>
+          </firstNames>
+          <lastName>Lourenço</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>O</string>
+            <string>C</string>
+          </firstNames>
+          <lastName>Martin</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>T</string>
+          </firstNames>
+          <lastName>Stützle</lastName>
+        </ReferenceAuthor>
+      </authors>
+			<volume>1</volume>
+      <pageFrom>1</pageFrom>
+      <pageTo>6</pageTo>
+      <publicationDateString>2001-07</publicationDateString>
+      <publicationMonth>7</publicationMonth>
+      <publicationYear>2001</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref29</id>
+      <title>Iterated Local Search</title>
+			<source>Handbook of Metaheuristics</source>
+      <location>Boston Hardbound</location>
+      <publisher>Kluwer Academic Publishers</publisher>
+      <type>m</type>
+      <editor>F. W. Glover and G. A. Kochenberger</editor>
+		  <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>H</string>
+            <string>R</string>
+          </firstNames>
+          <lastName>Lourenço</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>O</string>
+            <string>C</string>
+          </firstNames>
+          <lastName>Martin</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>T</string>
+          </firstNames>
+          <lastName>Stützle</lastName>
+        </ReferenceAuthor>
+      </authors><note>ch. . 11</note>
+      <pageFrom>321</pageFrom>
+      <pageTo>353</pageTo>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref30</id>
+			<title>Multi-Start</title>
+      <source>Handbook of Metaheuristics</source>
+      <location>Boston Hardbound</location>
+      <publisher>Kluwer Academic Publishers</publisher>
+      <editor>F. W. Glover and G. A. Kochenberger</editor>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>R</string>
+          </firstNames>
+          <lastName>Martí</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <note>ch. . 12</note>
+      <pageFrom>355</pageFrom>
+      <pageTo>368</pageTo>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref31</id>
+      <title>Equation of State Calculations by Fast Computing Machines</title>
+      <source>Journal of Chemical Physics</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>N</string>
+          </firstNames>
+          <lastName>Metropolis</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A</string>
+          </firstNames>
+          <lastName>Rosenbluth</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+            <string>N</string>
+          </firstNames>
+          <lastName>Rosenbluth</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A</string>
+            <string>H</string>
+          </firstNames>
+          <lastName>Teller</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>E</string>
+          </firstNames>
+          <lastName>Teller</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>21</volume>
+      <issue>6</issue>
+      <pageFrom>1088</pageFrom>
+      <pageTo>1092</pageTo>
+      <publicationDateString>1953-06</publicationDateString>
+      <publicationMonth>6</publicationMonth>
+      <publicationYear>1953</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref32</id>
+      <title>Applying an extended Guided Local Search to the Quadratic Assignment Problem</title>
+      <source>Annals of Operations Research</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>P</string>
+          </firstNames>
+          <lastName>Mills</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>E</string>
+            <string>P</string>
+						<string>K</string>
+          </firstNames>
+          <lastName>Tsang</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>J</string>
+          </firstNames>
+          <lastName>Ford</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>118</volume>
+      <issue>1</issue>
+      <pageFrom>121</pageFrom>
+      <pageTo>135</pageTo>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref33</id>
+      <title>Aerospace Applications of Integer and Combinatorial Optimization</title>
+			<source>NASA Technical Memorandum</source>
+      <location>NASA, Langley Research Center ; Hampton, Virginia</location>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>S</string>
+            <string>L</string>
+          </firstNames>
+          <lastName>Padula</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>				
+          <firstNames>
+            <string>R</string>
+            <string>K</string>
+          </firstNames>
+          <lastName>Kincaid</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>23681</pageFrom>
+      <pageTo>23682</pageTo>
+      <publicationDateString>1995-10</publicationDateString>
+      <publicationMonth>10</publicationMonth>
+      <publicationYear>1995</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref34</id>
+      <title>An Algorithm for Construction of Test Cases for the Quadratic Assigmnet Problem</title>
+      <source>Informatica</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>G</string>
+          </firstNames>
+          <lastName>Palubeckis</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>11</volume>
+      <issue>3</issue>
+      <pageFrom>281</pageFrom>
+      <pageTo>296</pageTo>
+      <publicationDateString>2000</publicationDateString>
+      <publicationYear>2000</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref35</id>
+      <source>EAlib 1.1 – A Generic Library for Metaheuristics</source>
+			<publisher>Institute of Computer Graphics and Algorithms, Vienna University of Technology</publisher>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>G</string>
+          </firstNames>
+          <lastName>Raidl</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref36</id>
+      <title>Bounds for the Quadratic Assignment Problem Using the Bundle Method</title>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>F</string>
+          </firstNames>
+          <lastName>Rendl</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>R</string>
+          </firstNames>
+          <lastName>Sotirov</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2003-08</publicationDateString>
+      <publicationMonth>8</publicationMonth>
+      <publicationYear>2003</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref37</id>
+      <title>Greedy Randomized Adaptive Search Procedures</title>
+      <source>Handbook of Metaheuristics</source>      
+      <location>Boston Hardbound</location>
+      <publisher>Kluwer Academic Publishers</publisher>
+      <editor>F. W. Glover and G. A. Kochenberger</editor>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+            <string>G</string>
+            <string>G</string>
+          </firstNames>
+          <lastName>Resende</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <note>ch. . 8</note>
+      <pageFrom>219</pageFrom>
+      <pageTo>249</pageTo>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref38</id>
+      <title>Parallel Greedy Randomized Adaptive Search Procedures</title>
+			<source>Tech. Rep. TD-67EKXH</source>
+			<publisher>AT&amp;T Labs Research</publisher>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+            <string>G</string>
+						<string>C</string>
+          </firstNames>
+          <lastName>Resende</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>C</string>
+            <string>C</string>
+          </firstNames>
+					<lastName>Ribeiro</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2004-12</publicationDateString>
+      <publicationMonth>12</publicationMonth>
+      <publicationYear>2004</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref39</id>
+      <title>P-Complete Approximation Problems</title>
+      <source>Journal of the ACM</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>S</string>
+          </firstNames>
+          <lastName>Sahni</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>T</string>
+          </firstNames>
+					<lastName>Gonzales</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>23</volume>
+      <issue>3</issue>
+      <pageFrom>555</pageFrom>
+      <pageTo>565</pageTo>
+      <publicationDateString>1976-07</publicationDateString>
+      <publicationMonth>7</publicationMonth>
+      <publicationYear>1976</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref40</id>
+      <title>The Backboard Wiring Problem: A Placement Algorithm</title>
+      <source>SIAM Review</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>L</string>
+          </firstNames>
+          <lastName>Steinberg</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>3</volume>
+      <issue>1</issue>
+      <pageFrom>37</pageFrom>
+      <pageTo>50</pageTo>
+      <publicationDateString>1961</publicationDateString>
+      <publicationYear>1961</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref41</id>
+      <title>Robust taboo search for the quadratic assignment problem</title>
+      <source>Parallel Computing</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>E</string>
+            <string>D</string>
+          </firstNames>
+          <lastName>Taillard</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>17</volume>
+      <pageFrom>4</pageFrom>
+      <pageTo>5</pageTo>
+      <publicationDateString>1991-07</publicationDateString>
+      <publicationMonth>7</publicationMonth>
+      <publicationYear>1991</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref42</id>
+			<title>Fast Local Search and Guided Local Search and Their Application to British Telecom&apos;s Workforce Scheduling Problem</title>
+      <source>Tech. Rep. CSM-246</source>
+			<publisher>Department of Computer Science, University of Essex</publisher>
+      <location>Colchester CO4 3SQ</location>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>E</string>
+            <string>P</string>
+            <string>K</string>
+          </firstNames>
+          <lastName>Tsang</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>C</string>
+          </firstNames>
+          <lastName>Voudouris</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1995-08</publicationDateString>
+      <publicationMonth>8</publicationMonth>
+      <publicationYear>1995</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref43</id>
+      <title>A Generic Neural Network Approach for Constraint Satisfaction Problems</title>
+      <source>Neural Network Applications</source>
+      <publisher>Springer-Verlag</publisher>
+		<editor>J. G. Taylor</editor>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>E</string>
+            <string>P</string>
+						<string>K</string>
+          </firstNames>
+          <lastName>Tsang</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Wang</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>C</string>
+            <string>J</string>
+          </firstNames>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>12</pageFrom>
+      <pageTo>22</pageTo>
+      <publicationDateString>1992</publicationDateString>
+      <publicationYear>1992</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref44</id>
+			<title>Guided Local Search</title>
+      <source>Department of Computer Science, University of Essex</source>
+      <location>Colchester, C04 3SQ, UK</location>
+			<publisher>Department of Computer Science, University of Essex</publisher>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>C</string>
+          </firstNames>
+          <lastName>Voudouris</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>E</string>
+            <string>P</string>
+						<string>K</string>
+          </firstNames>
+          <lastName>Tsang</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1995-08</publicationDateString>
+      <publicationMonth>8</publicationMonth>
+      <publicationYear>1995</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref45</id>
+      <title>Guided Local Search</title>
+      <source>Handbook of Metaheuristics</source>
+      
+      <location>Boston Hardbound</location>
+      <publisher>Kluwer Academic Publishers</publisher>
+      <editor>F. W. Glover and G. A. Kochenberger</editor>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>C</string>
+          </firstNames>
+          <lastName>Voudouris</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>E</string>
+            <string>P K</string>
+          </firstNames>
+          <lastName>Tsang</lastName>
+        </ReferenceAuthor>
+      </authors>
+			<note>ch . . 7</note>
+      <pageFrom>185</pageFrom>
+      <pageTo>217</pageTo>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+    </Reference>
+  </references>
+</Publication>
