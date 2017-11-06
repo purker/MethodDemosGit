@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
@@ -35,15 +36,20 @@ import mapping.grobid.AuthorNameConcatenationWorker;
 import mapping.result.Affiliation;
 import mapping.result.Publication;
 import mapping.result.Reference;
+import mapping.result.Section;
 import utils.XStreamUtil;
 
 public class StepsHistory
 {
-	static File file = new File("D:/Java/git/MethodDemosGit/MethodDemos/output/result/result-TUW-137078-xstream.xml");
+	static File file1 = new File("D:/Java/git/MethodDemosGit/MethodDemos/output/result/result-TUW-137078-xstream.xml");
 	static File file2 = new File("D:/Java/git/MethodDemosGit/MethodDemos/output/result/result-TUW-137078-xstream2.xml");
 	static File file3 = new File(Demos.grobIdOutputDir, "grobid-TUW-137078-xstream.xml");
 	static File file4 = new File("D:/Java/git/MethodDemosGit/MethodDemos/output/result/result-TUW-139761-xstream.xml");
 	static File file5 = new File(Demos.pdfxOutputDir, "pdfx-TUW-139761.xml");
+	static File file6 = new File("D:/Java/git/MethodDemosGit/MethodDemos/output/result/result-TUW-139785-xstream.xml");
+	static File file7 = new File(Demos.pdfxOutputDir, "pdfx-TUW-140048.xml");
+	static File file8 = new File("D:/output/methods/result/result-TUW-140048-xstream.xml");
+	static File file9 = new File("D:/output/methods/result/result-TUW-140253-xstream.xml");
 
 	public static void main(String[] args) throws Exception
 	{
@@ -61,13 +67,40 @@ public class StepsHistory
 
 		// setRefCounter(file4, (1));
 
-		// setRefMarker(file5);
+		// setRefMarker(file5, file4);
 
 		// concatNames(file4);
 
 		// xpathSampleStackoverflowQuestion();
 
-		countPagesGroundTruth();
+		// countPagesGroundTruth();
+
+		// setRefCounter(file6, (-40));
+
+		// setRefMarker(file7, file8);
+
+		// setRefCounter(file9, (-1));
+
+		printRefAuthorYearAndNumber(file9);
+	}
+
+	private static void printRefAuthorYearAndNumber(File file)
+	{
+		Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
+
+		TreeMap<String, String> map = new TreeMap<>();
+		Integer x = 1;
+		for(Reference reference : publication.getReferences())
+		{
+			String ref = reference.getAuthors().get(0).getLastName() + " " + reference.getPublicationYear();
+			map.put(ref, "[" + x.toString() + "] ");
+			x++;
+		}
+		for(Entry<String, String> entry : map.entrySet())
+		{
+			System.out.println(entry.getKey() + " " + entry.getValue());
+		}
+
 	}
 
 	private static void countPagesGroundTruth() throws IOException
@@ -115,7 +148,7 @@ public class StepsHistory
 
 	}
 
-	private static void concatNames(File file42)
+	private static void concatNames(File file4)
 	{
 		Publication publication = XStreamUtil.convertFromXML(file4, Publication.class);
 
@@ -126,14 +159,14 @@ public class StepsHistory
 
 	}
 
-	private static void setRefMarker(File file) throws Exception
+	private static void setRefMarker(File pdfxFileWithMarkers, File xStream) throws Exception
 	{
 		List<String> markers = new ArrayList<>();
 
 		DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
 		domFactory.setNamespaceAware(true);
 		DocumentBuilder builder = domFactory.newDocumentBuilder();
-		Document doc = builder.parse(file);
+		Document doc = builder.parse(pdfxFileWithMarkers);
 		XPath xpath = XPathFactory.newInstance().newXPath();
 		XPathExpression expr = xpath.compile("//ref/text()");
 		Object result = expr.evaluate(doc, XPathConstants.NODESET);
@@ -146,12 +179,12 @@ public class StepsHistory
 			markers.add(marker);
 		}
 
-		Publication publication = XStreamUtil.convertFromXML(file4, Publication.class);
+		Publication publication = XStreamUtil.convertFromXML(xStream, Publication.class);
 
 		List<Reference> references = publication.getReferences();
 		references.forEach(p -> p.setMarker(markers.get(new Integer(p.getId().replace("ref", "")) - 1)));
 
-		XStreamUtil.convertToXmL(publication, file4, System.out, true);
+		XStreamUtil.convertToXmL(publication, xStream, System.out, true);
 
 	}
 
@@ -159,8 +192,19 @@ public class StepsHistory
 	{
 		Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
 
+		// references
 		List<Reference> references = publication.getReferences();
 		references.forEach(p -> p.setId(setId(p.getId(), i)));
+
+		// section references
+		for(Section section : publication.getSections())
+		{
+			for(final ListIterator<String> iterator = section.getReferenceIds().listIterator(); iterator.hasNext();)
+			{
+				final String refString = iterator.next();
+				iterator.set(setId(refString, i));
+			}
+		}
 
 		XStreamUtil.convertToXmL(publication, file, System.out, true);
 	}
