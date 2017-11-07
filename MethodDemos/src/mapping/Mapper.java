@@ -102,7 +102,7 @@ public abstract class Mapper
 		}
 	}
 
-	private String getIdFromFileName(String fileName)
+	public static String getIdFromFileName(String fileName)
 	{
 		String id = CharMatcher.DIGIT.retainFrom(fileName);
 		return "TUW-" + id;

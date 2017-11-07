@@ -40,7 +40,7 @@ public class Demos
 		executeDemos();
 	}
 
-	private static void executeDemos() throws IOException, JAXBException
+	public static void executeDemos() throws IOException, JAXBException
 	{
 		boolean runDemos = false;
 		boolean runCermineDemo = false;
