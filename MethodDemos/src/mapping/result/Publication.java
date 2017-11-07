@@ -16,6 +16,8 @@ public class Publication extends BaseEntity
 	private List<Affiliation> affiliations = new ArrayList<>();
 
 	private Long publicationYear;
+	private Long publicationMonth;
+	private Long publicationDay;
 	private Date publicationDate; // if known
 	private String doi;
 
@@ -91,6 +93,26 @@ public class Publication extends BaseEntity
 	public void setPublicationYear(Long publicationYear)
 	{
 		this.publicationYear = publicationYear;
+	}
+
+	public Long getPublicationMonth()
+	{
+		return publicationMonth;
+	}
+
+	public void setPublicationMonth(Long publicationMonth)
+	{
+		this.publicationMonth = publicationMonth;
+	}
+
+	public Long getPublicationDay()
+	{
+		return publicationDay;
+	}
+
+	public void setPublicationDay(Long publicationDay)
+	{
+		this.publicationDay = publicationDay;
 	}
 
 	public Date getPublicationDate()
