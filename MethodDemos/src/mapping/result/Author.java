@@ -1,5 +1,6 @@
 package mapping.result;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Author extends BaseEntity
@@ -7,13 +8,13 @@ public class Author extends BaseEntity
 	private static final long serialVersionUID = -7444267954223367935L;
 
 	private String name; // if null, information in first and lastname
-	protected List<String> firstNames;
-	protected String lastName;
+	private List<String> firstNames;
+	private String lastName;
 
-	protected String email;
+	private String email;
 
-	protected String type;
-	protected Affiliation affiliation;
+	private String type;
+	private ArrayList<Affiliation> affiliations;
 
 	public String getLastName()
 	{
@@ -45,14 +46,14 @@ public class Author extends BaseEntity
 		this.email = email;
 	}
 
-	public Affiliation getAffiliation()
+	public ArrayList<Affiliation> getAffiliations()
 	{
-		return affiliation;
+		return affiliations;
 	}
 
-	public void setAffiliation(Affiliation affiliation)
+	public void setAffiliations(ArrayList<Affiliation> affiliations)
 	{
-		this.affiliation = affiliation;
+		this.affiliations = affiliations;
 	}
 
 }

@@ -21,14 +21,14 @@
         </java-type>
         <java-type name="Author">
             <xml-root-element name="author"/>
-            <xml-type prop-order="firstNames lastName email affiliation"/>
+            <xml-type prop-order="firstNames lastName email affiliations"/>
             <java-attributes>
                 <xml-element java-attribute="name" xml-transient="true"/>
                 <xml-element java-attribute="firstNames" xml-path="persName/forename/text()"/>
                 <xml-element java-attribute="lastName" xml-path="persName/surname/text()"/>
             	<xml-element java-attribute="email" name="email"/>
             	<xml-attribute java-attribute="type" name="role"/>
-            	<xml-element java-attribute="affiliation" name="affiliation"/>
+            	<xml-element java-attribute="affiliations" xml-path="affiliation"/>
             </java-attributes>
         </java-type>        
         <java-type name="Affiliation">
