@@ -1,0 +1,1614 @@
+<Publication>
+  <id>grobid-TUW-140533.xml</id>
+  <title>Formal Program Verification: a Comparison of Selected Tools and Their Theoretical Foundations</title>
+	<abstractText>Formal specification and verification of software have made small but continuous advances throughout its long history, and have reached a point where commercial tools became available for verifying programs semi-automatically or automatically. The aim of the master thesis is to evaluate commercial and academic verification tools with respect to their usability in developing software and in teaching formal methods. The thesis will explain the theoretical foundation and compare the capabilities and characteristics of selected commercial and academic tools on concrete examples. The theoretical foundations deal on the one hand with the general ideas and principles of formal software verification, on the other hand present some internals of the selected tools to give a comprehensive understanding. The discussed tools are the Frege Program Prover, KeY, Perfect Developer, and the Prototype Verification System. The examples encompass simple standard computer science problems. The evaluation of these tools concentrates on the whole development process of specification and verification, not just on the verification results.</abstractText>
+	<abstractTextGerman>Formale Spezifikation und Verifikation sind durch die durch kontinuierliche Weiterentwicklung in letzter Zeit an einem Punkt angelangt, wo Programme beinahe automatisch verifiziert werden können. Das Ziel dieser Magisterarbeit ist es, sowohl kommerzielle als auch für wissenschaftliche Zwecke entwickelte Verifikationsprogramme zu testen. Der Hauptaugenmerk liegt auf dem Nutzen dieser Werkzeuge in der Software- Entwicklung und in der Lehre. Hierzu wird diese Magisterarbeit die theoretischen Grundlagen vorstellen und auf die verschiedenen Fähigkeiten und Eigenheiten der ausgewählten Werkzeuge eingehen. Die theoretischen Grundlagen behandeln einerseits Ansätze, die für die formale Verifikation gebraucht werden, andererseits wird die Funktionsweise der ausgewählten Werkzeuge erklärt. Die begutachteten Programme sind der Frege Program Prover, KeY, Perfect Developer und das Prototype Verification System. Die Beispiele, mit denen diese Werkzeuge getestet werden, sind typische Problemstellung der Informatik. Bei der Evaluation wird auf den ganzen Ablauf beim Einsatz dieser Werkzeuge eingegangen und nicht nur auf das Endergebnis.</abstractTextGerman>
+  <authors>
+    <Author>
+			<firstNames>
+				<string>Ingo</string>
+			</firstNames>
+      <lastName>Feinerer</lastName>
+      <affiliation>
+        <id>aff0</id>
+        <institution>Technischen Universität Wien</institution>
+        <department>Institut für Computersprachen</department>
+      </affiliation>
+    </Author>
+  </authors>
+  <affiliations>
+    <Affiliation reference="/Publication[1]/authors[1]/Author[1]/affiliation[1]"/>
+  </affiliations>
+  <sections>
+    <Section>
+      <title>Acknowledgements</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>1</level>
+      <title>Introduction</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Historical perspective</title>
+      <referenceIds>
+				<string>Jones,2003</string>
+				<string>Hoare,1969</string>
+				<string>Hoare,2003</string>
+				<string>Mayer,2003</string>
+			</referenceIds>
+    </Section>
+    <Section>
+      <level>2</level>
+      <title>Theoretical Foundations</title>
+      <referenceIds>
+			  <string>Gallier 2003</string>
+			  <string>Huth and Ryan 2004</string>
+			</referenceIds>
+    </Section>
+    <Section>
+      <level>2.1</level>
+      <title>Propositional Logic</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Syntax</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Semantics</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>2.2</level>
+      <title>Natural Deduction</title>
+      <referenceIds>
+        <string>Juth and Ryan,2004</string>
+        <string>van Dalen,2004</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>2.3</level>
+      <title>Sequent Calculus</title>
+      <referenceIds>
+        <string>Gentzen,1935</string>
+        <string>Fitting,1990</string>
+			  <string>Gallier,2003</string>
+			  <string>Salzer,2002</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>2.4</level>
+      <title>Hoare Calculus</title>
+      <referenceIds>
+        <string>Hoare,1969</string>
+			  <string>Apt and Olderog,1994</string>
+			  <string>Salzer,2002</string>
+      </referenceIds>
+    </Section>
+      <level>2.5</level>
+      <title>Weakest Preconditions</title>
+      <referenceIds>
+        <string>Gannon et al.,1993</string>
+        <string>Gries,1989</string>
+        <string>Dijkstra and Scholten,1990</string>
+        <string>Winkler,1995</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>3</level>
+      <title>Selected Tools</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>3.1</level>
+      <title>Overview</title>
+      <referenceIds>
+        <string>Griffioen and Huisman,1998</string>
+        <string>Zolda,2004</string>
+        <string>Freining et al.,2002</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <title>Related work</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>3.2</level>
+      <title>Frege Program Prover</title>
+      <referenceIds>
+        <string>Clarke and Zhao,1993</string>
+        <string>Bauer et al.,1998</string>
+        <string>Baader and Nipkow,1998</string>
+        <string>Bauer et al.,1998</string>
+        <string>Winkler,1995</string>
+        <string>Freining et al.,2002</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>3.3</level>
+      <title>KeY System</title>
+      <referenceIds>
+        <string>Ahrendt et al.,2004</string>
+        <string>OMG,2003a</string>
+        <string>OMG,2003b</string>
+        <string>Ahrendt et al.,2004</string>
+        <string>Sun Microsystems,2003</string>
+        <string>Ahrendt et al.,2004</string>
+        <string>Ahrendt et al.,2004</string>
+        <string>Beckert et al.,2004</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>3.4</level>
+      <title>Perfect Developer</title>
+      <referenceIds>
+        <string>Crocker,2001</string>
+        <string>Crocker,2004b</string>
+        <string>Crocker,2004a</string>
+        <string>Crocker,2003b</string>
+        <string>Crocker,2003a</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>3.5</level>
+      <title>PVS Specification and Verification System</title>
+      <referenceIds>
+        <string>Owre et al.,1992</string>
+        <string>Owre et al.,2001a</string>
+        <string>Owre et al.,2001a</string>				
+        <string>Owre et al.,2001a</string>
+        <string>Owre and Shankar,1999</string>			
+        <string>Owre et al.,2001a</string>			
+        <string>Owre et al.,2001a</string>		
+        <string>Owre et al.,2001b</string>		
+        <string>Owre et al.,2001c</string>
+        <string>Owre et al.,1992</string>
+        <string>Owre et al.,1998</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>4</level>
+      <title>Examples</title>
+			<referenceIds>
+			  <string>Bundy,2004</string>
+			</referenceIds>
+    </Section>
+    <Section>
+      <level>4.1</level>
+      <title>Criteria</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.2</level>
+      <title>Methodology</title>
+			<referenceIds>
+			  <string>Freining et al.,2002</string>
+			  <string>Griffioen and Huisman,1998</string>
+			</referenceIds>
+    </Section>
+    <Section>
+      <level>4.3</level>
+      <title>Frege Program Prover</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.3.1</level>
+      <title>Cubic sum</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Program code</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Prover output</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Analysis</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.3.2</level>
+      <title>Division</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Program code</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Prover output</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Analysis</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.3.3</level>
+      <title>Factorial</title>
+      <referenceIds/>
+    </Section>		
+    <Section>
+      <title>Program code</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Prover output</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Analysis</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.3.4</level>
+      <title>Fibonacci numbers</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Program code</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Prover output</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Analysis</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.3.5</level>
+      <title>Inconsistency test</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Program code</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Prover output</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Analysis</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.3.6</level>
+      <title>Multiplication</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Program code</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Prover output</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Analysis</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Degree of coverage Total coverage after slight modifications.</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.3.7</level>
+      <title>False theorem test</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Program code</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Prover output</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Analysis</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.3.8</level>
+      <title>Correct theorem test</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Program code</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Prover output</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Analysis</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.3.9</level>
+      <title>Conditional weakest precondition</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Program code</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Prover output</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Analysis</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.4</level>
+      <title>KeY System</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.4.1</level>
+      <title>Cubic sum</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Program code</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Analysis</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.4.2</level>
+      <title>Conditional</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Program code</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Analysis</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.4.3</level>
+      <title>Division</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Program code</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Analysis</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.4.4</level>
+      <title>Factorial</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Program code</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Analysis</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.4.5</level>
+      <title>List maximum</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Program code</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Analysis</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.4.6</level>
+      <title>Multiplication</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Program code</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Analysis</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.4.7</level>
+      <title>Prime</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Program code</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Analysis</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.5</level>
+      <title>Perfect Developer</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.5.1</level>
+      <title>Cubic sum</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Program code</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Analysis</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.5.2</level>
+      <title>Factorial</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Program code</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Analysis</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.5.3</level>
+      <title>Intersection</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Program code</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Analysis</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.5.4</level>
+      <title>Inversions</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Program code</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Prover output</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Analysis</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.5.5</level>
+      <title>List maximum</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Program code</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Analysis</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.5.6</level>
+      <title>Multiplication</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Program code</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Analysis</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.5.7</level>
+      <title>Prime</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Program code</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Analysis</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.5.8</level>
+      <title>Quicksort</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Program code</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Analysis</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.6</level>
+      <title>PVS Specification and Verification System</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.6.1</level>
+      <title>Cubic sum</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Program code</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Proof procedure</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.6.2</level>
+      <title>Factorial</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Program code</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Proof procedure</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Analysis</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.6.3</level>
+      <title>Inversions</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Program code</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Proof procedure</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Analysis</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.6.4</level>
+      <title>Multiplication</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Program code</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Proof procedure</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Analysis</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Analysis</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.6.5</level>
+      <title>Quicksort</title>
+      <referenceIds>
+        <string>Griffioen and Huisman,1998</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <title>Program code</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Analysis</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>5</level>
+      <title>Summary</title>
+      <referenceIds>
+        <string>Gries,1989</string>
+        <string>Dijkstra and Scholten,1990</string>
+        <string>Gries,1989</string>
+        <string>Hoare,2003</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <title>Resources</title>
+      <referenceIds/>
+    </Section>
+  </sections>
+  <citationContexts/>
+  <references>
+    <Reference>
+      <id>ref1</id>
+      <title>The KeY tool</title>
+      <source>Software and System Modeling</source>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Wolfgang</string>
+          </firstNames>
+          <lastName>Ahrendt</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Thomas</string>
+          </firstNames>
+          <lastName>Baar</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Bernhard</string>
+          </firstNames>
+          <lastName>Beckert</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Richard</string>
+          </firstNames>
+          <lastName>Bubel</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Martin</string>
+          </firstNames>
+          <lastName>Giese</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Reiner</string>
+          </firstNames>
+          <lastName>Hähnle</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Wolfram</string>
+          </firstNames>
+          <lastName>Menzel</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Wojciech</string>
+          </firstNames>
+          <lastName>Mostowski</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Andreas</string>
+          </firstNames>
+          <lastName>Roth</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Steffen</string>
+          </firstNames>
+          <lastName>Schlager</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Peter</string>
+          </firstNames>
+          <lastName>Schmitt</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <note>Online First issue, to. appear in print</note>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref2</id>
+      <title></title>
+      <source>Programmverifikation</source>
+			<publisher>Springer-Verlag</publisher>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Krzysztof</string>
+          </firstNames>
+          <lastName>Apt</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Ernst-Rüdiger</string>
+          </firstNames>
+          <lastName>Olderog</lastName>
+        </ReferenceAuthor>
+      </authors>
+			<note>ISBN 3-540-57479-4</note>
+      <publicationDateString>1994</publicationDateString>
+      <publicationYear>1994</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref3</id>
+      <source>Term Rewriting and All That</source>
+      <publisher>Cambridge University Press</publisher>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Franz</string>
+          </firstNames>
+          <lastName>Baader</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Tobias</string>
+          </firstNames>
+          <lastName>Nipkow</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1998</publicationDateString>
+      <publicationYear>1998</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref4</id>
+      <title>Analytica — An Experiment in Combining Theorem Proving and Symbolic Computation</title>
+      <source>Journal of Automated Reasoning</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Andrej</string>
+          </firstNames>
+          <lastName>Bauer</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Edmund</string>
+          </firstNames>
+          <lastName>Clarke</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Xudong</string>
+          </firstNames>
+          <lastName>Zhao</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>21</volume>
+      <pageFrom>295</pageFrom>
+      <pageTo>325</pageTo>
+      <publicationDateString>1998</publicationDateString>
+      <publicationYear>1998</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref5</id>
+      <title>Taclets: A new paradigm for constructing interactive theorem provers</title>
+      <source>Revista de la Real Academia de Ciencias Exactas, Físicas y Naturales, Serie A: Matemáticas (RACSAM) Special Issue on Symbolic Computation in Logic and Artificial Intelligence</source>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Bernhard</string>
+          </firstNames>
+          <lastName>Beckert</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Martin</string>
+          </firstNames>
+          <lastName>Giese</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Elmar</string>
+          </firstNames>
+          <lastName>Habermalz</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Reiner</string>
+          </firstNames>
+          <lastName>Hähnle</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Andreas</string>
+          </firstNames>
+          <lastName>Roth</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Philipp</string>
+          </firstNames>
+          <lastName>Rümmer</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Steffen</string>
+          </firstNames>
+          <lastName>Schlager</lastName>
+        </ReferenceAuthor>
+      </authors>
+			<volume>98</volume>
+			<issue>1</issue>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref6</id>
+      <title>The Paradox of the Case Study</title>
+      <url>http://www-unix.mcs.anl.gov/AAR/issuesept04/index.html#paradox.</url>
+			<type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Alan</string>
+          </firstNames>
+          <lastName>Bundy</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref7</id>
+      <title>Analytica — A Theorem Prover for Mathematica</title>
+      <source>The Mathematica Journal</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Edmund</string>
+          </firstNames>
+          <lastName>Clarke</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Xudong</string>
+          </firstNames>
+          <lastName>Zhao</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>3</volume>
+      <pageFrom>56</pageFrom>
+      <pageTo>71</pageTo>
+      <publicationDateString>1993</publicationDateString>
+      <publicationYear>1993</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref8</id>
+      <source>The Perfect Developer Language Reference Manual</source>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>David</string>
+          </firstNames>
+          <lastName>Crocker</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2001-09</publicationDateString>
+      <publicationMonth>9</publicationMonth>
+      <publicationYear>2001</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref9</id>
+      <title>Developing Reliable Software using Object-Oriented Formal Specification and Refinement</title>
+      <publisher>Escher Technologies Ltd</publisher>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>David</string>
+          </firstNames>
+          <lastName>Crocker</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref10</id>
+      <title>Perfect Developer: A tool for Object-Oriented Formal Specification and Refinement</title>
+      <source>Tools Exhibition Notes at Formal Methods Europe</source>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>David</string>
+          </firstNames>
+          <lastName>Crocker</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref11</id>
+      <title>Automated Reasoning in Perfect Developer</title>
+      <publisher>Escher Technologies Ltd</publisher>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>David</string>
+          </firstNames>
+          <lastName>Crocker</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref12</id>
+      <title>Safe Object-Oriented Software: The Verified Design-ByContract Paradigm</title>
+      <source>Proceedings of the Twelfth Safety-Critical Systems Symposium</source>
+      <publisher>Springer-Verlag</publisher>
+			<editor>Redmill and Anderson</editor>
+			<location>London</location>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>David</string>
+          </firstNames>
+          <lastName>Crocker</lastName>
+        </ReferenceAuthor>
+      </authors>
+			<note>ISBN 1-85233-800-8</note>
+      <pageFrom>19</pageFrom>
+      <pageTo>41</pageTo>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref13</id>
+      <source>Predicate Calculus and Program Semantics</source>
+      <publisher>Springer-Verlag</publisher>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Edsger</string>
+          </firstNames>
+          <lastName>Dijkstra</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Carel</string>
+          </firstNames>
+          <lastName>Scholten</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1990</publicationDateString>
+      <publicationYear>1990</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref14</id>
+      <source>First-order logic and automated theorem proving</source>
+			<publisher>Springer-Verlag</publisher>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Melvin</string>
+          </firstNames>
+          <lastName>Fitting</lastName>
+        </ReferenceAuthor>
+      </authors>
+			<note>ISBN 0-387-97233-1</note>
+      <publicationDateString>1990</publicationDateString>
+      <publicationYear>1990</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref15</id>
+			<title>Ein Vergleich der Programmbeweiser FPP, NPPV und SPARK</title>
+      <source>Ada-Deutschland-Tagung</source>
+      <type>m</type>
+			<url>http://psc.informatik.uni-jena.de/Fpp/fpp-intr.htm#references</url>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Carsten</string>
+          </firstNames>
+          <lastName>Freining</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Stefan</string>
+          </firstNames>
+          <lastName>Kauer</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Jürgen</string>
+          </firstNames>
+          <lastName>Winkler</lastName>
+        </ReferenceAuthor>
+      </authors>
+			<note>ISSN 1433-9986</note>
+      <pageFrom>127</pageFrom>
+      <pageTo>145</pageTo>
+      <publicationDateString>2002</publicationDateString>
+      <publicationYear>2002</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref16</id>
+      <source>Logic for Computer Science: Foundations of Automatic Theorem Proving</source>
+      <publisher>Wiley</publisher>
+			<url>http://www.cis.upenn.edu/~jean/gbooks/logic.html</url>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Jean</string>
+          </firstNames>
+          <lastName>Gallier</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref17</id>
+      <source>Software Specification: A Comparison of Formal Methods</source>
+      <publisher>International Specialized Book Service Inc</publisher>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>John</string>
+          </firstNames>
+          <lastName>Gannon</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>James</string>
+          </firstNames>
+          <lastName>Purtilo</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Marvin</string>
+          </firstNames>
+          <lastName>Zelkowitz</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1993-09</publicationDateString>
+      <publicationMonth>9</publicationMonth>
+      <publicationYear>1993</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref18</id>
+      <title>Untersuchungen überUntersuchungen¨Untersuchungenüber das logische Schließen</title>
+      <source>Mathematische Zeitschrift</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Gerhard</string>
+          </firstNames>
+          <lastName>Gentzen</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>39</volume>
+      <publicationDateString>1935</publicationDateString>
+      <publicationYear>1935</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref19</id>
+      <source>The Science of Programming</source>
+      <publisher>Springer-Verlag</publisher>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>David</string>
+          </firstNames>
+          <lastName>Gries</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1989</publicationDateString>
+      <publicationYear>1989</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref20</id>
+      <title>A comparison of PVS and Isabelle/HOL</title>
+      <source>Theorem Proving in Higher Order Logics: 11th International Conference, TPHOLs ’98, volume 1479 of Lecture Notes in Computer Science</source>
+      <publisher>Springer-Verlag</publisher>
+			<editor>Jim Grundy and Malcolm Newey</editor>
+			<location>Canberra, Australia</location>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>David</string>
+          </firstNames>
+          <lastName>Griffioen</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Marieke</string>
+          </firstNames>
+          <lastName>Huisman</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>/</string>
+          </firstNames>
+          <lastName>Isabelle</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <lastName>Hol</lastName>
+        </ReferenceAuthor>
+      </authors>
+			<volume>1479</volume>
+      <pageFrom>123</pageFrom>
+      <pageTo>142</pageTo>
+      <publicationDateString>1998-09</publicationDateString>
+      <publicationMonth>9</publicationMonth>
+      <publicationYear>1998</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref21</id>
+      <title>An axiomatic basis for computer programming</title>
+      <source>Communications of the ACM</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Tony</string>
+          </firstNames>
+          <lastName>Hoare</lastName>
+        </ReferenceAuthor>
+      </authors>
+			<note>ISSN 0001-0782</note>
+			<doi>http://doi.acm.org/10.1145/363235.363259</doi>
+      <volume>12</volume>
+      <issue>10</issue>
+      <pageFrom>576</pageFrom>
+      <pageTo>580</pageTo>
+      <publicationDateString>1969</publicationDateString>
+      <publicationYear>1969</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref22</id>
+      <title>The verifying compiler: A grand challenge for computing research</title>
+      <source>J. ACM</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Tony</string>
+          </firstNames>
+          <lastName>Hoare</lastName>
+        </ReferenceAuthor>
+      </authors>
+			<note>ISSN 0004-5411</note>
+			<doi>http://doi.acm.org/10.1145/602382.602403</doi>
+      <volume>50</volume>
+      <issue>1</issue>
+      <pageFrom>63</pageFrom>
+      <pageTo>69</pageTo>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref23</id>
+      <source>Logic in Computer Science: Modelling and Reasoning about Systems</source>
+      <publisher>Cambridge University Press</publisher>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Michael</string>
+          </firstNames>
+          <lastName>Huth</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Mark</string>
+          </firstNames>
+          <lastName>Ryan</lastName>
+        </ReferenceAuthor>
+      </authors>
+			<note>ISBN 0 521 54310X</note>
+      <edition>2</edition>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref24</id>
+      <title>The Early Search for Tractable Ways of Reasoning about Programs</title>
+      <source>IEEE Annals of the History of Computing</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Cliff</string>
+          </firstNames>
+          <lastName>Jones</lastName>
+        </ReferenceAuthor>
+      </authors>
+			<note>ISSN 1058-6180</note>
+      <volume>25</volume>
+      <pageFrom>26</pageFrom>
+      <pageTo>49</pageTo>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref25</id>
+      <title>The grand challenge of Trusted Components</title>
+      <source>ICSE &apos;03: Proceedings of the 25th International Conference on Software Engineering</source>
+      <publisher>IEEE Computer Society</publisher>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Bertrand</string>
+          </firstNames>
+          <lastName>Meyer</lastName>
+        </ReferenceAuthor>
+      </authors>
+			<note>ISBN 0-7695-1877-X</note>
+      <pageFrom>660</pageFrom>
+      <pageTo>667</pageTo>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref26</id>
+      <source>Object Constraint Language Specification</source>
+			<url>http://www.omg.org/docs/ptc/03-10-14.pdf</url>
+			<publisher>OMG</publisher>
+      <type>m</type>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref27</id>
+      <source>Unified Modeling Language Specification</source>
+      <type>m</type>
+			<publisher>OMG</publisher>
+			<url>http://www.uml.org/#UML2.0</url>
+      <publicationDateString>2003-03</publicationDateString>
+      <publicationMonth>3</publicationMonth>
+      <publicationYear>2003</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref28</id>
+      <title>PVS: A prototype verification system</title>
+      <source>11th International Conference on Automated Deduction (CADE), volume 607 of Lecture Notes in Artificial Intelligence, pages 748–752,</source>
+      <publisher>Springer-Verlag</publisher>
+			<url>http://www.csl.sri.com/papers/cade92-pvs/</url>
+			<editor>Deepak Kapur</editor>
+			<location>Saratoga, NY</location>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Sam</string>
+          </firstNames>
+          <lastName>Owre</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>John</string>
+          </firstNames>
+          <lastName>Rushby</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Natarajan</string>
+          </firstNames>
+          <lastName>Shankar</lastName>
+        </ReferenceAuthor>
+      </authors>
+			<volume>607</volume>
+      <pageFrom>748</pageFrom>
+      <pageTo>752</pageTo>
+      <publicationDateString>1992-06</publicationDateString>
+      <publicationMonth>6</publicationMonth>
+      <publicationYear>1992</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref29</id>
+      <title>PVS: an experience report</title>
+      <source>Applied Formal Methods—FMTrends 98, volume 1641 of Lecture Notes in Computer Science</source>
+			<location>Boppard, Germany</location>
+      <publisher>Springer-Verlag. URL http</publisher>
+			<url>http://www.csl.sri.com/papers/fmtrends98/</url>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Sam</string>
+          </firstNames>
+          <lastName>Owre</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>John</string>
+          </firstNames>
+          <lastName>Rushby</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Natarajan</string>
+          </firstNames>
+          <lastName>Shankar</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>David</string>
+          </firstNames>
+          <lastName>Stringer-Calvert</lastName>
+        </ReferenceAuthor>
+      </authors>
+			<volume>1641</volume>
+      <pageFrom>338</pageFrom>
+      <pageTo>345</pageTo>
+      <publicationDateString>1998-10</publicationDateString>
+      <publicationMonth>10</publicationMonth>
+      <publicationYear>1998</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref30</id>
+      <source>PVS Language Reference</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Sam</string>
+          </firstNames>
+          <lastName>Owre</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>John</string>
+          </firstNames>
+          <lastName>Rushby</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Natarajan</string>
+          </firstNames>
+          <lastName>Shankar</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>David</string>
+          </firstNames>
+          <lastName>Stringer-Calvert</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2001-11</publicationDateString>
+      <publicationMonth>11</publicationMonth>
+      <publicationYear>2001</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref31</id>
+      <source>PVS Prover Guide</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Sam</string>
+          </firstNames>
+          <lastName>Owre</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>John</string>
+          </firstNames>
+          <lastName>Rushby</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Natarajan</string>
+          </firstNames>
+          <lastName>Shankar</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>David</string>
+          </firstNames>
+          <lastName>Stringer-Calvert</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2001-11</publicationDateString>
+      <publicationMonth>11</publicationMonth>
+      <publicationYear>2001</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref32</id>
+      <title></title>
+      <source>PVS System Guide</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Sam</string>
+          </firstNames>
+          <lastName>Owre</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>John</string>
+          </firstNames>
+          <lastName>Rushby</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Natarajan</string>
+          </firstNames>
+          <lastName>Shankar</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>David</string>
+          </firstNames>
+          <lastName>Stringer-Calvert</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2001-11</publicationDateString>
+      <publicationMonth>11</publicationMonth>
+      <publicationYear>2001</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref33</id>
+      <source>The Formal Semantics of PVS</source>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Sam</string>
+          </firstNames>
+          <lastName>Owre</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Natarajan</string>
+          </firstNames>
+          <lastName>Shankar</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1999-03</publicationDateString>
+      <publicationMonth>3</publicationMonth>
+      <publicationYear>1999</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref34</id>
+      <source>Theoretische Informatik 1</source>
+			<publisher>Institute of Computer Languages, Vienna University of Technology</publisher>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Gernot</string>
+          </firstNames>
+          <lastName>Salzer</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2002-06</publicationDateString>
+      <publicationMonth>6</publicationMonth>
+      <publicationYear>2002</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref35</id>
+      <source>Java Card 2.2.1 Platform Specification</source>
+			<publisher>Sun Microsystems</publisher>
+      <type>m</type>
+      <authors/>
+      <publicationDateString>2003-10</publicationDateString>
+      <publicationMonth>10</publicationMonth>
+      <publicationYear>2003</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref36</id>
+      <source>Logic and Structure</source>
+      <publisher>Springer-Verlag</publisher>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Dirk</string>
+          </firstNames>
+          <lastName>Van Dalen</lastName>
+        </ReferenceAuthor>
+      </authors>
+			<note>ISBN 3-540-20879-8</note>
+      <edition>4</edition>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref37</id>
+      <title>wp is Basically a State Set Transformer</title>
+			<publisher>Institute of Computer Science, Friedrich-Schiller-University</publisher>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Jürgen</string>
+          </firstNames>
+          <lastName>Winkler</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1995</publicationDateString>
+      <publicationYear>1995</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref38</id>
+			<title>The Frege Program Prover</title>
+      <source>42. Internationales Wissenschaftliches Kolloquium</source>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Jürgen</string>
+          </firstNames>
+          <lastName>Winkler</lastName>
+        </ReferenceAuthor>
+      </authors>
+			<note>ISSN 0943-7207</note>
+      <pageFrom>116</pageFrom>
+      <pageTo>121</pageTo>
+      <publicationDateString>1997</publicationDateString>
+      <publicationYear>1997</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref39</id>
+      <title>Isabelle/HOL versus ACL2: Comparing Two Inductive Proof Systems</title>
+			<publisher>Institute of Computer Languages, Vienna University of Technology</publisher>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Michael</string>
+          </firstNames>
+          <lastName>Zolda</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+    </Reference>
+  </references>
+</Publication>
