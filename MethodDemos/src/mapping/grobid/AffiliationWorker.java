@@ -1,7 +1,8 @@
 package mapping.grobid;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
 
 import mapping.Worker;
 import mapping.result.Affiliation;
@@ -26,20 +27,30 @@ public class AffiliationWorker extends Worker
 	@Override
 	protected void doWork(Publication publication)
 	{
-		Map<Affiliation, Affiliation> idMap = new HashMap<>(); // because there is no method for a set, to get element by equals
+		List<Affiliation> existedList = new ArrayList<>(); // because there is no method for a set, to get element by equals
 		for(Author author : publication.getAuthors())
 		{
-			// equals of Affiliation doesn't include id
-			Affiliation existedBefore = idMap.get(author.getAffiliation());
-			if(existedBefore != null)
+			if(author.getAffiliations() != null)
 			{
-				// discard old Affiliation
-				author.setAffiliation(existedBefore);
-			}
-			else
-			{
-				publication.getAffiliations().add(author.getAffiliation());
-				idMap.put(author.getAffiliation(), author.getAffiliation());
+				for(final ListIterator<Affiliation> iterator = author.getAffiliations().listIterator(); iterator.hasNext();)
+				{
+					final Affiliation affiliation = iterator.next();
+
+					// equals of Affiliation doesn't include id
+					int index = existedList.indexOf(affiliation);
+					if(index != -1)
+					{
+						Affiliation existedBefore = existedList.get(index);
+
+						// discard old Affiliation
+						iterator.set(existedBefore);
+					}
+					else
+					{
+						publication.getAffiliations().add(affiliation);
+						existedList.add(affiliation);
+					}
+				}
 			}
 		}
 	}
