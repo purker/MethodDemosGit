@@ -14,11 +14,13 @@ public class Reference extends BaseEntity
 	private String source;
 	private String location;
 	private String publisher;
+	private String editor;
 	private String type; // book, colletion, inproceedings, ...
 
 	private List<ReferenceAuthor> authors = new ArrayList<>();
 
 	private String doi;
+	private String url;
 
 	private String edition;
 	private String volume;
@@ -94,6 +96,16 @@ public class Reference extends BaseEntity
 		this.publisher = publisher;
 	}
 
+	public String getEditor()
+	{
+		return editor;
+	}
+
+	public void setEditor(String editor)
+	{
+		this.editor = editor;
+	}
+
 	public String getType()
 	{
 		return type;
@@ -132,6 +144,16 @@ public class Reference extends BaseEntity
 	public void setDoi(String doi)
 	{
 		this.doi = doi;
+	}
+
+	public String getUrl()
+	{
+		return url;
+	}
+
+	public void setUrl(String url)
+	{
+		this.url = url;
 	}
 
 	public String getVolume()
