@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
@@ -13,6 +14,7 @@ import mapping.result.Author;
 import mapping.result.Publication;
 import mapping.result.Reference;
 import mapping.result.ReferenceAuthor;
+import mapping.result.ReferenceCitation;
 import mapping.result.Section;
 
 public class XStreamUtil
@@ -34,15 +36,17 @@ public class XStreamUtil
 
 	private static XStream getXStream()
 	{
-		XStream xStream = new XStream(new DomDriver("UTF-8"));
+		XStream xStream = new XStream(new DomDriver(StandardCharsets.UTF_8.name()));
 		xStream.setMode(XStream.SINGLE_NODE_XPATH_ABSOLUTE_REFERENCES);
-		// xStream.aliasPackage("", "jaxb");
+
 		xStream.alias("Publication", Publication.class);
 		xStream.alias("Author", Author.class);
 		xStream.alias("Affiliation", Affiliation.class);
 		xStream.alias("Section", Section.class);
+		xStream.alias("ReferenceCitation", ReferenceCitation.class);
 		xStream.alias("Reference", Reference.class);
 		xStream.alias("ReferenceAuthor", ReferenceAuthor.class);
+
 		return xStream;
 	}
 

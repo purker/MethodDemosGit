@@ -13,6 +13,7 @@ public class Section extends BaseEntity
 	private String type;
 	private SectionType typeEnum;
 	private List<String> referenceIds = new ArrayList<>();
+	private List<ReferenceCitation> referenceCitations = new ArrayList<>();
 	// private List<Reference> references = new ArrayList<>();
 
 	public String getId()
@@ -73,6 +74,16 @@ public class Section extends BaseEntity
 	public void setReferenceIds(List<String> referenceIds)
 	{
 		this.referenceIds = referenceIds;
+	}
+
+	public List<ReferenceCitation> getReferenceCitations()
+	{
+		return referenceCitations;
+	}
+
+	public void setReferenceCitations(List<ReferenceCitation> referenceCitations)
+	{
+		this.referenceCitations = referenceCitations;
 	}
 
 	// public List<Reference> getReferences()
