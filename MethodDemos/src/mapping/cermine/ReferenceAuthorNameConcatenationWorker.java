@@ -27,7 +27,7 @@ public class ReferenceAuthorNameConcatenationWorker extends Worker
 				{
 					sb.append(author.getLastName());
 				}
-				author.setName(sb.toString());
+				// TODO einkomment author.setName(sb.toString());
 			}
 		}
 

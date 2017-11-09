@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import demos.Demos;
+import factory.PublicationFactory;
 import mapping.Mapper;
 import mapping.Worker;
 import mapping.parscit.SectionTypeNormalizerWorker;
@@ -29,7 +30,7 @@ public class PDFXMapper extends Mapper
 
 		grobidMapper.unmarshall(inputFile, outputFile);
 
-		grobidMapper.marshall();
+		grobidMapper.marshall(PublicationFactory.createPublication());
 	}
 
 	@Override

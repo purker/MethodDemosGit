@@ -14,16 +14,19 @@ public class AuthorNameConcatenationWorker extends Worker
 		{
 			StringBuffer sb = new StringBuffer();
 
-			if(author.getFirstName() != null)
+			for(String firstName : author.getFirstNames())
 			{
-				sb.append(author.getFirstName());
-				sb.append(" ");
+				if(firstName != null)
+				{
+					sb.append(firstName);
+					sb.append(" ");
+				}
 			}
 			if(author.getLastName() != null)
 			{
 				sb.append(author.getLastName());
 			}
-			author.setName(sb.toString());
+			// TODO einkomment author.setName(sb.toString());
 		}
 
 	}

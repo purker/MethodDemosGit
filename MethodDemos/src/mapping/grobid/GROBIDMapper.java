@@ -41,7 +41,7 @@ public class GROBIDMapper extends Mapper
 	@Override
 	protected List<? extends Worker> getWorkers()
 	{
-		return Arrays.asList(new AffiliationWorker(), new AuthorNameConcatenationWorker(), new ReferenceIdReplaceWorker(), new ReferenceAuthorNameConcatenationWorker(), new ReferenceDateWorker());
+		return Arrays.asList(new AffiliationWorker(), /* dort auch wieder einkommentieren new AuthorNameConcatenationWorker(), */new ReferenceIdReplaceWorker(), new ReferenceAuthorNameConcatenationWorker(), new ReferenceEditionWorker(), new ReferenceDateWorker());
 	}
 
 	@Override

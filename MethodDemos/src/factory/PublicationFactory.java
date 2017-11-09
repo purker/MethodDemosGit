@@ -1,4 +1,5 @@
 package factory;
+
 import java.util.Arrays;
 import java.util.Date;
 
@@ -26,10 +27,10 @@ public class PublicationFactory
 	private static Author createAuthor()
 	{
 		Author author = new Author();
-		author.setFirstName("first");
+		author.setFirstNames(Arrays.asList("first"));
 		author.setLastName("last");
 		author.setEmail("blub@cob");
-		author.setType("author");
+		// TODO author.setType("author");
 
 		return author;
 	}

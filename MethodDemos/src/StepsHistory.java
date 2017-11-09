@@ -4,12 +4,14 @@ import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.DocumentBuilder;
@@ -19,7 +21,10 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.SerializationUtils;
 import org.eclipse.persistence.jaxb.JAXBContext;
 import org.eclipse.persistence.jaxb.JAXBContextFactory;
 import org.eclipse.persistence.jaxb.JAXBContextProperties;
@@ -31,12 +36,25 @@ import com.itextpdf.text.pdf.PdfReader;
 
 import demos.Demos;
 import factory.PublicationFactory;
+import mapping.Worker;
 import mapping.cermine.ReferenceAuthorNameConcatenationWorker;
 import mapping.grobid.AuthorNameConcatenationWorker;
+import mapping.markers.AbstractMarkerStyle;
+import mapping.markers.NameSquareBracketYearMarkerStyle;
+import mapping.markers.RoundBracketNameYearMarkerStyle;
+import mapping.markers.SquareBracketNameYearMarkerStyle;
+import mapping.markers.SquareBracketNameYearShortMarkerStyle;
+import mapping.markers.SquareBracketNumberedMarkerStyle;
+import mapping.markers.SuperscriptNumberedMarkerStyle;
 import mapping.result.Affiliation;
+import mapping.result.Author;
 import mapping.result.Publication;
 import mapping.result.Reference;
+import mapping.result.ReferenceAuthor;
+import mapping.result.ReferenceCitation;
 import mapping.result.Section;
+import utils.PublicationUtil;
+import utils.ReferenceUtil;
 import utils.XStreamUtil;
 
 public class StepsHistory
@@ -50,6 +68,11 @@ public class StepsHistory
 	static File file7 = new File(Demos.pdfxOutputDir, "pdfx-TUW-140048.xml");
 	static File file8 = new File("D:/output/methods/result/result-TUW-140048-xstream.xml");
 	static File file9 = new File("D:/output/methods/result/result-TUW-140253-xstream.xml");
+	static File resultFileDirectory = new File("D:/Java/git/MethodDemosGit/MethodDemos/output/result");
+	static File result10_141336 = new File("D:/output/methods/result/result-TUW-141336-xstream.xml");
+	static File result11_141618 = new File("D:/output/methods/result/result-TUW-141618-xstream.xml");
+
+	static List<String> alreadyDone = getResultPubIdsFromDirectory();
 
 	public static void main(String[] args) throws Exception
 	{
@@ -81,7 +104,260 @@ public class StepsHistory
 
 		// setRefCounter(file9, (-1));
 
-		printRefAuthorYearAndNumber(file9);
+		// printRefAuthorYearAndNumber(result_141336);
+
+		// affiliationsToAffiliationList(resultFileDirectory);
+
+		// useWorker(resultFileDirectory, new AffiliationWorker());
+
+		// checkGet();
+
+		// rewriteXStreamFiles(resultFileDirectory);
+
+		// ATTENTION uses Demo where parameters have to be adapted
+		// doGrobIdAndMoveToResults();
+
+		// changeSectionReferenceIdsToReferenceCitations(resultFileDirectory);
+
+		// changeSectionReferenceIdsToReferenceCitationsFile(result10_141336);
+
+		// setSectionReferenceIdsFromReferenceCitationKeys(result_141336);
+
+		// printResultFiles(resultFileDirectory);
+
+		// rotateReferenceNames(result11_141618);
+
+		// setRefCounter(result11_141618, (-1), 26);
+	}
+
+	/**
+	 * @param file
+	 * @param i
+	 * @param fromIndex
+	 *            from witch index (based on 1)
+	 */
+	private static void setRefCounter(File file, Integer i, Integer fromIndex)
+	{
+		Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
+
+		// references
+		List<Reference> references = publication.getReferences();
+		references.subList(fromIndex - 2, references.size()).forEach(p -> p.setId(setId(p.getId(), i)));
+		// references.subList(fromIndex - 2, references.size()).forEach(p -> System.out.println(p.getId()));
+
+		XStreamUtil.convertToXmL(publication, file, System.out, true);
+	}
+
+	private static void rotateReferenceNames(File file)
+	{
+		Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
+
+		for(Reference reference : publication.getReferences().subList(7, publication.getReferences().size()))
+		{
+			if(CollectionUtils.isNotEmpty(reference.getAuthors()))
+			{
+				int authorCount = reference.getAuthors().size();
+
+				// set lastname of firstauthor to his lastname
+				ReferenceAuthor firstAuthor = reference.getAuthors().get(0);
+				if(CollectionUtils.isNotEmpty(firstAuthor.getFirstNames()))
+				{
+					firstAuthor.getFirstNames().clear();
+					firstAuthor.setLastName(firstAuthor.getFirstNames().get(0));
+				}
+				for(int i = 0; (i + 1) < authorCount; i++)
+				{
+					ReferenceAuthor referenceAuthor1 = reference.getAuthors().get(i);
+					ReferenceAuthor referenceAuthor2 = reference.getAuthors().get(i + 1);
+
+					referenceAuthor1.setFirstNames(new ArrayList<String>(referenceAuthor2.getFirstNames()));
+				}
+				ReferenceAuthor lastAuthor = reference.getAuthors().get(authorCount - 1);
+				if(StringUtils.isEmpty(lastAuthor.getLastName()))
+				{
+					reference.getAuthors().remove(authorCount - 1);
+				}
+
+			}
+		}
+
+		XStreamUtil.convertToXmL(publication, file, System.out, true);
+
+	}
+
+	private static void setSectionReferenceIdsFromReferenceCitationKeys(File file)
+	{
+		Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
+
+		for(Section section : publication.getSections())
+		{
+			if(section.getReferenceCitations() != null)
+			{
+				section.getReferenceIds().clear();
+				section.setReferenceIds(section.getReferenceCitations().stream().map(ReferenceCitation::getReferenceId).collect(Collectors.toList()));
+			}
+		}
+
+		XStreamUtil.convertToXmL(publication, file, System.out, true);
+
+	}
+
+	private static void changeSectionReferenceIdsToReferenceCitationsFile(File file)
+	{
+		try
+		{
+			Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
+
+			for(Section section : publication.getSections())
+			{
+				if(section.getReferenceIds() != null)
+				{
+					section.setReferenceCitations(new ArrayList<ReferenceCitation>());
+					for(String referenceId : section.getReferenceIds())
+					{
+						AbstractMarkerStyle markerStyle = map.get(publication.getId());
+						if(markerStyle != null)
+						{
+							int referenceIndex = ReferenceUtil.getReferenceIdNumber(referenceId) - 1;
+							Reference reference = publication.getReferences().get(referenceIndex);
+							String marker = markerStyle.getMarkerString(reference);
+							reference.setMarker(marker);
+
+							ReferenceCitation referenceCitation = new ReferenceCitation(referenceId, marker);
+							section.getReferenceCitations().add(referenceCitation);
+						}
+					}
+				}
+			}
+
+			XStreamUtil.convertToXmL(publication, file, System.out, true);
+		}
+		catch(Exception e)
+		{
+			System.out.println(file);
+			e.printStackTrace();
+			return;
+		}
+
+	}
+
+	private static void printResultFiles(File directory)
+	{
+		for(File file : directory.listFiles())
+		{
+			System.out.println(file);
+		}
+
+	}
+
+	private static List<String> getResultPubIdsFromDirectory()
+	{
+		List<String> ids = Arrays.asList(resultFileDirectory.listFiles()).stream().map(f -> PublicationUtil.getIdFromFileName(f.getName())).collect(Collectors.toList());
+
+		return ids;
+	}
+
+	private static void changeSectionReferenceIdsToReferenceCitations(File directory)
+	{
+
+		for(File file : directory.listFiles())
+		{
+			changeSectionReferenceIdsToReferenceCitationsFile(file);
+
+		}
+
+	}
+
+	private static void doGrobIdAndMoveToResults() throws IOException, JAXBException
+	{
+		Demos.executeDemos();
+
+		List<File> xStreamFiles = Demos.getAllFilesFromDirectories(Demos.grobIdOutputDir, "-xstream.xml");
+
+		for(File file : xStreamFiles)
+		{
+			if(!alreadyDone.contains(PublicationUtil.getIdFromFileName(file.getName())))
+			{
+				File newFile = new File("D:/output/methods/result", file.getName().replace("grobid", "result"));
+
+				file.renameTo(newFile);
+			}
+		}
+
+	}
+
+	private static void checkGet()
+	{
+		Affiliation affiliation = PublicationFactory.createAffiliation();
+		Affiliation affiliation2 = SerializationUtils.clone(affiliation);
+
+		ArrayList<Affiliation> list = new ArrayList<>();
+		list.add(affiliation);
+		list.add(affiliation2);
+
+		affiliation.setId("2");
+		affiliation2.setId("3");
+
+		System.out.println(affiliation);
+		System.out.println(affiliation2);
+
+		System.out.println(list.indexOf(affiliation2));
+
+	}
+
+	private static void useWorker(File directory, Worker worker)
+	{
+		for(File file : directory.listFiles())
+		{
+			Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
+			// worker.doWork(publication);
+			XStreamUtil.convertToXmL(publication, file, System.out, true);
+
+		}
+
+	}
+
+	private static void affiliationsToAffiliationList(File directory)
+	{
+		for(File file : directory.listFiles())
+		{
+			try
+			{
+				Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
+
+				for(Author author : publication.getAuthors())
+				{
+					// author.setAffiliations(new ArrayList(Arrays.asList(author.affiliation)));
+					// author.affiliation = null;
+				}
+				XStreamUtil.convertToXmL(publication, file, System.out, true);
+			}
+			catch(Exception e)
+			{
+				System.out.println(file);
+				e.printStackTrace();
+				break;
+			}
+		}
+	}
+
+	private static void rewriteXStreamFiles(File directory)
+	{
+		for(File file : directory.listFiles())
+		{
+			try
+			{
+				Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
+
+				XStreamUtil.convertToXmL(publication, file, System.out, true);
+			}
+			catch(Exception e)
+			{
+				System.out.println(file);
+				e.printStackTrace();
+				break;
+			}
+		}
 	}
 
 	private static void printRefAuthorYearAndNumber(File file)
@@ -92,7 +368,7 @@ public class StepsHistory
 		Integer x = 1;
 		for(Reference reference : publication.getReferences())
 		{
-			String ref = reference.getAuthors().get(0).getLastName() + " " + reference.getPublicationYear();
+			String ref = new RoundBracketNameYearMarkerStyle().getMarkerString(reference);
 			map.put(ref, "[" + x.toString() + "] ");
 			x++;
 		}
@@ -148,14 +424,14 @@ public class StepsHistory
 
 	}
 
-	private static void concatNames(File file4)
+	private static void concatNames(File file)
 	{
-		Publication publication = XStreamUtil.convertFromXML(file4, Publication.class);
+		Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
 
 		new AuthorNameConcatenationWorker().doWork(publication);
 		new ReferenceAuthorNameConcatenationWorker().doWork(publication);
 
-		XStreamUtil.convertToXmL(publication, file4, System.out, true);
+		XStreamUtil.convertToXmL(publication, file, System.out, true);
 
 	}
 
@@ -282,5 +558,35 @@ public class StepsHistory
 	{
 		Publication p = XStreamUtil.convertFromXML(file2, Publication.class);
 
+	}
+
+	static Map<String, AbstractMarkerStyle> map = new HashMap<>();
+	static
+	{
+		map.put("TUW-137078", new SquareBracketNumberedMarkerStyle());
+		map.put("TUW-138011", new SquareBracketNumberedMarkerStyle());
+		map.put("TUW-138447", new SuperscriptNumberedMarkerStyle());
+		map.put("TUW-138544", new SquareBracketNumberedMarkerStyle());
+		map.put("TUW-138547", new SquareBracketNumberedMarkerStyle());
+		map.put("TUW-139299", new SquareBracketNameYearMarkerStyle());
+		map.put("TUW-139761", new SquareBracketNameYearShortMarkerStyle());// new SquareBracketNameYearShortMarkerStyle());
+		map.put("TUW-139769", new SquareBracketNumberedMarkerStyle());
+		map.put("TUW-139781", new SquareBracketNumberedMarkerStyle());
+		map.put("TUW-139785", new SquareBracketNumberedMarkerStyle());
+		map.put("TUW-140047", new SquareBracketNumberedMarkerStyle());
+		map.put("TUW-140048", new SquareBracketNameYearShortMarkerStyle());
+		map.put("TUW-140229", new SquareBracketNumberedMarkerStyle());
+		map.put("TUW-140253", new RoundBracketNameYearMarkerStyle());
+		map.put("TUW-140308", new SquareBracketNumberedMarkerStyle());
+		map.put("TUW-140533", new NameSquareBracketYearMarkerStyle());
+		map.put("TUW-140867", new SquareBracketNumberedMarkerStyle());
+		map.put("TUW-140895", new SquareBracketNumberedMarkerStyle());
+		map.put("TUW-140983", new SquareBracketNumberedMarkerStyle());
+		map.put("TUW-141024", new SquareBracketNumberedMarkerStyle());
+		map.put("TUW-141065", new SquareBracketNumberedMarkerStyle());
+		map.put("TUW-141121", new SquareBracketNumberedMarkerStyle());
+		map.put("TUW-141140", new RoundBracketNameYearMarkerStyle());
+		map.put("TUW-141336", new RoundBracketNameYearMarkerStyle());
+		map.put("TUW-141618", new SquareBracketNumberedMarkerStyle());
 	}
 }

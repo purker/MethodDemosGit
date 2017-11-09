@@ -22,9 +22,8 @@ import org.eclipse.persistence.jaxb.JAXBContextProperties;
 import org.eclipse.persistence.jaxb.JAXBMarshaller;
 import org.eclipse.persistence.jaxb.JAXBUnmarshaller;
 
-import com.google.common.base.CharMatcher;
-
 import mapping.result.Publication;
+import utils.PublicationUtil;
 import utils.XStreamUtil;
 
 /**
@@ -79,7 +78,7 @@ public abstract class Mapper
 		for(File inputFile : inputFilesXML)
 		{
 			// id="TUW-000000"
-			String id = getIdFromFileName(inputFile.getName());
+			String id = PublicationUtil.getIdFromFileName(inputFile.getName());
 			File outputFile = getOutputFile(id);
 			File errorFile = getErrorFile(id);
 			try
@@ -100,12 +99,6 @@ public abstract class Mapper
 				}
 			}
 		}
-	}
-
-	public static String getIdFromFileName(String fileName)
-	{
-		String id = CharMatcher.DIGIT.retainFrom(fileName);
-		return "TUW-" + id;
 	}
 
 	private File getErrorFile(String id)
@@ -133,7 +126,8 @@ public abstract class Mapper
 		{
 			publication = (Publication)unmarshaller.unmarshal(inputFileXML);
 		}
-		publication.setId(inputFileXML.getName());
+		String id = PublicationUtil.getIdFromFileName(inputFileXML.getName());
+		publication.setId(id);
 
 		for(Worker worker : getWorkers())
 		{
