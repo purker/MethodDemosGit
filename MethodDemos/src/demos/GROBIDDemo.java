@@ -24,8 +24,9 @@ public class GROBIDDemo extends AbstractDemo
 	private static final String pGrobidHome = GROBID_DIRECTORY + "grobid/grobid-home";
 	private static final String pGrobidProperties = GROBID_DIRECTORY + "grobid/grobid-home/config/grobid.properties";
 
-	boolean consolidateCitations = false;
-	boolean consolidateHeader = false;
+	private boolean consolidate = true;
+	private boolean consolidateCitations = consolidate;
+	private boolean consolidateHeader = consolidate;
 
 	public static void main(String[] args) throws IOException
 	{
@@ -67,6 +68,9 @@ public class GROBIDDemo extends AbstractDemo
 		}
 	}
 
+	/*
+	 * https://github.com/kermitt2/grobid-example
+	 */
 	@Override
 	String runDemo(File inputFile, File outputFile) throws IOException
 	{
