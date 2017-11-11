@@ -3,6 +3,7 @@ package utils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 
@@ -23,11 +24,24 @@ public class XStreamUtil
 	{
 		try
 		{
-			XStream xStream = getXStream();
-			// xStream.setMode(XStream.ID_REFERENCES);
-			xStream.toXML(object, new FileOutputStream(file));
+			convertToXmL(object, new FileOutputStream(file), out, exitOnError);
 		}
 		catch(FileNotFoundException e)
+		{
+			FailureUtil.failureExit(e, out, "exit program - failure writing publication xml file", exitOnError);
+		}
+
+	}
+
+	public static void convertToXmL(Object object, OutputStream stream, PrintStream out, boolean exitOnError)
+	{
+		try
+		{
+			XStream xStream = getXStream();
+			// xStream.setMode(XStream.ID_REFERENCES);
+			xStream.toXML(object, stream);
+		}
+		catch(Exception e)
 		{
 			FailureUtil.failureExit(e, out, "exit program - failure writing publication xml file", exitOnError);
 		}
