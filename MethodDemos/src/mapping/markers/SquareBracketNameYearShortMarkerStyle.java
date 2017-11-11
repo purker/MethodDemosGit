@@ -1,8 +1,7 @@
 package mapping.markers;
 
-import org.apache.commons.collections.CollectionUtils;
-
 import mapping.result.Reference;
+import utils.ReferenceUtil;
 
 public class SquareBracketNameYearShortMarkerStyle extends AbstractMarkerStyle
 {
@@ -12,22 +11,13 @@ public class SquareBracketNameYearShortMarkerStyle extends AbstractMarkerStyle
 	{
 		StringBuffer sb = new StringBuffer();
 		sb.append("[");
-		sb.append(getNames(reference));
+		sb.append(ReferenceUtil.getConcatinatedLastNamesOfAuthors(reference));
 		if(reference.getPublicationYear() != null)
 		{
 			sb.append(reference.getPublicationYear().toString().substring(0, 2));
 		}
 		sb.append("]");
 		return sb.toString();
-	}
-
-	private String getNames(Reference reference)
-	{
-		if(!CollectionUtils.isEmpty(reference.getAuthors()))
-		{
-			return reference.getAuthors().get(0).getLastName();
-		}
-		else return "";
 	}
 
 }
