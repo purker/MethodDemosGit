@@ -1,0 +1,1404 @@
+<Publication>
+  <id>TUW-200748</id>
+  <title>A Multilevel Refinement Approach to the Rooted Delay-Constrained Steiner Tree Problem</title>
+  <abstractText>The Rooted Delay-Constrained Steiner Tree Problem (RDCSTP) is a variant of the well-known Steiner Tree Problem on a graph in which the paths to all terminal nodes are restricted by a certain maximum delay. The problem mostly appears in the context of network routing for multicasts, i.e., sending packages from a fixed source to a subset of other participants in the network. Since the RDCSTP belongs to the class of N P-hard problems it is in general not possible to solve large instances exactly in a reasonable amount of time. Therefore, the focus mostly lies on developing good heuristics that can still solve large instances comparatively fast to near optimality.
+In this thesis a Multilevel Refinement heuristic – which has already been successfully applied to other problems like the Graph Partitioning Problem – is implemented as an improvement heuristic for the RDCSTP. In the general approach of this metaheuristic the problem&apos;s complexity is first iteratively reduced while still maintaining its general characteristics. The problem is thereby simplified and can at the top level finally easily be solved. Then, the solution on this highest level is refined until a solution for the original problem is obtained.
+The algorithm introduced here implements the Multilevel Refinement approach as an improvement heuristic, iteratively changing an existing solution. However, it is designed in a way that also allows it to be used to construct an initial solution. Another distinctiveness is that, due to the additional delay constraints, supplementary data structures have to be used to avoid creating invalid solutions on higher levels as much as possible. In the refinement phase an additional improvement algorithm, the Key Path Improvement, is executed on each level, drastically increasing result quality.
+Experimental tests are carried out, evaluating the performance of the algorithm on large instances and comparing it to other algorithms in the literature. The obtained results are promising and indicate that the Multilevel Refinement metaheuristic is indeed a competitive approach for the RDCSTP.</abstractText>
+  <abstractTextGerman>Das Rooted Delay-Constrained Steiner Tree Problem (RDCSTP) ist eine Variante des bekannten Steinerbaum-Problems auf einem Graphen in welcher die Pfade zu allen Zielknoten durch eine bestimmte maximale Verzögerung beschränkt sind. Das Problem tritt hauptsächlich im Bereich des Netzwerk-Routings beim Multicast auf, das heißt wenn Pakete von einer einzelnen Quelle zu einer bestimmten Untermenge der anderen Netzwerk-Teilnehmer gesendet werden sollen. Da das RDCSTP, wie das ursprüngliche Steiner-Problem, zur Klasse der N P-schwierigen Probleme gehört, ist es allgemein nicht möglich die exakte Lösung einer großen Probleminstanz in vertret-barer Zeit zu finden. Der Fokus der Forschung liegt daher großteils auf der Entwicklung guter Heuristiken, die auch bei großen Probleminstanzen in der Lage sind in vergleichbar kurzer Zeit zu möglichst guten Lösungen zu kommen.
+In dieser Arbeit wird hierfür die Multilevel-Refinement-Heuristik – die bereits erfolgreich auf etliche andere Probleme, wie das Graph Partitioning Problem, angewandt wurde – als Ver-besserungsheuristik für das RDCSTP entwickelt. Grundsätzlich werden bei dieser Metaheuristik in einem ersten Schritt Knoten sukzessive zusammengefasst um den Graphen auf höheren &quot;Lev-els&quot;, mit weniger Knoten, darzustellen. Das so vereinfachte Problem kann dann auf der höchsten Abstraktionsebene in simpler Weise gelöst werden. Dann wird diese Lösung schrittweise wieder soweit verfeinert, bis eine Lösung für das ursprüngliche Problem erreicht wird.
+Der hier vorgestellte Algorithmus für das RDCSTP implementiert diesen Multilevel-Ansatz als Verbesserungsheuristik, die eine existierende Lösung iterativ verändert. Er wurde allerdings in einer Weise entworfen, die es ihm ebenso erlaubt eine Anfangslösung selbst zu generieren. Eine weitere Besonderheit ist, dass wegen der zusätzlichen Verzögerungs-Einschränkung wei-tere Datenstrukturen benötigt werden, um auf höheren Levels möglichst gültige Lösungen zu erzeugen. Außerdem wird während der Verfeinerung der Lösung auf jedem Level eine weite-re Verbesserungsheuristik angewandt, das Key Path Improvement, welches die Lösungsqualität drastisch verbessert.
+Umfangreiche experimentelle Tests wurden durchgeführt um die Leistungsfähigkeit des Al-gorithmus bei großen Instanzen zu messen, und ihn mit anderen Algorithmen aus der Literatur zu vergleichen. Die hierbei erhaltenen Ergebnisse sind durchwegs sehr positiv und weisen somit darauf hin, dass der verfolgte Multilevel-Ansatz tatsächlich eine konkurrenzfähige Heuristik für das RDCSTP darstellt.</abstractTextGerman>
+  <authors>
+    <Author>
+      <firstNames>
+        <string>Thomas</string>
+      </firstNames>
+      <lastName>Seidl</lastName>
+      <affiliations>
+        <Affiliation>
+          <id>aff0</id>
+          <institution>Technische Universität Wien</institution>
+          <department>Fakultät für Informatik</department>
+        </Affiliation>
+      </affiliations>
+    </Author>
+  </authors>
+  <affiliations>
+    <Affiliation reference="/Publication[1]/authors[1]/Author[1]/affiliations[1]/Affiliation[1]"/>
+  </affiliations>
+  <sections>
+    <Section>
+      <title>Acknowledgements</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>1</level>
+      <title>Introduction</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>1.1</level>
+      <title>The Rooted Delay-Constrained Steiner Tree Problem</title>
+      <referenceIds>
+        <string>ref1</string>
+        <string>ref2</string>
+        <string>ref3</string>
+        <string>ref4</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>1.2</level>
+      <title>The Multilevel Refinement heuristic</title>
+      <referenceIds>
+        <string>ref5</string>
+        <string>ref6</string>
+        <string>ref7</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <title>Structure of the thesis</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>2</level>
+      <title>Related work</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>2.1</level>
+      <title>Preprocessing</title>
+      <referenceIds>
+        <string>ref8</string>
+        <string>ref9</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>2.2</level>
+      <title>Heuristic algorithms</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Construction heuristics</title>
+      <referenceIds>
+        <string>ref4</string>
+        <string>ref10</string>
+        <string>ref11</string>
+        <string>ref12</string>
+        <string>ref13</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <title>Improvement and meta-heuristics</title>
+      <referenceIds>
+        <string>ref14</string>
+        <string>ref15</string>
+        <string>ref16</string>
+        <string>ref17</string>
+        <string>ref18</string>
+        <string>ref19</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>2.3</level>
+      <title>Exact algorithms</title>
+      <referenceIds>
+        <string>ref20</string>
+        <string>ref21</string>
+        <string>ref22</string>
+        <string>ref23</string>
+        <string>ref24</string>
+        <string>ref25</string>
+        <string>ref26</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>2.4</level>
+      <title>Multilevel Refinement heuristic</title>
+      <referenceIds>
+        <string>ref5</string>
+        <string>ref6</string>
+        <string>ref27</string>
+        <string>ref28</string>
+        <string>ref29</string>
+        <string>ref30</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>2.5</level>
+      <title>Other related work</title>
+      <referenceIds>
+        <string>ref31</string>
+        <string>ref32</string>
+        <string>ref33</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>3</level>
+      <title>Algorithm</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>3.1</level>
+      <title>Problem formulation and definitions</title>
+      <referenceIds>
+        <string>ref4</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>3.2</level>
+      <title>General approach</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>3.3</level>
+      <title>Coarsening phase</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>An example</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>3.4</level>
+      <title>Solving the highest level</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>3.5</level>
+      <title>Refinement phase</title>
+      <referenceIds>
+        <string>ref34</string>
+        <string>ref35</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <title>The Key Path Improvement heuristic</title>
+      <referenceIds>
+        <string>ref36</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>3.6</level>
+      <title>Asymptotic runtime</title>
+      <referenceIds>
+        <string>ref37</string>
+        <string>ref38</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>4</level>
+      <title>Implementation</title>
+      <referenceIds>
+        <string>ref39</string>
+        <string>ref8</string>
+        <string>ref9</string>
+        <string>ref4</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>4.1</level>
+      <title>Additional data structures</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>The dmax property</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Memory size problems</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>The changelog data structure</title>
+    </Section>
+    <Section>
+      <level>4.2</level>
+      <title>A detailed merge example</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.3</level>
+      <title>Parameters</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>randBoost</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>treeBoost</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>twoTermBoost</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>mixedEdgeBoost</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>scpMode</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>minKPCost</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>4.4</level>
+      <title>Shortest Constrained Path algorithms</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>Exact algorithm</title>
+      <referenceIds>
+        <string>ref36</string>
+        <string>ref37</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <title>Heuristic algorithm</title>
+      <referenceIds>
+        <string>ref37</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>5</level>
+      <title>Benchmarks and comparison</title>
+      <referenceIds>
+        <string>ref40</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>5.1</level>
+      <title>Evaluating parameters</title>
+      <referenceIds>
+        <string>ref4</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <title>randBoost</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>treeBoost</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>twoTermBoost</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>mixedEdgeBoost</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>scpMode</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <title>minKPCost</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>5.2</level>
+      <title>Automatic parameters</title>
+      <referenceIds>
+        <string>ref41</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <title>Results with automatic parameters</title>
+    </Section>
+    <Section>
+      <level>5.3</level>
+      <title>100 node instances</title>
+      <referenceIds>
+        <string>ref1</string>
+        <string>ref1</string>
+        <string>ref1</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>5.4</level>
+      <title>5000 node instances</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>5.5</level>
+      <title>Comparison to other heuristics</title>
+      <referenceIds>
+        <string>ref19</string>
+        <string>ref24</string>
+        <string>ref19</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>6</level>
+      <title>Conclusions and FutureWork</title>
+      <referenceIds/>
+    </Section>
+  </sections>
+  <citationContexts/>
+  <references>
+    <Reference>
+      <id>ref1</id>
+      <title>Steiner minimal trees</title>
+      <source>SIAM Journal on Applied Mathematics</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>E</string>
+            <string>N</string>
+          </firstNames>
+          <lastName>Gilbert</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>H</string>
+            <string>O</string>
+          </firstNames>
+          <lastName>And Pollak</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>16</volume>
+      <issue>1</issue>
+      <pageFrom>1</pageFrom>
+      <pageTo>29</pageTo>
+      <publicationDateString>1968</publicationDateString>
+      <publicationYear>1968</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref2</id>
+      <title>Steiner&apos;s problem in graphs and its implications</title>
+			<source>Networks</source>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>S</string>
+            <string>L</string>
+          </firstNames>
+          <lastName>Hakimi</lastName>
+        </ReferenceAuthor>
+      </authors>
+			<volume>1</volume>
+			<issue>2</issue>
+      <pageFrom>113</pageFrom>
+      <pageTo>133</pageTo>
+      <publicationDateString>1971</publicationDateString>
+      <publicationYear>1971</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref3</id>
+      <title>Reducibility among combinatorial problems</title>
+      <source>Complexity of Computer Computations</source>
+      <publisher>Plenum Press</publisher>
+			<editor>R. Miller and J. Thatcher</editor>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>R</string>
+          </firstNames>
+          <lastName>Karp</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>85</pageFrom>
+      <pageTo>103</pageTo>
+      <publicationDateString>1972</publicationDateString>
+      <publicationYear>1972</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref4</id>
+      <title>Multicasting for multimedia applications</title>
+      <source>INFOCOM &apos;92. Eleventh Annual Joint Conference of the IEEE Computer and Communications Societies</source>
+			<publisher>IEEE</publisher>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>V</string>
+            <string>P</string>
+          </firstNames>
+          <lastName>Kompella</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>J</string>
+            <string>C</string>
+          </firstNames>
+          <lastName>Pasquale</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>G</string>
+            <string>C</string>
+          </firstNames>
+          <lastName>And Polyzos</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>2078</pageFrom>
+      <pageTo>2085</pageTo>
+      <publicationDateString>1992-05</publicationDateString>
+      <publicationMonth>5</publicationMonth>
+      <publicationYear>1992</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref5</id>
+      <title>A fast and high quality multilevel scheme for partitioning irregular graphs</title>
+      <source>SIAM J. Sci. Comput</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>G</string>
+          </firstNames>
+          <lastName>Karypis</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>V</string>
+          </firstNames>
+          <lastName>Kumar</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>20</volume>
+      <pageFrom>359</pageFrom>
+      <pageTo>392</pageTo>
+      <publicationDateString>1998-12</publicationDateString>
+      <publicationMonth>12</publicationMonth>
+      <publicationYear>1998</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref6</id>
+      <title>A multi-level algorithm for partitioning graphs</title>
+      <source>SC Conference</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>B</string>
+          </firstNames>
+          <lastName>Hendrickson</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>R</string>
+          </firstNames>
+          <lastName>Leland</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>0</volume>
+      <pageFrom>28</pageFrom>
+      <publicationDateString>1995</publicationDateString>
+      <publicationYear>1995</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref7</id>
+      <title>Coarsening, sampling, and smoothing: Elements of the multilevel method</title>
+      <source>Algorithms for Parallel Processing</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>S</string>
+          </firstNames>
+          <lastName>Teng</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>105</volume>
+      <pageFrom>247</pageFrom>
+      <pageTo>276</pageTo>
+      <publicationDateString>1999</publicationDateString>
+      <publicationYear>1999</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref8</id>
+      <title>Variable Neighborhood Search and Ant Colony Optimization for the Rooted Delay-Constrained Minimum Spanning Tree Problem</title>
+      <source>Proceedings of the 11th International Conference on Parallel Problem Solving from Nature: Part II</source>
+      <publisher>Springer</publisher>
+			<editor>R. Schaefer et al.</editor>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Ruthmair</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>G</string>
+            <string>R</string>
+          </firstNames>
+          <lastName>And Raidl</lastName>
+        </ReferenceAuthor>
+      </authors>
+			<volume>6239</volume>
+			<note>of LNCS</note>
+      <pageFrom>391</pageFrom>
+      <pageTo>400</pageTo>
+      <publicationDateString>2010</publicationDateString>
+      <publicationYear>2010</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref9</id>
+      <title>Solving Steiner tree problems in graphs to optimality</title>
+			<source>Networks</source>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>T</string>
+          </firstNames>
+          <lastName>Koch</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A</string>
+          </firstNames>
+          <lastName>Martin</lastName>
+        </ReferenceAuthor>
+      </authors>
+			<volume>32</volume>
+      <pageFrom>207</pageFrom>
+      <pageTo>232</pageTo>
+      <publicationDateString>1998</publicationDateString>
+      <publicationYear>1998</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref10</id>
+      <title>A fast algorithm for Steiner trees</title>
+      <source>Acta Informatica</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>L</string>
+          </firstNames>
+          <lastName>Kou</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>G</string>
+          </firstNames>
+          <lastName>Markowsky</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>L</string>
+          </firstNames>
+          <lastName>Berman</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>15</volume>
+      <issue>2</issue>
+      <pageFrom>141</pageFrom>
+      <pageTo>145</pageTo>
+      <publicationDateString>1981</publicationDateString>
+      <publicationYear>1981</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref11</id>
+      <title>A source-based algorithm for delay-constrained minimum-cost multicasting</title>
+      <source>INFOCOM&apos;95. Fourteenth Annual Joint Conference of the IEEE Computer and Communications Societies. Bringing Information to People</source>
+      <publisher>IEEE</publisher>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Q</string>
+          </firstNames>
+          <lastName>Zhu</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Parsa</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>377</pageFrom>
+      <pageTo>385</pageTo>
+      <publicationDateString>1995</publicationDateString>
+      <publicationYear>1995</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref12</id>
+      <title>A delay-constrained least-cost multicast routing heuristic for dynamic multicast groups</title>
+      <source>Electronic Commerce Research</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>W</string>
+          </firstNames>
+          <lastName>ZHENGYING</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>S</string>
+          </firstNames>
+          <lastName>Bingxin</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Z</string>
+          </firstNames>
+          <lastName>Ling</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>2</volume>
+      <issue>4</issue>
+      <pageFrom>323</pageFrom>
+      <pageTo>335</pageTo>
+      <publicationDateString>2002</publicationDateString>
+      <publicationYear>2002</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref13</id>
+      <title>Dclc routing algorithm based on selective function</title>
+			<source>Mini-Micro Computer Systems</source>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>W</string>
+          </firstNames>
+          <lastName>Zhengying</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>S</string>
+          </firstNames>
+          <lastName>Bingxin</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Tao</lastName>
+        </ReferenceAuthor>
+      </authors>
+			<volume>21</volume>
+			<issue>12</issue>
+      <pageFrom>1267</pageFrom>
+      <pageTo>1269</pageTo>
+      <publicationDateString>2000</publicationDateString>
+      <publicationYear>2000</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref14</id>
+      <title>Bandwidth-delay-constrained least-cost multicast routing based on heuristic genetic algorithm</title>
+      <source>Computer communications</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>W</string>
+          </firstNames>
+          <lastName>Zhengying</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>S</string>
+          </firstNames>
+          <lastName>Bingxin</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Z</string>
+          </firstNames>
+          <lastName>Erdun</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>24</volume>
+      <pageFrom>7</pageFrom>
+      <pageTo>8</pageTo>
+      <publicationDateString>2001</publicationDateString>
+      <publicationYear>2001</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref15</id>
+      <title>A path relinking approach for delay-constrained least-cost multicast routing problem</title>
+      <source>Tools with Artificial Intelligence, 2007. ICTAI 2007. 19th IEEE International Conference</source>
+      <publisher>IEEE</publisher>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>N</string>
+          </firstNames>
+          <lastName>Ghaboosi</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A</string>
+          </firstNames>
+          <lastName>Haghigha</lastName>
+        </ReferenceAuthor>
+      </authors>
+			<volume>1</volume>
+      <pageFrom>383</pageFrom>
+      <pageTo>390</pageTo>
+      <publicationDateString>2007</publicationDateString>
+      <publicationYear>2007</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref16</id>
+      <title>A grasp heuristic for the delay-constrained multicast routing problem</title>
+      <source>Telecommunication Systems</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>N</string>
+          </firstNames>
+          <lastName>Skorin-Kapov</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Kos</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>32</volume>
+      <issue>1</issue>
+      <pageFrom>55</pageFrom>
+      <pageTo>69</pageTo>
+      <publicationDateString>2006</publicationDateString>
+      <publicationYear>2006</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref17</id>
+      <title>A GRASP approach for the Delay-constrained Multicast routing problem</title>
+      <source>Proceedings of the 4th Multidisplinary International Scheduling Conference (MISTA4)</source>
+			<location>Dublin, Ireland, 2009</location>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Y</string>
+          </firstNames>
+          <lastName>Xu</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>R</string>
+          </firstNames>
+          <lastName>Qu</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>93</pageFrom>
+      <pageTo>104</pageTo>
+      <publicationDateString>2009</publicationDateString>
+      <publicationYear>2009</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref18</id>
+      <title>A Variable Neighborhood Descent Search Algorithm for Delay-Constrained Least-Cost Multicast Routing</title>
+      <source>Proceedings of Learning and Intelligent OptimizatioN (LION3)</source>
+      <publisher>Springer</publisher>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>R</string>
+          </firstNames>
+          <lastName>Qu</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Y</string>
+          </firstNames>
+          <lastName>Xu</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>G</string>
+          </firstNames>
+          <lastName>Kendall</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>15</pageFrom>
+      <pageTo>29</pageTo>
+      <publicationDateString>2009</publicationDateString>
+      <publicationYear>2009</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref19</id>
+      <title>A hybrid scatter search meta-heuristic for delay-constrained multicast routing problems</title>
+      <source>Applied Intelligence</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Y</string>
+          </firstNames>
+          <lastName>Xu</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>R</string>
+          </firstNames>
+          <lastName>Qu</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>1</pageFrom>
+      <pageTo>13</pageTo>
+      <publicationDateString>2010</publicationDateString>
+      <publicationYear>2010</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref20</id>
+      <title>Optimum routing of multicast streams</title>
+      <source>INFOCOM&apos;94. Networking for Global Communications., 13th Proceedings IEEE</source>
+      <publisher>IEEE</publisher>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>C</string>
+          </firstNames>
+          <lastName>Noronha Jr</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>F</string>
+          </firstNames>
+          <lastName>Tobagi</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>865</pageFrom>
+      <pageTo>873</pageTo>
+      <publicationDateString>1994</publicationDateString>
+      <publicationYear>1994</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref21</id>
+      <title>Multicast problems in telecommunication networks</title>
+			<source>PhD thesis</source>
+			<publisher>Università del Salento</publisher>
+      <location>Lecce, Italy</location>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>V</string>
+          </firstNames>
+          <lastName>Leggieri</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2007</publicationDateString>
+      <publicationYear>2007</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref22</id>
+      <title>The steiner tree problem with delays: a tight compact formulation and reduction procedures</title>
+			<source>Tech. rep., Technical report</source>
+			<publisher>Universita del Salento</publisher>
+      <location>Lecce, Italy</location>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>V</string>
+          </firstNames>
+          <lastName>Leggieri</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Haouari</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>C</string>
+          </firstNames>
+          <lastName>Triki</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2010</publicationDateString>
+      <publicationYear>2010</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref23</id>
+      <title>An Exact Algorithm for the Steiner Tree Problem with Delays</title>
+      <source>Electronic Notes in Discrete Mathematics</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>V</string>
+          </firstNames>
+          <lastName>Leggieri</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Haouari</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>C</string>
+          </firstNames>
+          <lastName>Triki</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>36</volume>
+      <pageFrom>223</pageFrom>
+      <pageTo>230</pageTo>
+      <publicationDateString>2010</publicationDateString>
+      <publicationYear>2010</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref24</id>
+      <title>A Layered Graph Model and an Adaptive Layers Framework to Solve Delay-Constrained Minimum Tree Problems</title>
+      <source>Proceedings of the 15th Conference on Integer Programming and Combinatorial Optimization (IPCO XV)</source>
+      <publisher>Springer</publisher>
+			<editor>O. Günlük and G. Woeginger</editor>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Ruthmair</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>G</string>
+            <string>R</string>
+          </firstNames>
+          <lastName>Raidl</lastName>
+        </ReferenceAuthor>
+      </authors>
+			<note>of LNCS</note>
+			<volume>6655</volume>
+      <pageFrom>376</pageFrom>
+      <pageTo>388</pageTo>
+      <publicationDateString>2011</publicationDateString>
+      <publicationYear>2011</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref25</id>
+      <title>Stabilized Branch-and-Price for the Rooted Delay-Constrained Steiner Tree Problem</title>
+      <source>Network Optimization: 5th International Conference, INOC 2011</source>
+			<editor>J. Pahl, T. Reiners, and S. Voß</editor>
+			<location>Hamburg, Germany</location>
+      <publisher>Springer</publisher>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Leitner</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Ruthmair</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>G</string>
+            <string>R</string>
+          </firstNames>
+          <lastName>Raidl</lastName>
+        </ReferenceAuthor>
+      </authors>
+			<note>LNCS</note>
+			<volume>6701</volume>
+      <pageFrom>124</pageFrom>
+      <pageTo>138</pageTo>
+      <publicationDateString>2011-06</publicationDateString>
+      <publicationMonth>6</publicationMonth>
+      <publicationYear>2011</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref26</id>
+      <title>Stabilized Column Generation for the Rooted Delay-Constrained Steiner Tree Problem</title>
+      <source>Proceedings of the VII ALIO/EURO – Workshop on Applied Combinatorial Optimization</source>
+			<location>Porto, Portugal</location>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Leitner</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Ruthmair</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>G</string>
+						<string>R</string>
+          </firstNames>
+          <lastName>Raidl</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>250</pageFrom>
+      <pageTo>253</pageTo>
+      <publicationDateString>2011-05</publicationDateString>
+      <publicationMonth>5</publicationMonth>
+      <publicationYear>2011</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref27</id>
+      <title>Multilevel computations: Review and recent developments</title>
+      <source>Multigrid methods: theory, applications, and supercomputing;[papers from the 3. Copper Mountain Conference on Multigrid Methods, held at Copper Mountain, Colo., April 5-10, 1987]</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A</string>
+          </firstNames>
+          <lastName>Brandt</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>110</volume>
+      <pageFrom>35</pageFrom>
+      <publicationDateString>1988</publicationDateString>
+      <publicationYear>1988</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref28</id>
+      <title>A multilevel approach to the travelling salesman problem</title>
+      <source>Operations Research</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>C</string>
+          </firstNames>
+          <lastName>Walshaw</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>862</pageFrom>
+      <pageTo>877</pageTo>
+      <publicationDateString>2002</publicationDateString>
+      <publicationYear>2002</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref29</id>
+      <title>Experimental analysis of heuristics for the stsp</title>
+			<source>The Traveling Salesman Problem and its Variations</source>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>D</string>
+          </firstNames>
+          <lastName>Johnson</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>L</string>
+          </firstNames>
+          <lastName>Mcgeoch</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>369</pageFrom>
+      <pageTo>443</pageTo>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref30</id>
+      <title>A multilevel approach to the graph colouring problem</title>
+      <source>SE10 9LS</source>
+			<publisher>Citeseer</publisher>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>C</string>
+          </firstNames>
+          <lastName>Walshaw</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2001</publicationDateString>
+      <publicationYear>2001</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref31</id>
+      <title>Multilevel Heuristiken für das Rooted Delay-Constrained Minimum Spanning Tree Problem</title>
+			<source>Master&apos;s thesis</source>
+      <location>Vienna, Austria</location>
+			<publisher>Vienna University of Technology, Institute of Computer Graphics and Algorithms</publisher>
+
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Berlakovich</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <note>supervised by G. Raidl and M. Ruthmair</note>
+      <publicationDateString>2010-07</publicationDateString>
+      <publicationMonth>7</publicationMonth>
+      <publicationYear>2010</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref32</id>
+      <title>A Multilevel Heuristic for the Rooted Delay-Constrained Minimum Spanning Tree Problem</title>
+      <source>Extended Abstracts of the 13th International Conference on Computer Aided Systems Theory (2011)</source>
+			<editor>A. Quesada-Arencibia et al.</editor>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Berlakovich</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Ruthmair</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>G</string>
+            <string>R</string>
+          </firstNames>
+          <lastName>Raidl</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>247</pageFrom>
+      <pageTo>249</pageTo>
+    </Reference>
+    <Reference>
+      <id>ref33</id>
+      <title>A Kruskal-Based Heuristic for the Rooted Delay-Constrained Minimum Spanning Tree Problem</title>
+      <source>Proceedings of the 12th International Conference on Computer Aided Systems Theory</source>
+			<editor>R. Moreno-Díaz, F. Pichler, and A. Quesada-Arencibia</editor>
+      <publisher>Springer</publisher>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Ruthmair</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>G</string>
+            <string>R</string>
+          </firstNames>
+          <lastName>Raidl</lastName>
+        </ReferenceAuthor>
+      </authors>
+			<note>of LNCS</note>
+			<volume>5717</volume>
+      <pageFrom>713</pageFrom>
+      <pageTo>720</pageTo>
+      <publicationDateString>2009</publicationDateString>
+      <publicationYear>2009</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref34</id>
+      <title>Steiner&apos;s problem in graphs: heuristic methods</title>
+      <source>Discrete Applied Mathematics</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>S</string>
+          </firstNames>
+          <lastName>Voss</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>40</volume>
+      <issue>1</issue>
+      <pageFrom>45</pageFrom>
+      <pageTo>72</pageTo>
+      <publicationDateString>1992</publicationDateString>
+      <publicationYear>1992</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref35</id>
+      <title>Solving Two Network Design Problems by Mixed Integer Programming and Hybrid Optimization Methods</title>
+      <source>PhD thesis</source>
+			<publisher>Vienna University of Technology, Institute of Computer Graphics and Algorithms</publisher>
+			<location>Vienna, Austria</location>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Leitner</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>35</volume>
+      <issue>2</issue>
+      <pageFrom>600</pageFrom>
+      <pageTo>613</pageTo>
+      <publicationDateString>2010</publicationDateString>
+      <publicationYear>2010</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref36</id>
+      <title>Modeling and Solving the Rooted Distance-Constrained Minimum Spanning Tree Problem</title>
+      <source>Computers and Operations Research</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>L</string>
+          </firstNames>
+          <lastName>GOUVEIA</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A</string>
+          </firstNames>
+          <lastName>PAIAS</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>D</string>
+          </firstNames>
+          <lastName>SHARMA</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>35</volume>
+      <issue>2</issue>
+      <pageFrom>600</pageFrom>
+      <pageTo>613</pageTo>
+      <publicationDateString>2008</publicationDateString>
+      <publicationYear>2008</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref37</id>
+      <title>A note on two problems in connexion with graphs</title>
+      <source>Numerische mathematik</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>E</string>
+          </firstNames>
+          <lastName>Dijkstra</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>1</volume>
+      <issue>1</issue>
+      <pageFrom>269</pageFrom>
+      <pageTo>271</pageTo>
+      <publicationDateString>1959</publicationDateString>
+      <publicationYear>1959</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref38</id>
+      <title>Network flows: theory, algorithms, and applications</title>
+      <location>New York</location>
+      <publisher>Prentice Hall</publisher>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>R</string>
+          </firstNames>
+          <lastName>Ahuja</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>T</string>
+          </firstNames>
+          <lastName>Magnanti</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>J</string>
+          </firstNames>
+          <lastName>Orlin</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1993</publicationDateString>
+      <publicationYear>1993</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref39</id>
+      <title>C++-Framework for Solving Delay-Constrained Tree Problems</title>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Ruthmair</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2011</publicationDateString>
+      <publicationYear>2011</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref40</id>
+      <title>Test instances for the RDCMSTP</title>
+      <type>m</type>
+			<url>https://www.ads.tuwien.ac.at/~marior/instances/random/</url>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Ruthmair</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2011</publicationDateString>
+      <publicationYear>2011</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref41</id>
+      <title>A hybrid GRASP with perturbations for the Steiner problem in graphs</title>
+      <source>INFORMS Journal on Computing</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>C</string>
+          </firstNames>
+          <lastName>Ribeiro</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>E</string>
+          </firstNames>
+          <lastName>Uchoa</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>R</string>
+          </firstNames>
+          <lastName>Werneck</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>14</volume>
+      <issue>3</issue>
+      <pageFrom>228</pageFrom>
+      <pageTo>246</pageTo>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+    </Reference>
+  </references>
+</Publication>
