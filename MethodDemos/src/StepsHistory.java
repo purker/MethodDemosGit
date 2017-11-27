@@ -50,6 +50,7 @@ import mapping.markers.SquareBracketNameYearMarkerStyle;
 import mapping.markers.SquareBracketNameYearShortMarkerStyle;
 import mapping.markers.SquareBracketNumberedMarkerStyle;
 import mapping.markers.SuperscriptNumberedMarkerStyle;
+import mapping.result.AbstractAuthor;
 import mapping.result.Affiliation;
 import mapping.result.Author;
 import mapping.result.Publication;
@@ -75,42 +76,45 @@ public class StepsHistory
 	static File file5 = new File(Demos.pdfxOutputDir, "pdfx-TUW-139761.xml");
 	static File file6 = new File("D:/Java/git/MethodDemosGit/MethodDemos/output/result/result-TUW-139785-xstream.xml");
 	static File file7 = new File(Demos.pdfxOutputDir, "pdfx-TUW-140048.xml");
-	static File file8 = new File("D:/output/methods/result/result-TUW-140048-xstream.xml");
-	static File file9 = new File("D:/output/methods/result/result-TUW-140253-xstream.xml");
+	static File file8 = new File("D:/output/methods/resultsource/result-TUW-140048-xstream.xml");
+	static File file9 = new File("D:/output/methods/resultsource/result-TUW-140253-xstream.xml");
 	static File resultFileDirectory = new File("D:/Java/git/MethodDemosGit/MethodDemos/output/result");
-	static File result10_141336 = new File("D:/output/methods/result/result-TUW-141336-xstream.xml");
-	static File result11_141618 = new File("D:/output/methods/result/result-TUW-141618-xstream.xml");
-	static File result12_141758 = new File("D:/output/methods/result/result-TUW-141758-xstream.xml");
+	static File result10_141336 = new File("D:/output/methods/resultsource/result-TUW-141336-xstream.xml");
+	static File result11_141618 = new File("D:/output/methods/resultsource/result-TUW-141618-xstream.xml");
+	static File result12_141758 = new File("D:/output/methods/resultsource/result-TUW-141758-xstream.xml");
 	static File result12_141758cermine = new File(Demos.cermineOutputDir, "cermine-TUW-141758-xstream.xml");
-	static File result13_168482 = new File("D:/output/methods/result/result-TUW-168482-xstream.xml");
+	static File result13_168482 = new File("D:/output/methods/resultsource/result-TUW-168482-xstream.xml");
 	static File result13_168482pdfx = new File(Demos.pdfxOutputDir, "pdfx-TUW-168482.xml");
 	static File groundTruthDiplomarbeiten = new File("D:\\output\\2017-08-06 17.04.36.036 c52c68fa-4732-44fa-b392-e1fdbff324d8\\Diplom- und Masterarbeiten");
-	static File result14_182414 = new File("D:/output/methods/result/result-TUW-182414-xstream.xml");
-	static File result15_182899 = new File("D:/output/methods/result/result-TUW-182899-xstream.xml");
-	static File result16_191715 = new File("D:/output/methods/result/result-TUW-191715-xstream.xml");
-	static File result17_192724 = new File("D:/output/methods/result/result-TUW-192724-xstream.xml");
+	static File result14_182414 = new File("D:/output/methods/resultsource/result-TUW-182414-xstream.xml");
+	static File result15_182899 = new File("D:/output/methods/resultsource/result-TUW-182899-xstream.xml");
+	static File result16_191715 = new File("D:/output/methods/resultsource/result-TUW-191715-xstream.xml");
+	static File result17_192724 = new File("D:/output/methods/resultsource/result-TUW-192724-xstream.xml");
 	static List<String> alreadyDone = getResultPubIdsFromDirectory();
-	static File file18_194085 = new File("D:/output/methods/result/result-TUW-194085-xstream.xml");
-	static File file19_194660 = new File("D:/output/methods/result/result-TUW-194660-xstream.xml");
+	static File file18_194085 = new File("D:/output/methods/resultsource/result-TUW-194085-xstream.xml");
+	static File file19_194660 = new File("D:/output/methods/resultsource/result-TUW-194660-xstream.xml");
 	private static File file20_197422pdfx = new File("D:/output/methods/pdfx/pdfx-TUW-197422.xml");
-	private static File file20_197422 = new File("D:/output/methods/result/result-TUW-197422-xstream.xml");
-	private static File file21_197852 = new File("D:/output/methods/result/result-TUW-197852-xstream.xml");
-	private static File file22_198400 = new File("D:/output/methods/result/result-TUW-198400-xstream.xml");
-	private static File file23_198408 = new File("D:/output/methods/result/result-TUW-198408-xstream.xml");
+	private static File file20_197422 = new File("D:/output/methods/resultsource/result-TUW-197422-xstream.xml");
+	private static File file21_197852 = new File("D:/output/methods/resultsource/result-TUW-197852-xstream.xml");
+	private static File file22_198400 = new File("D:/output/methods/resultsource/result-TUW-198400-xstream.xml");
+	private static File file23_198408 = new File("D:/output/methods/resultsource/result-TUW-198408-xstream.xml");
 	private static File file23_198408grobid = new File("D:/output/methods/grobid/grobid-TUW-198408-xstream.xml");
-	private static File file24_200748 = new File("D:/output/methods/result/result-TUW-200748-xstream.xml");
-	private static File file25_200950 = new File("D:/output/methods/result/result-TUW-200950-xstream.xml");
+	private static File file24_200748 = new File("D:/output/methods/resultsource/result-TUW-200748-xstream.xml");
+	private static File file25_200950 = new File("D:/output/methods/resultsource/result-TUW-200950-xstream.xml");
 	private static File file25_200950pdfx = new File("D:/output/methods/pdfx/pdfx-TUW-200950.xml");
 	private static File file26 = new File("D:\\Java\\git\\MethodDemosGit\\MethodDemos\\output\\result\\result-TUW-189842-xstream.xml");
 	private static File groundTruthNoSubdir = new File("D:\\output\\methods\\GroundTruthNoSubDir");
-	static File resultIn = new File("D:/output/methods/result/");
+	static File resultIn = new File("D:/output/methods/resultsource/");
 	private static File file27_200745 = new File("D:/output/methods/grobid/grobid-TUW-200745-xstream.xml");
 	private static File file28_247743 = new File("D:/output/methods/grobid/grobid-TUW-247743-xstream.xml");
-	private static File file29_202034 = new File("D:/output/methods/result/result-TUW-202034-xstream.xml");
+	private static File file29_202034 = new File("D:/output/methods/resultsource/result-TUW-202034-xstream.xml");
 
 	public static void main(String[] args) throws Exception
 	{
-		setRefCounter(file29_202034, (-1));
+		setNamesNull(resultFileDirectory);
+		// checkNameEqualsFirstLast(resultFileDirectory);
+		// rewriteXStreamFiles(resultFileDirectory);
+		// setRefCounter(file29_202034, (-1));
 		// replaceReferenceMarkersWithIdsInSections(file28_247743);
 		// setRefCounter(file27_200745, (-1), 12);
 		// setRefCounter(file27_200745, (-6), 10);
@@ -400,32 +404,32 @@ public class StepsHistory
 
 	private static void createFirstAndLastNameFromName(File file)
 	{
-		Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
-
-		for(Reference reference : publication.getReferences())
-		{
-			for(ReferenceAuthor author : reference.getAuthors())
-			{
-				List<String> firstNames = new ArrayList<>();
-				for(ListIterator<String> iterator = Arrays.asList(author.name.split(" ")).listIterator(); iterator.hasNext();)
-				{
-					String string = iterator.next();
-					if(iterator.hasNext())
-					{
-						firstNames.add(string);
-					}
-					else
-					{
-						author.setLastName(string);
-					}
-				}
-				author.setFirstNames(firstNames);
-				author.name = null;
-			}
-		}
-
-		XStreamUtil.convertToXmL(publication, file, System.out, true);
-
+		// Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
+		//
+		// for(Reference reference : publication.getReferences())
+		// {
+		// for(ReferenceAuthor author : reference.getAuthors())
+		// {
+		// List<String> firstNames = new ArrayList<>();
+		// for(ListIterator<String> iterator = Arrays.asList(author.name.split(" ")).listIterator(); iterator.hasNext();)
+		// {
+		// String string = iterator.next();
+		// if(iterator.hasNext())
+		// {
+		// firstNames.add(string);
+		// }
+		// else
+		// {
+		// author.setLastName(string);
+		// }
+		// }
+		// author.setFirstNames(firstNames);
+		// author.name = null;
+		// }
+		// }
+		//
+		// XStreamUtil.convertToXmL(publication, file, System.out, true);
+		System.err.println("wieder einkommentieren");
 	}
 
 	private static void setSourceByTitle(File file)
@@ -709,7 +713,8 @@ public class StepsHistory
 						iterator.set(setId(refString, i, fromIndex));
 					}
 					if(
-		section.getReferenceCitations() == null) section.setReferenceCitations(new ArrayList<>());
+		    section.getReferenceCitations() == null
+		) section.setReferenceCitations(new ArrayList<>());
 		for(ReferenceCitation referenceCitation : section.getReferenceCitations())
 		{
 		String refString = referenceCitation.getReferenceId();
@@ -728,40 +733,40 @@ public class StepsHistory
 		private static void rotateReferenceNames(File file)
 		{
 		rotateReferenceNames(file, null);
-	}
+		}
 
-	/**
-	 * <pre>
-		  <authors>
-	        <ReferenceAuthor>
-	          <firstNames>
-	            <string>Feremans</string>
-	          </firstNames>
-	        </ReferenceAuthor>
-	        <ReferenceAuthor>
-	          <firstNames>
-	            <string>C</string>
-	          </firstNames>
-	        </ReferenceAuthor>
-	      </authors>
-	 * </pre>
-	 * 
-	 * to
-	 * 
-	 * <pre>
-	 	  <authors>
-		    <ReferenceAuthor>
-		      <firstNames>
-		        <string>C</string>
-		      </firstNames>
-		      <lastName>Feremans</lastName>
-		    </ReferenceAuthor>
-		  </authors>
-	 * </pre>
-	 * 
-	 */
-	private static void rotateReferenceNames(File file, Integer from)
-	{
+		/**
+		 * <pre>
+			  <authors>
+		        <ReferenceAuthor>
+		          <firstNames>
+		            <string>Feremans</string>
+		          </firstNames>
+		        </ReferenceAuthor>
+		        <ReferenceAuthor>
+		          <firstNames>
+		            <string>C</string>
+		          </firstNames>
+		        </ReferenceAuthor>
+		      </authors>
+		 * </pre>
+		 * 
+		 * to
+		 * 
+		 * <pre>
+		 	  <authors>
+			    <ReferenceAuthor>
+			      <firstNames>
+			        <string>C</string>
+			      </firstNames>
+			      <lastName>Feremans</lastName>
+			    </ReferenceAuthor>
+			  </authors>
+		 * </pre>
+		 * 
+		 */
+		private static void rotateReferenceNames(File file, Integer from)
+		{
 		Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
 
 		for(Reference reference : publication.getReferences())
@@ -1204,6 +1209,94 @@ public class StepsHistory
 			{
 				Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
 
+				XStreamUtil.convertToXmL(publication, file, System.out, true);
+			}
+			catch(Exception e)
+			{
+				System.out.println(file);
+				e.printStackTrace();
+				break;
+			}
+		}
+	}
+
+	private static void checkNameEqualsFirstLast(File directory)
+	{
+		for(File file : directory.listFiles())
+		{
+			try
+			{
+				Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
+
+				for(AbstractAuthor author : PublicationUtil.getAllAuthors(publication))
+				{
+					String concatedName = PublicationUtil.getNameFromAuthor(author);
+					String name = author.name;
+
+					if(name != null && (!concatedName.equals(name)))
+					{
+						System.out.println(file);
+						System.out.println(concatedName);
+						System.out.println(name);
+					}
+					if(name != null)
+					{
+						System.out.println(file + new Boolean(concatedName.equals(name)).toString());
+					}
+				}
+
+				if(CollectionUtil.isNotEmpty(publication.getReferences()))
+				{
+					for(Reference reference : publication.getReferences())
+					{
+						if(CollectionUtil.isNotEmpty(reference.getAuthors()))
+						{
+							for(ReferenceAuthor referenceAuthor : reference.getAuthors())
+							{
+								referenceAuthor.name = null;
+							}
+						}
+					}
+				}
+			}
+			catch(Exception e)
+			{
+				System.out.println(file);
+				e.printStackTrace();
+				break;
+			}
+		}
+	}
+
+	private static void setNamesNull(File directory)
+	{
+		for(File file : directory.listFiles())
+		{
+			try
+			{
+				Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
+
+				if(CollectionUtil.isNotEmpty(publication.getAuthors()))
+				{
+					for(Author author : publication.getAuthors())
+					{
+						author.name = null;
+					}
+				}
+
+				if(CollectionUtil.isNotEmpty(publication.getReferences()))
+				{
+					for(Reference reference : publication.getReferences())
+					{
+						if(CollectionUtil.isNotEmpty(reference.getAuthors()))
+						{
+							for(ReferenceAuthor referenceAuthor : reference.getAuthors())
+							{
+								referenceAuthor.name = null;
+							}
+						}
+					}
+				}
 				XStreamUtil.convertToXmL(publication, file, System.out, true);
 			}
 			catch(Exception e)
