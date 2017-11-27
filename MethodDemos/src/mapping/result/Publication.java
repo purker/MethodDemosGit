@@ -1,7 +1,6 @@
 package mapping.result;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Publication extends BaseEntity
@@ -15,10 +14,10 @@ public class Publication extends BaseEntity
 	private List<Author> authors = new ArrayList<>();
 	private List<Affiliation> affiliations = new ArrayList<>();
 
-	private Long publicationYear;
-	private Long publicationMonth;
-	private Long publicationDay;
-	private Date publicationDate; // if known
+	private String publicationYear;
+	private String publicationMonth;
+	private String publicationDay;
+	private String publicationDateString; // if known
 	private String doi;
 
 	private List<Section> sections = new ArrayList<>();
@@ -85,44 +84,44 @@ public class Publication extends BaseEntity
 		this.affiliations = affiliations;
 	}
 
-	public Long getPublicationYear()
+	public String getPublicationYear()
 	{
 		return publicationYear;
 	}
 
-	public void setPublicationYear(Long publicationYear)
+	public void setPublicationYear(String publicationYear)
 	{
 		this.publicationYear = publicationYear;
 	}
 
-	public Long getPublicationMonth()
+	public String getPublicationMonth()
 	{
 		return publicationMonth;
 	}
 
-	public void setPublicationMonth(Long publicationMonth)
+	public void setPublicationMonth(String publicationMonth)
 	{
 		this.publicationMonth = publicationMonth;
 	}
 
-	public Long getPublicationDay()
+	public String getPublicationDay()
 	{
 		return publicationDay;
 	}
 
-	public void setPublicationDay(Long publicationDay)
+	public void setPublicationDay(String publicationDay)
 	{
 		this.publicationDay = publicationDay;
 	}
 
-	public Date getPublicationDate()
+	public String getPublicationDateString()
 	{
-		return publicationDate;
+		return publicationDateString;
 	}
 
-	public void setPublicationDate(Date publicationDate)
+	public void setPublicationDateString(String publicationDateString)
 	{
-		this.publicationDate = publicationDate;
+		this.publicationDateString = publicationDateString;
 	}
 
 	public String getDoi()
@@ -133,16 +132,6 @@ public class Publication extends BaseEntity
 	public void setDoi(String doi)
 	{
 		this.doi = doi;
-	}
-
-	public List<Reference> getReferences()
-	{
-		return references;
-	}
-
-	public void setReferences(List<Reference> references)
-	{
-		this.references = references;
 	}
 
 	public List<Section> getSections()
@@ -163,6 +152,16 @@ public class Publication extends BaseEntity
 	public void setCitationContexts(List<CitationContext> citationContexts)
 	{
 		this.citationContexts = citationContexts;
+	}
+
+	public List<Reference> getReferences()
+	{
+		return references;
+	}
+
+	public void setReferences(List<Reference> references)
+	{
+		this.references = references;
 	}
 
 }
