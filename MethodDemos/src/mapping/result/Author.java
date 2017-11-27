@@ -1,40 +1,15 @@
 package mapping.result;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class Author extends BaseEntity
+public class Author extends AbstractAuthor
 {
 	private static final long serialVersionUID = -7444267954223367935L;
-
-	private String name; // if null, information in first and lastname
-	private List<String> firstNames;
-	private String lastName;
 
 	private String email;
 
 	private String type;
 	private ArrayList<Affiliation> affiliations;
-
-	public String getLastName()
-	{
-		return lastName;
-	}
-
-	public List<String> getFirstNames()
-	{
-		return firstNames;
-	}
-
-	public void setFirstNames(List<String> firstNames)
-	{
-		this.firstNames = firstNames;
-	}
-
-	public void setLastName(String lastName)
-	{
-		this.lastName = lastName;
-	}
 
 	public String getEmail()
 	{

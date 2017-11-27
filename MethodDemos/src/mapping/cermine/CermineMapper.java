@@ -48,7 +48,7 @@ public class CermineMapper extends Mapper
 	@Override
 	protected List<? extends Worker> getWorkers()
 	{
-		return Arrays.asList(new SectionReferenceWorker(), new ReferenceAuthorNameConcatenationWorker());
+		return Arrays.asList(new SectionReferenceWorker());
 	}
 
 	@Override

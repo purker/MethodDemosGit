@@ -8,7 +8,6 @@ import demos.Demos;
 import factory.PublicationFactory;
 import mapping.Mapper;
 import mapping.Worker;
-import mapping.cermine.ReferenceAuthorNameConcatenationWorker;
 import utils.XStreamUtil;
 
 public class GROBIDMapper extends Mapper
@@ -45,7 +44,7 @@ public class GROBIDMapper extends Mapper
 	@Override
 	protected List<? extends Worker> getWorkers()
 	{
-		return Arrays.asList(new AffiliationWorker(), /* dort auch wieder einkommentieren new AuthorNameConcatenationWorker(), */new ReferenceIdReplaceWorker(), new ReferenceAuthorNameConcatenationWorker(), new ReferenceEditionWorker(), new ReferenceDateWorker());
+		return Arrays.asList(new AffiliationWorker(), /* dort auch wieder einkommentieren new AuthorNameConcatenationWorker(), */new ReferenceIdReplaceWorker(), new ReferenceEditionWorker(), new ReferenceDateWorker());
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package mapping.grobid;
 import mapping.Worker;
 import mapping.result.Author;
 import mapping.result.Publication;
+import utils.PublicationUtil;
 
 public class AuthorNameConcatenationWorker extends Worker
 {
@@ -12,21 +13,8 @@ public class AuthorNameConcatenationWorker extends Worker
 	{
 		for(Author author : publication.getAuthors())
 		{
-			StringBuffer sb = new StringBuffer();
-
-			for(String firstName : author.getFirstNames())
-			{
-				if(firstName != null)
-				{
-					sb.append(firstName);
-					sb.append(" ");
-				}
-			}
-			if(author.getLastName() != null)
-			{
-				sb.append(author.getLastName());
-			}
-			// TODO einkomment author.setName(sb.toString());
+			String name = PublicationUtil.getNameFromAuthor(author);
+			// TODO einkomment author.setName();
 		}
 
 	}
