@@ -11,11 +11,15 @@
     <java-types>
         <java-type name="Publication">
             <xml-root-element name="article"/>
-            <xml-type prop-order="id title abstractText abstractTextGerman authors affiliations publicationYear publicationMonth publicationDay publicationDate doi sections citationContexts references"/>
+            <xml-type prop-order="id title abstractText abstractTextGerman authors affiliations publicationYear publicationMonth publicationDay publicationDateString doi sections citationContexts references"/>
             <java-attributes>
                 <xml-element java-attribute="title" xml-path="/front/article-meta/title-group/article-title/text()"/>
             	<xml-element java-attribute="abstractText" xml-path="/front/article-meta/abstract/p/text()"/>
             	<xml-element java-attribute="authors" xml-path="/front/article-meta/contrib-group/contrib"/>
+                <xml-element java-attribute="publicationDateString" xml-path="/mixed-citation/year/text()"/>
+                <xml-element java-attribute="publicationYear" xml-path="/mixed-citation/year/text()"/>
+            	<xml-element java-attribute="publicationMonth" xml-path="/mixed-citation/month/text()"/>
+                <xml-element java-attribute="publicationDay" xml-path="/mixed-citation/day/text()"/>
             	<xml-element java-attribute="affiliations" xml-path="/front/article-meta/contrib-group/aff"/>
             	<xml-element java-attribute="sections" xml-path="/body/sec"/>
             	<xml-element java-attribute="references" xml-path="/back/ref-list/ref"/>
