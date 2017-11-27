@@ -21,6 +21,9 @@ public class PublicationFactory
 		publication.setSections(Arrays.asList(createSection()));
 		publication.setReferences(Arrays.asList(createReference()));
 
+		publication.setPublicationYear("1990");
+		publication.setPublicationMonth("9");
+
 		return publication;
 	}
 
@@ -60,8 +63,8 @@ public class PublicationFactory
 	{
 		Reference reference = new Reference();
 		reference.setTitle("referencetitle");
-		reference.setPageFrom(1L);
-		reference.setPageTo(2L);
+		reference.setPageFrom("1");
+		reference.setPageTo("2");
 		reference.setPublicationDate(new Date());
 
 		return reference;

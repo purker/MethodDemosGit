@@ -16,6 +16,7 @@ import utils.SimplestFormatter;
 public abstract class AbstractDemo
 {
 	protected static Logger logger = Logger.getLogger(AbstractDemo.class.getName());
+	private static final boolean OVERRIDE_EXISTING = false; // only map file, if output file not existing
 
 	/**
 	 * Iterates over files and invokes runDemo for them. Also measures the execution time.
@@ -45,6 +46,11 @@ public abstract class AbstractDemo
 					String errorString;
 					try
 					{
+						if(!OVERRIDE_EXISTING && outputFile.exists())
+						{
+							System.out.println("already exists: " + outputFile);
+							continue;
+						}
 						errorString = runDemo(inputFile, outputFile);
 						// write result xml to outputfolder
 						if(errorString != null && !errorString.isEmpty())

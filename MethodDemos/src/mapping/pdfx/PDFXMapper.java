@@ -1,11 +1,11 @@
 package mapping.pdfx;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import demos.Demos;
-import factory.PublicationFactory;
 import mapping.Mapper;
 import mapping.Worker;
 import mapping.parscit.SectionTypeNormalizerWorker;
@@ -24,13 +24,12 @@ public class PDFXMapper extends Mapper
 
 	public static void main(String[] args) throws Exception
 	{
-		PDFXMapper grobidMapper = new PDFXMapper();
-		File inputFile = new File("D:/output/PDFX/pdfx-TUW-194561.xml");
-		File outputFile = new File("D:/output/PDFX/pdfx-TUW-194561-xstream.xml");
+		List<File> files = new ArrayList<>();
+		files.add(new File("D:\\output\\methods\\pdfx\\pdfx-TUW-247743.xml"));
 
-		grobidMapper.unmarshall(inputFile, outputFile);
+		new PDFXMapper().unmarshallFiles(files);
 
-		grobidMapper.marshall(PublicationFactory.createPublication());
+		// grobidMapper.marshall(PublicationFactory.createPublication());
 	}
 
 	@Override

@@ -27,13 +27,13 @@ public class Reference extends BaseEntity
 	private String issue;
 	private String note;
 
-	private Long pageFrom;
-	private Long pageTo;
+	private String pageFrom;
+	private String pageTo;
 
 	private String publicationDateString; // as in the extraction xml
-	private Long publicationDay;
-	private Long publicationMonth;
-	private Long publicationYear; // if null, information found in date
+	private String publicationDay;
+	private String publicationMonth;
+	private String publicationYear; // if null, information found in date
 	private Date publicationDate;
 
 	public String getId()
@@ -186,22 +186,22 @@ public class Reference extends BaseEntity
 		this.note = note;
 	}
 
-	public Long getPageFrom()
+	public String getPageFrom()
 	{
 		return pageFrom;
 	}
 
-	public void setPageFrom(Long pageFrom)
+	public void setPageFrom(String pageFrom)
 	{
 		this.pageFrom = pageFrom;
 	}
 
-	public Long getPageTo()
+	public String getPageTo()
 	{
 		return pageTo;
 	}
 
-	public void setPageTo(Long pageTo)
+	public void setPageTo(String pageTo)
 	{
 		this.pageTo = pageTo;
 	}
@@ -216,39 +216,39 @@ public class Reference extends BaseEntity
 		this.publicationDateString = publicationDateString;
 	}
 
-	public Long getPublicationDay()
+	public Date getPublicationDate()
+	{
+		return publicationDate;
+	}
+
+	public String getPublicationDay()
 	{
 		return publicationDay;
 	}
 
-	public void setPublicationDay(Long publicationDay)
+	public void setPublicationDay(String publicationDay)
 	{
 		this.publicationDay = publicationDay;
 	}
 
-	public Long getPublicationMonth()
+	public String getPublicationMonth()
 	{
 		return publicationMonth;
 	}
 
-	public void setPublicationMonth(Long publicationMonth)
+	public void setPublicationMonth(String publicationMonth)
 	{
 		this.publicationMonth = publicationMonth;
 	}
 
-	public Long getPublicationYear()
+	public String getPublicationYear()
 	{
 		return publicationYear;
 	}
 
-	public void setPublicationYear(Long publicationYear)
+	public void setPublicationYear(String publicationYear)
 	{
 		this.publicationYear = publicationYear;
-	}
-
-	public Date getPublicationDate()
-	{
-		return publicationDate;
 	}
 
 	public void setPublicationDate(Date publicationDate)

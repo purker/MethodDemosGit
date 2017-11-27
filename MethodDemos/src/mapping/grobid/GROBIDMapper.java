@@ -5,9 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import demos.Demos;
+import factory.PublicationFactory;
 import mapping.Mapper;
 import mapping.Worker;
 import mapping.cermine.ReferenceAuthorNameConcatenationWorker;
+import utils.XStreamUtil;
 
 public class GROBIDMapper extends Mapper
 {
@@ -24,12 +26,14 @@ public class GROBIDMapper extends Mapper
 	public static void main(String[] args) throws Exception
 	{
 		GROBIDMapper grobidMapper = new GROBIDMapper();
-		File inputFile = new File("D:/output/methods/grobid/grobid-TUW-240858.xml");
+		File inputFile = new File("D:/output/methods/grobid/grobid-TUW-198408.xml");
 		File outputFile = new File(inputFile.getParentFile(), inputFile.getName().replace(".xml", "-xstream.xml"));
 
-		grobidMapper.unmarshall(inputFile, outputFile);
+		// grobidMapper.unmarshall(inputFile, outputFile);
 
-		// grobidMapper.marshall();
+		// grobidMapper.marshall(PublicationFactory.createPublication(), System.out);
+
+		XStreamUtil.convertToXmL(PublicationFactory.createPublication(), System.out, System.out, true);
 	}
 
 	@Override

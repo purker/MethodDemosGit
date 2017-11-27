@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import demos.Demos;
-import factory.PublicationFactory;
 import mapping.Mapper;
 import mapping.Worker;
 
@@ -29,7 +28,7 @@ public class ParsCitMapper extends Mapper
 
 		parscitMapper.unmarshall(inputFile, outputFile);
 
-		parscitMapper.marshall(PublicationFactory.createPublication());
+		// parscitMapper.marshall(PublicationFactory.createPublication(), System.out);
 	}
 
 	@Override

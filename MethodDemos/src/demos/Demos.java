@@ -25,7 +25,7 @@ public class Demos
 
 	public static File inputDir = new File("D:/output/GroundTruth");
 	// public static File inputDirTxt = new File("D:/output/methods/Cermine");
-
+ 
 	public static File cermineOutputDir = new File("D:/output/methods/cermine");
 	public static File grobIdOutputDir = new File("D:/output/methods/grobid");
 	public static File parsCitOutputDir = new File("D:/output/methods/parscit");
@@ -42,16 +42,17 @@ public class Demos
 
 	public static void executeDemos() throws IOException, JAXBException
 	{
-		boolean runDemos = false;
+		boolean runDemos = true;
 		boolean runCermineDemo = false;
 		boolean runGrobidDemo = false;
 		boolean runParsCitDemo = false;
-		boolean runPdfxDemo = false;
+		boolean runPdfxDemo = true;
 		boolean runCermineMapper = false;
-		boolean runGrobidMapper = true;
+		boolean runGrobidMapper = false;
 		boolean runParsCitMapper = false;
-		boolean runPdfxMapper = false;
-		List<File> groundTruthFiles = getAllGroundTruthFiles();// .subList(0, 1);
+		boolean runPdfxMapper = true;
+		List<File> groundTruthFiles = getFileById("203924");
+		// List<File> groundTruthFiles = getAllGroundTruthFiles();// .subList(0, 1);
 		List<File> groundTruthFilesOmnipage = getAllGroundTruthFilesAsOmnipage();// .subList(0, 11);
 
 		if(!USE_SPECIFIC_OUTPUTDIR)
@@ -84,10 +85,10 @@ public class Demos
 
 		if(runDemos)
 		{
-			// if(runCermineDemo) new CERMINEDemo().runDemo(groundTruthFiles, cermineOutputDir);
-			// if(runGrobidDemo) new GROBIDDemo().runDemo(groundTruthFiles, grobIdOutputDir);
-			// if(runParsCitDemo) new ParsCitDemo().runDemo(groundTruthFilesOmnipage, parsCitOutputDir); // uses txt output from Cermine
-			// if(runPdfxDemo) new PDFXDemo().runDemo(groundTruthFiles, pdfxOutputDir);
+			if(runCermineDemo) new CERMINEDemo().runDemo(groundTruthFiles, cermineOutputDir);
+			if(runGrobidDemo) new GROBIDDemo().runDemo(groundTruthFiles, grobIdOutputDir);
+			if(runParsCitDemo) new ParsCitDemo().runDemo(groundTruthFilesOmnipage, parsCitOutputDir); // uses txt output from Cermine
+			if(runPdfxDemo) new PDFXDemo().runDemo(groundTruthFiles, pdfxOutputDir);
 		}
 
 		if(runCermineMapper) new CermineMapper().unmarshallFiles(cermineOutputDir);
@@ -96,13 +97,19 @@ public class Demos
 		if(runPdfxMapper) new PDFXMapper().unmarshallFiles(pdfxOutputDir);
 	}
 
-	private static void deleteResultAndErrorFiles(File directory)
+	private static List<File> getFileById(String string)
 	{
+		List<File> groundTruthFiles = getAllFilesAlsoFromSubDirectories(inputDir, string + ".pdf");
+		return groundTruthFiles;
+	}
+
+	private static void deleteResultAndErrorFiles(File directory)
+	{ 
 		List<File> resultOrErrorFiles = Arrays.stream(directory.listFiles()).filter(file -> file.getName().endsWith("mapping.errxml") || file.getName().endsWith("-xstream.xml")).collect(Collectors.toList());
 		for(File file : resultOrErrorFiles)
 		{
 			file.delete();
-		}
+		} 
 	}
 
 	private static List<File> getAllGroundTruthFilesAsOmnipage()

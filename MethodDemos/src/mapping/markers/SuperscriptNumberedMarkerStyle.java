@@ -13,7 +13,7 @@ public class SuperscriptNumberedMarkerStyle extends AbstractMarkerStyle
 	@Override
 	public String getMarkerString(Reference reference)
 	{
-		return ReferenceUtil.getReferenceIdNumber(reference.getId()).toString();
+		return ReferenceUtil.getReferenceIdNumber(reference).toString();
 	}
 
 }

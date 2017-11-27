@@ -3,6 +3,7 @@ package demos;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -24,13 +25,20 @@ public class GROBIDDemo extends AbstractDemo
 	private static final String pGrobidHome = GROBID_DIRECTORY + "grobid/grobid-home";
 	private static final String pGrobidProperties = GROBID_DIRECTORY + "grobid/grobid-home/config/grobid.properties";
 
-	private boolean consolidate = true;
+	private boolean consolidate = false;
 	private boolean consolidateCitations = consolidate;
 	private boolean consolidateHeader = consolidate;
 
 	public static void main(String[] args) throws IOException
 	{
-		List<File> groundTruthFiles = Demos.getAllGroundTruthFiles().subList(0, 1);
+		List<File> groundTruthFiles = new ArrayList<>();
+		// groundTruthFiles.add(Demos.getAllGroundTruthFiles().subList(0, 1));
+		groundTruthFiles.add(new File("D:\\output\\methods\\GroundTruthNoSubDir\\TUW-247743.pdf"));
+		// groundTruthFiles.add(Demos.getAllGroundTruthFiles().subList(0, 1));
+		// groundTruthFiles.add(new File("D:\\output\\methods\\GroundTruthNoSubDir\\TUW-200745.pdf"));
+		// groundTruthFiles.add(Demos.getAllGroundTruthFiles().subList(0, 1));
+		// groundTruthFiles.add(new File("D:\\output\\methods\\GroundTruthNoSubDir\\TUW-200948.pdf"));
+
 		new GROBIDDemo().runDemo(groundTruthFiles, Demos.grobIdOutputDir);
 		// new GROBIDDemo().runDemoInBatch("D:/TU/Masterarbeit/Papers/Methoden/", Demos.grobIdOutputDir.getPath());
 		// new GROBIDDemo().runDemoInBatch("D:/output/GroundTruth-subset", grobIdOutputDir.getPath());
@@ -84,6 +92,8 @@ public class GROBIDDemo extends AbstractDemo
 			GrobidAnalysisConfig config = GrobidAnalysisConfig.builder().consolidateHeader(consolidateHeader).consolidateCitations(consolidateCitations).build();
 			String resultString = engine.fullTextToTEI(inputFile, config);
 			FileUtils.writeStringToFile(outputFile, resultString, StandardCharsets.UTF_8);
+
+			System.out.println(inputFile);
 
 			return null;
 		}

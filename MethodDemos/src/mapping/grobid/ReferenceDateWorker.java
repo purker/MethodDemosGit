@@ -22,20 +22,20 @@ public class ReferenceDateWorker extends Worker
 				// "2011"
 				if(dateString.length() == 4)
 				{
-					reference.setPublicationYear(new Long(dateString));
+					reference.setPublicationYear(new String(dateString));
 				}
 				// "2011-05"
 				else if(dateString.length() == 7)
 				{
-					reference.setPublicationYear(new Long(dateString.substring(0, 4)));
-					reference.setPublicationMonth(new Long(dateString.substring(5, 7)));
+					reference.setPublicationYear(new String(dateString.substring(0, 4)));
+					reference.setPublicationMonth(new String(dateString.substring(5, 7)));
 				}
 				// "2011-05-01"
 				else if(dateString.length() == 10)
 				{
-					reference.setPublicationYear(new Long(dateString.substring(0, 4)));
-					reference.setPublicationMonth(new Long(dateString.substring(5, 7)));
-					reference.setPublicationDay(new Long(dateString.substring(8, 10)));
+					reference.setPublicationYear(new String(dateString.substring(0, 4)));
+					reference.setPublicationMonth(new String(dateString.substring(5, 7)));
+					reference.setPublicationDay(new String(dateString.substring(8, 10)));
 					// System.out.println(publication.getId());
 					// System.out.println(reference.getTitle());
 					// System.out.println(reference.getPublicationYear() + "-" + reference.getPublicationMonth() + " " + reference.getPublicationDay());

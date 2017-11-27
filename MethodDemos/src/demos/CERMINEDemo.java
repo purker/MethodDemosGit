@@ -10,7 +10,7 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -48,9 +48,12 @@ public class CERMINEDemo extends AbstractDemo
 
 	public static void main(String[] args) throws Exception
 	{
-		List<File> groundTruthFiles = Demos.getAllGroundTruthFiles().subList(0, 1);
-		new CERMINEDemo().runDemo(Arrays.asList(new File("D:\\output\\GroundTruth\\Diplom- und Masterarbeiten\\TUW-139794.pdf")), Demos.cermineOutputDir);
 
+		List<File> groundTruthFiles = new ArrayList<>();
+		// groundTruthFiles.add(Demos.getAllGroundTruthFiles().subList(0, 1));
+		groundTruthFiles.add(new File("D:\\output\\methods\\GroundTruthNoSubDir\\TUW-176845.pdf"));
+
+		new CERMINEDemo().runDemo(groundTruthFiles, Demos.grobIdOutputDir);
 		// ContentExtractor.main(new String[]
 		// {"-path", "D:/output/GroundTruth-subset"});// , "-outputs", "trueviz"});// , "-str", "D:/output/GroundTruth-subset/file.txt"});
 

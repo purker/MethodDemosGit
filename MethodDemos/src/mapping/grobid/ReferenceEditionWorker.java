@@ -38,7 +38,7 @@ public class ReferenceEditionWorker extends Worker
 	{
 		for(Reference reference : publication.getReferences())
 		{
-			if(reference.getNote() != null && reference.getNote().contains("edition"))
+			if(reference.getNote() != null && (reference.getNote().contains("edition") || reference.getNote().contains("edn")))
 			{
 				for(Entry<String, List<String>> synonymEntry : synoyms.entrySet())
 				{

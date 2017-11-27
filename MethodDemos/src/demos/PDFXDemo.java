@@ -31,13 +31,8 @@ public class PDFXDemo extends AbstractDemo
 	{
 		List<File> groundTruthFiles = Demos.getAllGroundTruthFiles().subList(0, 1);
 
-		List<File> files = new ArrayList<File>();
-		// files.add(new File("D:\\output\\GroundTruth\\Diplom-undMasterarbeiten\\TUW-168482.pdf"));
-		files.add(new File("D:\\output\\GroundTruthNoSubDir\\TUW-170329.pdf"));
-		// files.add(new File("D:\\output\\GroundTruth\\Zeitschriftenartikel\\TUW-200959.pdf"));
-		// files.add(new File("D:\\output\\GroundTruth\\Diplom-undMasterarbeiten\\TUW-202034.pdf"));
-		// files.add(new File("D:\\output\\GroundTruth\\Diplom-undMasterarbeiten\\TUW-226016.pdf"));
-		// files.addAll(Arrays.asList(new File("D:\\output\\GroundTruth\\Diplom-undMasterarbeiten").listFiles()));
+		List<File> files = new ArrayList<>();
+		files.add(new File("D:\\output\\methods\\GroundTruthNoSubDir\\TUW-247743.pdf"));
 
 		new PDFXDemo().runDemo(files, Demos.pdfxOutputDir);
 	}

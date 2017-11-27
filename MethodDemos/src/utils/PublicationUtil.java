@@ -1,5 +1,7 @@
 package utils;
 
+import java.io.File;
+
 import com.google.common.base.CharMatcher;
 
 public class PublicationUtil
@@ -9,5 +11,10 @@ public class PublicationUtil
 	{
 		String id = CharMatcher.DIGIT.retainFrom(fileName);
 		return "TUW-" + id;
+	}
+
+	public static String getIdFromFile(File file)
+	{
+		return getIdFromFileName(file.getName());
 	}
 }

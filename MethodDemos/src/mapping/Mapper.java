@@ -3,6 +3,7 @@ package mapping;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,12 +32,13 @@ import utils.XStreamUtil;
  */
 public abstract class Mapper
 {
+	private static final boolean OVERRIDE_EXISTING = false; // only map file, if output file not existing
 	protected JAXBContext jc;
 	protected Boolean ignoreDTD = false;
 
 	public Mapper()
 	{
-		Map<String, Object> properties = new HashMap<String, Object>(1);
+		Map<String, Object> properties = new HashMap<>(1);
 		properties.put(JAXBContextProperties.OXM_METADATA_SOURCE, getBindingFile());
 
 		try
@@ -78,7 +80,7 @@ public abstract class Mapper
 		for(File inputFile : inputFilesXML)
 		{
 			// id="TUW-000000"
-			String id = PublicationUtil.getIdFromFileName(inputFile.getName());
+			String id = PublicationUtil.getIdFromFile(inputFile);
 			File outputFile = getOutputFile(id);
 			File errorFile = getErrorFile(id);
 			try
@@ -113,6 +115,11 @@ public abstract class Mapper
 
 	protected void unmarshall(File inputFileXML, File outputFileObjectAsXML) throws JAXBException, XMLStreamException
 	{
+		if(!OVERRIDE_EXISTING && outputFileObjectAsXML.exists())
+		{
+			System.out.println("already exists: " + outputFileObjectAsXML);
+			return;
+		}
 		JAXBUnmarshaller unmarshaller = jc.createUnmarshaller();
 		Publication publication;
 		if(getIgnoreDTD())
@@ -126,7 +133,7 @@ public abstract class Mapper
 		{
 			publication = (Publication)unmarshaller.unmarshal(inputFileXML);
 		}
-		String id = PublicationUtil.getIdFromFileName(inputFileXML.getName());
+		String id = PublicationUtil.getIdFromFile(inputFileXML);
 		publication.setId(id);
 
 		for(Worker worker : getWorkers())
@@ -142,15 +149,17 @@ public abstract class Mapper
 	/**
 	 * Only for test of mappings
 	 * 
+	 * @param out
+	 * 
 	 * @param inputFileXML
 	 * @param outputFileObjectAsXML
 	 * @throws JAXBException
 	 */
-	protected void marshall(Publication publication) throws JAXBException
+	protected void marshall(Publication publication, OutputStream out) throws JAXBException
 	{
 		JAXBMarshaller marshaller = jc.createMarshaller();
 		marshaller.setProperty(JAXBMarshaller.JAXB_FORMATTED_OUTPUT, true);
-		marshaller.marshal(publication, System.out);
+		marshaller.marshal(publication, out);
 	}
 
 	protected abstract String getBindingFile();

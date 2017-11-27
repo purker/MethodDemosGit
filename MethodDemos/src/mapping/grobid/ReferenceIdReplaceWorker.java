@@ -27,7 +27,14 @@ public class ReferenceIdReplaceWorker extends Worker
 				{
 					if(referenceId != null)
 					{
-						newReferenceIds.add("ref" + (new Integer(referenceId.replaceFirst("#b", "")) + 1));
+						try
+						{
+							newReferenceIds.add("ref" + (new Integer(referenceId.replaceFirst("#b", "")) + 1));
+						}
+						catch(NumberFormatException e)
+						{
+							System.err.println(e.getMessage());
+						}
 					}
 				}
 				section.setReferenceIds(newReferenceIds);

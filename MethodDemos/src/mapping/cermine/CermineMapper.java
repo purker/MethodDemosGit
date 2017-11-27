@@ -1,6 +1,7 @@
 package mapping.cermine;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,11 +24,10 @@ public class CermineMapper extends Mapper
 
 	public static void main(String[] args) throws Exception
 	{
-		CermineMapper cermineMapper = new CermineMapper();
-		File inputFile = new File("D:/output/Cermine/cermine-TUW-139299.xml");
-		File outputFile = new File(inputFile.getParentFile(), inputFile.getName().replace(".xml", "-xstream.xml"));
+		List<File> files = new ArrayList<>();
+		files.add(new File("D:\\output\\methods\\cermine\\cermine-TUW-176845.xml"));
 
-		cermineMapper.unmarshall(inputFile, outputFile);
+		new CermineMapper().unmarshallFiles(files);
 
 		// Publication publication = PublicationFactory.createPublication();
 		// cermineMapper.marshall(publication);
