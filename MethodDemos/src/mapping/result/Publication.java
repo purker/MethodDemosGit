@@ -11,8 +11,17 @@ public class Publication extends BaseEntity
 	private String title;
 	private String abstractText;
 	private String abstractTextGerman;
+	private String keywords; // with "; " as delimiter
 	private List<Author> authors = new ArrayList<>();
 	private List<Affiliation> affiliations = new ArrayList<>();
+
+	private String source;
+	private String edition;
+	private String volume;
+	private String issue;
+
+	private String pageFrom;
+	private String pageTo;
 
 	private String publicationYear;
 	private String publicationMonth;
@@ -62,6 +71,16 @@ public class Publication extends BaseEntity
 	public void setAbstractTextGerman(String abstractTextGerman)
 	{
 		this.abstractTextGerman = abstractTextGerman;
+	}
+
+	public String getKeywords()
+	{
+		return keywords;
+	}
+
+	public void setKeywords(String keywords)
+	{
+		this.keywords = keywords;
 	}
 
 	public List<Author> getAuthors()

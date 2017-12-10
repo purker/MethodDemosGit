@@ -108,10 +108,14 @@ public class StepsHistory
 	private static File file27_200745 = new File("D:/output/methods/grobid/grobid-TUW-200745-xstream.xml");
 	private static File file28_247743 = new File("D:/output/methods/grobid/grobid-TUW-247743-xstream.xml");
 	private static File file29_202034 = new File("D:/output/methods/resultsource/result-TUW-202034-xstream.xml");
+	private static File file30_203924 = new File("D:/output/methods/resultsource/result-TUW-203924-xstream.xml");
 
 	public static void main(String[] args) throws Exception
 	{
-		setNamesNull(resultFileDirectory);
+		setKeywords(resultFileDirectory);
+		// setRefCounter(file30_203924, (-1), 16);
+		// setRefCounter(file30_203924, (1), 10);
+		// setNamesNull(resultFileDirectory);
 		// checkNameEqualsFirstLast(resultFileDirectory);
 		// rewriteXStreamFiles(resultFileDirectory);
 		// setRefCounter(file29_202034, (-1));
@@ -216,6 +220,42 @@ public class StepsHistory
 		// setRefCounter(result15_182899, (2), null);
 		// changeSectionReferenceIdsToIdsWithMarker(result15_182899);
 		// removeMarkersFromIds(result15_182899);
+	}
+
+	private static void setKeywords(File directory)
+	{
+		for(File file : directory.listFiles())
+		{
+			try
+			{
+				Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
+
+				for(ListIterator<Section> iterator = publication.getSections().listIterator(); iterator.hasNext();)
+				{
+					Section section = iterator.next();
+
+					if(section.getTitle().toLowerCase().contains("keyword"))
+					{
+						System.out.println(section.getLevel());
+
+						publication.setKeywords(String.join("; ", section.getLevel().split(", ")));
+						iterator.remove();
+						XStreamUtil.convertToXmL(publication, file, System.err, true);
+						Desktop.getDesktop().open(file);
+						return;
+					}
+
+				}
+
+			}
+			catch(Exception e)
+			{
+				System.out.println(file);
+				e.printStackTrace();
+				break;
+			}
+		}
+
 	}
 
 	/**
