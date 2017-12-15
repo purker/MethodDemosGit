@@ -7,6 +7,7 @@ import mapping.result.Affiliation;
 import mapping.result.Author;
 import mapping.result.Publication;
 import mapping.result.Reference;
+import mapping.result.ReferenceAuthor;
 import mapping.result.Section;
 
 public class PublicationFactory
@@ -16,8 +17,22 @@ public class PublicationFactory
 		Publication publication = new Publication();
 
 		publication.setTitle("title");
-		publication.setAuthors(Arrays.asList(createAuthor()));
-		publication.setAffiliations(Arrays.asList(createAffiliation()));
+		publication.setAbstractText("This is the abstract test");
+		publication.setAbstractTextGerman("Das ist der Text der Kurzfassung auf deutsch.");
+		publication.setKeywords("keyword1; keyword2, keyword3");
+
+		Author author = createAuthor();
+		Affiliation affiliation = createAffiliation();
+		author.setAffiliations(Arrays.asList(affiliation));
+
+		publication.setAuthors(Arrays.asList(author));
+		publication.setAffiliations(Arrays.asList(affiliation));
+		publication.setSource("Source");
+		publication.setVolume("volume");
+		publication.setIssue("Issue");
+		publication.setPageFrom("1");
+		publication.setPageTo("5");
+		publication.setPublicationYear("2017");
 		publication.setSections(Arrays.asList(createSection()));
 		publication.setReferences(Arrays.asList(createReference()));
 
@@ -34,6 +49,15 @@ public class PublicationFactory
 		author.setLastName("last");
 		author.setEmail("blub@cob");
 		// TODO author.setType("author");
+
+		return author;
+	}
+
+	public static ReferenceAuthor createReferenceAuthor()
+	{
+		ReferenceAuthor author = new ReferenceAuthor();
+		author.setFirstNames(Arrays.asList("first"));
+		author.setLastName("last");
 
 		return author;
 	}
@@ -62,6 +86,7 @@ public class PublicationFactory
 	public static Reference createReference()
 	{
 		Reference reference = new Reference();
+		reference.setAuthors(Arrays.asList(createReferenceAuthor()));
 		reference.setTitle("referencetitle");
 		reference.setPageFrom("1");
 		reference.setPageTo("2");

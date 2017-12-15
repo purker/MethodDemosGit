@@ -1,6 +1,9 @@
 package mapping.result;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import utils.PublicationUtil;
 
 public class AbstractAuthor extends BaseEntity
 {
@@ -8,7 +11,7 @@ public class AbstractAuthor extends BaseEntity
 
 	// TODO delete or to private
 	public String name; // if null, information in first and lastname
-	private List<String> firstNames;
+	private List<String> firstNames = new ArrayList<>();
 	private String lastName;
 
 	public List<String> getFirstNames()
@@ -31,4 +34,8 @@ public class AbstractAuthor extends BaseEntity
 		this.lastName = lastName;
 	}
 
+	public String getName()
+	{
+		return PublicationUtil.getNameFromAuthor(this);
+	}
 }

@@ -1,5 +1,7 @@
 package mapping.result;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+
 public class Affiliation extends BaseEntity
 {
 	private static final long serialVersionUID = -3698496426249593692L;
@@ -105,5 +107,10 @@ public class Affiliation extends BaseEntity
 		}
 		else if(!institution.equals(other.institution)) return false;
 		return true;
+	}
+
+	public String getRawText()
+	{
+		return new ReflectionToStringBuilder(this).toString();
 	}
 }

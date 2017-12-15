@@ -51,6 +51,7 @@ import mapping.markers.SquareBracketNameYearShortMarkerStyle;
 import mapping.markers.SquareBracketNumberedMarkerStyle;
 import mapping.markers.SuperscriptNumberedMarkerStyle;
 import mapping.result.AbstractAuthor;
+import mapping.result.AbstractMetaPublication;
 import mapping.result.Affiliation;
 import mapping.result.Author;
 import mapping.result.Publication;
@@ -109,10 +110,12 @@ public class StepsHistory
 	private static File file28_247743 = new File("D:/output/methods/grobid/grobid-TUW-247743-xstream.xml");
 	private static File file29_202034 = new File("D:/output/methods/resultsource/result-TUW-202034-xstream.xml");
 	private static File file30_203924 = new File("D:/output/methods/resultsource/result-TUW-203924-xstream.xml");
+	private static File file31_204724 = new File("D:/output/methods/resultsource/result-TUW-204724-xstream.xml");
 
 	public static void main(String[] args) throws Exception
 	{
-		setKeywords(resultFileDirectory);
+		adaptCerminePublication(file31_204724);
+		// setKeywords(resultFileDirectory);
 		// setRefCounter(file30_203924, (-1), 16);
 		// setRefCounter(file30_203924, (1), 10);
 		// setNamesNull(resultFileDirectory);
@@ -316,7 +319,6 @@ public class StepsHistory
 				break;
 			}
 		}
-
 	}
 
 	private static boolean checkDateString(String dateString, String day, String month, String year)
@@ -351,7 +353,6 @@ public class StepsHistory
 			return isEqual;
 		}
 		else return year == null && month == null && day == null;
-
 	}
 
 	private static boolean myEqual(String dayFromString, String day)
@@ -659,6 +660,11 @@ public class StepsHistory
 
 	}
 
+	/**
+	 * Splits Firstname in multiple Firstnames "A. H." to "A.", "H."
+	 * 
+	 * @param file
+	 */
 	private static void adaptCerminePublication(File file)
 	{
 		Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
@@ -673,7 +679,7 @@ public class StepsHistory
 					{
 						String s = author.getFirstNames().get(0);
 						author.getFirstNames().clear();
-						author.getFirstNames().addAll(Arrays.asList(s.replace(".", "").split(" ")));
+						author.getFirstNames().addAll(Arrays.asList(s.split(" ")));
 					}
 
 				}
@@ -1147,7 +1153,7 @@ public class StepsHistory
 
 	private static void useWorkerFile(File file, Worker worker)
 	{
-		Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
+		AbstractMetaPublication publication = XStreamUtil.convertFromXML(file, Publication.class);
 		// worker.doWork(publication);
 		XStreamUtil.convertToXmL(publication, file, System.out, true);
 	}
@@ -1247,7 +1253,7 @@ public class StepsHistory
 		{
 			try
 			{
-				Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
+				AbstractMetaPublication publication = XStreamUtil.convertFromXML(file, Publication.class);
 
 				XStreamUtil.convertToXmL(publication, file, System.out, true);
 			}
@@ -1354,7 +1360,7 @@ public class StepsHistory
 		{
 			try
 			{
-				Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
+				AbstractMetaPublication publication = XStreamUtil.convertFromXML(file, Publication.class);
 
 			}
 			catch(Exception e)
@@ -1500,7 +1506,7 @@ public class StepsHistory
 
 	private static void checkSerialization(File file) throws IOException
 	{
-		Publication p = XStreamUtil.convertFromXML(file, Publication.class);
+		AbstractMetaPublication p = XStreamUtil.convertFromXML(file, Publication.class);
 		System.out.println(p);
 	}
 
@@ -1524,7 +1530,7 @@ public class StepsHistory
 
 	private static void getPublicationFromFile3()
 	{
-		Publication p = XStreamUtil.convertFromXML(file3, Publication.class);
+		AbstractMetaPublication p = XStreamUtil.convertFromXML(file3, Publication.class);
 
 		System.out.println(p);
 	}
@@ -1554,7 +1560,7 @@ public class StepsHistory
 
 	private static void publicationToFile()
 	{
-		Publication p2 = PublicationFactory.createPublication();
+		AbstractMetaPublication p2 = PublicationFactory.createPublication();
 
 		XStreamUtil.convertToXmL(p2, file2, System.out, true);
 
@@ -1562,7 +1568,7 @@ public class StepsHistory
 
 	private static void getPublicationFromFile2()
 	{
-		Publication p = XStreamUtil.convertFromXML(file2, Publication.class);
+		AbstractMetaPublication p = XStreamUtil.convertFromXML(file2, Publication.class);
 
 	}
 

@@ -1,6 +1,7 @@
 package mapping.result;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Author extends AbstractAuthor
 {
@@ -9,7 +10,7 @@ public class Author extends AbstractAuthor
 	private String email;
 
 	private String type;
-	private ArrayList<Affiliation> affiliations;
+	private List<Affiliation> affiliations = new ArrayList<>();
 
 	public String getEmail()
 	{
@@ -21,12 +22,12 @@ public class Author extends AbstractAuthor
 		this.email = email;
 	}
 
-	public ArrayList<Affiliation> getAffiliations()
+	public List<Affiliation> getAffiliations()
 	{
 		return affiliations;
 	}
 
-	public void setAffiliations(ArrayList<Affiliation> affiliations)
+	public void setAffiliations(List<Affiliation> affiliations)
 	{
 		this.affiliations = affiliations;
 	}

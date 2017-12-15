@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import mapping.result.AbstractMetaPublication;
 import mapping.result.Publication;
 import utils.XStreamUtil;
 
@@ -32,7 +33,7 @@ public class MergeForGroundTruthResult
 			groundtruth.put(id, getAllResultFiles(id));
 		}
 
-		Publication mergedPublication = new Publication();
+		AbstractMetaPublication mergedPublication = new Publication();
 		int x = 0;
 		for(List<File> files : groundtruth.values())
 		{
@@ -43,7 +44,7 @@ public class MergeForGroundTruthResult
 				{
 					try
 					{
-						Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
+						AbstractMetaPublication publication = XStreamUtil.convertFromXML(file, Publication.class);
 						merge(mergedPublication, publication);
 					}
 					catch(Exception e)
@@ -59,7 +60,7 @@ public class MergeForGroundTruthResult
 
 	}
 
-	private static void merge(Publication publication, Publication publicationToMerge)
+	private static void merge(AbstractMetaPublication publication, AbstractMetaPublication publicationToMerge)
 	{
 		if(publication == null)
 		{
