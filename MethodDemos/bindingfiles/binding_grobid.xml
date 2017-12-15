@@ -11,6 +11,7 @@
     <java-types>
     	<java-type name="Publication">
             <xml-root-element name="TEI" />
+            <xml-type prop-order="id title abstractText abstractTextGerman keywords authors affiliations publicationYear publicationMonth publicationDay publicationDateString publicationDate source edition volume issue pageFrom pageTo doi sections citationContexts references"/>
             <java-attributes>
                 <xml-element java-attribute="title" xml-path="teiHeader/fileDesc/titleStmt/title/text()"/>
             	<xml-element java-attribute="abstractText" xml-path="teiHeader/profileDesc/abstract/p/text()"/>
@@ -19,6 +20,7 @@
             	<xml-element java-attribute="references" xml-path="text/back/div[@type='references']/listBibl/biblStruct"/>
             </java-attributes>
         </java-type>
+        <java-type name="AbstractAuthor" xml-transient="true"/>
         <java-type name="Author">
             <xml-root-element name="author"/>
             <xml-type prop-order="firstNames lastName email affiliations"/>

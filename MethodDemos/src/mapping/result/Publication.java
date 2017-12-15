@@ -3,51 +3,28 @@ package mapping.result;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Publication extends BaseEntity
+public class Publication extends AbstractMetaPublication
 {
 	private static final long serialVersionUID = 8605009499117151049L;
+	public static final String KEYWORD_DELIMITER = "; ";
 
-	private String id;
-	private String title;
 	private String abstractText;
 	private String abstractTextGerman;
 	private String keywords; // with "; " as delimiter
 	private List<Author> authors = new ArrayList<>();
 	private List<Affiliation> affiliations = new ArrayList<>();
 
-	private String source;
-	private String edition;
-	private String volume;
-	private String issue;
-
-	private String pageFrom;
-	private String pageTo;
-
-	private String publicationYear;
-	private String publicationMonth;
-	private String publicationDay;
-	private String publicationDateString; // if known
-	private String doi;
-
 	private List<Section> sections = new ArrayList<>();
 	private List<CitationContext> citationContexts = new ArrayList<>();
 	private List<Reference> references = new ArrayList<>();
 
-	public String getId()
-	{
-		return id;
-	}
-
-	public void setId(String id)
-	{
-		this.id = id;
-	}
-
+	@Override
 	public String getTitle()
 	{
 		return title;
 	}
 
+	@Override
 	public void setTitle(String title)
 	{
 		this.title = title;
@@ -103,51 +80,85 @@ public class Publication extends BaseEntity
 		this.affiliations = affiliations;
 	}
 
-	public String getPublicationYear()
+	@Override
+	public String getSource()
 	{
-		return publicationYear;
+		return source;
 	}
 
-	public void setPublicationYear(String publicationYear)
+	@Override
+	public void setSource(String source)
 	{
-		this.publicationYear = publicationYear;
+		this.source = source;
 	}
 
-	public String getPublicationMonth()
+	@Override
+	public String getEdition()
 	{
-		return publicationMonth;
+		return edition;
 	}
 
-	public void setPublicationMonth(String publicationMonth)
+	@Override
+	public void setEdition(String edition)
 	{
-		this.publicationMonth = publicationMonth;
+		this.edition = edition;
 	}
 
-	public String getPublicationDay()
+	@Override
+	public String getVolume()
 	{
-		return publicationDay;
+		return volume;
 	}
 
-	public void setPublicationDay(String publicationDay)
+	@Override
+	public void setVolume(String volume)
 	{
-		this.publicationDay = publicationDay;
+		this.volume = volume;
 	}
 
-	public String getPublicationDateString()
+	@Override
+	public String getIssue()
 	{
-		return publicationDateString;
+		return issue;
 	}
 
-	public void setPublicationDateString(String publicationDateString)
+	@Override
+	public void setIssue(String issue)
 	{
-		this.publicationDateString = publicationDateString;
+		this.issue = issue;
 	}
 
+	@Override
+	public String getPageFrom()
+	{
+		return pageFrom;
+	}
+
+	@Override
+	public void setPageFrom(String pageFrom)
+	{
+		this.pageFrom = pageFrom;
+	}
+
+	@Override
+	public String getPageTo()
+	{
+		return pageTo;
+	}
+
+	@Override
+	public void setPageTo(String pageTo)
+	{
+		this.pageTo = pageTo;
+	}
+
+	@Override
 	public String getDoi()
 	{
 		return doi;
 	}
 
+	@Override
 	public void setDoi(String doi)
 	{
 		this.doi = doi;

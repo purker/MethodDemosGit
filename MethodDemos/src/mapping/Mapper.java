@@ -23,6 +23,7 @@ import org.eclipse.persistence.jaxb.JAXBContextProperties;
 import org.eclipse.persistence.jaxb.JAXBMarshaller;
 import org.eclipse.persistence.jaxb.JAXBUnmarshaller;
 
+import mapping.result.AbstractMetaPublication;
 import mapping.result.Publication;
 import utils.PublicationUtil;
 import utils.XStreamUtil;
@@ -32,7 +33,7 @@ import utils.XStreamUtil;
  */
 public abstract class Mapper
 {
-	private static final boolean OVERRIDE_EXISTING = false; // only map file, if output file not existing
+	private static final boolean OVERRIDE_EXISTING = true; // only map file, if output file not existing
 	protected JAXBContext jc;
 	protected Boolean ignoreDTD = false;
 
@@ -155,7 +156,7 @@ public abstract class Mapper
 	 * @param outputFileObjectAsXML
 	 * @throws JAXBException
 	 */
-	protected void marshall(Publication publication, OutputStream out) throws JAXBException
+	protected void marshall(AbstractMetaPublication publication, OutputStream out) throws JAXBException
 	{
 		JAXBMarshaller marshaller = jc.createMarshaller();
 		marshaller.setProperty(JAXBMarshaller.JAXB_FORMATTED_OUTPUT, true);

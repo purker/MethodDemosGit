@@ -9,9 +9,10 @@
         element-form-default="UNSET"
         prefix=""/>
     <java-types>
+        <java-type name="AbstractMetaPublication" xml-transient="true"/>
         <java-type name="Publication">
             <xml-root-element name="article"/>
-            <xml-type prop-order="id title abstractText abstractTextGerman authors affiliations publicationYear publicationMonth publicationDay publicationDateString doi sections citationContexts references"/>
+            <xml-type prop-order="id title abstractText abstractTextGerman keywords authors affiliations publicationYear publicationMonth publicationDay publicationDateString publicationDate source edition volume issue pageFrom pageTo doi sections citationContexts references"/>
             <java-attributes>
                 <xml-element java-attribute="title" xml-path="/front/article-meta/title-group/article-title/text()"/>
             	<xml-element java-attribute="abstractText" xml-path="/front/article-meta/abstract/p/text()"/>
@@ -25,6 +26,7 @@
             	<xml-element java-attribute="references" xml-path="/back/ref-list/ref"/>
             </java-attributes>
         </java-type>
+        <java-type name="AbstractAuthor" xml-transient="true"/>
         <java-type name="Author">
             <xml-root-element name="contrib"/>
             <!-- <xml-type prop-order="title"/> -->

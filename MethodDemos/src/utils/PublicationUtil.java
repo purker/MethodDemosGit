@@ -2,12 +2,14 @@ package utils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.google.common.base.CharMatcher;
 
 import mapping.result.AbstractAuthor;
+import mapping.result.AbstractMetaPublication;
 import mapping.result.Publication;
 
 public class PublicationUtil
@@ -46,6 +48,26 @@ public class PublicationUtil
 		return sb.toString();
 	}
 
+	public static String concatinateAllAuthorNames(List<? extends AbstractAuthor> authors)
+	{
+		StringBuffer sb = new StringBuffer();
+
+		if(authors != null)
+		{
+			for(Iterator<? extends AbstractAuthor> iterator = authors.iterator(); iterator.hasNext();)
+			{
+				AbstractAuthor author = iterator.next();
+				sb.append(getNameFromAuthor(author));
+
+				if(iterator.hasNext())
+				{
+					sb.append(", ");
+				}
+			}
+		}
+		return sb.toString();
+	}
+
 	public static List<AbstractAuthor> getAllAuthors(Publication publication)
 	{
 		List<AbstractAuthor> authors = new ArrayList<>();
@@ -54,5 +76,28 @@ public class PublicationUtil
 		authors.addAll(publication.getReferences().stream().flatMap(r -> (r.getAuthors() != null) ? (r.getAuthors().stream()) : null).collect(Collectors.toList()));
 
 		return authors;
+	}
+
+	public static String getConcatinatedPages(AbstractMetaPublication publication)
+	{
+		String pageFrom = publication.getPageFrom();
+		String pageTo = publication.getPageTo();
+
+		StringBuffer sb = new StringBuffer();
+
+		if(pageFrom != null)
+		{
+			sb.append(pageFrom);
+		}
+		if(pageFrom != null && pageTo != null)
+		{
+			sb.append("-");
+		}
+		if(pageTo != null)
+		{
+			sb.append(pageTo);
+		}
+
+		return sb.toString();
 	}
 }

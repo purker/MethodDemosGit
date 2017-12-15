@@ -11,7 +11,7 @@
     <java-types>
         <java-type name="Publication">
             <xml-root-element name="algorithms"/>
-            <!-- <xml-type prop-order="title abstractText authors affiliations publicationYear publicationDate doi sections citationContexts references"/> -->
+            <xml-type prop-order="id title abstractText abstractTextGerman keywords authors affiliations publicationYear publicationMonth publicationDay publicationDateString publicationDate source edition volume issue pageFrom pageTo doi sections citationContexts references"/>
             <java-attributes>
                 <xml-element java-attribute="title" xml-path="/algorithm/variant/title/text()"/>
             	<!-- <xml-element java-attribute="abstractText" xml-path="//bodyText[0]/text()"/> -->
@@ -21,6 +21,7 @@
             	<!-- <xml-any-element java-attribute="references" lax="true"/> -->
             </java-attributes>
         </java-type>
+        <java-type name="AbstractAuthor" xml-transient="true"/>
         <java-type name="Author">
             <xml-root-element name="author"/>
             <!-- <xml-type prop-order="title"/> -->

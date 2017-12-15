@@ -1,17 +1,20 @@
 package mapping.result;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-public class Reference extends BaseEntity
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import utils.PublicationUtil;
+
+public class Reference extends AbstractMetaPublication
 {
 	private static final long serialVersionUID = -3747798923009051624L;
 
-	private String id; // normalized marker in form "ref1"
+	// id is normalized marker in form "ref1"
 	private String marker; // "[1]", "[Hun97]", if defined for this method
-	private String title;
-	private String source;
+
 	private String location;
 	private String publisher;
 	private String editor;
@@ -19,32 +22,9 @@ public class Reference extends BaseEntity
 
 	private List<ReferenceAuthor> authors = new ArrayList<>();
 
-	private String doi;
 	private String url;
 
-	private String edition;
-	private String volume;
-	private String issue;
 	private String note;
-
-	private String pageFrom;
-	private String pageTo;
-
-	private String publicationDateString; // as in the extraction xml
-	private String publicationDay;
-	private String publicationMonth;
-	private String publicationYear; // if null, information found in date
-	private Date publicationDate;
-
-	public String getId()
-	{
-		return id;
-	}
-
-	public void setId(String id)
-	{
-		this.id = id;
-	}
 
 	public String getMarker()
 	{
@@ -54,26 +34,6 @@ public class Reference extends BaseEntity
 	public void setMarker(String marker)
 	{
 		this.marker = marker;
-	}
-
-	public String getTitle()
-	{
-		return title;
-	}
-
-	public void setTitle(String title)
-	{
-		this.title = title;
-	}
-
-	public String getSource()
-	{
-		return source;
-	}
-
-	public void setSource(String source)
-	{
-		this.source = source;
 	}
 
 	public String getLocation()
@@ -126,26 +86,6 @@ public class Reference extends BaseEntity
 		this.authors = authors;
 	}
 
-	public String getEdition()
-	{
-		return edition;
-	}
-
-	public void setEdition(String edition)
-	{
-		this.edition = edition;
-	}
-
-	public String getDoi()
-	{
-		return doi;
-	}
-
-	public void setDoi(String doi)
-	{
-		this.doi = doi;
-	}
-
 	public String getUrl()
 	{
 		return url;
@@ -154,26 +94,6 @@ public class Reference extends BaseEntity
 	public void setUrl(String url)
 	{
 		this.url = url;
-	}
-
-	public String getVolume()
-	{
-		return volume;
-	}
-
-	public void setVolume(String volume)
-	{
-		this.volume = volume;
-	}
-
-	public String getIssue()
-	{
-		return issue;
-	}
-
-	public void setIssue(String issue)
-	{
-		this.issue = issue;
 	}
 
 	public String getNote()
@@ -186,74 +106,96 @@ public class Reference extends BaseEntity
 		this.note = note;
 	}
 
-	public String getPageFrom()
+	@Override
+	public String toString()
 	{
-		return pageFrom;
+		return new ReflectionToStringBuilder(this, new ToStringStyle()
+		{
+			private static final long serialVersionUID = -6243515731657791041L;
+
+			@SuppressWarnings("unchecked")
+			@Override
+			public void append(StringBuffer buffer, String fieldName, Object value, Boolean fullDetail)
+			{
+				// boolean isEmptyList = value instanceof List;
+				// System.out.println(isEmptyList + " " + fieldName + isFullDetail(fullDetail));
+
+				if(value != null)
+				{
+					if(fieldName.equals("authors"))
+					{
+						if(!((List<?>)value).isEmpty())
+						{
+							// appendFieldStart(buffer, fieldName);
+							value = PublicationUtil.concatinateAllAuthorNames((List<ReferenceAuthor>)value);
+							appendInternal(buffer, fieldName, value, isFullDetail(fullDetail));
+							appendFieldEnd(buffer, fieldName);
+						}
+					}
+					else
+					{
+						// appendFieldStart(buffer, fieldName);
+						appendInternal(buffer, fieldName, value, isFullDetail(fullDetail));
+						appendFieldEnd(buffer, fieldName);
+					}
+				}
+			}
+
+			@Override
+			public void appendStart(StringBuffer buffer, Object object)
+			{
+
+			}
+
+			@Override
+			public void appendEnd(StringBuffer buffer, Object object)
+			{
+
+			}
+		}).toString();
 	}
 
-	public void setPageFrom(String pageFrom)
+	public final static class NotNullToStringStyle extends ToStringStyle
 	{
-		this.pageFrom = pageFrom;
-	}
+		public static ToStringStyle NOT_NULL_STYLE = new NotNullToStringStyle();
 
-	public String getPageTo()
-	{
-		return pageTo;
-	}
+		private static final long serialVersionUID = 1L;
 
-	public void setPageTo(String pageTo)
-	{
-		this.pageTo = pageTo;
-	}
+		/**
+		 * <p>
+		 * Use the static constant rather than instantiating.
+		 * </p>
+		 */
+		NotNullToStringStyle()
+		{
+			super();
+			this.setFieldSeparator("  ");
+			this.setFieldSeparatorAtStart(true);
+			this.setContentEnd(".");
+		}
 
-	public String getPublicationDateString()
-	{
-		return publicationDateString;
-	}
+		/**
+		 * <p>
+		 * Ensure <code>Singleton</code> after serialization.
+		 * </p>
+		 *
+		 * @return the singleton
+		 */
+		private Object readResolve()
+		{
+			return NOT_NULL_STYLE;
+		}
 
-	public void setPublicationDateString(String publicationDateString)
-	{
-		this.publicationDateString = publicationDateString;
-	}
-
-	public Date getPublicationDate()
-	{
-		return publicationDate;
-	}
-
-	public String getPublicationDay()
-	{
-		return publicationDay;
-	}
-
-	public void setPublicationDay(String publicationDay)
-	{
-		this.publicationDay = publicationDay;
-	}
-
-	public String getPublicationMonth()
-	{
-		return publicationMonth;
-	}
-
-	public void setPublicationMonth(String publicationMonth)
-	{
-		this.publicationMonth = publicationMonth;
-	}
-
-	public String getPublicationYear()
-	{
-		return publicationYear;
-	}
-
-	public void setPublicationYear(String publicationYear)
-	{
-		this.publicationYear = publicationYear;
-	}
-
-	public void setPublicationDate(Date publicationDate)
-	{
-		this.publicationDate = publicationDate;
+		@Override
+		public void append(StringBuffer buffer, String fieldName, Object value, Boolean fullDetail)
+		{
+			if(value != null)
+			{
+				appendFieldStart(buffer, fieldName);
+				appendInternal(buffer, fieldName, value, isFullDetail(fullDetail));
+				appendFieldEnd(buffer, fieldName);
+			}
+		}
 	}
 
 }
