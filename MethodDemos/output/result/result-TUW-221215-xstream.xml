@@ -1,0 +1,1341 @@
+<Publication>
+  <id>TUW-221215</id>
+  <title>Selective Graph Coloring Problem</title>
+  <abstractText>The Selective Graph Coloring Problem (SGCP) is about finding a subgraph of a particular structure whose chromatic number is as low as possible. The original graph is divided into several clusters, and from each cluster the subgraph has to contain exactly one node. This problem is NP-hard and therefore it is usually solved by means of heuristics.
+	
+I implemented several variants of an algorithm making use of Variable Neighborhood Search (VNS) to search the space of solution candidates and then evaluating the solution using heuristic or exact methods. Furthermore, each variant can be used with or without a solution archive, i.e. a data structure in which previously found solutions are stored so that duplicates need not be re-evaluated but can be efficiently converted into new solutions instead. For exact computation of the chromatic number integer linear programming was used. To obtain an upper bound a variant of greedy coloring was used. Another variant of the algorithm also counts the number of conflicts that would appear if one color less were used. Finally, two methods were implemented to obtain a lower bound: maximum clique and linear programming using column generation.
+
+The program was tested with various instances from the literature. My algorithm often finished computation within a very short time, but in general it led to slightly worse results.</abstractText>
+<abstractTextGerman>
+Kurzfassung Beim Selective Graph Coloring Problem (SGCP) geht es darum, einen Teilgraphen mit spezieller Struktur zu finden, dessen chromatische Zahl so niedrig wie möglich ist. Der Ursprungsgraph ist in mehrere Cluster unterteilt, und von jedem Cluster muss der Teilgraph genau einen Knoten enthalten. Dieses Problem ist NP-schwer und wird daher meistens mit Heuristiken gelöst.
+
+Ich habe mehrere Varianten eines Algorithmus implementiert, der Variable Neighborhood Search (VNS) benutzt, um den Lösungsraum zu durchsuchen, und dann die gefundene Lösung mit heuristischen oder exakten Methoden evaluiert. Jede Variante kann mit oder ohne ein Lösungsarchiv verwendet werden. Ein Lösungsarchiv ist eine Datenstruktur, in der bereits gefundene Lösungen gespeichert werden, so dass Duplikate nicht neu evaluiert werden müssen, sondern effizient zu neuen Lösungen konvertiert werden können. Um eine obere Schranke zu errechnen, wurde eine Variante von Greedy Coloring verwendet. Eine weitere Variante des Algorithmus zählt auch die Anzahl der Konflikte, die entstünden, würde eine Farbe weniger verwendet werden. Schließlich wurden zwei Methoden umgesetzt, um eine untere Schranke zu berechnen: maximale Clique und lineare Programmierung mit Spaltengenerierung.
+
+Das Programm wurde mit verschiedenen Instanzen aus der Literatur getestet. Mein Algorithmus beendete die Berechnungen oft schon nach sehr kurzer Laufzeit, führte aber im Allgemeinen zu geringfügig schlechteren Ergebnissen.</abstractTextGerman>
+  <authors>
+    <Author>
+      <firstNames>
+        <string>Claus-Dieter</string>
+      </firstNames>
+      <lastName>Volko</lastName>
+      <affiliations>
+        <Affiliation>
+          <id>aff0</id>
+          <institution>Technische Universität Wien</institution>
+          <department>Fakultät für Informatik</department>
+        </Affiliation>
+      </affiliations>
+    </Author>
+    <Author>
+      <firstNames>
+        <string>Claus-Dieter</string>
+      </firstNames>
+      <lastName>Volko</lastName>
+      <affiliations>
+        <Affiliation reference="/Publication[1]/authors[1]/Author[1]/affiliations[1]/Affiliation[1]"/>
+      </affiliations>
+    </Author>
+  </authors>
+  <sections>
+    <Section>
+		  <level>1</level>
+      <title>Introduction</title>
+      <referenceIds>
+        <string>ref10</string>
+        <string>ref39</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>1.1</level>
+      <title>Graph Theory Basics</title>
+    </Section>
+    <Section>
+      <level>1.2</level>
+      <title>Applications</title>
+      <referenceIds>
+        <string>ref39</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>1.3</level>
+      <title>Formal Definition and Complexity</title>
+      <referenceIds>
+        <string>ref3</string>
+      </referenceIds>
+    </Section>
+    <Section>
+		  <level>2</level>
+      <title>Literature Survey</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>2.1</level>
+      <title>Selective Graph Coloring Problem and Routing and Wavelength Assignment Problem</title>
+      <referenceIds>
+        <string>ref39</string>
+        <string>ref28</string>
+        <string>ref29</string>
+        <string>ref22</string>
+        <string>ref34</string>
+        <string>ref23</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>2.2</level>
+      <title>Graph Coloring</title>
+      <referenceIds>
+        <string>ref3</string>
+        <string>ref5</string>
+        <string>ref43</string>
+        <string>ref10</string>
+        <string>ref42</string>
+        <string>ref44</string>
+        <string>ref37</string>
+        <string>ref41</string>
+        <string>ref24</string>
+      </referenceIds>
+    </Section>
+    <Section>
+		  <level>3</level>
+      <title>Methods</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>3.1</level>
+      <title>Metaheuristics</title>
+      <referenceIds>
+        <string>ref38</string>
+        <string>ref11</string>
+        <string>ref25</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>3.1.1</level>
+      <title>Solution Representation</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>3.1.2</level>
+      <title>Initialization</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>3.1.3</level>
+      <title>Local Search</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>3.1.4</level>
+      <title>Variable Neighborhood Descent</title>
+      <referenceIds>
+        <string>ref21</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>3.1.5</level>
+      <title>Variable Neighborhood Search</title>
+      <referenceIds>
+        <string>ref16</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>3.2</level>
+      <title>Solution Evaluation</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>3.2.1</level>
+      <title>Upper Bound: Maximal Degree</title>
+      <referenceIds>
+        <string>ref1</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>3.2.2</level>
+      <title>Upper Bound: Greedy Coloring</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>3.2.3</level>
+      <title>Minimal Conflicts Heuristic</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>3.2.4</level>
+      <title>Lower Bound: Maximal Clique</title>
+      <referenceIds>
+        <string>ref42</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>3.2.5</level>
+      <title>Exact Method: Integer Linear Programming</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+      <level>3.2.6</level>
+      <title>Lower Bound: Linear Programming with Column Generation</title>
+      <referenceIds>
+        <string>ref10</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>3.3</level>
+      <title>Solution Archive</title>
+      <referenceIds>
+        <string>ref45</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>3.4</level>
+      <title>Complete Algorithm</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+		  <level>4</level>
+      <title>Testing Environment</title>
+      <referenceIds>
+        <string>ref39</string>
+      </referenceIds>
+    </Section>
+    <Section>
+		  <level>5</level>
+      <title>Computational Results</title>
+      <referenceIds>
+        <string>ref39</string>
+        <string>ref40</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>5.1</level>
+      <title>Preliminary Results</title>
+      <referenceIds>
+        <string>ref34</string>
+      </referenceIds>
+    </Section>
+    <Section>
+      <level>5.2</level>
+      <title>Discussion and Final Results</title>
+      <referenceIds/>
+    </Section>
+    <Section>
+		  <level>6</level>
+      <title>Conclusions</title>
+      <referenceIds/>
+    </Section>
+  </sections>
+  <citationContexts/>
+  <references>
+    <Reference>
+      <id>ref1</id>
+      <title>On colouring the nodes of a network</title>
+      <source>Proceedings of the Cambridge Philosophical Society</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>R</string>
+          </firstNames>
+          <lastName>Brooks</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>W</string>
+          </firstNames>
+          <lastName>Tutte</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>37</volume>
+      <issue>2</issue>
+      <pageFrom>194</pageFrom>
+      <pageTo>197</pageTo>
+      <publicationDateString>1941</publicationDateString>
+      <publicationYear>1941</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref2</id>
+      <title>Chromatic scheduling and the chromatic number problem</title>
+      <source>Management Science</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>J</string>
+          </firstNames>
+          <lastName>Brown</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>19</volume>
+			<issue>4</issue>
+      <pageFrom>456</pageFrom>
+      <pageTo>463</pageTo>
+      <publicationDateString>1972</publicationDateString>
+      <publicationYear>1972</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref3</id>
+			<title>Reducibility Among Combinatorial Problems</title>
+      <source>Complexity of Computer Computations</source>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>R</string>
+          </firstNames>
+          <lastName>Karp</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>85</pageFrom>
+      <pageTo>103</pageTo>
+      <publicationDateString>1972</publicationDateString>
+      <publicationYear>1972</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref4</id>
+      <title>Every Planar Map is Four Colorable</title>
+      <source>Illinois Journal of Mathematics</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>K</string>
+          </firstNames>
+          <lastName>Appel</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>W</string>
+          </firstNames>
+          <lastName>Haken</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>21</volume>
+      <pageFrom>429</pageFrom>
+      <pageTo>567</pageTo>
+      <publicationDateString>1977</publicationDateString>
+      <publicationYear>1977</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref5</id>
+      <title>A Graph Coloring Algorithm for Large Scheduling Problems</title>
+      <source>Journal of Research of the National Bureau of Standards</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>F</string>
+          </firstNames>
+          <lastName>Leighton</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>84</volume>
+      <issue>6</issue>
+      <pageFrom>489</pageFrom>
+      <pageTo>506</pageTo>
+      <publicationDateString>1979</publicationDateString>
+      <publicationYear>1979</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref6</id>
+      <title>A correction to Brelaz&apos;s modification of Brown&apos;s coloring algorithm</title>
+      <source>Communications of the ACM</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>J</string>
+          </firstNames>
+          <lastName>Peemöller</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>26</volume>
+      <issue>8</issue>
+      <pageFrom>593</pageFrom>
+      <pageTo>597</pageTo>
+      <publicationDateString>1983</publicationDateString>
+      <publicationYear>1983</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref7</id>
+      <title>A generalized implicit enumeration algorithm for graph coloring</title>
+      <source>Communications of the ACM</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Kubale</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>B</string>
+          </firstNames>
+          <lastName>Jackowski</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>28</volume>
+			<issue>4</issue>
+      <pageFrom>412</pageFrom>
+      <pageTo>418</pageTo>
+      <publicationDateString>1985</publicationDateString>
+      <publicationYear>1985</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref8</id>
+      <source>Using Tabu Search Techniques for Graph Coloring. Computing</source>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A</string>
+          </firstNames>
+          <lastName>Hertz</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>D</string>
+          </firstNames>
+          <lastName>de Werra</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>39</volume>
+      <pageFrom>345</pageFrom>
+      <pageTo>351</pageTo>
+      <publicationDateString>1987</publicationDateString>
+      <publicationYear>1987</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref9</id>
+      <title>Efficient routing in all-optical networks</title>
+      <source>Proc 26th ACM Symp. on Theory of Computing</source>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>P</string>
+          </firstNames>
+          <lastName>Raghavan</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>E</string>
+          </firstNames>
+          <lastName>Upfal</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>134</pageFrom>
+      <pageTo>143</pageTo>
+      <publicationDateString>1994</publicationDateString>
+      <publicationYear>1994</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref10</id>
+      <title>A Column Generation Approach For Graph Coloring</title>
+      <source>INFORMS Journal on Computing</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A</string>
+          </firstNames>
+          <lastName>Mehrotra</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Trick</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>8</volume>
+      <pageFrom>344</pageFrom>
+      <pageTo>354</pageTo>
+      <publicationDateString>1995</publicationDateString>
+      <publicationYear>1995</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref11</id>
+			<title>No Free Lunch Theorems for Search</title>
+      <source>Technical Report SFI-TR-95-02-010</source>
+      <publisher>Santa Fe Institute</publisher>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>D</string>
+          </firstNames>
+          <lastName>Wolpert</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>W</string>
+          </firstNames>
+          <lastName>Macready</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1995</publicationDateString>
+      <publicationYear>1995</publicationYear>			
+    </Reference>
+    <Reference>
+      <id>ref12</id>
+			<title>Distributed Coloration Neighborhood Search</title>
+      <source>DIMACS Series in Discrete Mathematics and Theoretical Computer Science</source>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>C</string>
+          </firstNames>
+          <lastName>Morgenstern</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>26</volume>
+      <pageFrom>335</pageFrom>
+      <pageTo>357</pageTo>
+      <publicationDateString>1996</publicationDateString>
+      <publicationYear>1996</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref13</id>
+      <title>Routing and wavelength assignment in alloptical networks</title>
+      <source>IEEE/ACM Trans. Networking</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>R</string>
+          </firstNames>
+          <lastName>Ramaswami</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>K</string>
+          </firstNames>
+          <lastName>Sivarajan</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>3</volume>
+      <issue>5</issue>
+      <pageFrom>489</pageFrom>
+      <pageTo>500</pageTo>
+      <publicationDateString>1995</publicationDateString>
+      <publicationYear>1995</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref14</id>
+      <title>Genetic and hybrid algorithms for graph coloring</title>
+      <source>Annals of Operations Research</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>C</string>
+          </firstNames>
+          <lastName>Fleurent</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>J</string>
+          </firstNames>
+          <lastName>Ferland</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>63</volume>
+			<issue>3</issue>
+      <pageFrom>437</pageFrom>
+      <pageTo>461</pageTo>
+      <publicationDateString>1996</publicationDateString>
+      <publicationYear>1996</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref15</id>
+      <title>Some principles for designing a wide-area WDM optical network</title>
+      <source>IEEE/ACM Trans. Networking</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>B</string>
+          </firstNames>
+          <lastName>Mukherjee</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>4</volume>
+      <issue>5</issue>
+      <pageFrom>684</pageFrom>
+      <pageTo>696</pageTo>
+      <publicationDateString>1996</publicationDateString>
+      <publicationYear>1996</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref16</id>
+      <title>Variable neighborhood search</title>
+      <source>Computers and Operations Research</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>N</string>
+          </firstNames>
+          <lastName>Mladenovic</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>P</string>
+          </firstNames>
+          <lastName>Hansen</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>24</volume>
+      <issue>11</issue>
+      <pageFrom>1097</pageFrom>
+      <pageTo>1100</pageTo>
+      <publicationDateString>1997</publicationDateString>
+      <publicationYear>1997</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref17</id>
+      <title>Routing and wavelength assignment in all-optical WDM wavelength-routed networks</title>
+			<source>PhD thesis</source>
+			<publisher>George Washington University</publisher>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>E</string>
+          </firstNames>
+          <lastName>Harder</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1998</publicationDateString>
+      <publicationYear>1998</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref18</id>
+			<title>Optical communication networks</title>
+      <publisher>Morgan-Kaufmann</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>R</string>
+          </firstNames>
+          <lastName>Ramaswami</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>K</string>
+          </firstNames>
+          <lastName>Sivarajan</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1998</publicationDateString>
+      <publicationYear>1998</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref19</id>
+      <title>Hybrid Evolutionary Algorithms for Graph Coloring</title>
+      <source>Journal of Combinatoral Optimization</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>P</string>
+          </firstNames>
+          <lastName>Galinier</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>J</string>
+          </firstNames>
+          <lastName>Hao</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>3</volume>
+			<issue>4</issue>
+      <pageFrom>379</pageFrom>
+      <pageTo>397</pageTo>
+      <publicationDateString>1999</publicationDateString>
+      <publicationYear>1999</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref20</id>
+      <title>Routing and Scheduling I/O Transfers on WormholeRouted Mesh Networks</title>
+      <source>J. Parallel and Distributed Computing</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>B</string>
+          </firstNames>
+          <lastName>Narahari</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>et</string>
+          </firstNames>
+          <lastName>al.</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>57</volume>
+      <issue>1</issue>
+      <pageFrom>1</pageFrom>
+      <pageTo>13</pageTo>
+      <publicationDateString>1999</publicationDateString>
+      <publicationYear>1999</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref21</id>
+      <title>Improvements and comparison of heuristics for solving the multisource Weber problem</title>
+      <source>Operational Research</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>J</string>
+          </firstNames>
+          <lastName>Brimberg</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <issue>48</issue>
+      <pageFrom>444</pageFrom>
+      <pageTo>460</pageTo>
+      <publicationDateString>2000</publicationDateString>
+      <publicationYear>2000</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref22</id>
+      <title>The Partition Coloring Problem and its Application to Wavelength Routing and Assignment</title>
+      <source>Proceedings of the First Workshop on Optical Networks</source>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>G</string>
+          </firstNames>
+          <lastName>Li</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>R</string>
+          </firstNames>
+          <lastName>Simha</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2000</publicationDateString>
+      <publicationYear>2000</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref23</id>
+      <title>A functional classification of routing and wavelength assignment schemes in DWDM networks: Static case</title>
+      <source>Proceedings of the 7th International Conference on Optical Communication and Networks</source>
+			<location>Paris</location>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>J</string>
+          </firstNames>
+          <lastName>Choi</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>et</string>
+          </firstNames>
+          <lastName>al.</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>1109</pageFrom>
+      <pageTo>1115</pageTo>
+      <publicationDateString>2000</publicationDateString>
+      <publicationYear>2000</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref24</id>
+      <source>Constructive Genetic Algorithm and Column Generation: an Application to Graph Coloring</source>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>G</string>
+          </firstNames>
+          <lastName>Filho</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>et</string>
+          </firstNames>
+          <lastName>al.</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <note>paper published on the Internet</note>
+      <publicationDateString>2000</publicationDateString>
+      <publicationYear>2000</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref25</id>
+      <title>Optimization Is Easy and Learning Is Hard in the Typical Function</title>
+      <source>Proceedings of the 2000 Congress on Evolutionary Computation: CEC00</source>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>T</string>
+          </firstNames>
+          <lastName>English</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>924</pageFrom>
+      <pageTo>931</pageTo>
+      <publicationDateString>2000</publicationDateString>
+      <publicationYear>2000</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref26</id>
+      <title>Finding the chromatic number by means of critical graphs</title>
+      <source>ACM Journal of Experimental Algorithmics</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>F</string>
+          </firstNames>
+          <lastName>Herrmann</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A</string>
+          </firstNames>
+          <lastName>Hertz</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>7</volume>
+      <issue>10</issue>
+      <pageFrom>1</pageFrom>
+      <pageTo>9</pageTo>
+      <publicationDateString>2002</publicationDateString>
+      <publicationYear>2002</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref27</id>
+      <title>A Variable Neighborhood Search for Graph Coloring</title>
+      <source>European Journal of Operational Research</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>C</string>
+          </firstNames>
+          <lastName>Avanthay</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A</string>
+          </firstNames>
+          <lastName>Hertz</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>N</string>
+          </firstNames>
+          <lastName>Zufferey</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>151</volume>
+      <pageFrom>379</pageFrom>
+      <pageTo>388</pageTo>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref28</id>
+			<title>Cliques, holes and the vertex coloring polytope</title>
+      <source>Information Processing Letters</source>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>R</string>
+          </firstNames>
+          <lastName>Correa</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Campelo</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Y</string>
+          </firstNames>
+          <lastName>Frota</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>89</volume>
+      <pageFrom>159</pageFrom>
+      <pageTo>164</pageTo>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref29</id>
+      <title>On the asymmetric representatives formulation for the vertex coloring problem</title>
+      <source>Proceedings of the 2th Brazilian Symposium on Graphs, Algorithms and Combinatorics</source>
+      <type>m</type>
+			<location>Angra dos Reis</location>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Campelo</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>V</string>
+          </firstNames>
+          <lastName>Campos</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>R</string>
+          </firstNames>
+          <lastName>Correa</lastName>
+        </ReferenceAuthor>
+      </authors>
+			<note>Electronic Notes in Discrete Mathematics</note>
+      <volume>19</volume>
+      <pageFrom>337</pageFrom>
+      <pageTo>343</pageTo>
+      <publicationDateString>2005</publicationDateString>
+      <publicationYear>2005</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref30</id>
+      <title>Efficient algorithms for finding critical subgraphs</title>
+      <source>Discrete Applied mathematics</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>C</string>
+          </firstNames>
+          <lastName>Desrosiers</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>P</string>
+          </firstNames>
+          <lastName>Galinier</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A</string>
+          </firstNames>
+          <lastName>Hertz</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>156</volume>
+      <issue>2</issue>
+      <pageFrom>244</pageFrom>
+      <pageTo>266</pageTo>
+      <publicationDateString>2005</publicationDateString>
+      <publicationYear>2005</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref31</id>
+      <title>An Adaptive Memory Algorithm for the Graph Coloring Problem</title>
+      <source>Discrete Applied Mathematics</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A</string>
+          </firstNames>
+          <lastName>Hertz</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>P</string>
+          </firstNames>
+          <lastName>Galinier</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>N</string>
+          </firstNames>
+          <lastName>Zufferey</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>156</volume>
+      <issue>2</issue>
+      <pageFrom>267</pageFrom>
+      <pageTo>279</pageTo>
+      <publicationDateString>2005</publicationDateString>
+      <publicationYear>2005</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref32</id>
+			<title>A Metaheuristic Approach for the Vertex Coloring Problem</title>
+      <source>Technical Report OR/05/3</source>
+			<publisher>University of Bologna</publisher>
+      <location>Italy</location>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>E</string>
+          </firstNames>
+          <lastName>Malaguti</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Monaci</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>P</string>
+          </firstNames>
+          <lastName>Thot</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2005</publicationDateString>
+      <publicationYear>2005</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref33</id>
+      <title>A Branch-and-Cut Algorithm for Graph Coloring</title>
+      <source>Discrete Applied Mathematics</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>I</string>
+          </firstNames>
+          <lastName>Diaz</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>P</string>
+          </firstNames>
+          <lastName>Zabala</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>154</volume>
+      <issue>5</issue>
+      <pageFrom>826</pageFrom>
+      <pageTo>847</pageTo>
+      <publicationDateString>2006</publicationDateString>
+      <publicationYear>2006</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref34</id>
+      <title>Routing and wavelength assignment by partition colouring</title>
+      <source>European Journal of Operational Research</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>T</string>
+          </firstNames>
+          <lastName>Noronha</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>C</string>
+          </firstNames>
+          <lastName>Ribeiro</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>171</volume>
+			<issue>3</issue>
+      <pageFrom>797</pageFrom>
+      <pageTo>810</pageTo>
+      <publicationDateString>2006</publicationDateString>
+      <publicationYear>2006</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref35</id>
+			<title>Tremaux Trees and Planarity</title>
+      <source>European Journal of Combinatorics</source>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>H</string>
+          </firstNames>
+          <lastName>de Fraysseix</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>P</string>
+          </firstNames>
+          <lastName>Ossona de Mendez</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>P</string>
+          </firstNames>
+          <lastName>Rosenstiehl</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>33</volume>
+			<issue>3</issue>
+      <pageFrom>2798</pageFrom>
+      <pageTo>293</pageTo>
+      <publicationDateString>2012</publicationDateString>
+      <publicationYear>2012</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref36</id>
+      <title>A graph coloring heuristic using partial solutions and a reactive tabu scheme</title>
+      <source>Computers &amp; Operations Research</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>I</string>
+          </firstNames>
+          <lastName>Blöchliger</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>N</string>
+          </firstNames>
+          <lastName>Zufferey</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>35</volume>
+      <issue>3</issue>
+      <pageFrom>960</pageFrom>
+      <pageTo>975</pageTo>
+      <publicationDateString>2008</publicationDateString>
+      <publicationYear>2008</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref37</id>
+      <title>Variable space search for graph coloring</title>
+      <source>Discrete Applied Mathematics</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A</string>
+          </firstNames>
+          <lastName>Hertz</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>et</string>
+          </firstNames>
+          <lastName>al.</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>156</volume>
+			<issue>13</issue>
+      <pageFrom>2551</pageFrom>
+      <pageTo>1560</pageTo>
+      <publicationDateString>2008</publicationDateString>
+      <publicationYear>2008</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref38</id>
+      <title>Essentials of Metaheuristics</title>
+			<pulbisher>Lulu</pulbisher>
+			<url>http://cs.gmu.edu/~sean/book/metaheuristics/</url>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>S</string>
+          </firstNames>
+          <lastName>Luke</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2009</publicationDateString>
+      <publicationYear>2009</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref39</id>
+			<title>A branch-and-cut algorithm for partition coloring</title>
+      <source>Networks</source>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Y</string>
+          </firstNames>
+          <lastName>Frota</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>et</string>
+          </firstNames>
+          <lastName>al.</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>55</volume>
+			<issue>3</issue>
+      <pageFrom>194</pageFrom>
+      <pageTo>204</pageTo>
+      <publicationDateString>2010</publicationDateString>
+      <publicationYear>2010</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref40</id>
+      <title>Instances for the partition Coloring Problem</title>
+			<url>www.ic.uff.br/~celso/grupo/pcp.htm</url>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Y</string>
+          </firstNames>
+          <lastName>Frota</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>et</string>
+          </firstNames>
+          <lastName>al.</lastName>
+        </ReferenceAuthor>
+      </authors>
+    </Reference>
+    <Reference>
+      <id>ref41</id>
+      <title>A memetic algorithm for graph coloring</title>
+      <source>European Journal of Operational Research</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Z</string>
+          </firstNames>
+          <lastName>Lü</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>J</string>
+          </firstNames>
+          <lastName>Hao</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>203</volume>
+      <issue>1</issue>
+      <pageFrom>241</pageFrom>
+      <pageTo>250</pageTo>
+      <publicationDateString>2010</publicationDateString>
+      <publicationYear>2010</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref42</id>
+			<title>Safe Lower Bounds For Graph Coloring</title>
+      <source>IPCO 2011</source>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>S</string>
+          </firstNames>
+          <lastName>Held</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>et</string>
+          </firstNames>
+          <lastName>al.</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>261</pageFrom>
+      <pageTo>273</pageTo>
+      <publicationDateString>2011</publicationDateString>
+      <publicationYear>2011</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref43</id>
+			<title>Efficieny issues in the RLF heuristic for graph coloring</title>
+      <source>MIC 2011 (The IX Metaheuristics International Conference)</source>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Chiarandini</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>G</string>
+          </firstNames>
+          <lastName>Galbiati</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>S</string>
+          </firstNames>
+          <lastName>Gualandi</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>461</pageFrom>
+      <pageTo>469</pageTo>
+      <publicationDateString>2011</publicationDateString>
+      <publicationYear>2011</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref44</id>
+      <title>Exact Solution of Graph Coloring Problems via Constraint Programming and Column Generation</title>
+      <source>INFORMS Journal on Computing</source>
+      <type>j</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>S</string>
+          </firstNames>
+          <lastName>Gualandi</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>F</string>
+          </firstNames>
+          <lastName>Malucelli</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>24</volume>
+      <issue>1</issue>
+      <pageFrom>81</pageFrom>
+      <pageTo>100</pageTo>
+      <publicationDateString>2012</publicationDateString>
+      <publicationYear>2012</publicationYear>
+    </Reference>
+    <Reference>
+      <id>ref45</id>
+      <title>An evolutionary algorithm with solution archive for the generalized minimum spanning tree problem</title>
+      <source>Proceedings of the 13th International Conference on Computer Aided Systems Theory: Part I</source>
+      <publisher>Springer</publisher>
+      <type>m</type>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>B</string>
+          </firstNames>
+          <lastName>Hu</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>G</string>
+          </firstNames>
+          <lastName>Raidl</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>6927</volume>
+      <pageFrom>287</pageFrom>
+      <pageTo>294</pageTo>
+			<note>of LNCS</note>
+      <publicationDateString>2012</publicationDateString>
+      <publicationYear>2012</publicationYear>
+    </Reference>
+  </references>
+</Publication>
