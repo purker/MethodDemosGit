@@ -6,18 +6,29 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.google.common.base.CharMatcher;
-
 import mapping.result.AbstractAuthor;
 import mapping.result.AbstractMetaPublication;
 import mapping.result.Publication;
+import mapping.result.Reference;
 
 public class PublicationUtil
 {
 
+	public static String getIdFromFileNameWithoutPrefix(File file)
+	{
+		String id = getIdFromFileNameWithoutPrefix(file.getName());
+		return id;
+	}
+
+	public static String getIdFromFileNameWithoutPrefix(String fileName)
+	{
+		String id = fileName.replaceAll("\\D+", "");
+		return id;
+	}
+
 	public static String getIdFromFileName(String fileName)
 	{
-		String id = CharMatcher.DIGIT.retainFrom(fileName);
+		String id = getIdFromFileNameWithoutPrefix(fileName);
 		return "TUW-" + id;
 	}
 
@@ -68,6 +79,67 @@ public class PublicationUtil
 		return sb.toString();
 	}
 
+	/**
+	 * @param authors
+	 *            if 1 author: name<br>
+	 *            if 2 authors: name and name<br>
+	 *            if >2 authors: name et al.
+	 * @return
+	 */
+	public static String getConcatinatedLastNamesOfAuthors(List<? extends AbstractAuthor> authors)
+	{
+		if(CollectionUtil.isNotEmpty(authors))
+		{
+			if(authors.size() == 1)
+			{
+				return authors.get(0).getLastName();
+			}
+			else if(authors.size() == 2)
+			{
+				return authors.get(0).getLastName() + " and " + authors.get(1).getLastName();
+			}
+			else
+			{
+				return authors.get(0).getLastName() + " et al.";
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * @param authors
+	 *            if 1 author: name<br>
+	 *            if 2 authors: name and name<br>
+	 *            if 3 authors: name, name, and name<br>
+	 *            if >3 authors: name et al.
+	 * @return
+	 */
+	public static String getConcatinatedLastNamesOfAuthors2(List<? extends AbstractAuthor> authors)
+	{
+		if(CollectionUtil.isNotEmpty(authors))
+		{
+			if(authors.size() == 1)
+			{
+				return authors.get(0).getLastName();
+			}
+			else if(authors.size() == 2)
+			{
+				return authors.get(0).getLastName() + " and " + authors.get(1).getLastName();
+			}
+			else if(authors.size() == 3)
+			{
+				return authors.get(0).getLastName() + ", " + authors.get(1).getLastName() + ", and " + authors.get(2).getLastName();
+			}
+			else
+			{
+				return authors.get(0).getLastName() + " et al.";
+			}
+		}
+
+		return null;
+	}
+
 	public static List<AbstractAuthor> getAllAuthors(Publication publication)
 	{
 		List<AbstractAuthor> authors = new ArrayList<>();
@@ -99,5 +171,10 @@ public class PublicationUtil
 		}
 
 		return sb.toString();
+	}
+
+	public static String getConcatinatedLastNamesOfAuthors(Reference reference)
+	{
+		return getConcatinatedLastNamesOfAuthors(reference.getAuthors());
 	}
 }

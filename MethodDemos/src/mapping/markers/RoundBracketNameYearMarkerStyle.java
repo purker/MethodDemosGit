@@ -14,8 +14,25 @@ public class RoundBracketNameYearMarkerStyle extends AbstractMarkerStyle
 	{
 		StringBuffer sb = new StringBuffer();
 		sb.append("(");
-		sb.append(ReferenceUtil.getConcatinatedLastNamesOfAuthors(reference));
-		sb.append(", ");
+		String names = ReferenceUtil.getConcatinatedLastNamesOfAuthors(reference);
+		if(names != null)
+		{
+			sb.append(names);
+			sb.append(", ");
+		}
+		else
+		{
+			if(reference.getPublisher() != null)
+			{
+				sb.append(reference.getPublisher());
+				sb.append(", ");
+			}
+			else if(reference.getEditor() != null)
+			{
+				sb.append(reference.getEditor());
+				sb.append(", ");
+			}
+		}
 		sb.append(reference.getPublicationYear());
 		sb.append(")");
 		return sb.toString();
