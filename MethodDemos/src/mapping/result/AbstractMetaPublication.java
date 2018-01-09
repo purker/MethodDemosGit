@@ -12,16 +12,18 @@ public class AbstractMetaPublication extends BaseEntity
 	protected String edition;
 	protected String volume;
 	protected String issue;
+	protected String chapter;
 
 	protected String pageFrom;
 	protected String pageTo;
 
-	private String publicationDateString; // as in the extraction xml
-	private String publicationDay;
-	private String publicationMonth;
-	private String publicationYear; // if null, information found in date
-	private Date publicationDate;
+	protected String publicationDateString; // as in the extraction xml
+	protected String publicationDay;
+	protected String publicationMonth;
+	protected String publicationYear; // if null, information found in date
+	protected Date publicationDate;
 
+	protected String url;
 	protected String doi;
 
 	public String getId()
@@ -82,6 +84,16 @@ public class AbstractMetaPublication extends BaseEntity
 	public void setIssue(String issue)
 	{
 		this.issue = issue;
+	}
+
+	public String getChapter()
+	{
+		return chapter;
+	}
+
+	public void setChapter(String chapter)
+	{
+		this.chapter = chapter;
 	}
 
 	public String getPageFrom()
@@ -152,6 +164,16 @@ public class AbstractMetaPublication extends BaseEntity
 	public void setPublicationDate(Date publicationDate)
 	{
 		this.publicationDate = publicationDate;
+	}
+
+	public String getUrl()
+	{
+		return url;
+	}
+
+	public void setUrl(String url)
+	{
+		this.url = url;
 	}
 
 	public String getDoi()
