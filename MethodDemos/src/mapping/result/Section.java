@@ -9,6 +9,7 @@ public class Section extends BaseEntity
 
 	private String id;
 	private String level;
+	private String layer;
 	private String title;
 	private String type;
 	private SectionType typeEnum;
@@ -34,6 +35,16 @@ public class Section extends BaseEntity
 	public void setLevel(String level)
 	{
 		this.level = level;
+	}
+
+	public String getLayer()
+	{
+		return layer;
+	}
+
+	public void setLayer(String layer)
+	{
+		this.layer = layer;
 	}
 
 	public String getTitle()
