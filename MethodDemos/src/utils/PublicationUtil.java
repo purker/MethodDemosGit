@@ -14,7 +14,7 @@ import mapping.result.Reference;
 public class PublicationUtil
 {
 
-	public static String getIdFromFileNameWithoutPrefix(File file)
+	public static String getIdFromFileWithoutPrefix(File file)
 	{
 		String id = getIdFromFileNameWithoutPrefix(file.getName());
 		return id;

@@ -1,6 +1,7 @@
 package utils;
 
 import java.util.Collection;
+import java.util.Collections;
 
 public class CollectionUtil
 {
@@ -14,4 +15,8 @@ public class CollectionUtil
 		return !isEmpty(collection);
 	}
 
+	public static <T> Collection<T> emptyIfNull(Collection<T> iterable)
+	{
+		return iterable == null ? Collections.<T> emptyList() : iterable;
+	}
 }

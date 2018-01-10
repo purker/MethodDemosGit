@@ -8,6 +8,9 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.converters.reflection.FieldDictionary;
+import com.thoughtworks.xstream.converters.reflection.SortableFieldKeySorter;
+import com.thoughtworks.xstream.converters.reflection.SunUnsafeReflectionProvider;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import mapping.result.Affiliation;
@@ -38,7 +41,6 @@ public class XStreamUtil
 		try
 		{
 			XStream xStream = getXStream();
-			// xStream.setMode(XStream.ID_REFERENCES);
 			xStream.toXML(object, stream);
 		}
 		catch(Exception e)
@@ -50,7 +52,14 @@ public class XStreamUtil
 
 	private static XStream getXStream()
 	{
-		XStream xStream = new XStream(new DomDriver(StandardCharsets.UTF_8.name()));
+		SortableFieldKeySorter sorter = new SortableFieldKeySorter();
+		// sorter.registerFieldOrder(Reference.class, new String[]
+		// {"serialVersionUID", "id", "marker", "authors", "title", "editor", "source", "edition", "publisher", "location", "volume", "issue", "pageFrom", "pageTo", "publicationDateString",
+		// "publicationDay", "publicationMonth", "publicationYear", "publicationDate", "doi", "type", "url", "note"});
+		sorter.registerFieldOrder(Reference.class, new String[]{"serialVersionUID", "id", "marker", "title", "editor", "source", "publisher", "authors", "edition", "location", "volume", "issue", "chapter", "note", "pageFrom", "pageTo", "publicationDateString", "publicationDay", "publicationMonth", "publicationYear", "publicationDate", "doi", "type", "url"});
+
+		XStream xStream = new XStream(new SunUnsafeReflectionProvider(new FieldDictionary(sorter)), new DomDriver(StandardCharsets.UTF_8.name()));
+
 		xStream.setMode(XStream.SINGLE_NODE_XPATH_ABSOLUTE_REFERENCES);
 
 		xStream.alias("Publication", Publication.class);
