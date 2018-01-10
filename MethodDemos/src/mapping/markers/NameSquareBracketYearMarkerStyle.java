@@ -1,10 +1,10 @@
 package mapping.markers;
 
 import mapping.result.Reference;
-import utils.ReferenceUtil;
+import utils.PublicationUtil;
 
 /**
- * "Freining et al. [2002]", "Gallier [2003] or Huth and Ryan [2004]"
+ * "Freining et al. (2002)", "Gallier (2003) or Huth and Ryan (2004)"
  */
 public class NameSquareBracketYearMarkerStyle extends AbstractMarkerStyle
 {
@@ -13,10 +13,10 @@ public class NameSquareBracketYearMarkerStyle extends AbstractMarkerStyle
 	public String getMarkerString(Reference reference)
 	{
 		StringBuffer sb = new StringBuffer();
-		sb.append(ReferenceUtil.getConcatinatedLastNamesOfAuthors(reference));
-		sb.append(" [");
+		sb.append(PublicationUtil.getConcatinatedLastNamesOfAuthors(reference));
+		sb.append(" (");
 		sb.append(reference.getPublicationYear());
-		sb.append("]");
+		sb.append(")");
 		return sb.toString();
 	}
 
