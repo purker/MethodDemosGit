@@ -104,66 +104,6 @@ public class Publication extends AbstractMetaPublication
 		this.edition = edition;
 	}
 
-	@Override
-	public String getVolume()
-	{
-		return volume;
-	}
-
-	@Override
-	public void setVolume(String volume)
-	{
-		this.volume = volume;
-	}
-
-	@Override
-	public String getIssue()
-	{
-		return issue;
-	}
-
-	@Override
-	public void setIssue(String issue)
-	{
-		this.issue = issue;
-	}
-
-	@Override
-	public String getPageFrom()
-	{
-		return pageFrom;
-	}
-
-	@Override
-	public void setPageFrom(String pageFrom)
-	{
-		this.pageFrom = pageFrom;
-	}
-
-	@Override
-	public String getPageTo()
-	{
-		return pageTo;
-	}
-
-	@Override
-	public void setPageTo(String pageTo)
-	{
-		this.pageTo = pageTo;
-	}
-
-	@Override
-	public String getDoi()
-	{
-		return doi;
-	}
-
-	@Override
-	public void setDoi(String doi)
-	{
-		this.doi = doi;
-	}
-
 	public List<Section> getSections()
 	{
 		return sections;

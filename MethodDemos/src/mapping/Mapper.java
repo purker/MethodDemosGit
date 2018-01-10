@@ -23,13 +23,13 @@ import org.eclipse.persistence.jaxb.JAXBContextProperties;
 import org.eclipse.persistence.jaxb.JAXBMarshaller;
 import org.eclipse.persistence.jaxb.JAXBUnmarshaller;
 
-import mapping.result.AbstractMetaPublication;
 import mapping.result.Publication;
+import utils.CollectionUtil;
 import utils.PublicationUtil;
 import utils.XStreamUtil;
 
 /**
- * Converts xml output of Cermine to ResultPublication (with JAXB) and saves resulting pojo as xml (serialized with XStream, not JAXB)
+ * Converts xml output of specific method to Publication (with JAXB) and saves resulting pojo as xml (serialized with XStream, not JAXB)
  */
 public abstract class Mapper
 {
@@ -76,6 +76,32 @@ public abstract class Mapper
 		unmarshallFiles(inputFiles);
 	}
 
+	/**
+	 * @param inputDir
+	 *            all xml-files with {methodName} will be mapped
+	 * @throws JAXBException
+	 */
+	public void unmarshallFilesWithId(File inputDir, List<String> idList)
+	{
+		if(CollectionUtil.isEmpty(idList))
+		{
+			unmarshallFiles(inputDir);
+		}
+		else
+		{
+			List<File> inputFiles = Arrays.asList(inputDir.listFiles(new FilenameFilter()
+			{
+				@Override
+				public boolean accept(File file, String fileName)
+				{
+					String id = PublicationUtil.getIdFromFileNameWithoutPrefix(fileName);
+					return fileName.startsWith(getMethodName()) && idList.contains(id) && fileName.endsWith(".xml") && !fileName.endsWith("xstream.xml");
+				}
+			}));
+			unmarshallFiles(inputFiles);
+		}
+	}
+
 	public void unmarshallFiles(List<File> inputFilesXML)
 	{
 		for(File inputFile : inputFilesXML)
@@ -86,12 +112,14 @@ public abstract class Mapper
 			File errorFile = getErrorFile(id);
 			try
 			{
-				unmarshall(inputFile, outputFile);
+				unmarshallToXmlFile(inputFile, outputFile);
 			}
 			catch(Exception e)
 			{
 				try
 				{
+					System.out.println(inputFile);
+					// Desktop.getDesktop().open(inputFile);
 					e.printStackTrace();
 					e.printStackTrace(new PrintStream(errorFile));
 				}
@@ -114,13 +142,22 @@ public abstract class Mapper
 		return new File(getDirectory(), getMethodName() + "-" + id + "-xstream.xml");
 	}
 
-	protected void unmarshall(File inputFileXML, File outputFileObjectAsXML) throws JAXBException, XMLStreamException
+	protected void unmarshallToXmlFile(File inputFileXML, File outputFileObjectAsXML) throws JAXBException, XMLStreamException
 	{
 		if(!OVERRIDE_EXISTING && outputFileObjectAsXML.exists())
 		{
 			System.out.println("already exists: " + outputFileObjectAsXML);
 			return;
 		}
+		Publication publication = unmarshall(inputFileXML);
+
+		XStreamUtil.convertToXmL(publication, outputFileObjectAsXML, System.out, false);
+
+		// System.out.println(publication);
+	}
+
+	public Publication unmarshall(File inputFileXML) throws JAXBException, XMLStreamException
+	{
 		JAXBUnmarshaller unmarshaller = jc.createUnmarshaller();
 		Publication publication;
 		if(getIgnoreDTD())
@@ -142,9 +179,7 @@ public abstract class Mapper
 			worker.doWork(publication);
 		}
 
-		XStreamUtil.convertToXmL(publication, outputFileObjectAsXML, System.out, false);
-
-		// System.out.println(publication);
+		return publication;
 	}
 
 	/**
@@ -156,11 +191,18 @@ public abstract class Mapper
 	 * @param outputFileObjectAsXML
 	 * @throws JAXBException
 	 */
-	protected void marshall(AbstractMetaPublication publication, OutputStream out) throws JAXBException
+	protected void marshall(Publication publication, OutputStream out) throws JAXBException
 	{
 		JAXBMarshaller marshaller = jc.createMarshaller();
 		marshaller.setProperty(JAXBMarshaller.JAXB_FORMATTED_OUTPUT, true);
 		marshaller.marshal(publication, out);
+	}
+
+	public void marshall(Publication publication, File file) throws JAXBException
+	{
+		JAXBMarshaller marshaller = jc.createMarshaller();
+		marshaller.setProperty(JAXBMarshaller.JAXB_FORMATTED_OUTPUT, true);
+		marshaller.marshal(publication, file);
 	}
 
 	protected abstract String getBindingFile();

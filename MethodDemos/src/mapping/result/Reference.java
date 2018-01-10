@@ -15,14 +15,11 @@ public class Reference extends AbstractMetaPublication
 	// id is normalized marker in form "ref1"
 	private String marker; // "[1]", "[Hun97]", if defined for this method
 
-	private String location;
+	private List<ReferenceAuthor> authors = new ArrayList<>();
 	private String publisher;
+	private String location;
 	private String editor;
 	private String type; // book, colletion, inproceedings, ...
-
-	private List<ReferenceAuthor> authors = new ArrayList<>();
-
-	private String url;
 
 	private String note;
 
@@ -84,16 +81,6 @@ public class Reference extends AbstractMetaPublication
 	public void setAuthors(List<ReferenceAuthor> authors)
 	{
 		this.authors = authors;
-	}
-
-	public String getUrl()
-	{
-		return url;
-	}
-
-	public void setUrl(String url)
-	{
-		this.url = url;
 	}
 
 	public String getNote()

@@ -7,16 +7,18 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
+import utils.PublicationUtil;
 import utils.SimplestFormatter;
 
 public abstract class AbstractDemo
 {
 	protected static Logger logger = Logger.getLogger(AbstractDemo.class.getName());
-	private static final boolean OVERRIDE_EXISTING = false; // only map file, if output file not existing
+	private static final boolean OVERRIDE_EXISTING = true; // only map file, if output file not existing
 
 	/**
 	 * Iterates over files and invokes runDemo for them. Also measures the execution time.
@@ -104,7 +106,7 @@ public abstract class AbstractDemo
 	{
 		try
 		{
-			FileHandler fileHandler = new FileHandler(Demos.allOutputDir + "/result.log", false);
+			FileHandler fileHandler = new FileHandler(Demos.loggingDir + "/result.log", false);
 			fileHandler.setFormatter(new SimplestFormatter());
 			logger.addHandler(fileHandler);
 		}
@@ -129,4 +131,11 @@ public abstract class AbstractDemo
 	 * @throws IOException
 	 */
 	abstract String runDemo(File inputFile, File outputFile) throws IOException;
+
+	public void runDemo(List<File> groundTruthFiles, File grobIdOutputDir, List<String> idList) throws IOException
+	{
+		List<File> files = groundTruthFiles.stream().filter(f -> idList.contains(PublicationUtil.getIdFromFileWithoutPrefix(f))).collect(Collectors.toList());
+		runDemo(files, grobIdOutputDir);
+
+	}
 }

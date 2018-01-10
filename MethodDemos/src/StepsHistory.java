@@ -45,6 +45,7 @@ import com.google.common.collect.Sets;
 import com.google.common.collect.Sets.SetView;
 import com.itextpdf.text.pdf.PdfReader;
 
+import config.Config;
 import demos.Demos;
 import factory.PublicationFactory;
 import mapping.Worker;
@@ -69,6 +70,7 @@ import mapping.result.ReferenceAuthor;
 import mapping.result.ReferenceCitation;
 import mapping.result.Section;
 import utils.CollectionUtil;
+import utils.FileCollectionUtil;
 import utils.FileNameUtil;
 import utils.PublicationUtil;
 import utils.ReferenceUtil;
@@ -116,7 +118,7 @@ public class StepsHistory
 	private static File file26 = new File("D:\\Java\\git\\MethodDemosGit\\MethodDemos\\output\\result\\result-TUW-189842-xstream.xml");
 	private static File groundTruthNoSubdir = new File("D:\\output\\methods\\GroundTruthNoSubDir");
 	private static File file27_200745 = new File("D:/output/methods/grobid/grobid-TUW-200745-xstream.xml");
-	private static File file28_247743 = new File("D:/output/methods/grobid/grobid-TUW-247743-xstream.xml");
+	private static File file28_247743 = new File(Config.groundTruthResults, "result-TUW-247743-xstream.xml");
 	private static File file29_202034 = new File("D:/output/methods/resultsource/result-TUW-202034-xstream.xml");
 	private static File file30_203924 = new File("D:/output/methods/resultsource/result-TUW-203924-xstream.xml");
 	private static File file31_204724 = new File("D:/output/methods/resultsource/result-TUW-204724-xstream.xml");
@@ -134,13 +136,14 @@ public class StepsHistory
 	private static File file40pdfx = new File("D:/output/methods/pdfx/pdfx-TUW-174216.xml");
 	private static File file41 = new File("D:/output/methods/resultsource/result-TUW-175428-xstream.xml");
 	private static File file42 = new File("D:/output/methods/resultsource/result-TUW-177140-xstream.xml");
-	private static File groundTruth = new File("D:\\Java\\git\\MethodDemosGit\\MethodDemos\\docs\\groundtruth");
 	private static List<String> idList = Arrays.asList("137078", "138011", "138447", "138544", "138547", "139299", "139761", "139769", "139781", "139785", "140047", "140048", "140229", "140253", "140308", "140533", "140867", "140895", "140983", "141024", "141065", "141121", "141140", "141336", "141618", "141758", "168222", "168482", "169511", "172697", "174216", "175428", "176087", "177140", "179146", "180162", "181199", "182414", "182899", "185321", "185441", "186227", "189842", "191715", "191977", "192724", "194085", "194561", "194660", "197422", "197852", "198400", "198401", "198405", "198408", "200745", "200748", "200948", "200950", "200959", "201066", "201160", "201167", "202034", "225252", "202824", "203409", "203924", "201821", "204724", "205557", "205933", "213513", "216744", "217690", "217971", "221215", "223906", "223973", "226000", "226016", "228620", "231707", "233317", "233657", "236063", "236120", "237297", "240858", "245336", "245799", "247301", "247741", "247743", "251544", "252847", "255712", "256654", "257397", "257870");
 
 	public static void main(String[] args) throws Exception
 	{
+		findNotProcessedParscitFiles();
+		// setRefCounter(file28_247743, (-1), 18, true, true);
 		// checkAllGroundTruthAreInIdList();
-		checkAllGroundTruthFilesExist(idList);
+		// checkAllGroundTruthFilesExist(idList);
 		// checkXStreamFiles(resultFileDirectory);
 		// findNotProcessedPDFXFiles(Demos.pdfxOutputDir);
 		// printPageCountForPdfs(getNotAlreadyDone(new File("D:\\output\\old\\Ground Truth old\\Publikationsart Beiträge aus Tagungsbänden")));
@@ -296,6 +299,17 @@ public class StepsHistory
 		// removeMarkersFromIds(result15_182899);
 	}
 
+	private static void findNotProcessedParscitFiles()
+	{
+		List<String> processed = FileCollectionUtil.getFilesIdsWithoutPrefix(FileCollectionUtil.getParscitXmlFiles());
+
+		List<String> toProcess = new ArrayList(idList);
+
+		toProcess.removeAll(processed);
+
+		System.out.println(toProcess);
+	}
+
 	/**
 	 * Nachzuholende omnipages: 200745 OR 200948 OR 225252 OR 201821 OR 247743
 	 */
@@ -309,13 +323,13 @@ public class StepsHistory
 
 		for(String pubId : idList)
 		{
-			File file = new File(groundTruth, FileNameUtil.getPdfFileNameFromID(pubId));
+			File file = new File(Config.groundTruth, FileNameUtil.getPdfFileNameFromID(pubId));
 			if(!file.exists()) System.out.println("Exists: " + file.exists() + " " + file);
 
-			file = new File(groundTruth, FileNameUtil.getOmnipageFileNameFromID(pubId));
+			file = new File(Config.groundTruth, FileNameUtil.getOmnipageFileNameFromID(pubId));
 			if(!file.exists()) System.out.println("Exists: " + file.exists() + " " + file);
 
-			file = new File(groundTruth, FileNameUtil.getPublicationDbFileNameFromID(pubId));
+			file = new File(Config.groundTruth, FileNameUtil.getPublicationDbFileNameFromID(pubId));
 			if(!file.exists()) System.out.println("Exists: " + file.exists() + " " + file);
 		}
 
@@ -323,16 +337,16 @@ public class StepsHistory
 
 	private static void checkAllGroundTruthAreInIdList()
 	{
-		for(File file : groundTruth.listFiles())
+		for(File file : Config.groundTruth.listFiles())
 		{
-			String pubId = PublicationUtil.getIdFromFileNameWithoutPrefix(file);
+			String pubId = PublicationUtil.getIdFromFileWithoutPrefix(file);
 
 			System.out.println(pubId + ": " + idList.contains(pubId));
 		}
 
 		for(File file : FileUtils.listFiles(Demos.inputDir, null, true))
 		{
-			String pubId = PublicationUtil.getIdFromFileNameWithoutPrefix(file);
+			String pubId = PublicationUtil.getIdFromFileWithoutPrefix(file);
 
 			System.out.println(pubId + ": " + idList.contains(pubId));
 		}

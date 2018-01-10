@@ -6,6 +6,9 @@ import org.eclipse.persistence.sessions.Session;
 
 import mapping.result.Reference;
 
+/**
+ * TODO wird noch benötigt?
+ */
 public class PageScopeReadTransformer extends AbstactAttributeTransformer<Reference>
 {
 	private static final long serialVersionUID = -5805592045562412135L;
@@ -17,23 +20,24 @@ public class PageScopeReadTransformer extends AbstactAttributeTransformer<Refere
 
 		for(DatabaseField field : mapping.getFields())
 		{
-
-			String recordString = (String)record.get(field);
-			if(recordString != null)
-			{
-				try
-				{
-					Long value = new Long(recordString);
-					if(field.getName().contains("from") || field.getName().contains("text"))
-					{
-						return value;
-					}
-				}
-				catch(NumberFormatException e)
-				{
-					System.err.println("couldn't parse value " + recordString + " for " + field);
-				}
-			}
+			return record.get(field);
+			// Old with page als Long
+			// String recordString = (String)record.get(field);
+			// if(recordString != null)
+			// {
+			// try
+			// {
+			// Long value = new Long(recordString);
+			// if(field.getName().contains("from") || field.getName().contains("text"))
+			// {
+			// return value;
+			// }
+			// }
+			// catch(NumberFormatException e)
+			// {
+			// System.err.println("couldn't parse value " + recordString + " for " + field);
+			// }
+			// }
 
 		}
 		return null;

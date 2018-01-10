@@ -2,7 +2,6 @@ package mapping.grobid;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
-import java.util.ListIterator;
 import java.util.Set;
 
 import mapping.Worker;
@@ -12,17 +11,7 @@ import mapping.result.Publication;
 import utils.CollectionUtil;
 
 /**
- * Map authors with different affiliations to same affiliation if they are equal
- * 
- * <pre>
- * author1.affiliation = aff0
- * author2.affiliation = aff1
- * 
- * if aff0.equals(aff1) -> delete aff1 and update reference, to get distinct affiliation list
- * 
- * author1.affiliation = aff0
- * author2.affiliation = aff0
- * </pre>
+ * Sets publication.affiliations to collection of all author.publications
  */
 public class AffiliationCollectorWorker extends Worker
 {
@@ -34,9 +23,8 @@ public class AffiliationCollectorWorker extends Worker
 		{
 			if(author.getAffiliations() != null)
 			{
-				for(final ListIterator<Affiliation> iterator = author.getAffiliations().listIterator(); iterator.hasNext();)
+				for(Affiliation affiliation : author.getAffiliations())
 				{
-					final Affiliation affiliation = iterator.next();
 					affiliations.add(affiliation);
 				}
 			}
