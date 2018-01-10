@@ -7,7 +7,7 @@ public enum SectionType
 {
 	ABSTRACT(Arrays.asList("abstract")),
 	INTRODUCTION(Arrays.asList("deo:Introduction", "introduction")),
-	KEYWORDS(Arrays.asList("keywords", "general terms")),
+	KEYWORDS(Arrays.asList("keywords", "general terms", "categories and subject descriptors")),
 	MOTIVATION(Arrays.asList("deo:Motivation")),
 	BACKGROUND(Arrays.asList("deo:Background", "background")),
 	RELATEDWORK(Arrays.asList("related work", "deo:RelatedWork")),
@@ -16,9 +16,10 @@ public enum SectionType
 	CONCLUSIONS(Arrays.asList("conclusions", "deo:Conclusion")),
 	REFERENCES(Arrays.asList("references")),
 
-	ACKNOWLEDGEMENTS(Arrays.asList("deo:Acknowledgements")),
+	ACKNOWLEDGEMENTS(Arrays.asList("deo:Acknowledgements", "acknowledgments")),
+	MATERIALS(Arrays.asList("deo:Materials")),
 	EVALUATION(Arrays.asList("evaluation", "deo:Evaluation")),
-	DISCUSSION(Arrays.asList("deo:Discussion")),
+	DISCUSSION(Arrays.asList("deo:Discussion", "discussions")),
 	FUTUREWORK(Arrays.asList("deo:FutureWork"));
 
 	private List<String> synonyms;
