@@ -1,0 +1,109 @@
+/**
+ * This file is part of CERMINE project.
+ * Copyright (c) 2011-2016 ICM-UW
+ *
+ * CERMINE is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * CERMINE is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package evaluation;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import evaluation.tools.EvalInformationType;
+import pl.edu.icm.cermine.evaluation.exception.EvaluationException;
+
+public class Evaluators
+{
+	private static ArrayList<EvalInformationType> types;
+
+	public static void main(String[] args)
+	{
+		try
+		{
+			evaluateMethods();
+		}
+		catch(EvaluationException e)
+		{
+			e.printStackTrace();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	private static void evaluateMethods() throws EvaluationException, IOException
+	{
+		new CermineXStreamFileEvaluator().evaluate();
+		new GrobidXStreamFileEvaluator().evaluate();
+		new ParscitXStreamFileEvaluator().evaluate();
+		new PdfxXStreamFileEvaluator().evaluate();
+	}
+
+	public static ArrayList<EvalInformationType> getTypes()
+	{
+		if(types == null)
+		{
+			types = new ArrayList<>();
+			types.add(EvalInformationType.TITLE);
+			types.add(EvalInformationType.ABSTRACT);
+			types.add(EvalInformationType.ABSTRACTGERMAN);
+			types.add(EvalInformationType.KEYWORDS);
+			types.add(EvalInformationType.AUTHORS);
+			types.add(EvalInformationType.EMAILS);
+			types.add(EvalInformationType.AUTHOR_EMAILS);
+			types.add(EvalInformationType.AFFILIATIONS);
+			types.add(EvalInformationType.AUTHOR_AFFILIATIONS);
+			types.add(EvalInformationType.SOURCE);
+			types.add(EvalInformationType.VOLUME);
+			types.add(EvalInformationType.ISSUE);
+			types.add(EvalInformationType.PAGE_FROM);
+			types.add(EvalInformationType.PAGE_TO);
+			types.add(EvalInformationType.YEAR);
+			types.add(EvalInformationType.DOI);
+			types.add(EvalInformationType.SECTIONS);
+			// types.add(EvalInformationType.SECTION_LEVELS);
+			// types.add(EvalInformationType.SECTION_REFERENCES);
+			types.add(EvalInformationType.REFERENCES);
+			// types.add(EvalInformationType.REFERENCE_AUTHORS);
+			// types.add(EvalInformationType.REFERENCE_TITLE);
+			// types.add(EvalInformationType.REFERENCE_SOURCE);
+			// types.add(EvalInformationType.REFERENCE_LOCATION);
+			// types.add(EvalInformationType.REFERENCE_PUBLISHER);
+			// types.add(EvalInformationType.REFERENCE_EDITOR);
+			// types.add(EvalInformationType.REFERENCE_DOI);
+			// types.add(EvalInformationType.REFERENCE_URL);
+			// types.add(EvalInformationType.REFERENCE_EDITION);
+			// types.add(EvalInformationType.REFERENCE_VOLUME);
+			// types.add(EvalInformationType.REFERENCE_ISSUE);
+			// types.add(EvalInformationType.REFERENCE_NOTE);
+			// types.add(EvalInformationType.REFERENCE_PAGEFROM);
+			// types.add(EvalInformationType.REFERENCE_PAGETO);
+			// types.add(EvalInformationType.REFERENCE_DATE);
+
+			// return Lists.newArrayList(EvalInformationType.TITLE, EvalInformationType.ABSTRACT, EvalInformationType.ABSTRACTGERMAN, EvalInformationType.KEYWORDS, EvalInformationType.AUTHORS//
+			// EvalInformationType.AFFILIATIONS,
+			// // EvalInformationType.AUTHOR_AFFILIATIONS,
+			// , EvalInformationType.EMAILS, EvalInformationType.AUTHOR_EMAILS,
+			// // EvalInformationType.JOURNAL,
+			// // EvalInformationType.VOLUME,
+			// // EvalInformationType.ISSUE,
+			// // EvalInformationType.PAGES,
+			// EvalInformationType.YEAR, // EvalInformationType.DOI,
+			// EvalInformationType.REFERENCES);
+		}
+		return types;
+	}
+}
