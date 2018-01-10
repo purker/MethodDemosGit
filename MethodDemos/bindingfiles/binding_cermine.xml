@@ -12,7 +12,7 @@
         <java-type name="AbstractMetaPublication" xml-transient="true"/>
         <java-type name="Publication">
             <xml-root-element name="article"/>
-            <xml-type prop-order="id title abstractText abstractTextGerman keywords authors affiliations publicationYear publicationMonth publicationDay publicationDateString publicationDate source edition volume issue pageFrom pageTo doi sections citationContexts references"/>
+            <xml-type prop-order="id title abstractText abstractTextGerman keywords authors affiliations publicationYear publicationMonth publicationDay publicationDateString publicationDate source edition volume issue chapter pageFrom pageTo url doi sections citationContexts references"/>
             <java-attributes>
                 <xml-element java-attribute="title" xml-path="/front/article-meta/title-group/article-title/text()"/>
             	<xml-element java-attribute="abstractText" xml-path="/front/article-meta/abstract/p/text()"/>
@@ -47,7 +47,7 @@
             </java-attributes>
         </java-type>
         <java-type name="Reference">
-            <xml-root-element name="ref"/>
+            <xml-root-element name="ref"/><xml-type prop-order="id marker authors title editor source edition publisher location volume issue chapter pageFrom pageTo publicationDateString publicationDay publicationMonth publicationYear publicationDate doi type url note"/>
             <java-attributes>
             	<xml-attribute java-attribute="id" name="id" xml-id="true"/>
                 <xml-element java-attribute="title" xml-path="/mixed-citation/article-title/text()"/>
