@@ -10,7 +10,8 @@ public class Publication extends AbstractMetaPublication
 
 	private String abstractText;
 	private String abstractTextGerman;
-	private String keywords; // with "; " as delimiter
+	// private String keywords; // with "; " as delimiter
+	private List<String> keywords = new ArrayList<>();
 	private List<Author> authors = new ArrayList<>();
 	private List<Affiliation> affiliations = new ArrayList<>();
 
@@ -50,12 +51,12 @@ public class Publication extends AbstractMetaPublication
 		this.abstractTextGerman = abstractTextGerman;
 	}
 
-	public String getKeywords()
+	public List<String> getKeywords()
 	{
 		return keywords;
 	}
 
-	public void setKeywords(String keywords)
+	public void setKeywords(List<String> keywords)
 	{
 		this.keywords = keywords;
 	}

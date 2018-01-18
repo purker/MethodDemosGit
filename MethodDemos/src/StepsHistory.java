@@ -140,7 +140,8 @@ public class StepsHistory
 
 	public static void main(String[] args) throws Exception
 	{
-		findNotProcessedParscitFiles();
+		keywordsToKeywordsList();
+		// findNotProcessedParscitFiles();
 		// setRefCounter(file28_247743, (-1), 18, true, true);
 		// checkAllGroundTruthAreInIdList();
 		// checkAllGroundTruthFilesExist(idList);
@@ -297,6 +298,26 @@ public class StepsHistory
 		// setRefCounter(result15_182899, (2), null);
 		// changeSectionReferenceIdsToIdsWithMarker(result15_182899);
 		// removeMarkersFromIds(result15_182899);
+	}
+
+	private static void keywordsToKeywordsList()
+	{
+		List<File> files = FileCollectionUtil.getResultFiles();
+
+		for(File file : files)
+		{
+			Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
+
+			// if(publication.getKeywords() != null)
+			// {
+			// List<String> keywords = Arrays.asList(publication.getKeywords().split("; "));
+			// publication.getKeywordsList().addAll(keywords);
+			// publication.setKeywords(null);
+			// }
+
+			XStreamUtil.convertToXmL(publication, file, System.out, true);
+		}
+
 	}
 
 	private static void findNotProcessedParscitFiles()
@@ -584,7 +605,7 @@ public class StepsHistory
 					{
 						System.out.println(section.getLevel());
 
-						publication.setKeywords(String.join("; ", section.getLevel().split(", ")));
+						publication.setKeywords(Arrays.asList(section.getLevel().split(", ")));
 						iterator.remove();
 						XStreamUtil.convertToXmL(publication, file, System.err, true);
 						Desktop.getDesktop().open(file);
