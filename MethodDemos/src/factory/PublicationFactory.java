@@ -19,7 +19,7 @@ public class PublicationFactory
 		publication.setTitle("title");
 		publication.setAbstractText("This is the abstract test");
 		publication.setAbstractTextGerman("Das ist der Text der Kurzfassung auf deutsch.");
-		publication.setKeywords("keyword1; keyword2, keyword3");
+		publication.setKeywords(Arrays.asList("keyword1", "keyword2", "keyword3"));
 
 		Author author = createAuthor();
 		Affiliation affiliation = createAffiliation();

@@ -6,7 +6,6 @@ import java.util.List;
 public class Publication extends AbstractMetaPublication
 {
 	private static final long serialVersionUID = 8605009499117151049L;
-	public static final String KEYWORD_DELIMITER = "; ";
 
 	private String abstractText;
 	private String abstractTextGerman;
