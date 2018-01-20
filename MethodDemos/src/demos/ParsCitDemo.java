@@ -6,11 +6,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import method.Method;
 import utils.ExecUtil;
 
 public class ParsCitDemo extends AbstractDemo
 {
-	private static final String METHOD_NAME = "parscit";
+	private static final Method METHOD = Method.PARSCIT;
 	private static final boolean INPUT_IN_XML_FORMAT = true; // true=xml, false=txt
 
 	// "cmd.exe /c citeExtract.pl C:/Users/Angela/git/ParsCit/demodata/sample1.txt"
@@ -49,9 +50,9 @@ public class ParsCitDemo extends AbstractDemo
 	}
 
 	@Override
-	String getMethodName()
+	protected Method getMethod()
 	{
-		return METHOD_NAME;
+		return METHOD;
 	}
 
 	@Override

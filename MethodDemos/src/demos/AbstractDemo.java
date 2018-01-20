@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
+import method.Method;
 import utils.PublicationUtil;
 import utils.SimplestFormatter;
 
@@ -92,6 +93,11 @@ public abstract class AbstractDemo
 		}
 	}
 
+	protected String getMethodName()
+	{
+		return getMethod().getName();
+	}
+
 	void log(String string)
 	{
 		logger.info(string);
@@ -122,7 +128,7 @@ public abstract class AbstractDemo
 		return inputFileName;
 	}
 
-	abstract String getMethodName();
+	protected abstract Method getMethod();
 
 	/**
 	 * @param inputFile
@@ -138,4 +144,5 @@ public abstract class AbstractDemo
 		runDemo(files, grobIdOutputDir);
 
 	}
+
 }

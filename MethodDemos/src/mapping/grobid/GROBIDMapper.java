@@ -8,11 +8,12 @@ import demos.Demos;
 import factory.PublicationFactory;
 import mapping.Mapper;
 import mapping.Worker;
+import method.Method;
 import utils.XStreamUtil;
 
 public class GROBIDMapper extends Mapper
 {
-	private static final String METHOD_NAME = "grobid";
+	private static final Method METHOD = Method.GROBID;
 	private static final File DIRECTORY_NAME = Demos.grobIdOutputDir;
 	public static final String BINDINGFILE = "bindingfiles/binding_grobid.xml";
 
@@ -36,9 +37,9 @@ public class GROBIDMapper extends Mapper
 	}
 
 	@Override
-	protected String getMethodName()
+	protected Method getMethod()
 	{
-		return METHOD_NAME;
+		return METHOD;
 	}
 
 	@Override

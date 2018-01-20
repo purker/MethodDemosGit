@@ -9,10 +9,12 @@ import demos.Demos;
 import mapping.Mapper;
 import mapping.SectionReferenceWorker;
 import mapping.Worker;
+import mapping.grobid.AffiliationCollectorWorker;
+import method.Method;
 
 public class CermineMapper extends Mapper
 {
-	private static final String METHOD_NAME = "cermine";
+	private static final Method METHOD = Method.CERMINE;
 	private static final File DIRECTORY_NAME = Demos.cermineOutputDir;
 	public static final String BINDINGFILE = "bindingfiles/binding_cermine.xml";
 
@@ -34,9 +36,9 @@ public class CermineMapper extends Mapper
 	}
 
 	@Override
-	protected String getMethodName()
+	protected Method getMethod()
 	{
-		return METHOD_NAME;
+		return METHOD;
 	}
 
 	@Override
@@ -48,7 +50,7 @@ public class CermineMapper extends Mapper
 	@Override
 	protected List<? extends Worker> getWorkers()
 	{
-		return Arrays.asList(new SectionReferenceWorker());
+		return Arrays.asList(new AffiliationCollectorWorker(), new SectionReferenceWorker());
 	}
 
 	@Override

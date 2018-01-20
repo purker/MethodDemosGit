@@ -13,13 +13,15 @@ import org.grobid.core.factory.GrobidFactory;
 import org.grobid.core.mock.MockContext;
 import org.grobid.core.utilities.GrobidProperties;
 
+import method.Method;
+
 /**
  * http://grobid.readthedocs.io/en/latest/Grobid-java-library/
  *
  */
 public class GROBIDDemo extends AbstractDemo
 {
-	private static final String METHOD_NAME = "grobid";
+	private static final Method METHOD = Method.GROBID;
 
 	private static final String GROBID_DIRECTORY = "C:/Users/Angela/git/";
 	private static final String pGrobidHome = GROBID_DIRECTORY + "grobid/grobid-home";
@@ -115,8 +117,8 @@ public class GROBIDDemo extends AbstractDemo
 	}
 
 	@Override
-	String getMethodName()
+	protected Method getMethod()
 	{
-		return METHOD_NAME;
+		return METHOD;
 	}
 }

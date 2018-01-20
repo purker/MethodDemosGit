@@ -9,10 +9,11 @@ import demos.Demos;
 import mapping.Mapper;
 import mapping.Worker;
 import mapping.parscit.SectionTypeNormalizerWorker;
+import method.Method;
 
 public class PDFXMapper extends Mapper
 {
-	private static final String METHOD_NAME = "pdfx";
+	private static final Method METHOD = Method.PDFX;
 	private static final File DIRECTORY_NAME = Demos.pdfxOutputDir;
 	public static final String BINDINGFILE = "bindingfiles/binding_pdfx.xml";
 
@@ -33,9 +34,9 @@ public class PDFXMapper extends Mapper
 	}
 
 	@Override
-	protected String getMethodName()
+	protected Method getMethod()
 	{
-		return METHOD_NAME;
+		return METHOD;
 	}
 
 	@Override

@@ -24,6 +24,7 @@ import org.jdom.output.XMLOutputter;
 
 import com.google.common.collect.Lists;
 
+import method.Method;
 import pl.edu.icm.cermine.ContentExtractor;
 import pl.edu.icm.cermine.exception.AnalysisException;
 import pl.edu.icm.cermine.exception.TransformationException;
@@ -33,7 +34,7 @@ import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
 
 public class CERMINEDemo extends AbstractDemo
 {
-	private static final String METHOD_NAME = "cermine";
+	private static final Method METHOD = Method.CERMINE;
 
 	private static final boolean EXTRACT_ZONES = true;
 	private static final boolean EXTRACT_IMAGES = true;
@@ -150,8 +151,8 @@ public class CERMINEDemo extends AbstractDemo
 	}
 
 	@Override
-	protected String getMethodName()
+	protected Method getMethod()
 	{
-		return METHOD_NAME;
+		return METHOD;
 	}
 }

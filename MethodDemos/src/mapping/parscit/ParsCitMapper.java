@@ -7,10 +7,11 @@ import java.util.List;
 import demos.Demos;
 import mapping.Mapper;
 import mapping.Worker;
+import method.Method;
 
 public class ParsCitMapper extends Mapper
 {
-	private static final String METHOD_NAME = "parscit";
+	private static final Method METHOD = Method.PARSCIT;
 	private static final File DIRECTORY_NAME = Demos.parsCitOutputDir;
 	public static final String BINDINGFILE = "bindingfiles/binding_parscit.xml";
 
@@ -26,15 +27,15 @@ public class ParsCitMapper extends Mapper
 		File inputFile = new File("D:/output/all/parscit-TUW-138011.xml");
 		File outputFile = new File("D:/output/all/parscit-TUW-138011-xstream.xml");
 
-		parscitMapper.unmarshall(inputFile, outputFile);
+		parscitMapper.unmarshall(inputFile);
 
 		// parscitMapper.marshall(PublicationFactory.createPublication(), System.out);
 	}
 
 	@Override
-	protected String getMethodName()
+	protected Method getMethod()
 	{
-		return METHOD_NAME;
+		return METHOD;
 	}
 
 	@Override

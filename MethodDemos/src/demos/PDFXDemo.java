@@ -15,11 +15,12 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.apache.commons.exec.ExecuteException;
 
+import method.Method;
 import utils.ExecUtil;
 
 public class PDFXDemo extends AbstractDemo
 {
-	private static final String METHOD_NAME = "pdfx";
+	private static final Method METHOD = Method.PDFX;
 
 	// Usage:
 	// curl --data-binary @"/path/to/my.pdf" -H "Content-Type: application/pdf" -L "http://pdfx.cs.man.ac.uk"
@@ -71,8 +72,8 @@ public class PDFXDemo extends AbstractDemo
 	}
 
 	@Override
-	String getMethodName()
+	protected Method getMethod()
 	{
-		return METHOD_NAME;
+		return METHOD;
 	}
 }
