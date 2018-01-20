@@ -1,0 +1,242 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pdfx xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://pdfx.cs.man.ac.uk/static/article-schema.xsd">
+  <meta>
+    <job>bf4f7dcad28f948ad1753fd00871148fd8956e92099b8322532db8cf03227696</job>
+    <base_name>l4b</base_name>
+    <doi>http://dx.doi.org/10.1109/icassp.2014.6854513</doi>
+    <warning>Name identification was not possible. </warning>
+  </meta>
+  <article>
+    <front class="DoCO:FrontMatter">
+      <title-group>
+        <article-title class="DoCO:Title" id="1">Unsupervised Clustering of Social Events</article-title>
+      </title-group>
+      <region class="unknown" id="4">Matthias Zeppelzauer Maia Zaharieva Vienna University of University of Vienna, Austria Technology, Austria Research Group Multimedia Interactive Media Sys. Group Information Systems <email id="2">mzz@ims.tuwien.ac.at</email> <email id="3">zaharieva@cs.univie.ac.at</email></region>
+      <abstract class="DoCO:Abstract" id="5">This paper describes our contribution to the social event detection (SED) task of the MediaEval Benchmark 2013. We present a robust unsupervised approach for the clustering of tagged photos and videos into social events. Results on the SED datasets show that the proposed approach yields an ex- cellent generalization ability and state-of-the-art clustering performance.</abstract>
+    </front>
+    <body class="DoCO:BodyMatter">
+      <section class="deo:Introduction">
+        <h1 class="DoCO:SectionTitle" id="6" page="1" column="1">1. INTRODUCTION</h1>
+      </section>
+      <region class="DoCO:TextChunk" id="8" page="1" column="1">We participated in challenge 1 of the Social Event Detection (SED) task [<xref ref-type="bibr" rid="R4" id="7" class="deo:Reference">4</xref>]. The goal of the task is to build photo clusters belonging to unique social events in a large collection of tagged flicker images. Thereby the total number of events is not provided. In an additional subtask we assign unlabeled videos to the previously discovered photo clusters. The development set comprises 300k images from 14882 unique events. For the test set of 131k images no ground truth is available. We consider challenge 1 as an unsupervised data mining task. The basic idea is to rely on robust heuristics and to reduce the number of parameters of the approach to a minimum to obtain a good generalization ability between different datasets. Additionally, the proposed approach does not require any external (online) data sources. In the course of the SED2013 task, we focus on the fol- lowing research questions: (i) Which level of clustering performance can be obtained by relying on simple but robust heuristics for unsupervised clustering and how do the results compare to more complex clustering methods? (ii) How well does the proposed approach generalize to unknown data?</region>
+      <section class="deo:RelatedWork">
+        <h1 class="DoCO:SectionTitle" id="9" page="1" column="1">2. RELATED WORK</h1>
+      </section>
+      <region class="DoCO:TextChunk" id="14" page="1" column="1">Many existing approaches for event detection in image collections require a separate training [<xref ref-type="bibr" rid="R1" id="10" class="deo:Reference">1</xref>, <xref ref-type="bibr" rid="R3" id="11" class="deo:Reference">3</xref>]. Becker et al. create separate clusters for each feature such as title, description, time, etc. The authors employ single-pass incremental clustering whereas the threshold for each cluster is tuned based on a set of training data [<xref ref-type="bibr" rid="R1" id="12" class="deo:Reference">1</xref>]. Reuter and Cimiano employ machine learning techniques to detect events in social streams. The authors employ SVMs to classify Flickr images annotated by machine tags from last.fm into events [<xref ref-type="bibr" rid="R3" id="13" class="deo:Reference">3</xref>]. Vavliakis et al. propose a social event detection approach</region>
+      <region class="DoCO:TextChunk" id="15" confidence="possible" page="1" column="1">Copyright is held by the author/owner(s). MediaEval 2013 Workshop, October 18-19, 2013, Barcelona, Spain</region>
+      <region class="unknown" id="17" page="1" column="2">Manfred Del Fabro Klagenfurt University, Austria Institute of Information Technology <email id="16">manfred@itec.aau.at</email></region>
+      <region class="DoCO:TextChunk" id="19" page="1" column="2">based on topic detection [<xref ref-type="bibr" rid="R5" id="18" class="deo:Reference">5</xref>]. The authors perform topic detection by Latent Dirichlet Allocation (LDA) for each city in the image collection. Additionally, the authors manually identify topics that are typical for a specific event cluster. From related approaches we observe that many assumptions are made on the training set and (partially manual) optimizations are required which limits general applicabil- ity. Our unsupervised approach minimizes the assumptions on the data and avoids manual intervention. The approach exhibits a strong generalization ability and results show that the sensitivity to the involved parameters is reasonably low.</region>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="20" page="1" column="2">3. APPROACH</h1>
+        <section class="DoCO:Section">
+          <h2 class="DoCO:SectionTitle" id="21" page="1" column="2">3.1 Full Clustering</h2>
+        </section>
+        <section class="DoCO:Section">
+          <h2 class="DoCO:SectionTitle" id="26" page="2" column="1">3.2 Full Clustering of Media using Videos</h2>
+          <region class="DoCO:TextChunk" id="27" page="2" column="1">For the video subtask, we apply the above described topic modeling to the stopword-filtered textual descriptions of the videos (title, description, keywords). Temporal clustering and location clustering are neglected, because most videos do not contain location information and a capturing date. As a consequence, parameter τ is set to 0 . 0 for all experiments to achieve a complete clustering of all videos. We investigate three different approaches for generating the video clusters: (i) LDA is applied to train a topic model with 200 topics on the development data from which the topics of the test data are derived; (ii) each video constitutes a topic on its own; and (iii) an unsupervised LDA-based approach is used to detect 70 topics in the test data. After the video clusters are created, we link them to the previously generated photo clusters. The keywords of video clusters V are compared to the keywords of the photo clusters P using the Jaccard similarity coefficient. Each video cluster is linked to the photo cluster with the highest similarity.</region>
+        </section>
+      </section>
+      <region class="DoCO:TextChunk" id="25" page="1" column="2">The input to the approach are the available metadata of the SED dataset (capture data, location, title, tags, description) and a stopword list. No other data sources are required. In a first step, the metadata are preprocessed: Since a user cannot be at two locations at the same time, we assign locations of photos taken by the same user at the same time to the user’s non-geotagged photos. Additionally, the textual metadata are filtered by the stopword list. In a next step, we perform three independent clusterings in parallel: temporal clustering, location clustering, and topic clustering. For temporal clustering we employ meanshift and set the bandwidth parameter β T in a way that the resulting clusters span between 2 and 6 hours, which is a reasonable temporal resolution for social events. For location clustering we observe that the performance gain of meanshift clustering does not justify the computational ef- forts. Hence, we skip meanshift clustering and assign each individual and unique location in the data a separate cluster ID. Topic clustering is based on topic extraction by LDA. We perform topic modeling on the textual descriptions of each photo (title, tags, description) using LDA and extract T topics for the employed dataset. For each photo i , we estimate the likelihoods l i, 1 and l i, 2 of the first- and second- best matching topics. If the difference of the likelihoods is larger than a threshold τ ( l i, 1 − l i, 2 &gt; τ ) the most likely topic is assigned to the photo otherwise no topic is assigned. Parameter τ is set to 0 . 3 for all experiments. The three independent clusterings are the basis for the generation of initial event clusters. Photos which share the same temporal cluster, location cluster, and topic cluster are assigned the same unique event ID. The remaining photos are assigned to existing and new events in a number of matching steps. First, remaining photos which share <marker type="page" number="2"/><marker type="column" number="1"/><marker type="block"/> the same user and capture time as photos in already existing events are assigned to the respective events. If sev- eral events share the same users and capture times, the events are merged. Second, remaining photos without location information are matched to existing events by time and topic. If no match to an existing event can be established, a new (non-geotagged event cluster) is generated. For photos where no location and no topic is available we generate new events by their capture time. The resulting sets of events (refined event clusters and non-geotagged event clusters) may oversegment the true event distribution. Hence, we merge events that share similar time, location, and topic to obtain the final event clusters.</region>
+      <region class="unknown" id="23" page="2" column="1">metadata description location time stop preprocessing words topic clustering location clustering temporal clustering merge clusterings initial clusters unassigned fotos match user + time match time + topic refined event clusters non-geotagged event clusters merge events final event clusters</region>
+      <region class="DoCO:FigureBox" id="F1">
+        <caption class="deo:Caption" id="24" page="2" column="1">Figure 1: Overview of the approach</caption>
+      </region>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="28" page="2" column="1">4. EXPERIMENTS AND RESULTS</h1>
+        <region class="DoCO:TextChunk" id="34" page="2" column="1">We use the same parameters for experiments on the development and test set. To estimate the numbers of topics, we assume that each topic is constituted in average by 100- 200 photos. Additionally, we evaluate different values of β T corresponding to an event duration of 2-6 hours. The results of the proposed approach for both sets demonstrate its ex- cellent generalization ability (see <xref ref-type="table" rid="T1" id="29" class="deo:Reference">Table 1</xref>). Results for the test set are even better than for the development set. The clustering performance is comparable to (more complex) supervised state-of-the-art methods. The approach by Petkos et al., for example, yields NMI values of 0.92 (average of best<marker type="column" number="2"/><marker type="block"/> results) and 0.69 (average performance) on a portion of the SED2011 dataset (no F1 reported) [<xref ref-type="bibr" rid="R2" id="31" class="deo:Reference">2</xref>]. Becker et al. [<xref ref-type="bibr" rid="R1" id="32" class="deo:Reference">1</xref>] yield NMI values between 0.92 and 0.94 and F1 values from 0.77 to 0.82 on a test set consisting of 270k photos (10 splits). Reuter and Cimiano report an F1 of 0.74 for a dataset of 700k photos (7 splits, no NMI reported) [<xref ref-type="bibr" rid="R3" id="33" class="deo:Reference">3</xref>].</region>
+        <region class="DoCO:TableBox" id="T1">
+          <caption class="deo:Caption" id="35" page="2" column="2">Table 1: Results for Full Clustering Development Set Test Set</caption>
+          <content>
+            <table class="DoCO:Table" number="1" page="2">
+              <thead class="table">
+                <tr class="table">
+                  <th class="table"> β T</th>
+                  <th class="table"> Topics</th>
+                  <th class="table"> F1</th>
+                  <th class="table"> NMI</th>
+                  <th class="table"> Topics</th>
+                  <th class="table"> F1</th>
+                  <th class="table"> NMI</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table.strange">
+                  <td class="table.strange"> 0.2</td>
+                  <td class="table.strange"> 2000</td>
+                  <td class="table.strange"> 0.74</td>
+                  <td class="table.strange"> 0.94</td>
+                  <td class="table.strange"> 1000</td>
+                  <td class="table.strange"> 0.78</td>
+                  <td class="table.strange"> 0.94</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 0.2</td>
+                  <td class="table"> 3000</td>
+                  <td class="table"> 0.74</td>
+                  <td class="table"> 0.94</td>
+                  <td class="table"> 1500</td>
+                  <td class="table"> 0.78</td>
+                  <td class="table"> 0.94</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 0.2</td>
+                  <td class="table"> 1600</td>
+                  <td class="table"> 0.74</td>
+                  <td class="table"> 0.94</td>
+                  <td class="table"> 800</td>
+                  <td class="table"> 0.78</td>
+                  <td class="table"> 0.94</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 0.1</td>
+                  <td class="table"> 2000</td>
+                  <td class="table"> 0.73</td>
+                  <td class="table"> 0.93</td>
+                  <td class="table"> 1000</td>
+                  <td class="table"> 0.76</td>
+                  <td class="table"> 0.94</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 0.5</td>
+                  <td class="table"> 2000</td>
+                  <td class="table"> 0.72</td>
+                  <td class="table"> 0.93</td>
+                  <td class="table"> 1000</td>
+                  <td class="table"> 0.77</td>
+                  <td class="table"> 0.94</td>
+                </tr>
+                <tr class="table.strange">
+                  <td class="table.strange"> The</td>
+                  <td class="table.strange"> three approaches</td>
+                  <td class="table.strange"></td>
+                  <td class="table.strange"> submitted submitted</td>
+                  <td class="table.strange"> to the</td>
+                  <td class="table.strange"> video</td>
+                  <td class="table.strange"> subtask</td>
+                </tr>
+                <tr class="table.strange">
+                  <td class="table.strange"> different</td>
+                  <td class="table.strange"> results.</td>
+                  <td class="table.strange"> The</td>
+                  <td class="table.strange"> supervised</td>
+                  <td class="table.strange"> approach</td>
+                  <td class="table.strange"> trained trained</td>
+                  <td class="table.strange"> on the</td>
+                </tr>
+                <tr class="table.strange">
+                  <td class="table.strange"> velopment velopment</td>
+                  <td class="table.strange"> data</td>
+                  <td class="table.strange"> performs</td>
+                  <td class="table.strange"> suboptimally suboptimally</td>
+                  <td class="table.strange"> NMI=0.68).</td>
+                  <td class="table.strange"> (F1=0.42,</td>
+                  <td class="table.strange"> NMI=0.68). NMI=0.68).</td>
+                </tr>
+                <tr class="table.strange">
+                  <td class="table.strange"> reason</td>
+                  <td class="table.strange"> for this</td>
+                  <td class="table.strange"> may</td>
+                  <td class="table.strange"> be that</td>
+                  <td class="table.strange"> the events</td>
+                  <td class="table.strange"> of the</td>
+                  <td class="table.strange"> test</td>
+                </tr>
+                <tr class="table.strange">
+                  <td class="table.strange"> inferred</td>
+                  <td class="table.strange"> from</td>
+                  <td class="table.strange"> the events</td>
+                  <td class="table.strange"> in</td>
+                  <td class="table.strange"> the development</td>
+                  <td class="table.strange"></td>
+                  <td class="table.strange"> data. If</td>
+                </tr>
+                <tr class="table.strange">
+                  <td class="table.strange"> event is</td>
+                  <td class="table.strange"> not included</td>
+                  <td class="table.strange"> in</td>
+                  <td class="table.strange"> the</td>
+                  <td class="table.strange"> development</td>
+                  <td class="table.strange"> data, it</td>
+                  <td class="table.strange"> cannot</td>
+                </tr>
+                <tr class="table.strange">
+                  <td class="table.strange"> inferred.</td>
+                  <td class="table.strange"> The second</td>
+                  <td class="table.strange"></td>
+                  <td class="table.strange"> approach</td>
+                  <td class="table.strange"> shows that</td>
+                  <td class="table.strange"></td>
+                  <td class="table.strange"> comparing</td>
+                </tr>
+                <tr class="table.strange">
+                  <td class="table.strange"> metadata metadata</td>
+                  <td class="table.strange"> of single</td>
+                  <td class="table.strange"> videos</td>
+                  <td class="table.strange"> with</td>
+                  <td class="table.strange"> the</td>
+                  <td class="table.strange"> accumulated</td>
+                  <td class="table.strange"> LDA</td>
+                </tr>
+                <tr class="table.strange">
+                  <td class="table.strange"> words from</td>
+                  <td class="table.strange"> clusters</td>
+                  <td class="table.strange"> is not</td>
+                  <td class="table.strange"></td>
+                  <td class="table.strange"> well-suited to</td>
+                  <td class="table.strange"> link</td>
+                  <td class="table.strange"> single</td>
+                </tr>
+                <tr class="table.strange">
+                  <td class="table.strange"> clusters</td>
+                  <td class="table.strange"> (F1=0.34,</td>
+                  <td class="table.strange"></td>
+                  <td class="table.strange"> NMI=0.77). NMI=0.77).</td>
+                  <td class="table.strange"> The</td>
+                  <td class="table.strange"> unsupervised unsupervised</td>
+                  <td class="table.strange"></td>
+                </tr>
+                <tr class="table.strange">
+                  <td class="table.strange"> based</td>
+                  <td class="table.strange"> approach</td>
+                  <td class="table.strange"> performs performs</td>
+                  <td class="table.strange"> best</td>
+                  <td class="table.strange"> (F1=0.69,</td>
+                  <td class="table.strange"></td>
+                  <td class="table.strange"> NMI=0.85)</td>
+                </tr>
+                <tr class="table.strange">
+                  <td class="table.strange"> builds a</td>
+                  <td class="table.strange"> promising</td>
+                  <td class="table.strange"> baseline</td>
+                  <td class="table.strange"> for</td>
+                  <td class="table.strange"> future</td>
+                  <td class="table.strange"> improvements. improvements.</td>
+                  <td class="table.strange"></td>
+                </tr>
+              </tbody>
+            </table>
+          </content>
+          <region class="TableInfo" id="36" confidence="possible" page="2" column="2">β T Topics F1 NMI Topics F1 NMI 0.2 2000 0.74 0.94 1000 0.78 0.94 0.2 3000 0.74 0.94 1500 0.78 0.94 0.2 1600 0.74 0.94 800 0.78 0.94 0.1 2000 0.73 0.93 1000 0.76 0.94 0.5 2000 0.72 0.93 1000 0.77 0.94 The three approaches submitted to the video subtask show different results. The supervised approach trained on the development data performs suboptimally (F1=0.42, NMI=0.68). The reason for this may be that the events of the test data are inferred from the events in the development data. If an event is not included in the development data, it cannot be inferred. The second approach shows that comparing the metadata of single videos with the accumulated LDA keywords from clusters is not well-suited to link single videos to clusters (F1=0.34, NMI=0.77). The unsupervised LDA- based approach performs best (F1=0.69, NMI=0.85) and builds a promising baseline for future improvements.</region>
+        </region>
+      </section>
+      <section class="deo:Conclusion">
+        <h1 class="DoCO:SectionTitle" id="37" page="2" column="2">5. CONCLUSIONS AND OUTLOOK</h1>
+        <region class="DoCO:TextChunk" id="38" page="2" column="2">In this paper we presented our contribution to the SED challenge of the MediaEval 2013 Benchmark. We proposed a robust unsupervised method for the clustering of photos and videos into social events. The method exhibits strong generalization ability, low sensitivity to parameters, and yields state-of-the-art performance. Future work focuses on more sophisticated event refinements and visual content analysis.</region>
+      </section>
+      <section class="deo:Acknowledgements">
+        <h1 class="DoCO:SectionTitle" id="39" page="2" column="2">6. ACKNOWLEDGMENTS</h1>
+        <region class="DoCO:TextChunk" id="40" page="2" column="2">This work has been partly funded by the Vienna Science and Technology Fund (WWTF) through project ICT12-010 and the Carinthian Economic Promotion Fund (KWF) un- der grant KWF-20214 22573 33955.</region>
+      </section>
+      <section class="DoCO:Bibliography">
+        <h1 class="DoCO:SectionTitle" id="41" page="2" column="2">7. REFERENCES</h1>
+        <ref-list class="DoCO:BiblioGraphicReferenceList">
+          <ref rid="R1" class="deo:BibliographicReference" id="42" page="2" column="2">[1] H. Becker, M. Naaman, and L. Gravano. Learning similarity metrics for event identification in social media. In ACM WSDM , pp. 291–300, 2010.</ref>
+          <ref rid="R2" class="deo:BibliographicReference" id="43" page="2" column="2">[2] G. Petkos, S. Papadopoulos, and Y. Kompatsiaris. Social event detection using multimodal clustering and integrating supervisory signals. In ACM ICMR , pp. 23:1–8, 2012.</ref>
+          <ref rid="R3" class="deo:BibliographicReference" id="44" page="2" column="2">[3] T. Reuter and P. Cimiano. Event-based classification of social media streams. In ACM ICMR , pp. 22:1–8, 2012.</ref>
+          <ref rid="R4" class="deo:BibliographicReference" id="45" page="2" column="2">[4] T. Reuter, S. Papadopoulos, V. Mezaris, P. Cimiano, C. de Vries, and S. Geva. Social Event Detection at MediaEval 2013: Challenges, datasets, and evaluation. In MediaEval 2013 Workshop , 2013.</ref>
+          <ref rid="R5" class="deo:BibliographicReference" id="46" page="2" column="2">[5] K. N. Vavliakis, F. A. Tzima, and P. A. Mitkas. Event detection via LDA for the MediaEval2012 SED Task. In MediaEval 2012 Workshop , 2012.</ref>
+        </ref-list>
+      </section>
+    </body>
+  </article>
+</pdfx>

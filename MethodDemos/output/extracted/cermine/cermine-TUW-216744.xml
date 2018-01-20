@@ -1,0 +1,875 @@
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN" "JATS-archivearticle1.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+  <front>
+    <journal-meta>
+      <journal-title-group>
+        <journal-title>Schreier G, Hayn D, Ammenwerth E, editors.Tagungsband der eHealth</journal-title>
+      </journal-title-group>
+    </journal-meta>
+    <article-meta>
+      <title-group>
+        <article-title>TOWARDS AN OPEN, TRUSTWORTHY AND MULTILINGUAL SEARCH ENGINE FOR MEDICAL PRACTITIONERS: NEWS FROM THE EUROPEAN KHRESMOI PROJECT</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <string-name>Samwald M</string-name>
+          <xref ref-type="aff" rid="aff0">0</xref>
+          <xref ref-type="aff" rid="aff1">1</xref>
+          <xref ref-type="aff" rid="aff2">2</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Kritz M</string-name>
+          <xref ref-type="aff" rid="aff3">3</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Gschwandtner M</string-name>
+          <xref ref-type="aff" rid="aff3">3</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Stefanov V</string-name>
+          <xref ref-type="aff" rid="aff1">1</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Hanbury A</string-name>
+          <xref ref-type="aff" rid="aff1">1</xref>
+        </contrib>
+        <contrib contrib-type="editor">
+          <string-name>Support, Multilinguality</string-name>
+        </contrib>
+        <aff id="aff0">
+          <label>0</label>
+          <institution>Digital Enterprise Research Institute (DERI), National University of Ireland Galway</institution>
+          ,
+          <country country="IE">Ireland</country>
+        </aff>
+        <aff id="aff1">
+          <label>1</label>
+          <institution>Information Retrieval Facility</institution>
+          ,
+          <addr-line>Vienna</addr-line>
+          ,
+          <country country="AT">Austria</country>
+        </aff>
+        <aff id="aff2">
+          <label>2</label>
+          <institution>Section for Medical Expert and Knowledge-Based Systems, Center for Medical Statistics</institution>
+          ,
+          <addr-line>Informatics, and Intelligent Systems</addr-line>
+          ,
+          <institution>Medical University of Vienna</institution>
+          ,
+          <country country="AT">Austria</country>
+        </aff>
+        <aff id="aff3">
+          <label>3</label>
+          <institution>Society of Physicians in Vienna (Billrothhaus)</institution>
+          ,
+          <addr-line>Vienna</addr-line>
+          ,
+          <country country="AT">Austria</country>
+        </aff>
+      </contrib-group>
+      <pub-date>
+        <year>2011</year>
+      </pub-date>
+      <volume>26</volume>
+      <abstract>
+        <p>Medical practitioners often have unmet information needs that impact patient care. However, currently available web-based search engines are not suitable for routine use. Finding relevant information takes too long, assessing the trustworthiness of found information is difficult, and support for the heterogeneity of languages and nomenclature across European countries is lacking. In this paper, we analyze the current barriers to web-based searching by medical practitioners and introduce the European Khresmoi project, which aims to dismantle these barriers.</p>
+      </abstract>
+      <kwd-group>
+        <kwd>- Medical Practice</kwd>
+        <kwd>Information Retrieval</kwd>
+        <kwd>Semantic Technologies</kwd>
+        <kwd>Decision</kwd>
+      </kwd-group>
+    </article-meta>
+  </front>
+  <body>
+    <fig>
+      <graphic xlink:href="D:\output\methods\cermine\cermine-TUW-216744.images\img_3_1.png" />
+    </fig>
+    <sec id="sec-1">
+      <title>1. Background</title>
+      <p>
+        Physicians often have unmet information needs. These have been reported as occurring for up to 2
+of every 3 patients seen [
+        <xref ref-type="bibr" rid="ref1">1</xref>
+        ], or more recently for 41% of the questions they pursued [
+        <xref ref-type="bibr" rid="ref2">2</xref>
+        ]. Although
+these medical professionals have many tools for information search available (such as PubMed),
+studies have revealed that they do not use them to their full capabilities.
+      </p>
+      <p>
+        Most questions arise during consultations and have a direct impact on the medical decision process
+[
+        <xref ref-type="bibr" rid="ref3">3</xref>
+        ]. There is evidence suggesting that physicians primarily respond to their information needs when
+they perceive the question to be urgent and believe that definitive answers can be found [
+        <xref ref-type="bibr" rid="ref4">4</xref>
+        ].
+However, physicians are often restricted in their search by time constraints [
+        <xref ref-type="bibr" rid="ref5">5</xref>
+        ]. Physicians search
+on average for less than 5 minutes to answer questions [
+        <xref ref-type="bibr" rid="ref6">6</xref>
+        ]. A so-called “90 second rule” has been
+described in the literature — meaning physicians do not even attempt to find information unless
+they think they can do it in a minute and a half [
+        <xref ref-type="bibr" rid="ref7">7</xref>
+        ]. Hence, it is important that the pertinent
+information is found during this time. However, the time taken to answer questions using PubMed
+averages 30 minutes [
+        <xref ref-type="bibr" rid="ref1">1</xref>
+        ] and the information found is often scattered over multiple articles, making
+PubMed searching impractical for routine clinical use [
+        <xref ref-type="bibr" rid="ref6">6</xref>
+        ]. Furthermore, physicians that are not
+native English speakers using systems in English language are prone to use erroneous search terms,
+resulting in poorer returned results [
+        <xref ref-type="bibr" rid="ref8">8</xref>
+        ].
+      </p>
+      <p>
+        The World Wide Web has a lot to offer in terms of both quantity and quality of medical
+information [
+        <xref ref-type="bibr" rid="ref9">9</xref>
+        ]. There is no consensus within the literature as to what extent doctors currently rely
+on web-based searching as compared to other information sources. One line of research suggests
+that physicians often find it quicker and easier to look up answers in a pocket reference book or ask
+a colleague for advice [
+        <xref ref-type="bibr" rid="ref10">10</xref>
+        ] rather than searching on the Internet. In addition current web-based
+solutions fail to provide psychological support, guidance, affirmation, sympathy, judgement, and
+feedback, which colleagues can provide within the daily decision making process of a physician. A
+review by Davies [
+        <xref ref-type="bibr" rid="ref3">3</xref>
+        ] compared relevant research between 2000 and 2005, and found that text
+books (39%) and colleagues (25%) were the information sources physicians accessed most
+frequently, while computer resources were used only by 13%. However, an upward trend of
+Internet use is visible as the highest percentage of use examined in the study, 53%, occurred in the
+latest published research from 2005. A Spanish study published in 2007 [
+        <xref ref-type="bibr" rid="ref11">11</xref>
+        ] found that the
+majority of physicians still relied on colleagues, drug compendiums and textbooks rather than on
+web-based resources. A possible explanation is language as a potential barrier to web-based
+searching, and it appears to be inadequately addressed by current web-based solutions within the
+medical domain. In contrast to these findings is research claiming a clear preference of the Internet
+as a primary informational resource amongst physicians [
+        <xref ref-type="bibr" rid="ref12">12</xref>
+        ],[
+        <xref ref-type="bibr" rid="ref13">13</xref>
+        ]. Both studies provide support for
+the notion that the Internet has become an important information source amongst physicians.
+Possible explanations of conflicting study outcomes could be the variance among medical
+specialities, different geographical locations and potential biases introduced by different
+methodologies used in the studies (e.g., user observations versus self reports). Furthermore, the
+rapid changes and advances in the field of information technology make comparisons over larger
+time spans difficult.
+      </p>
+      <p>
+        There is also conflicting data about which web sites and tools physicians use to look for medical
+information on the web. Some publications suggest that general-purpose search services such as
+Google can play a useful role in the medical decision making process [
+        <xref ref-type="bibr" rid="ref14">14</xref>
+        ],[
+        <xref ref-type="bibr" rid="ref15">15</xref>
+        ]. In contrast, Leo et.
+al. [
+        <xref ref-type="bibr" rid="ref16">16</xref>
+        ] reported that physicians mistrust the quality of results from such search engines and prefer
+to directly access specialized medical websites. A study by Yu and Kaufman [
+        <xref ref-type="bibr" rid="ref14">14</xref>
+        ] suggests that
+Google is preferred for finding medical definitions, as it is easy to use and provides good answers
+to simple questions. However, for more complex information needs more advanced search systems
+may be required. A recent study funded by Google [
+        <xref ref-type="bibr" rid="ref13">13</xref>
+        ] is in strong contrast with prior findings. It
+postulates that the majority of physicians use Google or a similar search engine as their primary
+information sources in the clinical decision making process. However, it is unclear as to what
+extent the study was biased in terms of sample selection. Another study showed that general
+practitioners use Google as their first information source, primarily to lead them to higher quality
+websites [
+        <xref ref-type="bibr" rid="ref17">17</xref>
+        ]. Thus, it appears that physicians are currently willing to use a search engine for
+simple questions and as an initial source to help them find their way to higher quality websites.
+      </p>
+    </sec>
+    <sec id="sec-2">
+      <title>2. The Khresmoi approach</title>
+      <p>Summarizing the issues described above, medical practitioners could benefit from a widely
+deployed search engine that:
+● provides relevant, summarised output, yielding answers to complex questions in just a few
+minutes
+● is openly available on the web without barriers (e.g., requirement of subscription,
+registration fees)
+● is multilingual and supports terminologies (e.g., drug brand names in various countries)
+● is fast, easy to use and can be viewed on mobile devices
+● is developed in close cooperation with medical practitioners
+● is able to deal with short and underspecified queries
+● is continuously kept up-to-date
+● responds to the need for psychological support and affirmation
+It is the aim of the Khresmoi project5 to design and build a search engine that meets these criteria.
+The project is executed by a consortium of 12 academic and industrial partners and has a budget of
+approximately € 10 million. It started in September 2010 and will run for four years. Incremental
+versions will be made available during the project. Results of interviews and questionnaires about
+search engine use and information needs of European medical practitioners will be available by
+mid-2011. A first prototype will be released after one year, the final stable version of the
+infrastructure will be released in 2014.</p>
+      <p>
+        Khresmoi aims to meet the needs of a variety of users (Fig. 1): Members of the general public that
+do not have any medical expertise, as well as medical practitioners within their specialities, and
+radiologists (which form a separate user group because of their distinct information needs).
+The prototype system is based on existing software tools developed by the consortium partners.
+The GATE framework [
+        <xref ref-type="bibr" rid="ref18">18</xref>
+        ] is used for natural language processing, information extraction and the
+automated annotation of biomedical entities mentioned in websites and articles. The crawling,
+processing and querying of several terabytes of medical literature from web sources is done by the
+Vienna-based Information Retrieval Facility6 (IRF). To query both unstructured and
+semistructured, annotated text, the Mímir information retrieval engine7 is employed. Mímir is able to
+recognize and normalize linguistic variants, different units of measurement, annotations and
+document sections. It provides a sophisticated query language based on these text features. Mímir is
+interlinked with and complemented by the BigOWLIM semantic repository8, a highly scalable
+storage and reasoning system for data in RDF/OWL9 format. BigOWLIM is used to house a large
+medical knowledge base composed of biomedical ontologies (such as those from the Unified
+Medical Language System, UMLS10) and relevant medical and pharmacological datasets harvested
+from the web of data .
+      </p>
+      <p>The quality of medical websites used by the Khresmoi system is ensured by Health on the Net11
+(HON). HON is a non-governmental organization that gives a certificate (the 'HONcode') to
+trustworthy medical websites, based on a rigorous check of the website content. The HONcode is
+among the most widely acknowledged quality certificates for medical information on the web.
+The project has a dedicated budget of around 120,000 Euros for the manual creation of annotations
+on professional medical literature, which will add rich contextual information and raise the data
+quality.</p>
+      <p>The ability to query over an integrated database of annotated text from medical websites and
+literature, biomedical ontologies and well-structured biomedical datasets is expected to improve the
+quality of search results, and to reduce the time that is needed to find relevant, valid answers to
+medical questions.</p>
+      <p>Of course, such a system needs to be designed in close collaboration with the targeted group of end
+users. The Society of Physicians in Vienna12 is a member of the Khresmoi consortium and
+responsible for guiding project developments according to the needs of European medical
+practitioners. The society has over 2400 members and around 200 new members join each year.
+The website of the society is one of the leading Austrian websites for continuing medical education.
+It offers an online library, courses, webcasts, podcasts, as well as mobile services for physicians. In
+the Khresmoi project, the Society of Physicians conducts a large-scale user study to gather current
+data about the use of web-based information sources by medical practitioners in Austria and other
+European countries, employing both qualitative and quantitative methodologies (interviews and
+questionnaires). The study will serve to gather user requirements for the development of the
+Khresmoi system. Furthermore, the society will evaluate and test the initial and final versions of the
+Khresmoi search engine amongst its members.</p>
+    </sec>
+    <sec id="sec-3">
+      <title>3. Conclusions</title>
+      <p>The Khresmoi project is at an early stage. In order to increase the uptake of web-based search
+systems by medical practitioners and to have a meaningful impact on medical decision making, the
+development of the system needs to be done in close collaboration with medical practitioners. The
+community of physicians in Vienna could spearhead the uptake of web-based decision support in
+the daily medical routine.</p>
+    </sec>
+    <sec id="sec-4">
+      <title>4. Acknowledgements</title>
+      <p>The research leading to these results has received funding from the European Union Seventh
+Framework Programme (FP7/2007-2013) under grant agreement n° 257528 (KHRESMOI).
+http://www.nlm.nih.gov/research/umls/
+http://healthonnet.org
+http://www.billrothhaus.at</p>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <ref id="ref1">
+        <mixed-citation>
+          [1]
+          <string-name>
+            <surname>HERSH</surname>
+            ,
+            <given-names>W.R</given-names>
+          </string-name>
+          , HICKAM,
+          <string-name>
+            <surname>D.H.</surname>
+          </string-name>
+          ,
+          <article-title>How Well Do Physicians Use Electronic Information Retrieval Systems? A Framework for Investigation and Systematic Review</article-title>
+          ,
+          <source>JAMA: The Journal of the American Medical Association</source>
+          , vol.
+          <volume>280</volume>
+          ,
+          <string-name>
+            <surname>Okt</surname>
+          </string-name>
+          .
+          <year>1998</year>
+          , S.
+          <fpage>1347</fpage>
+          -
+          <lpage>1352</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref2">
+        <mixed-citation>
+          [2]
+          <string-name>
+            <surname>ELY</surname>
+            ,
+            <given-names>J.W.</given-names>
+          </string-name>
+          , OSHEROFF,
+          <string-name>
+            <given-names>J.A.</given-names>
+            ,
+            <surname>MAVIGLIA</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>S.M.</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>ROSENBAUM</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>M.E.</surname>
+          </string-name>
+          ,
+          <article-title>Patient-Care Questions that Physicians Are Unable to Answer</article-title>
+          ,
+          <source>Journal of the American Medical Informatics Association : JAMIA</source>
+          , vol.
+          <volume>14</volume>
+          ,
+          <year>2007</year>
+          , S.
+          <fpage>407</fpage>
+          -
+          <lpage>414</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref3">
+        <mixed-citation>
+          [3]
+          <string-name>
+            <surname>DAVIES</surname>
+            ,
+            <given-names>K.</given-names>
+          </string-name>
+          ,
+          <article-title>The information-seeking behaviour of doctors: a review of the evidence</article-title>
+          ,
+          <source>Health Information and Libraries Journal</source>
+          , vol.
+          <volume>24</volume>
+          ,
+          <year>2007</year>
+          , S.
+          <fpage>78</fpage>
+          -
+          <lpage>94</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref4">
+        <mixed-citation>
+          [4]
+          <string-name>
+            <surname>GORMAN</surname>
+            ,
+            <given-names>P.N.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>HELFAND</surname>
+            ,
+            <given-names>M.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Information</surname>
+          </string-name>
+          <article-title>Seeking in Primary Care, Medical Decision Making</article-title>
+          , vol.
+          <volume>15</volume>
+          ,
+          <string-name>
+            <surname>Juni</surname>
+          </string-name>
+          .
+          <year>1995</year>
+          , S.
+          <fpage>113</fpage>
+          -
+          <lpage>119</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref5">
+        <mixed-citation>
+          [5]
+          <string-name>
+            <surname>SACKETT</surname>
+            ,
+            <given-names>D.L.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>STRAUS</surname>
+            ,
+            <given-names>S.E.</given-names>
+          </string-name>
+          ,
+          <article-title>Finding and Applying Evidence During Clinical Rounds</article-title>
+          ,
+          <source>JAMA: The Journal of the American Medical Association</source>
+          , vol.
+          <volume>280</volume>
+          ,
+          <string-name>
+            <surname>Okt</surname>
+          </string-name>
+          .
+          <year>1998</year>
+          , S.
+          <fpage>1336</fpage>
+          -
+          <lpage>1338</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref6">
+        <mixed-citation>
+          [6]
+          <string-name>
+            <surname>HOOGENDAM</surname>
+            ,
+            <given-names>A.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>STALENHOEF</surname>
+            ,
+            <given-names>A.F.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>DE VRIES ROBBÉ</surname>
+            ,
+            <given-names>P.F.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>OVERBEKE</surname>
+            ,
+            <given-names>A.J.P.</given-names>
+          </string-name>
+          ,
+          <article-title>Answers to Questions Posed During Daily Patient Care Are More Likely to Be Answered by UpToDate Than PubMed</article-title>
+          ,
+          <source>Journal of Medical Internet Research</source>
+          , vol.
+          <volume>10</volume>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref7">
+        <mixed-citation>
+          [7]
+          <string-name>
+            <surname>SANDERS</surname>
+            ,
+            <given-names>S.</given-names>
+          </string-name>
+          ,
+          <article-title>Clever searching for evidence</article-title>
+          ,
+          <source>BMJ</source>
+          , vol.
+          <volume>330</volume>
+          ,
+          <year>2005</year>
+          , S.
+          <fpage>1162</fpage>
+          -
+          <lpage>1163</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref8">
+        <mixed-citation>
+          [8]
+          <string-name>
+            <surname>HOOGENDAM</surname>
+            ,
+            <given-names>A.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>STALENHOEF</surname>
+            ,
+            <given-names>A.F.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>DE VRIES ROBBÉ</surname>
+            ,
+            <given-names>P.F.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>OVERBEKE</surname>
+            ,
+            <given-names>A.J.P.</given-names>
+          </string-name>
+          ,
+          <article-title>Analysis of queries sent to PubMed at the point of care: Observation of search behaviour in a medical teaching hospital</article-title>
+          ,
+          <source>BMC Medical Informatics and Decision Making</source>
+          , vol. 8,
+          <string-name>
+            <surname>S.</surname>
+          </string-name>
+          42-
+          <fpage>42</fpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref9">
+        <mixed-citation>
+          [9]
+          <string-name>
+            <surname>PANDOLFINI</surname>
+            ,
+            <given-names>C. und BONATI</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>M.</surname>
+          </string-name>
+          ,
+          <article-title>Follow up of quality of public oriented health information on the world wide web: systematic re-evaluation, BMJ</article-title>
+          , vol.
+          <volume>324</volume>
+          ,
+          <string-name>
+            <surname>März</surname>
+          </string-name>
+          .
+          <year>2002</year>
+          , S.
+          <fpage>582</fpage>
+          -
+          <lpage>583</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref10">
+        <mixed-citation>
+          [10]
+          <string-name>
+            <surname>RAMOS</surname>
+            ,
+            <given-names>K.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>LINSCHEID</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>R.</surname>
+          </string-name>
+          , SCHAFER,
+          <string-name>
+            <surname>S.</surname>
+          </string-name>
+          ,
+          <article-title>Real-time information-seeking behavior of residency physicians</article-title>
+          ,
+          <source>Family Medicine</source>
+          , vol.
+          <volume>35</volume>
+          ,
+          <string-name>
+            <surname>Apr</surname>
+          </string-name>
+          .
+          <year>2003</year>
+          , S.
+          <fpage>257</fpage>
+          -
+          <lpage>260</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref11">
+        <mixed-citation>
+          [11]
+          <string-name>
+            <surname>GONZALES-GONZALES</surname>
+            ,
+            <given-names>A.I.</given-names>
+          </string-name>
+          , DAWES,
+          <string-name>
+            <given-names>M.</given-names>
+            ,
+            <surname>SANCHEZ-MATEOS</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J.</given-names>
+            ,
+            <surname>RIESGO-FUERTES</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>R.</given-names>
+            ,
+            <surname>ESCORTELL-MAYOR</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>E.</given-names>
+            ,
+            <surname>SANZ-CUESTA</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>T.</given-names>
+            ,
+            <surname>HERNANDEZ-FERNANDEZ</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>T.</surname>
+          </string-name>
+          ,
+          <source>Information Needs and Information-Seeking Behavior of Primary Care Physicians, Ann Fam Med</source>
+          , vol.
+          <volume>5</volume>
+          ,
+          <string-name>
+            <surname>Juli</surname>
+          </string-name>
+          .
+          <year>2007</year>
+          , S.
+          <fpage>345</fpage>
+          -
+          <lpage>352</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref12">
+        <mixed-citation>
+          [12]
+          <string-name>
+            <surname>GRAVATT</surname>
+            ,
+            <given-names>Z.B.H.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>ARROLL</surname>
+            ,
+            <given-names>B.</given-names>
+          </string-name>
+          ,
+          <article-title>What resources do Auckland general practitioners use for answering immediate clinical questions and for lifelong learning?</article-title>
+          ,
+          <source>Journal of Primary Health Care</source>
+          , vol.
+          <volume>2</volume>
+          ,
+          <string-name>
+            <surname>Juni</surname>
+          </string-name>
+          .
+          <year>2010</year>
+          , S.
+          <fpage>100</fpage>
+          -
+          <lpage>104</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref13">
+        <mixed-citation>
+          <article-title>[13] HALL AND PARTNERS, Connecting with physicians online: searching for answers</article-title>
+          .,
+          <year>2009</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref14">
+        <mixed-citation>
+          [14]
+          <string-name>
+            <surname>YU</surname>
+            <given-names>H.</given-names>
+          </string-name>
+          , KAUFMAN D.,
+          <article-title>A cognitive evaluation of four online search engines for answering definitional questions posed by physicians</article-title>
+          ,
+          <source>Pacific Symposium on Biocomputing. Pacific Symposium on Biocomputing</source>
+          ,
+          <year>2007</year>
+          , S.
+          <fpage>328</fpage>
+          -
+          <lpage>339</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref15">
+        <mixed-citation>
+          [15]
+          <string-name>
+            <surname>TANG</surname>
+            ,
+            <given-names>H.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>NG</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>J.H.K.</surname>
+          </string-name>
+          ,
+          <article-title>Googling for a diagnosis-use of Google as a diagnostic aid: internet based study</article-title>
+          ,
+          <source>BMJ</source>
+          , vol.
+          <volume>333</volume>
+          ,
+          <string-name>
+            <surname>Dez</surname>
+          </string-name>
+          .
+          <year>2006</year>
+          , S.
+          <fpage>1143</fpage>
+          -
+          <lpage>1145</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref16">
+        <mixed-citation>
+          [16]
+          <string-name>
+            <surname>DE</surname>
+            <given-names>LEO</given-names>
+          </string-name>
+          , G.,
+          <string-name>
+            <surname>LEROUG</surname>
+            ,
+            <given-names>E C.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>CERIANI</surname>
+            ,
+            <given-names>C.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>NIEDERMAN</surname>
+            ,
+            <given-names>F.</given-names>
+          </string-name>
+          ,
+          <article-title>Websites Most Frequently Used by Physician for Gathering Medical Information</article-title>
+          , vol.
+          <year>2006</year>
+          ,
+          <year>2006</year>
+          , S.
+          <fpage>902</fpage>
+          -
+          <lpage>902</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref17">
+        <mixed-citation>
+          [17]
+          <string-name>
+            <surname>SIM</surname>
+            ,
+            <given-names>M.G.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>KHONG</surname>
+            ,
+            <given-names>E.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>JIWA</surname>
+            ,
+            <given-names>M.</given-names>
+          </string-name>
+          , Does general practice Google?,
+          <source>Australian Family Physician</source>
+          , vol.
+          <volume>37</volume>
+          ,
+          <string-name>
+            <surname>Juni</surname>
+          </string-name>
+          .
+          <year>2008</year>
+          , S.
+          <fpage>471</fpage>
+          -
+          <lpage>474</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref18">
+        <mixed-citation>
+          [18]
+          <string-name>
+            <surname>CUNNINGHAM</surname>
+            ,
+            <given-names>H.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>MAYNARD</surname>
+            ,
+            <given-names>D.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>BONTCHEVA</surname>
+            ,
+            <given-names>K.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>TABLAN</surname>
+            ,
+            <given-names>V.</given-names>
+          </string-name>
+          ,
+          <article-title>GATE: A Framework and Graphical Development Environment for Robust NLP Tools</article-title>
+          and Applications,
+          <year>2002</year>
+          .
+        </mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  SYSTEM "http://dtd.nlm.nih.gov/archiving/3.0/archivearticle3.dtd">
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:mml="http://www.w3.org/1998/Math/MathML"
+         xmlns:xlink="http://www.w3.org/1999/xlink">
+   <front>
+      <journal-meta>
+         <journal-id/>
+         <journal-title-group>
+            <journal-title/>
+         </journal-title-group>
+         <issn/>
+         <publisher>
+            <publisher-name/>
+         </publisher>
+      </journal-meta>
+      <article-meta>
+         <title-group>
+            <article-title>Unsupervised Clustering of Social Events</article-title>
+         </title-group>
+         <supplement>
+            <p>Matthias Zeppelzauer Maia Zaharieva Vienna University of University of Vienna, Austria Technology, Austria Research Group Multimedia Interactive Media Sys. Group Information Systems <email>mzz@ims.tuwien.ac.at</email> 
+               <email>zaharieva@cs.univie.ac.at</email>
+            </p>
+         </supplement>
+         <abstract>
+            <sec>
+               <p>This paper describes our contribution to the social event detection (SED) task of the MediaEval Benchmark 2013. We present a robust unsupervised approach for the clustering of tagged photos and videos into social events. Results on the SED datasets show that the proposed approach yields an ex- cellent generalization ability and state-of-the-art clustering performance.</p>
+            </sec>
+         </abstract>
+      </article-meta>
+   </front>
+   <body>
+      <sec>
+         <title>1. INTRODUCTION</title>
+      </sec>
+      <sec>
+         <title>2. RELATED WORK</title>
+      </sec>
+      <sec>
+         <title>3. APPROACH</title>
+         <sec>
+            <title>3.1 Full Clustering</title>
+         </sec>
+         <sec>
+            <title>3.2 Full Clustering of Media using Videos</title>
+            <p>For the video subtask, we apply the above described topic modeling to the stopword-filtered textual descriptions of the videos (title, description, keywords). Temporal clustering and location clustering are neglected, because most videos do not contain location information and a capturing date. As a consequence, parameter τ is set to 0 . 0 for all experiments to achieve a complete clustering of all videos. We investigate three different approaches for generating the video clusters: (i) LDA is applied to train a topic model with 200 topics on the development data from which the topics of the test data are derived; (ii) each video constitutes a topic on its own; and (iii) an unsupervised LDA-based approach is used to detect 70 topics in the test data. After the video clusters are created, we link them to the previously generated photo clusters. The keywords of video clusters V are compared to the keywords of the photo clusters P using the Jaccard similarity coefficient. Each video cluster is linked to the photo cluster with the highest similarity.</p>
+         </sec>
+      </sec>
+      <sec>
+         <title>4. EXPERIMENTS AND RESULTS</title>
+         <p>We use the same parameters for experiments on the development and test set. To estimate the numbers of topics, we assume that each topic is constituted in average by 100- 200 photos. Additionally, we evaluate different values of β T corresponding to an event duration of 2-6 hours. The results of the proposed approach for both sets demonstrate its ex- cellent generalization ability (see <xref id="XR29" ref-type="table" rid="T1">Table 1</xref>). Results for the test set are even better than for the development set. The clustering performance is comparable to (more complex) supervised state-of-the-art methods. The approach by Petkos et al., for example, yields NMI values of 0.92 (average of best results) and 0.69 (average performance) on a portion of the SED2011 dataset (no F1 reported) [<xref id="XR31" ref-type="bibr" rid="R2">2</xref>]. Becker et al. [<xref id="XR32" ref-type="bibr" rid="R1">1</xref>] yield NMI values between 0.92 and 0.94 and F1 values from 0.77 to 0.82 on a test set consisting of 270k photos (10 splits). Reuter and Cimiano report an F1 of 0.74 for a dataset of 700k photos (7 splits, no NMI reported) [<xref id="XR33" ref-type="bibr" rid="R3">3</xref>].</p>
+         <table-wrap id="T1">
+            <caption>
+               <p>Table 1: Results for Full Clustering Development Set Test Set</p>
+            </caption>
+            <table>
+               <thead>
+                  <tr>
+                     <td> β T</td>
+                     <td> Topics</td>
+                     <td> F1</td>
+                     <td> NMI</td>
+                     <td> Topics</td>
+                     <td> F1</td>
+                     <td> NMI</td>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td> 0.2</td>
+                     <td> 2000</td>
+                     <td> 0.74</td>
+                     <td> 0.94</td>
+                     <td> 1000</td>
+                     <td> 0.78</td>
+                     <td> 0.94</td>
+                  </tr>
+                  <tr>
+                     <td> 0.2</td>
+                     <td> 3000</td>
+                     <td> 0.74</td>
+                     <td> 0.94</td>
+                     <td> 1500</td>
+                     <td> 0.78</td>
+                     <td> 0.94</td>
+                  </tr>
+                  <tr>
+                     <td> 0.2</td>
+                     <td> 1600</td>
+                     <td> 0.74</td>
+                     <td> 0.94</td>
+                     <td> 800</td>
+                     <td> 0.78</td>
+                     <td> 0.94</td>
+                  </tr>
+                  <tr>
+                     <td> 0.1</td>
+                     <td> 2000</td>
+                     <td> 0.73</td>
+                     <td> 0.93</td>
+                     <td> 1000</td>
+                     <td> 0.76</td>
+                     <td> 0.94</td>
+                  </tr>
+                  <tr>
+                     <td> 0.5</td>
+                     <td> 2000</td>
+                     <td> 0.72</td>
+                     <td> 0.93</td>
+                     <td> 1000</td>
+                     <td> 0.77</td>
+                     <td> 0.94</td>
+                  </tr>
+                  <tr>
+                     <td> The</td>
+                     <td> three approaches</td>
+                     <td/>
+                     <td> submitted submitted</td>
+                     <td> to the</td>
+                     <td> video</td>
+                     <td> subtask</td>
+                  </tr>
+                  <tr>
+                     <td> different</td>
+                     <td> results.</td>
+                     <td> The</td>
+                     <td> supervised</td>
+                     <td> approach</td>
+                     <td> trained trained</td>
+                     <td> on the</td>
+                  </tr>
+                  <tr>
+                     <td> velopment velopment</td>
+                     <td> data</td>
+                     <td> performs</td>
+                     <td> suboptimally suboptimally</td>
+                     <td> NMI=0.68).</td>
+                     <td> (F1=0.42,</td>
+                     <td> NMI=0.68). NMI=0.68).</td>
+                  </tr>
+                  <tr>
+                     <td> reason</td>
+                     <td> for this</td>
+                     <td> may</td>
+                     <td> be that</td>
+                     <td> the events</td>
+                     <td> of the</td>
+                     <td> test</td>
+                  </tr>
+                  <tr>
+                     <td> inferred</td>
+                     <td> from</td>
+                     <td> the events</td>
+                     <td> in</td>
+                     <td> the development</td>
+                     <td/>
+                     <td> data. If</td>
+                  </tr>
+                  <tr>
+                     <td> event is</td>
+                     <td> not included</td>
+                     <td> in</td>
+                     <td> the</td>
+                     <td> development</td>
+                     <td> data, it</td>
+                     <td> cannot</td>
+                  </tr>
+                  <tr>
+                     <td> inferred.</td>
+                     <td> The second</td>
+                     <td/>
+                     <td> approach</td>
+                     <td> shows that</td>
+                     <td/>
+                     <td> comparing</td>
+                  </tr>
+                  <tr>
+                     <td> metadata metadata</td>
+                     <td> of single</td>
+                     <td> videos</td>
+                     <td> with</td>
+                     <td> the</td>
+                     <td> accumulated</td>
+                     <td> LDA</td>
+                  </tr>
+                  <tr>
+                     <td> words from</td>
+                     <td> clusters</td>
+                     <td> is not</td>
+                     <td/>
+                     <td> well-suited to</td>
+                     <td> link</td>
+                     <td> single</td>
+                  </tr>
+                  <tr>
+                     <td> clusters</td>
+                     <td> (F1=0.34,</td>
+                     <td/>
+                     <td> NMI=0.77). NMI=0.77).</td>
+                     <td> The</td>
+                     <td> unsupervised unsupervised</td>
+                     <td/>
+                  </tr>
+                  <tr>
+                     <td> based</td>
+                     <td> approach</td>
+                     <td> performs performs</td>
+                     <td> best</td>
+                     <td> (F1=0.69,</td>
+                     <td/>
+                     <td> NMI=0.85)</td>
+                  </tr>
+                  <tr>
+                     <td> builds a</td>
+                     <td> promising</td>
+                     <td> baseline</td>
+                     <td> for</td>
+                     <td> future</td>
+                     <td> improvements. improvements.</td>
+                     <td/>
+                  </tr>
+               </tbody>
+            </table>
+         </table-wrap>
+      </sec>
+      <sec>
+         <title>5. CONCLUSIONS AND OUTLOOK</title>
+         <p>In this paper we presented our contribution to the SED challenge of the MediaEval 2013 Benchmark. We proposed a robust unsupervised method for the clustering of photos and videos into social events. The method exhibits strong generalization ability, low sensitivity to parameters, and yields state-of-the-art performance. Future work focuses on more sophisticated event refinements and visual content analysis.</p>
+      </sec>
+      <sec>
+         <title>6. ACKNOWLEDGMENTS</title>
+         <p>This work has been partly funded by the Vienna Science and Technology Fund (WWTF) through project ICT12-010 and the Carinthian Economic Promotion Fund (KWF) un- der grant KWF-20214 22573 33955.</p>
+      </sec>
+      <sec>
+         <title>7. REFERENCES</title>
+      </sec>
+   </body>
+   <back>
+      <ref-list>
+         <ref id="R1">
+            <mixed-citation>[1] H. Becker, M. Naaman, and L. Gravano. Learning similarity metrics for event identification in social media. In ACM WSDM , pp. 291–300, 2010.</mixed-citation>
+         </ref>
+         <ref id="R2">
+            <mixed-citation>[2] G. Petkos, S. Papadopoulos, and Y. Kompatsiaris. Social event detection using multimodal clustering and integrating supervisory signals. In ACM ICMR , pp. 23:1–8, 2012.</mixed-citation>
+         </ref>
+         <ref id="R3">
+            <mixed-citation>[3] T. Reuter and P. Cimiano. Event-based classification of social media streams. In ACM ICMR , pp. 22:1–8, 2012.</mixed-citation>
+         </ref>
+         <ref id="R4">
+            <mixed-citation>[4] T. Reuter, S. Papadopoulos, V. Mezaris, P. Cimiano, C. de Vries, and S. Geva. Social Event Detection at MediaEval 2013: Challenges, datasets, and evaluation. In MediaEval 2013 Workshop , 2013.</mixed-citation>
+         </ref>
+         <ref id="R5">
+            <mixed-citation>[5] K. N. Vavliakis, F. A. Tzima, and P. A. Mitkas. Event detection via LDA for the MediaEval2012 SED Task. In MediaEval 2012 Workshop , 2012.</mixed-citation>
+         </ref>
+      </ref-list>
+   </back>
+</article>

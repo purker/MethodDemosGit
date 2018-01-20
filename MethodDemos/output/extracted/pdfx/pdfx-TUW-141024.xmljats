@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  SYSTEM "http://dtd.nlm.nih.gov/archiving/3.0/archivearticle3.dtd">
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:mml="http://www.w3.org/1998/Math/MathML"
+         xmlns:xlink="http://www.w3.org/1999/xlink">
+   <front>
+      <journal-meta>
+         <journal-id/>
+         <journal-title-group>
+            <journal-title/>
+         </journal-title-group>
+         <issn/>
+         <publisher>
+            <publisher-name/>
+         </publisher>
+      </journal-meta>
+      <article-meta>
+         <title-group>
+            <article-title>Embedding the Evidence Information in Guideline Representation Languages</article-title>
+         </title-group>
+         <supplement>
+            <p>Alime Oztü  ̈ rk a , Katharina Kaiser a , Patrick Martini a , Silvia Miksch a,b a Institute of Software Technology and Interactive Systems, Vienna University of Technology, Austria b Department of Information and Knowledge Engineering, Danube University Krems, Austria { alime, kaiser, martini, silvia } @asgaard.tuwien.ac.at</p>
+         </supplement>
+         <abstract>
+            <sec>
+               <p>Clinical practice guidelines are widely used to support medical staff in treatment planning and decision-making, whereas, the classification of different recommendations in the CPGs are one of the most important information sources to use. However, there is a lack of consensus amongst guideline developers, regarding those classification schemes. To address this problem, we mapped the different graded and ungraded evidence information used by different guideline developing organizations into our meta schema. In this paper we describe how guideline representation languages, such as Asbru and PROforma can be extended to model our meta schema.</p>
+            </sec>
+         </abstract>
+      </article-meta>
+   </front>
+   <body>
+      <sec>
+         <title>1. Introduction</title>
+      </sec>
+      <sec>
+         <title>2. Motivation</title>
+         <p>In order to facilitate the decision-making process, several guideline representation languages and systems have been developed. They provide physicians a computer interpretable representation of guidelines to enable automated decision-making support. However, LoEs and SoRs are inadequatly treated in guideline representation languages and tools, as they do not support the formalising and modeling process of recommendations with regard to the LoEs and SoRs sufficiently. They need to be extended to provide means for representing evidence information in CPGs. Therefore, a method is required to extend these guideline representation languages with the evidence information in computer-supported guidelines. Guideline representation languages with well-structured syntax and semantics, such as Asbru [<xref id="XR11" ref-type="bibr" rid="R9">9</xref>] and PROforma [<xref id="XR12" ref-type="bibr" rid="R4">4</xref>] are of particular importance, because they have been developed to handle various concepts that care formalisation implies. Many guideline modelling tools (e.g., AsbruView, Tallis) are based on these languages. Our proposed extensions can be embedded into the syntax and semantic of these languages so that such tools can provide a computer-interpretable representation of the evidence information in CPGs. Hence, we decided to use Asbru and PROforma to model the evidence information according to our meta schema. Asbru is a time-oriented, intention-based representation language to represent CPGs and clinical protocols in XML. It is used to represent guidelines in a set of hierarchical skeletal plans. Each plan consists of a name, a set of arguments, a time annotation, preferences, intentions, conditions, effects, and a plan body (for more detail consider [<xref id="XR13" ref-type="bibr" rid="R9">9</xref>, <xref id="XR14" ref-type="bibr" rid="R8">8</xref>]). The preferences are of particular importance to us, because they describe the resource constraints, the costs, and the responsible actor. Our meta schema will be embedded into the definitions of preferences. PROforma is a guideline representation language to support the management of medical procedures as well as decision systems. It provides a basis for a method, a technology and different applications for developing and publishing executeable CPGs. A guideline application is modeled as a set of tasks and data items. The four basis classes are (1) plan, (2) decision, (3) action, and (4) enquiry (compare [<xref id="XR15" ref-type="bibr" rid="R11">11</xref>]). In order to embed the evidence information into the PROforma syntax we focused on the decision task, because this task is responsible for the decision-making process during execution.</p>
+      </sec>
+      <sec>
+         <title>3. The way to the meta schema</title>
+         <p>We already stressed out the importance of a formal representation of evidence information in CPGs and analysed 21 CPGs developed by nine different organizations and co-operations. We manually extracted the data needed to embed the evidence information in CPGs into the representation languages Asbru and PROforma. The extracted data included information about the guideline developing organization (GDOs), LoEs, SoRs, trade-off between benefits and harms, and costs (for more detail compare [ <xref id="XR18" ref-type="bibr" rid="R7">7</xref>]). Guideline developing organizations (GDOs): is essential to extract from and differentiate between the different grading systems. For example, the Finnish Medical Society Duodecim (FMSD) uses the letter A to grade a LoEs, whereas the Allergic Rhinitis and its Impact on Asthma Workshop Group (ARIA) uses the letter A to classify the SoRs. Levels of evidence (LoEs): Our meta schema takes various types of medical studies into consideration and defines for each type of study different LoEs, indicating the quality of evidence on which the study is based. In order to get a hierarchical structure, we defined the LoEs on the basis of the study types, where meta-analysis is on the top and no study type at the bottom of the hierar- chy. The type of a study is of particular importance to us, because it is going to be used to assign grades to ungraded evidence information. Classification system is important to establish a relation between the study type and the quality of evidence the study is based on. Therefore, we introduce our own labels (e.g., I 3, II 6) that consists of a Roman numeral indicating the type of study and a number indicating the quality of evidence the study is based on, separated by an underscore (for more detail see [<xref id="XR20" ref-type="bibr" rid="R7">7</xref>] ). This classification system will be used to formalize our meta schema and to extend the guideline representation languages Asbru and PROforma. Strengths of recommendations (SoRs): In most of the CPGs (16 guidelines out of 21) we considered, the SoRs are not explicitly represented. In the remaining five guidelines, different labels are used to refer to SoRs. Therefore, we developed our own meta schema for SoRs, which is compatible with the ones used in those five guidelines. It was clear that the SoRs have to be distinguishable, meaningful, clear, and unambiguous. We thought that more than four hierarchical levels would not satisfy these objectives and defined levels of strength as (1)strong recommendation, (2)recommendation, (3)weak recommendation, and (4)no recommendation. Benefits and harms: Often CPGs contain texts about the benefits and possible harms of a particular treatment. The CPGs we used do not contain any information about the trade-off between the benefits and harms either. They only contain a common description of known benefits and harms. We used the well defined categorization by the GRADE working group as a basis for defining our meta schema for representing the trade-off between benefits and harms, because tehy suggest to in- clude explicit information about the balance between the main health benefits of a treatment while considering its costs, as they may play a significant role during the decision-making process (see [<xref id="XR21" ref-type="bibr" rid="R1">1</xref>]). We want this attribute to be included in the guideline representation languages. Costs: CPGs have been developed to improve the quality of health care, while reducing avoid- able costs for providing this health care. Therefore, it is important that guideline users are informed about the potential costs and expected outcomes of different choices regarding the treatment. This information allows users to prioritize different options for treatment according to their value and cost-effectiveness [<xref id="XR22" ref-type="bibr" rid="R5">5</xref>].</p>
+      </sec>
+      <sec>
+         <title>4. Extension of Asbru and PROforma</title>
+         <p>In Section 3 we gave an overview of the basic attributes of evidence information we think to be mandatory when it is aimed to enable better support of physicians while decision-making. Now, we want to explain how they can be represented in the guideline representation languages Asbru and PROforma and how these languages have to be extended. In the following we summarise and name the seven attributes we propose:</p>
+         <p>scientific conclusion: is the main attribute representing the overall result organization: represents the name of the guideline developing organization</p>
+         <p>levels of evidence: contains the labels that refer to the type of study and the quality of its evidence (e.g., II 2, IV 3) study type: gives information about the concrete type of study (e.g., cohort study, etc.) strength: represents the stregnth of recommendation (e.g., strong recommendation) benefit harm: refers to the trade-off between benefits and harms of a treatment (only if available in the CPG) costs: provides information about the costs of a particular treatment (only if available in the CPG)</p>
+         <p>The attributes organization, study type, strength, level of evidence, and scientific conclusion are essential, whereas benefit harm and costs are optional. Because Asbru and PROforma have their own syntax, it is necessary to propose the extension to both languages separately.</p>
+         <sec>
+            <title>4.1. Extending Asbru</title>
+            <p>As Asbru is an XML-based language, we defined a Document Type Definition (DTD) that describes the use of our proposed seven attributes to formally represent evidence information in Asbru. The attribute scientific conclusion has to be included into the element preferences , which is a child of the plan element containing various information used in the plan selection phase (compare [<xref id="XR30" ref-type="bibr" rid="R8">8</xref>]).</p>
+            <p>&lt; !ELEMENT scientific conclusion (#PCDATA) &gt; &lt; !ATTLIST scientific conclusion organization CDATA #REQUIRED level of evidence ( I 1 | I 2 | I 3 | I 4 | II 1 | II 2 | II 3 | II 4 | II 5 | II 6 | II 7 | III 1 | III 2 | III 3 #REQUIRED | III 4 | III 5 | III 6 | III 7 | IV 1 | IV 2 | IV 3 | IV 4 | IV 5 | V 1 | V 2 | V 3 | V 4 | V 5 | VI 1 | VII 1 | VII 2 | VII 3 ) study type (Meta Analysis | Systematic Reviews | Randomized Controlled Trials | Cohort #REQUIRED Studies | Case Control Studies | Expert Opinion | No Study Type) strength (Strong Recommendation | Recommendation | Weak Recommendation | No #REQUIRED Recommendation ) benefit harm CDATA #IMPLIED cost CDATA #IMPLIED &gt; The following XML representation is an example of a CPG modeled in Asbru. &lt; preferences &gt; &lt; scientific conclusion organisation = ”SIGN” level of evidence = ”III 2” study type = ”Randomized Controlled Trials” strength = ”Strong Recommendation” &gt; &lt; costs name=”monetary-costs” &gt; &lt; numerical-constant unit=”Euro” value=”1000” /&gt; &lt;/ costs &gt; &lt; costs name=”discomfort” &gt; &lt; qualitative-constant value=”low” /&gt; &lt;/ costs &gt; &lt;/ scientific conclusion &gt; &lt;/ preferences &gt;</p>
+            <p>This example states that, the guideline is developed by SIGN , whereas the medical recommendation is classified with III 2 referring to the study type Randomized Controlled Trials and indicating the strength Strong Recommendation . Its costs are estimated to be 1000 Euro per month, whereas the patient’s discomfort will be at a low level [<xref id="XR33" ref-type="bibr" rid="R8">8</xref>].</p>
+         </sec>
+         <sec>
+            <title>4.2. Extending PROforma</title>
+            <p>The syntax of PROforma is described using the Backus Naur Form (BNF). We use the same syntax to present our extension that can be embedded into PROforma. Here, the scientific conclusion attribute has to be embedded into the main definitions of the attribute argument in the PROforma syntax (compare [<xref id="XR36" ref-type="bibr" rid="R10">10</xref>]).</p>
+            <p>&lt; argument &gt; ::=”argument”::” &lt; scientific conclusion &gt; ”,” &lt; expression &gt; &lt; scientific conclusion &gt; ::= &lt; organisation &gt;&lt; level of evidence &gt;&lt; study type &gt;&lt; strength &gt; &lt; scientific conclusion &gt; ::=[ &lt; benefit harm &gt; ] &lt; scientific conclusion &gt; ::=[ &lt; cost &gt; ] &lt; organisation &gt; ::= &lt; atom &gt; &lt; level of evidence &gt; ::= &lt; atom &gt; (must be either ”I 1”, ”I 2”, ”I 3”, ”I 4”, ”II 1”, ”II 2”, ”II 3”, ”II 4”, ”II 5”, ”II 6”, ”II 7”, ”III 1”, ”III 2”, ”III 3”, ”III 4”, ”III 5”, ”III 6”, ”III 7”, ”IV 1”, ”IV 2”, ”IV 3”, ”IV 4”, ”IV 5”, ”V 1”, ”V 2”, ”V 3”, ”V 4”, ”V 5”, ”VI 1”, ”VII 1”, ”VII 2” or ”VII 3”) &lt; study type &gt; ::= &lt; atom &gt; (must be either ”Meta Analysis”, ”Systematic Reviews”, ”Randomized Controlled Trials”, ”Cohort Studies”, ”Case Control Studies”, ”Expert Opinion”, ”No Study Type”) &lt; strength &gt; ::= &lt; atom &gt; (must be either ”Strong Recommendation”, ”Recommendation”, ”Weak Recommendation”, ”No Recommendation”) &lt; benefit harm &gt; ::= &lt; atom &gt; &lt; benefit harm &gt; ::= &lt; empty &gt; &lt; cost &gt; ::= &lt; atom &gt; &lt; cost &gt; ::= &lt; empty &gt;</p>
+         </sec>
+      </sec>
+      <sec>
+         <title>5. Evaluation</title>
+         <p>To evaluate the motivation to our meta schema, the grading schema itself, and the proposed extensions to Asbru and PROforma, we composed a questionnaire of ten questions. They were about the correctness, feasibility, and understandability of, the hierarchical structure of our meta schema, the proposed LoEs and SoRs, the mappings between existing grading schemes and our schema, the attribute representing the trade-off between benefits and harms, and the assignment of our LoEs and SoRs to ungraded evidence information. We also formulated questions regarding the availability of needed information for the proposed attributes, the expected extent of facilitation of the decison-making process when using our grading schema, and the representability of our schema with regard to existing grading schemes. We sent this questionnaire to 29 persons including guideline developers, physicians, and developers of guideline representation languages. Most of them agreed with the correctness, understandability, and sensibility of the hierarchical structure, the quality of the LoEs and the SoRs, and the mapping tables for our schema. Some of them disagreed with the assignment of the SoRs to the ungraded evidence information. They believe that more information is needed than the LoEs and the SoRs to support a correct decision. We took all received answers into consideration to update our grading schema and representations, which yield to the enhanced version of our grading schema that we presented in this work.</p>
+      </sec>
+      <sec>
+         <title>6. Conclusion and future work</title>
+         <p>Our meta schema connects different schemes of LoEs and SoRs and provides a means to assign a LoE and a SoR to ungraded evidence recommendations based on the study type and quality of  evidence if available. The meta schema provides a possibility to handle the multitude of grading systems on an equal level and facilitates the flow of the underlying information to be quickly and traceable. Additionally, evidence information about a particular recommendation provides guideline users the facility to choose between recommendations with high level and recommendations with lower level during decision-making. In this paper, we presented two extensions to the guideline representation languages Asbru and PROforma, to enable them to represent evidence information according to our proposed meta schema. We think that these extensions are essential to facilitate the decision-making process in computer-based medical treatment planning. For the near future, our focus is on enhancing our meta schema in order to apply it to guidelines from other domains (e.g., cancer) and on developing Information Extraction methods that are able to (semi-) automatically extract evidence information in CPGs according to our proposed meta schema. Acknowledgments. This work is supported by ”Fonds zur Foerderung der wissenschaftlichen Forschung - FWF” (Austrian Science Fund), grants L290-N04.</p>
+      </sec>
+      <sec>
+         <title>References</title>
+      </sec>
+   </body>
+   <back>
+      <ref-list>
+         <ref id="R1">
+            <mixed-citation>[1] David Atkins, D. Best, Peter A. Briss, Martin Eccles, Y. Falck-Ytter, Signe Flottorp, Gordon H. Guyatt, Robin T. Harbour, M. C. Haugh, D. Henry, Suzanne Hill, Roman Jaeschke, G. Leng, Alessandro Liberati, Nicola Ma- grini, James Mason, P. Middleton, J. Mrukowicz, Dianne O’Connell, Andrew D. Oxman, Bob Phillips, Holger Schünemann, Tessa Tan-Torres Edejer, H. Varonen, Gunn E. Vist, John W. Williams Jr., S. Zaza, and The GRADE Working Group. Grading quality of evidence and strength of recommendations. BMJ , 328(7454):1490–1498, June 2004.</mixed-citation>
+         </ref>
+         <ref id="R2">
+            <mixed-citation>[2] Mark H. Ebell, Jay Siwek, Barry D. Weiss, Steven H. Woole, Jeffrey Susman, Bernard Ewigman, and Marjorie Bowman. Strength of recommandation taxonomy (sort): A patient-centered approach to grading evidence in the medical literature. American Family Physician , 69(3):548–556, Feb. 2004.</mixed-citation>
+         </ref>
+         <ref id="R3">
+            <mixed-citation>[3] Marilyn J. Field and Kathleen N. Lohr, editors. Clinical Practice Guidelines: Directions for a New Program. National Academies Press, Institute of Medicine, Washington DC, 1990.</mixed-citation>
+         </ref>
+         <ref id="R4">
+            <mixed-citation>[4] John Fox, Nicky Johns, and Ali Rahmanzadeh. Disseminating medical knowledge: The PROforma approach. Artificial Intelligence in Medicine , 14:157–181, Sept. 1998.</mixed-citation>
+         </ref>
+         <ref id="R5">
+            <mixed-citation>[5] Attilio V. Granata and Alan L. Hillman. Competing practice guidelines: Using cost-effectiveness analysis to make optimal decisions. Annals of Internal Medicine , 128(1):56–63, 1998.</mixed-citation>
+         </ref>
+         <ref id="R6">
+            <mixed-citation>[6] Richard Grol, Johannes Dalhuijsen, Siep Thomas, Cees in ’t Veld, Guy Rutten, and Henk Mokkink. Attributes of clinical guidelines that influence use of guidelines in general practice: observational study. BMJ , 317:858–861, Sept. 26 1998.</mixed-citation>
+         </ref>
+         <ref id="R7">
+            <mixed-citation>[7] Katharina Kaiser, Patrick Martini, Silvia Miksch, and Alime Oztü  ̈ rk. A meta schema for evidence information in clinical practice guidelines as a basis for decision-making. In Klaus Kuhn, Tze Yun Leong, and Jim Warren, editors, Proceedings of the 12th World Congress on Health (Medical) Informatics (Medinfo’2007) , Brisbane, Australia, 2007, forthcoming. AMIA.</mixed-citation>
+         </ref>
+         <ref id="R8">
+            <mixed-citation>[8] Andreas Seyfang, Robert Kosara, and Silvia Miksch. Asbru 7.3 reference manual. Technical Report Asgaard- TR-2002-1, Institute of Software Technology &amp; Interactive Systems, Vienna University of Technology, Vienna, Austria, Europe, 2002.</mixed-citation>
+         </ref>
+         <ref id="R9">
+            <mixed-citation>[9] Yuval Shahar, Silvia Miksch, and Peter Johnson. The Asgaard project: A task-specific framework for the application and critiquing of time-oriented clinical guidelines. Artificial Intelligence in Medicine , 14:29–51, Sept. 1998.</mixed-citation>
+         </ref>
+         <ref id="R10">
+            <mixed-citation>[10] David R. Sutton and John Fox. The syntax and semantics of the PRO forma guideline modeling language. Journal of the American Medical Informatics Association (JAMIA) , 10(5):433–443, Sep / Oct 2003.</mixed-citation>
+         </ref>
+         <ref id="R11">
+            <mixed-citation>[11] Arjen Vollebregt, Annette ten Teije, Frank van Harmelen, Johan van der Lei, and Mees Mosseveld. A study of PROforma, a development methodology for clinical procedures. Artificial Intelligence in Medicine , 17(3):195– 221, 1999.</mixed-citation>
+         </ref>
+      </ref-list>
+   </back>
+</article>

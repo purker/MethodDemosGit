@@ -1,0 +1,974 @@
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN" "JATS-archivearticle1.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+  <front>
+    <journal-meta>
+      <journal-title-group>
+        <journal-title>Authorized licensed use limited to: Universitatsbibliothek der TU Wien. Downloaded on December</journal-title>
+      </journal-title-group>
+    </journal-meta>
+    <article-meta>
+      <title-group>
+        <article-title>Introducing Aspect-oriented Space Containers for Efficient Publish/Subscribe Scenarios in Intelligent Transportation Systems</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <string-name>Eva Ku¨ hn, Richard Mordinyi,</string-name>
+          <email>{ek,rm,lk,cs}@complang.tuwien.ac.at</email>
+          <xref ref-type="aff" rid="aff0">0</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Sandford Bessler, Slobodanka Tomic</string-name>
+          <email>bessler@ftw.at</email>
+          <email>tomic@ftw.at</email>
+          <email>{bessler, tomic}@ftw.at</email>
+          <xref ref-type="aff" rid="aff1">1</xref>
+        </contrib>
+        <aff id="aff0">
+          <label>0</label>
+          <institution>Laszlo Keszthelyi, Christian Schreiber, Space-based Computing Group, Vienna University of Technology</institution>
+          ,
+          <addr-line>Favoritenstr. 9-11, 1040 Vienna</addr-line>
+          ,
+          <country country="AT">Austria</country>
+        </aff>
+        <aff id="aff1">
+          <label>1</label>
+          <institution>Telecommunications Research Centre Vienna (FTW)</institution>
+          ,
+          <addr-line>Donau-City 1, 1210 Vienna</addr-line>
+          ,
+          <country country="AT">Austria</country>
+        </aff>
+      </contrib-group>
+      <pub-date>
+        <year>2009</year>
+      </pub-date>
+      <volume>4</volume>
+      <issue>2009</issue>
+      <fpage>313</fpage>
+      <lpage>316</lpage>
+      <abstract>
+        <p />
+      </abstract>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="sec-1">
+      <title>-</title>
+      <p>The publish/subscribe paradigm is a common concept
+for delivering events from information producers to
+consumers in a decoupled manner. Some approaches allow
+durable subscriptions or the transportation of events even
+to mobile subscribers in a dynamic network infrastructure.
+However, in the safety-critical telematics durable delivery
+of events is not sufficient enough. Short network
+connectivity time and small bandwidth limit the number and size of
+events to be transmitted hence relevant information needed
+for safety-critical decision making may not be timely
+delivered.</p>
+      <p>In this paper we propose the integration of publish/
+subscribe systems and Aspect-oriented Space Containers
+(ASC) distributed via Distributed Hash Tables (DHT) in
+the network. The approach allows storage, manipulation,
+pre-processing, and prioritization of messages sent to
+mobile peers during bursts of connectivity.</p>
+      <p>The benefits of the proposed approach are a) less
+complex application logic due to the processing capabilities of
+Space Containers, and b) increased efficiency due to
+delivery of essential messages only aggregated and processed
+while mobile peers are not connected. We describe the
+architecture of the proposed approach and explain its benefits
+by means of an industry use case.</p>
+      <p>
+        The publish/subscribe paradigm [
+        <xref ref-type="bibr" rid="ref8">8</xref>
+        ] is a common and
+largely recognized concept for delivering messages in an
+anonymous decoupled fashion from publishers to
+subscribers. There are also concepts trying to ensure durability
+or the correct order of events [
+        <xref ref-type="bibr" rid="ref13">13</xref>
+        ], even in case of mobile
+peers or a completely dynamic network [
+        <xref ref-type="bibr" rid="ref10">10</xref>
+        ]. However,
+978-1-4244-4985-9/09/$25.00 c 2009 IEEE
+there are application domains, like safety-critical
+telematics, in which the durable delivery of subscribed messages,
+in other words the guaranteed delivery with ”exactly once”
+semantics” may be considered a precondition for operation,
+due to jurisdictional reasons, but is not adequate at all.
+Among others, a durable notification service has to store all
+events a peer has subscribed for while the subscriber is
+offline. Once the peer is reachable again, the saved events have
+to be delivered to the associated subscriber. This means that
+the peer would receive a large amount of data that it has
+to process locally in order to extract relevant information.
+However, in scenarios from Intelligent Transportation
+Systems (ITS), mobile peers (vehicles) have only a few
+seconds of connectivity and very limited bandwidth [
+        <xref ref-type="bibr" rid="ref17">17</xref>
+        ].
+This may cause several problems: the reconnecting peer
+should receive all stored events which may have very
+different importance for the user or be even stale, but due
+to the limited bandwidth and connectivity window only a
+very few messages can be forwarded to the peer creating
+a kind of back-pressure in the system. Furthermore, due
+to the small connectivity window, there is a possibility
+that essential information, such as safety-critical ghost
+driver warnings, cannot be transmitted to the peer. If such
+messages are not forwarded to the peer on time humans
+lives may be jeopardized. Therefore, the safety risk grows
+with the amount of irrelevant or even incorrect information
+delivered instead of important life-saving information.
+      </p>
+      <p>
+        In this paper1 we propose the concept of Aspect-oriented
+Space Containers (ASC) for linking pub/sub systems and
+mobile peers with short connectivity time. The so called
+Space Container [
+        <xref ref-type="bibr" rid="ref12">12</xref>
+        ] is a customizable storage
+component for efficient storage and retrieval of structured,
+spatialtemporal data distributed in a fault-tolerant manner [
+        <xref ref-type="bibr" rid="ref11">11</xref>
+        ]
+1This work has been supported by the Complex Systems Design &amp;
+Engineering Lab, and by the Austrian Government and the City of Vienna
+within the competence center program COMET.
+by means of Distributed Hash Tables (DHT) [
+        <xref ref-type="bibr" rid="ref15">15</xref>
+        ].
+Aspects are components with customizable application logic
+executed either before or after the operation on the Space
+Container for events processing. The combination of a
+pub/sub medium and ASC allow the mobile peer to inset
+a Space Container in the network which then acts as an
+intermediate-subscriber for events in the pub/sub medium,
+and processes the delivered events on behalf of that mobile
+peer.
+2
+      </p>
+    </sec>
+    <sec id="sec-2">
+      <title>Related Work</title>
+      <p>
+        The pub/sub paradigm defines two types of clients:
+publishers generating events, and subscribers receiving
+notifications of events they have previously subscribed for. This
+type of messaging paradigm allows a strong decoupling of
+publishers and subscribers in time and space. Furthermore,
+it enables asynchronous and anonymous communication
+between publishers and subscribers [
+        <xref ref-type="bibr" rid="ref8">8</xref>
+        ]. There are two types
+of pub/sub systems: topic-based and content-based [
+        <xref ref-type="bibr" rid="ref8">8</xref>
+        ].
+Hybrid pub/sub systems like Hermes [
+        <xref ref-type="bibr" rid="ref14">14</xref>
+        ], SIENA [
+        <xref ref-type="bibr" rid="ref5">5</xref>
+        ] or
+Rebecca [
+        <xref ref-type="bibr" rid="ref18">18</xref>
+        ] support both types of subscription. Furthermore,
+the pub/sub system architecture can be further classified
+into client-server and peer-to-peer. In a client-server
+architecture, like Gryphon [
+        <xref ref-type="bibr" rid="ref3">3</xref>
+        ], publishers and subscribers are
+clients which are connected to a network of servers.
+Generally, the servers temporarily store the events generated
+by publisher-clients and forwarded them to the
+subscriberclients. If a subscribed client is not directly connected to
+a server, where a publisher has dispatched an event, the
+server has to forward the event to other servers until the
+event reaches the server capable of delivering the event
+directly to the subscribed client. In a P2P architecture each
+node can act as a publisher, subscriber or event-forwarder
+to another node.
+      </p>
+      <p>
+        Reliable pub/sub systems guarantee that published
+events are delivered to all its subscribers. Durable
+(faulttolerant) pub/sub system are able to cope with unreachable
+subscribers and servers (due to network failures or crashed
+clients/servers). Some pub/sub systems like SIENA offer
+a best-effort delivery strategy, i.e. the system will
+periodically retry to deliver the message until the message was
+delivered successfully, a timeout expired or the maximum
+retry-count was reached. In mobile environments [
+        <xref ref-type="bibr" rid="ref10">10</xref>
+        ]
+client applications reside on a host that is moving and
+therefore accessing the network (composed of so called
+event brokers) from various locations [
+        <xref ref-type="bibr" rid="ref4">4</xref>
+        ]. The event brokers
+are responsible to guarantee the reliability and durability
+of the pub/sub system as described before. Furthermore, a
+protocol must exist which enables the update of a client’s
+subscription as it is moving from one broker to another.
+During the client’s movement undeliverable events have to
+be stored by the system and delivered as soon as the client
+reconnects to the system. When the client reconnects at
+another broker, all stored events have to be forwarded to
+that broker. One of the first pub/sub system that supports
+the reconnection of mobile clients is JEDI [
+        <xref ref-type="bibr" rid="ref7">7</xref>
+        ]. However,
+our investigations of pub/sub systems have shown that
+currently most of the available systems are research
+prototypes which concentrate primarily on scalability
+and reliability rather on durability in P2P environments.
+Furthermore, current pub/sub systems for mobile scenarios
+have the disadvantage that the time needed to update a
+subscription and to forward all messages to the peer where
+the re-subscription is made, may take too long. Mobile
+clients in ITS scenarios are fast moving and have only a
+few seconds for data transmission (section 3).
+      </p>
+      <p>
+        In order to adequately address the scaling needs of
+distributed applications, over the past years there has been
+research on pub/sub systems making use of the
+scalability characteristics of Distributed Hash Tables (DHTs) [
+        <xref ref-type="bibr" rid="ref15">15</xref>
+        ].
+This has led to several implementations of DHT-based
+pub/sub systems, like [
+        <xref ref-type="bibr" rid="ref1 ref16 ref2 ref6 ref9">6, 9, 16, 1, 2</xref>
+        ]. However, the papers aim
+at using DHT like for routing purposes, extended
+querying, efficient subscriptions, or the efficient distribution of
+events. In contrast to those approaches ASC focuses on
+the distribution of Space Containers as fault-tolerant
+intermediate subscribers, functioning as a scalable and efficient
+bridge between mobile peers with very short connectivity
+time and pub/sub systems. Thus, although ASC has been
+developed with respect to a mesh network (section 3), it
+does not prescribe the usage of P2P capable pub/sub
+systems (section 4.2).
+3
+      </p>
+    </sec>
+    <sec id="sec-3">
+      <title>Scenario</title>
+      <p>
+        A motivating use-case to illustrate the benefits of the
+proposed ASC architecture is an Intelligent Transportation
+System (ITS) scenario [
+        <xref ref-type="bibr" rid="ref11">11</xref>
+        ]. The scenario consists of a highway
+with fast moving vehicles communicating with a fixed,
+geographically distributed infrastructure. Along the highway
+there are so called Road Site Units (RSU) responsible for
+either passing safety and traffic information to the vehicles
+or receiving information from the vehicles and pass it to the
+system. RSUs are installed along the road network in 2-3
+km distance of each other and are connected in a meshed
+wired broadband network in order to assure scalability and
+increase fault-tolerance. Information exchanged in the
+system mainly concerns the road traffic itself and the messages
+are published by e.g. the Traffic Control Centre (TCC),
+the police, the road maintenance depot. Events generated
+may contain information about traffic restrictions and
+warnings, traffic density, traffic congestions, accidents, road and
+weather conditions. The published data is geo-located and
+its relevance in space and time is limited to a certain region,
+moving direction and period of time. A subscriber my be
+314
+a vehicle driving at high speed or a road worker in a field
+service. Connectivity between the RSU and the passing by
+vehicles is characterized by a limited bandwidth,
+communication range, and connectivity window (ca. 300KB/sec for
+2-3 sec at 100km/h in case of a single vehicle) allowing the
+exchange of small and a few messages only [
+        <xref ref-type="bibr" rid="ref17">17</xref>
+        ]. The
+received information can be used to adapt driving behaviour
+since drivers are informed about occurrences in upcoming
+road segments. Therefore, subscribers are interested in
+information which a) is represented by the very last event
+delivered by the pub/sub medium, b) is represented by an
+aggregated set of events, or c) is a prioritized set of the
+delivered events. In a special case events can even cancel each
+other and should not be delivered at all.
+4
+      </p>
+    </sec>
+    <sec id="sec-4">
+      <title>Architecture</title>
+      <p>
+        This section pictures how Aspects on top of Space
+Containers [
+        <xref ref-type="bibr" rid="ref12">12</xref>
+        ] can be deployed for the events processing
+and illustrates the integration between the Aspect-oriented
+Space Container and the pub/sub paradigm.
+4.1
+      </p>
+      <p>Aspect-oriented Space Container</p>
+      <p>Space Containers realize some parts of Aspect-oriented
+Programming (AOP) by registering so called Aspects2 at
+different points of a Space Container. Aspects are executed
+on the peer where the Space Container is located and can
+be triggered by the various operations on the container. The
+join points of AOP are called interception points (IPoints)
+and can be located before (pre) or after (post) the execution
+of an operation on the Space Container. Adding and
+removing Aspects can be performed at any time during runtime.
+In addition to the parameters of a Space Container operation
+a so called Aspect Context can be passed along with
+every operation allowing the client to communicate with the
+installed Aspects. Aspect may contain any computational
+logic, thus can be used to realize security (authorization and
+authentication), the implementation of a highly
+customizable notification mechanism, or the additional manipulation
+of already stored or incoming entries. In case multiple
+Aspects are installed on the same Space Container, they are
+executed in the order they were added.</p>
+      <p>
+        Before an operation can be executed on a Space
+Container it has to pass the installed pre-Aspects. If all Aspects
+return OK, the container interprets the selectors of the
+operations and executes the operation [
+        <xref ref-type="bibr" rid="ref12">12</xref>
+        ]. Afterwards, all
+post-Aspects are executed. Depending on the result of the
+post-Aspects the result of the operation is either returned to
+the requesting peer, or the operation is rolled back. As
+already mentioned, an Aspect can manipulate the execution
+2the complete API
+http://www.mozartspaces.org
+      </p>
+      <p>JavaDoc
+can
+be
+found
+at
+of the operation which triggered it. This is realized by the
+returning values an Aspect can throw. The returned value
+is analysed and the execution of the operation manipulated
+accordingly. In case of OK: the Aspect does not require any
+changes of the operation; NotOK: the execution of the
+operation is stopped and the transaction is rolled back; SKIP:
+the operation is neither performed on the container, nor on
+any following pre-Aspects, but post-Aspects are executed
+immediately afterwards; Reschedule: the execution of the
+operation is stopped and will be rescheduled for a later
+execution.
+4.2</p>
+      <p>Execution of Aspect-oriented Space
+Containers in Publish/Subscribe
+Scenarios</p>
+      <p>
+        A reason why we recommend that a Space Container
+shall be used instead of a database is the fact that the
+number of different events in an ITS is not known beforehand
+and as a consequence an appropriate data model is
+difficult to establish. By means of Coordinators [
+        <xref ref-type="bibr" rid="ref12">12</xref>
+        ], a Space
+Container is capable of using ’dynamic’ data models which
+can be plugged in whenever needed. A Coordinator allows
+different views, optimally implemented with respect to
+accessing requirements, on the entire data in the Space
+Container at the same time. As depicted in Figure 1, such a
+Space Container and its Aspects are deployed by means of
+a DHT in the RSU network. The principle is explained in
+[
+        <xref ref-type="bibr" rid="ref11">11</xref>
+        ], where we described how to combine Space-Containers
+with an overlay network based on DHT concepts in
+order to a) make such Space Containers uniquely addressable
+in a fault-tolerant and scalable manner, and b) to replicate
+Space Containers in order to increase fault-tolerance and
+their availability.
+      </p>
+      <p>Publi- publish
+sher</p>
+      <p>Pub/Sub
+Notification</p>
+      <p>Medium
+subscribe Pastry Network</p>
+      <p>subscribe
+notify</p>
+      <p>Aspects
+Container
+read</p>
+      <p>Subscriber
+The original subscriber (e.g. a vehicle) places its
+intention in receiving events from publishers by deploying
+a Space Container, installing Aspects and publish it in the
+DHT network. The Aspect registers itself as a subscriber
+in the pub/sub medium on behalf and according to the
+requirements of the original subscriber. From now on the
+Aspect will, independent of the connectivity mode of the
+original subscriber, receive events which are then processed by
+other installed pre-Aspects and the results are then stored
+in the Space Container. When the original subscriber
+reestablishes a connection to the network, it uses a
+readselector to pick up the results from the Space Container. If
+the Space Container is replicated, Aspects are replicated as
+well. This means that the original subscriber is subscribed
+as often as many replicas of that Space Container exists.
+This is necessary in order to avoid missing events in case
+one of the replicas, including the subscribed Aspect, is
+offline. The way how the replicated Space Containers handle
+incoming events in order to stay consistent is up to the
+implementation of the deployed pre-Aspects. Either, the
+replicas are completely independent of each other and perform
+every operation as many times as replicas exists, or an
+incoming event is registered and not used for further
+processing until the result based on that event has been announced
+from a designated replica. The latter approach may be more
+efficient with respect to computational resources but require
+knowledge about group coordination.
+5</p>
+    </sec>
+    <sec id="sec-5">
+      <title>Conclusion and Future Work</title>
+      <p>In this paper we described the concept of ASC,
+Aspectoriented Space Containers, distributed via Distributed Hash
+Tables for efficient publish/subscribe scenarios in the
+Intelligent Transportation System. The benefits of bridging
+mobile peers with pub/sub systems via ASC are reduction
+of the complexity of application implementation since the
+processing logic has been moved to the Aspects. Therefore,
+this solution allows efficient delivery of events to mobile
+peers, since the relevant information have been extracted in
+installed Aspects while the peer was off-line.</p>
+      <p>Future work contains an evaluation on how efficient the
+ASC approach is compared to current pub/sub systems.
+Further investigations regarding the way how the usage of
+Space Containers and Aspects change the relation between
+subscribers and the notification medium is intended.
+Further questions that we will consider are: Is a durable
+notification medium still necessary if Space Containers are
+replicated and distributed via DHTs, since DHT use the same
+network as the notification medium? Does this have an
+effect on the semantics of durability? What is the influence on
+QoS coming from the number of replica set up by the
+subscriber? Another future work will deal with the question
+how to move Space Containers along the mesh of RSUs to
+minimize Space Container access time.</p>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <ref id="ref1">
+        <mixed-citation>
+          [1]
+          <string-name>
+            <given-names>I.</given-names>
+            <surname>Aekaterinidis</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>P.</given-names>
+            <surname>Triantafillou. Pastrystrings</surname>
+          </string-name>
+          :
+          <article-title>A comprehensive content-based publish/subscribe dht network</article-title>
+          .
+          <source>In 26th IEEE Int. Conf. on Distributed Computing Systems (ICDCS'06)</source>
+          , page 23. IEEE Computer Society,
+          <year>2006</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref2">
+        <mixed-citation>
+          [2]
+          <string-name>
+            <given-names>J. P.</given-names>
+            <surname>Ahull</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>P. G.</given-names>
+            <surname>Lpez</surname>
+          </string-name>
+          ,
+          <article-title>and</article-title>
+          <string-name>
+            <given-names>A. F. G.</given-names>
+            <surname>Skarmeta</surname>
+          </string-name>
+          . Caps:
+          <article-title>Content-based publish/subscribe services for peer-to-peer systems</article-title>
+          .
+          <source>2nd Int. Conf. on Distributed Event-Based Systems (DEBS'08)</source>
+          ,
+          <year>2008</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref3">
+        <mixed-citation>
+          [3]
+          <string-name>
+            <given-names>S.</given-names>
+            <surname>Bhola</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>R.</given-names>
+            <surname>Strom</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>S.</given-names>
+            <surname>Bagchi</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>Y.</given-names>
+            <surname>Zhao</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>and J.</given-names>
+            <surname>Auerbach</surname>
+          </string-name>
+          .
+          <article-title>Exactly-once delivery in a content-based publish-subscribe system</article-title>
+          .
+          <source>In DSN</source>
+          , pages
+          <fpage>7</fpage>
+          -
+          <lpage>16</lpage>
+          ,
+          <year>2002</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref4">
+        <mixed-citation>
+          [4]
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Caporuscio</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>C. M.</given-names>
+            <surname>Caporuscio</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Carzaniga</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Carzaniga</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>E. L.</given-names>
+            <surname>Wolf</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>E. L.</given-names>
+            <surname>Wolf</surname>
+          </string-name>
+          .
+          <article-title>Design and evaluation of a support service for mobile, wireless publish/subscribe applications</article-title>
+          .
+          <source>IEEE Trans. on Softw. Eng.</source>
+          ,
+          <volume>29</volume>
+          :
+          <fpage>1059</fpage>
+          -
+          <lpage>1071</lpage>
+          ,
+          <year>2003</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref5">
+        <mixed-citation>
+          [5]
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Carzaniga</surname>
+          </string-name>
+          .
+          <article-title>Architectures for an Event Notification Service Scalable toWide-area Networks</article-title>
+          .
+          <source>PhD thesis</source>
+          , Politecnico Di Milano,
+          <year>December 1998</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref6">
+        <mixed-citation>
+          [6]
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Castro</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>P.</given-names>
+            <surname>Druschel</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>A.-M. Kermarrec</surname>
+          </string-name>
+          ,
+          <article-title>and</article-title>
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Rowstron</surname>
+          </string-name>
+          .
+          <article-title>Scribe: a large-scale and decentralized applicationlevel multicast infrastructure</article-title>
+          . Selected Areas in Communications,
+          <source>IEEE Journal on</source>
+          ,
+          <volume>20</volume>
+          (
+          <issue>8</issue>
+          ):
+          <fpage>1489</fpage>
+          -
+          <lpage>1499</lpage>
+          ,
+          <year>Oct 2002</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref7">
+        <mixed-citation>
+          [7]
+          <string-name>
+            <given-names>G.</given-names>
+            <surname>Cugola</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>E. Di</given-names>
+            <surname>Nitto</surname>
+          </string-name>
+          ,
+          <article-title>and</article-title>
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Fuggetta</surname>
+          </string-name>
+          .
+          <article-title>The jedi eventbased infrastructure and its application to the development of the opss wfms</article-title>
+          .
+          <source>IEEE Trans. Softw</source>
+          . Eng.,
+          <volume>27</volume>
+          (
+          <issue>9</issue>
+          ):
+          <fpage>827</fpage>
+          -
+          <lpage>850</lpage>
+          ,
+          <year>2001</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref8">
+        <mixed-citation>
+          [8]
+          <string-name>
+            <given-names>P. T.</given-names>
+            <surname>Eugster</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>P. A.</given-names>
+            <surname>Felber</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>R.</given-names>
+            <surname>Guerraoui</surname>
+          </string-name>
+          , and A.
+          <string-name>
+            <surname>-M. Kermarrec</surname>
+          </string-name>
+          .
+          <article-title>The many faces of publish/subscribe</article-title>
+          . ACM Comput. Surv.,
+          <volume>35</volume>
+          (
+          <issue>2</issue>
+          ):
+          <fpage>114</fpage>
+          -
+          <lpage>131</lpage>
+          ,
+          <year>2003</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref9">
+        <mixed-citation>
+          [9]
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Gupta</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>O. D.</given-names>
+            <surname>Sahin</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>D.</given-names>
+            <surname>Agrawal</surname>
+          </string-name>
+          ,
+          <article-title>and</article-title>
+          <string-name>
+            <given-names>A. E.</given-names>
+            <surname>Abbadi</surname>
+          </string-name>
+          .
+          <article-title>Meghdoot: content-based publicsh/subscribe over p2p networks</article-title>
+          .
+          <source>In 5th ACM/IFIP/USENIX Int. Conf. on Middleware (Middleware'04)</source>
+          , pages
+          <fpage>254</fpage>
+          -
+          <lpage>273</lpage>
+          ,
+          <year>2004</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref10">
+        <mixed-citation>
+          [10]
+          <string-name>
+            <given-names>Y.</given-names>
+            <surname>Huang</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>H.</given-names>
+            <surname>Garcia-Molina</surname>
+          </string-name>
+          .
+          <article-title>Publish/subscribe in a mobile environment</article-title>
+          . Wirel. Netw.,
+          <volume>10</volume>
+          (
+          <issue>6</issue>
+          ):
+          <fpage>643</fpage>
+          -
+          <lpage>652</lpage>
+          ,
+          <year>2004</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref11">
+        <mixed-citation>
+          [11]
+          <string-name>
+            <given-names>E.</given-names>
+            <surname>Ku</surname>
+          </string-name>
+          <article-title>¨hn</article-title>
+          , R. Mordinyi, H.
+          <string-name>
+            <surname>-D. Goiss</surname>
+            ,
+            <given-names>S.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Bessler</surname>
+            , and
+            <given-names>S.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Tomic</surname>
+          </string-name>
+          .
+          <article-title>A p2p network of space containers for efficient management of spatial-temporal data in intelligent transportation scenarios</article-title>
+          .
+          <source>International Symposium on Parallel and Distributed Computing (ISPDC'09)</source>
+          ,
+          <year>2009</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref12">
+        <mixed-citation>
+          [12]
+          <string-name>
+            <given-names>E.</given-names>
+            <surname>Ku</surname>
+          </string-name>
+          <article-title>¨hn</article-title>
+          ,
+          <string-name>
+            <given-names>R.</given-names>
+            <surname>Mordinyi</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>L.</given-names>
+            <surname>Keszthelyi</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>C.</given-names>
+            <surname>Schreiber</surname>
+          </string-name>
+          .
+          <article-title>Introducing the concept of customizable structured spaces for agent coordination in the production automation domain</article-title>
+          .
+          <source>The 8th International Conference on Autonomous Agents and Multiagent Systems</source>
+          ,
+          <year>2009</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref13">
+        <mixed-citation>
+          [13]
+          <string-name>
+            <surname>C. M. M. Pereira</surname>
+            ,
+            <given-names>D. C.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Lobato</surname>
+            ,
+            <given-names>C. A. C.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Teixeira</surname>
+            , and
+            <given-names>M. G.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Pimentel</surname>
+          </string-name>
+          .
+          <article-title>Achieving causal and total ordering in publish/- subscribe middleware with dsm</article-title>
+          .
+          <source>In Proc. of the 3rd Wsh on Middleware for service oriented computing (MW4SOC'08)</source>
+          , pages
+          <fpage>61</fpage>
+          -
+          <lpage>66</lpage>
+          ,
+          <year>2008</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref14">
+        <mixed-citation>
+          [14]
+          <string-name>
+            <given-names>P. R.</given-names>
+            <surname>Pietzuch</surname>
+          </string-name>
+          .
+          <article-title>Hermes: A Scalable Event-Based Middleware</article-title>
+          .
+          <source>PhD thesis</source>
+          , Queens' College University of Cambridge,
+          <year>February 2004</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref15">
+        <mixed-citation>
+          [15]
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Rowstron</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>P.</given-names>
+            <surname>Druschel</surname>
+          </string-name>
+          .
+          <article-title>Pastry: Scalable, decentralized object location, and routing for large-scale peer-to-peer systems</article-title>
+          .
+          <source>Proc. of the 18th IFIP/ACM Int. Conf. on Distributed Systems Platforms (Middleware'01)</source>
+          , pages
+          <fpage>329</fpage>
+          -
+          <lpage>350</lpage>
+          ,
+          <year>2001</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref16">
+        <mixed-citation>
+          [16]
+          <string-name>
+            <surname>R. van Renesse</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Bozdog</surname>
+          </string-name>
+          . Willow: Dht, aggregation, and publish/subscribe in one protocol,
+          <year>2005</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref17">
+        <mixed-citation>
+          [17]
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Zaera</surname>
+          </string-name>
+          .
+          <article-title>Wave-based communication in vehicle to infrastructure real-time safety-related traffic telematics</article-title>
+          .
+          <source>Master's thesis</source>
+          , Telecommunication Engineering, University of Zaragoza,
+          <year>August 2008</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref18">
+        <mixed-citation>
+          [18]
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Zeidler</surname>
+          </string-name>
+          .
+          <article-title>A Distributed Publish/Subscribe Notification Service for Pervasive Environments</article-title>
+          .
+          <source>PhD thesis</source>
+          , Technischen Universitt Darmstadt,
+          <year>2004</year>
+          .
+        </mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

@@ -1,0 +1,632 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<algorithms version="110505">
+<algorithm name="SectLabel" version="110505">
+<variant no="0" confidence="0.000005">
+<title confidence="0.989297333333333">
+MDWEnet: A Practical Approach to Achieving
+Interoperability of Model-Driven Web Engineering
+Methods
+</title>
+<author confidence="0.992696">
+Antonio Vallecillo1, Nora Koch2, Cristina Cachero4, Sara Comai3, Piero Fraternali3,
+Irene Garrigós4, Jaime Gómez4, Gerti Kappel5, Alexander Knapp2, Maristella Matera3,
+Santiago Meliá4, Nathalie Moreno1, Birgit Pröll6, Thomas Reiter6, Werner Ret-
+</author>
+<affiliation confidence="0.356859">
+schitzegger6, José E. Rivera1, Andrea Schauerhuber5, Wieland Schwinger6, Manuel
+</affiliation>
+<author confidence="0.682702">
+Wimmer5, Gefei Zhang2
+</author>
+<affiliation confidence="0.930483">
+1Universidad de Málaga, Spain
+2Ludwig-Maximilians-Universität München, Germany
+3Politecnico di Milano, Italy
+4Universidad de Alicante, Spain
+5Technical University Vienna, Austria
+6Johannes Kepler Universität Linz, Austria
+</affiliation>
+<email confidence="0.893367">
+mdwenet@pst.ifi.lmu.de
+</email>
+<bodyText confidence="0.995943315789474">
+Abstract. Current model-driven Web Engineering approaches (such as OO-H,
+UWE or WebML) provide a set of methods and supporting tools for a system-
+atic design and development of Web applications. Each method addresses dif-
+ferent concerns using separate models (content, navigation, presentation, busi-
+ness logic, etc.), and provide model compilers that produce most of the logic
+and Web pages of the application from these models. However, these proposals
+also have some limitations, especially for exchanging models or representing
+further modeling concerns, such as architectural styles, technology independ-
+ence, or distribution. A possible solution to these issues is provided by making
+model-driven Web Engineering proposals interoperate, being able to comple-
+ment each other, and to exchange models between the different tools.
+MDWEnet is a recent initiative started by a small group of researchers working
+on model-driven Web Engineering (MDWE). Its goal is to improve current
+practices and tools for the model-driven development of Web applications for
+better interoperability. The proposal is based on the strengths of current model-
+driven Web Engineering methods, and the existing experience and knowledge
+in the field. This paper presents the background, motivation, scope, and objec-
+tives of MDWEnet. Furthermore, it reports on the MDWEnet results and
+achievements so far, and its future plan of actions.
+</bodyText>
+<sectionHeader confidence="0.998608" genericHeader="abstract">
+1 Introduction
+</sectionHeader>
+<bodyText confidence="0.992284">
+Model-Driven Engineering (MDE) advocates the use of models and model transfor-
+mations as the key features in all phases of software development, from system speci-
+fication and analysis over design to implementation and testing. Each model usually
+</bodyText>
+<note confidence="0.945328">
+Vallecillo, Koch, et al., 2007
+</note>
+<bodyText confidence="0.999566794871795">
+addresses one concern, independently of the rest of the issues involved in the con-
+struction of the system. Thus, the basic functionality of the system can be separated
+from its final implementation; the business logic can be separated from the underlying
+platform technology, etc. The transformations between models enable the automated
+implementation of a system right from the different models defined for it.
+Web Engineering is a specific domain in which model-driven software develop-
+ment can be successfully applied [1]. Existing model-driven Web Engineering ap-
+proaches (such as OO-H [2], UWE [3] or WebML [4]) already provide a set of suit-
+able methods and tools for the design and development of most kinds of Web applica-
+tions. They address different concerns using separate models (navigation, presenta-
+tion, business logic, etc.) and come with model compilers that produce most of the
+application’s Web pages and logic based on these models. However, most of these
+Web Engineering proposals do not fully exploit all the potential benefits of MDE,
+such as complete platform independence, or tool interoperability. In addition, these
+proposals also have some limitations, especially when it comes to exchanging models
+or expressing further concerns, such as architectural styles or distribution.
+Recently, the OMG’s Model-Driven Architecture (MDA) initiative [5] has intro-
+duced a new approach for organizing the design of an application into different mod-
+els so portability, interoperability and reusability can be obtained through architec-
+tural separation of concerns. MDA covers a wide spectrum of topics and issues rang-
+ing from MOF-based metamodels to UML profiles, model transformations and mod-
+eling languages.
+However, the effective integration with the already existing model-driven Web
+Engineering approaches has been only partially achieved. The most interesting issue
+is the interoperability of models and artifacts designed using the different existing
+development methods to enable the use of synergies. The vision is, at the end of a
+long way, to count on either one unified method based on the strengths of the differ-
+ent methods, or interoperability bridges (transformations) between the individual
+models and tools that would allow their seamless integration for building Web appli-
+cations.
+Many groups of the Web Engineering community share these objectives. Lively
+discussions took place at both Model-Driven Web Engineering (MDWE) workshops
+in Sydney (2005) and Menlo Park (2006). A small number of groups decided to rein-
+force discussions on workshops with a set of planned activities in order to get con-
+crete solutions to the current problem of interoperability of model-driven Web Engi-
+neering approaches. The initiative is called MDWEnet and started its activities in
+December 2006. This paper provides an overview of the motivation and background
+of this initiative (Section 2), its scope and objectives (Section 3), activities (Section
+4), and future plans (Section 5).
+</bodyText>
+<sectionHeader confidence="0.737774" genericHeader="categories and subject descriptors">
+2 Background and Motivation
+</sectionHeader>
+<bodyText confidence="0.996389">
+The growing interest in Model-Driven Web Engineering has produced quite a signifi-
+cant number of results, which have materialized into a concrete set of MDWE ap-
+proaches. As mentioned above, they provide suitable methods and tools for the design
+and development of Web applications, but they also present some limitations. So far,
+</bodyText>
+<subsectionHeader confidence="0.654771">
+MDWEnet: A Practical Approach to Achieving Interoperability of Model-Driven Web
+Engineering Methods
+</subsectionHeader>
+<bodyText confidence="0.99998448">
+each group is mainly working on progressively improving their own proposals in an
+independent manner, with the exception of a couple of bilateral collaborations. One
+alternative solution is provided by the possibility of making Web proposals interoper-
+ate, being able to complement each other, and to exchange models between the differ-
+ent tools. This is precisely one of the goals of MDWEnet.
+The authors of this paper met for the first time in Munich in December 2006, with
+the objective of coordinating the current efforts being carried out by individual groups
+in the field of MDWE. They are members from five of the groups that work on these
+topics, including the UWE, OO-H and WebML teams from the Universities of Mu-
+nich, Alicante and Politecnico di Milano, respectively. The other two groups are from
+the University of Malaga, and from a joint cooperation between the Technical Univer-
+sity of Vienna and the Johannes Kepler University of Linz, contributing with their
+knowledge on frameworks, metamodels and model transformations in the Web field
+[6,7,8]. The intention is to harmonize their efforts in order to be more effective, to
+avoid duplicated work, and to align their targets and goals. The plan was to start with
+a small number of groups first, and then to open to the rest of the MDWE community
+as soon as the first results were tangible and could be shown.
+Several discussions took place during the meeting, most of them being representa-
+tive examples of the topics and issues of current interest to the MDWE community.
+First, the current activities and work in progress of each group were presented. Then,
+a SWOT (Strengths, Weaknesses, Opportunities, and Threats) analysis of the situation
+of MDWE in the fields of MDE and Web Engineering was conducted, to provide a
+clear picture of the context and the current position from where to start. The following
+sections describe these issues, because they not only can be of help to the MDWEnet
+group, but can also be of interest to the whole MDWE community.
+</bodyText>
+<subsectionHeader confidence="0.9919">
+2.1 Work in Progress
+</subsectionHeader>
+<bodyText confidence="0.859346">
+The following list shows the topics and issues that each individual group has recently
+addressed:
+a) Addressing new concerns in Web application development
+</bodyText>
+<listItem confidence="0.992207608695652">
+• Software architecture (OO-H)
+• Personalization (OO-H), Adaptation (WebML)
+• Workflows (UWE, WebML)
+• Integration with external Web Services (WebML)
+• Requirements (UWE)
+b) Quality evaluation
+• Definition of Quality Models and Measurement meta-models (OO-H)
+• Effort estimation (WebML)
+• Navigability evaluation and improvement (OO-H, WebML)
+• Usability logs for analysing usage patterns and validation of naviga-
+tional designs (WebML)
+Vallecillo, Koch, et al., 2007
+c) Metamodel profiling and integration
+• Definition of a global framework (Málaga)
+• WebML profiles (various)
+• Metamodel integration (Wien/Linz)
+d) Other
+• Semantic annotations (OO-H)
+• Automatic client-side code generation (WebML)
+• Test derivation of applications (WebML)
+• Analysis, validation and verification of models (WebML, UWE)
+• Use of Aspect-Oriented Software Development techniques (e.g., for ad-
+aptation/access control) (UWE, Wien/Linz)
+</listItem>
+<subsectionHeader confidence="0.996888">
+2.2 SWOT Analysis
+</subsectionHeader>
+<bodyText confidence="0.9992288">
+A SWOT analysis was conducted to gain a better understanding of the Strengths,
+Weaknesses, Opportunities and Threads of current MDWE practices and approaches.
+The results are very illustrative, and show a field with plenty of possibilities and op-
+portunities to grow and provide interesting benefits to the Web Engineering commu-
+nity.
+</bodyText>
+<listItem confidence="0.8220454">
+a) Strengths
+• Tool-supported methods
+...that work in practice!
+Significant improvements on productivity
+• Tested and validated by real industrial usage
+</listItem>
+<bodyText confidence="0.6849">
+Large companies
+Many projects (both privately and publicly funded)
+</bodyText>
+<listItem confidence="0.967728846153846">
+• Wide knowledge and experience in Web Engineering
+• Many groups working on interesting and useful extensions (see Sect.
+2.1)
+b) Weaknesses
+• Of those approaches not using OMG standards
+Use of proprietary notations (many customers don’t like them)
+Tools not aligned with MDA (yet)
+• Of those using UML
+Tool support (for modeling and code generation)
+• No interoperability of models and tools between individual proposals
+No reusability of efforts and developments
+No “core competencies” approach possible
+• Current Web modeling languages...
+</listItem>
+<bodyText confidence="0.9969054">
+...are model-driven to a limited extent (e.g., the majority of ap-
+proaches have not defined their metamodels, do not rely on model
+transformations, etc.)
+...partly provide concepts for modeling customization but no com-
+prehensive support
+</bodyText>
+<listItem confidence="0.890104615384615">
+MDWEnet: A Practical Approach to Achieving Interoperability of Model-Driven Web
+Engineering Methods
+• Customization of functionality cannot be captured separately but is scat-
+tered across all levels of a Web application model
+c) Opportunities
+• Web Engineering is a domain where MDE ideas can be successfully ap-
+plied
+• There is a current need for MDWE solutions in industry
+Real interest from customers
+Research funds (National and European)
+• There is an interest in academia
+Journals, conferences
+• MDE and MDA are fashionable now
+</listItem>
+<bodyText confidence="0.734458">
+Claimed to be supported by everybody (OMG, IBM, Microsoft,
+Customers, etc.)
+Model transformation languages are becoming mature
+</bodyText>
+<listItem confidence="0.9979705">
+• There is a group of people willing to co-operate to make it work
+MDWEnet is a concrete example
+• Use the repositories of previous projects for conducting empirical stud-
+ies on performance, quality, etc.
+d) Threats
+• MDE/MDA fails to deliver because of
+</listItem>
+<bodyText confidence="0.794645">
+No tool support
+Customer dissatisfaction or frustration (probably due to too high ex-
+pectations)
+• We fail to deliver because of
+Result is worse than individual proposals, or
+Resulting method, techniques and/or notation are too complex,
+Learning is too difficult, or usability is not good enough
+No real applications (very complex) can be built
+</bodyText>
+<listItem confidence="0.987883">
+• Real goals not addressed; they are
+</listItem>
+<bodyText confidence="0.978119">
+Too academic, or
+Too pragmatic
+</bodyText>
+<sectionHeader confidence="0.954189" genericHeader="method">
+3 Scope and objectives of MDWEnet
+</sectionHeader>
+<bodyText confidence="0.999752">
+The scope of the MDWEnet initiative is the model-driven development of Web appli-
+cations, using different methods and tools, while ensuring the interoperability of their
+artifacts and models.
+The overall objective is to improve current practices and tools for the model-
+driven development of Web applications, by making use of the strengths of current
+model-driven Web Engineering methods, and the existing experience and knowledge
+in the field.
+The way in which we decided to reach this goal is by investigating the interopera-
+bility of model-driven Web Engineering methods, i.e., by trying to explore how Web
+</bodyText>
+<note confidence="0.795435">
+Vallecillo, Koch, et al., 2007
+</note>
+<bodyText confidence="0.999736866666667">
+proposals could interoperate, be able to complement each other, and exchange models
+between the different tools.
+Two clear phases in the process were distinguished: (1) proof of concept and vali-
+dation; and (2) application of the interoperability approach.
+The first phase is focused on investigating how this interoperability can be
+achieved at a basic level (i.e., over the fundamental set of elements and functionality
+that any MDWE method should cover), and on its validation for three MDWE meth-
+ods: OO-H [2], UWE [3] and WebML [4]. This phase is based on an incremental and
+iterative process, starting from a very small set of features and functionality that the
+different methods should deal with, which are progressively extended until the basic
+functionality offered by any MDWE approach is covered.
+Once we achieve the required interoperability between the individual methods at
+that basic level, the second phase will use a set of representative Web applications to
+progressively extend these modeling elements and features, being able to deal with
+both static and dynamic aspects of Web application design.
+</bodyText>
+<sectionHeader confidence="0.99837" genericHeader="method">
+4 Activities
+</sectionHeader>
+<bodyText confidence="0.999954428571429">
+During the workshop different possibilities to achieve the objectives were discussed,
+as already mentioned, focusing on two options: to use or not to use a common meta-
+model. In order to be able to define precise actions, the MDWEnet group had to
+make a set of decisions related to the technologies and tools to be used for implement-
+ing the actions. Some of these decisions were not easy to make, as described below. A
+plan of concrete actions was defined, relying on a strong commitment of the teams of
+all groups.
+</bodyText>
+<subsectionHeader confidence="0.987607">
+4.1 Possibilities
+</subsectionHeader>
+<bodyText confidence="0.99868675">
+In general, there are many ways to achieve these goals, especially in the MDE field—
+which is neither fully mature nor well established yet. For instance, we had the fol-
+lowing choices for tackling the problem of the interoperability between different
+MDWE approaches.
+</bodyText>
+<listItem confidence="0.9932104">
+• Taking the best of each approach and try to define an integrated approach (in
+a similar way in which the UML was originally defined)?
+• Developing a common metamodel?
+• Preserving the nature of each web method and try to concentrate the efforts
+to process transformations between models?
+</listItem>
+<bodyText confidence="0.994253666666667">
+We decided to initially explore two possibilities, and, once we have some concrete
+results, to look back and decide based on the pros and cons of each one. These possi-
+bilities, together with their advantages and disadvantages (a priori) are as follows.
+</bodyText>
+<figureCaption confidence="0.5203025">
+Option 1: Definition of a metamodel for each individual approach and of the
+transformations between the different metamodels.
+</figureCaption>
+<figure confidence="0.175383">
+MDWEnet: A Practical Approach to Achieving Interoperability of Model-Driven Web
+Engineering Methods
+</figure>
+<listItem confidence="0.987102448275862">
+• Assumptions
+– There exists no common metamodel, or
+– No agreement is reached w.r.t. a common metamodel, or
+– The common metamodel is not expressive enough, or
+– Transformations are possible between all individual metamodels
+• Benefits/advantages
+– Individuality is respected
+– Tools are readily available
+– Zoos (model repositories) can be “easily” built and maintained to
+share models
+• Disadvantages
+– Integration and interoperation are much more difficult
+– Sharing tools is complicated
+– Too many transformations required [n(n–1)]
+Option 2: Definition of a common metamodel
+• Assumptions
+– There exists a common metamodel
+– An agreement is reached w.r.t. such a common metamodel
+– The common metamodel is expressive enough
+– Transformations are possible to/from all individual metamodels
+• Benefits/advantages
+– Integration and interoperation are easier
+– Sharing tools is possible
+– Core competencies (presentation/information/tools/...)
+– Less transformations between metamodels [2n]
+• Disadvantages
+– Individuality is somehow lost
+– Too many assumptions
+– Interoperability conflicts between different proposals
+</listItem>
+<bodyText confidence="0.999814642857143">
+Of course, none of these options is free from problems. For example, should the
+common metamodel be (a) just the basics of MDWE; (b) the intersection of the meta-
+models of all MDWE proposals; or (c) the union of all metamodels?
+Regarding the notation to express the metamodels, should we use MOF, eMOF,
+Ecore, KM3, or other metamodeling languages?
+This leads to a more delicate question, regarding the MDE approach to use. Should
+we go try to be compatible with the OMG approach (which means using MOF, UML,
+QVT, etc), the Microsoft approach, or other (e.g., use AMMA and the ATLAS way)?
+This has also to do with the choice of the modeling tools, since they do not inter-
+operate at present. This is another important decision, since the only way to be able to
+seamlessly exchange models and artefacts is by sharing a common modeling tool
+(such as Enterprise Architect, MagicDraw, etc.). And the same is true for the model
+transformation language and tool to use: QVT (Together), graph-based (AGG,
+VIATRA, ATOM3), or other (e.g., ATL).
+</bodyText>
+<note confidence="0.959457">
+Vallecillo, Koch, et al., 2007
+</note>
+<subsectionHeader confidence="0.795472">
+4.2 Decisions
+</subsectionHeader>
+<bodyText confidence="0.999964285714286">
+As aforementioned, we decided to explore the two options above: (1) to define and
+use individual metamodels and transformations between them; and (2) to define a
+common metamodel and transformations to/from the metamodels of the different
+proposals. The common metamodel will be defined as the union of all metamodels.
+The metamodeling language will be Ecore, and the MDE approach will be based on
+the ATLAS group initiative, i.e., using the ATL as model transformation language.
+For drawing models we agreed to use MagicDraw as modeling tool.
+</bodyText>
+<subsectionHeader confidence="0.998637">
+4.3 Plan of actions
+</subsectionHeader>
+<bodyText confidence="0.999979333333333">
+Based on these decisions, a concrete plan of actions was set up. It was organized into
+two phases, the first one running for 6 months. The actions to be developed during the
+first phase focus on the definition of a common metamodel, on the specification of the
+metamodels of the three initial proposals (UWE, OO-H and WebML) and on the
+transformations between these metamodels.
+In addition, the actions should achieve the preparation of a survey of existing
+MDWE approaches and a “map” of communities that work on topics closely related
+to Model-Driven Web Engineering. A second phase would build on the result of the
+first one, and would consist of the definition of a Web Engineering modeling ontol-
+ogy, the evaluation of existing Web Engineering modeling tool environments and
+their capabilities for integration. Another goal is to cooperate in teaching and re-
+search, e.g., sharing teaching material and the acquisition of funding for joint projects.
+</bodyText>
+<subsectionHeader confidence="0.882707">
+4.4 Results so far
+</subsectionHeader>
+<bodyText confidence="0.9998554">
+Although there is still a long way to go, we already count on a set of results, which
+could be of interest to the MDWE community.
+The first one is a Wiki web, used by the group as a collaborative platform. The
+Wiki allows the exchange of information, documents, models, and tools, as well as
+the development of joint work on the material. It fulfills also the role of a repository
+of all kind of interesting information on model-driven Web Engineering topics.
+The Wiki also contains the results that the actions have produced. In particular, it
+includes a collection of information on funding opportunities, the specification of the
+common metamodel, core metamodels of OO-H, UWE and WebML and a set of
+example model problems.
+</bodyText>
+<sectionHeader confidence="0.997724" genericHeader="method">
+5 Future plans
+</sectionHeader>
+<bodyText confidence="0.915069076923077">
+The current activities are limited to the proof of concept of a first approach of interop-
+erability of three methods OO-H, UWE and WebML. We also restricted the number
+of issues the different methods should manage to a small set of basic features of Web
+applications.
+MDWEnet: A Practical Approach to Achieving Interoperability of Model-Driven Web
+Engineering Methods
+We plan to extend the current state with further modeling elements of the selected
+methods in order to cover all static and dynamic model-driven aspects of Web appli-
+cations. Further methods and experimental material for volunteers to conduct experi-
+ments on external quality of Web applications developed with Web Engineering
+methods will be provided as well. At a long term plan the vision of a fully integrated
+environment where modeling and generation of Web applications using any method
+would be possible.
+</bodyText>
+<sectionHeader confidence="0.999192" genericHeader="references">
+References
+</sectionHeader>
+<reference confidence="0.99995848">
+[1] Nathalie Moreno, José Raúl Romero, and Antonio Vallecillo. An overview of model-
+driven Web Engineering and the MDA. In Luis Olsina, Oscar Pastor, Gustavo Rossi and
+Daniel Schwabe, editors, Web Engineering and Web Applications Design Methods, vol-
+ume 12 of Human-Computer Interaction Series, chapter 12. Springer, 2007.
+[2] Jaime Gómez and Cristina Cachero. OO-H Method: Extending UML to Model Web Inter-
+faces. Idea Group Publishing, pp. 144–173, 2003.
+[3] Nora Koch, Alexander Knapp, Gefei Zhang, and Hubert Baumeister. UML-based Web
+Engineering: An Approach based on Standards. In Luis Olsina, Oscar Pastor, Gustavo
+Rossi and Daniel Schwabe, editors, Web Engineering and Web Applications Design Meth-
+ods, volume 12 of Human-Computer Interaction Series, chapter 7. Springer, 2007.
+[4] S. Ceri, P. Fraternali, A. Bongio, M. Brambilla, S. Comai, and M. Matera. Designing
+Data-Intensive Web Applications. Morgan Kaufmann, 2002.
+[5] MDA Guide V1.0.1, omg/03-06-01, www.omg.org/mda
+[6] Andrea Schauerhuber, Manuel Wimmer, Elisabeth Kapsammer, Wieland Schwinger, and
+Werner Retschitzegger. Bridging WebML to Model-Driven Engineering: From DTDs to
+MOF. Accepted for puplication in IET Software, 2007.
+[7] Andrea Schauerhuber, Manuel Wimmer, and Wieland Schwinger, Elisabeth Kapsammer,
+and Werner Retschitzegger. Aspect-Oriented Modeling of Ubiquitous Web Applications:
+The aspectWebML Approach. 5th Workshop on Model-Based Development for Com-
+puterBased Systems: Domain-Specific Approaches to Model-Based Development, in con-
+junction with ECBS, Tucson, AZ, USA, March 2007.
+[8] Manuel Wimmer, Andrea Schauerhuber, Wieland Schwinger, and Horst Kargl. On the
+Integration of Web Modeling Languages: Preliminary Results and Future Challenges.
+Workshop on Model-driven Web Engineering (MDWE), held in conjunction with ICWE,
+Como, Italy, July, 2007
+</reference>
+</variant>
+</algorithm>
+<algorithm name="ParsHed" version="110505">
+<variant no="0" confidence="0.219001">
+<title confidence="0.997839">MDWEnet: A Practical Approach to Interoperability of Model-Driven Web Engineering Methods</title>
+<author confidence="0.8734672">Nora Cristina Sara Piero Jaime Gerti Alexander Maristella Nathalie Birgit Thomas Werner Ret- José E Andrea Wieland Manuel Gefei</author>
+<affiliation confidence="0.732126">de Málaga, Spain</affiliation>
+<address confidence="0.9076038">München, Germany di Milano, Italy de Alicante, Spain University Vienna, Austria Kepler Universität Linz, Austria</address>
+<email confidence="0.789325">mdwenet@pst.ifi.lmu.de</email>
+<abstract confidence="0.998616368421053">model-driven Web Engineering approaches (such as OO-H, UWE or WebML) provide a set of methods and supporting tools for a systematic design and development of Web applications. Each method addresses different concerns using separate models (content, navigation, presentation, business logic, etc.), and provide model compilers that produce most of the logic and Web pages of the application from these models. However, these proposals also have some limitations, especially for exchanging models or representing further modeling concerns, such as architectural styles, technology independence, or distribution. A possible solution to these issues is provided by making model-driven Web Engineering proposals interoperate, being able to complement each other, and to exchange models between the different tools. a recent initiative started by a small group of researchers working on model-driven Web Engineering (MDWE). Its goal is to improve current practices and tools for the model-driven development of Web applications for better interoperability. The proposal is based on the strengths of current modeldriven Web Engineering methods, and the existing experience and knowledge in the field. This paper presents the background, motivation, scope, and objectives of MDWEnet. Furthermore, it reports on the MDWEnet results and achievements so far, and its future plan of actions.</abstract>
+</variant>
+</algorithm>
+<algorithm name="ParsCit" version="110505">
+<citationList>
+<citation valid="true">
+<authors>
+<author>Nathalie Moreno</author>
+<author>José Raúl Romero</author>
+<author>Antonio Vallecillo</author>
+</authors>
+<title>An overview of modeldriven Web Engineering and the MDA.</title>
+<date>2007</date>
+<booktitle>Web Engineering and Web Applications Design Methods,</booktitle>
+<volume>12</volume>
+<editor>In Luis Olsina, Oscar Pastor, Gustavo Rossi and Daniel Schwabe, editors,</editor>
+<publisher>Springer,</publisher>
+<contexts>
+<context position="2914" citStr="[1]" startWordPosition="411" endWordPosition="411">le the automated implementation of a system right from the different models defined for it. Web Engineering is a specific domain in which model-driven software development can be successfully applied [1]. Existing model-driven Web Engineering approaches (such as OO-H [2], UWE [3] or WebML [4]) already provide a set of suitable methods and tools for the design and development of most kinds of Web appl</context>
+</contexts>
+<marker>[1]</marker>
+<rawString>Nathalie Moreno, José Raúl Romero, and Antonio Vallecillo. An overview of modeldriven Web Engineering and the MDA. In Luis Olsina, Oscar Pastor, Gustavo Rossi and Daniel Schwabe, editors, Web Engineering and Web Applications Design Methods, volume 12 of Human-Computer Interaction Series, chapter 12. Springer, 2007.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>Jaime Gómez</author>
+<author>Cristina Cachero</author>
+</authors>
+<title>OO-H Method: Extending UML to Model Web Interfaces.</title>
+<date>2003</date>
+<pages>144--173</pages>
+<publisher>Idea Group Publishing,</publisher>
+<contexts>
+<context position="2982" citStr="[2]" startWordPosition="421" endWordPosition="421"> models defined for it. Web Engineering is a specific domain in which model-driven software development can be successfully applied [1]. Existing model-driven Web Engineering approaches (such as OO-H [2], UWE [3] or WebML [4]) already provide a set of suitable methods and tools for the design and development of most kinds of Web applications. They address different concerns using separate models (nav</context>
+<context position="12812" citStr="[2]" startWordPosition="1946" endWordPosition="1946"> interoperability can be achieved at a basic level (i.e., over the fundamental set of elements and functionality that any MDWE method should cover), and on its validation for three MDWE methods: OO-H [2], UWE [3] and WebML [4]. This phase is based on an incremental and iterative process, starting from a very small set of features and functionality that the different methods should deal with, which ar</context>
+</contexts>
+<marker>[2]</marker>
+<rawString>Jaime Gómez and Cristina Cachero. OO-H Method: Extending UML to Model Web Interfaces. Idea Group Publishing, pp. 144–173, 2003.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>Nora Koch</author>
+<author>Alexander Knapp</author>
+<author>Gefei Zhang</author>
+<author>Hubert Baumeister</author>
+</authors>
+<title>UML-based Web Engineering: An Approach based on Standards.</title>
+<date>2007</date>
+<booktitle>Web Engineering and Web Applications Design Methods,</booktitle>
+<volume>12</volume>
+<editor>In Luis Olsina, Oscar Pastor, Gustavo Rossi and Daniel Schwabe, editors,</editor>
+<publisher>Springer,</publisher>
+<contexts>
+<context position="2991" citStr="[3]" startWordPosition="423" endWordPosition="423">efined for it. Web Engineering is a specific domain in which model-driven software development can be successfully applied [1]. Existing model-driven Web Engineering approaches (such as OO-H [2], UWE [3] or WebML [4]) already provide a set of suitable methods and tools for the design and development of most kinds of Web applications. They address different concerns using separate models (navigation, </context>
+<context position="12821" citStr="[3]" startWordPosition="1948" endWordPosition="1948">rability can be achieved at a basic level (i.e., over the fundamental set of elements and functionality that any MDWE method should cover), and on its validation for three MDWE methods: OO-H [2], UWE [3] and WebML [4]. This phase is based on an incremental and iterative process, starting from a very small set of features and functionality that the different methods should deal with, which are progres</context>
+</contexts>
+<marker>[3]</marker>
+<rawString>Nora Koch, Alexander Knapp, Gefei Zhang, and Hubert Baumeister. UML-based Web Engineering: An Approach based on Standards. In Luis Olsina, Oscar Pastor, Gustavo Rossi and Daniel Schwabe, editors, Web Engineering and Web Applications Design Methods, volume 12 of Human-Computer Interaction Series, chapter 7. Springer, 2007.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>S Ceri</author>
+<author>P Fraternali</author>
+<author>A Bongio</author>
+<author>M Brambilla</author>
+<author>S Comai</author>
+<author>M Matera</author>
+</authors>
+<title>Designing Data-Intensive Web Applications.</title>
+<date>2002</date>
+<publisher>Morgan Kaufmann,</publisher>
+<contexts>
+<context position="3004" citStr="[4]" startWordPosition="426" endWordPosition="426">. Web Engineering is a specific domain in which model-driven software development can be successfully applied [1]. Existing model-driven Web Engineering approaches (such as OO-H [2], UWE [3] or WebML [4]) already provide a set of suitable methods and tools for the design and development of most kinds of Web applications. They address different concerns using separate models (navigation, presentation,</context>
+<context position="12835" citStr="[4]" startWordPosition="1951" endWordPosition="1951">e achieved at a basic level (i.e., over the fundamental set of elements and functionality that any MDWE method should cover), and on its validation for three MDWE methods: OO-H [2], UWE [3] and WebML [4]. This phase is based on an incremental and iterative process, starting from a very small set of features and functionality that the different methods should deal with, which are progressively extende</context>
+</contexts>
+<marker>[4]</marker>
+<rawString>S. Ceri, P. Fraternali, A. Bongio, M. Brambilla, S. Comai, and M. Matera. Designing Data-Intensive Web Applications. Morgan Kaufmann, 2002.</rawString>
+</citation>
+<citation valid="false">
+<journal>MDA Guide</journal>
+<volume>1</volume>
+<pages>03--06</pages>
+<contexts>
+<context position="3757" citStr="[5]" startWordPosition="538" endWordPosition="538">limitations, especially when it comes to exchanging models or expressing further concerns, such as architectural styles or distribution. Recently, the OMG’s Model-Driven Architecture (MDA) initiative [5] has introduced a new approach for organizing the design of an application into different models so portability, interoperability and reusability can be obtained through architectural separation of co</context>
+</contexts>
+<marker>[5]</marker>
+<rawString>MDA Guide V1.0.1, omg/03-06-01, www.omg.org/mda</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>Andrea Schauerhuber</author>
+<author>Manuel Wimmer</author>
+<author>Elisabeth Kapsammer</author>
+<author>Wieland Schwinger</author>
+<author>Werner Retschitzegger</author>
+</authors>
+<title>Bridging WebML to Model-Driven Engineering: From DTDs to MOF. Accepted for puplication in IET Software,</title>
+<date>2007</date>
+<contexts>
+<context position="6900" citStr="[6,7,8]" startWordPosition="1026" endWordPosition="1026">operation between the Technical University of Vienna and the Johannes Kepler University of Linz, contributing with their knowledge on frameworks, metamodels and model transformations in the Web field [6,7,8]. The intention is to harmonize their efforts in order to be more effective, to avoid duplicated work, and to align their targets and goals. The plan was to start with a small number of groups first, </context>
+</contexts>
+<marker>[6]</marker>
+<rawString>Andrea Schauerhuber, Manuel Wimmer, Elisabeth Kapsammer, Wieland Schwinger, and Werner Retschitzegger. Bridging WebML to Model-Driven Engineering: From DTDs to MOF. Accepted for puplication in IET Software, 2007.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>Andrea Schauerhuber</author>
+<author>Manuel Wimmer</author>
+<author>Wieland Schwinger</author>
+<author>Elisabeth Kapsammer</author>
+<author>Werner Retschitzegger</author>
+</authors>
+<title>Aspect-Oriented Modeling of Ubiquitous Web Applications:</title>
+<date>2007</date>
+<booktitle>The aspectWebML Approach. 5th Workshop on Model-Based Development for ComputerBased Systems: Domain-Specific Approaches to Model-Based Development, in conjunction with ECBS,</booktitle>
+<location>Tucson, AZ, USA,</location>
+<contexts>
+<context position="6900" citStr="[6,7,8]" startWordPosition="1026" endWordPosition="1026">operation between the Technical University of Vienna and the Johannes Kepler University of Linz, contributing with their knowledge on frameworks, metamodels and model transformations in the Web field [6,7,8]. The intention is to harmonize their efforts in order to be more effective, to avoid duplicated work, and to align their targets and goals. The plan was to start with a small number of groups first, </context>
+</contexts>
+<marker>[7]</marker>
+<rawString>Andrea Schauerhuber, Manuel Wimmer, and Wieland Schwinger, Elisabeth Kapsammer, and Werner Retschitzegger. Aspect-Oriented Modeling of Ubiquitous Web Applications: The aspectWebML Approach. 5th Workshop on Model-Based Development for ComputerBased Systems: Domain-Specific Approaches to Model-Based Development, in conjunction with ECBS, Tucson, AZ, USA, March 2007.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>Manuel Wimmer</author>
+<author>Andrea Schauerhuber</author>
+<author>Wieland Schwinger</author>
+<author>Horst Kargl</author>
+</authors>
+<title>On the Integration of Web Modeling Languages: Preliminary Results and Future Challenges. Workshop on Model-driven Web Engineering (MDWE), held in conjunction with ICWE,</title>
+<date>2007</date>
+<location>Como, Italy,</location>
+<contexts>
+<context position="6900" citStr="[6,7,8]" startWordPosition="1026" endWordPosition="1026">operation between the Technical University of Vienna and the Johannes Kepler University of Linz, contributing with their knowledge on frameworks, metamodels and model transformations in the Web field [6,7,8]. The intention is to harmonize their efforts in order to be more effective, to avoid duplicated work, and to align their targets and goals. The plan was to start with a small number of groups first, </context>
+</contexts>
+<marker>[8]</marker>
+<rawString>Manuel Wimmer, Andrea Schauerhuber, Wieland Schwinger, and Horst Kargl. On the Integration of Web Modeling Languages: Preliminary Results and Future Challenges. Workshop on Model-driven Web Engineering (MDWE), held in conjunction with ICWE, Como, Italy, July, 2007</rawString>
+</citation>
+</citationList>
+</algorithm>
+</algorithms>

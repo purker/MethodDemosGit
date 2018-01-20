@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<algorithms version="110505">
+<algorithm name="SectLabel" version="110505">
+<variant no="0" confidence="0.057483">
+<title confidence="0.990938">
+QualityTrails: Data Quality Provenance as a Basis for Sensemaking
+</title>
+<author confidence="0.999456">
+Christian Bors1, Theresia Gschwandtner1, Silvia Miksch1, and Johannes Gärtner2
+</author>
+<affiliation confidence="0.856061">
+1Institute of Software Technology &amp; Interactive Systems (ISIS), Vienna University of Technology, Austria, {surname}@ifs.tuwien.ac.at
+2XIMES GmbH, Vienna, Austria, gaertner@ximes.com
+</affiliation>
+<sectionHeader confidence="0.88256" genericHeader="abstract">
+ABSTRACT
+</sectionHeader>
+<bodyText confidence="0.989405">
+Visual Analytics prototypes increasingly support human sensemak-
+ing through providing Provenance information. For data analysts
+the challenge of knowledge generation starts with assessing the
+quality of a data set, but Provenance is not yet utilized to aid this
+task. This position paper aims at characterizing the complexity of
+Visual Analytics methods introducing Provenance in Data Quality
+by highlighting the challenges of (1) generating Provenance from
+Data Quality Control and (2) sensemaking based on Data Quality
+Provenance.
+Keywords: data provenance, analytic provenance, sensemaking,
+data quality, quality metrics, visual data analysis
+Index Terms: Human-centered Computing [Visualization]: Vi-
+sualization application domains—Visual Analytics Mathematics
+of computing [Probability and statistics]: Statistical paradigms—
+Exploratory data analysis
+</bodyText>
+<sectionHeader confidence="0.999264" genericHeader="introduction">
+1 INTRODUCTION
+</sectionHeader>
+<bodyText confidence="0.999708608695652">
+In Data Quality (DQ) assessment one of the central questions is,
+‘Is the Data Quality good enough for analysis to produce meaning-
+ful results?’ The quality of data analysis is highly dependent on
+the quality of the underlying data. Thus, a prerequisite of any data
+analysis, such as creating visualizations and performing analytical
+reasoning, is assessing and improving DQ. Data cleansing is an it-
+erative task that requires user expertise and domain knowledge of
+the data provided [7]. DQ control can be understood as a combina-
+tion of data quality assessment, the data cleansing process, as well
+as applying transformations to change a data set’s structure. Kandel
+et al. [7] argue that integrating interactive and visual systems could
+facilitate these tasks as well as data verification.
+Yet, the analyst is left with the decision about when quality is
+sufficient to start analysis, or if the data is worth further manipulat-
+ing at all. Sensemaking is an integral part of Visual Analytics (VA).
+During DQ assessment the analyst needs to take into account not
+only the actual data, but also implicit information, like how the data
+was created or its transformation history. A data set already might
+have been analyzed by someone else, generating a transformation
+history or other insight. This information could be helpful for fur-
+ther analysis. Provenance conceives this information and makes it
+available to the data analyst. Establishing a model for sensemaking
+to grasp the context of a data set benefits knowledge discovery.
+</bodyText>
+<sectionHeader confidence="0.996808" genericHeader="method">
+2 CHALLENGES
+</sectionHeader>
+<bodyText confidence="0.999812285714286">
+We reviewed the state-of-the-art of Provenance generation [11],
+Provenance in VA [10], as well as sensemaking in VA [1, 13], and
+lastly Provenance in DQ assessment [5, 2]. In the following sec-
+tions we illustrate our results, i.e., the current VA approaches that
+combine DQ with Provenance to aid analysts in their task of making
+sense of data. Furthermore we derive open problems and challenges
+for Provenance in DQ analysis and contemplate possible solutions.
+</bodyText>
+<subsectionHeader confidence="0.996052">
+2.1 Provenance from Data Quality Control
+</subsectionHeader>
+<bodyText confidence="0.99511176">
+Data Provenance information is primarily utilized for resolving
+conflicting data sets and estimating data reliability based on lin-
+eage [3, 14]. Hartig [5] suggests to use a Provenance model in
+DQ to assess metrics like accuracy, reliability, or timeliness of data,
+which partly conforms with the above mentioned use of conflict
+resolution.
+However, there are just a few approaches that denote how Prove-
+nance information could be used for DQ improvement and assess-
+ment. In the following sections we propose approaches to outline
+which Provenance information is suited to aid these tasks and how
+it should be gathered.
+Generating Provenance from Data Cleansing Opera-
+tions. Some data analysis tools incorporate the concept of log-
+ging the actions of data manipulation [8]. Generating Provenance
+from cleansing operations is a promising approach. By now, this
+information is merely presented in textual form and used for track-
+ing purposes rather than DQ assessment. Provenance information
+from data exploration and transformation can be obtained by trac-
+ing transformation steps, cleansing operations, etc. in a log for later
+inspection.
+The Open Provenance Model [11] (OPM) has been developed
+to depict Provenance information through an Artifact, Process, and
+Agent model. DQ assessment and cleansing operations can be ap-
+plied to this model as means of tracking the action history of qual-
+ity assessment, employing data sources, similar to artifacts, trans-
+formation functions, comparable to processes, and analysts, inter-
+pretable as agents. The model’s design is generic enough to support
+this task. It provides a good overview of which actions have been
+taken by other analysts. However, this approach does not consider
+implicit information about data generation sources or information
+based on the analyst’s experiences while cleansing operations are
+omitted. Thus, it is necessary to either investigate the extensibility
+of this model or to find other solutions that are suited to convey this
+information.
+Generating Provenance from Annotated Data. As a
+common way of propagating insightful information to collaborators
+or analysts annotations are employed to further analyze the data [9].
+They can be seen as a type of Provenance information and allow for
+manually adding information about the conditions under which the
+data have been created or manipulated. This information is impor-
+tant to analysts in order to correctly assess the DQ and to be aware
+of all kinds of background information.
+Hullman et al. [6] proposed automatically adding narrative an-
+notations to line-charts of stock visualizations. They stress the im-
+portance of using annotations as an additional information source
+to support sensemaking. In existing data analysis approaches anno-
+tation is not directly incorporated, but analysts rely on informal in-
+formation and consider it in their sensemaking process. We propose
+administrating annotations about data sources and quality cleansing
+operations as Provenance information.
+Generating Provenance from Quality Metrics. In Data
+Quality Management one approach to measuring Data Quality is
+computing Data Quality Metrics [12] (QM). The aim is to find
+structural or measurement errors by means of computation. This
+is a task that requires comprehensive knowledge about the error
+sources and causes, as well as how they manifest in the data. Met-
+rics can be used to both give overview on a data set and simulta-
+neously give detailed information on specific values, by being cal-
+culated on multiple granularity levels. Errors in the data set are
+propagated to high level overviews and can still be easily tracked
+by browsing lower aggregation layers.
+With quality problems being resolved over time, also the qual-
+ity measures improve and indicate a trend during DQ assessment.
+We propose utilizing development of the data quality – as indicated
+by QM computed at different points in time – as Provenance. We
+contemplate that an analyst can determine if the quality is sufficient
+for analysis from assessing gradual quality improvement over time,
+comparing the current status to the data’s original condition.
+We have described approaches to generate Provenance from data
+cleansing operations, from annotations, as well as from meta in-
+formation based on QM. Logging this information allows their in-
+tegration into computation processes and it can be used to deduce
+patterns and learn about domain specific traits. Another challenge
+is to design means that foster the integration of DQ Provenance into
+sensemaking.
+</bodyText>
+<subsectionHeader confidence="0.999026">
+2.2 Sensemaking based on Data Quality Provenance
+</subsectionHeader>
+<bodyText confidence="0.856747555555556">
+It is not enough to capture Provenance information about DQ, it
+also needs to be integrated into sensemaking. Making sense of data
+is a highly complex task, which requires the analyst to be aware of
+the circumstances under which the data have been generated and by
+which contingencies they were influenced. The diversity of Prove-
+nance information can be significant. It is necessary to determine
+ways of efficiently presenting various types of Provenance informa-
+tion to the analyst without obstructing data cleansing operations.
+In general, DQ improvement is used to prepare a data set for sub-
+sequent analysis. Attfield et al. [1] suggest that analysts aim at gen-
+erating a model of sensemaking based on their semantic knowledge
+in combination with available information. We identify three itera-
+tive phases in the course of DQ assessment and sensemaking where
+the analyst combines his/her semantic knowledge with information
+about the data set and its respective Provenance information:
+(1) The analyst decides if the data is usable, based on the Prove-
+nance information that has been provided.
+(2) The analyst has a certain goal in mind what to do with the data
+in the subsequent analysis and thus he/she transforms and refines
+the data to achieve an output that supports sensemaking in this spe-
+cific context.
+(3) Based on the Provenance information the analyst determines
+his/her confidence in the data, and thus, in the analysis results and
+interprets the outcome accordingly.
+One way of further supporting the sensemkaing process is the
+use of efficient visualizations, providing the necessary information
+in a suitable format.
+</bodyText>
+<subsectionHeader confidence="0.586927">
+Visualizing Provenance from Data Quality Assess-
+</subsectionHeader>
+<bodyText confidence="0.999885074074074">
+ment. Provenance for sensemaking in DQ has the potential to
+provide substantial additional information to the analyst. It is nec-
+essary to develop means of visually propagating this information to
+him/her. Analytic Provenance approaches resort to graph- or tree-
+like visualization techniques to develop visual representations of
+Provenance graphs [5, 13, 10]. Attfield et al. [1] suggest to em-
+ploy visualization prototypes to provide indicators that let analysts
+hypothesize on the data.
+Carata et al. [4] claim that little research has been put into al-
+ternative visualization techniques, aside from node-link represen-
+tations. We propose novel ideas on how to utilize Provenance
+information to generate visual aids in a DQ assessment environ-
+ment. Which types of visual aids are suited for this task depends,
+of course, on the type of information. QM measure data properties
+over time, and are usually normalized. This implies that a contin-
+uous multivariate line-chart could properly visualize such informa-
+tion and support the decision-making process of the data analyst.
+Manual annotations could serve as guiding-points in either data ta-
+ble views or in the suggested line-chart visualizations of QM devel-
+opment over time, similar to Hullman et al. [6].
+We contemplate combining visualizations of different Prove-
+nance information types into interactive views that employ linking
+and brushing. Within these multiple views annotations could be
+used to accentuate significant events and draw conclusions. Pro-
+viding such visualizations in addition to Provenance graphs would
+provide enriched means for DQ aware data analysis, i.e., different
+kinds of visualization for different analysis tasks.
+</bodyText>
+<sectionHeader confidence="0.999538" genericHeader="method">
+3 OUTLOOK
+</sectionHeader>
+<bodyText confidence="0.9476255">
+In our upcoming research we aim at tackling the challenges charac-
+terized above by developing a DQ control prototype that incorpo-
+rates data cleansing and transformation operations as well as em-
+ploying Provenance information to support analysts in their sense-
+making tasks.
+ACKNOWLEDGMENTS This work is part of the the Laura Bassi Cen-
+tre of Expertise CVAST is funded by the Austrian Federal Ministry of Econ-
+omy, Family and Youth (project number: 822746).
+</bodyText>
+<sectionHeader confidence="0.998368" genericHeader="references">
+REFERENCES
+</sectionHeader>
+<reference confidence="0.994473142857143">
+[1] S. J. Attfield, S. K. Hara, and B. L. W. Wong. Sensemaking in visual
+analytics: Processes and challenges. In J. Kohlhammer and D. Keim,
+editors, EuroVAST 2010: Intern. Symp. on VAST, pages 1–6, Bor-
+deaux, France, 2010. Eurographics Association.
+[2] C. Batini and M. Scannapieco. Data Quality: Concepts, Method-
+ologies and Techniques (Data-Centric Systems and Applications).
+Springer Verlag New York, Inc., Secaucus, NJ, USA, 2006.
+[3] P. Buneman, S. Khanna, and W. C. Tan. Why and where: A character-
+ization of data provenance. In J. V. d. Bussche and V. Vianu, editors,
+Intern. Conf. DB Theory, pages 316–330. Springer, LNCS 1973, 2001.
+[4] L. Carata, S. Akoush, N. Balakrishnan, T. Bytheway, R. Sohan,
+M. Seltzer, and A. Hopper. A primer on provenance. Queue,
+12(3):10:10–10:23, Mar. 2014.
+[5] O. Hartig and J. Zhao. Using web data provenance for quality assess-
+ment. In J. Freire, P. Missier, and S. S. Sahoo, editors, SWPM, volume
+526 of CEUR Workshop Proceedings. CEUR-WS.org, Oct. 2009.
+[6] J. Hullman, N. Diakopoulos, and E. Adar. Contextifier: Automatic
+generation of annotated stock visualizations. In Proc. SIGCHI Conf.
+Human Factors in Computing Systems, CHI ’13, pages 2707–2716,
+New York, NY, USA, 2013. ACM.
+[7] S. Kandel, J. Heer, C. Plaisant, J. Kennedy, F. van Ham, N. H. Riche,
+C. Weaver, B. Lee, D. Brodbeck, and P. Buono. Research directions
+in data wrangling: Visualizations and transformations for usable and
+credible data. Inf. Vis. Journal, 10(4):271–288, 2011.
+[8] S. Kandel, R. Parikh, A. Paepcke, J. M. Hellerstein, and J. Heer. Pro-
+filer: Integrated statistical analysis and visualization for data quality
+assessment. In Proc. Intern. Working Conf. Advanced Visual Inter-
+faces, AVI ’12, pages 547–554, New York, NY, USA, 2012. ACM.
+[9] Q. Li, A. Labrinidis, and P. Chrysanthis. User-centric annotation man-
+agement for biological data. In J. Freire, D. Koop, and L. Moreau,
+editors, Provenance and Annotation of Data and Processes, volume
+5272 of Lecture Notes in Computer Science, pages 54–61. Springer
+Berlin Heidelberg, 2008.
+[10] J. Lu, Z. Wen, S. Pan, and J. Lai. Analytic trails: Supporting prove-
+nance, collaboration, and reuse for visual data analysis by business
+users. In Proc. 13th IFIP TC 13 Int. Conf. HCI - Vol. IV, INTER-
+ACT’11, pages 256–273, Berlin, Heidelberg, 2011.
+[11] L. Moreau, B. Clifford, J. Freire, J. Futrelle, Y. Gil, P. Groth, N. Kwas-
+nikowska, S. Miles, P. Missier, J. Myers, B. Plale, Y. Simmhan,
+E. Stephan, and J. V. d. Bussche. The open provenance model core
+spec. (v1.1). Future Gen. Computer Systems, 27(6):743 – 756, 2011.
+[12] S. Sadiq, editor. Handbook of Data Quality. Springer Verlag, Berlin,
+Heidelberg, 2013.
+[13] Y. B. Shrinivasan and J. J. van Wijk. Supporting the analytical reason-
+ing process in information visualization. In Proc. SIGCHI Conference
+on Human Factors in Computing Systems, CHI ’08, pages 1237–1246,
+New York, NY, USA, 2008. ACM.
+[14] Y. L. Simmhan, B. Plale, and D. Gannon. A survey of data provenance
+in e-science. SIGMOD Rec., 34(3):31–36, Sept. 2005.
+</reference>
+</variant>
+</algorithm>
+<algorithm name="ParsHed" version="110505">
+<variant no="0" confidence="0.116584">
+<title confidence="0.999952">QualityTrails: Data Quality Provenance as a Basis for Sensemaking</title>
+<author confidence="0.978038">Theresia Silvia</author>
+<author confidence="0.978038">Johannes</author>
+<affiliation confidence="0.995242">of Software Technology &amp; Interactive Systems (ISIS), Vienna University of Technology, Austria,</affiliation>
+<address confidence="0.989728">GmbH, Vienna, Austria,</address>
+<abstract confidence="0.997348037433156">Visual Analytics prototypes increasingly support human sensemaking through providing Provenance information. For data analysts the challenge of knowledge generation starts with assessing the quality of a data set, but Provenance is not yet utilized to aid this task. This position paper aims at characterizing the complexity of Visual Analytics methods introducing Provenance in Data Quality by highlighting the challenges of (1) generating Provenance from Data Quality Control and (2) sensemaking based on Data Quality Provenance. provenance, analytic provenance, sensemaking, data quality, quality metrics, visual data analysis Terms: Computing [Visualization]: Visualization application domains—Visual Analytics Mathematics of computing [Probability and statistics]: Statistical paradigms— Exploratory data analysis In Data Quality (DQ) assessment one of the central questions is, ‘Is the Data Quality good enough for analysis to produce meaningful results?’ The quality of data analysis is highly dependent on the quality of the underlying data. Thus, a prerequisite of any data analysis, such as creating visualizations and performing analytical reasoning, is assessing and improving DQ. Data cleansing is an iterative task that requires user expertise and domain knowledge of the data provided [7]. DQ control can be understood as a combination of data quality assessment, the data cleansing process, as well as applying transformations to change a data set’s structure. Kandel et al. [7] argue that integrating interactive and visual systems could facilitate these tasks as well as data verification. Yet, the analyst is left with the decision about when quality is sufficient to start analysis, or if the data is worth further manipulating at all. Sensemaking is an integral part of Visual Analytics (VA). During DQ assessment the analyst needs to take into account not only the actual data, but also implicit information, like how the data was created or its transformation history. A data set already might have been analyzed by someone else, generating a transformation history or other insight. This information could be helpful for further analysis. Provenance conceives this information and makes it available to the data analyst. Establishing a model for sensemaking to grasp the context of a data set benefits knowledge discovery. We reviewed the state-of-the-art of Provenance generation [11], Provenance in VA [10], as well as sensemaking in VA [1, 13], and lastly Provenance in DQ assessment [5, 2]. In the following sections we illustrate our results, i.e., the current VA approaches that combine DQ with Provenance to aid analysts in their task of making sense of data. Furthermore we derive open problems and challenges for Provenance in DQ analysis and contemplate possible solutions. 2.1 Provenance from Data Quality Control Data Provenance information is primarily utilized for resolving conflicting data sets and estimating data reliability based on lineage [3, 14]. Hartig [5] suggests to use a Provenance model in DQ to assess metrics like accuracy, reliability, or timeliness of data, which partly conforms with the above mentioned use of conflict resolution. However, there are just a few approaches that denote how Provenance information could be used for DQ improvement and assessment. In the following sections we propose approaches to outline which Provenance information is suited to aid these tasks and how it should be gathered. Generating Provenance from Data Cleansing Operadata analysis tools incorporate the concept of logging the actions of data manipulation [8]. Generating Provenance from cleansing operations is a promising approach. By now, this information is merely presented in textual form and used for tracking purposes rather than DQ assessment. Provenance information from data exploration and transformation can be obtained by tracing transformation steps, cleansing operations, etc. in a log for later inspection. The Open Provenance Model [11] (OPM) has been developed depict Provenance information through an and DQ assessment and cleansing operations can be applied to this model as means of tracking the action history of qualassessment, employing similar to artifacts, transcomparable to processes, and interpretable as agents. The model’s design is generic enough to support this task. It provides a good overview of which actions have been taken by other analysts. However, this approach does not consider implicit information about data generation sources or information based on the analyst’s experiences while cleansing operations are omitted. Thus, it is necessary to either investigate the extensibility of this model or to find other solutions that are suited to convey this information. Provenance from Annotated Data. a common way of propagating insightful information to collaborators or analysts annotations are employed to further analyze the data [9]. They can be seen as a type of Provenance information and allow for manually adding information about the conditions under which the data have been created or manipulated. This information is important to analysts in order to correctly assess the DQ and to be aware of all kinds of background information. Hullman et al. [6] proposed automatically adding narrative annotations to line-charts of stock visualizations. They stress the importance of using annotations as an additional information source to support sensemaking. In existing data analysis approaches annotation is not directly incorporated, but analysts rely on informal information and consider it in their sensemaking process. We propose administrating annotations about data sources and quality cleansing operations as Provenance information. Provenance from Quality Metrics. Data Quality Management one approach to measuring Data Quality is computing Data Quality Metrics [12] (QM). The aim is to find structural or measurement errors by means of computation. This is a task that requires comprehensive knowledge about the error sources and causes, as well as how they manifest in the data. Metrics can be used to both give overview on a data set and simultaneously give detailed information on specific values, by being calculated on multiple granularity levels. Errors in the data set are propagated to high level overviews and can still be easily tracked by browsing lower aggregation layers. With quality problems being resolved over time, also the quality measures improve and indicate a trend during DQ assessment. We propose utilizing development of the data quality – as indicated by QM computed at different points in time – as Provenance. We contemplate that an analyst can determine if the quality is sufficient for analysis from assessing gradual quality improvement over time, comparing the current status to the data’s original condition. We have described approaches to generate Provenance from data cleansing operations, from annotations, as well as from meta information based on QM. Logging this information allows their integration into computation processes and it can be used to deduce patterns and learn about domain specific traits. Another challenge is to design means that foster the integration of DQ Provenance into sensemaking. 2.2 Sensemaking based on Data Quality Provenance It is not enough to capture Provenance information about DQ, it also needs to be integrated into sensemaking. Making sense of data is a highly complex task, which requires the analyst to be aware of the circumstances under which the data have been generated and by which contingencies they were influenced. The diversity of Provenance information can be significant. It is necessary to determine ways of efficiently presenting various types of Provenance information to the analyst without obstructing data cleansing operations. In general, DQ improvement is used to prepare a data set for subsequent analysis. Attfield et al. [1] suggest that analysts aim at generating a model of sensemaking based on their semantic knowledge in combination with available information. We identify three iterative phases in the course of DQ assessment and sensemaking where the analyst combines his/her semantic knowledge with information about the data set and its respective Provenance information: (1) The analyst decides if the data is usable, based on the Provenance information that has been provided. (2) The analyst has a certain goal in mind what to do with the data in the subsequent analysis and thus he/she transforms and refines the data to achieve an output that supports sensemaking in this specific context. (3) Based on the Provenance information the analyst determines his/her confidence in the data, and thus, in the analysis results and interprets the outcome accordingly. One way of further supporting the sensemkaing process is the use of efficient visualizations, providing the necessary information in a suitable format. Visualizing Provenance from Data Quality Assessfor sensemaking in DQ has the potential to provide substantial additional information to the analyst. It is necessary to develop means of visually propagating this information to him/her. Analytic Provenance approaches resort to graphor treelike visualization techniques to develop visual representations of Provenance graphs [5, 13, 10]. Attfield et al. [1] suggest to employ visualization prototypes to provide indicators that let analysts hypothesize on the data. Carata et al. [4] claim that little research has been put into alternative visualization techniques, aside from node-link representations. We propose novel ideas on how to utilize Provenance information to generate visual aids in a DQ assessment environment. Which types of visual aids are suited for this task depends, of course, on the type of information. QM measure data properties over time, and are usually normalized. This implies that a continuous multivariate line-chart could properly visualize such information and support the decision-making process of the data analyst. Manual annotations could serve as guiding-points in either data table views or in the suggested line-chart visualizations of QM development over time, similar to Hullman et al. [6]. We contemplate combining visualizations of different Provenance information types into interactive views that employ linking and brushing. Within these multiple views annotations could be used to accentuate significant events and draw conclusions. Providing such visualizations in addition to Provenance graphs would provide enriched means for DQ aware data analysis, i.e., different kinds of visualization for different analysis tasks. In our upcoming research we aim at tackling the challenges characterized above by developing a DQ control prototype that incorporates data cleansing and transformation operations as well as employing Provenance information to support analysts in their sensemaking tasks. work is part of the the Laura Bassi Centre of Expertise CVAST is funded by the Austrian Federal Ministry of Economy, Family and Youth (project number: 822746). [1] S. J. Attfield, S. K. Hara, and B. L. W. Wong. Sensemaking in visual analytics: Processes and challenges. In J. Kohlhammer and D. Keim,</abstract>
+<address confidence="0.9250665">2010: Intern. Symp. on pages 1–6, Bordeaux, France, 2010. Eurographics Association.</address>
+<note confidence="0.913846555555556">C. Batini and M. Scannapieco. Quality: Concepts, Methodand Techniques (Data-Centric Systems and Springer Verlag New York, Inc., Secaucus, NJ, USA, 2006. [3] P. Buneman, S. Khanna, and W. C. Tan. Why and where: A characterization of data provenance. In J. V. d. Bussche and V. Vianu, editors, Conf. DB pages 316–330. Springer, LNCS 1973, 2001. [4] L. Carata, S. Akoush, N. Balakrishnan, T. Bytheway, R. Sohan, Seltzer, and A. Hopper. A primer on provenance. 12(3):10:10–10:23, Mar. 2014. [5] O. Hartig and J. Zhao. Using web data provenance for quality assess- In J. Freire, P. Missier, and S. S. Sahoo, editors, volume of Workshop CEUR-WS.org, Oct. 2009. [6] J. Hullman, N. Diakopoulos, and E. Adar. Contextifier: Automatic of annotated stock visualizations. In SIGCHI Conf. Factors in Computing CHI ’13, pages 2707–2716, New York, NY, USA, 2013. ACM. [7] S. Kandel, J. Heer, C. Plaisant, J. Kennedy, F. van Ham, N. H. Riche, C. Weaver, B. Lee, D. Brodbeck, and P. Buono. Research directions in data wrangling: Visualizations and transformations for usable and data. Vis. 10(4):271–288, 2011. [8] S. Kandel, R. Parikh, A. Paepcke, J. M. Hellerstein, and J. Heer. Profiler: Integrated statistical analysis and visualization for data quality In Intern. Working Conf. Advanced Visual Inter- AVI ’12, pages 547–554, New York, NY, USA, 2012. ACM. [9] Q. Li, A. Labrinidis, and P. Chrysanthis. User-centric annotation management for biological data. In J. Freire, D. Koop, and L. Moreau, and Annotation of Data and volume of Notes in Computer pages 54–61. Springer Berlin Heidelberg, 2008. [10] J. Lu, Z. Wen, S. Pan, and J. Lai. Analytic trails: Supporting provenance, collaboration, and reuse for visual data analysis by business In 13th IFIP TC 13 Int. Conf. HCI - Vol. INTER- ACT’11, pages 256–273, Berlin, Heidelberg, 2011. [11] L. Moreau, B. Clifford, J. Freire, J. Futrelle, Y. Gil, P. Groth, N. Kwasnikowska, S. Miles, P. Missier, J. Myers, B. Plale, Y. Simmhan, E. Stephan, and J. V. d. Bussche. The open provenance model core (v1.1). Gen. Computer 27(6):743 – 756, 2011. S. Sadiq, editor. of Data Springer Verlag, Berlin, Heidelberg, 2013. [13] Y. B. Shrinivasan and J. J. van Wijk. Supporting the analytical reasonprocess in information visualization. In SIGCHI Conference Human Factors in Computing CHI ’08, pages 1237–1246, New York, NY, USA, 2008. ACM. [14] Y. L. Simmhan, B. Plale, and D. Gannon. A survey of data provenance e-science. 34(3):31–36, Sept. 2005.</note>
+</variant>
+</algorithm>
+<algorithm name="ParsCit" version="110505">
+<citationList>
+<citation valid="true">
+<authors>
+<author>S J Attfield</author>
+<author>S K Hara</author>
+<author>B L W Wong</author>
+</authors>
+<title>Sensemaking in visual analytics: Processes and challenges.</title>
+<date>2010</date>
+<booktitle>EuroVAST 2010: Intern. Symp. on VAST,</booktitle>
+<pages>1--6</pages>
+<editor>In J. Kohlhammer and D. Keim, editors,</editor>
+<publisher>Eurographics Association.</publisher>
+<location>Bordeaux, France,</location>
+<contexts>
+<context position="2870" citStr="[1, 13]" startWordPosition="416" endWordPosition="417">aking to grasp the context of a data set benefits knowledge discovery. 2 CHALLENGES We reviewed the state-of-the-art of Provenance generation [11], Provenance in VA [10], as well as sensemaking in VA [1, 13], and lastly Provenance in DQ assessment [5, 2]. In the following sections we illustrate our results, i.e., the current VA approaches that combine DQ with Provenance to aid analysts in their task of m</context>
+<context position="8450" citStr="[1]" startWordPosition="1285" endWordPosition="1285">various types of Provenance information to the analyst without obstructing data cleansing operations. In general, DQ improvement is used to prepare a data set for subsequent analysis. Attfield et al. [1] suggest that analysts aim at generating a model of sensemaking based on their semantic knowledge in combination with available information. We identify three iterative phases in the course of DQ asse</context>
+<context position="9874" citStr="[1]" startWordPosition="1505" endWordPosition="1505">g this information to him/her. Analytic Provenance approaches resort to graph- or treelike visualization techniques to develop visual representations of Provenance graphs [5, 13, 10]. Attfield et al. [1] suggest to employ visualization prototypes to provide indicators that let analysts hypothesize on the data. Carata et al. [4] claim that little research has been put into alternative visualization te</context>
+</contexts>
+<marker>[1]</marker>
+<rawString>S. J. Attfield, S. K. Hara, and B. L. W. Wong. Sensemaking in visual analytics: Processes and challenges. In J. Kohlhammer and D. Keim, editors, EuroVAST 2010: Intern. Symp. on VAST, pages 1–6, Bordeaux, France, 2010. Eurographics Association.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>C Batini</author>
+<author>M Scannapieco</author>
+</authors>
+<title>Data Quality: Concepts, Methodologies and Techniques (Data-Centric Systems and Applications).</title>
+<date>2006</date>
+<publisher>Springer Verlag</publisher>
+<location>New York, Inc., Secaucus, NJ, USA,</location>
+<contexts>
+<context position="2917" citStr="[5, 2]" startWordPosition="424" endWordPosition="425">s knowledge discovery. 2 CHALLENGES We reviewed the state-of-the-art of Provenance generation [11], Provenance in VA [10], as well as sensemaking in VA [1, 13], and lastly Provenance in DQ assessment [5, 2]. In the following sections we illustrate our results, i.e., the current VA approaches that combine DQ with Provenance to aid analysts in their task of making sense of data. Furthermore we derive open</context>
+</contexts>
+<marker>[2]</marker>
+<rawString>C. Batini and M. Scannapieco. Data Quality: Concepts, Methodologies and Techniques (Data-Centric Systems and Applications). Springer Verlag New York, Inc., Secaucus, NJ, USA, 2006.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>P Buneman</author>
+<author>S Khanna</author>
+<author>W C Tan</author>
+</authors>
+<title>Why and where: A characterization of data provenance.</title>
+<date>1973</date>
+<booktitle>Intern. Conf. DB Theory,</booktitle>
+<pages>316--330</pages>
+<editor>In J. V. d. Bussche and V. Vianu, editors,</editor>
+<publisher>Springer,</publisher>
+<location>LNCS</location>
+<contexts>
+<context position="3391" citStr="[3, 14]" startWordPosition="497" endWordPosition="498">ate possible solutions. 2.1 Provenance from Data Quality Control Data Provenance information is primarily utilized for resolving conflicting data sets and estimating data reliability based on lineage [3, 14]. Hartig [5] suggests to use a Provenance model in DQ to assess metrics like accuracy, reliability, or timeliness of data, which partly conforms with the above mentioned use of conflict resolution. Ho</context>
+</contexts>
+<marker>[3]</marker>
+<rawString>P. Buneman, S. Khanna, and W. C. Tan. Why and where: A characterization of data provenance. In J. V. d. Bussche and V. Vianu, editors, Intern. Conf. DB Theory, pages 316–330. Springer, LNCS 1973, 2001.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>L Carata</author>
+<author>S Akoush</author>
+<author>N Balakrishnan</author>
+<author>T Bytheway</author>
+<author>R Sohan</author>
+<author>M Seltzer</author>
+<author>A Hopper</author>
+</authors>
+<title>A primer on provenance.</title>
+<date>2014</date>
+<journal>Queue,</journal>
+<volume>12</volume>
+<issue>3</issue>
+<contexts>
+<context position="10000" citStr="[4]" startWordPosition="1525" endWordPosition="1525"> visual representations of Provenance graphs [5, 13, 10]. Attfield et al. [1] suggest to employ visualization prototypes to provide indicators that let analysts hypothesize on the data. Carata et al. [4] claim that little research has been put into alternative visualization techniques, aside from node-link representations. We propose novel ideas on how to utilize Provenance information to generate vi</context>
+</contexts>
+<marker>[4]</marker>
+<rawString>L. Carata, S. Akoush, N. Balakrishnan, T. Bytheway, R. Sohan, M. Seltzer, and A. Hopper. A primer on provenance. Queue, 12(3):10:10–10:23, Mar. 2014.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>O Hartig</author>
+<author>J Zhao</author>
+</authors>
+<title>Using web data provenance for quality assessment.</title>
+<date>2009</date>
+<booktitle>of CEUR Workshop Proceedings. CEUR-WS.org,</booktitle>
+<volume>526</volume>
+<editor>In J. Freire, P. Missier, and S. S. Sahoo, editors, SWPM,</editor>
+<contexts>
+<context position="2917" citStr="[5, 2]" startWordPosition="424" endWordPosition="425">s knowledge discovery. 2 CHALLENGES We reviewed the state-of-the-art of Provenance generation [11], Provenance in VA [10], as well as sensemaking in VA [1, 13], and lastly Provenance in DQ assessment [5, 2]. In the following sections we illustrate our results, i.e., the current VA approaches that combine DQ with Provenance to aid analysts in their task of making sense of data. Furthermore we derive open</context>
+<context position="3403" citStr="[5]" startWordPosition="500" endWordPosition="500">utions. 2.1 Provenance from Data Quality Control Data Provenance information is primarily utilized for resolving conflicting data sets and estimating data reliability based on lineage [3, 14]. Hartig [5] suggests to use a Provenance model in DQ to assess metrics like accuracy, reliability, or timeliness of data, which partly conforms with the above mentioned use of conflict resolution. However, there</context>
+<context position="9853" citStr="[5, 13, 10]" startWordPosition="1499" endWordPosition="1501"> means of visually propagating this information to him/her. Analytic Provenance approaches resort to graph- or treelike visualization techniques to develop visual representations of Provenance graphs [5, 13, 10]. Attfield et al. [1] suggest to employ visualization prototypes to provide indicators that let analysts hypothesize on the data. Carata et al. [4] claim that little research has been put into alterna</context>
+</contexts>
+<marker>[5]</marker>
+<rawString>O. Hartig and J. Zhao. Using web data provenance for quality assessment. In J. Freire, P. Missier, and S. S. Sahoo, editors, SWPM, volume 526 of CEUR Workshop Proceedings. CEUR-WS.org, Oct. 2009.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>J Hullman</author>
+<author>N Diakopoulos</author>
+<author>E Adar</author>
+</authors>
+<title>Contextifier: Automatic generation of annotated stock visualizations.</title>
+<date>2013</date>
+<booktitle>In Proc. SIGCHI Conf. Human Factors in Computing Systems, CHI ’13,</booktitle>
+<pages>2707--2716</pages>
+<publisher>ACM.</publisher>
+<location>New York, NY, USA,</location>
+<contexts>
+<context position="5759" citStr="[6]" startWordPosition="866" endWordPosition="866">r which the data have been created or manipulated. This information is important to analysts in order to correctly assess the DQ and to be aware of all kinds of background information. Hullman et al. [6] proposed automatically adding narrative annotations to line-charts of stock visualizations. They stress the importance of using annotations as an additional information source to support sensemaking.</context>
+<context position="10746" citStr="[6]" startWordPosition="1643" endWordPosition="1643">s of the data analyst. Manual annotations could serve as guiding-points in either data table views or in the suggested line-chart visualizations of QM development over time, similar to Hullman et al. [6]. We contemplate combining visualizations of different Provenance information types into interactive views that employ linking and brushing. Within these multiple views annotations could be used to ac</context>
+</contexts>
+<marker>[6]</marker>
+<rawString>J. Hullman, N. Diakopoulos, and E. Adar. Contextifier: Automatic generation of annotated stock visualizations. In Proc. SIGCHI Conf. Human Factors in Computing Systems, CHI ’13, pages 2707–2716, New York, NY, USA, 2013. ACM.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>S Kandel</author>
+<author>J Heer</author>
+<author>C Plaisant</author>
+<author>J Kennedy</author>
+<author>F van Ham</author>
+<author>N H Riche</author>
+<author>C Weaver</author>
+<author>B Lee</author>
+<author>D Brodbeck</author>
+<author>P Buono</author>
+</authors>
+<title>Research directions in data wrangling: Visualizations and transformations for usable and credible data.</title>
+<date>2011</date>
+<journal>Inf. Vis. Journal,</journal>
+<volume>10</volume>
+<issue>4</issue>
+<contexts>
+<context position="1690" citStr="[7]" startWordPosition="227" endWordPosition="227"> creating visualizations and performing analytical reasoning, is assessing and improving DQ. Data cleansing is an iterative task that requires user expertise and domain knowledge of the data provided [7]. DQ control can be understood as a combination of data quality assessment, the data cleansing process, as well as applying transformations to change a data set’s structure. Kandel et al. [7] argue th</context>
+</contexts>
+<marker>[7]</marker>
+<rawString>S. Kandel, J. Heer, C. Plaisant, J. Kennedy, F. van Ham, N. H. Riche, C. Weaver, B. Lee, D. Brodbeck, and P. Buono. Research directions in data wrangling: Visualizations and transformations for usable and credible data. Inf. Vis. Journal, 10(4):271–288, 2011.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>S Kandel</author>
+<author>R Parikh</author>
+<author>A Paepcke</author>
+<author>J M Hellerstein</author>
+<author>J Heer</author>
+</authors>
+<title>Profiler: Integrated statistical analysis and visualization for data quality assessment.</title>
+<date>2012</date>
+<booktitle>In Proc. Intern. Working Conf. Advanced Visual Interfaces, AVI ’12,</booktitle>
+<pages>547--554</pages>
+<publisher>ACM.</publisher>
+<location>New York, NY, USA,</location>
+<contexts>
+<context position="4016" citStr="[8]" startWordPosition="598" endWordPosition="598">ed to aid these tasks and how it should be gathered. Generating Provenance from Data Cleansing Operations. Some data analysis tools incorporate the concept of logging the actions of data manipulation [8]. Generating Provenance from cleansing operations is a promising approach. By now, this information is merely presented in textual form and used for tracking purposes rather than DQ assessment. Proven</context>
+</contexts>
+<marker>[8]</marker>
+<rawString>S. Kandel, R. Parikh, A. Paepcke, J. M. Hellerstein, and J. Heer. Profiler: Integrated statistical analysis and visualization for data quality assessment. In Proc. Intern. Working Conf. Advanced Visual Interfaces, AVI ’12, pages 547–554, New York, NY, USA, 2012. ACM.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>Q Li</author>
+<author>A Labrinidis</author>
+<author>P Chrysanthis</author>
+</authors>
+<title>User-centric annotation management for biological data. In</title>
+<date>2008</date>
+<booktitle>Provenance and Annotation of Data and Processes,</booktitle>
+<volume>5272</volume>
+<pages>54--61</pages>
+<editor>J. Freire, D. Koop, and L. Moreau, editors,</editor>
+<publisher>Springer</publisher>
+<location>Berlin Heidelberg,</location>
+<contexts>
+<context position="5434" citStr="[9]" startWordPosition="810" endWordPosition="810">ey this information. Generating Provenance from Annotated Data. As a common way of propagating insightful information to collaborators or analysts annotations are employed to further analyze the data [9]. They can be seen as a type of Provenance information and allow for manually adding information about the conditions under which the data have been created or manipulated. This information is importa</context>
+</contexts>
+<marker>[9]</marker>
+<rawString>Q. Li, A. Labrinidis, and P. Chrysanthis. User-centric annotation management for biological data. In J. Freire, D. Koop, and L. Moreau, editors, Provenance and Annotation of Data and Processes, volume 5272 of Lecture Notes in Computer Science, pages 54–61. Springer Berlin Heidelberg, 2008.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>J Lu</author>
+<author>Z Wen</author>
+<author>S Pan</author>
+<author>J Lai</author>
+</authors>
+<title>Analytic trails: Supporting provenance, collaboration, and reuse for visual data analysis by business users.</title>
+<date>2011</date>
+<booktitle>In Proc. 13th IFIP TC 13 Int. Conf. HCI - Vol. IV, INTERACT’11,</booktitle>
+<pages>256--273</pages>
+<location>Berlin, Heidelberg,</location>
+<contexts>
+<context position="2832" citStr="[10]" startWordPosition="409" endWordPosition="409">st. Establishing a model for sensemaking to grasp the context of a data set benefits knowledge discovery. 2 CHALLENGES We reviewed the state-of-the-art of Provenance generation [11], Provenance in VA [10], as well as sensemaking in VA [1, 13], and lastly Provenance in DQ assessment [5, 2]. In the following sections we illustrate our results, i.e., the current VA approaches that combine DQ with Provena</context>
+<context position="9853" citStr="[5, 13, 10]" startWordPosition="1499" endWordPosition="1501"> means of visually propagating this information to him/her. Analytic Provenance approaches resort to graph- or treelike visualization techniques to develop visual representations of Provenance graphs [5, 13, 10]. Attfield et al. [1] suggest to employ visualization prototypes to provide indicators that let analysts hypothesize on the data. Carata et al. [4] claim that little research has been put into alterna</context>
+</contexts>
+<marker>[10]</marker>
+<rawString>J. Lu, Z. Wen, S. Pan, and J. Lai. Analytic trails: Supporting provenance, collaboration, and reuse for visual data analysis by business users. In Proc. 13th IFIP TC 13 Int. Conf. HCI - Vol. IV, INTERACT’11, pages 256–273, Berlin, Heidelberg, 2011.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>L Moreau</author>
+<author>B Clifford</author>
+<author>J Freire</author>
+<author>J Futrelle</author>
+<author>Y Gil</author>
+<author>P Groth</author>
+<author>N Kwasnikowska</author>
+<author>S Miles</author>
+<author>P Missier</author>
+<author>J Myers</author>
+<author>B Plale</author>
+<author>Y Simmhan</author>
+<author>E Stephan</author>
+<author>J V d Bussche</author>
+</authors>
+<title>The open provenance model core spec. (v1.1). Future Gen.</title>
+<date>2011</date>
+<journal>Computer Systems,</journal>
+<volume>27</volume>
+<issue>6</issue>
+<contexts>
+<context position="2809" citStr="[11]" startWordPosition="405" endWordPosition="405">lable to the data analyst. Establishing a model for sensemaking to grasp the context of a data set benefits knowledge discovery. 2 CHALLENGES We reviewed the state-of-the-art of Provenance generation [11], Provenance in VA [10], as well as sensemaking in VA [1, 13], and lastly Provenance in DQ assessment [5, 2]. In the following sections we illustrate our results, i.e., the current VA approaches that </context>
+<context position="4411" citStr="[11]" startWordPosition="656" endWordPosition="656">t. Provenance information from data exploration and transformation can be obtained by tracing transformation steps, cleansing operations, etc. in a log for later inspection. The Open Provenance Model [11] (OPM) has been developed to depict Provenance information through an Artifact, Process, and Agent model. DQ assessment and cleansing operations can be applied to this model as means of tracking the a</context>
+</contexts>
+<marker>[11]</marker>
+<rawString>L. Moreau, B. Clifford, J. Freire, J. Futrelle, Y. Gil, P. Groth, N. Kwasnikowska, S. Miles, P. Missier, J. Myers, B. Plale, Y. Simmhan, E. Stephan, and J. V. d. Bussche. The open provenance model core spec. (v1.1). Future Gen. Computer Systems, 27(6):743 – 756, 2011.</rawString>
+</citation>
+<citation valid="true">
+<date>2013</date>
+<booktitle>Handbook of Data Quality.</booktitle>
+<editor>S. Sadiq, editor.</editor>
+<publisher>Springer Verlag,</publisher>
+<location>Berlin, Heidelberg,</location>
+<contexts>
+<context position="6391" citStr="[12]" startWordPosition="953" endWordPosition="953">quality cleansing operations as Provenance information. Generating Provenance from Quality Metrics. In Data Quality Management one approach to measuring Data Quality is computing Data Quality Metrics [12] (QM). The aim is to find structural or measurement errors by means of computation. This is a task that requires comprehensive knowledge about the error sources and causes, as well as how they manifes</context>
+</contexts>
+<marker>[12]</marker>
+<rawString>S. Sadiq, editor. Handbook of Data Quality. Springer Verlag, Berlin, Heidelberg, 2013.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>Y B Shrinivasan</author>
+<author>J J van Wijk</author>
+</authors>
+<title>Supporting the analytical reasoning process in information visualization.</title>
+<date>2008</date>
+<booktitle>In Proc. SIGCHI Conference on Human Factors in Computing Systems, CHI ’08,</booktitle>
+<pages>1237--1246</pages>
+<publisher>ACM.</publisher>
+<location>New York, NY, USA,</location>
+<contexts>
+<context position="2870" citStr="[1, 13]" startWordPosition="416" endWordPosition="417">aking to grasp the context of a data set benefits knowledge discovery. 2 CHALLENGES We reviewed the state-of-the-art of Provenance generation [11], Provenance in VA [10], as well as sensemaking in VA [1, 13], and lastly Provenance in DQ assessment [5, 2]. In the following sections we illustrate our results, i.e., the current VA approaches that combine DQ with Provenance to aid analysts in their task of m</context>
+<context position="9853" citStr="[5, 13, 10]" startWordPosition="1499" endWordPosition="1501"> means of visually propagating this information to him/her. Analytic Provenance approaches resort to graph- or treelike visualization techniques to develop visual representations of Provenance graphs [5, 13, 10]. Attfield et al. [1] suggest to employ visualization prototypes to provide indicators that let analysts hypothesize on the data. Carata et al. [4] claim that little research has been put into alterna</context>
+</contexts>
+<marker>[13]</marker>
+<rawString>Y. B. Shrinivasan and J. J. van Wijk. Supporting the analytical reasoning process in information visualization. In Proc. SIGCHI Conference on Human Factors in Computing Systems, CHI ’08, pages 1237–1246, New York, NY, USA, 2008. ACM.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>Y L Simmhan</author>
+<author>B Plale</author>
+<author>D Gannon</author>
+</authors>
+<title>A survey of data provenance in e-science.</title>
+<date>2005</date>
+<journal>SIGMOD Rec.,</journal>
+<volume>34</volume>
+<issue>3</issue>
+<contexts>
+<context position="3391" citStr="[3, 14]" startWordPosition="497" endWordPosition="498">ate possible solutions. 2.1 Provenance from Data Quality Control Data Provenance information is primarily utilized for resolving conflicting data sets and estimating data reliability based on lineage [3, 14]. Hartig [5] suggests to use a Provenance model in DQ to assess metrics like accuracy, reliability, or timeliness of data, which partly conforms with the above mentioned use of conflict resolution. Ho</context>
+</contexts>
+<marker>[14]</marker>
+<rawString>Y. L. Simmhan, B. Plale, and D. Gannon. A survey of data provenance in e-science. SIGMOD Rec., 34(3):31–36, Sept. 2005.</rawString>
+</citation>
+</citationList>
+</algorithm>
+</algorithms>

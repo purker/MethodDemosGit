@@ -1,0 +1,407 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pdfx xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://pdfx.cs.man.ac.uk/static/article-schema.xsd">
+  <meta>
+    <job>158973aa212c8fc3db5666cf2097a5512e895e30e8fcb594911c434faed86239</job>
+    <base_name>l35</base_name>
+    <doi>http://dx.doi.org/10.1007/s11416-009-0132-6</doi>
+    <warning>Name identification was not possible. </warning>
+  </meta>
+  <article>
+    <front class="DoCO:FrontMatter">
+      <title-group>
+        <article-title class="DoCO:Title" id="1">Removing Web Spam Links from Search Engine Results</article-title>
+      </title-group>
+      <region class="unknown" id="5">Manuel Egele Christopher Kruegel Engin Kirda Technical University Vienna University of California Institute Eurecom <email id="2">pizzaman@iseclab.org</email> Santa Barbara France <email id="3">chris@cs.ucsb.edu</email> <email id="4">kirda@eurecom.fr</email></region>
+      <abstract class="DoCO:Abstract" id="6">Web spam denotes the manipulation of web pages with the sole intent to raise their position in search engine rankings. Since a better position in the rankings directly and positively affects the number of visits to a site, attackers use different techniques to boost their pages to higher ranks. In the best case, web spam pages are a nuisance that provide undeserved advertisement revenues to the page owners. In the worst case, these pages pose a threat to Internet users by hosting malicious content and launching drive-by attacks against unsuspecting victims. When successful, these drive-by attacks then install malware on the victims’ machines. In this paper, we introduce an approach to detect web spam pages in the list of results that are returned by a search engine. In a first step, we determine the importance of different page features to the ranking in search engine results. Based on this information, we develop a classification technique that uses important features to successfully distinguish spam sites from legitimate entries. By removing spam sites from the results, more slots are available to links that point to pages with useful content. Additionally, and more importantly, the threat posed by malicious web sites can be mitigated, reducing the risk for users to get infected by malicious code that spreads via drive-by attacks.</abstract>
+    </front>
+    <body class="DoCO:BodyMatter">
+      <section class="deo:Introduction">
+        <h1 class="DoCO:SectionTitle" id="7" page="1" column="1">1 Introduction</h1>
+      </section>
+      <region class="DoCO:TextChunk" id="17" page="1" column="1">Search engines are designed to help users find relevant information on the Internet. Typically, a user submits a query (i.e., a set of keywords) to a search engine, which then returns a list of links to pages that are most relevant to this query. To determine the most-relevant pages, a search engine selects a set of candidate pages that contain some or all of the query terms and calculates a page score for each page. Finally, a list of pages, sorted by their score, is returned to the user. This score is calculated from properties of the candidate pages, so-called features. Unfortunately, details on the exact algorithms that calculate these ranking values are kept secret by search engine companies, since this information directly influences the quality of the search results. Only general information is made available. For example, in 2007, Google claimed to take more than 200 features into account for the ranking value [ <xref ref-type="bibr" rid="R8" id="8" class="deo:Reference">8</xref>]. The way in which pages are ranked directly influences the set of pages that are visited frequently by the search engine users. The higher a page is ranked, the more likely it is to be visited [<xref ref-type="bibr" rid="R3" id="9" class="deo:Reference">3</xref>]. This makes search engines an attractive target for everybody who aims to attract a large number of visitors to her site. There are three categories of web sites that benefit directly from high rankings in search engine results. First, sites that sell products or services. In their context, more visitors imply more potential customers. The second category contains sites that are financed through advertisement. These<marker type="page" number="2"/><marker type="block"/> sites aim to rank high for any query. The reason is that they can display their advertisements to each visitor, and, in turn, charge the advertiser. The third, and most dangerous, category of sites that aim to attract many visitors by ranking high in search results are sites that distribute malicious software. Such sites typically contain code that exploits web browser vulnerabilities to silently install malicious software on the visitor’s computer. Once infected, the attacker can steal sensitive information (such as passwords, financial information, or web-banking credentials), misuse the user’s bandwidth to join a denial of service attack, or send spam. The threat of drive-by downloads (i.e., automatically down- loading and installing software without the user’s consent as the result of a mere visit to a web page) and distribution of malicious software via web sites has become a significant security problem. Web sites that host drive-by downloads are either created solely for the purpose of distributing malicious software or existing pages that are hacked and modified (for example, by inserting an iframe tag into the page that loads malicious content). Provos et al. [<xref ref-type="bibr" rid="R13" id="12" class="deo:Reference">13</xref>, <xref ref-type="bibr" rid="R14" id="13" class="deo:Reference">14</xref>] observe that such attacks can quickly reach a large number of potential victims, as at least 1.3% of all search queries directed to the Google search engine contain results that link to malicious pages. Moreover, the pull-based infection scheme circumvents barriers (such as web proxies or NAT devices) that protect from push-based malware infection schemes (such as traditional, exploit-based worms). As a result, the manipulation of search engine results is an attractive technique for attackers that aim to attract victims to their malicious sites and spread malware via drive-by attacks [<xref ref-type="bibr" rid="R16" id="14" class="deo:Reference">16</xref>]. Search engine optimization (SEO) companies offer their expertise to help clients improve the rank for a given site through a mixture of techniques, which can be classified as being acceptable or malicious. Acceptable techniques refer to approaches that improve the content or the presentation of a page to the benefit of users. Malicious techniques, on the other hand, do not benefit the user but aim to mislead the search engine’s ranking algorithm. The fact that bad sites can be pushed into undeserved, higher ranks via malicious SEO techniques leads to the problem of web spam . Gyöngyi and Garcia-Molina [<xref ref-type="bibr" rid="R9" id="15" class="deo:Reference">9</xref>] define web spam as every deliberate human action that is meant to improve a site’s ranking without changing the site’s true value. Search engines need to adapt their ranking algorithms continuously to mitigate the effect of spamming techniques on their results. For example, when the Google search engine was launched, it strongly relied on the PageRank [<xref ref-type="bibr" rid="R2" id="16" class="deo:Reference">2</xref>] algorithm to determine the ranking of a page where the rank is proportional to the number of incoming links. Unfortunately, this led to the problem of link farms and “Google Bombs,” where enormous numbers of automatically created forum posts and blog comments were used to promote an attacker’s target page by linking to it. Clearly, web spam is undesirable, because it degrades the quality of search results and draws users to malicious sites. Although search engines invest a significant amount of money and effort into fighting this problem, checking the results of search engines for popular search terms demonstrates that the problem still exists. In this work, we aim to post-process results returned by a search engine to identify entries that link to spam pages. To this end, we first study the importance of different features for the ranking of a page. In some sense, we attempt to reverse-engineer the “secret” ranking algorithm of a search engine to understand better what features are important. Based on this analysis, we attempt to build a classifier that inspects these features to identify indications that a page is web spam. When such a page is identified, we can remove it from the search results. The two main contributions of this paper are the following:</region>
+      <outsider class="DoCO:TextBox" type="page_nr" id="11" page="1" column="1">1</outsider>
+      <region class="DoCO:TextChunk" id="18" confidence="possible" page="2" column="1">• We conducted comprehensive experiments to understand the effects of different features on search engine rankings.</region>
+      <outsider class="DoCO:TextBox" type="page_nr" id="19" page="2" column="1">2</outsider>
+      <region class="DoCO:TextChunk" id="20" confidence="possible" page="3" column="1">• We developed a system that allows us to reduce spam entries from search engine results by post-processing them. This protects users from visiting either spam pages or, more importantly, malicious sites that attempt to distribute malware.</region>
+      <region class="DoCO:TextChunk" id="21" page="3" column="1">The remainder of this paper is organized as follows. Section 2 provides a brief overview of our overall approach. In Section 3, we discuss our experiment that helped us understand how the ranking is calculated by major search engines. Section 4 describes our system for detecting web spam in search engine results and examines its effectiveness. Section 5 presents related work, and Section 6 briefly concludes.</region>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="22" page="3" column="1">2 Overview</h1>
+        <region class="DoCO:TextChunk" id="23" page="3" column="1">In this section, we first provide an overview of our approach to determine the features that are important for the ranking algorithm. Then, we describe how we use this information to develop a technique that allows us to identify web spam pages in search engine results.</region>
+        <section class="DoCO:Section">
+          <h2 class="DoCO:SectionTitle" id="24" page="3" column="1">2.1 Inferring Important Features</h2>
+          <region class="DoCO:TextChunk" id="25" page="3" column="1">Unfortunately, search engine companies keep their ranking algorithms and the features that are used to determine the relevance of a page secret. However, to be able to understand which features might be abused by spammers and malware authors to push their pages, a more detailed understanding of the page ranking techniques is necessary. Thus, the goal of the first step of our work is to determine the features of a web page that have the most-pronounced influence on the ranking of this page. A feature is a property of a web page, such as the number of links pointing to other pages, the number of words in the text, or the presence of keywords in the title tag. To infer the importance of the individual features, we perform “black-box testing” of search engines. More precisely, we create a set of different test pages with different combinations of features and observe their rankings. This allows us to deduce which features have a positive effect on the ranking and which contribute only a little.</region>
+        </section>
+        <section class="DoCO:Section">
+          <h2 class="DoCO:SectionTitle" id="26" page="3" column="1">2.2 Removing Spam from Search Engine Results</h2>
+          <region class="DoCO:TextChunk" id="27" page="3" column="1">Based on the results of the previous step, we developed a system that aims to remove spam entries from search engine results. To this end, we examine the results that are returned by a search engine and attempt to detect links that point to web spam pages. This is a classification problem; every page in the result set needs to be classified as either spam or nospam. To perform this classification, we have to determine those features that are indicators of spam. For this, we leverage the findings from the first step. Based on the features that are indicative of spam and a labeled training set, we construct a C4.5 decision tree. A decision tree is useful because of its intuitive insight into which features are important to the classification. Using this classifier, we can then check the results from the search engine and remove those links that point to spam pages. The result is an improvement of search quality and fewer visits to malicious pages.</region>
+          <outsider class="DoCO:TextBox" type="page_nr" id="28" page="3" column="1">3</outsider>
+        </section>
+      </section>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="29" page="4" column="1">3 Feature Inference</h1>
+        <region class="DoCO:TextChunk" id="30" page="4" column="1">In this section, we introduce in detail our techniques to infer important features. First, we discuss which features we selected. Then, we describe how these features are used to prepare a set of (related, but different) pages. Finally, we report on the rankings that major search engines produced for these pages and the conclusions that we could draw about the importance of each feature.</region>
+        <section class="DoCO:Section">
+          <h2 class="DoCO:SectionTitle" id="31" page="4" column="1">3.1 Feature Selection</h2>
+          <region class="DoCO:TextChunk" id="40" page="4" column="1">As mentioned previously, we first aim to “reverse engineer” the ranking algorithm of a search engine to determine those features that are relevant for ranking. Based on reports from different SEO <marker type="block"/> vendors [<xref ref-type="bibr" rid="R17" id="36" class="deo:Reference">17</xref>] and study of related work [<xref ref-type="bibr" rid="R1" id="37" class="deo:Reference">1</xref>, <xref ref-type="bibr" rid="R5" id="38" class="deo:Reference">5</xref>], we chose ten presumably important page features (see <xref ref-type="table" rid="T1" id="39" class="deo:Reference">Table 1</xref>). We focused on features that can be directly influenced by us. The rationale is that only from the exact knowledge of the values of each feature, one can determine their importance. Additionally, the feature value should remain unchanged during the whole experiment. This can only be ensured for features under direct control. When considering features, we first examined different locations on the page where a search term can be stored. Content-based features, such as body-, title-, or headings-tags are considered since these typically provide a good indicator for the information that can be found on that page. Additionally, we also take link-based features into account (since search engines are known to rely on linking information). Usually, the number of incoming links pointing to a page (i.e., the in-link feature) cannot be influenced directly. However, by recruiting 19 volunteers willing to host pages linking to our experiments, we were able to fully control this feature as well. Together with features that are not directly related to the page’s content (e.g., keyword in domain name), we believe to have covered a wide selection of features from which search engines can draw information to calculate the rankings. We are aware of the fact that search engines also take temporal aspects into account when com- puting their rankings (e.g., how does a page or its link count evolve over time). However, we decided against adding time-dependent features to our feature set because this would have made the experiment significantly more complex. Also, since all pages are modified and made available at the same time, this should not influence our results.</region>
+          <region class="DoCO:TableBox" id="Tx33">
+            <content>
+              <table class="DoCO:Table" number="1" page="4">
+                <thead class="table"/>
+                <tbody>
+                  <tr class="table">
+                    <td class="table"> 1</td>
+                    <td class="table"> Keyword(s) in title tag</td>
+                  </tr>
+                  <tr class="table">
+                    <td class="table"> 2</td>
+                    <td class="table"> Keyword(s) in body section</td>
+                  </tr>
+                  <tr class="table">
+                    <td class="table"> 3</td>
+                    <td class="table"> Keyword(s) in H1 tag</td>
+                  </tr>
+                  <tr class="table">
+                    <td class="table"> 4</td>
+                    <td class="table"> External links to high quality sites</td>
+                  </tr>
+                  <tr class="table">
+                    <td class="table"> 5</td>
+                    <td class="table"> External links to low quality sites</td>
+                  </tr>
+                  <tr class="table">
+                    <td class="table"> 6</td>
+                    <td class="table"> Number of inbound links</td>
+                  </tr>
+                  <tr class="table">
+                    <td class="table"> 7</td>
+                    <td class="table"> Anchor text of inbound links contains keyword(s)</td>
+                  </tr>
+                  <tr class="table">
+                    <td class="table"> 8</td>
+                    <td class="table"> Amount of indexable text</td>
+                  </tr>
+                  <tr class="table">
+                    <td class="table"> 9</td>
+                    <td class="table"> Keyword(s) in URL file path</td>
+                  </tr>
+                  <tr class="table">
+                    <td class="table"> 10</td>
+                    <td class="table"> Keyword(s) in URL domain name</td>
+                  </tr>
+                </tbody>
+              </table>
+            </content>
+            <region class="TableInfo" id="34" confidence="possible" page="4" column="1">1 Keyword(s) in title tag 2 Keyword(s) in body section 3 Keyword(s) in H1 tag 4 External links to high quality sites 5 External links to low quality sites 6 Number of inbound links 7 Anchor text of inbound links contains keyword(s) 8 Amount of indexable text 9 Keyword(s) in URL file path 10 Keyword(s) in URL domain name</region>
+            <caption class="deo:Caption" id="35" page="4" column="1">Table 1: Feature set used for inferring important features.</caption>
+          </region>
+          <outsider class="DoCO:TextBox" type="page_nr" id="41" page="4" column="1">4</outsider>
+        </section>
+        <section class="DoCO:Section">
+          <h2 class="DoCO:SectionTitle" id="42" page="5" column="1">3.2 Preparation of Pages</h2>
+          <region class="DoCO:TextChunk" id="44" page="5" column="1">Once the features were selected, the next step was to create a large set of test pages, each with a different combination and different values of these features. For these test pages, we had to select a combination of search terms (a query) for which no search engine would produce any search results prior to our experiment (i.e., only pages that are part of our experiment are part of the results). We arbitrarily chose “gerridae plasmatron” as the key phrase to optimize the pages for. 1 Remember, the goal is to estimate the influence of page features to the ranking algorithms and not to determine whether our experiment pages outperform (in terms of search engine response position) existing legitimate sites. Using this search phrase, we prepared the test pages for our experiment. To this end, we first created a reference page consisting of information about gerridae and plasmatrons compiled from different sources. In a second step, this reference page was copied 90 times. To evade duplicate detection by search engines (where duplicate pages are removed from the results), each of these 90 pages was obfuscated by substituting many words in a manner similar to [<xref ref-type="bibr" rid="R10" id="43" class="deo:Reference">10</xref>]. Subsequent duplicate detection by the search engines (presumably based on title and headline tag) required a more aggressive obfuscation scheme where title texts and headlines where randomized as well. For features whose possible values exceed the boolean values (i.e., present or absent), such as keyword frequencies, we selected representative values that correspond to one of the following four classes.</region>
+          <region class="DoCO:TextChunk" id="45" confidence="possible" page="5" column="1">• The feature is not present at all. • The feature is present in normal quantities. • The feature is present in elevated quantities. • The feature is present in spam quantities.</region>
+          <region class="DoCO:TextChunk" id="46" page="5" column="1">That is, a feature with a large domain (i.e., set of possible values) can assume four different values in our experiment. Of course, there is no general rule to define a precise frequency for which a feature can be considered to be normal, elevated, or spam. Thus, We manually examined legitimate and spam pages and extracted average, empirical frequencies for the different values. For example, for the frequencies of the keyword in the body text, a 1% keyword frequency is used as a baseline, 4% is regarded elevated, and 10% is considered to be spam. Since only 90 domains were available, we had to select a representative subset of the 16,392 possible feature combinations. Moreover, to mitigate any measurement inaccuracies, we decided to do all experiments triple-redundant. That is, we chose a subset of 30 feature combinations, where each combination forms an experiment group that consists of three identical instances that share the same feature values. For these 30 experiment groups, we decided to select the feature values in a way to represent different, common cases. The regular case is a legitimate site, which is represented by the reference page. For this page, all feature values belong to the normal class. Other cases include keyword stuffing in different page locations (e.g., body, title, headlines), or differing amounts of incoming and outgoing links. The full list of the created experiments can be found in Appendix B. 1 Gerridae is the Latin expression for water strider, plasmatron is a special form of an ion source.</region>
+          <outsider class="DoCO:TextBox" type="page_nr" id="47" page="5" column="1">5</outsider>
+        </section>
+        <section class="DoCO:Section">
+          <h2 class="DoCO:SectionTitle" id="48" page="6" column="1">3.3 Execution of Experiments and Results</h2>
+          <region class="DoCO:TextChunk" id="49" page="6" column="1">Once the 30 experiment groups (i.e., 90 pages) were created, they were deployed to 90 freshly regis- tered domains, served by four different hosting providers. Additionally, some domains were hosted on our department web server. This was done to prevent any previous reputation of a long-lived domain to influence the rankings, and hence, our results. Once the sites were deployed, we began to take hourly snapshots of the search engine results for the query “gerridae plasmatron.” To keep the results compareable we queried the search engines for results of the english web (i.e., turning off any language detection support). In addition, we also took snapshots of results to queries consisting of the individual terms of the key phrase. Since all major search engines had results for the single query terms (gerridae/plasmatron) before our experiment started, we gained valuable insights into how our sites perform in comparison to already existing, mostly legitimate sites. Our experiment was carried out between December 2007 and March 2008. During 86 days, we submitted 2,312 queries to Google and 1,700 queries to the Yahoo! search engine. Interestingly, we observed that rankings usually do not remain stable over a longer period of time. In fact, the longest period of a stable ranking for all test pages was only 68 hours for Google and 143 hours for Yahoo!. Also, we observed that Google refuses to index pages whose path (in the URL) contained more than five directories. This excluded some of our test pages from being indexed for the first couple of weeks. One would expect that instances within the same experiment group occupy very close positions in the search engine results. Unfortunately, this is not always the case. While there were identical instances that ranked at successive or close positions, there were also some experiment groups whose instances were significantly apart. We suspect that most of these cases are due to duplicate detection (where search engines still recognized too many similarities among these instances). At the time of writing, querying Google for “gerridae plasmatron” resulted in 92 hits. Including omitted results, 330 hits are returned. Yahoo! returns 82 hits without and 297 hits including the omitted results. Microsoft Live search returns only 28 pages. Since Microsoft Live search seemed slower in indexing our test pages, we report our results only for Google and Yahoo!. Note that the Google and Yahoo! results consist of more than 90 elements. The reason for this is that the result sets also contain some sites of the volunteers, which frequently contain the query terms in anchor texts pointing to the test sites. For Google, searching for “gerridae” yields approximately 55,000 results. Our test pages con- stantly managed to occupy five of the top ten slots with the highest ranking page at position three. Six was the highest position observed for the “plasmatron” query. For Yahoo!, we observed that for both keywords pages of our experiments managed to rank at position one and stay there for about two weeks.</region>
+        </section>
+        <section class="DoCO:Section">
+          <h2 class="DoCO:SectionTitle" id="50" page="6" column="1">3.4 Extraction of Important Features</h2>
+          <region class="DoCO:TextChunk" id="53" page="6" column="1">Because of the varying rankings, we determined a page’s position by averaging its positions over the last six weeks of the experiment. We decided for the last six weeks, since the initial phase of our experiment contains the inaccuracies that were introduced due to duplicate detection. Also, it took some time before most pages were included in the index. We observed that when we issued the same query to Google and Yahoo!, they produced different rankings. This indicates that the employed algorithms weight features apparently differently. Thus, we extracted different feature weights for Google and Yahoo! as described below. <marker type="page" number="7"/><marker type="block"/> Knowing the combinations of all feature values for a page k and observing its position pos ( k ) in the rankings, our goal is now to assign an (optimal) weight to each feature that best captures this feature’s importance to the ranking algorithm. As a first step, we define a function score . This function takes as input a set of weights and feature values and computes a score score ( k ) for a page k . n k score ( k ) = f i · w i i =1</region>
+          <outsider class="DoCO:TextBox" type="page_nr" id="52" page="6" column="1">6</outsider>
+          <region class="DoCO:TextChunk" id="54" confidence="possible" page="7" column="1">n . . . number of features w i ∈ [ − 1 , 1] . . . weight of feature i f i k ∈ 0 , 1 . . . presence of feature i in test page k</region>
+          <region class="DoCO:TextChunk" id="61" page="7" column="1">This calculation is repeated for all test pages (of course, using the same weights). Once all scores are calculated, the set of test pages is sorted by their score. This allows us to assign a predicted ranking rank ( k ) to each page. Subsequently, distances between the predicted ranking and the real position are calculated for all test pages. When the sum of these distances reaches the minimum, the weights are optimal. This translates to the following objective function of a linear programming problem (LP): <marker type="block"/> m min : α k | pos ( k ) − rank ( k ) | k =1 Note that we added the factor α ( k ) = m − pos ( k ) to the LP, which allows higher-ranking test pages to exert a larger influence on the feature weights ( m is the number of test pages). This is to reflect that the exact position of a lower-ranking page fluctuates often significantly, and we aim to reduce the influence of these “random” fluctuations on the calculation of the weights. Solving this LP with the Simplex algorithm results in weights for all features that, over all pages, minimize the distance between the predicted rank and the actual position. For Google, we found that the number of search terms in the title and the text body of the doc- ument had the strongest, positive influence on the ranking. Also, the number of outgoing links was important. On the other hand, the fact that the keywords are part of the file path had only a small influence. This is also true for the anchor text of inbound links. For Yahoo!, the features were quite different. For example, the fact that a keyword appears in the title has less influence and even decreases with an increase of the frequency. Yahoo! also (and somewhat surprisingly) puts significantly more weight on both the number of incoming and outgoing links than Google. On the other hand, the number of times keywords appear in the text have no noticeable, positive effect. As a last step, we examine the quality of our predicted rankings. To this end, we calculate the distance between the predicted position and the actual position for each experiment group. More precisely, <xref ref-type="fig" rid="F1" id="56" class="deo:Reference">Figure 1</xref> shows, for each experiment group, the distance between the actual and predicted positions, taking the closest match for all three pages in each group. Considering the Google results, 78 experiment pages of 26 experiment groups were listed in the rankings. The missing experiment groups are those whose pages have a directory hierarchy level of five, and thus, were not indexed by the search engine spiders. Looking at the distance, we observe that we can predict the position for six groups (23%) within a distance of two, and for eleven groups (42%) with a distance of five or less (over a range of 78 positions). For Yahoo!, when comparing the<marker type="page" number="8"/><marker type="block"/> experiment groups with the rankings, 21 groups appear in the results. Three (14%) of these groups are predicted within a distance of two, while eight (38%) are within a distance of five or less positions to the observed rank (over a range of 63 positions). At a first glance, our predictions do not appear very precise. However, especially for Yahoo!, almost all predictions are reasonably close to the actual results. Also, even though our predictions are not perfectly accurate, they typically reflect the general trend. Thus, we can conclude that our general assessment of the importance of a feature is correct, although the precise weight value might be different. Also, we only consider a linear ranking function, while the actual ranking algorithms are likely more sophisticated.</region>
+          <outsider class="DoCO:TextBox" type="page_nr" id="58" page="7" column="1">7</outsider>
+          <region class="unknown" id="59" page="8" column="1">60 Google Yahoo! 50 40 Distance 30 20 10 0 0 5 10 15 20 25 30 Experiment Group</region>
+          <region class="DoCO:FigureBox" id="F1">
+            <caption class="deo:Caption" id="60" page="8" column="1">Figure 1: Differences when comparing predicted values with actual ranking positions.</caption>
+          </region>
+        </section>
+      </section>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="62" page="8" column="1">4 Reducing Spam from Search Engine Results</h1>
+        <region class="DoCO:TextChunk" id="63" page="8" column="1">In this section, we present the details of our prototype system to detect web spam entries in search engine results. The general idea behind this system is to use machine learning techniques to generate a classification model (a classifier) that is able to distinguish between legitimate and spam sites by examining a page’s features. The following section first presents the details on how the system operates. Then, the evaluation section describes our spam detection effectiveness.</region>
+        <section class="DoCO:Section">
+          <h2 class="DoCO:SectionTitle" id="64" page="8" column="1">4.1 Detecting Web Spam in Search Engine Results</h2>
+          <region class="DoCO:TextChunk" id="69" page="8" column="1">During the previous feature inference step, we determined the features that are most important to search engine ranking algorithms. Assuming an attacker can also learn this information, this suggests that the attacker will focus on those features that have the most pronounced influence on the rankings. This motivates our approach in developing a classifier that distinguishes spam and non-spam pages according to these features. The classifier presented in this section is developed for the Google search engine. Thus, we include those features that are most relevant for Google, as discussed in the previous section. These are the number of keywords in the title, body, and domain name. In addition, we consider linking information. While counting the outgoing links of a page is trivial, the number of incoming links is not easily determinable. The information of how many in-links point to a page is not made available by search engines. This is the reason why we have to estimate the corresponding features with the help <marker type="page" number="9"/><marker type="block"/> of link: queries. Google and Yahoo! support queries in the form of link:www.example.com resulting in a list of pages that link to www.example.com . The drawback is that neither the Google nor the Yahoo! results contain all pages that link to the queried page. Thus, these numbers are only an approximation of the real number of links pointing to a site. On the other hand, we can introduce additional information sources that were not available to us before. For example, the PageRank value (as reported by the Google toolbar) was added to the feature set. This value could not be used for the experiment because of the infrequent updates (roughly every three months) and its violation of the requirement that we can control each feature directly.<marker type="block"/> Classifier. To build a classifier for web pages, we first require a labeled training set. Another set of data is required to verify the resulting model and evaluate its performance. To create these sets, 12 queries were submitted to the Google search engine (asking for popular search terms, extracted from Google’s list of popular queries, called Zeitgeist [<xref ref-type="bibr" rid="R7" id="68" class="deo:Reference">7</xref>]). For every query, the first 50 results were manually classified as legitimate or spam/malicious. Discarding links to non-HTML content (e.g., PDF or PPT files) resulted in a training data set consisting of 295 sites (194 legitimate, 101 spam). The test data set had 252 pages (193 legitimate, 59 spam). All result pages were downloaded and fed into feature extractors that parse the HTML source code and return the value (i.e., the frequency) of the feature under consideration. If the query consists of multiple terms, query dependent feature extractors report higher values if the full query matches the analyzed feature. The rationale behind this is that a single heading tag that contains the whole query indicates a better match than multiple, individual heading tags, each containing one of the query terms. Feature extractors that follow this approach are marked with an (X) in the following list, which enumerates all the features that we consider:</region>
+          <outsider class="DoCO:TextBox" type="page_nr" id="66" page="8" column="1">8</outsider>
+          <region class="DoCO:TextChunk" id="70" confidence="possible" page="9" column="1">• the number of query terms from HTML title tag (X) • the number of query terms in the HTML body section (X)</region>
+          <region class="unknown" id="71" page="9" column="1">•</region>
+        </section>
+      </section>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="72" confidence="possible" page="9" column="1">Title: Body: Domain name:</h1>
+        <region class="DoCO:TextChunk" id="73" confidence="possible" page="9" column="1">the number of query terms in the domain name part of the URL (e.g, www. gerridae-plasmatron .com/index.php)</region>
+      </section>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="74" confidence="possible" page="9" column="1">Filepath:</h1>
+        <region class="unknown" id="75" page="9" column="1">• the number of query terms in the path of the URL (e.g., www.example.org/ gerridae-plasmatron /index.php)</region>
+        <region class="DoCO:TextChunk" id="76" confidence="possible" page="9" column="1">• the total number of outbound links • the number of inbound links reported by Google link: query • the number of inbound links reported by Yahoo! link: query • the Google PageRank value for the URL as reported by the Google toolbar</region>
+        <region class="unknown" id="77" page="9" column="1">•</region>
+      </section>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="78" confidence="possible" page="9" column="1">Out-links: In-links - Google: In-links - Yahoo!: PageRank site: PageRank domain:</h1>
+        <region class="DoCO:TextChunk" id="79" confidence="possible" page="9" column="1">the Google PageRank value for the domain as reported by the Google</region>
+        <region class="DoCO:TextChunk" id="80" confidence="possible" page="9" column="1">toolbar</region>
+      </section>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="81" confidence="possible" page="9" column="1">Tfreq:</h1>
+        <region class="unknown" id="82" page="9" column="1">• the frequency of query terms appearing on the page (number of query terms / number of words on page)</region>
+        <outsider class="DoCO:TextBox" type="page_nr" id="83" page="9" column="1">9</outsider>
+        <region class="DoCO:TextChunk" id="92" page="10" column="1">Using the labeled training data as a basis, we run the J48 algorithm to generate a decision tree. J48 is an implementation of the C4.5 decision tree [ <xref ref-type="bibr" rid="R15" id="84" class="deo:Reference">15</xref>] algorithm in the Weka toolkit [<xref ref-type="bibr" rid="R20" id="85" class="deo:Reference">20</xref>]. We chose a decision tree as the classifier as it intuitively presents the importance of the involved features (i.e., the closer to the root a feature appears in the tree, the more important it is). The J48 decision tree generated for our training data set is shown in Appendix A. This tree consists of 21 nodes, 11 of which are leafs. Five features were selected by the algorithm to be useful as distinction criteria between spam and legitimate sites. Additionally, Weka calculates for every leaf a confidence factor, indicating how accurate this classification is. The most important feature is related to the presence of the search terms on the page (i.e., the query term frequency &gt; 0). Other important features are the domain name, the file path, the number of in-links as reported by Yahoo!, and the PageRank value of the given site as reported by the Google toolbar.<marker type="block"/> 4.2 Evaluation This section evaluates the ability of our decision tree to detect unwanted (spam, malicious) pages in search engine results. The fact that we want to improve the results by removing spam sites demands a low false positive rate. False positives are legitimate sites that are removed from the results because they are misclassified as spam. It is clearly desirable to have a low number of these misclassifications, since false positives influence the quality of the search results in a negative way. False negatives on the other hand, do not have an immediate negative effect on the search results. If a spam site is misclassified as legitimate, it ends up as part of the search results. Since we are only post-processing search engine results, the site was there in the first place. Thus, false negatives indicate inaccuracies in our classification model, but do not influence the quality of the original search results negatively. Evaluating the J48 decision tree with our test data set results in the confusion matrix as shown in <xref ref-type="table" rid="T2" id="87" class="deo:Reference">Table 2</xref>. The classifier has a false positive rate of 10.8% and a false negative rate of 64.4%. The detection rate (true positives) is 35.6%.<marker type="block"/> Detecting 35% of the unwanted sites is good, but the false positive rate of 11% might be too high. To lower the false positive rate, we decided to take the confidence factor into account that is provided for each leaf in the decision tree. By using this confidence factor as a threshold (i.e., a site is only classified as spam when the confidence factor is above the chosen threshold), we can tune the system in a way that it produces less false positives, at the cost of more false negatives. For example, by using a confidence value of 0.88, the classifier has a false negative rate of 81.4%. However, it produces no false positives for our test set. The true positive rate with this threshold value is 18.6%, indicating that the system still detects about every fifth spam/malicious page in the search results. While a detection rate of 18% is not perfect and allows for improvement, it clearly lowers the amount of unwanted pages in the results. Taking into consideration that most users only pay attention to the top 10 or top 20 results of a search query, these 18% create up to two empty slots in the top 10 rankings that can accommodate potentially interesting pages instead.</region>
+        <region class="DoCO:TableBox" id="Tx89">
+          <content>
+            <table class="DoCO:Table" number="2" page="10">
+              <thead class="table">
+                <tr class="table">
+                  <th class="table"></th>
+                  <th class="table"> Classified as Spam Classified</th>
+                  <th class="table"> as Legitimate</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table">
+                  <td class="table"> Spam</td>
+                  <td class="table"> 21</td>
+                  <td class="table"> 38</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> Legitimate</td>
+                  <td class="table"> 20</td>
+                  <td class="table"> 173</td>
+                </tr>
+              </tbody>
+            </table>
+          </content>
+          <region class="TableInfo" id="90" confidence="possible" page="10" column="1">Classified as Spam Classified as Legitimate Spam 21 38 Legitimate 20 173</region>
+          <caption class="deo:Caption" id="91" page="10" column="1">Table 2: Confusion matrix of the J48 decision tree</caption>
+        </region>
+        <outsider class="DoCO:TextBox" type="page_nr" id="93" page="10" column="1">10</outsider>
+      </section>
+      <section class="deo:RelatedWork">
+        <h1 class="DoCO:SectionTitle" id="94" page="11" column="1">5 Related Work</h1>
+        <region class="DoCO:TextChunk" id="106" page="11" column="1">In recent years, considerable effort was dedicated to the detection and mitigation of web spam. In [<xref ref-type="bibr" rid="R9" id="95" class="deo:Reference">9</xref>], the authors present different techniques to fool search engine ranking algorithms. Boosting techniques, such as link farms, are used to push pages to undeserved higher ranks in search engine results. Hiding or cloaking techniques are used to trick search engines by serving different content to the search engine spiders and human users. One of the most prominent boosting techniques are link farms, and multiple researchers have presented techniques for detecting them. For example, Wu and Davison [<xref ref-type="bibr" rid="R22" id="96" class="deo:Reference">22</xref>] propose an algorithm that generates a graph of a link farm from an initial seed and propagates badness values through this graph. This information can then be used with common, link-based ranking algorithms, such as PageRank or HITS. The same authors also present their findings on cloaking and redirection techniques [<xref ref-type="bibr" rid="R21" id="97" class="deo:Reference">21</xref>]. Ntoulas et al. [<xref ref-type="bibr" rid="R12" id="98" class="deo:Reference">12</xref>] present a technique of detecting spam pages by content analysis. This work only takes query independent features into account, while Svore et al. [<xref ref-type="bibr" rid="R18" id="99" class="deo:Reference">18</xref>] also use query dependent information. A system to detect cloaking pages is proposed by Chellapilla and Chickering in [<xref ref-type="bibr" rid="R4" id="100" class="deo:Reference">4</xref>]. For this, a given URL is downloaded twice, providing different user agent strings for each download. If the pages are (significantly) different, the page uses cloaking techniques. Wang et al. [<xref ref-type="bibr" rid="R19" id="101" class="deo:Reference">19</xref>] follow the money in advertising schemes and propose a five-layer, double-funnel model to explain the relations that exist between advertisers and sites that employ web spam techniques. Fetterly et al. [<xref ref-type="bibr" rid="R6" id="102" class="deo:Reference">6</xref>] present a series of measurements to evaluate the effectiveness in web spam detection. A quantitative study of forum spamming was presented by Niu et al. [<xref ref-type="bibr" rid="R11" id="103" class="deo:Reference">11</xref>] The work that is closest to our attempt in inferring the importance of different web page features is [<xref ref-type="bibr" rid="R1" id="104" class="deo:Reference">1</xref>]. In that paper, Bifet et al. attempt to infer the importance of page features for the ranking algorithm by analyzing the results for different queries. They extract feature vectors for each page and try to model the ranking function by using support vector machines. Since their work is based on already existing pages, they do not have control over certain features (e.g., in-link properties). In [<xref ref-type="bibr" rid="R5" id="105" class="deo:Reference">5</xref>], Evans performs a statistical analysis of the effect that certain factors have on the ranking of pages. While he includes factors, such as the listing of pages in web directories and a site’s PageRank value, Evans only focuses on query independent values while neglecting all other factors.</region>
+      </section>
+      <section class="deo:Conclusion">
+        <h1 class="DoCO:SectionTitle" id="107" page="11" column="1">6 Conclusions</h1>
+        <region class="DoCO:TextChunk" id="110" page="11" column="1">Search engines are a target for attackers that aim to distribute malicious content on their websites or earn undeserved (advertising) revenue. This observation motivated our work to create a classifier that is able to identify and remove unwanted entries from search results. As a first step, we required to understand which features are important for the rank of a page. The reason is that these features are most likely the ones that an attacker will tamper with. To infer important features, we conducted an experiment in which we monitored, for almost three months, the ranking of pages with 30 different combinations of feature values. Then, we computed the weights for the features that would best predict the actual, observed rankings. Those features with the highest weights are considered to be the most important for the search engine ranking algorithm. Based on the features determined in the first step and a labeled training set, we generated a classifier (a J48 decision tree). This decision tree was then evaluated on a test data set. The initial evaluation resulted in 35% detection rate and 11% false positives. By taking into account the confidence values of the decision tree and introducing a <marker type="page" number="12"/><marker type="block"/> cutoff value, the false positives could be lowered to zero. At this rate, almost one out of five spam pages can be detected, improving the results of search engines without removing any valid results.</region>
+        <outsider class="DoCO:TextBox" type="page_nr" id="109" page="11" column="1">11</outsider>
+      </section>
+      <section class="deo:Acknowledgements">
+        <h1 class="DoCO:SectionTitle" id="111" confidence="possible" page="12" column="1">Acknowledgments</h1>
+        <region class="DoCO:TextChunk" id="112" page="12" column="1">This work has been supported by the Austrian Science Foundation (FWF) under grant P18764, SEC- overer FIT-IT Trust in IT-Systems 2. Call, Austria, Secure Business Austria (SBA), and the WOM- BAT and FORWARD projects funded by the European Commission in the 7th Framework.</region>
+      </section>
+      <section class="DoCO:Bibliography">
+        <h1 class="DoCO:SectionTitle" id="113" page="12" column="1">References</h1>
+        <ref-list class="DoCO:BiblioGraphicReferenceList">
+          <ref rid="R1" class="deo:BibliographicReference" id="114" page="12" column="1">[1] A. Bifet, C. Castillo, P.-A. Chirita, and I. Weber. An Analysis of Factors Used in Search Engine Ranking. In Adversarial Information Retrieval on the Web , 2005.</ref>
+          <ref rid="R2" class="deo:BibliographicReference" id="115" page="12" column="1">[2] S. Brin and L. Page. The Anatomy of a Large-Scale Hypertextual Web Search Engine. In 7th International World Wide Web Conference (WWW) , 1998.</ref>
+          <ref rid="R3" class="deo:BibliographicReference" id="116" page="12" column="1">[3] F. Cacheda and A.  ́ Vi na. Experiencies retrieving information in the world wide web. In Proceedings of the Sixth IEEE Symposium on Computers and Communications (ISCC 2001) , pages 72–79, 2001.</ref>
+          <ref rid="R4" class="deo:BibliographicReference" id="117" page="12" column="1">[4] K. Chellapilla and D. Chickering. Improving Cloaking Detection Using Search Query Popularity and Monetizability. In Adversarial Information Retrieval on the Web , 2006.</ref>
+          <ref rid="R5" class="deo:BibliographicReference" id="118" page="12" column="1">[5] M. P. Evans. Analysing Google rankings through search engine optimization data. Internet Research Vol. 17 No. 1 , 2007.</ref>
+          <ref rid="R6" class="deo:BibliographicReference" id="119" page="12" column="1">[6] D. Fetterly, M. Manasse, and M. Najork. Spam, damn spam, and statistics: Using statistical analysis to locate spam web pages. In WebDB , pages 1–6, 2004.</ref>
+          <ref rid="R7" class="deo:BibliographicReference" id="121" page="12" column="1">[7] Google. Zeitgeist: Search patterns, trends, and surprises. <ext-link ext-link-type="uri" href="http://www.google.com/press/" id="120">http://www.google.com/press/</ext-link> zeitgeist.html .</ref>
+          <ref rid="R8" class="deo:BibliographicReference" id="123" page="12" column="1">[8] Google Keeps Tweaking Its Search Engine. <ext-link ext-link-type="uri" href="http://www.nytimes.com/2007/06/03/" id="122">http://www.nytimes.com/2007/06/03/</ext-link> business/yourmoney/03google.html?pagewanted=4&amp;_r=1 .</ref>
+          <ref rid="R9" class="deo:BibliographicReference" id="124" page="12" column="1">[9] Z. Gyöngyi and H. Garcia-Molina. Web Spam Taxonomy. In Adversarial Information Retrieval on the Web , 2005.</ref>
+          <ref rid="R10" class="deo:BibliographicReference" id="125" page="12" column="1">[10] C. Karlberger, G. Bayler, C. Kruegel, and E. Kirda. Exploiting Redundancy in Natural Language to Penetrate Bayesian Spam Filters. In First USENIX Workshop on Offensive Technologies (WOOT07) , 2007.</ref>
+          <ref rid="R11" class="deo:BibliographicReference" id="126" page="12" column="1">[11] Y. Niu, Y.-M. Wang, H. Chen, M. Ma, , and F. Hsu. A quantitative study of forum spamming using context-based analysis. In NDSS , 2007.</ref>
+          <ref rid="R12" class="deo:BibliographicReference" id="127" page="12" column="1">[12] A. Ntoulas, M. Najork, M. Manasse, and D. Fetterly. Detecting Spam Web Pages through Content Analysis. In 15th International World Wide Web Conference (WWW) , 2006.</ref>
+          <ref rid="R13" class="deo:BibliographicReference" id="128" page="12" column="1">[13] N. Provos, P. Mavrommatis, M. A. Rajab, and F. Monrose. All your iframes point to us. In 17th USENIX Security Symposium , 2008.</ref>
+          <ref rid="R14" class="deo:BibliographicReference" id="129" page="12" column="1">[14] N. Provos, D. McNamee, P. Mavrommatis, K. Wang, and N. Modadugu. The Ghost In The Browser Analysis of Web-based Malware. In First Workshop on Hot Topics in Understanding Botnets (HotBots ’07) , 2007.</ref>
+          <ref rid="R15" class="deo:BibliographicReference" id="130" page="12" column="1">[15] R. Quinlan. C4.5: Programs for Machine Learning . Morgan Kaufmann, 1993.</ref>
+          <ref rid="R16" class="deo:BibliographicReference" id="132" page="12" column="1">[16] Rahul Mohandas (McAfee Avert Labs). Analysis of Adversarial Code: The role of Malware Kits! <ext-link ext-link-type="uri" href="http://clubhack.com/2007/files/Rahul-Analysis_of_Adversarial_" id="131">http://clubhack.com/2007/files/Rahul-Analysis_of_Adversarial_</ext-link> Code.pdf , December 2007. Last accessed, December 2008.</ref>
+          <ref rid="R17" class="deo:BibliographicReference" id="134" page="12" column="1">[17] Google Search Engine Ranking Factors. <ext-link ext-link-type="uri" href="http://www.seomoz.org/article/" id="133">http://www.seomoz.org/article/</ext-link> search-ranking-factors .</ref>
+          <ref rid="R18" class="deo:BibliographicReference" id="135" page="12" column="1">[18] K. Svore, Q. Wu, C. Burges, and A. Raman. Improving Web Spam Classification using Rank-time Features. In Adversarial Information Retrieval on the Web , 2007.</ref>
+          <ref rid="R19" class="deo:BibliographicReference" id="136" page="12" column="1">[19] Y.-M. Wang, M. Ma, Y. Niu, and H. Chen. Spam Double-Funnel: Connecting Web Spammers with Advertisers. In 16th International Conference on World Wide Web , 2007.</ref>
+          <ref rid="R20" class="deo:BibliographicReference" id="138" page="13" column="1">[20] I. Witten and E. Frank. Data Mining: Practical machine learning tools and techniques . Morgan Kaufmann, 2nd edition edition, 2005.</ref>
+          <ref rid="R21" class="deo:BibliographicReference" id="139" page="13" column="1">[21] B. Wu and B. Davison. Cloaking and Redirection: A Preliminary Study. In Adversarial Information Retrieval on the Web , 2005.</ref>
+          <ref rid="R22" class="deo:BibliographicReference" id="140" page="13" column="1">[22] B. Wu and B. D. Davison. Identifying Link Farm Spam Pages. In 14th International World Wide Web Conference (WWW) , 2005.</ref>
+        </ref-list>
+        <outsider class="DoCO:TextBox" type="page_nr" id="137" page="12" column="1">12</outsider>
+      </section>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="141" page="13" column="1">Appendix A: J48 Decision Tree</h1>
+        <region class="unknown" id="142" page="13" column="1">tfreq &lt;= 0 &gt; 0 filepath domainname &lt;= 0 &gt; 0 &lt;= 1 &gt; 1 True (27.0/1.0) inlink_yahoo inlink_yahoo True (15.0/3.0) &lt;= 2 &gt; 2 &lt;= 3 &gt; 3 False (7.0/1.0) True (9.0/1.0) False (187.0/29.0) inlink_yahoo &lt;= 5 &gt; 5 pagerank_site False (4.0) &lt;= -1 &gt; -1 True (6.0) domainname &lt;= 0 &gt; 0 tfreq True (6.0/1.0) &lt;= 2 &gt; 2 False (20.0/5.0) inlink_yahoo &lt;= 4 &gt; 4 True (8.0/1.0) False (6.0/2.0)</region>
+        <region class="DoCO:FigureBox" id="F2">
+          <caption class="deo:Caption" id="143" page="13" column="1">Figure 2: Generated J48 decision tree. The node labels correspond to the feature extractors listed in Section 4.1</caption>
+        </region>
+        <outsider class="DoCO:TextBox" type="page_nr" id="144" page="13" column="1">13</outsider>
+      </section>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="145" page="14" column="1">Appendix B: List of Experiments</h1>
+        <region class="DoCO:TextChunk" id="146" page="14" column="1">Since instances within an experiment group share the same feature values, only the experiment groups are listed here.</region>
+        <region class="DoCO:TableBox" id="Tx147">
+          <content>
+            <table class="DoCO:Table" number="3" page="14">
+              <thead class="table">
+                <tr class="table">
+                  <th class="table"> No.</th>
+                  <th class="table"> Feature Combination</th>
+                  <th class="table"> Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table.strange">
+                  <td class="table.strange"> 1</td>
+                  <td class="table.strange"> 1,2,3,4,7,9</td>
+                  <td class="table.strange"> Baseline</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 2</td>
+                  <td class="table"> 1,2,3,7,$9</td>
+                  <td class="table"> Baseline with much text</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 3</td>
+                  <td class="table"> 1,2,3,$6,7,$9</td>
+                  <td class="table"> Baseline with much text and many links to low quality sites</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 4</td>
+                  <td class="table"> 1,+2,3,7,9</td>
+                  <td class="table"> Elevated use of keywords in BODY</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 5</td>
+                  <td class="table"> 1,$2,3,7,9</td>
+                  <td class="table"> Keyword spamming of BODY</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 6</td>
+                  <td class="table"> +1,2,3,7,9</td>
+                  <td class="table"> Elevated use of keywords in the TITLE</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 7</td>
+                  <td class="table"> $1,2,3,7,9</td>
+                  <td class="table"> Keyword spamming of TITLE</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 8</td>
+                  <td class="table"> 1,2,3,$4,7,9,10</td>
+                  <td class="table"> Keyword spamming of the URL</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 9</td>
+                  <td class="table"> $1,$2,$3,$4,$5,7,9</td>
+                  <td class="table"> Spam all on site</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 10</td>
+                  <td class="table"> $1,$2,$3,$4,$5,$7,9</td>
+                  <td class="table"> Spam all</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 11</td>
+                  <td class="table"> $1,$2,$3,$4,$5,$7,$9</td>
+                  <td class="table"> Spam all with much text</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 12</td>
+                  <td class="table"> 1,2,3,4,5,7,9</td>
+                  <td class="table"> Include links to high quality pages</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 13</td>
+                  <td class="table"> 1,2,3,4,+5,7,9</td>
+                  <td class="table"> Include more links to high quality pages</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 14</td>
+                  <td class="table"> 1,2,3,4,$5,7,9</td>
+                  <td class="table"> Include many links to high quality pages</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 15</td>
+                  <td class="table"> 1,2,3,4,6,7,9</td>
+                  <td class="table"> Include links to low quality pages</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 16</td>
+                  <td class="table"> 1,2,3,4,+6,7,9</td>
+                  <td class="table"> Include more links to low quality pages</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 17</td>
+                  <td class="table"> 1,2,3,4,$6,7,9</td>
+                  <td class="table"> Include many links to low quality pages</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 18</td>
+                  <td class="table"> 1,2,3,4,7,8,9</td>
+                  <td class="table"> In-links with keywords in anchor text</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 19</td>
+                  <td class="table"> 1,2,3,4,7,9</td>
+                  <td class="table"> In-links without keywords in anchor text</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 20</td>
+                  <td class="table"> 1,2,3,4,+7,8,9</td>
+                  <td class="table"> Elevated amount of in-links with keywords in anchor text</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 21</td>
+                  <td class="table"> 1,2,3,4,+7,9</td>
+                  <td class="table"> Elevated amount of in-links without keywords in anchor text</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 22</td>
+                  <td class="table"> 1,2,3,4,$7,8,9</td>
+                  <td class="table"> Spam amount of in-links with keywords in anchor text</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 23</td>
+                  <td class="table"> 1,2,3,4,$7,9</td>
+                  <td class="table"> Spam amount of in-links without keywords in anchor text</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 24</td>
+                  <td class="table"> 1,2,3,$4,7,9</td>
+                  <td class="table"> URL keyword spam without domain name</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 25</td>
+                  <td class="table"> 1,2,3,4,7,9,10</td>
+                  <td class="table"> Baseline with keyword in domain name</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 26</td>
+                  <td class="table"> $1,$2,$3,$4,$5,$7,$9, 10</td>
+                  <td class="table"> Spam all with keyword in domain name</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 27</td>
+                  <td class="table"> 1,2,3,4,7,8,9</td>
+                  <td class="table"> In-links with keywords and keywords in file name</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 28</td>
+                  <td class="table"> 1,2,3,4,7,9</td>
+                  <td class="table"> In-links without keywords and keywords in file name</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 29</td>
+                  <td class="table"> 1,2,3,4,7,8,9,10</td>
+                  <td class="table"> In-links with keywords and keywords in domain name</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 30</td>
+                  <td class="table"> 1,2,3,4,7,9,10</td>
+                  <td class="table"> In-links without keywords and keywords in domain name</td>
+                </tr>
+              </tbody>
+            </table>
+          </content>
+          <region class="TableInfo" id="148" confidence="possible" page="14" column="1">No. Feature Combination Description 1 1,2,3,4,7,9 Baseline 2 1,2,3,7,$9 Baseline with much text 3 1,2,3,$6,7,$9 Baseline with much text and many links to low quality sites 4 1,+2,3,7,9 Elevated use of keywords in BODY 5 1,$2,3,7,9 Keyword spamming of BODY 6 +1,2,3,7,9 Elevated use of keywords in the TITLE 7 $1,2,3,7,9 Keyword spamming of TITLE 8 1,2,3,$4,7,9,10 Keyword spamming of the URL 9 $1,$2,$3,$4,$5,7,9 Spam all on site 10 $1,$2,$3,$4,$5,$7,9 Spam all 11 $1,$2,$3,$4,$5,$7,$9 Spam all with much text 12 1,2,3,4,5,7,9 Include links to high quality pages 13 1,2,3,4,+5,7,9 Include more links to high quality pages 14 1,2,3,4,$5,7,9 Include many links to high quality pages 15 1,2,3,4,6,7,9 Include links to low quality pages 16 1,2,3,4,+6,7,9 Include more links to low quality pages 17 1,2,3,4,$6,7,9 Include many links to low quality pages 18 1,2,3,4,7,8,9 In-links with keywords in anchor text 19 1,2,3,4,7,9 In-links without keywords in anchor text 20 1,2,3,4,+7,8,9 Elevated amount of in-links with keywords in anchor text 21 1,2,3,4,+7,9 Elevated amount of in-links without keywords in anchor text 22 1,2,3,4,$7,8,9 Spam amount of in-links with keywords in anchor text 23 1,2,3,4,$7,9 Spam amount of in-links without keywords in anchor text 24 1,2,3,$4,7,9 URL keyword spam without domain name 25 1,2,3,4,7,9,10 Baseline with keyword in domain name 26 $1,$2,$3,$4,$5,$7,$9, 10 Spam all with keyword in domain name 27 1,2,3,4,7,8,9 In-links with keywords and keywords in file name 28 1,2,3,4,7,9 In-links without keywords and keywords in file name 29 1,2,3,4,7,8,9,10 In-links with keywords and keywords in domain name 30 1,2,3,4,7,9,10 In-links without keywords and keywords in domain name</region>
+          <caption class="deo:Caption" id="149" page="14" column="1">Table 3: List of experiment groups.</caption>
+        </region>
+        <region class="DoCO:TextChunk" id="151" confidence="possible" page="14" column="1">Column 2 references the features in <xref ref-type="table" rid="T1" id="150" class="deo:Reference">Table 1</xref> and captures the list of applied features for this experiment group. The lack of a feature in the description denotes that the feature is not used for this experiment, the prefix (+) indicates that a feature is applied in elevated quantities, where ($) means the feature is present in spam quantities. The third column is a description of the case that this experiment group reflects.</region>
+        <outsider class="DoCO:TextBox" type="page_nr" id="152" page="14" column="1">14</outsider>
+      </section>
+    </body>
+  </article>
+</pdfx>

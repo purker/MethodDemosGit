@@ -1,0 +1,1090 @@
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN" "JATS-archivearticle1.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+  <front>
+    <journal-meta />
+    <article-meta>
+      <title-group>
+        <article-title>A Probabilistic Approach to Problems Parameterized Above or Below Tight Bounds</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <string-name>Gregory Gutin</string-name>
+          <xref ref-type="aff" rid="aff0">0</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Eun Jung Kim</string-name>
+          <xref ref-type="aff" rid="aff0">0</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Stefan Szeider</string-name>
+          <email>stefan@szeider.net</email>
+          <xref ref-type="aff" rid="aff1">1</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Anders Yeo</string-name>
+          <email>andersg@cs.rhul.ac.uk</email>
+          <xref ref-type="aff" rid="aff0">0</xref>
+        </contrib>
+        <aff id="aff0">
+          <label>0</label>
+          <institution>Department of Computer Science Royal Holloway, University of London Egham</institution>
+          ,
+          <addr-line>Surrey TW20 0EX</addr-line>
+          ,
+          <country country="UK">UK</country>
+        </aff>
+        <aff id="aff1">
+          <label>1</label>
+          <institution>Department of Computer Science, Durham University</institution>
+          ,
+          <addr-line>Durham DH1 3LE, England</addr-line>
+          ,
+          <country country="UK">UK</country>
+        </aff>
+      </contrib-group>
+      <abstract>
+        <p>We introduce a new approach for establishing xed-parameter tractability of problems parameterized above tight lower bounds or below tight upper bounds. To illustrate the approach we consider two problems of this type of unknown complexity that were introduced by Mahajan, Raman and Sikdar (J. Comput. Syst. Sci. 75, 2009). We show that a generalization of one of the problems and three nontrivial special cases of the other problem admit kernels of quadratic size.</p>
+      </abstract>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="sec-1">
+      <title>Introduction</title>
+      <p>A parameterized problem can be considered as a set of pairs (I; k) where I
+is the main part and k (usually an integer) is the parameter. is called
+xedparameter tractable (FPT) if membership of (I; k) in can be decided in time
+O(f (k)jIjc), where jIj denotes the size of I, f (k) is a computable function, and
+c is a constant independent of k and I (for further background and terminology
+on parameterized complexity we refer the reader to the monographs [7, 8, 16]).
+If the nonparameterized version of (where k is just a part of the input) is
+NP-hard, then the function f (k) must be superpolynomial provided P 6= NP.
+Often f (k) is \moderately exponential," which makes the problem practically
+feasible for small values of k. Thus, it is important to parameterize a problem
+in such a way that the instances with small values of k are of real interest.</p>
+      <p>Consider the following well-known problem: given a digraph D = (V; A),
+nd an acyclic subdigraph of D with the maximum number of arcs. We can
+parameterize this problem \naturally" by asking whether D contains an acyclic
+subdigraph with at least k arcs. It is easy to prove that this parameterized
+problem is xed-parameter tractable by observing that D always has an acyclic
+subdigraph with at least jAj=2 arcs. (Indeed, consider a bijection : V !
+f1; : : : ; jV jg and the following subdigraphs of D: (V; f xy 2 A : (x) &lt; (y) g)
+and (V; f xy 2 A : (x) &gt; (y) g). Both subdigraphs are acyclic and at least one
+of them has at least jAj=2 arcs.) However, k jAj=2 for every small value of k
+and almost every practical value of jAj and, thus, our \natural" parameterization
+is of almost no practical or theoretical interest.</p>
+      <p>Instead, one should consider the following parameterized problem: decide
+whether D = (V; A) contains an acyclic subdigraph with at least jAj=2 + k
+arcs. We choose jAj=2 + k because jAj=2 is a tight lower bound on the size of
+a largest acyclic subdigraph. Indeed, the size of a largest acyclic subdigraph of
+a symmetric digraph D = (V; A) is precisely jAj=2. (A digraph D = (V; A) is
+symmetric if xy 2 A implies yx 2 A.)</p>
+      <p>In a recent paper [15] Mahajan, Raman and Sikdar provided several
+examples of problems of this type and argued that a natural parameterization is one
+above a tight lower bound for maximization problems, and below a tight upper
+bound for minimization problems. Furthermore, they observed that only a few
+non-trivial results are known for problems parameterized above a tight lower
+bound [10, 11, 13, 14], and they listed several problems parameterized above a
+tight lower bound whose complexity is unknown. The di culty in showing
+whether such a problem is xed-parameter tractable can be illustrated by the
+fact that often we even do not know whether the problem is in XP, i.e., can
+be solved in time O(jIjg(k)) for a computable function g(k). For example, it
+is non-trivial to see that the above-mentioned digraph problem is in XP when
+parameterized above the jAj=2 bound.</p>
+      <p>In this paper we introduce the Strictly Above/Below Expectation Method
+(SABEM), a novel approach for establishing the xed-parameter tractability
+of maximization problems parameterized above tight lower bounds and
+minimization problems parameterized below tight upper bounds. The new method
+is based on probabilistic arguments and utilizes certain probabilistic inequalities.
+We will state the equalities in the next section, and in the subsequent sections
+we will apply SABEM to two open problems posed in [15].</p>
+      <p>Now we give a very brief description of the new method with respect to
+a given problem parameterized above a tight lower bound or below a tight
+upper bound. We rst apply some reductions rules to reduce to its special
+case 0: Then we introduce a random variable X such that the answer to is
+yes if and only if X takes, with positive probability, a value greater or equal
+to the parameter k. Now using some probabilistic inequalities on X, we derive
+upper bounds on the size of no-instances of 0 in terms of a function of the
+parameter k. If the size of a given instance exceeds this bound, then we know
+the answer is yes; otherwise, we produce a problem kernel [7]. In many cases,
+we obtain problem kernels of polynomial size.</p>
+      <p>In Section 3, we consider the Linear Ordering problem, a generalization
+of the problem discussed above: Given a digraph D = (V; A) in which each
+arc ij has a positive integral weight wij , nd an acyclic subdigraph of D of
+maximum weight. Observe that W=2, where W is the sum of all arc weights,
+is a tight lower bound for Linear Ordering. We prove that the problem
+parameterized above W=2 is xed-parameter tractable and admits a quadratic
+kernel. Note that this parameterized problem generalizes the parameterized
+maximum acyclic subdigraph problem considered in [15]; thus, our result answers
+the corresponding open question of [15].</p>
+      <p>
+        In Section 4, we consider the problem Max Lin-2: Given a system of m
+linear equations e1; : : : ; em in n variables over GF(
+        <xref ref-type="bibr" rid="ref2">2</xref>
+        ), and for each equation ej
+a positive integral weight wj ; nd an assignment of values to the n variables
+that maximizes the total weight of the satis ed equations. We will see that
+W=2, where W = w1 + + wm, is a tight lower bound for Max Lin-2. The
+complexity of the problem parameterized above W=2 is open [15]. We prove
+that the following three special cases of the parameterized problem are
+xedparameter tractable: (
+        <xref ref-type="bibr" rid="ref1">1</xref>
+        ) there is a set U of variables such that each equation
+has an odd number of variables from U , (
+        <xref ref-type="bibr" rid="ref2">2</xref>
+        ) there is a constant r such that each
+equation involves at most r variables, (
+        <xref ref-type="bibr" rid="ref3">3</xref>
+        ) there is a constant such that any
+variable appears in at most equations. For all three cases we obtain kernels
+with O(k2) variables and equations. We also show that if we allow the weights wj
+to be positive reals, the problem is NP-hard already if k = 1 and each equation
+involves two variables.
+      </p>
+      <p>In Section 5, we brie y mention minimization problems parameterized below
+tight upper bounds, provide further discussions of problems considered in this
+paper and point out to a very recent result obtained using our new method.
+2</p>
+    </sec>
+    <sec id="sec-2">
+      <title>Probabilistic Inequalities</title>
+      <p>In our approach we introduce a random variable X such that the answer to the
+problem parameterized above a tight lower bound or below a tight upper bound
+is yes if and only if X takes with positive probability a value greater or equal
+to the parameter k.</p>
+      <p>In this paper all random variables are real. A random variable is discrete if
+its distribution function has a nite or countable number of positive increases.
+A random variable X is a symmetric if X has the same distribution function
+as X. If X is discrete, then X is symmetric if and only if Prob(X = a) =
+Prob(X = a) for each real a: Let X be a symmetric variable for which the rst
+moment E(X) exists. Then E(X) = E( X) = E(X) and, thus, E(X) = 0:
+The following is easy to prove [17].</p>
+      <p>Lemma 1. If X is a symmetric random variable and E(X2) &lt; 1, then</p>
+      <sec id="sec-2-1">
+        <title>Prob( X</title>
+        <p>pE(X2) ) &gt; 0:
+See Sections 3 and 4 for applications of Lemma 1. Unfortunately, often X is not
+symmetric, but Lemma 2 provides an inequality that can be used in many such
+cases. This lemma was proved by Alon et al. [2]; a weaker version was obtained
+by Hastad and Venkatesh [12].</p>
+        <p>Lemma 2. Let X be a random variable and suppose that its rst, second and
+forth moments satisfy E(X) = 0, E(X2) = 2 &gt; 0 and E(X4) b 4,
+respectively. Then Prob( X &gt; 4pb ) 441=3b .
+Since it is often rather nontrivial to evaluate E(X4) in order to check whether
+E(X4) b 4 holds, one can sometimes use the following result by Bourgain [5].
+Lemma 3. Let f = f (x1; : : : ; xn) be a polynomial of degree r in n variables
+x1; : : : ; xn with domain f 1; 1g. De ne a random variable X by choosing a
+vector ( 1; : : : ; n) 2 f 1; 1gn uniformly at random and setting X = f ( 1; : : : ; n).
+Then E(X4) 26r(E(X2))2.
+3</p>
+      </sec>
+    </sec>
+    <sec id="sec-3">
+      <title>Linear Ordering</title>
+      <p>Let D = (V; A) be a digraph with no loops or parallel arcs in which every arc
+ij has a positive weight wij . The problem of nding an acyclic subdigraph
+of D of maximum weight, known as Linear Ordering, has applications in
+economics [3]. Let n = jV j and consider a bijection : V ! f1; : : : ; ng. Observe
+that the subdigraphs (V; f ij 2 A : (i) &lt; (j) g) and (V; f ij 2 A : (i) &gt;
+(j) g) are acyclic. Since the two subdigraphs contain all arcs of D, at least one
+of them has weight at least W=2, where W = Pij2A wij , the weight of D. Thus,
+W=2 is a lower bound on the maximum weight of an acyclic subdigraph of D.
+Consider a digraph D where for every arc ij of D there is also an arc ji of the
+same weight. Each maximum weight subdigraph of D has weight exactly W=2.
+Hence the lower bound W=2 is tight.</p>
+      <p>Linear Ordering Above Tight Lower Bound (LOALB)
+Instance: A digraph D = (V; A), each arc ij has an integral positive
+weight wij , and a positive integer k.</p>
+      <p>Parameter: The integer k.</p>
+      <p>Question: Is there an acyclic subdigraph of D of weight at least W=2+k,
+where W = Pij2A wij ?
+Mahajan, Raman, and Sikdar [15] asked whether LOALB is xed-parameter
+tractable for the special case when all arcs are of weight 1 (i.e., D is unweighted).
+In this section we will prove that LOALB admits a kernel with O(k2) arcs;
+consequently the problem is xed-parameter tractable. Note that if we allow
+weights to be positive reals, then we can show, similarly to the NP-completeness
+proof given in the next section, that LOALB is NP-complete already for k = 1.</p>
+      <p>Consider the following reduction rule:
+Reduction Rule 1 Assume D has a directed 2-cycle iji; if wij = wji delete
+the cycle, if wij &gt; wji delete the arc ji and replace wij by wij wji, and if
+wji &gt; wij delete the arc ij and replace wji by wji wij .</p>
+      <p>It is easy to check that the answer to LOALB for a digraph D is yes if and
+only if the answer to LOALB is yes for a digraph obtained from D using the
+reduction rule as long as possible.</p>
+      <p>Let D = (V; A) be an oriented graph, let n = jV j and W = Pij2A wij .
+Consider a random bijection: : V ! f1; : : : ; ng and a random variable X( ) =
+21 Pij2A ij ( ), where ij ( ) = wij if (i) &lt; (j) and ij ( ) = wij , otherwise.
+It is easy to see that X( ) = Pf wij : ij 2 A; (i) &lt; (j) g
+answer to LOALB is yes if and only if there is a bijection
+such that X( ) k. Since E( ij) = 0, we have E(X) = 0.</p>
+      <p>
+        Let W (
+        <xref ref-type="bibr" rid="ref2">2</xref>
+        ) = Pij2A wi2j. We will prove the following:
+Lemma 4. E(X2)
+where the second sum is taken over ordered pairs of distinct arcs. Clearly,
+Pij2A E( i2j) = W (
+        <xref ref-type="bibr" rid="ref2">2</xref>
+        ): To compute Pij;pq2A E( ij pq) we consider the following
+cases:
+Case 1: fi; jg \ fp; qg = ;. Then ij and pq are independent and E( ij pq) =
+E( ij)E( pq) = 0.
+      </p>
+      <p>Case 2a: jfi; jg \ fp; qgj = 1 and i = p. Since the probability that i &lt;
+minfj; qg or i &gt; maxfj; qg is 2=3, ij iq = wijwiq with probability 32 and ij iq =
+wijwiq with probability 31 . Thus, for every i 2 V we have Pij;iq2A E( ij iq) =
+13 Pf wijwiq : j 6= q 2 N +(i) g = 13 (Pj2N+(i) wij)2 13 Pj2N+(i) wi2j.
+Case 2b: jfi; jg \ fp; qgj = 1 and j = q. Similarly to Case 2a, we obtain
+Pij;pj2A E( ij pj) = 13 (Pi2N (j) wij)2 13 Pi2N (j) wi2j.</p>
+      <p>Case 3a: jfi; jg \ fp; qgj = 1 and i = q. Since ij pi = wijwpi with
+probability 13 and ij pi = wijwpi with probability 23 , we obtain Pij;pi2A E( ij pi) =
+13 Pf wijwpi : j 2 N +(i); p 2 N (i) g = 31 Pj2N+(i) wij Pp2N (i) wpi.
+Case 3b: jfi; jg \ fp; qgj = 1 and j = p. Similarly to Case 3a, we obtain
+Pij;jq2A E( ij jq) = 31 Pi2N (j) wij Pq2N+(j) wjq.</p>
+      <sec id="sec-3-1">
+        <title>Equation that 4</title>
+        <p>P</p>
+        <p>
+          (
+          <xref ref-type="bibr" rid="ref1">1</xref>
+          )
+E(X2)
+and
+=
+2
+        </p>
+        <p>
+          the subsequent
+W (
+          <xref ref-type="bibr" rid="ref2">2</xref>
+          ) + 31 (Q R);
+computations
+where
+2
+        </p>
+        <p>Q
+imply
+=
+i2V Pj2N+(i) wij Pj2N+(i) wi2j + Pj2N (i) wji Pj2N (i) wj2i ;
+and R = 2 P Pj2N+(i) wij Pj2N (i) wji : By the inequality of
+arithmetic and geo mi2eVtric means, for each i 2 V , we have</p>
+        <p>X
+j2N+(i)
+wij 2 +</p>
+        <p>X
+j2N (i)
+wji
+2
+2</p>
+        <p>X
+j2N+(i)
+wij</p>
+        <p>X
+j2N (i)
+wji
+0:</p>
+      </sec>
+      <sec id="sec-3-2">
+        <title>Therefore,</title>
+        <p>Q R</p>
+        <p>X X
+i2V j2N+(i)</p>
+        <p>2
+wij</p>
+        <p>X X
+i2V j2N (i)
+wj2i =</p>
+        <p>
+          2W (
+          <xref ref-type="bibr" rid="ref2">2</xref>
+          );
+and 4 E(X2) W (
+          <xref ref-type="bibr" rid="ref2">2</xref>
+          ) 2W (
+          <xref ref-type="bibr" rid="ref2">2</xref>
+          )=3 = W (
+          <xref ref-type="bibr" rid="ref2">2</xref>
+          )=3, implying E(X2)
+        </p>
+        <p>Now we can prove the main result of this section.</p>
+        <p>
+          tu
+Theorem 1. The problem LOALB admits a kernel with O(k2) arcs.
+Proof. Let H be a digraph. We know that the answer to LOALB for H is yes
+if and only if the answer to LOALB is yes for a digraph D obtained from H
+using Reduction Rule 1 as long as possible. Observe that D is an oriented graph.
+Let B be the set of bijections from V to f1; : : : ; ng. Observe that f : B ! B
+such that f ( (v)) = jV j + 1 (v) for each 2 B is a bijection. Note that
+X(f ( )) = X( ) for each 2 B. Therefore, Prob(X = a) = Prob(X = a)
+for each real a and, thus, X is symmetric. Thus, by Lemmas 1 and 4, we have
+Prob( X pW (
+          <xref ref-type="bibr" rid="ref2">2</xref>
+          )=12 ) &gt; 0. Hence, if pW (
+          <xref ref-type="bibr" rid="ref2">2</xref>
+          )=12 k, there is a bijection
+: V ! f1; : : : ; ng such that X( ) k and, thus, the answer to LOALB (for
+both D and H) is yes. Otherwise, jAj W (
+          <xref ref-type="bibr" rid="ref2">2</xref>
+          ) &lt; 12 k2. tu
+We close this section by outlining how Theorem 1 can be used to actually nd
+a solution to LOALB if one exists. Let (D; k) be an instance of LOALB where
+D = (V; A) is a directed graph with integral positive arc-weights and k 1 is an
+integer. Let W be the total weight of D. As discussed above, we may assume
+that D is an oriented graph. If jAj &lt; 12k2 then we can nd a solution, if one
+exists, by trying all subsets A0 A, and testing whether (V; A0) is acyclic and
+has weight at least W=2 + k; this search can be carried out in time 2O(k2). Next
+we assume jAj 12k2. We know by Theorem 1 that (D; k) is a yes-instance; it
+remains to nd a solution.
+        </p>
+        <p>
+          For a vertex i 2 V let dD(i) denote its unweighted degree in D, i.e., the
+number of arcs (incoming or outgoing) that are incident with i. Consider the
+following reduction rule:
+Reduction Rule 2 If there is a vertex i 2 V with jAj
+delete i from D.
+12k2
+dD(i), then
+Observe that by applying the rule we obtain again a yes-instance (D i; k)
+of LOALB since D i has still at least 12k2 arcs. Moreover, if we know a
+solution Di0 of (D i; k), then we can e ciently obtain a solution D0 of (D; k):
+if Pj2N+(i) wij Pj2N (i) wij then we add i and all outgoing arcs ij 2 A
+to D0; otherwise, we add i and all incoming arcs ji 2 A to D0. After multiple
+i i
+applications of Rule 2 we are left with an instance (D0; k) to which Rule 2 cannot
+be applied. Let D0 = (V0; A0). We pick a vertex i 2 V0. If i has a neighbor j
+with dD0 (j) = 1, then jA0j 12k2, since jA0j dD0 (j) &lt; 12k2. On the other
+hand, if dD0 (j) 2 for all neighbors j of i, then i has less than 2 12k2 neighbors,
+i has less than 12k2 arcs; thus jA0j &lt; 3 12k2. Therefore, as above,
+tsiimncee 2DO0(k2) is su cient to try all subsets A00 A0 to nd a solution to the
+instance (D0; k). Let n denote the input size of instance (D; k). Rule 2 can
+certainly be applied in polynomial time nO(
+          <xref ref-type="bibr" rid="ref1">1</xref>
+          ), and we apply it less than n times.
+Hence, we can nd a solution to (D; k), if one exists, in time nO(
+          <xref ref-type="bibr" rid="ref1">1</xref>
+          ) + 2O(k2).
+        </p>
+        <p>Recall that a kernelization reduces in polynomial time an instance (I; k) of
+a parameterized problem to a decision-equivalent instance (I0; k0), its problem
+kernel, where k0 k and the size of I0 is bounded by a function of k. Solutions
+for (I; k) and solutions for (I0; k0) are possibly unrelated to each other. We call
+(I0; k0) a faithful problem kernel if from a solution for (I0; k0) we can construct a
+solution for (I; k) in time polynomial in jIj and k. Clearly the above (D0; k) is
+a faithful kernel.
+4</p>
+        <p>
+          Max Lin-2
+Consider a system of m linear equations e1; : : : ; em in n variables z1; : : : ; zn over
+GF(
+          <xref ref-type="bibr" rid="ref2">2</xref>
+          ), and suppose that each equation ej has a positive integral weight wj ,
+j = 1; : : : ; m. The problem Max Lin-2 asks for an assignment of values to
+the variables that maximizes the total weight of the satis ed equations. Let
+W = w1 + + wm.
+        </p>
+        <p>To see that the total weight of the equations that can be satis ed is at least
+W=2, we describe a simple procedure suggested in [12]. We assign values to the
+variables z1; : : : ; zn one by one and simplify the system after each assignment.
+When we wish to assign 0 or 1 to zi, we consider all equations reduced to the
+form zi = b, for a constant b. Let W 0 be the total weight of all such equations.
+We set zi := 0, if the total weight of such equations is at least W 0=2, and set
+zi := 1, otherwise. If there are no equations of the form zi = b, we set zi := 0:
+To see that the lower bound W=2 is tight, consider a system consisting of pairs
+of equations of the form Pi2I zi = 1 and Pi2I zi = 0 where both equations have
+the same weight.</p>
+        <p>The parameterized complexity of Max Lin-2 parameterized above the tight
+lower bound W=2 was stated by Mahajan, Raman and Sikdar [15] as an open
+question:</p>
+        <p>
+          Max Lin-2 Parameterized Above Tight Lower Bound (LinALB)
+Instance: A system S of m linear equations e1; : : : ; em in n variables
+z1; : : : ; zn over GF(
+          <xref ref-type="bibr" rid="ref2">2</xref>
+          ), each equation ei with a positive integral weight
+wi, i = 1; 2; : : : ; m, and a positive integer k. Each equation ej can be
+written as Pi2Ij zi = bj , where ; 6= Ij f1; : : : ; ng.
+        </p>
+        <p>Parameter: The integer k.</p>
+        <p>Question: Is there an assignment of values to the variables z1; : : : ; zn
+such that the total weight of the satis ed equations is at least W=2 + k,
+where W = Pm</p>
+        <p>
+          i=1 wi?
+Let rj be the number of variables in equation ej , and let r(S) = maxim=1 rj .
+We are not able to determine whether LinALB is xed-parameter tractable or
+not, but we can prove that the following three special cases are xed-parameter
+tractable: (
+          <xref ref-type="bibr" rid="ref1">1</xref>
+          ) there is a set U of variables such that each equation contains an
+odd number of variables from U , (
+          <xref ref-type="bibr" rid="ref2">2</xref>
+          ) there is a constant r such that r(S) r,
+(
+          <xref ref-type="bibr" rid="ref3">3</xref>
+          ) there is a constant such that any variable appears in at most equations.
+        </p>
+        <p>Notice that in our formulation of LinALB it is required that each equation
+has a positive integral weight. In a relaxed setting in which an equation may
+have any positive real number as its weight, the problem is NP-complete even
+for k = 1 and each rj = 2. Indeed, let each linear equation be of the form
+zu + zv = 1. Then the problem is equivalent to MaxCut, the problem of
+nding a cut of total weight at least L in an undirected graph G, where V (G)
+is the set of variables, E(G) contains (zu; zv) if and only if there is a linear
+equation zu + zv = 1, and the weight of an edge (zu; zv) equals the weight of
+the corresponding linear equation. The problem MaxCut is a well-known
+NPcomplete problem. Let us transform an instance I of MaxCut into an instance
+I0 of the \relaxed" LinALB by replacing the weight wi by wi0 := wi=(L W=2).
+We may assume that L W=2 &gt; 0 since otherwise the instance is immediately
+seen as a yes-instance. Observe that the new instance I0 has an assignment of
+values with total weight at least W 0=2 + 1 if and only if I has a cut with total
+weight at least L. We are done.</p>
+        <p>Let A be the matrix of the coe cients of the variables in S. It is well-known
+that the maximum number of linearly independent columns of A equals rankA,
+and such a collection of columns can be found in time polynomial in n and m,
+using, e.g., the Gaussian elimination on columns [4]. We have the following
+reduction rule and supporting lemma.</p>
+        <p>Reduction Rule 3 Let A be the matrix of the coe cients of the variables in
+S, let t = rankA and let columns ai1 ; : : : ; ait of A be linearly independent. Then
+delete all variables not in fzi1 ; : : : ; zit g from the equations of S.
+Lemma 5. Let T be obtained from S by Rule 3. Then T is a yes-instance if
+and only if S is a yes-instance. Moreover, T can be obtained from S in time
+polynomial in n and m.</p>
+        <p>Proof. If t = n, set T := S, so assume that t &lt; n: The remark before the lemma
+immediately implies that T can be obtained from S in time polynomial in n and
+m. Let S0 be a system of equations from S and let T 0 be the corresponding
+system of equations from T . It is su cient to prove the following claim:</p>
+        <p>There is an assignment of values to z1; : : : ; zn satisfying all equations in S0
+and falsifying the rest of equations in S if and only if there is an assignment
+of values to zi1 ; : : : ; zit satisfying all equations in T 0 and falsifying the rest of
+equations in T .</p>
+        <p>Let an assignment z0 of values to z = (z1; : : : ; zn) satisfy all equations of S0
+and falsify the equations of S00, where S00 = S n S0: This assignment satis es
+all equations of R, the system obtained from S by replacing the right hand side
+bj of each equation in S00 by 1 bj : Note that R has the same matrix A of
+coe cients with columns a1; : : : ; an: Let a column ai 62 fai1 ; : : : ; ait g: Then, by
+de nition of ai1 ; : : : ; ait , ai = 1ai1 + + tait for some numbers j 2 f0; 1g:
+Knowing the numbers j , we may eliminate a variable zi from R by replacing ai
+with the sum of all columns from fai1 ; : : : ; ait g for which j = 1 and carrying
+out the obvious simpli cation of the system. Thus, we may eliminate from R
+all variables zi 62 fzi1 ; : : : ; zit g and get yi1 ai1 + + yit ait = b0; where b0 is the
+right hand side of R and each yj 2 f0; 1g: Now replace, in the modi ed R, the
+right hand side b0j of each equation corresponding to an equation in S00 by 1 b0j
+obtaining T . Clearly, (yi1 ; : : : ; yit ) satis es all equations of T 0 and falsi es all
+equations in T 00 = T n T 0:</p>
+        <p>Suppose now that (yi1 ; : : : ; yit ) satis es all equations of T 0 and falsi es all
+equations in T 00. Then (y1; : : : ; yn), where yj = 0 if j 62 fi1; : : : ; itg, satis es
+all equations of S0 and falsi es all equations in S00. Thus, the claim has been
+proved. tu</p>
+        <p>Consider the following reduction rule for LinALB used in [12].</p>
+        <p>Reduction Rule 4 If we have, for a subset I of f1; 2; : : : ; ng, the equation
+Pi2I zi = b0 with weight w0, and the equation Pi2I zi = b00 with weight w00, then
+we replace this pair by one of these equations with weight w0 + w00 if b0 = b00 and,
+otherwise, by the equation whose weight is bigger, modifying its new weight to
+be the di erence of the two old ones. If the resulting weight is 0, we omit the
+equation from the system.</p>
+        <p>If Rule 4 is not applicable to a system we call the system reduced under Rule
+4. Note that the problem LinALB for S and the system obtained from S by
+applying Rule 4 as long as possible have the same answer.</p>
+        <p>
+          Let Ij f1; : : : ; ng be the set of indices of the variables participating in
+equation ej , and let bj 2 f0; 1g be the right hand side of ej . De ne a random
+variable X = Pjm=1 Xj , where Xj = (
+          <xref ref-type="bibr" rid="ref1">1</xref>
+          )bj wj Qi2Ij i and all the i are
+independent uniform random variables on f 1; 1g (X was rst introduced in [12]).
+We set zi = 0 if i = 1 and zi = 1, otherwise, for each i. Observe that Xj = wj
+if ej is satis ed and Xj = wj , otherwise.
+        </p>
+        <p>Lemma 6. Let S be reduced under Rule 4. The weight of the satis ed equations
+is at least W=2 + k if and only if X 2k. We have E(X) = 0 and E(X2) =
+Pm</p>
+        <p>j=1 wj2:
+Proof. Observe that X is the di erence between the weights of satis ed and
+falsi ed equations. Therefore, the weight of the satis ed equations equals (X +
+W )=2, and it is at least W=2 + k if and only if X 2k. Since i are independent,
+E(Qi2Ij i) = Qi2Ij E( i) = 0. Thus, E(Xj ) = 0 and E(X) = 0 by linearity of
+expectation. Moreover,</p>
+        <p>E(X2) =
+m
+X E(Xj2) +
+j=1</p>
+        <p>X
+1 j6=q m</p>
+        <p>E(Xj Xq) =
+m
+X wj2 &gt; 0
+j=1
+as E(Qi2Ij i Qi2Iq i) = E(Qi2Ij Iq i) = 0 implies E(Xj Xq) = 0; where Ij Iq
+is the symmetric di erence between Ij and Iq (Ij Iq 6= ; due to Rule 4). tu
+Lemma 7. Let S be reduced under Rule 4 and suppose that no variable appears
+in more than 2 equations of S. Then E(X4) 2 2(E(X2))2:</p>
+      </sec>
+      <sec id="sec-3-3">
+        <title>Proof. Observe that</title>
+        <p>E(X4) =</p>
+        <p>X
+(p;q;s;t)2[m]4</p>
+        <sec id="sec-3-3-1">
+          <title>E(XpXqXsXt);</title>
+          <p>
+            (
+            <xref ref-type="bibr" rid="ref2">2</xref>
+            )
+where [m] = f1; : : : ; mg: Note that if the product XpXqXsXt contains a variable
+i in only one or three of the factors, then E(XpXqXsXt) = A E( i) = 0; where
+A is a polynomial in random variables l, l 2 f1; : : : ; ng n fig: Thus, the only
+nonzero terms in (
+            <xref ref-type="bibr" rid="ref2">2</xref>
+            ) are those for which either (
+            <xref ref-type="bibr" rid="ref1">1</xref>
+            ) p = q = s = t, or (
+            <xref ref-type="bibr" rid="ref2">2</xref>
+            ) there
+are two distinct integers j; l such that each of them coincides with two elements
+in the sequence p; q; s; t, or (
+            <xref ref-type="bibr" rid="ref3">3</xref>
+            ) jfp; q; s; tgj = 4, but each variable i appears
+in an even number of the factors in XpXqXsXt. In Cases 1 and 2, we have
+E(XpXqXsXt) = wp4 and E(XpXqXsXt) = wj2wl2; respectively. In Case 3,
+          </p>
+        </sec>
+        <sec id="sec-3-3-2">
+          <title>E(XpXqXsXt)</title>
+          <p>wpwqwswt
+(wp2wq2 + ws2wt2)=2:</p>
+          <p>
+            Let 1 j &lt; l m. Observe that E(XpXqXsXt) = wj2wl2 in Case 2 for
+24 = 6 4-tuples (p; q; s; t) 2 [m]4: In Case 3, we claim that j; l 2 fp; q; s; tg for
+at most 4 (
+            <xref ref-type="bibr" rid="ref1">1</xref>
+            )2 4-tuples (p; q; s; t) 2 [m]4. To see this, rst note that wp2wq2
+and ws2wt2 appear in our upper bound on E(XpXqXsXt) (with coe cient 1/2).
+Therefore, there are only four possible ways for wj2wl2 to appear in our upper
+bound, namely the following: (i) j = p; l = q, (ii) l = p; j = q, (iii) j = s; l = t,
+and (iv) l = s; j = t: Now assume, without loss of generality, that j = p and
+l = q. Since S is reduced under Rule 4, the product Xj Xl must have a variable
+i of degree one. Thus, i must be in Xs or Xt, but not in both (two choices).
+Assume that i is in Xs. Observe that there are at most 1 choices for s. Note
+that Xj XlXs must contain contain a variable i0 of odd degree. Thus, i0 must
+be in Xt and, hence, there are at most 1 choices for t.
+          </p>
+          <p>Therefore, we have</p>
+          <p>E(X4)
+m
+X wj4 + (6 + 4(
+j=1
+1)2)</p>
+          <p>X
+1 j&lt;l m
+wj2wl2 &lt; 2 2 @X wj2A :</p>
+          <p>j=1
+0 m
+12
+Thus, by Lemma 6, E(X4) 2 2(E(X2))2: tu</p>
+          <p>Case 1 of Theorem 2 is of interest since its condition can be checked in
+polynomial time due to the following:
+Proposition 1. We can check, in polynomial time, whether there exists a set
+U of variables such that each equation of S contains an odd number of variables
+from U .</p>
+          <p>
+            Proof. Observe that such a set U exists if and only if the unweighted system S0
+of linear equations over GF(
+            <xref ref-type="bibr" rid="ref2">2</xref>
+            ) obtained from S by replacing each bj with 1 has
+a solution. Indeed, if U exists, set zj = 1 for each zj 2 U and zj = 0 for each
+zj 62 U . This assignment is a solution to S0: If a solution to S0 exists, form U
+by including in it all variables zj which equal 1 in the solution. We can check
+whether S0 has a solution using the Gaussian elimination or other
+polynomialtime algorithms, see, e.g., [6]. tu
+          </p>
+          <p>
+            Now we can prove the following:
+Theorem 2. Let S be reduced under Rule 4. The following three special cases
+of LinALB are xed-parameter tractable: (
+            <xref ref-type="bibr" rid="ref1">1</xref>
+            ) there is a set U of variables such
+that each equation contains an odd number of variables from U , (
+            <xref ref-type="bibr" rid="ref2">2</xref>
+            ) there is a
+constant r such that r(S) r, (
+            <xref ref-type="bibr" rid="ref3">3</xref>
+            ) there is a constant , such that any variable
+appears in at most equations. In each case, there exists a kernel with O(k2)
+equations and variables.
+          </p>
+          <p>Proof. Case 1. Let z0 = (z10; : : : ; zn0) 2 f0; 1gn be an assignment of values
+to the variables z1; : : : ; zn; and let z0 = (z10; : : : ; zn0); where zi0 = 1 zi0 if
+zi 2 U and zi0 = zi0; otherwise, i = 1; : : : ; n: Observe that f : z0 7! z0
+is a bijection on the set of assignments and X( z0) = X(z0). Thus, X is a
+symmetric random variable. Therefore, by Lemmas 1 and 6, Prob( X pm )
+Prob( X qPjm=1 wj2 ) &gt; 0: Hence, if pm 2k, the answer to LinALB is
+yes. Otherwise, m &lt; 4k2 and after applying Rule 3, we obtain a kernel with
+O(k2) equations and variables.</p>
+          <p>Case 2. Since X is a polynomial of degree at most r, it follows by Lemma
+3 that E(X4) 26rE(X2)2. This inequality and the results in the
+previous paragraph show that the conditions of Lemma 2 are satis ed and, thus,
+Prob X &gt; pP4jm8=r1 wj2 &gt; 0; implying Prob X &gt; 4p8mr &gt; 0: Consequently,
+if 2k 1 pm=(4 8r), then there is an assignment of values to the variables
+z1; : : : ; zn which satis es equations of total weight at least W=2 + k. Otherwise,
+2k 1 &gt; pm=(4 8r) and m &lt; 16(2k 1)264r. After applying Rule 3, we obtain
+the required kernel.</p>
+          <p>Case 3. If = 1, it is easy to nd an assignment to the variables that satis es
+all equations of S. Thus, we may assume that 2: To prove that there exists
+a kernel with O(k2) equations, we can proceed as in Case 2, but use Lemma 7
+rather than Lemma 3. tu
+Remark 1. Note that even if S does not satisfy Case 2 of the theorem, T , the
+system obtained from S using Rule 3, may still satisfy Case 2. However, we have
+not formulated the theorem for S reduced under Rule 3 as the reduced system
+depends on the choice of a maximum linear independent collection of columns
+of A.
+5</p>
+        </sec>
+      </sec>
+    </sec>
+    <sec id="sec-4">
+      <title>Discussions</title>
+      <p>We have showed that the new method allows us to prove that some maximization
+problems parameterized above tight lower bounds are xed-parameter tractable.
+Our method can also be used for minimization problems parameterized below
+tight upper bounds. As a simple example, consider the feedback arc problem:
+given a digraph D = (V; A) nd a minimum set F of arcs such that D F
+is acyclic. Certainly, jAj=2 is a tight upper bound on a minimum feedback
+set and we can consider the parameterized problem which asks whether D has a
+feedback arc set with at most jAj=2 k arcs. Fixed-parameter tractability of this
+parameterized problem follows immediately from xed-parameter tractability
+of LOALB, but we could prove this result directly using essentially the same
+approach as for LOALB.</p>
+      <p>Theorem 2.1 in [1] allows one to obtain a smaller kernel for LOALB on dense
+digraphs than given in our paper. The proof of Theorem 2.1 in [1] also uses a
+probabilistic approach, but it is more specialized than SABEM.</p>
+      <p>It would be interesting to obtain applications of our method to other problems
+parameterized above tight lower bounds or below tight upper bounds. One such
+very recent application is given in [9], where an open problem due to Benny
+Chor and described in [16] was solved.</p>
+      <p>Acknowledgments. Research of Gutin, Kim and Yeo was supported in part
+by an EPSRC grant.</p>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <ref id="ref1">
+        <mixed-citation>
+          1.
+          <string-name>
+            <given-names>N.</given-names>
+            <surname>Alon</surname>
+          </string-name>
+          ,
+          <article-title>Voting paradoxes and digraphs realizations</article-title>
+          . Advances in Applied Math.,
+          <volume>29</volume>
+          :
+          <fpage>126</fpage>
+          {
+          <fpage>135</fpage>
+          ,
+          <year>2002</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref2">
+        <mixed-citation>
+          2.
+          <string-name>
+            <given-names>N.</given-names>
+            <surname>Alon</surname>
+          </string-name>
+          , G. Gutin, and
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Krivelevich</surname>
+          </string-name>
+          .
+          <article-title>Algorithms with large domination ratio</article-title>
+          .
+          <source>J. Algorithms</source>
+          ,
+          <volume>50</volume>
+          (
+          <issue>1</issue>
+          ):
+          <volume>118</volume>
+          {
+          <fpage>131</fpage>
+          ,
+          <year>2004</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref3">
+        <mixed-citation>
+          3.
+          <string-name>
+            <given-names>J.</given-names>
+            <surname>Bang-Jensen</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>G.</given-names>
+            <surname>Gutin</surname>
+          </string-name>
+          . Digraphs: Theory, Algorithms and Applications. Springer-Verlag,
+          <source>London, 2nd edition</source>
+          ,
+          <year>2009</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref4">
+        <mixed-citation>
+          4.
+          <string-name>
+            <given-names>T. S.</given-names>
+            <surname>Blyth</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>E. F.</given-names>
+            <surname>Robertson</surname>
+          </string-name>
+          , Basic Linear Algebra, Springer,
+          <year>2000</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref5">
+        <mixed-citation>
+          5.
+          <string-name>
+            <given-names>J.</given-names>
+            <surname>Bourgain</surname>
+          </string-name>
+          .
+          <article-title>Walsh subspaces of Lp-product spaces</article-title>
+          .
+          <source>In Seminar on Functional Analysis</source>
+          ,
+          <year>1979</year>
+          {1980 (
+          <article-title>French)</article-title>
+          .
+          <source>Ecole Polytech</source>
+          .,
+          <string-name>
+            <surname>Palaiseau</surname>
+          </string-name>
+          ,
+          <year>1980</year>
+          . Exp. No.
+          <year>4A</year>
+          ,
+          <fpage>9</fpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref6">
+        <mixed-citation>
+          6.
+          <string-name>
+            <given-names>D.</given-names>
+            <surname>Coppersmith</surname>
+          </string-name>
+          .
+          <article-title>Solving linear systems over GF(2): block Lanczos algorithm</article-title>
+          .
+          <source>Lin. Algebra Applic.</source>
+          ,
+          <volume>192</volume>
+          :
+          <fpage>33</fpage>
+          {
+          <fpage>60</fpage>
+          ,
+          <year>1993</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref7">
+        <mixed-citation>
+          7.
+          <string-name>
+            <given-names>R. G.</given-names>
+            <surname>Downey and M. R. Fellows</surname>
+          </string-name>
+          , Parameterized Complexity, Springer,
+          <year>1999</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref8">
+        <mixed-citation>
+          8.
+          <string-name>
+            <given-names>J.</given-names>
+            <surname>Flum</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Grohe</surname>
+          </string-name>
+          .
+          <source>Parameterized Complexity Theory, volume XIV of Texts in Theoretical Computer Science. An EATCS Series</source>
+          . Springer Verlag,
+          <year>2006</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref9">
+        <mixed-citation>
+          9.
+          <string-name>
+            <given-names>G.</given-names>
+            <surname>Gutin</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>E. J.</given-names>
+            <surname>Kim</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Mnich</surname>
+          </string-name>
+          ,
+          <article-title>and</article-title>
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Yeo. Ordinal Embedding Relaxations Parameterized Above Tight Lower Bound</surname>
+          </string-name>
+          .
+          <source>Tech. Report arXiv:0907</source>
+          .
+          <fpage>5427</fpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref10">
+        <mixed-citation>
+          10. G. Gutin,
+          <string-name>
+            <surname>A.</surname>
+          </string-name>
+          <article-title>Ra ey, S. Szeider, and</article-title>
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Yeo</surname>
+          </string-name>
+          .
+          <article-title>The linear arrangement problem parameterized above guaranteed value</article-title>
+          .
+          <source>Theory Comput. Syst.</source>
+          ,
+          <volume>41</volume>
+          :
+          <fpage>521</fpage>
+          {
+          <fpage>538</fpage>
+          ,
+          <year>2007</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref11">
+        <mixed-citation>
+          11. G. Gutin,
+          <string-name>
+            <given-names>S.</given-names>
+            <surname>Szeider</surname>
+          </string-name>
+          ,
+          <article-title>and</article-title>
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Yeo</surname>
+          </string-name>
+          .
+          <article-title>Fixed-parameter complexity of minimum pro le problems</article-title>
+          . Algorithmica,
+          <volume>52</volume>
+          (
+          <issue>2</issue>
+          ):
+          <volume>133</volume>
+          {
+          <fpage>152</fpage>
+          ,
+          <year>2008</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref12">
+        <mixed-citation>
+          12.
+          <string-name>
+            <given-names>J.</given-names>
+            <surname>Hastad</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>S.</given-names>
+            <surname>Venkatesh</surname>
+          </string-name>
+          .
+          <article-title>On the advantage over a random assignment</article-title>
+          .
+          <source>In Proceedings of the Thirty-Fourth Annual ACM Symposium on Theory of Computing</source>
+          , pages
+          <volume>43</volume>
+          {
+          <fpage>52</fpage>
+          , New York,
+          <year>2002</year>
+          . ACM. Full version appeared in
+          <source>Random Structures Algorithms</source>
+          <volume>25</volume>
+          (
+          <issue>2</issue>
+          ) (
+          <year>2004</year>
+          ), pp.
+          <volume>117</volume>
+          {
+          <fpage>149</fpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref13">
+        <mixed-citation>
+          13.
+          <string-name>
+            <given-names>P.</given-names>
+            <surname>Heggernes</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>C.</given-names>
+            <surname>Paul</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J. A.</given-names>
+            <surname>Telle</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>Y.</given-names>
+            <surname>Villanger</surname>
+          </string-name>
+          .
+          <article-title>Interval completion with few edges</article-title>
+          .
+          <source>In STOC'07|Proceedings of the 39th Annual ACM Symposium on Theory of Computing</source>
+          , pages
+          <volume>374</volume>
+          {
+          <fpage>381</fpage>
+          . ACM,
+          <year>2007</year>
+          . Full version appeared in
+          <source>SIAM J. Comput</source>
+          .
+          <volume>38</volume>
+          (
+          <issue>5</issue>
+          ),
+          <year>2008</year>
+          /09.
+        </mixed-citation>
+      </ref>
+      <ref id="ref14">
+        <mixed-citation>
+          14.
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Mahajan</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>V.</given-names>
+            <surname>Raman</surname>
+          </string-name>
+          .
+          <article-title>Parameterizing above guaranteed values: MaxSat and MaxCut</article-title>
+          . J. Algorithms,
+          <volume>31</volume>
+          (
+          <issue>2</issue>
+          ):
+          <volume>335</volume>
+          {
+          <fpage>354</fpage>
+          ,
+          <year>1999</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref15">
+        <mixed-citation>
+          15.
+          <string-name>
+            <surname>M. Mahajan</surname>
+            ,
+            <given-names>V.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Raman</surname>
+            , and
+            <given-names>S.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Sikdar</surname>
+          </string-name>
+          .
+          <article-title>Parameterizing above or below guaranteed values</article-title>
+          .
+          <source>J. of Computer and System Sciences</source>
+          ,
+          <volume>75</volume>
+          (
+          <issue>2</issue>
+          ):
+          <volume>137</volume>
+          {
+          <fpage>153</fpage>
+          ,
+          <year>2009</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref16">
+        <mixed-citation>
+          16.
+          <string-name>
+            <given-names>R.</given-names>
+            <surname>Niedermeier</surname>
+          </string-name>
+          . Invitation to Fixed-Parameter
+          <source>Algorithms. Oxford Lecture Series in Mathematics and its Applications</source>
+          . Oxford University Press,
+          <year>2006</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref17">
+        <mixed-citation>
+          17.
+          <string-name>
+            <given-names>V.</given-names>
+            <surname>Vovk</surname>
+          </string-name>
+          , Private communication,
+          <source>August</source>
+          ,
+          <year>2009</year>
+          .
+        </mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

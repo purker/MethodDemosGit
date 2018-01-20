@@ -1,0 +1,838 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<algorithms version="110505">
+<algorithm name="SectLabel" version="110505">
+<variant no="0" confidence="0.000506">
+<title confidence="0.999501">
+Competence Orientation in Vocational Schools –
+the Case of Industrial Information Technology in Austria
+</title>
+<author confidence="0.992567">
+Markus Brunner1, Monika Di Angelo2
+</author>
+<affiliation confidence="0.858894">
+1 HTL Krems, Department for Information Technology, Krems, Austria
+</affiliation>
+<email confidence="0.905509">
+markus.a.brunner@gmail.com
+</email>
+<affiliation confidence="0.966431">
+2 Vienna University of Technology, Institute for Computer Aided Automation, Vienna, Austria
+</affiliation>
+<email confidence="0.953693">
+monika.diangelo@tuwien.ac.at
+</email>
+<bodyText confidence="0.943645875">
+Abstract. As part of the project “Educational standards in vocational schools”
+the responsible Federal Ministry compiled competence models, descriptors and
+didactic examples for Informatics in technical high schools (HTL). The imple-
+mentation of this project implies a paradigm shift for the vocational school sys-
+tem, which requires a new pedagogic foundation. This paper presents a didacti-
+cal concept, that meets the requirements of the educational standards in general
+and competence orientation in particular. A proposal for the implementation of
+these educational standards in the competence area industrial information tech-
+nology (INIT) is presented. The specification is based on selected teaching ses-
+sions for micro controller technique. Learner-oriented teaching methods are ap-
+plied, along with procedures to promote the learners’ intrinsic motivation and
+creativity in general. It became apparent that the competence area INIT conveys
+remarkably demanding learning outcomes and its implementation proved chal-
+lenging on multiple levels.
+Keywords: vocational schools · competence orientation · educational standards
+· technical high school · secondary education
+</bodyText>
+<sectionHeader confidence="0.999267" genericHeader="abstract">
+1 Introduction
+</sectionHeader>
+<bodyText confidence="0.932762375">
+Austria’s school system is in a flux, educational standards and competence orientation
+are the two key topics. The declared objectives in this process are a sustainable in-
+crease of quality and a better comparability of educational attainment.
+This change is already partly implemented: in 2011, the Federal Ministry of Educa-
+tion, Arts and Culture (bm:ukk) released new educational standards for the vocational
+school system [1] which are orientated towards the development of well-defined
+competences. To this end, the ministry compiled competence models, descriptors and
+didactic examples for Informatics in technical high schools (HTL) as part of the pro-
+ject “educational standards in vocational schools”.
+These new curricula induce a twofold change: new contents and an orientation to-
+wards competence attainment. While the adaptation of the contents is caused by the
+dynamics of IT, the change towards competences bears challenges on multiple levels.
+The predominant method in the class rooms is still ex-cathedra teaching where the
+students assume a rather passive role. This is in conflict with the characteristics of
+competence orientation which calls for a paradigm shift in teaching. Therefore, new
+didactic concepts have to be developed that cater to the new contents and the demands
+of competence orientated teaching.
+This paper deals with the development and implementation of a didactic concept
+for the competence field “Industrial Information Technology” (INIT) within the voca-
+tional schools for information technology (HTL for IT) as a case study. The pursuit of
+this new concept entails the following central questions:
+Q1: In which way should teaching be designed as to ensure the educational stand-
+ards for the competence field INIT?
+Q2: In which way can be ensured that individual learning goals are attained in
+combination with personal and social competencies?
+Q3: To what extent does a specific school influence the implementation of the new
+curricula with respect to activity-oriented teaching methods?
+Q4: In which way should teaching be designed as to foster creativity and intrinsic
+motivation?
+Section 2 of this paper discusses Austria’s approach towards competence orienta-
+tion within the vocational schools for IT. In section 3 the case study is presented.
+Finally, an evaluation and discussion can be found in section 4.
+</bodyText>
+<sectionHeader confidence="0.694195" genericHeader="method">
+2 Competence Orientation at Vocational Schools for IT
+</sectionHeader>
+<bodyText confidence="0.999902294117647">
+Educational standards can be seen as precise and binding expectations regarding
+competence attainments of the learners. A so-called competence model (c.f. section
+2.2) serves as basis for the definition of the aspired competences, which include oper-
+ational competences with respect to the learning content. These competences com-
+prise expertise and methodological competences, as well as social and personal com-
+petences. Competence orientation in education systems means a focus on fostering the
+desired competences.
+One of the reasons for a shift towards competence orientation lies in the compara-
+bility of education systems. To that extent, the EU developed the European Qualifica-
+tions Framework (EQF) [2] in 2008.
+In order to improve the quality of informatics education by means of standards and
+competences, there have been initiatives in Germany, like MoKoM [3] or the GI
+standards [4].
+The current initiative in Austria is based on Weinert’s definition of competence
+[5]. The legal basis for competence orientation in vocational schools in Austria is the
+enactment of the respective curricula [6]. Details for the implementation can be found
+in the ministry’s report “educational standards for vocational schools” [7].
+</bodyText>
+<subsectionHeader confidence="0.998065">
+2.1 Teaching Competencies
+</subsectionHeader>
+<bodyText confidence="0.99983275">
+Austria’s new educational standards define the desired learning attainments in terms
+of competencies. Adequate teaching methods are required for the learners to acquire
+these competencies effectively [8, 9, 10]. These have to go beyond the conveyance of
+factual knowledge.
+The ministry’s report “teaching competencies” [11] still defines the main compo-
+nents of teaching as planning, delivering, and assessment, which accounts for tradi-
+tional teaching as well. New territory has to be conquered with regard to the teaching
+methods: They should aim at establishing operational competence, skills and abilities,
+along with personal and social competence. A major difference lies in the learner-
+centered approach as opposed to traditional subject-centered or teacher-centered
+methods. More specifically, learners are no longer mostly passive consumers of con-
+veyed information, but are put to action.
+In this sense the teacher becomes a learning coach, while the learners are encour-
+aged to actively work through the contents, thereby acquiring the desired competenc-
+es. The teacher’s responsibility shifts towards providing suitable conditions, materials
+and a productive atmosphere. In addition to factual knowledge, an interdisciplinary
+embedding of knowledge and skills plays a central role. For teachers this implies a
+coordination and alignment with other teachers with respect to content and timing.
+The ministry’s report [11] further identifies the following criteria as essential to
+successful competence orientated teaching: Structured teaching with clearly defined
+objectives; Diversity of methods, variable forms of learning; Assessment-free space
+for exercises; Facilitation of experiencing competence increase; Motivating environ-
+ment; Development of the ability to accept criticism; Sufficient time for learning pro-
+cesses.
+</bodyText>
+<subsectionHeader confidence="0.995878">
+2.2 Competence model
+</subsectionHeader>
+<bodyText confidence="0.999668352941176">
+The ministry’s competence model defines the desired learning outcomes by means of
+competences. It consists of the two dimensions “content” and “action”, as depicted in
+fig. 1.
+For a vocational school for information technology (HTL IT) the dimension “con-
+tent” defines the contents that are taught in IT. These include software development,
+IT projects, and systems engineering as competence fields. For the case study in this
+paper the competence area industrial information technology (INIT) has been selected
+which belongs to the competence field “systems engineering”. Other areas in this flied
+are: electrical engineering and electronics for IT, basics of informatics, operating
+systems, system integration and infrastructure, and decentralized systems.
+The dimension “action” defines the cognitive effort. This is based on the revised
+Bloom’s taxonomy [12] where the cognitive area of learning goals has been subdivid-
+ed into six categories: Remember, Understand, Apply, Analyze, Evaluate, and Create.
+For Austria’s educational standards, the ministry combined the first two categories
+[13]. The ministry’s report “educational standards for vocational schools” [7] serves
+as a basis for the dimension “action”, together with the more specific “educational
+standards for information technology” [14].
+</bodyText>
+<figure confidence="0.971136111111111">
+Action Dimension
+Descriptors
+1 Software Development
+2 IT Projects
+3 Information Systems
+4 Systems Engineering
+5 Media Technology
+6 Networks
+Content Dimension
+</figure>
+<figureCaption confidence="0.98873">
+Fig. 1. Competence model of a vocational school with focus on IT.
+</figureCaption>
+<subsectionHeader confidence="0.987319">
+2.3 Descriptors
+</subsectionHeader>
+<bodyText confidence="0.999321863636364">
+As can be seen in fig. 1, descriptors are the intersection points of the dimensions “ac-
+tion” and “content”. They describe the expectation in the form of resulting compe-
+tences. The ministry defined a coding syntax [13] for the descriptors in order to
+uniquely assign them to competence areas:
+&amp;lt;school type&amp;gt;&amp;lt;school focus&amp;gt; - &amp;lt;content&amp;gt; . &amp;lt;index&amp;gt; - &amp;lt;action&amp;gt;
+For the school type vocational school for information technology (HTL IT), the
+code is IT, for the school focus “system engineering” the code is S. For basic topics
+the code for the school focus is generally omitted. The code for content is a numerical
+value indicating one of the main educational topics (in our case “systems engineer-
+ing” is represented by 3). The index is used to distinguish multiple descriptors within
+an educational topic. For basics the index can run up to 100. Indices with a value over
+100 indicate focus topics. The code for actions is a letter, where A represents the cat-
+egory “remember and understand”. To illustrate this coding, a few descriptors [13] are
+listed below:
+IT-5.1-B I am able to explain the main scalar data types of a high-level pro-
+gramming language.
+IT-3.23-D I am able to assess an operating system and to choose an appropriate
+one for a given purpose.
+According to [13] IT-5.1-B is assigned to the competence area software develop-
+ment. The student should understand and be able to describe the taught contents “sca-
+lar data types”. IT-3.23-D represents the 23rd competence in the area of systems engi-
+neering at the level of analyzing.
+</bodyText>
+<sectionHeader confidence="0.423073" genericHeader="method">
+3 Case study at HTL Krems
+</sectionHeader>
+<bodyText confidence="0.999942428571429">
+For the case study the vocational school HTL Krems (http://www.htlkrems.ac.at) was
+chosen. The school’s intent is to follow the state-of-the-art as closely as possible,
+which was demonstrated by their great interest in participating in this case study. The
+implementation of the developed didactic concept was done at the school’s depart-
+ment for information technology.
+The recently enacted new curricula [6] had to be applied for the first time in the
+school year 2011/2012 for all first grades in the vocational school.
+</bodyText>
+<subsectionHeader confidence="0.995891">
+3.1 HTL (Technical High Schools)
+</subsectionHeader>
+<bodyText confidence="0.9972832">
+Vocational schools. Vocational schools take five years (from year 9 to 13) and award
+a diploma that not only certifies professional qualifications but also allows university
+access. This type of school is deeply rooted in the Austrian education system with a
+fine tradition. According to [15] about half of the roughly 8000 diploma holder per
+year opt for tertiary education. Those who enter the job market are very welcome by
+employers [16].
+In an international comparison it is hard to classify those diplomas. Within the
+ISCED (International Standard Classification of Education) [17] it could be classified
+between 4A and 5B [18]. To help with the international comparison of educational
+qualification, Europe developed the European Qualification Framework (EQF) [2]
+which defines attainment in the categories “knowledge”, “skills”, and “competencies”
+at eight levels.
+Technical High School for Information Technology (HTL IT). Within the range
+of vocational schools there are the technical high schools, the so-called HTL, which
+come in several different flavors, e.g. for Information Technology (IT). These school
+types devote about half of the weekly hours to general subjects, and the remainder to
+IT specific ones.
+Among the IT specific subjects, the competence field “systems engineering” co-
+vers the most weekly hours, namely 31 over the five years. Systems engineering com-
+prises the competence areas: electrical engineering and electronics for IT, basics of
+informatics, operating systems, system integration and infrastructure, decentralized
+systems, and industrial information technology (INIT).
+Competence area INIT. For the case study, the competence area INIT was select-
+ed which is taught in years 4 and 5. The desired competences for those years [14] are
+listed in the tables 1 and 2.
+</bodyText>
+<tableCaption confidence="0.982591">
+Table 1. Descriptors for competence area INIT, competence levels A, B, and C.
+</tableCaption>
+<table confidence="0.99899275">
+Content Remember/Understand Apply
+Structure and functionality of ... know the basic structure ... are able to apply SPC and
+SPC and micro controller and functionality of SPC and micro controller systems for
+systems micro controller systems technical tasks in typical
+settings within INIT
+Development of typical
+applications
+Industrial field bus systems ... know the structure of ... are able to apply technol-
+typical industrial field bus ogies and methods of indus-
+systems including their tech- trial field bus systems
+nologies and transmission
+methods
+</table>
+<tableCaption confidence="0.848097">
+Table 2. Descriptors for competence area INIT, competence levels D and E.
+</tableCaption>
+<table confidence="0.997499">
+Content Analyze Create
+Data processing, visualiza- ... are able to plan, handle, ... apply SPC and micro
+tion, and communication of document and supervise IT controller systems for devel-
+processes infrastructure for processes opment of networked and
+in INIT real-time systems in industri-
+al scenarios, and to imple-
+ment suitable mechanisms
+for process communication
+for these systems
+Advanced topics in SPC and
+micro controller
+Development of specialized
+systems
+</table>
+<bodyText confidence="0.9662945">
+These competences are not assigned to a school year, neither in the curriculum nor
+in the educational standards. So it is obviously left to the teacher’s responsibility.
+</bodyText>
+<subsectionHeader confidence="0.989027">
+3.2 Requirements
+</subsectionHeader>
+<bodyText confidence="0.999534666666667">
+Based on the given constraints the following requirements for the teaching concept
+could be derived. These requirements are intended for the school years 4 and 5 (over-
+all years 12, 13). In order to increase clarity, four clusters have been formed:
+</bodyText>
+<tableCaption confidence="0.967396">
+Table 3. Requirements for pedagogy and learning psychology.
+</tableCaption>
+<table confidence="0.99059">
+Cluster A: Pedagogy and learning psychology
+A1 Consider aspects of natural, reasonable and incidental learning
+A2 Harness different learning speed
+A3 Set clear teaching goals and identify contents
+</table>
+<tableCaption confidence="0.693075">
+Table 4. Requirements for competence-orientated teaching.
+</tableCaption>
+<table confidence="0.999926714285714">
+Cluster B: Competence-orientated teaching
+B1 Put student to action by employing activity-oriented methods
+B2 Consider individual performance
+B3 Foster intrinsic motivation and creativity
+B4 Use a range of diverse teaching methods
+B5 Leave room for learning processes and reflection
+B6 Support networked thinking and multidisciplinarity
+</table>
+<tableCaption confidence="0.827239">
+Table 5. Requirements for legal and institutional constraints.
+</tableCaption>
+<table confidence="0.996657083333333">
+Cluster C: Legal and institutional constraints
+C1 Descriptor “remember and understand” for micro controllers
+C2 Descriptor “remember and understand” for SPC
+C3 Descriptor “remember and understand” for industrial field buses
+C4 Descriptor “apply” for micro controllers
+C5 Descriptor “apply” for SPC
+C6 Descriptor “apply” for industrial field buses
+C7 Descriptor “analyze” for processes
+C8 Descriptor “create” for micro controllers
+C9 Descriptor “create” for SPC
+C10 Foster development of social and personal competence
+C11 Consider school specific implementation of INIT
+C12 Practical instruction with focus on deepening knowledge
+Table 6. Requirements for embedded systems.
+Cluster D: Embedded Systems
+D1 Consolidation of previous knowledge
+D2 Consider 3S (science, skills, state-of-the-art)
+D3 Introduction to embedded C (essential for practical exercises)
+D4 Modular and open topics for projects with flexible and creative solutions
+D5 Impede plagiarism, foster individual attainment
+D6 Use free software
+D7 Use evaluation kits
+D8 Flexible grading – grade is based on several elective contributions
+D9 Assignments with diverse levels of difficulty and degree of fulfilment
+</table>
+<subsectionHeader confidence="0.882183">
+3.3 Didactical concept
+</subsectionHeader>
+<bodyText confidence="0.8627925">
+Based on the above listed requirements the didactical concept for INIT for year 4 in a
+HTL IT has been derived and is presented in fig. 2.
+</bodyText>
+<figure confidence="0.297088727272727">
+Theory units Thematic blocks Practical exercises
+11 SPC C2
+-
+20
+21 Industrial field bus systems C5
+- C3
+30
+31 Process: data processing, visualization, and communication C6
+-
+35
+School week
+</figure>
+<figureCaption confidence="0.987453">
+Fig. 2. Teaching concept for Industrial Information Technology (INIT) in a HTL IT in year 4.
+</figureCaption>
+<bodyText confidence="0.919765">
+As can be seen, an emphasis has been put onto micro controllers. Furthermore, not all
+requirements are taught in year 4. The remaining requirements are rather taught in
+year 5.
+</bodyText>
+<page confidence="0.645826">
+2
+</page>
+<figure confidence="0.990054888888889">
+7
+3
+4
+6
+9
+1
+5
+8
+10
+T4: Relevant
+componenrs and their
+importance
+T6: Project presentation
+T2: Micro controller
+T 5: Reflection and
+outlook
+T3: Performance
+classes and
+selection criteria
+T1: Introduction
+C1
+B1: Introduction
+PC to micro controller
+B2: Functionality and
+application of a
+mücro controller
+B3: Micro controller
+components
+P1
+P2
+C4
+PE1: Embedded
+software development
+„Hello World“
+PE4: I/O components
+(ADW u. Interrupts)
+PE5: Finalization of
+Group project 2
+PE2: „How to use a
+port“
+PE3: Connection
+of peripheral
+components
+Project 1
+Project 2
+</figure>
+<sectionHeader confidence="0.721947" genericHeader="evaluation">
+4 Evaluation and Discussion
+</sectionHeader>
+<subsectionHeader confidence="0.976359">
+4.1 Evaluation
+</subsectionHeader>
+<bodyText confidence="0.999983813953488">
+The change of paradigm towards competence orientation proved challenging for both,
+teachers and students. Apart from obstacles in administration and organization, the
+change to student-centered teaching makes great demands on teachers. Teachers are
+used to being the center and to immediately react to fuzziness in the learning process.
+This is in conflict with student-centered teaching which should allow sufficient space
+for the student’s own exploration. Aside from necessary self-discipline, phases for
+correction of the instructional process are required. This has to be adequately consid-
+ered during planning.
+Concerning methods which reflect the student-centeredness (e.g. group puzzle[9])
+it must be reported that students do not necessarily appreciate them. Especially stu-
+dents with a performance level well above average moan about the lack of balance
+regarding the cost-benefit ratio. They spend a lot of time instructing others with little
+gain for themselves. These students prefer ex-cathedra teaching because of the con-
+densed information supply. Nevertheless, they appreciate the social aspect of the new
+teaching methods. It would be interesting to see a long-term evaluation for differently
+gifted groups of students.
+With regard to the implementation it may be noted, that for grade 4 in HTL (over-
+all grade 12) competencies are limited by the level “Apply”. Even for that, the intend-
+ed period of 11 weeks of instruction has been overly ambitious. More realistically, 15
+weeks should be planned. The general division of the topics into three major blocks
+proved useful. It turned out that a major difficulty lies in the strict two hour limit for
+practical exercises. Especially, if specialized hardware was used which had to be reas-
+sembled every time from scratch, valuable time was lost. The students, however, did
+not complain extensively as the reassembly reinforced the general understanding of
+the circuits. Alternatively, pre-assembled hardware with peripheral components could
+be used (e.g. buttons, LCD).
+In order to accommodate for individualization within the practical exercises, indi-
+vidual learning goals have been agreed upon. Especially students who work faster
+chose their own additional tasks. Interestingly, this turned out to be motivating for
+other students, as well. A possible reason for this effect could be the inspiring demon-
+stration of the creative possibilities of the employed evaluation kit. Generally, it could
+be observed that the chosen contents and exercises were conducive to the intrinsic
+motivation of the students. It can be concluded that the employment of suitable hard-
+ware kits seems essential.
+Concerning multidisciplinary aspects, the competence areas “IT projects” has been
+successfully coupled with the competence area “project management”. For “project
+management” which is taught 4 hours per week, the students had to accomplish pro-
+jects with contents from INIT. Results show that the students’ choices for INIT con-
+tents were highly ambitious and far beyond the content requirements.
+In summary it can be concluded, that the presented didactical concept served as a
+solid basis for developing the desired competencies up to the level “apply”. There is
+potential for improvement concerning the theory part “micro controller” which was
+too ambitious for one teaching unit.
+</bodyText>
+<subsectionHeader confidence="0.95878">
+4.2 Discussion
+</subsectionHeader>
+<bodyText confidence="0.999681101449276">
+The initially posed central questions can be answered as follows:
+Q1: In which way should teaching be designed as to ensure the educational stand-
+ards for the competence field INIT?
+The presented concept had the educational standards as requirements, and therefore
+shows a possible implementation strategy, but definitely not the only one. School
+specific requirements were considered, as well. These might differ from other
+schools, and again represent one of many possible implementations. The distinction
+into theory and practice blocks was a school requirement, but proved useful. In order
+to support the combination of theory and practice, the contents have been subdivided
+into three major topics. Furthermore, the theory sessions have been designed in an
+open way as to facilitate constructivist learning processes. The application of activity-
+oriented teaching methods has been favored, as well as conceptual knowledge. Con-
+trary to the theory session, the practical exercises (workshops) were more restrictive
+with respect to the activity and expected results.
+It has to be mentioned that there is only a single example in [14] for the compe-
+tence area INIT. This is problematic since the educational standards are fairly general
+and leave plenty of room for interpretation. Furthermore, it becomes evident that both,
+the curriculum as well as the educational standards, are rather ambitious in view of
+the available time frame. Therefore it should be discussed as to what extent the area
+of SPC correlates with the profile of a HTL IT in general. Instead, it might be more
+advisable to emphasize micro controllers.
+Q2: In which way can be ensured that individual learning goals are attained in
+combination with personal and social competencies?
+The didactical concept is based on the idea of achieving personal and social skills
+mainly during the theory sessions. In contrast, the practical exercises focus on indi-
+vidual attainment as they demand the student’s own effort to find solutions. Later on,
+the practical exercises include group work as well, where social interaction is a neces-
+sary part of the task, but personal outcomes are defined, as well.
+Q3: To what extent does a specific school influence the implementation of the new
+curricula with respect to activity-oriented teaching methods?
+The school specific requirement to distinguish theory and practice blocks bears ad-
+vantages as well as disadvantages. Most students appreciate the concept “Theory
+deals with general concepts, while practical exercises deal with a specific technolo-
+gy.” Problems mainly arise from the organizational limit of 50-minutes sessions. The
+consequences of splitting tasks over several sessions remain to be seen. Concerning
+activity-oriented teaching methods, the average class size seems to be challenging. In
+general, there is little flexibility for schools to influence class sizes; a deviation from
+50-minutes sessions is possible, but requires a huge organizational effort.
+The requirement for sufficient time for reflection had to be planned ahead, but does
+not pose a problem in general. Also multidisciplinary aspects have to be planned in
+advance as it requires intensive coordination efforts by the participating teachers.
+Q4: In which way should teaching be designed as to foster creativity and intrinsic
+motivation?
+The open approach to theory sessions provides space for personal development.
+Activity-oriented methods are generally conducive to intrinsic motivation, as students
+tend to acquit themselves well when asked to actively contribute.
+An evaluation kit was used for the practical exercises. Thereby the students could
+test their solutions on physical hardware which could be adjusted to the individual
+tasks. Both, testing and individualization increased the motivation. There was a
+choice of possible tasks, with the possibility of individual flair. Tasks were formulat-
+ed as questions or hypotheses with the intent to arise the student’s interest.
+Furthermore, it can be stated that, due to the complexity of teaching competences,
+teachers are required to exhibit an appropriate willingness, as well as sufficient skills
+for this approach. This starts with a fundamental acceptance of competence orienta-
+tion.
+With the definition of descriptors, it seems that essential steps towards educational
+standards for IT have been made, while some details are still missing. This can be
+derived from the fact that the descriptors in [13] for the educational basics are a draft
+version. Also, while the competence model in [13] uses five dimensions, the one in
+[14] applies six dimensions. A synthesis of these two documents [13, 14] is advisable.
+Additionally, to implement these educational standards, the completion of the proto-
+typical instruction examples in [14] is of great importance. Furthermore, the coding
+syntax of [13] was not applied in [14], which only represents a minor problem.
+As stated by Reinbacher [19] as well, time will prove whether this approach to
+competence orientation in vocational schools actually is an important step towards an
+increase in quality. To achieve this long-term goal it is indispensable to provide a
+fully developed competence model with descriptors that reflect the state-of-the-art.
+In any case, the comparison between educational programs should be more feasible
+than before.
+</bodyText>
+<sectionHeader confidence="0.999792" genericHeader="conclusions">
+5 References
+</sectionHeader>
+<reference confidence="0.9986969375">
+1. Educational standards for vocational schools, Austria
+http://www.bildungsstandards.berufsbildendeschulen.at/en/leitideen.html
+2. EQF – European Qualifications Framework, 2008. http://eur-lex.europa.eu/LexUriServ/
+LexUriServ.do?uri=CELEX:32008H0506%2801%29:EN:NOT
+3. Linck, B., Magenheim, J., Nelles, W., Neugebauer, J., Ohrndorf, L., Schaper, N., Schubert,
+S.: Empirical refinement of a theoretically derived competence model for informatics
+modelling and system comprehension. In: Proceedings of IFIP-Conference Addressing
+Educational Challenges: The Role of ICT (AECRICT), July 2-5, Manchester Metropolitan
+University (2012).
+4. Grundsätze und Standards für die Informatik in der Schule. LOG IN Nr. 150/151, (2008).
+5. Weinert, F.E.: Concept of Competence: A Conceptual Clarification. In: Rychen, D., Sal-
+ganik, L. (eds.): Defining and Selecting Key Competencies. Hofgrefe &amp; Huber, (2001).
+6. Curricula for HTL (Bundesgesetzblatt Nr. 300/2011), Austria
+http://www.htl.at/fileadmin/content/Lehrplan/HTL_VO_2011/BGBl_II_Nr_300_2011.pdf
+7. Bildungsstandards in der Berufsbildung – Projekthandbuch,
+http://www.bildungsstandards.berufsbildendeschulen.at/fileadmin/content/bbs/Handbuch_
+BIST_25.03.2013.pdf
+8. Antonitsch, P.: On Competence-Orientation and Learning Informatics. In: Bezakova, D.,
+Kalas, I. (eds.): Informatics in Schools: Situation, Evolution and Perspectives, Proceedings
+of ISSEP 2011, Selected Papers (on CD). Library and Publishing Centre Comenius Uni-
+versity, Bratislava (2011).
+9. Reich, K. (ed.): Methodenpool, http://methodenpool.uni-koeln.de
+10. Lersch, R.: Kompetenzfördernd unterrichten – 22 Schritte von der Theorie zur Praxis. In:
+Pädagogik 12, (2007).
+11. Fritz, U.: Kompetenzorientiertes Unterrichten – Grundlagenpapier. bm:ukk (ed.), 2011.
+http://www.berufsbildendeschulen.at/fileadmin/content/bbs/KU/Grundlagenpapier_KU_M
+aerz2011.pdf
+12. Anderson, L. W., David R., Krathwohl, D. R., et al (eds.): A Taxonomy for Learning,
+Teaching, and Assessing: A Revision of Bloom&amp;apos;s Taxonomy of Educational Objectives.
+Allyn &amp; Bacon. Boston, MA (Pearson Education Group), (2001).
+13. Höhere technische Lehranstalt für Informationstechnologie – Bildungsstandards in der Be-
+rufsbildung,
+http://www.berufsbildendeschulen.at/fileadmin/content/bbs/AGBroschueren/IT_V8.pdf
+14. Höhere technische Lehranstalt für Informationstechnologie – Fachrichtungsstandard,
+http://www.bildungsstandards.berufsbildendeschulen.at/fileadmin/content/bbs/AGBroschu
+eren/Fachrichtungsstandard_IT_08-09-2011_Druck.pdf
+15. Schneeberger, A.: Mittelfristige Perspektiven der HTL - Erhebung und Analysen zur Si-
+cherung und Weiterentwicklung der Ausbildungsqualität. Juni 2008.
+http://www.ibw.at/html/rb/pdf/rb_43_schneeberger.pdf
+16. Schneeberger, A., Petanovitsch. A.: HTL und Qualifikationsbedarf der Wirtschaft - Analy-
+sen zur Arbeitsmarktlage und europäischer Vergleiche. March 2009.
+http://www.ibw.at/de/pruefungsunterlagen?page=shop.getfile&amp;file_id=306&amp;product_id=2
+88
+17. UNESCO. International Standard Classification of Education, 1997.
+http://www.unesco.org/education/information/nfsunesco/doc/isced_1997.htm
+18. Schneeberger, A.: Internationale Einstufung der österreichischen Berufsbildung - Adäqua-
+te ISCED-Positionierung als bildungspolitische Herausforderung. May 2010,
+http://www.ibw.at/de/pruefungsunterlagen?page=shop.getfile&amp;file_id=404&amp;product_id=3
+</reference>
+<page confidence="0.582082">
+65
+19. Reinbacher, T.: Lehre von Software-Verifikation in der Berufsbildung unter dem Aspekt
+von Bildungsstandards. Master thesis, Vienna University of Technology, (2010).
+</page>
+</variant>
+</algorithm>
+<algorithm name="ParsHed" version="110505">
+<variant no="0" confidence="0.441475">
+<title confidence="0.9642805">Competence Orientation in Vocational Schools – the Case of Industrial Information Technology in Austria</title>
+<author confidence="0.998774">Monika Di</author>
+<affiliation confidence="0.997112">Krems, Department for Information Technology, Krems,</affiliation>
+<email confidence="0.994318">markus.a.brunner@gmail.com</email>
+<affiliation confidence="0.944442">University of Technology, Institute for Computer Aided Automation, Vienna, Austria</affiliation>
+<email confidence="0.6171">monika.diangelo@tuwien.ac.at</email>
+<abstract confidence="0.996419866666667">part of the project “Educational standards in vocational schools” the responsible Federal Ministry compiled competence models, descriptors and didactic examples for Informatics in technical high schools (HTL). The implementation of this project implies a paradigm shift for the vocational school system, which requires a new pedagogic foundation. This paper presents a didactical concept, that meets the requirements of the educational standards in general and competence orientation in particular. A proposal for the implementation of these educational standards in the competence area industrial information technology (INIT) is presented. The specification is based on selected teaching sessions for micro controller technique. Learner-oriented teaching methods are applied, along with procedures to promote the learners’ intrinsic motivation and creativity in general. It became apparent that the competence area INIT conveys remarkably demanding learning outcomes and its implementation proved challenging on multiple levels. schools · competence orientation · educational standards</abstract>
+<intro confidence="0.862281">technical high school · secondary education</intro>
+</variant>
+</algorithm>
+<algorithm name="ParsCit" version="110505">
+<citationList>
+<citation valid="false">
+<title>Educational standards for vocational schools,</title>
+<location>Austria</location>
+<note>http://www.bildungsstandards.berufsbildendeschulen.at/en/leitideen.html</note>
+<contexts>
+<context position="1964" citStr="[1]" startWordPosition="271" endWordPosition="271">tional attainment. This change is already partly implemented: in 2011, the Federal Ministry of Education, Arts and Culture (bm:ukk) released new educational standards for the vocational school system [1] which are orientated towards the development of well-defined competences. To this end, the ministry compiled competence models, descriptors and didactic examples for Informatics in technical high sch</context>
+</contexts>
+<marker>1.</marker>
+<rawString>Educational standards for vocational schools, Austria http://www.bildungsstandards.berufsbildendeschulen.at/en/leitideen.html</rawString>
+</citation>
+<citation valid="true">
+<title>EQF – European Qualifications Framework,</title>
+<date>2008</date>
+<note>http://eur-lex.europa.eu/LexUriServ/ LexUriServ.do?uri=CELEX:32008H0506%2801%29:EN:NOT</note>
+<contexts>
+<context position="4645" citStr="[2]" startWordPosition="677" endWordPosition="677">competences. One of the reasons for a shift towards competence orientation lies in the comparability of education systems. To that extent, the EU developed the European Qualifications Framework (EQF) [2] in 2008. In order to improve the quality of informatics education by means of standards and competences, there have been initiatives in Germany, like MoKoM [3] or the GI standards [4]. The current in</context>
+<context position="11468" citStr="[2]" startWordPosition="1710" endWordPosition="1710">n of Education) [17] it could be classified between 4A and 5B [18]. To help with the international comparison of educational qualification, Europe developed the European Qualification Framework (EQF) [2] which defines attainment in the categories “knowledge”, “skills”, and “competencies” at eight levels. Technical High School for Information Technology (HTL IT). Within the range of vocational schools</context>
+</contexts>
+<marker>2.</marker>
+<rawString>EQF – European Qualifications Framework, 2008. http://eur-lex.europa.eu/LexUriServ/ LexUriServ.do?uri=CELEX:32008H0506%2801%29:EN:NOT</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>B Linck</author>
+<author>J Magenheim</author>
+<author>W Nelles</author>
+<author>J Neugebauer</author>
+<author>L Ohrndorf</author>
+<author>N Schaper</author>
+<author>S Schubert</author>
+</authors>
+<title>Empirical refinement of a theoretically derived competence model for informatics modelling and system comprehension. In:</title>
+<date></date>
+<booktitle>Proceedings of IFIP-Conference Addressing Educational Challenges: The Role of ICT (AECRICT),</booktitle>
+<institution>Manchester Metropolitan University</institution>
+<contexts>
+<context position="4805" citStr="[3]" startWordPosition="703" endWordPosition="703">European Qualifications Framework (EQF) [2] in 2008. In order to improve the quality of informatics education by means of standards and competences, there have been initiatives in Germany, like MoKoM [3] or the GI standards [4]. The current initiative in Austria is based on Weinert’s definition of competence [5]. The legal basis for competence orientation in vocational schools in Austria is the enact</context>
+</contexts>
+<marker>3.</marker>
+<rawString>Linck, B., Magenheim, J., Nelles, W., Neugebauer, J., Ohrndorf, L., Schaper, N., Schubert, S.: Empirical refinement of a theoretically derived competence model for informatics modelling and system comprehension. In: Proceedings of IFIP-Conference Addressing Educational Challenges: The Role of ICT (AECRICT), July 2-5, Manchester Metropolitan University (2012).</rawString>
+</citation>
+<citation valid="true">
+<title>Grundsätze und Standards für die Informatik in der Schule.</title>
+<date>2008</date>
+<journal>LOG IN Nr.</journal>
+<volume>150</volume>
+<contexts>
+<context position="4829" citStr="[4]" startWordPosition="708" endWordPosition="708">Framework (EQF) [2] in 2008. In order to improve the quality of informatics education by means of standards and competences, there have been initiatives in Germany, like MoKoM [3] or the GI standards [4]. The current initiative in Austria is based on Weinert’s definition of competence [5]. The legal basis for competence orientation in vocational schools in Austria is the enactment of the respective c</context>
+</contexts>
+<marker>4.</marker>
+<rawString>Grundsätze und Standards für die Informatik in der Schule. LOG IN Nr. 150/151, (2008).</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>F E Weinert</author>
+</authors>
+<title>Concept of Competence: A Conceptual Clarification.</title>
+<date>2001</date>
+<booktitle>Defining and Selecting Key Competencies. Hofgrefe &amp; Huber,</booktitle>
+<editor>In: Rychen, D., Salganik, L. (eds.):</editor>
+<contexts>
+<context position="4915" citStr="[5]" startWordPosition="721" endWordPosition="721">by means of standards and competences, there have been initiatives in Germany, like MoKoM [3] or the GI standards [4]. The current initiative in Austria is based on Weinert’s definition of competence [5]. The legal basis for competence orientation in vocational schools in Austria is the enactment of the respective curricula [6]. Details for the implementation can be found in the ministry’s report “ed</context>
+</contexts>
+<marker>5.</marker>
+<rawString>Weinert, F.E.: Concept of Competence: A Conceptual Clarification. In: Rychen, D., Salganik, L. (eds.): Defining and Selecting Key Competencies. Hofgrefe &amp; Huber, (2001).</rawString>
+</citation>
+<citation valid="false">
+<title>Curricula for HTL (Bundesgesetzblatt Nr. 300/2011),</title>
+<location>Austria http://www.htl.at/fileadmin/content/Lehrplan/HTL_VO_2011/BGBl_II_Nr_300_2011.pdf</location>
+<contexts>
+<context position="5041" citStr="[6]" startWordPosition="740" endWordPosition="740">rent initiative in Austria is based on Weinert’s definition of competence [5]. The legal basis for competence orientation in vocational schools in Austria is the enactment of the respective curricula [6]. Details for the implementation can be found in the ministry’s report “educational standards for vocational schools” [7]. 2.1 Teaching Competencies Austria’s new educational standards define the desi</context>
+<context position="10551" citStr="[6]" startWordPosition="1566" endWordPosition="1566">t interest in participating in this case study. The implementation of the developed didactic concept was done at the school’s department for information technology. The recently enacted new curricula [6] had to be applied for the first time in the school year 2011/2012 for all first grades in the vocational school. 3.1 HTL (Technical High Schools) Vocational schools. Vocational schools take five year</context>
+</contexts>
+<marker>6.</marker>
+<rawString>Curricula for HTL (Bundesgesetzblatt Nr. 300/2011), Austria http://www.htl.at/fileadmin/content/Lehrplan/HTL_VO_2011/BGBl_II_Nr_300_2011.pdf</rawString>
+</citation>
+<citation valid="false">
+<booktitle>Bildungsstandards in der Berufsbildung – Projekthandbuch, http://www.bildungsstandards.berufsbildendeschulen.at/fileadmin/content/bbs/Handbuch_ BIST_25.03.2013.pdf</booktitle>
+<contexts>
+<context position="5162" citStr="[7]" startWordPosition="757" endWordPosition="757"> in vocational schools in Austria is the enactment of the respective curricula [6]. Details for the implementation can be found in the ministry’s report “educational standards for vocational schools” [7]. 2.1 Teaching Competencies Austria’s new educational standards define the desired learning attainments in terms of competencies. Adequate teaching methods are required for the learners to acquire the</context>
+<context position="8208" citStr="[7]" startWordPosition="1186" endWordPosition="1186">d, Apply, Analyze, Evaluate, and Create. For Austria’s educational standards, the ministry combined the first two categories [13]. The ministry’s report “educational standards for vocational schools” [7] serves as a basis for the dimension “action”, together with the more specific “educational standards for information technology” [14]. Action Dimension Descriptors 1 Software Development 2 IT Project</context>
+</contexts>
+<marker>7.</marker>
+<rawString>Bildungsstandards in der Berufsbildung – Projekthandbuch, http://www.bildungsstandards.berufsbildendeschulen.at/fileadmin/content/bbs/Handbuch_ BIST_25.03.2013.pdf</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>P Antonitsch</author>
+</authors>
+<title>On Competence-Orientation and Learning Informatics.</title>
+<date>2011</date>
+<booktitle>Informatics in Schools: Situation, Evolution and Perspectives, Proceedings of ISSEP 2011, Selected Papers (on CD). Library and Publishing</booktitle>
+<editor>In: Bezakova, D., Kalas, I. (eds.):</editor>
+<institution>Centre Comenius University,</institution>
+<location>Bratislava</location>
+<contexts>
+<context position="5400" citStr="[8, 9, 10]" startWordPosition="787" endWordPosition="789">Austria’s new educational standards define the desired learning attainments in terms of competencies. Adequate teaching methods are required for the learners to acquire these competencies effectively [8, 9, 10]. These have to go beyond the conveyance of factual knowledge. The ministry’s report “teaching competencies” [11] still defines the main components of teaching as planning, delivering, and assessment,</context>
+</contexts>
+<marker>8.</marker>
+<rawString>Antonitsch, P.: On Competence-Orientation and Learning Informatics. In: Bezakova, D., Kalas, I. (eds.): Informatics in Schools: Situation, Evolution and Perspectives, Proceedings of ISSEP 2011, Selected Papers (on CD). Library and Publishing Centre Comenius University, Bratislava (2011).</rawString>
+</citation>
+<citation valid="false">
+<editor>Reich, K. (ed.):</editor>
+<note>Methodenpool, http://methodenpool.uni-koeln.de</note>
+<contexts>
+<context position="5400" citStr="[8, 9, 10]" startWordPosition="787" endWordPosition="789">Austria’s new educational standards define the desired learning attainments in terms of competencies. Adequate teaching methods are required for the learners to acquire these competencies effectively [8, 9, 10]. These have to go beyond the conveyance of factual knowledge. The ministry’s report “teaching competencies” [11] still defines the main components of teaching as planning, delivering, and assessment,</context>
+<context position="17902" citStr="[9]" startWordPosition="2671" endWordPosition="2671">ine, phases for correction of the instructional process are required. This has to be adequately considered during planning. Concerning methods which reflect the student-centeredness (e.g. group puzzle[9]) it must be reported that students do not necessarily appreciate them. Especially students with a performance level well above average moan about the lack of balance regarding the cost-benefit ratio.</context>
+</contexts>
+<marker>9.</marker>
+<rawString>Reich, K. (ed.): Methodenpool, http://methodenpool.uni-koeln.de</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>R Lersch</author>
+</authors>
+<title>Kompetenzfördernd unterrichten – 22 Schritte von der Theorie zur Praxis. In: Pädagogik 12,</title>
+<date>2007</date>
+<contexts>
+<context position="5400" citStr="[8, 9, 10]" startWordPosition="787" endWordPosition="789">Austria’s new educational standards define the desired learning attainments in terms of competencies. Adequate teaching methods are required for the learners to acquire these competencies effectively [8, 9, 10]. These have to go beyond the conveyance of factual knowledge. The ministry’s report “teaching competencies” [11] still defines the main components of teaching as planning, delivering, and assessment,</context>
+</contexts>
+<marker>10.</marker>
+<rawString>Lersch, R.: Kompetenzfördernd unterrichten – 22 Schritte von der Theorie zur Praxis. In: Pädagogik 12, (2007).</rawString>
+</citation>
+<citation valid="false">
+<date>2011</date>
+<editor>Fritz, U.: Kompetenzorientiertes Unterrichten – Grundlagenpapier. bm:ukk (ed.),</editor>
+<note>http://www.berufsbildendeschulen.at/fileadmin/content/bbs/KU/Grundlagenpapier_KU_M aerz2011.pdf</note>
+<contexts>
+<context position="5513" citStr="[11]" startWordPosition="805" endWordPosition="805"> methods are required for the learners to acquire these competencies effectively [8, 9, 10]. These have to go beyond the conveyance of factual knowledge. The ministry’s report “teaching competencies” [11] still defines the main components of teaching as planning, delivering, and assessment, which accounts for traditional teaching as well. New territory has to be conquered with regard to the teaching m</context>
+<context position="6615" citStr="[11]" startWordPosition="966" endWordPosition="966">sciplinary embedding of knowledge and skills plays a central role. For teachers this implies a coordination and alignment with other teachers with respect to content and timing. The ministry’s report [11] further identifies the following criteria as essential to successful competence orientated teaching: Structured teaching with clearly defined objectives; Diversity of methods, variable forms of learn</context>
+</contexts>
+<marker>11.</marker>
+<rawString>Fritz, U.: Kompetenzorientiertes Unterrichten – Grundlagenpapier. bm:ukk (ed.), 2011. http://www.berufsbildendeschulen.at/fileadmin/content/bbs/KU/Grundlagenpapier_KU_M aerz2011.pdf</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>L W Anderson</author>
+<author>R David</author>
+<author>D R Krathwohl</author>
+</authors>
+<date>2001</date>
+<booktitle>A Taxonomy for Learning, Teaching, and Assessing: A Revision of Bloom&amp;apos;s Taxonomy of Educational Objectives. Allyn &amp; Bacon.</booktitle>
+<editor>et al (eds.):</editor>
+<publisher>(Pearson Education Group),</publisher>
+<location>Boston, MA</location>
+<contexts>
+<context position="7901" citStr="[12]" startWordPosition="1144" endWordPosition="1144">of informatics, operating systems, system integration and infrastructure, and decentralized systems. The dimension “action” defines the cognitive effort. This is based on the revised Bloom’s taxonomy [12] where the cognitive area of learning goals has been subdivided into six categories: Remember, Understand, Apply, Analyze, Evaluate, and Create. For Austria’s educational standards, the ministry combi</context>
+</contexts>
+<marker>12.</marker>
+<rawString>Anderson, L. W., David R., Krathwohl, D. R., et al (eds.): A Taxonomy for Learning, Teaching, and Assessing: A Revision of Bloom&amp;apos;s Taxonomy of Educational Objectives. Allyn &amp; Bacon. Boston, MA (Pearson Education Group), (2001).</rawString>
+</citation>
+<citation valid="false">
+<booktitle>Höhere technische Lehranstalt für Informationstechnologie – Bildungsstandards in der Berufsbildung, http://www.berufsbildendeschulen.at/fileadmin/content/bbs/AGBroschueren/IT_V8.pdf</booktitle>
+<contexts>
+<context position="8134" citStr="[13]" startWordPosition="1177" endWordPosition="1177">learning goals has been subdivided into six categories: Remember, Understand, Apply, Analyze, Evaluate, and Create. For Austria’s educational standards, the ministry combined the first two categories [13]. The ministry’s report “educational standards for vocational schools” [7] serves as a basis for the dimension “action”, together with the more specific “educational standards for information technolo</context>
+<context position="8801" citStr="[13]" startWordPosition="1278" endWordPosition="1278">n in fig. 1, descriptors are the intersection points of the dimensions “action” and “content”. They describe the expectation in the form of resulting competences. The ministry defined a coding syntax [13] for the descriptors in order to uniquely assign them to competence areas: &amp;lt;school type&amp;gt;&amp;lt;school focus&amp;gt; - &amp;lt;content&amp;gt; . &amp;lt;index&amp;gt; - &amp;lt;action&amp;gt; For the school type vocational school for information technology</context>
+<context position="9617" citStr="[13]" startWordPosition="1415" endWordPosition="1415"> to 100. Indices with a value over 100 indicate focus topics. The code for actions is a letter, where A represents the category “remember and understand”. To illustrate this coding, a few descriptors [13] are listed below: IT-5.1-B I am able to explain the main scalar data types of a high-level programming language. IT-3.23-D I am able to assess an operating system and to choose an appropriate one for</context>
+<context position="25004" citStr="[13]" startWordPosition="3759" endWordPosition="3759">tion of descriptors, it seems that essential steps towards educational standards for IT have been made, while some details are still missing. This can be derived from the fact that the descriptors in [13] for the educational basics are a draft version. Also, while the competence model in [13] uses five dimensions, the one in [14] applies six dimensions. A synthesis of these two documents [13, 14] is a</context>
+</contexts>
+<marker>13.</marker>
+<rawString>Höhere technische Lehranstalt für Informationstechnologie – Bildungsstandards in der Berufsbildung, http://www.berufsbildendeschulen.at/fileadmin/content/bbs/AGBroschueren/IT_V8.pdf</rawString>
+</citation>
+<citation valid="false">
+<booktitle>Höhere technische Lehranstalt für Informationstechnologie – Fachrichtungsstandard, http://www.bildungsstandards.berufsbildendeschulen.at/fileadmin/content/bbs/AGBroschu</booktitle>
+<pages>08--09</pages>
+<contexts>
+<context position="8342" citStr="[14]" startWordPosition="1205" endWordPosition="1205">e ministry’s report “educational standards for vocational schools” [7] serves as a basis for the dimension “action”, together with the more specific “educational standards for information technology” [14]. Action Dimension Descriptors 1 Software Development 2 IT Projects 3 Information Systems 4 Systems Engineering 5 Media Technology 6 Networks Content Dimension Fig. 1. Competence model of a vocational</context>
+<context position="12465" citStr="[14]" startWordPosition="1857" endWordPosition="1857">and industrial information technology (INIT). Competence area INIT. For the case study, the competence area INIT was selected which is taught in years 4 and 5. The desired competences for those years [14] are listed in the tables 1 and 2. Table 1. Descriptors for competence area INIT, competence levels A, B, and C. Content Remember/Understand Apply Structure and functionality of ... know the basic str</context>
+<context position="21688" citStr="[14]" startWordPosition="3253" endWordPosition="3253">trary to the theory session, the practical exercises (workshops) were more restrictive with respect to the activity and expected results. It has to be mentioned that there is only a single example in [14] for the competence area INIT. This is problematic since the educational standards are fairly general and leave plenty of room for interpretation. Furthermore, it becomes evident that both, the curric</context>
+<context position="25131" citStr="[14]" startWordPosition="3781" endWordPosition="3781">still missing. This can be derived from the fact that the descriptors in [13] for the educational basics are a draft version. Also, while the competence model in [13] uses five dimensions, the one in [14] applies six dimensions. A synthesis of these two documents [13, 14] is advisable. Additionally, to implement these educational standards, the completion of the prototypical instruction examples in [1</context>
+</contexts>
+<marker>14.</marker>
+<rawString>Höhere technische Lehranstalt für Informationstechnologie – Fachrichtungsstandard, http://www.bildungsstandards.berufsbildendeschulen.at/fileadmin/content/bbs/AGBroschu eren/Fachrichtungsstandard_IT_08-09-2011_Druck.pdf</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>A Schneeberger</author>
+</authors>
+<title>Mittelfristige Perspektiven der HTL - Erhebung und Analysen zur Sicherung und Weiterentwicklung der Ausbildungsqualität. Juni</title>
+<date>2008</date>
+<note>http://www.ibw.at/html/rb/pdf/rb_43_schneeberger.pdf</note>
+<contexts>
+<context position="10990" citStr="[15]" startWordPosition="1638" endWordPosition="1638">iploma that not only certifies professional qualifications but also allows university access. This type of school is deeply rooted in the Austrian education system with a fine tradition. According to [15] about half of the roughly 8000 diploma holder per year opt for tertiary education. Those who enter the job market are very welcome by employers [16]. In an international comparison it is hard to clas</context>
+</contexts>
+<marker>15.</marker>
+<rawString>Schneeberger, A.: Mittelfristige Perspektiven der HTL - Erhebung und Analysen zur Sicherung und Weiterentwicklung der Ausbildungsqualität. Juni 2008. http://www.ibw.at/html/rb/pdf/rb_43_schneeberger.pdf</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>A Schneeberger</author>
+<author>Petanovitsch</author>
+</authors>
+<title>A.: HTL und Qualifikationsbedarf der Wirtschaft - Analysen zur Arbeitsmarktlage und europäischer Vergleiche.</title>
+<date>2009</date>
+<note>http://www.ibw.at/de/pruefungsunterlagen?page=shop.getfile&amp;file_id=306&amp;product_id=2</note>
+<contexts>
+<context position="11139" citStr="[16]" startWordPosition="1664" endWordPosition="1664">ucation system with a fine tradition. According to [15] about half of the roughly 8000 diploma holder per year opt for tertiary education. Those who enter the job market are very welcome by employers [16]. In an international comparison it is hard to classify those diplomas. Within the ISCED (International Standard Classification of Education) [17] it could be classified between 4A and 5B [18]. To hel</context>
+</contexts>
+<marker>16.</marker>
+<rawString>Schneeberger, A., Petanovitsch. A.: HTL und Qualifikationsbedarf der Wirtschaft - Analysen zur Arbeitsmarktlage und europäischer Vergleiche. March 2009. http://www.ibw.at/de/pruefungsunterlagen?page=shop.getfile&amp;file_id=306&amp;product_id=2</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>UNESCO</author>
+</authors>
+<title>International Standard Classification of Education,</title>
+<date>1997</date>
+<note>http://www.unesco.org/education/information/nfsunesco/doc/isced_1997.htm</note>
+<contexts>
+<context position="11285" citStr="[17]" startWordPosition="1684" endWordPosition="1684">ho enter the job market are very welcome by employers [16]. In an international comparison it is hard to classify those diplomas. Within the ISCED (International Standard Classification of Education) [17] it could be classified between 4A and 5B [18]. To help with the international comparison of educational qualification, Europe developed the European Qualification Framework (EQF) [2] which defines at</context>
+</contexts>
+<marker>17.</marker>
+<rawString>UNESCO. International Standard Classification of Education, 1997. http://www.unesco.org/education/information/nfsunesco/doc/isced_1997.htm</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>A Schneeberger</author>
+</authors>
+<title>Internationale Einstufung der österreichischen Berufsbildung - Adäquate ISCED-Positionierung als bildungspolitische Herausforderung.</title>
+<date>2010</date>
+<pages>404--3</pages>
+<contexts>
+<context position="11331" citStr="[18]" startWordPosition="1693" endWordPosition="1693">ployers [16]. In an international comparison it is hard to classify those diplomas. Within the ISCED (International Standard Classification of Education) [17] it could be classified between 4A and 5B [18]. To help with the international comparison of educational qualification, Europe developed the European Qualification Framework (EQF) [2] which defines attainment in the categories “knowledge”, “skill</context>
+</contexts>
+<marker>18.</marker>
+<rawString>Schneeberger, A.: Internationale Einstufung der österreichischen Berufsbildung - Adäquate ISCED-Positionierung als bildungspolitische Herausforderung. May 2010, http://www.ibw.at/de/pruefungsunterlagen?page=shop.getfile&amp;file_id=404&amp;product_id=3</rawString>
+</citation>
+</citationList>
+</algorithm>
+</algorithms>

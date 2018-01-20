@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<algorithms version="110505">
+<algorithm name="SectLabel" version="110505">
+<variant no="0" confidence="0.105479">
+<title confidence="0.9968015">
+spock: A Debugging Support Tool for Logic Programs
+under the Answer-Set Semantics⋆
+</title>
+<author confidence="0.9890665">
+Martin Gebser1, Jörg Pührer2, Torsten Schaub1,
+Hans Tompits2, and Stefan Woltran2
+</author>
+<address confidence="0.5859555">
+1 Institut f¨ur Informatik, Universität Potsdam,
+August-Bebel-Straße 89, D-14482 Potsdam, Germany
+</address>
+<email confidence="0.763397">
+{gebser,torsten}@cs.uni-potsdam.de
+</email>
+<address confidence="0.621816">
+2 Institut f¨ur Informationssysteme, Technische Universität Wien,
+Favoritenstraße 9–11, A–1040 Vienna, Austria
+</address>
+<email confidence="0.8566945">
+{puehrer,tompits}@kr.tuwien.ac.at
+woltran@dbai.tuwien.ac.at
+</email>
+<bodyText confidence="0.987502083333334">
+Abstract. Answer-set programming (ASP) is an emerging logic-programming
+paradigm that strictly separates the description of a problem from its solving
+methods. Despite its semantic elegance, ASP suffers from a lack of support for
+program developers. In particular, tools are needed that help engineers in de-
+tecting erroneous parts of their programs. Unlike in other areas of logic pro-
+gramming, applying tracing techniques for debugging logic programs under the
+answer-set semantics seems rather unnatural, since employing imperative solv-
+ing algorithms would undermine the declarative flavour of ASP. In this paper,
+we present the system spock, a debugging support tool for answer-set programs
+making use of ASP itself. The implemented techniques maintain the declarative
+nature of ASP within the debugging process and are independent of the actual
+computation of answer sets.
+</bodyText>
+<sectionHeader confidence="0.986186" genericHeader="abstract">
+1 General Information
+</sectionHeader>
+<bodyText confidence="0.9960651875">
+Answer-set programming (ASP) [1] has become an important logic-programming
+paradigm for declarative problem solving, incorporating fundamental concepts of non-
+monotonic reasoning. A major reason why ASP has not yet found a more widespread
+popularity as a problem-solving technique, however, is its lack of suitable engineering
+tools for developing programs. In particular, realising tools for debugging answer-set
+programs is a clearly recognised issue in the ASP community, and several approaches
+in this direction have been proposed in recent years [2–5].
+From a theoretical point of view, the nonmonotonicity of answer-set programs is
+an aggravating factor for detecting sources of errors, since every rule of a program
+might significantly influence the resulting answer sets. On the other hand, applying
+tracing techniques for debugging logic programs under the answer-set semantics seems
+rather unnatural, since employing imperative solving algorithms would undermine the
+declarative flavour of ASP.
+⋆ This work was partially supported by the Austrian Science Fund (FWF) under project P18019.
+In this paper, we discuss the main features of the system spock [6], which supports
+developers of answer-set programs in locating errors in their programs by exploiting
+the declarative nature of ASP itself, but being independent of specific ASP solvers. The
+name “spock” makes reference to the fact that detecting errors is done by means of
+logic, just like the popular Vulcan of Star Trek fame.
+The theoretical background of the implemented methods was introduced in previ-
+ous work [5], exploiting and extending a tagging technique as used by Delgrande et
+al. [7] for compiling ordered logic programs into standard ones. In our approach, a pro-
+gram to debug, 11, is augmented with dedicated meta-atoms, called tags, serving two
+purposes: Firstly, they allow for controlling and manipulating the applicability of rules,
+and secondly, tags occurring in the answer sets of the extended program reflect various
+properties of 11. Our tool implements the tagging process and further related transla-
+tions for a program 11 to debug, allowing for an extrapolation of non-existing answer
+sets in combination with explanations why an interpretation is not an answer set of 11.
+For illustration of the debugging questions addressed, consider the problem of invit-
+ing guests to a party when it is known that some of them would appear only if certain
+others do or do not attend the festivity. An instance of such a setting is encoded in
+program 11inv, where each atom represents the appearing of a potential party visitor:
+</bodyText>
+<equation confidence="0.997923666666667">
+r1 = jim &lt;-- uhura, r4 = chekov &lt;-- not bones,
+r2 = jim &lt;-- not chekov, r5 = bones &lt;-- jim,
+r3 = uhura &lt;-- chekov, not scotty, r6 = scotty &lt;-- not uhura.
+</equation>
+<bodyText confidence="0.999942714285714">
+This program has two answer sets, viz., {chekov, scotty} and {bones, jim, scotty}.
+Assume that Sulu, the programmer, is quite perplexed by this result, wondering why
+there is a scenario where only Chekov and Scotty, who merely have a neutral relation to
+each other rather than a friendship, attend. On the other hand, he is astonished as there
+is no possibility such that Uhura and Jim can jointly be invited. With the help of the tool
+spock, reasons for such mismatches between the expected and the actual semantics of
+a program can be found.
+</bodyText>
+<sectionHeader confidence="0.988975" genericHeader="keywords">
+2 Background
+</sectionHeader>
+<subsectionHeader confidence="0.993673">
+2.1 Answer-Set Programs
+</subsectionHeader>
+<bodyText confidence="0.966267916666667">
+A (normal) logic program (over an alphabet A) is a finite set of rules of the form
+a &lt;-- b1, ... , bm, not c1, ... , not cn, (1)
+where a and bi, cj E A are atoms, for 0 &lt; i &lt; m, 0 &lt; j &lt; n. A literal is an atom a or
+its negation not a. For a rule r as in (1), let head (r) = a be the head of r and body(r) =
+{b1, ... , bm, not c1, ... , not cn} the body of r. Furthermore, we define body+(r) =
+{b1, ... , bm} and body−(r) = {c1, ... , cn}. For a logic program 11, a set X of atoms
+is an answer set of 11 iff X is a minimal model of {head(r) &lt;-- body+(r)  |r E 11,
+body−(r)nX = 0}. For uniformity, we assume that any integrity constraint &lt;-- body(r)
+is expressed as a rule w &lt;-- body (r), not w, where w is a globally new atom. Moreover,
+we allow nested expressions of form not not a, where a is some atom, in the body of
+rules. Such rules are identified with normal rules in which not not a is replaced by
+not a⋆, where a⋆ is a globally new atom, together with an additional rule a⋆ &lt;-- not a.
+</bodyText>
+<subsectionHeader confidence="0.994887">
+2.2 Tagging-Based Debugging
+</subsectionHeader>
+<bodyText confidence="0.9926076">
+In what follows, we sketch the theoretical principles underlying our system spock. For
+a more detailed discussion, we refer to Brain et al. [5]. The main idea of tagging is to
+split the head from the body, for each rule in a program, and thereby to intervene into
+the applicability of rules. After this division, tags are installed for triggering rules. This
+way, the formation of answer sets can be controlled, and tags in the answer sets of the
+transformed (or tagged) program reflect inherent properties of the original program.
+Technically, a program 11 (over alphabet A) to debug is rewritten into a program
+TK[11] over an extended alphabet A+. Let 11 be a logic program over A and consider a
+bijection n, assigning to each rule r over A a unique name nr. Then, the program TK[11]
+over A+ consists of the following rules, for r ∈ 11, b ∈ body+(r), and c ∈ body−(r):
+</bodyText>
+<equation confidence="0.8420836">
+head(r) &lt;-- ap(nr), not ko(nr),
+ap(nr) &lt;-- ok(nr), body(r),
+bl(nr) &lt;-- ok(nr), not b,
+bl(nr) &lt;-- ok(nr), not not c,
+ok(nr) &lt;-- not ok(nr).
+</equation>
+<bodyText confidence="0.999971695652174">
+The tags ap(nr) and bl(nr) express whether a rule r is applicable or blocked, respec-
+tively, while the control tags ko(nr), ok(nr), and ok(nr) are used for manipulating the
+application of r. Intuitively, the rules of 11 are split into rules of forms (2) and (3),
+separating the applicability of a rule from the actual occurrence of the respective rule
+head in an interpretation. Analogously, rules of forms (4) and (5) elicit which rules are
+blocked. Tags stating whether rule r is applicable or blocked are only derived if ok(nr)
+holds, which is by default the case, as expressed by rules of form (6).
+We call TK[11] the kernel tagging of 11, since it serves as a basic submodule for more
+enhanced programs facilitating certain debugging requests. One such extension scenario
+is the extrapolation of non-existing answer sets of a program 11 over A. Using further
+translations, TP, TC, and TL [5], the occurrence of abnormality tags, abp(nr), abc(a),
+and abl(a), respectively, in an answer set X+ of the transformed program provides
+information why an interpretation X = X+ ∩ A is not an answer set of 11. Here, we
+make use of the Lin-Zhao theorem [8], which qualifies answer sets as models of the
+completion [9] and the loop formulas of a program. In particular, the program-oriented
+abnormality tag abp(nr) indicates that rule r is applicable but not satisfied with respect
+to an interpretation. The completion-oriented abnormality tag abc(a) signals that a is
+in the considered interpretation but all rules having a as head are blocked. Finally,
+the presence of a loop-oriented abnormality tag abl(a) indicates that the derivation
+of atom a might recursively depend on a itself and, therefore, violate the minimality
+criterion for answer sets. Note that all transformations used are polynomial in the size
+of the input program and can be constructed for all programs under consideration, even
+for programs without answer sets.
+</bodyText>
+<figure confidence="0.9997996">
+Input Program
+&lt;file_1&gt;
+&lt;file_2&gt;
+...
+Standard Input
+&lt;file_n&gt;
+Command-Line
+Arguments
+Program
+Translation
+Internal
+Program
+Representation
+spock
+Parser
+</figure>
+<figureCaption confidence="0.99635">
+Fig. 1. Data flow of program translations
+</figureCaption>
+<sectionHeader confidence="0.994208" genericHeader="introduction">
+3 System
+</sectionHeader>
+<bodyText confidence="0.995392875">
+spock is a command-line oriented tool, written in Java 5.0 and published under the
+GNU general public license [10]. It is publicly available at
+http://www.kr.tuwien.ac.at/research/debug
+as a jar-package including binaries and sources.
+The data flow for all transformations is depicted by Fig. 1. First, the input program
+is parsed and represented in an internal data structure. Then, the actual program trans-
+formation is performed, as specified by command-line arguments.
+The tagging technique uses labels to refer to individual rules. Therefore, we al-
+low the programmer to add labels to the rules of the program to debug. As this re-
+quires an extension of the program syntax, spock offers an interface to dlv [11] and
+lparse/smodels [12] for computing answer sets of labelled programs.
+For illustration of the debugging process, reconsider program 17i„,,,, having the an-
+swer sets X1 = {chekov, scotty} and X2 = {bones, jim, scotty}, and assume that it
+is stored in file FILE. The kernel tagging TK[17i„,,, ] is then obtained by the call
+java -jar spock.jar -k FILE .
+By piping the result of the command to an answer-set solver, we obtain the answer sets
+</bodyText>
+<equation confidence="0.999774">
+X1+ = X1 ∪ {ap(n,4), ap(n,6), bl(n,1), bl(n,2), bl(n,3), bl(n,5)} ∪ OK and
+X2+ = X2 ∪ {ap(n,2), ap(n,5), ap(n,6), bl(n,1), bl(n,3), bl(n,4)} ∪ OK,
+</equation>
+<bodyText confidence="0.998577071428571">
+where OK = {ok(n,1), ok(n,2), ok(nr3), ok(n,4), ok(n,5), ok(n,6)}, extending X1
+and X2 by information about the applicability of rules. E.g., the presence of ap(n,4)
+in X1+ indicates that rule r4 is applicable with respect to X1, and hence chekov ∈ X1
+but bones ∈/ X1, while bl(n,3) ∈ X1+ indicates that r3 is blocked with respect to X1.
+This is because scotty ∈ X1.
+The flags ‘-expo’, ‘-exco’, and ‘-exlo’ activate the extrapolation translations
+TP, TC, and TL, respectively. Instead of using all three flags simultaneously, setting
+‘-ex’ produces the union of the resulting programs. Furthermore, in order to restrict
+the scope of transformation TP to a subprogram Π′ (respectively, translations TC, TL
+to sets AC, AL of atoms), the names of the considered rules (respectively, atoms)
+can be explicitly stated in a comma-separated list following the ‘-exrules=’ (resp.,
+‘-exatomsC=’ and ‘-exatomsL=’) flag. Finally, spock allows for computing only
+abnormality-minimum answer sets by means of dlv-specific weak constraints. The
+flags ‘-minab’, ‘-minabp’, ‘-minabc’, or ‘-minabl’ make spock output weak
+constraints for minimising all abnormality tags, program-oriented abnormality tags,
+completion-oriented abnormality tags, or loop-oriented abnormality tags, respectively.
+As for our example, recall that Sulu wanted to know why there is no chance for
+Uhura and Jim to attend the same party. Therefore, we add the constraints &lt;-- not uhura
+and &lt;-- not jim to Πi„,,,. Let file FILE2 contain the overall program, which does not
+have answer sets. The (optimal) answer sets of the tagged program obtained by the call
+java -jar spock.jar -k -ex -exrules=r1,r2,r3,r4,r5,r6
+-minab FILE2 ,
+projected to the atoms occurring in Πi„,,, and the abnormality tags, are given by
+{abc(chekov), bones, chekov, jim, uhura}, {abc(uhura), bones, jim, uhura}, and
+{abp(nr5), chekov, jim, uhura}, indicating that {bones, chekov, jim, uhura} is not an
+answer set of Πi„,,, because atom chekov is not supported. Likewise, uhura is not sup-
+ported with respect to {bones, jim, uhura}. Finally, {chekov, jim, uhura} is not an
+answer set as it does not satisfy rule r5.
+</bodyText>
+<sectionHeader confidence="0.99198" genericHeader="discussions">
+4 Discussion and Related Work
+</sectionHeader>
+<bodyText confidence="0.999974692307692">
+In this paper, we presented spock, a prototype implementation of a debugging sup-
+port tool for answer-set programs. The implemented methodology relies on theoretical
+results of previous work [5] and is based on the idea that programs to be debugged
+are translated into other programs having answer sets that offer debugging-relevant in-
+formation about the original programs. After an initial kernel transformation, we get
+insight into the applicability of rules with respect to individual answer sets. In a further
+step, the system allows for identifying causes why interpretations are not answer sets.
+Here, spock distinguishes between abnormalities due to missing or spare atoms, or
+atoms whose presence in an interpretation is self-caused. In order to restrict the amount
+of information returned to the programmer, standard ASP optimisation techniques can
+be used to focus on interpretations with a minimal number of abnormalities. In addition
+to the tagging technique described here, spock also supports another approach towards
+debugging answer-set programs based on meta-programming [13,14]. Future work in-
+cludes the integration of further aspects of the translation approach and the design of a
+graphical user interface to ease the use of the features spock provides.
+Implementations of related techniques include smdebug [3], a prototype debugger
+focusing on odd-cycle-free inconsistent programs. The system is designed to find mini-
+mal sets of constraints, restoring consistency when removed from a program. Brain and
+De Vos [2] present the system IDEAS, implementing two query algorithms addressing
+the questions why a set of literals is true with respect to some or false with respect to
+all answer sets of a program. Both algorithms are procedural and similar to the ones
+used in ASP solvers, suggesting that an approach using program-level transformations
+would be more practical. Pontelli and Son [4] developed a preliminary implementa-
+tion for their adoption of so-called justifications [15,16] to the problem of debugging
+answer-set programs. Their system returns visual output in form of graphs explaining
+why atoms are (not) present in an answer set.
+</bodyText>
+<sectionHeader confidence="0.998547" genericHeader="references">
+References
+</sectionHeader>
+<reference confidence="0.999979909090909">
+1. Baral, C.: Knowledge Representation, Reasoning and Declarative Problem Solving. Cam-
+bridge University Press (2003)
+2. Brain, M., De Vos, M.: Debugging Logic Programs under the Answer Set Semantics. In:
+Proc. ASP’05. Volume 142, CEUR Workshop Proceedings (CEUR-WS.org) (2005) 141–152
+3. Syrjänen, T.: Debugging Inconsistent Answer Set Programs. In: Proc. NMR’06. (2006)
+77–83
+4. Pontelli, E., Son, T.: Justifications for Logic Programs under Answer Set Semantics. In:
+Proc. ICLP’06. Springer (2006) 196–210
+5. Brain, M., Gebser, M., Pührer, J., Schaub, T., Tompits, H., Woltran, S.: Debugging ASP
+Programs by means of ASP. In: Proc. LPNMR’07. Springer (2007) 31–43
+6. Brain, M., Gebser, M., Pührer, J., Schaub, T., Tompits, H., Woltran, S.: “That is Illogical
+Captain!” – The Debugging Support Tool spock for Answer-Set Programs: System Descrip-
+tion. In: Proc. SEA’07. (2007) 71–85
+7. Delgrande, J., Schaub, T., Tompits, H.: A Framework for Compiling Preferences in Logic
+Programs. Theory and Practice of Logic Programming 3 (2003) 129–187
+8. Lin, F., Zhao, Y.: ASSAT: Computing Answer Sets of a Logic Program by SAT Solvers.
+Artificial Intelligence 157 (2004) 115–137
+9. Clark, K.: Negation as Failure. In: Logic and Data Bases. Plenum Press (1978) 293–322
+10. GNU General Public License – Version 2, June 1991. Free Software Foundation Inc. (1991)
+http://www.gnu.org/copyleft/gpl.html
+11. Leone, N., Pfeifer, G., Faber, W., Eiter, T., Gottlob, G., Perri, S., Scarcello, F.: The DLV
+System for Knowledge Representation and Reasoning. ACM Transactions on Computational
+Logic 7 (2006) 499–562
+12. Simons, P., Niemelä, I., Soininen, T.: Extending and Implementing the Stable Model Seman-
+tics. Artificial Intelligence 138 (2002) 181–234
+13. Pührer, J.: On Debugging of Propositional Answer-Set Programs. Master’s thesis, Vienna
+University of Technology, Austria (2007)
+14. Gebser, M., Pührer, J., Schaub, T., Tompits, H.: A Meta-Programming Technique for De-
+bugging Answer-Set Programs. In: Proc. AAAI’08. (2008) To appear
+15. Roychoudhury, A., Ramakrishnan, C., Ramakrishnan, I.: Justifying Proofs using Memo
+Tables. In: Proc. PPDP’00. (2000) 178–189
+16. Specht, G.: Generating Explanation Trees even for Negations in Deductive Database Sys-
+tems. In: Proc. LPE’93. (1993) 8–13
+</reference>
+</variant>
+</algorithm>
+<algorithm name="ParsHed" version="110505">
+<variant no="0" confidence="0.001936">
+<title confidence="0.921159">A Debugging Support Tool for Logic Programs the Answer-Set</title>
+<author confidence="0.884641">Jörg Torsten</author>
+<author confidence="0.884641">Stefan</author>
+<email confidence="0.382493">f¨urInformatik,Universität</email>
+<abstract confidence="0.974243363636364">August-Bebel-Straße 89, D-14482 Potsdam, f¨ur Informationssysteme, Technische Universität Favoritenstraße 9–11, A–1040 Vienna, woltran@dbai.tuwien.ac.at programming (ASP) is an emerging logic-programming paradigm that strictly separates the description of a problem from its solving methods. Despite its semantic elegance, ASP suffers from a lack of support for program developers. In particular, tools are needed that help engineers in detecting erroneous parts of their programs. Unlike in other areas of logic programming, applying tracing techniques for debugging logic programs under the answer-set semantics seems rather unnatural, since employing imperative solving algorithms would undermine the declarative flavour of ASP. In this paper, present the system a debugging support tool for answer-set programs making use of ASP itself. The implemented techniques maintain the declarative nature of ASP within the debugging process and are independent of the actual computation of answer sets. 1 General Information programming [1] has become an important logic-programming paradigm for declarative problem solving, incorporating fundamental concepts of nonmonotonic reasoning. A major reason why ASP has not yet found a more widespread as a problem-solving technique, however, is its lack of suitable developing programs. In particular, realising tools for programs is a clearly recognised issue in the ASP community, and several approaches in this direction have been proposed in recent years [2–5]. From a theoretical point of view, the nonmonotonicity of answer-set programs is an aggravating factor for detecting sources of errors, since every rule of a program might significantly influence the resulting answer sets. On the other hand, applying tracing techniques for debugging logic programs under the answer-set semantics seems rather unnatural, since employing imperative solving algorithms would undermine the declarative flavour of ASP. work was partially supported by the Austrian Science Fund (FWF) under project P18019. this paper, we discuss the main features of the system which supports developers of answer-set programs in locating errors in their programs by exploiting the declarative nature of ASP itself, but being independent of specific ASP solvers. The makes reference to the fact that detecting errors is done by means of logic, just like the popular Vulcan of Star Trek fame. The theoretical background of the implemented methods was introduced in previwork [5], exploiting and extending a technique used by Delgrande et al. [7] for compiling ordered logic programs into standard ones. In our approach, a proto debug, is augmented with dedicated meta-atoms, called serving two purposes: Firstly, they allow for controlling and manipulating the applicability of rules, and secondly, tags occurring in the answer sets of the extended program reflect various of Our tool implements the tagging process and further related translafor a program debug, allowing for an extrapolation of non-existing answer in combination with explanations why an interpretation is not an answer set of For illustration of the debugging questions addressed, consider the problem of inviting guests to a party when it is known that some of them would appear only if certain others do or do not attend the festivity. An instance of such a setting is encoded in where each atom represents the appearing of a potential party visitor: = = bones, = chekov, = = not scotty, = uhura. program has two answer sets, viz., jim, Assume that Sulu, the programmer, is quite perplexed by this result, wondering why there is a scenario where only Chekov and Scotty, who merely have a neutral relation to each other rather than a friendship, attend. On the other hand, he is astonished as there is no possibility such that Uhura and Jim can jointly be invited. With the help of the tool reasons for such mismatches between the expected and the actual semantics of a program can be found. 2 Background 2.1 Answer-Set Programs program an alphabet is a finite set of rules of the form ... , ... , A atoms, for A an atom negation For a rule in (1), let = the = ... , ... , Furthermore, we define = ... , = ... , For a logic program a set atoms an set a minimal model of For uniformity, we assume that any integrity constraint expressed as a rule not a globally new atom. Moreover, allow nested expressions of form not where some atom, in the body of Such rules are identified with normal rules in which not replaced by where is a globally new atom, together with an additional rule &lt;-- 2.2 Tagging-Based Debugging what follows, we sketch the theoretical principles underlying our system For a more detailed discussion, we refer to Brain et al. [5]. The main idea of tagging is to split the head from the body, for each rule in a program, and thereby to intervene into the applicability of rules. After this division, tags are installed for triggering rules. This way, the formation of answer sets can be controlled, and tags in the answer sets of the transformed (or tagged) program reflect inherent properties of the original program. a program alphabet to debug is rewritten into a program an extended alphabet Let a logic program over consider a assigning to each rule unique name Then, the program consists of the following rules, for and not not not not tags whether a rule applicable or blocked, respecwhile the tags and used for manipulating the of Intuitively, the rules of split into rules of forms (2) and (3), separating the applicability of a rule from the actual occurrence of the respective rule head in an interpretation. Analogously, rules of forms (4) and (5) elicit which rules are Tags stating whether rule applicable or blocked are only derived if holds, which is by default the case, as expressed by rules of form (6). call tagging since it serves as a basic submodule for more enhanced programs facilitating certain debugging requests. One such extension scenario the extrapolation of non-existing answer sets of a program Using further and the occurrence of respectively, in an answer set of the transformed program provides why an interpretation ∩ A not an answer set of Here, we make use of the Lin-Zhao theorem [8], which qualifies answer sets as models of the and the formulas a program. In particular, the program-oriented tag that rule applicable but not satisfied with respect an interpretation. The completion-oriented abnormality tag that the considered interpretation but all rules having head are blocked. Finally, presence of a loop-oriented abnormality tag that the derivation atom recursively depend on and, therefore, violate the minimality criterion for answer sets. Note that all transformations used are polynomial in the size of the input program and can be constructed for all programs under consideration, even for programs without answer sets.</abstract>
+<note confidence="0.597904333333333">Input Program &lt;file_1&gt; &lt;file_2&gt; ... Standard Input &lt;file_n&gt;</note>
+<title confidence="0.774307833333333">Arguments Program Translation Internal Program Representation</title>
+<abstract confidence="0.98897809090909">spock Parser 1. flow of program translations 3 System a command-line oriented tool, written in Java 5.0 and published under the GNU general public license [10]. It is publicly available at http://www.kr.tuwien.ac.at/research/debug as a jar-package including binaries and sources. The data flow for all transformations is depicted by Fig. 1. First, the input program is parsed and represented in an internal data structure. Then, the actual program transformation is performed, as specified by command-line arguments. The tagging technique uses labels to refer to individual rules. Therefore, we allow the programmer to add labels to the rules of the program to debug. As this rean extension of the program syntax, an interface to and for computing answer sets of labelled programs. illustration of the debugging process, reconsider program having the ansets and assume that it stored in file The kernel tagging then obtained by the call -jar spock.jar -k FILE By piping the result of the command to an answer-set solver, we obtain the answer sets = ∪ = ∪ = extending information about the applicability of rules. E.g., the presence of indicates that rule applicable with respect to and hence while indicates that blocked with respect to is because flags and activate the extrapolation translations and respectively. Instead of using all three flags simultaneously, setting produces the union of the resulting programs. Furthermore, in order to restrict scope of transformation a subprogram (respectively, translations sets atoms), the names of the considered rules (respectively, atoms) be explicitly stated in a comma-separated list following the (resp., and flag. Finally, for computing only answer sets by means of weak constraints. The or make weak constraints for minimising all abnormality tags, program-oriented abnormality tags, completion-oriented abnormality tags, or loop-oriented abnormality tags, respectively. As for our example, recall that Sulu wanted to know why there is no chance for and Jim to attend the same party. Therefore, we add the constraints uhura jim Let file the overall program, which does not have answer sets. The (optimal) answer sets of the tagged program obtained by the call java -jar spock.jar -k -ex FILE2 to the atoms occurring in the abnormality tags, are given by chekov, jim, jim, and jim, indicating that chekov, jim, not an set of atom not supported. Likewise, not supwith respect to jim, Finally, jim, not an set as it does not satisfy rule 4 Discussion and Related Work this paper, we presented a prototype implementation of a debugging support tool for answer-set programs. The implemented methodology relies on theoretical results of previous work [5] and is based on the idea that programs to be debugged are translated into other programs having answer sets that offer debugging-relevant information about the original programs. After an initial kernel transformation, we get insight into the applicability of rules with respect to individual answer sets. In a further step, the system allows for identifying causes why interpretations are not answer sets. between abnormalities due to missing or spare atoms, or atoms whose presence in an interpretation is self-caused. In order to restrict the amount of information returned to the programmer, standard ASP optimisation techniques can be used to focus on interpretations with a minimal number of abnormalities. In addition the tagging technique described here, supports another approach towards debugging answer-set programs based on meta-programming [13,14]. Future work includes the integration of further aspects of the translation approach and the design of a user interface to ease the use of the features of related techniques include a prototype debugger focusing on odd-cycle-free inconsistent programs. The system is designed to find minimal sets of constraints, restoring consistency when removed from a program. Brain and Vos [2] present the system implementing two query algorithms addressing the questions why a set of literals is true with respect to some or false with respect to all answer sets of a program. Both algorithms are procedural and similar to the ones used in ASP solvers, suggesting that an approach using program-level transformations would be more practical. Pontelli and Son [4] developed a preliminary implementafor their adoption of so-called to the problem of debugging answer-set programs. Their system returns visual output in form of graphs explaining why atoms are (not) present in an answer set.</abstract>
+<note confidence="0.9846029">References 1. Baral, C.: Knowledge Representation, Reasoning and Declarative Problem Solving. Cambridge University Press (2003) 2. Brain, M., De Vos, M.: Debugging Logic Programs under the Answer Set Semantics. In: Proc. ASP’05. Volume 142, CEUR Workshop Proceedings (CEUR-WS.org) (2005) 141–152 3. Syrjänen, T.: Debugging Inconsistent Answer Set Programs. In: Proc. NMR’06. (2006) 77–83 4. Pontelli, E., Son, T.: Justifications for Logic Programs under Answer Set Semantics. In: Proc. ICLP’06. Springer (2006) 196–210 5. Brain, M., Gebser, M., Pührer, J., Schaub, T., Tompits, H., Woltran, S.: Debugging ASP Programs by means of ASP. In: Proc. LPNMR’07. Springer (2007) 31–43 6. Brain, M., Gebser, M., Pührer, J., Schaub, T., Tompits, H., Woltran, S.: “That is Illogical Captain!” – The Debugging Support Tool spock for Answer-Set Programs: System Description. In: Proc. SEA’07. (2007) 71–85 7. Delgrande, J., Schaub, T., Tompits, H.: A Framework for Compiling Preferences in Logic Theory and Practice of Logic Programming 129–187 8. Lin, F., Zhao, Y.: ASSAT: Computing Answer Sets of a Logic Program by SAT Solvers. Intelligence 115–137 9. Clark, K.: Negation as Failure. In: Logic and Data Bases. Plenum Press (1978) 293–322 10. GNU General Public License – Version 2, June 1991. Free Software Foundation Inc. (1991)</note>
+<web confidence="0.980692">http://www.gnu.org/copyleft/gpl.html</web>
+<note confidence="0.956757076923077">11. Leone, N., Pfeifer, G., Faber, W., Eiter, T., Gottlob, G., Perri, S., Scarcello, F.: The DLV System for Knowledge Representation and Reasoning. ACM Transactions on Computational 499–562 12. Simons, P., Niemelä, I., Soininen, T.: Extending and Implementing the Stable Model Seman- Artificial Intelligence 181–234 13. Pührer, J.: On Debugging of Propositional Answer-Set Programs. Master’s thesis, Vienna University of Technology, Austria (2007) 14. Gebser, M., Pührer, J., Schaub, T., Tompits, H.: A Meta-Programming Technique for Debugging Answer-Set Programs. In: Proc. AAAI’08. (2008) To appear 15. Roychoudhury, A., Ramakrishnan, C., Ramakrishnan, I.: Justifying Proofs using Memo Tables. In: Proc. PPDP’00. (2000) 178–189 16. Specht, G.: Generating Explanation Trees even for Negations in Deductive Database Systems. In: Proc. LPE’93. (1993) 8–13</note>
+</variant>
+</algorithm>
+<algorithm name="ParsCit" version="110505">
+<citationList>
+<citation valid="true">
+<authors>
+<author>C Baral</author>
+</authors>
+<title>Knowledge Representation, Reasoning and Declarative Problem Solving.</title>
+<date>2003</date>
+<publisher>Cambridge University Press</publisher>
+<contexts>
+<context position="1399" citStr="[1]" startWordPosition="184" endWordPosition="184">emented techniques maintain the declarative nature of ASP within the debugging process and are independent of the actual computation of answer sets. 1 General Information Answer-set programming (ASP) [1] has become an important logic-programming paradigm for declarative problem solving, incorporating fundamental concepts of nonmonotonic reasoning. A major reason why ASP has not yet found a more wides</context>
+</contexts>
+<marker>1.</marker>
+<rawString>Baral, C.: Knowledge Representation, Reasoning and Declarative Problem Solving. Cambridge University Press (2003)</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>M Brain</author>
+<author>M De Vos</author>
+</authors>
+<title>Debugging Logic Programs under the Answer Set Semantics. In:</title>
+<date>2005</date>
+<booktitle>Proc. ASP’05. Volume 142, CEUR Workshop Proceedings (CEUR-WS.org)</booktitle>
+<pages>141--152</pages>
+<contexts>
+<context position="13871" citStr="[2]" startWordPosition="2251" endWordPosition="2251"> a prototype debugger focusing on odd-cycle-free inconsistent programs. The system is designed to find minimal sets of constraints, restoring consistency when removed from a program. Brain and De Vos [2] present the system IDEAS, implementing two query algorithms addressing the questions why a set of literals is true with respect to some or false with respect to all answer sets of a program. Both alg</context>
+</contexts>
+<marker>2.</marker>
+<rawString>Brain, M., De Vos, M.: Debugging Logic Programs under the Answer Set Semantics. In: Proc. ASP’05. Volume 142, CEUR Workshop Proceedings (CEUR-WS.org) (2005) 141–152</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>T Syrjänen</author>
+</authors>
+<title>Debugging Inconsistent Answer Set Programs. In:</title>
+<date>2006</date>
+<booktitle>Proc. NMR’06.</booktitle>
+<pages>77--83</pages>
+<contexts>
+<context position="13667" citStr="[3]" startWordPosition="2220" endWordPosition="2220">ation of further aspects of the translation approach and the design of a graphical user interface to ease the use of the features spock provides. Implementations of related techniques include smdebug [3], a prototype debugger focusing on odd-cycle-free inconsistent programs. The system is designed to find minimal sets of constraints, restoring consistency when removed from a program. Brain and De Vos</context>
+</contexts>
+<marker>3.</marker>
+<rawString>Syrjänen, T.: Debugging Inconsistent Answer Set Programs. In: Proc. NMR’06. (2006) 77–83</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>E Pontelli</author>
+<author>T Son</author>
+</authors>
+<title>Justifications for Logic Programs under Answer Set Semantics. In:</title>
+<date>2006</date>
+<booktitle>Proc. ICLP’06.</booktitle>
+<pages>196--210</pages>
+<publisher>Springer</publisher>
+<contexts>
+<context position="14248" citStr="[4]" startWordPosition="2312" endWordPosition="2312">ets of a program. Both algorithms are procedural and similar to the ones used in ASP solvers, suggesting that an approach using program-level transformations would be more practical. Pontelli and Son [4] developed a preliminary implementation for their adoption of so-called justifications [15,16] to the problem of debugging answer-set programs. Their system returns visual output in form of graphs exp</context>
+</contexts>
+<marker>4.</marker>
+<rawString>Pontelli, E., Son, T.: Justifications for Logic Programs under Answer Set Semantics. In: Proc. ICLP’06. Springer (2006) 196–210</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>M Brain</author>
+<author>M Gebser</author>
+<author>J Pührer</author>
+<author>T Schaub</author>
+<author>H Tompits</author>
+<author>S Woltran</author>
+</authors>
+<title>Debugging ASP Programs by means of ASP. In:</title>
+<date>2007</date>
+<booktitle>Proc. LPNMR’07.</booktitle>
+<pages>31--43</pages>
+<publisher>Springer</publisher>
+<contexts>
+<context position="2949" citStr="[5]" startWordPosition="417" endWordPosition="417">ence to the fact that detecting errors is done by means of logic, just like the popular Vulcan of Star Trek fame. The theoretical background of the implemented methods was introduced in previous work [5], exploiting and extending a tagging technique as used by Delgrande et al. [7] for compiling ordered logic programs into standard ones. In our approach, a program to debug, 11, is augmented with dedic</context>
+<context position="5869" citStr="[5]" startWordPosition="969" endWordPosition="969">n additional rule a⋆ &lt;-- not a. 2.2 Tagging-Based Debugging In what follows, we sketch the theoretical principles underlying our system spock. For a more detailed discussion, we refer to Brain et al. [5]. The main idea of tagging is to split the head from the body, for each rule in a program, and thereby to intervene into the applicability of rules. After this division, tags are installed for trigger</context>
+<context position="7631" citStr="[5]" startWordPosition="1277" endWordPosition="1277">anced programs facilitating certain debugging requests. One such extension scenario is the extrapolation of non-existing answer sets of a program 11 over A. Using further translations, TP, TC, and TL [5], the occurrence of abnormality tags, abp(nr), abc(a), and abl(a), respectively, in an answer set X+ of the transformed program provides information why an interpretation X = X+ ∩ A is not an answer s</context>
+<context position="12530" citStr="[5]" startWordPosition="2050" endWordPosition="2050">ated Work In this paper, we presented spock, a prototype implementation of a debugging support tool for answer-set programs. The implemented methodology relies on theoretical results of previous work [5] and is based on the idea that programs to be debugged are translated into other programs having answer sets that offer debugging-relevant information about the original programs. After an initial ker</context>
+</contexts>
+<marker>5.</marker>
+<rawString>Brain, M., Gebser, M., Pührer, J., Schaub, T., Tompits, H., Woltran, S.: Debugging ASP Programs by means of ASP. In: Proc. LPNMR’07. Springer (2007) 31–43</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>M Brain</author>
+<author>M Gebser</author>
+<author>J Pührer</author>
+<author>T Schaub</author>
+<author>H Tompits</author>
+<author>S Woltran</author>
+</authors>
+<title>That is Illogical Captain!” – The Debugging Support Tool spock for Answer-Set Programs: System Description. In:</title>
+<date>2007</date>
+<booktitle>Proc. SEA’07.</booktitle>
+<pages>71--85</pages>
+<contexts>
+<context position="2531" citStr="[6]" startWordPosition="350" endWordPosition="350"> undermine the declarative flavour of ASP. ⋆ This work was partially supported by the Austrian Science Fund (FWF) under project P18019. In this paper, we discuss the main features of the system spock [6], which supports developers of answer-set programs in locating errors in their programs by exploiting the declarative nature of ASP itself, but being independent of specific ASP solvers. The name “spo</context>
+</contexts>
+<marker>6.</marker>
+<rawString>Brain, M., Gebser, M., Pührer, J., Schaub, T., Tompits, H., Woltran, S.: “That is Illogical Captain!” – The Debugging Support Tool spock for Answer-Set Programs: System Description. In: Proc. SEA’07. (2007) 71–85</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>J Delgrande</author>
+<author>T Schaub</author>
+<author>H Tompits</author>
+</authors>
+<title>A Framework for Compiling Preferences</title>
+<date>2003</date>
+<booktitle>in Logic Programs. Theory and Practice of Logic Programming</booktitle>
+<volume>3</volume>
+<pages>129--187</pages>
+<contexts>
+<context position="3027" citStr="[7]" startWordPosition="430" endWordPosition="430">e popular Vulcan of Star Trek fame. The theoretical background of the implemented methods was introduced in previous work [5], exploiting and extending a tagging technique as used by Delgrande et al. [7] for compiling ordered logic programs into standard ones. In our approach, a program to debug, 11, is augmented with dedicated meta-atoms, called tags, serving two purposes: Firstly, they allow for co</context>
+</contexts>
+<marker>7.</marker>
+<rawString>Delgrande, J., Schaub, T., Tompits, H.: A Framework for Compiling Preferences in Logic Programs. Theory and Practice of Logic Programming 3 (2003) 129–187</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>F Lin</author>
+<author>Y Zhao</author>
+</authors>
+<title>ASSAT: Computing Answer Sets of a Logic Program by SAT Solvers.</title>
+<date>2004</date>
+<journal>Artificial Intelligence</journal>
+<volume>157</volume>
+<pages>115--137</pages>
+<contexts>
+<context position="7886" citStr="[8]" startWordPosition="1322" endWordPosition="1322">), and abl(a), respectively, in an answer set X+ of the transformed program provides information why an interpretation X = X+ ∩ A is not an answer set of 11. Here, we make use of the Lin-Zhao theorem [8], which qualifies answer sets as models of the completion [9] and the loop formulas of a program. In particular, the program-oriented abnormality tag abp(nr) indicates that rule r is applicable but no</context>
+</contexts>
+<marker>8.</marker>
+<rawString>Lin, F., Zhao, Y.: ASSAT: Computing Answer Sets of a Logic Program by SAT Solvers. Artificial Intelligence 157 (2004) 115–137</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>K Clark</author>
+</authors>
+<title>Negation as Failure. In: Logic and Data Bases.</title>
+<date>1978</date>
+<pages>293--322</pages>
+<publisher>Plenum Press</publisher>
+<contexts>
+<context position="7947" citStr="[9]" startWordPosition="1332" endWordPosition="1332">formed program provides information why an interpretation X = X+ ∩ A is not an answer set of 11. Here, we make use of the Lin-Zhao theorem [8], which qualifies answer sets as models of the completion [9] and the loop formulas of a program. In particular, the program-oriented abnormality tag abp(nr) indicates that rule r is applicable but not satisfied with respect to an interpretation. The completion</context>
+</contexts>
+<marker>9.</marker>
+<rawString>Clark, K.: Negation as Failure. In: Logic and Data Bases. Plenum Press (1978) 293–322</rawString>
+</citation>
+<citation valid="true">
+<title>Free Software Foundation Inc.</title>
+<date>1991</date>
+<journal>GNU General Public License – Version</journal>
+<volume>2</volume>
+<note>http://www.gnu.org/copyleft/gpl.html</note>
+<contexts>
+<context position="8978" citStr="[10]" startWordPosition="1487" endWordPosition="1487">al Program Representation spock Parser Fig. 1. Data flow of program translations 3 System spock is a command-line oriented tool, written in Java 5.0 and published under the GNU general public license [10]. It is publicly available at http://www.kr.tuwien.ac.at/research/debug as a jar-package including binaries and sources. The data flow for all transformations is depicted by Fig. 1. First, the input p</context>
+</contexts>
+<marker>10.</marker>
+<rawString>GNU General Public License – Version 2, June 1991. Free Software Foundation Inc. (1991) http://www.gnu.org/copyleft/gpl.html</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>N Leone</author>
+<author>G Pfeifer</author>
+<author>W Faber</author>
+<author>T Eiter</author>
+<author>G Gottlob</author>
+<author>S Perri</author>
+<author>F Scarcello</author>
+</authors>
+<title>The DLV System for Knowledge Representation and Reasoning.</title>
+<date>2006</date>
+<journal>ACM Transactions on Computational Logic</journal>
+<volume>7</volume>
+<pages>499--562</pages>
+<contexts>
+<context position="6345" citStr="[11]" startWordPosition="1050" endWordPosition="1050"> tags in the answer sets of the transformed (or tagged) program reflect inherent properties of the original program. Technically, a program 11 (over alphabet A) to debug is rewritten into a program TK[11] over an extended alphabet A+. Let 11 be a logic program over A and consider a bijection n, assigning to each rule r over A a unique name nr. Then, the program TK[11] over A+ consists of the following</context>
+<context position="7352" citStr="[11]" startWordPosition="1232" endWordPosition="1232">d (5) elicit which rules are blocked. Tags stating whether rule r is applicable or blocked are only derived if ok(nr) holds, which is by default the case, as expressed by rules of form (6). We call TK[11] the kernel tagging of 11, since it serves as a basic submodule for more enhanced programs facilitating certain debugging requests. One such extension scenario is the extrapolation of non-existing ans</context>
+<context position="9577" citStr="[11]" startWordPosition="1581" endWordPosition="1581">refer to individual rules. Therefore, we allow the programmer to add labels to the rules of the program to debug. As this requires an extension of the program syntax, spock offers an interface to dlv [11] and lparse/smodels [12] for computing answer sets of labelled programs. For illustration of the debugging process, reconsider program 17i„,,,, having the answer sets X1 = {chekov, scotty} and X2 = {b</context>
+</contexts>
+<marker>11.</marker>
+<rawString>Leone, N., Pfeifer, G., Faber, W., Eiter, T., Gottlob, G., Perri, S., Scarcello, F.: The DLV System for Knowledge Representation and Reasoning. ACM Transactions on Computational Logic 7 (2006) 499–562</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>P Simons</author>
+<author>I Niemelä</author>
+<author>T Soininen</author>
+</authors>
+<title>Extending and Implementing the Stable Model Semantics.</title>
+<date>2002</date>
+<journal>Artificial Intelligence</journal>
+<volume>138</volume>
+<pages>181--234</pages>
+<contexts>
+<context position="9601" citStr="[12]" startWordPosition="1584" endWordPosition="1584">s. Therefore, we allow the programmer to add labels to the rules of the program to debug. As this requires an extension of the program syntax, spock offers an interface to dlv [11] and lparse/smodels [12] for computing answer sets of labelled programs. For illustration of the debugging process, reconsider program 17i„,,,, having the answer sets X1 = {chekov, scotty} and X2 = {bones, jim, scotty}, and </context>
+</contexts>
+<marker>12.</marker>
+<rawString>Simons, P., Niemelä, I., Soininen, T.: Extending and Implementing the Stable Model Semantics. Artificial Intelligence 138 (2002) 181–234</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>J Pührer</author>
+</authors>
+<title>On Debugging of Propositional Answer-Set Programs. Master’s thesis,</title>
+<date>2007</date>
+<institution>Vienna University of Technology,</institution>
+<location>Austria</location>
+<contexts>
+<context position="13431" citStr="[13,14]" startWordPosition="2183" endWordPosition="2183">tions with a minimal number of abnormalities. In addition to the tagging technique described here, spock also supports another approach towards debugging answer-set programs based on meta-programming [13,14]. Future work includes the integration of further aspects of the translation approach and the design of a graphical user interface to ease the use of the features spock provides. Implementations of re</context>
+</contexts>
+<marker>13.</marker>
+<rawString>Pührer, J.: On Debugging of Propositional Answer-Set Programs. Master’s thesis, Vienna University of Technology, Austria (2007)</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>M Gebser</author>
+<author>J Pührer</author>
+<author>T Schaub</author>
+<author>H Tompits</author>
+</authors>
+<title>A Meta-Programming Technique for Debugging Answer-Set Programs. In:</title>
+<date>2008</date>
+<booktitle>Proc. AAAI’08.</booktitle>
+<note>To appear</note>
+<contexts>
+<context position="13431" citStr="[13,14]" startWordPosition="2183" endWordPosition="2183">tions with a minimal number of abnormalities. In addition to the tagging technique described here, spock also supports another approach towards debugging answer-set programs based on meta-programming [13,14]. Future work includes the integration of further aspects of the translation approach and the design of a graphical user interface to ease the use of the features spock provides. Implementations of re</context>
+</contexts>
+<marker>14.</marker>
+<rawString>Gebser, M., Pührer, J., Schaub, T., Tompits, H.: A Meta-Programming Technique for Debugging Answer-Set Programs. In: Proc. AAAI’08. (2008) To appear</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>A Roychoudhury</author>
+<author>C Ramakrishnan</author>
+<author>Ramakrishnan</author>
+</authors>
+<title>I.: Justifying Proofs using Memo Tables. In:</title>
+<date>2000</date>
+<booktitle>Proc. PPDP’00.</booktitle>
+<pages>178--189</pages>
+<marker>15.</marker>
+<rawString>Roychoudhury, A., Ramakrishnan, C., Ramakrishnan, I.: Justifying Proofs using Memo Tables. In: Proc. PPDP’00. (2000) 178–189</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>G Specht</author>
+</authors>
+<title>Generating Explanation Trees even for Negations in Deductive Database Systems. In:</title>
+<date>1993</date>
+<booktitle>Proc. LPE’93.</booktitle>
+<pages>8--13</pages>
+<marker>16.</marker>
+<rawString>Specht, G.: Generating Explanation Trees even for Negations in Deductive Database Systems. In: Proc. LPE’93. (1993) 8–13</rawString>
+</citation>
+</citationList>
+</algorithm>
+</algorithms>

@@ -1,0 +1,206 @@
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN" "JATS-archivearticle1.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+  <front>
+    <journal-meta />
+    <article-meta>
+      <title-group>
+        <article-title>Optimization of communication by analyzing the interlocutor's wording</article-title>
+      </title-group>
+      <contrib-group>
+        <aff id="aff0">
+          <label>0</label>
+          <institution>Gudrun Kellner E-Commerce Group, Institute of Software Technology and Interactive Systems Vienna University of Technology Vienna</institution>
+          ,
+          <country country="AT">Austria</country>
+        </aff>
+      </contrib-group>
+      <abstract>
+        <p>- Recent research results on communication science mention a relation between the interlocutor's perceptional preferences, his or her mental representations and his or her choice of expressions. However, there is not any tool for analyzing such. In my research I combined lexical with computational linguistic methods to develop a software prototype that is able to analyze text on the usage of perceptional expressions. This analyzing tool can help to identify the interlocutor's perceptional preference for easier meeting his or her way of thinking and thereby facilitate the understanding.</p>
+      </abstract>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="sec-1">
+      <title>I. INTRODUCTION</title>
+      <p>All communication is based on perception. With the
+establishment of constructivism the knowledge about
+individual differences in perception spread. It seems
+reasonable to assume that the individual form of
+perception also influences the language of a person.
+Interestingly, this theory hasn’t yet shown great
+affects in the research on individual and personal
+language use.</p>
+      <p>The Neurolinguistic Programming (NLP) offers a
+model that seems as a first step in closing this gap:
+The idea of sensual-specific perception which comes
+noticeable in the individual language use is described
+by the keyword “representational systems”.
+According to this, every person has one or two sensory
+systems preferably used to perceive his or her
+environment. From the five senses arises the classification in
+visual, auditory, kinesthetic, olfactory and gustatory
+perception modalities. Each of these perception
+classes forms a sensomotor complex, in the NLP
+called representational system. As the inner
+representations are accessed for expressing thoughts, the
+preferred sensory system of a speaker can be told by
+his or her diction and wording.</p>
+      <p>The research about the optimization of
+communication furnished proof that the percentage of
+understanding is higher when a speaker adjusts his diction
+to the diction of his addressee – what applies with a
+high probability also to the use of perceptional
+words.</p>
+      <p>Still, for the German language, not much research
+on the relation between an individual’s perceptional
+preference and his or her language use has been done
+yet. To be able to go deeper into that idea, (1) a
+lexical corpus of perceptional expressions and (2) a
+software tool that automatically filters those
+expressions from a text are needed. Those two steps shall
+be explained in this abstract.</p>
+      <p>II. A LEXICAL CORPUS OF PERCEPTIONAL</p>
+    </sec>
+    <sec id="sec-2">
+      <title>EXPRESSIONS</title>
+      <p>
+        For a systematic analysis of the use of perceptional
+expressions, a corpus is needed, containing a
+collection of the most often used words and expressions
+that can be directly linked to one of the perceptional
+classes mentioned above. That corpus was built with
+the input of 13 different resources and contains more
+than 840 different entries with at least 200 words and
+expressions per perceptional class. For further details
+and the complete corpus see [
+        <xref ref-type="bibr" rid="ref1">1</xref>
+        ].
+      </p>
+      <p>During the examination of the corpus it was found
+that usually only the root word is decisive for the
+assignment to a representational class, but that such a
+root word can occur in different combinations. This
+follows the fact that in the German language it is
+possible to combine words and thereby create new
+ones. That possibility causes a problem when
+searching for a semantic unit that can also be part of a
+compound word. For example, when searching for the
+signal word “rot” [red], the output should also
+include words like “Morgenrot” [dawn] and “rotgrün”
+[red and green] containing the same semantic root,
+but not words like “Brot” [bread] or “Schrot”
+[bruised grain] which include the same sequence of
+characters, but have no semantic link to the searched
+word. A search algorithm that also takes compound
+words into account would especially be helpful when
+scanning a German text for a list of signal words.</p>
+      <p>Therefore, a search algorithm using a new model
+describing word composition was developed.</p>
+    </sec>
+    <sec id="sec-3">
+      <title>III. THE ANALYZING TOOL</title>
+      <p>As a consequence of the multiple combining
+possibilities of root words, an appropriate analyzing tool
+should not only be able to find the expressions
+contained by the corpus, but also all possible
+combinations that are based on the same semantic root.</p>
+      <p>To solve this problem, a model of possible word
+structures was developed. Following that model, it
+can be determined which letters or syllables may
+occur around a root word without changing its
+semantic meaning (and hence the assignment to the
+respective perceptional class). This model was
+introduced with the aim to provide a clear description of
+word composition transferable into an algorithm and,
+based on the root word, describes the structure of
+compound words as follows:
+[ [prefix] + root word + [infix] + (word joint) ]
+[prefix] + root word + [infix] + (ending)</p>
+      <p>The following notation was used: Round brackets
+mark optional, but maximal single occurrence, square
+brackets highlight optional (even multiple)
+occurrence of elements.</p>
+      <p>
+        Based on the word components mentioned in the
+Duden Grammatik [
+        <xref ref-type="bibr" rid="ref2">2</xref>
+        ], for each element of the model
+a list of letter combinations was set up. The
+analyzing tool joins the corpus of perceptional expressions
+with the model of word structure and the lists of
+possible word composition elements. After having
+identified the searched sequence of characters in a
+word, the algorithm analyzes the characters around it.
+Step by step it checks whether the environment either
+represents a semantically inseparable part of the
+sequence of characters (which indicates a different
+word meaning) or is the rest of a compound word
+and thereby should be part of the output result.
+      </p>
+      <p>The tests with the tool let presume that the
+occurrence of perceptional expression depends on the sort
+of text and on the topic. A user’s test report on some
+instant food i.e., had a very high rate of gustatory
+vocabulary.</p>
+    </sec>
+    <sec id="sec-4">
+      <title>IV. FURTHER RESEARCH</title>
+      <p>At the moment I’m working on using this tool in user
+modeling. As in the Internet (and esp. in blogs and
+forums) there is quite a lot of text which can be
+directly linked to a user, this could be a rich source for
+modeling the user’s mental representations of
+perceptional information. With such knowledge about the
+user, advertisements with a higher acceptance can be
+designed and chosen with respect to the user’s
+individual perceptional preference.</p>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <ref id="ref1">
+        <mixed-citation>
+          [1]
+          <string-name>
+            <given-names>G.</given-names>
+            <surname>Kellner</surname>
+          </string-name>
+          . Wege der Kommunikationsoptimierung.
+          <article-title>Anwendung von NLP im Bereich der Künstlichen Intelligenz</article-title>
+          .
+          <source>Master Thesis</source>
+          , Wien, Austria,
+          <year>2006</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref2">
+        <mixed-citation>
+          [2]
+          <string-name>
+            <given-names>G.</given-names>
+            <surname>Drosdowski</surname>
+          </string-name>
+          (Ed.). Duden „
+          <article-title>Grammatik der deutschen Gegenwartssprache“</article-title>
+          . Duden, Mannheim, Germany,
+          <year>1995</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref3">
+        <mixed-citation>
+          [3]
+          <string-name>
+            <surname>K.-U. Carstensen</surname>
+          </string-name>
+          et al. (Ed.):
+          <article-title>Computerlinguistik und Sprachtechnologie</article-title>
+          . Eine Einführung. Spektrum, München, Germany,
+          <year>2004</year>
+          .
+        </mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

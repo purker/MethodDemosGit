@@ -1,0 +1,2273 @@
+<Publication>
+  <id>TUW-226016</id>
+  <title>An Evaluation of Symbol Elimination for Generating First-Order Loop Invariants Diplom-Ingenieurin in Computational Intelligence Erklärung zur Verfassung der Arbeit</title>
+  <note>MASTER&apos;S THESIS submitted in partial fulfillment of the requirements for the degree of (Signature of Author) (Signature of Advisor) i</note>
+  <abstractText>Hiermit erkläre ich, dass ich diese Arbeit selbständig verfasst habe, dass ich die verwendeten Quellen und Hilfsmittel vollständig angegeben habe und dass ich die Stellen der Arbeit-einschließlich Tabellen, Karten und Abbildungen-, die anderen Werken oder dem Internet im Wortlaut oder dem Sinn nach entnommen sind, auf jeden Fall unter Angabe der Quelle als Entlehnung kenntlich gemacht habe. (Ort, Datum) (Unterschrift Verfasserin) ii Acknowledgements I would like to express my very great appreciation to Dr. Laura Kovács for her valuable and constructive suggestions during the planning and development of this research work. Her willingness to give her time so generously has been very much appreciated. I would also like to thank Mr. Ioan Dr˘ agan for his support with one of the tools needed. iii Abstract Invariant genereation is a critical problem in proving different properties for programs with loops, properties including correctnes. The problem becomes harder with the incresing numbers of quantifiers in the property to be proven. In this paper we study and combine different methods of invariant generation in order to obtain stronger properties. iv Kurzfassung Invariant generiert ist ein kritische Problem für Programmen mit Schleife zum Beweisen der Eigenschaften, inclusive die Richtigkeit. Die problem wird schwerer bei hohe Anzhal des Quantoren in die geprüfte Eigenschaft. In diese arbeit wir studiere diese Problem und versuchen combinieren verschieden Methoden für schwarer invariants zu beweisen. v</abstractText>
+  <keywords/>
+  <authors>
+    <Author>
+      <firstNames>
+        <string>Ioana</string>
+      </firstNames>
+      <lastName>Jucu</lastName>
+      <affiliations>
+        <Affiliation>
+          <id>aff0</id>
+          <institution>Vienna University of Technology</institution>
+          <department>Faculty of Informatics</department>
+        </Affiliation>
+      </affiliations>
+    </Author>
+    <Author>
+      <firstNames>
+        <string>Priv.-Doz</string>
+      </firstNames>
+      <affiliations>
+        <Affiliation reference="/Publication[1]/authors[1]/Author[1]/affiliations[1]/Affiliation[1]"/>
+      </affiliations>
+    </Author>
+    <Author>
+      <firstNames>
+        <string>Laura</string>
+      </firstNames>
+      <lastName>Kovács</lastName>
+      <affiliations>
+        <Affiliation reference="/Publication[1]/authors[1]/Author[1]/affiliations[1]/Affiliation[1]"/>
+      </affiliations>
+    </Author>
+    <Author>
+      <firstNames>
+        <string>Ioana</string>
+        <string>Jucu</string>
+      </firstNames>
+      <lastName>Martir</lastName>
+      <affiliations>
+        <Affiliation reference="/Publication[1]/authors[1]/Author[1]/affiliations[1]/Affiliation[1]"/>
+      </affiliations>
+    </Author>
+    <Author>
+      <firstNames>
+        <string>Herman</string>
+      </firstNames>
+      <lastName>Sporer</lastName>
+      <affiliations>
+        <Affiliation reference="/Publication[1]/authors[1]/Author[1]/affiliations[1]/Affiliation[1]"/>
+      </affiliations>
+    </Author>
+    <Author>
+      <firstNames/>
+      <lastName>Timisoara</lastName>
+      <affiliations>
+        <Affiliation reference="/Publication[1]/authors[1]/Author[1]/affiliations[1]/Affiliation[1]"/>
+      </affiliations>
+    </Author>
+    <Author>
+      <firstNames>
+        <string>Romania</string>
+      </firstNames>
+      <lastName>Timis</lastName>
+      <affiliations>
+        <Affiliation reference="/Publication[1]/authors[1]/Author[1]/affiliations[1]/Affiliation[1]"/>
+      </affiliations>
+    </Author>
+  </authors>
+  <affiliations>
+    <Affiliation reference="/Publication[1]/authors[1]/Author[1]/affiliations[1]/Affiliation[1]"/>
+  </affiliations>
+  <sections>
+    <Section>
+      <level>1</level>
+      <title>Introduction</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>2</level>
+      <title>Preliminaries</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>2.1</level>
+      <title>Propositional logic</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>2.2</level>
+      <title>SAT solvers</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>2.3</level>
+      <title>Boogie</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3</level>
+      <title>Overview of Invariant Generation Methods</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.1</level>
+      <title>GinPink</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.2</level>
+      <title>Lingva</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.3</level>
+      <title>CppInv</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4</level>
+      <title>Experiments</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.1</level>
+      <title>Experiments with Gin-Pink and Cpp-Inv</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.2</level>
+      <title>Experiments with Lingva</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>R e f u t a t i o n found</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>e g a t e d c o n j e c t u r e 1 3 9 ]</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>n p u t i m p l i c a t i o n ] 1 5 2 9 . (a ≤ (a0 + sK0)) [ f o r w a r d d e m o d u l a t i o n 1 5 2 8 , 1 4 2 ]</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.3</level>
+      <title>Discussions of Experimental Results</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5</level>
+      <title>Invariant Specific Theory Extensions to First</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.1</level>
+      <title>Comparison of invariants strength</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>6</level>
+      <title>Conclusions</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+  </sections>
+  <citationContexts/>
+  <references>
+    <Reference>
+      <id>ref1</id>
+      <title></title>
+      <source>Thanks to Tanya! 981. $false (0:0)</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref2</id>
+      <title></title>
+      <source>aa(sK2(X0)),aa(X0)))</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref3</id>
+      <title></title>
+      <source>,i) | sP5 (0:4)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref4</id>
+      <source>$uminus(i)) | ~sP5 (0:5)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref5</id>
+      <source>$sum(0,$uminus(i))) |</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref6</id>
+      <source>,i) | ~$lesseq(0,$sum(0,$uminus(i))) (0:9</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref7</id>
+      <source>,i) | ~$lesseq(i0,$sum(i0,$uminus(i))) (0:9</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref8</id>
+      <source>$sum(i0,$uminus(i))) | ~$lesseq(1,i)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref9</id>
+      <source>$sum(i0,$uminus(i))) | ~$lesseq(1,i)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref10</id>
+      <title></title>
+      <source>$sum(0,X0) = X0 (1:5)</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref11</id>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+    </Reference>
+    <Reference>
+      <id>ref12</id>
+      <source>X1) &amp; $lesseq(X1,c) &amp; bb(sK0) = aa(sK0)&amp; cc(X1) != sK0 &amp; cc(X1) != cc0(X1))</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref13</id>
+      <title></title>
+      <source>,X49) &amp; $lesseq(X49,c) &amp; bb(X48) = aa(X48)) =&gt; (cc(X49) = X48 | cc(X49) = cc0(X49)))</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref14</id>
+      <source>,c) | ~$lesseq(c,0) (0:6)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref15</id>
+      <source>0) | ~$lesseq(1,$sum(c,0)) (0:8)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref16</id>
+      <title></title>
+      <source>a = $sum(c,0) (0:5)</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref17</id>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+    </Reference>
+    <Reference>
+      <id>ref18</id>
+      <title></title>
+      <source>c0,a0) | $lesseq(c,a) (0:6)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref19</id>
+      <source>$lesseq(c,a) | ~$lesseq(c0,a0)</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref20</id>
+      <title></title>
+      <source>a = $sum(c,0) (0:8)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref21</id>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+    </Reference>
+    <Reference>
+      <id>ref22</id>
+      <source>0) | ~$lesseq($sum(c,$uminus(0)),a) | a = $sum(c,$uminus(0))(0:15)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref23</id>
+      <source>0) | ~$lesseq($sum(c,$uminus(c0)),a) | a = $sum(c,$uminus(c0)) (0:15)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref24</id>
+      <source>a = $sum(c,$uminus(c0)) | ~$lesseq($sum(c,$uminus(c0)),a) |</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref25</id>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+    </Reference>
+    <Reference>
+      <id>ref26</id>
+      <source>a = $sum(c,$uminus(c0)) | ~$lesseq($sum(c,$uminus(c0)),a) |</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref27</id>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+    </Reference>
+    <Reference>
+      <id>ref28</id>
+      <title></title>
+      <source>~$lesseq(1,$sum(c,0)) (0:8)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref29</id>
+      <source>~$lesseq(1,$sum(c,$uminus(0))) (0:9</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref30</id>
+      <title></title>
+      <source>~$lesseq(1,$sum(c,$uminus(c0))) (0:9</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref31</id>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+    </Reference>
+    <Reference>
+      <id>ref32</id>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>| ~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+    </Reference>
+    <Reference>
+      <id>ref33</id>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+    </Reference>
+    <Reference>
+      <id>ref34</id>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>| ~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+    </Reference>
+    <Reference>
+      <id>ref35</id>
+      <source>$uminus(c)) | $lesseq(c,0) (0:7)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref36</id>
+      <title></title>
+      <source>$sum(0,X0) = X0 (0:5)</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref37</id>
+      <title>X0))) (0:12)</title>
+      <source>$sum(0,X0) = $sum(c,$sum(0,$sum($uminus</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref38</id>
+      <title>X0))) (0:12)</title>
+      <source>$sum(0,X0) = $sum(a,$sum(0,$sum($uminus</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref39</id>
+      <title>X0))) (0:12)</title>
+      <source>$sum(a0,X0) = $sum(a,$sum(c0,$sum($uminus</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref40</id>
+      <title></title>
+      <source>$sum(a0,X0) = $sum(a,$sum(c0,$sum($uminus</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref41</id>
+      <title></title>
+      <source>$sum(a0,X1) = $sum(a,$sum(c0,$sum($uminus</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref42</id>
+      <title>X0))) = X0 (0:10)</title>
+      <source>$sum(c,$sum(0,$sum($uminus</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref43</id>
+      <title>X0))) (0:12)</title>
+      <source>$sum(X0,0) = $sum(c,$sum(0,$sum($uminus</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref44</id>
+      <title>X0))) (0:12)</title>
+      <source>$sum(X0,0) = $sum(a,$sum(0,$sum($uminus</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref45</id>
+      <title>X0))) (0:12 Refutation found. Thanks to Tanya! 1898. $false (2:0)</title>
+      <source>$sum(X0,a0) = $sum(a,$sum(c0,$sum($uminus</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref46</id>
+      <title>1))),0)</title>
+      <source>$sum(aa(l),$sum(aa(u),$sum($uminus</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref47</id>
+      <title></title>
+      <source>$sum(aa(l),$sum(aa(u),$sum($uminus</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref48</id>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+    </Reference>
+    <Reference>
+      <id>ref49</id>
+      <title></title>
+      <source>,X3) &amp; $lesseq(X3,l)) =&gt; $lesseq($sum(aa(l),$sum(aa(u),$sum($uminus</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref50</id>
+      <title></title>
+      <source>X16,sK0) | $lesseq(X16,l) (1:6)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref51</id>
+      <title></title>
+      <source>X1,X2) | ~$lesseq(X0,X1) | $lesseq(X0,X2) (0:9</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref52</id>
+      <source>:3) [subsumption resolution 1889</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref53</id>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+    </Reference>
+    <Reference>
+      <id>ref54</id>
+      <title>$sum(aa(u),aa(l)))),0) (0:12)</title>
+      <source>$sum(1,$sum($uminus(x)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref55</id>
+      <source>$sum(1,$sum($uminus(x),$sum(aa(l),aa(u)))),0) (0:12)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref56</id>
+      <title>aa(u)),$uminus(x))),0) (0:12)</title>
+      <source>$sum(1,$sum($sum(aa(l)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref57</id>
+      <title></title>
+      <source>$sum(X0,$sum(X1,X2)) = $sum($sum(X0,X1),X2) (0:11)</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref58</id>
+      <title>$sum(1,$sum(aa(l),aa(u)))),0) (0:12)</title>
+      <source>$sum($uminus(x)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref59</id>
+      <title>1))),0) (0:12)</title>
+      <source>$sum($uminus(x),$sum(aa(l),$sum</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref60</id>
+      <title>$sum($sum(aa(u),1),aa(l))),0) (0:12)</title>
+      <source>$sum($uminus(x)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref61</id>
+      <title>1))),0) (0:12)</title>
+      <source>$sum(aa(l),$sum($uminus(x),$sum</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref62</id>
+      <title>$sum(aa(u),$sum(1,$uminus(x)))),0) (0:12)</title>
+      <source>$sum(aa(l)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref63</id>
+      <title></title>
+      <source>$sum(aa(l),$sum(aa(u),$sum($uminus</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref64</id>
+      <title></title>
+      <source>$lesseq($sum(1,$sum($uminus(x),$sum(aa(u),aa(X0)))),0) |</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref65</id>
+      <title></title>
+      <source>X0,l) | ~$lesseq(0,X0) (1:18)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref66</id>
+      <title></title>
+      <source>$lesseq($sum(1,$sum($uminus(x),$sum(aa(X0),aa(u)))),0) |</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref67</id>
+      <title></title>
+      <source>X0,l) | ~$lesseq(0,X0) (0:18)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref68</id>
+      <title></title>
+      <source>$lesseq($sum(1,$sum($sum(aa(X0),aa(u)),$uminus(x))),0) |</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref69</id>
+      <title></title>
+      <source>X0,l) | ~$lesseq(0,X0) (0:18)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref70</id>
+      <title>$sum(1,$sum(aa(X0),aa(u)))),0) |</title>
+      <source>$lesseq($sum($uminus(x)</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref71</id>
+      <title></title>
+      <source>X0,l) | ~$lesseq(0,X0) (0:18)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref72</id>
+      <title></title>
+      <source>$lesseq($sum($uminus(x),$sum(aa(u),$sum(1,aa(X0)))),0) |</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref73</id>
+      <title></title>
+      <source>X0,l) | ~$lesseq(0,X0) (0:18)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref74</id>
+      <title></title>
+      <source>$lesseq($sum($uminus(x),$sum($sum(aa(u),1),aa(X0))),0) |</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref75</id>
+      <title></title>
+      <source>X0,l) | ~$lesseq(0,X0) (0:18)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref76</id>
+      <title></title>
+      <source>$lesseq($sum(aa(X0),$sum($uminus(x),$sum(aa(u),1))),0) |</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref77</id>
+      <title></title>
+      <source>X0,l) | ~$lesseq(0,X0) (0:18)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref78</id>
+      <title>$sum(aa(u),$sum(1,$uminus(x)))),0) |</title>
+      <source>$lesseq($sum(aa(X0)</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref79</id>
+      <title></title>
+      <source>X0,l) | ~$lesseq(0,X0) (0:18)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref80</id>
+      <title></title>
+      <source>$lesseq($sum(aa(X0),$sum(aa(u),$sum($uminus</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref81</id>
+      <title></title>
+      <source>X0,l) | ~$lesseq(0,X0) (0:18)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref82</id>
+      <source>X0) | ~$lesseq(X0,l) | $lesseq($sum(aa(X0),$sum(aa(u),$sum($uminus(x),1))),0))</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref83</id>
+      <source>X0) | ~$lesseq(X0,l)) | Refutation found. Thanks to Tanya! 5511. $false (0:0)</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref84</id>
+      <title></title>
+      <source>$sum</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref85</id>
+      <title></title>
+      <source>$sum(i0,sK0(sK0)) != sK0 (0:6)</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref86</id>
+      <source>$sum(i,$uminus(i0)),sK0(sK0))</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref87</id>
+      <source>sK0(sK0))!= sK0 &amp; ~$lesseq(0,sK0(sK0)) &amp; $lesseq(m,$sum(i0,sK0(sK0))) &amp; aa(sK0) != $sum(aa($sum(sK0,$uminus(1))),1)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>&amp;amp; $</string>
+          </firstNames>
+          <lastName>Sum</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref88</id>
+      <title></title>
+      <source>~$sum(i0,sK0(X37)) = X37 &amp; ~$lesseq(0,sK0(X37)) &amp; $lesseq(m,$sum(i0,sK0(X37)))) =&gt; aa(X37) = $sum(aa($sum(X37,$uminus</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref89</id>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+    </Reference>
+    <Reference>
+      <id>ref90</id>
+      <title></title>
+      <source>$lesseq(0,sK0(sK0)) | $sum(1,sK0(sK0)) = sK0</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref91</id>
+      <source>$lesseq(m,$sum(i0,sK0(sK0))) (0:6)</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref92</id>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+    </Reference>
+    <Reference>
+      <id>ref93</id>
+      <source>sK0(sK0)) | $sum(1,sK0(sK0)) = sK0 (1:16)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>| $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref94</id>
+      <source>,i),sK0(sK0)) (0:6)</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref95</id>
+      <title></title>
+      <source>$sum(X0,X1) = $sum(X1,X0) (0:7)</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref96</id>
+      <source>$sum(i,-1),sK0(sK0)) (0:6)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref97</id>
+      <title></title>
+      <source>$lesseq($sum(i,$uminus(i0)),sK0(sK0)) (0:7)</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref98</id>
+      <title></title>
+      <source>$sum(-1,i),sK0(X0)) | ~$lesseq(m,$sum</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref99</id>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>| $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+    </Reference>
+    <Reference>
+      <id>ref100</id>
+      <title></title>
+      <source>sK0(X0)) = X0 (0:22)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>| $</string>
+          </firstNames>
+          <lastName>Sum</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref101</id>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+    </Reference>
+    <Reference>
+      <id>ref102</id>
+      <title></title>
+      <source>sK0(X0)) | $sum(1,sK0(X0)) = X0 | ~$lesseq($sum(i,-1)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>| $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref103</id>
+      <source>X0))) | aa(X0) = aa0(X0) (0:11)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$ Lesseq ( M</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref104</id>
+      <title></title>
+      <source>~$lesseq(m,$sum(i0,sK0(X0))) | aa(X0) = aa0(X0) (0:11)</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref105</id>
+      <title></title>
+      <source>aa(X0) != aa0(X0) | ~$lesseq(m,$sum(1,sK0(X0))) | $lesseq</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref106</id>
+      <title></title>
+      <source>| $sum(1,sK0(X0)) = X0 | ~$lesseq($sum(i,-1)</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref107</id>
+      <title></title>
+      <source>~$sum(i0,sK0(X37)) = X37 &amp; ~$lesseq(0,sK0(X37)) &amp; $lesseq(m,$sum(i0,sK0(X37)))) =&gt; ~aa(X37) = aa0(X37)</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref108</id>
+      <title></title>
+      <source>Thanks to Tanya! 1299. $false (1:0)</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref109</id>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <location>j,j</location>
+    </Reference>
+    <Reference>
+      <id>ref110</id>
+      <source>X0,j) | $lesseq(X0,j0) (3:6)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref111</id>
+      <title></title>
+      <source>X1,X2) | ~$lesseq(X0,X1) | $lesseq(X0,X2) (0:9</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref112</id>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+    </Reference>
+    <Reference>
+      <id>ref113</id>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+    </Reference>
+    <Reference>
+      <id>ref114</id>
+      <title></title>
+      <source>~$lesseq(X0,j) &amp; $lesseq(X0,j0) &amp; $lesseq(aa(X0),x))</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref115</id>
+      <title></title>
+      <source>aa(X0),x))</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref116</id>
+      <title></title>
+      <source>aa(X0),x))</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref117</id>
+      <title></title>
+      <source>aa(X36),x))</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref118</id>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+    </Reference>
+    <Reference>
+      <id>ref119</id>
+      <title></title>
+      <source>aa(X36),x))</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref120</id>
+      <title></title>
+      <source>X24,sK0) | $lesseq(X24,j0) (1:6)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref121</id>
+      <source>j,j0) | ~$lesseq(j,j) (1:6)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref122</id>
+      <source>aa(X0),aa(j)) | ~$lesseq(X0,j0) | ~$lesseq(j,X0) (0:11)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref123</id>
+      <source>aa(X0),aa(j)))</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref124</id>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+    </Reference>
+    <Reference>
+      <id>ref125</id>
+      <source>aa(X36),aa(j)))</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~ $</string>
+          </firstNames>
+          <lastName>Lesseq</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref126</id>
+      <source>X36) | ~$lesseq(X36,j0) | $less(aa(j),aa(X36)))</source>
+      <authors/>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref127</id>
+      <title>Efficient Generation of Craig Interpolants in Satisfiability Modulo Theories</title>
+      <source>In ACM Transactions on Computational Logic</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A</string>
+          </firstNames>
+          <lastName>Cimatti</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A</string>
+          </firstNames>
+          <lastName>Griggio</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>R</string>
+          </firstNames>
+          <lastName>Sebastiani</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>12</volume>
+      <publicationDateString>2009-10</publicationDateString>
+      <publicationMonth>10</publicationMonth>
+      <publicationYear>2009</publicationYear>
+      <type>j</type>
+    </Reference>
+    <Reference>
+      <id>ref128</id>
+      <source>An Introduction to Mathematical Logic and Type Theory: To Truth Through Proof</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>B</string>
+          </firstNames>
+          <lastName>Peter</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Andrews</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2002</publicationDateString>
+      <publicationYear>2002</publicationYear>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref129</id>
+      <title></title>
+      <source>Bounded Model Checking</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Armin</string>
+          </firstNames>
+          <lastName>Biere</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Alessandro</string>
+          </firstNames>
+          <lastName>Cimatti</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Edmund</string>
+            <string>M</string>
+          </firstNames>
+          <lastName>Clarke</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Ofer</string>
+          </firstNames>
+          <lastName>Strichman</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Yunshan</string>
+          </firstNames>
+          <lastName>Zhu</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>58</volume>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+      <type>j</type>
+    </Reference>
+    <Reference>
+      <id>ref130</id>
+      <title>Boogie: A Modular Reusable Verifier for Object-Oriented Programs</title>
+      <source>FMCO</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Bcd + 05 ] Michael</string>
+          </firstNames>
+          <lastName>Barnett</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Bor-Yuh Evan</string>
+          </firstNames>
+          <lastName>Chang</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Robert</string>
+          </firstNames>
+          <lastName>Deline</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Bart</string>
+          </firstNames>
+          <lastName>Jacobs</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>K</string>
+          </firstNames>
+          <lastName>Rustan</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Leino</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>4111</volume>
+      <pageFrom>364</pageFrom>
+      <pageTo>387</pageTo>
+      <publicationDateString>2005</publicationDateString>
+      <publicationYear>2005</publicationYear>
+      <type>j</type>
+    </Reference>
+    <Reference>
+      <id>ref131</id>
+      <source>HOL-Boogie-An Interactive Prover-Backend for the Verifying C Compiler</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Sascha</string>
+          </firstNames>
+          <lastName>Böhme</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Wolfram</string>
+          </firstNames>
+          <lastName>Michaa L Moskal</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Burkhart</string>
+          </firstNames>
+          <lastName>Schulte</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Wolff</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>111</pageFrom>
+      <pageTo>144</pageTo>
+      <publicationDateString>2010-02</publicationDateString>
+      <publicationMonth>02</publicationMonth>
+      <publicationYear>2010</publicationYear>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref132</id>
+      <source>Abstract Interpretation: A Unified Lattice Model for Static Analysis of Programs by Construction or Approximation of Fixpoints</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Patrick</string>
+          </firstNames>
+          <lastName>Cousot</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Radhia</string>
+          </firstNames>
+          <lastName>Cousot</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>238</pageFrom>
+      <pageTo>252</pageTo>
+      <publicationDateString>1977</publicationDateString>
+      <publicationYear>1977</publicationYear>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref133</id>
+      <source>The complexity of theorem-proving procedures</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A</string>
+          </firstNames>
+          <lastName>Stephen</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Cook</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>151</pageFrom>
+      <pageTo>158</pageTo>
+      <publicationDateString>1971</publicationDateString>
+      <publicationYear>1971</publicationYear>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref134</id>
+      <source>A Fast LinearArithmetic Solver for DPLL(T)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Bruno</string>
+          </firstNames>
+          <lastName>Dutertre</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Leonardo</string>
+          </firstNames>
+          <lastName>De Moura</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>81</pageFrom>
+      <pageTo>94</pageTo>
+      <publicationDateString>2006</publicationDateString>
+      <publicationYear>2006</publicationYear>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref135</id>
+      <source>Guarded Commands, Nondeterminacy and Formal Derivation of Programs</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>E</string>
+            <string>W</string>
+          </firstNames>
+          <lastName>Dijkstra</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>453</pageFrom>
+      <pageTo>457</pageTo>
+      <publicationDateString>1975</publicationDateString>
+      <publicationYear>1975</publicationYear>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref136</id>
+      <source>A machine program for theorem-proving</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Martin</string>
+          </firstNames>
+          <lastName>Davis</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>George</string>
+          </firstNames>
+          <lastName>Logemann</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Donald</string>
+          </firstNames>
+          <lastName>Loveland</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>394</pageFrom>
+      <pageTo>397</pageTo>
+      <publicationDateString>1962-07</publicationDateString>
+      <publicationMonth>07</publicationMonth>
+      <publicationYear>1962</publicationYear>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref137</id>
+      <source>Satisfiability modulo theories: introduction and applications</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Leonardo</string>
+          </firstNames>
+          <lastName>De Moura</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Nikolaj</string>
+          </firstNames>
+          <lastName>Bjørner</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>69</pageFrom>
+      <pageTo>77</pageTo>
+      <publicationDateString>2011</publicationDateString>
+      <publicationYear>2011</publicationYear>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref138</id>
+      <source>A Computing Procedure for Quantification Theory</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Martin</string>
+          </firstNames>
+          <lastName>Davis</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Hilary</string>
+          </firstNames>
+          <lastName>Putnam</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>201</pageFrom>
+      <pageTo>215</pageTo>
+      <publicationDateString>1960-07</publicationDateString>
+      <publicationMonth>07</publicationMonth>
+      <publicationYear>1960</publicationYear>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref139</id>
+      <source>Principles of Mathematical Logic</source>
+      <publisher>Chelsea Publishing Company</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>D</string>
+          </firstNames>
+          <lastName>Hilbert</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>W</string>
+          </firstNames>
+          <lastName>Ackermann</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1950</publicationDateString>
+      <publicationYear>1950</publicationYear>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref140</id>
+      <source>An Extensible SAT-solver</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Niklas</string>
+          </firstNames>
+          <lastName>Eén</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Niklas</string>
+          </firstNames>
+          <lastName>Sörensson</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>502</pageFrom>
+      <pageTo>518</pageTo>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref141</id>
+      <title>Inferring Loop Invariants using Postconditions</title>
+      <source>Fields of Logic and Computation: Essays Dedicated to Yuri Gurevich on the Occasion of His 70th Birthday</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Carlo</string>
+            <string>A</string>
+          </firstNames>
+          <lastName>Furia</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Bertrand</string>
+          </firstNames>
+          <lastName>Meyer</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2010</publicationDateString>
+      <publicationYear>2010</publicationYear>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref142</id>
+      <source>On the Complexity of Derivation in Propositional Calculus</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>G</string>
+            <string>S</string>
+          </firstNames>
+          <lastName>Tseitin</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>466</pageFrom>
+      <pageTo>483</pageTo>
+      <publicationDateString>1983</publicationDateString>
+      <publicationYear>1983</publicationYear>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref143</id>
+      <source>Aligators for Arrays (Tool Paper)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Thomas</string>
+            <string>A</string>
+          </firstNames>
+          <lastName>Henzinger</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Thibaud</string>
+          </firstNames>
+          <lastName>Hottelier</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Laura</string>
+          </firstNames>
+          <lastName>Kovács</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Andrey</string>
+          </firstNames>
+          <lastName>Rybalchenko</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>348</pageFrom>
+      <pageTo>356</pageTo>
+      <publicationDateString>2010</publicationDateString>
+      <publicationYear>2010</publicationYear>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref144</id>
+      <title>Case Studies on Invariant Generation Using a Saturation Theorem Prover</title>
+      <source>10th Mexican International Conference on Artificial Intelligence, MICAI</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Krystof</string>
+          </firstNames>
+          <lastName>Hoder</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Laura</string>
+          </firstNames>
+          <lastName>Kovacs</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Andrei</string>
+          </firstNames>
+          <lastName>Voronkov</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2011</publicationDateString>
+      <publicationYear>2011</publicationYear>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref145</id>
+      <title>Finding Loop Invariants for Programs over Arrays Using a Theorem Prover</title>
+      <source>International Symposium on Symbolic and Numeric Algorithms for Scientific Computing, SYNASC</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Laura</string>
+          </firstNames>
+          <lastName>Kovacs</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Andrei</string>
+          </firstNames>
+          <lastName>Voronkov</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2009</publicationDateString>
+      <publicationYear>2009</publicationYear>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref146</id>
+      <title>First-Order Theorem Proving and Vampire</title>
+      <source>Proceedings of the International Conference on Computer Aided Veri cation (CAV)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Laura</string>
+          </firstNames>
+          <lastName>Kovacs</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Andrei</string>
+          </firstNames>
+          <lastName>Voronkov</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2013</publicationDateString>
+      <publicationYear>2013</publicationYear>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref147</id>
+      <title>SMT-Based Array Invariant Generation</title>
+      <source>14th International Conference Verification, Model Checking, and Abstract Interpretation</source>
+      <publisher>VMCAI</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Daniel</string>
+          </firstNames>
+          <lastName>Larraz</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Enric</string>
+          </firstNames>
+          <lastName>Rodriguez-Carbonell</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Albert</string>
+          </firstNames>
+          <lastName>Rubio</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2013</publicationDateString>
+      <publicationYear>2013</publicationYear>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref148</id>
+      <source>Chaff: Engineering an Efficient SAT Solver</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>W</string>
+          </firstNames>
+          <lastName>Mmz + 11 ] Matthew</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Conor</string>
+            <string>F</string>
+          </firstNames>
+          <lastName>Moskewicz</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Ying</string>
+          </firstNames>
+          <lastName>Madigan</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Lintao</string>
+          </firstNames>
+          <lastName>Zhao</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Sharad</string>
+          </firstNames>
+          <lastName>Zhang</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Malik</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2011</publicationDateString>
+      <publicationYear>2011</publicationYear>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref149</id>
+      <source>The Temporal Logic of Reactive and Concurrent Systems</source>
+      <publisher>Springer</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Z</string>
+          </firstNames>
+          <lastName>Manna</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A</string>
+          </firstNames>
+          <lastName>Pnueli</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1992</publicationDateString>
+      <publicationYear>1992</publicationYear>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref150</id>
+      <source>GRASP: a search algorithm for propositional satisfiability</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>J</string>
+          </firstNames>
+          <lastName>Marques-Silva</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>K</string>
+          </firstNames>
+          <lastName>Sakallah</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>506</pageFrom>
+      <pageTo>521</pageTo>
+      <publicationDateString>1999-05</publicationDateString>
+      <publicationMonth>05</publicationMonth>
+      <publicationYear>1999</publicationYear>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref151</id>
+      <title>Program Verification using Template over Predicate Abstraction</title>
+      <source>Proc. of PLDI</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>S</string>
+          </firstNames>
+          <lastName>Strivastava</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>S</string>
+          </firstNames>
+          <lastName>Gulwani</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2009</publicationDateString>
+      <publicationYear>2009</publicationYear>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref152</id>
+      <source>FaCT++ Description Logic Reasoner: System Description</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Dmitry</string>
+          </firstNames>
+          <lastName>Tsarkov</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Ian</string>
+          </firstNames>
+          <lastName>Horrocks</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>292</pageFrom>
+      <pageTo>297</pageTo>
+      <publicationDateString>2006</publicationDateString>
+      <publicationYear>2006</publicationYear>
+      <type>m</type>
+    </Reference>
+    <Reference>
+      <id>ref153</id>
+      <source>A branching heuristic for testing propositional satisfiability</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Jinchang</string>
+          </firstNames>
+          <lastName>Wang</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1995-10</publicationDateString>
+      <publicationMonth>10</publicationMonth>
+      <publicationYear>1995</publicationYear>
+      <type>m</type>
+    </Reference>
+  </references>
+</Publication>

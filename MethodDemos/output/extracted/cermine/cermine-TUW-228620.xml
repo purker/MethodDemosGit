@@ -1,0 +1,2138 @@
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN" "JATS-archivearticle1.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+  <front>
+    <journal-meta />
+    <article-meta>
+      <article-id pub-id-type="doi">10.1007/s12525-014-0158-6</article-id>
+      <title-group>
+        <article-title>Security and privacy in business networking</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <string-name>Sven Wohlgemuth</string-name>
+          <email>sven.wohlgemuth@trust.cased.de</email>
+          <xref ref-type="aff" rid="aff0">0</xref>
+          <xref ref-type="aff" rid="aff3">3</xref>
+          <xref ref-type="aff" rid="aff4">4</xref>
+          <xref ref-type="aff" rid="aff5">5</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Stefan Sackmann</string-name>
+          <xref ref-type="aff" rid="aff0">0</xref>
+          <xref ref-type="aff" rid="aff3">3</xref>
+          <xref ref-type="aff" rid="aff4">4</xref>
+          <xref ref-type="aff" rid="aff5">5</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Noboru Sonehara</string-name>
+          <xref ref-type="aff" rid="aff0">0</xref>
+          <xref ref-type="aff" rid="aff3">3</xref>
+          <xref ref-type="aff" rid="aff4">4</xref>
+          <xref ref-type="aff" rid="aff5">5</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>A Min Tjoa</string-name>
+          <xref ref-type="aff" rid="aff0">0</xref>
+          <xref ref-type="aff" rid="aff3">3</xref>
+          <xref ref-type="aff" rid="aff4">4</xref>
+          <xref ref-type="aff" rid="aff5">5</xref>
+        </contrib>
+        <aff id="aff0">
+          <label>0</label>
+          <institution>A. Tjoa Vienna University of Technology, Institute for Software Technology</institution>
+          ,
+          <addr-line>Favoritenstr. 9-11/188, 1040 Wien</addr-line>
+          ,
+          <country country="AT">Austria</country>
+        </aff>
+        <aff id="aff1">
+          <label>1</label>
+          <institution>CASED, System Security Lab</institution>
+          ,
+          <addr-line>Mornewegstr. 32, 64293 Darmstadt</addr-line>
+          ,
+          <country country="DE">Germany</country>
+        </aff>
+        <aff id="aff2">
+          <label>2</label>
+          <institution>Institute of Information Management, University of St. Gallen 2014</institution>
+        </aff>
+        <aff id="aff3">
+          <label>3</label>
+          <institution>N. Sonehara National Institute of Informatics, Information and Society Research Division</institution>
+          ,
+          <addr-line>2-1-2 Hitotsubashi, Chiyoda-ku, Tokyo 101-8430</addr-line>
+          ,
+          <country country="JP">Japan</country>
+        </aff>
+        <aff id="aff4">
+          <label>4</label>
+          <institution>S. Sackmann Martin Luther University Halle Wittenberg</institution>
+          ,
+          <addr-line>Universitätsring 3, 06108 Halle/Saale</addr-line>
+          ,
+          <country country="DE">Germany</country>
+        </aff>
+        <aff id="aff5">
+          <label>5</label>
+          <institution>S. Wohlgemuth (</institution>
+        </aff>
+      </contrib-group>
+      <abstract>
+        <p>Business networking relies on application-specific quantity and quality of information in order to support social infrastructures in, e.g., energy allocation coordinated by smart grids, healthcare services with electronic health records, traffic management with personal sensors, RFID in retail and logistics, or integration of individuals' social network information into good, services, and rescue operations. Due to the increasing reliance of networking applications on sharing ICT services, dependencies threaten privacy, security, and reliability of information and, thus, innovative business applications in smart societies. Resilience is becoming a new security approach, since it takes dependencies into account and aims at achieving equilibriums in case of opposite requirements. This special issue on 'Security and Privacy in Business Networking' contributes to the journal 'Electronic Markets' by introducing a different view on achieving acceptable secure business networking applications in spite of threats due to covert channels. This view is on adapting resilience to enforcement of IT security in business networking applications. Our analysis shows that privacy is an evidence to measure and improve trustworthy relationships and reliable interactions between participants of business processes and their IT systems. The</p>
+      </abstract>
+      <kwd-group>
+        <kwd>Business networking</kwd>
+        <kwd>Resilience</kwd>
+        <kwd>Information exchange</kwd>
+        <kwd>Security</kwd>
+        <kwd>Privacy</kwd>
+        <kwd>Enforcement</kwd>
+      </kwd-group>
+    </article-meta>
+  </front>
+  <body>
+    <fig>
+      <graphic xlink:href="D:\output\methods\cermine\cermine-TUW-228620.images\img_1_1.png" />
+    </fig>
+    <sec id="sec-1">
+      <title>-</title>
+      <p>
+        At present, one of the most promising visions for business
+networking is the exploitation of information with information
+and communication technology (ICT), in particular by Big
+Data analytics with cyber-physical systems (CPS)
+        <xref ref-type="bibr" rid="ref1 ref11 ref32 ref40">(acatech
+2011; Wahlster and Müller 2013)</xref>
+        . IBM calls it ‘Smarter
+Planet’
+        <xref ref-type="bibr" rid="ref26">(IBM Corporation 2008)</xref>
+        , the European Commission
+(2010) has started the corresponding program ‘Horizon 2020—
+A Digital Agenda for Europe’, and Japan proposes the
+‘Declaration to be the World’s Most Advanced IT Nation’
+        <xref ref-type="bibr" rid="ref32">(Prime Minister of Japan and His Cabinet 2013)</xref>
+        . One aim of
+these initiatives is that systems, such as business networking
+applications, social infrastructures, and a society become
+resilient. Changes and vulnerabilities should be identified and
+analyzed to foresee and prevent incidents of any kind, as well
+as to react accordingly in acceptable time. Resilient ICT then
+supports the increased, sustainable welfare of a society.
+      </p>
+      <p>The key approach for gaining information on
+vulnerabilities and predicting incidents will be the ability to access and
+to analyze huge amounts of data in nearly real-time and to
+implement so-called Big Data analytics successfully. Service
+providers will collect, aggregate, and analyze data from
+various sources provided by CPS, e.g., business networks, social
+networks, sensors and actuators, as well as governments and
+citizens. Prominent examples for such innovative business
+networking applications can be found, e.g., in the domain of
+energy allocation coordinated by smart grids, healthcare
+services with electronic records, traffic management with
+personal sensors and interconnected vehicles, RFID in retail and
+logistics, individualized manufacturing of goods, as well as
+personalized services based on an individual’s social network.</p>
+      <p>
+        Such business networking applications share the Internet
+and its ICT services for global communication. Due to the
+increasing interdependence of the participating components,
+incidents may result in highly disruptive impacts. Technical
+failure, human error, accidents, or cyber-attacks might spread
+via dependencies and could threaten security and reliability of
+ICT services, the supported social infrastructures, and, in the
+end, the welfare and safety of our society. In order to improve
+the security and reliability of ICT support in this context,
+several approaches are currently being discussed and
+implemented. For example, the reform of the EU legal framework
+for electronic communications added Article 13a addressing
+security and reliability. It asks public and private service
+providers to take security measures and provide an incident
+report flow as an information exchange on vulnerabilities and
+incidents between providers, national regulatory authorities,
+the European Union Agency for Network and Information
+Security (ENISA), and the European Commission. It is
+proposed that a qualified independent body should audit this
+information flow. The vision is that such an information
+exchange of incident reports would safeguard competition
+and boost consumer choice
+        <xref ref-type="bibr" rid="ref15">(European Commission 2009)</xref>
+        .
+      </p>
+      <p>
+        For improving resilience, a spontaneous exchange of
+information of acceptable quantity and quality lies at the core of
+these approaches. While such extensive information exchange
+and analysis can already be observed in business networking
+applications
+        <xref ref-type="bibr" rid="ref34">(Riemer et al. 2009)</xref>
+        in the context of security and
+reliability it is still in an early stage. However, it would enable
+service providers to derive information on vulnerabilities and
+incidents by means of a secondary use of data with machine
+learning algorithms. In turn such information can be disclosed
+to other participants, e.g. actuators, who decide and act on this
+information to improve the security of their services and ICT.
+On the whole, such service providers and their business
+networking applications might be of high relevance for
+improving resilience of critical infrastructures, the emerging CPS,
+and future business networks.
+      </p>
+      <p>
+        However, information exchange is also the basis for
+dependencies between ICT systems—not only in the desired
+way as realized in business networking applications, but also
+by creating undesirable vulnerabilities and risks.
+Unfortunately, not all dependencies of an ICT system can be
+automatically detected
+        <xref ref-type="bibr" rid="ref41">(Wang and Ju 2006)</xref>
+        and, thus, they
+threaten trustworthiness and participation in an information
+exchange. Therefore, one key issue to be resolved for
+exploiting the full potential of future business networking is
+enforcing the individual security and privacy interests of all
+participants to achieve an acceptable trustworthy information
+exchange. This implies controlling the usage of information.
+      </p>
+    </sec>
+    <sec id="sec-2">
+      <title>Information exchange and intermediaries</title>
+      <p>
+        In computer science trustworthy information exchange means
+a reduction of vulnerabilities in the participating ICT systems
+and their communication in order to reduce the effect of any
+incident
+        <xref ref-type="bibr" rid="ref4">(Avizienis et al. 2004)</xref>
+        . It also means that participants
+can formalize a security policy describing their individual
+security interests and negotiate on an agreed-upon security
+policy reflecting a compromise or equilibrium respectively
+(Rannenber
+        <xref ref-type="bibr" rid="ref20">g et al. 1999</xref>
+        ). In such multilateral IT security
+m od e l s p r ot e c t i o n g o a l s , l i ke a c co u n t a bi l i t y a n d
+unobservability, become an important part of a ‘balanced’
+security. Enforcing accountability and unobservability can
+be technically achieved by encryption and authentication
+schemes supporting pseudonymity, e.g. by identity
+management
+        <xref ref-type="bibr" rid="ref10">(Chaum 1985)</xref>
+        or cryptographic key systems
+        <xref ref-type="bibr" rid="ref29">(Pfitzmann
+and Hansen 2010)</xref>
+        . These approaches depend on
+confidentiality and integrity of the private key, its accountability to the
+given identity, and on integrity and consistency of a public key
+exchange. Even though trusted runtime environments exist
+        <xref ref-type="bibr" rid="ref3">(Asokan et al. 2013)</xref>
+        , security of a cryptographic key
+exchange without a trusted third party (TTP) has not yet been
+demonstrated
+        <xref ref-type="bibr" rid="ref18">(Freire et al. 2013)</xref>
+        .
+      </p>
+      <p>
+        Introducing a third party extends the direct communication
+model of an information exchange. In practice, the role of a
+third party acting as an intermediary for an information
+exchange is manifold. Intermediaries take care of the security
+and reliability of the communication and of current payments.
+Successful examples are SWIFT and international clearing
+systems
+        <xref ref-type="bibr" rid="ref6">(Bons et al. 2012)</xref>
+        . Intermediaries also establish
+relationships between data providers and data consumers by
+deriving information based on data collected with their consent.
+Successful examples here are loyalty card programs in the
+field of customer relationship management (CRM) or social
+networks sites. Furthermore, intermediaries can contribute to
+the usability of an information exchange to enforce the
+participants’ individual security interests. Usability studies of
+security tools, e.
+        <xref ref-type="bibr" rid="ref20">g. PGP (Whitten and Tygar 1999</xref>
+        ), show that
+their user interfaces and security concepts are too technical
+and not intuitive with the result that, as observed in Germany,
+over 70 % are willing to delegate responsibility for their
+security to a TTP
+        <xref ref-type="bibr" rid="ref12">(DIVSI 2012)</xref>
+        .
+      </p>
+      <p>
+        Altogether, intermediaries in the role of TTP can be
+expected to play an important role with respect to extensive
+information exchange. However, they also represent a new
+vulnerability. Since an intermediary is usually involved in
+several information exchanges with different participants,
+dependencies between the intermediary’s ICT system and
+those of the other participants arise during run-time. Hence,
+a TTP also can be the origin of a possible man-in-the-middle
+attack with serious consequences for the information
+exchange. According to Article 13a incident reports in 2013,
+third party failure has a high impact. Most of the observed
+incidents have their direct cause in system overload, power
+cuts, and software bugs
+        <xref ref-type="bibr" rid="ref11">(Dekker et al. 2013)</xref>
+        . The IT security
+report for Germany in 2011
+        <xref ref-type="bibr" rid="ref7">(BSI 2011)</xref>
+        shows a trend from
+direct attacks to indirect ones via dependencies to the affected
+ICT system. The report forecasts an increase in attacks by
+botnets, identity theft, security vulnerabilities, and malware.
+SCADA, mobile communications, interfaces and storage
+media, or Cloud Computing systems — all of which are
+considered to be part of future CPS — show an increased risk
+potential. A current study of Internet usage in Germany
+indicates that these threats represent a real hurdle for information
+exchange. A fear of misuse of personal data is the main reason
+why the majority of the population in Germany refrains from
+participating in Internet services
+        <xref ref-type="bibr" rid="ref12">(DIVSI 2012)</xref>
+        .
+      </p>
+      <p>Intermediaries can be expected to play a central role in
+future business networks in the context of providing privacy
+and security. However, they have to be trusted and, in other
+words, the less trust required, the better. Therefore, security
+and privacy mechanisms with a focus on intermediaries and
+their dependencies as origins of incidents are of interest for
+exploiting an effective information exchange in business
+networks. In respect of the realization of an incident report flow,
+there is no incentive to provide vulnerability information or to
+report incidents without adequate protection of the disclosed
+information. For example, a participant reporting a breach of
+confidentiality would be harmed twice: firstly by the incident
+itself and secondly by a loss of reputation due to the leakage of
+the confidential report.</p>
+    </sec>
+    <sec id="sec-3">
+      <title>Security models and their enforcement</title>
+      <p>
+        The security approach to protect information once it has been
+disclosed to a third party is isolation on the part of the third
+party. Isolation means that exchanged information should not
+come into contact with other information exchanges and that
+the intermediary should not know what information is used in
+the service or the purpose for which the service is being used
+by its consumers
+        <xref ref-type="bibr" rid="ref38">(Sonehara et al. 2011)</xref>
+        . Thus, enforcement of
+isolation means to implement a multilateral trust model to
+enforce an equilibrium concerning the individual security
+interests of the participants.
+      </p>
+      <p>
+        Individual security interests can be enforced by different
+security models as described in the following. At first, access
+control models formalize isolation by information flow
+control for a closed group of participants. Mandatory access
+control (MAC) security models, e.g. Biba, Bell-LaPadula, or
+the Chinese Wall Security Policy, are in widespread use
+        <xref ref-type="bibr" rid="ref37">(Samarati and de Capitani di Vimercati 2001)</xref>
+        . They model
+information flow control to protect data by the use of labels
+and a pre-defined order. The pre-defined order classifies data
+and identity of authorized participants as subjects into access
+classes and formalizes the properties on data access as
+provisions according to the protection goals of confidentiality or
+integrity, respectively. However, the protection goal
+availability of information might not be achieved easily if a MAC
+policy is deployed for a spontaneous information exchange:
+the pre-defined order of the security policy would have to be
+implemented for service providers, leading to confidentiality
+of the data but also to a restriction of the availability of the
+services. Hence, a security configuration based on MAC may
+lead to an incident on availability of information.
+      </p>
+      <p>Discretionary access control (DAC) where authorizations
+are granted to the identity of authorized service providers (data
+consumers) and not according to a security class, is more
+flexible. However, to date, DAC approaches are not precise
+enough for a trustworthy spontaneous information exchange.
+Granting access to data for given exchanges needs to define a
+group or role for the participants. This, in turn, could grant
+access to parties of an information exchange who are not
+participating in it representing a vulnerability regarding
+confidentiality and integrity of the information exchange.</p>
+      <p>
+        In contrast, the concept of distributed usage control specifies
+the confidentiality and integrity of an information exchange
+and, thus, information flows as data processing by obligations
+without restricting availability of information
+        <xref ref-type="bibr" rid="ref31">(Pretschner et al.
+2006)</xref>
+        . The classification of
+        <xref ref-type="bibr" rid="ref23">Hilty et al. (2005)</xref>
+        for obligations
+according to time and distribution shows that obligations are in
+general not enforceable but can become so at runtime.
+      </p>
+      <p>Concluding, an instance of a security model for a given
+isolation formalizes access on data and information, which is
+mapped to the identities of authorized subjects. According to
+the security model, security and privacy would be achieved if
+only authorized identities get access to the information as
+specified by provisions and obligations of the corresponding
+security policy and if these identities did in fact represent the
+corresponding data consumers. Their enforcement is to
+prevent incidents and to close vulnerabilities.</p>
+      <p>
+        A further relevant issue for realizing a trustworthy
+information exchange is the authenticity of the exchanged
+information. Authenticity of derived information is always subject
+to a given error probability. Firstly, this is conceptually due to
+application-dependent statistical model of machine learning
+schemes
+        <xref ref-type="bibr" rid="ref14">(Domingos 2012)</xref>
+        . Secondly, information relates to a
+given model, i.e. to a given context, e.g., described by service
+level agreements and security policies specifying the context
+of a data processing.
+      </p>
+      <p>
+        At present, two opposing security concepts for enforcing
+isolation are under discussion: transparency and control.
+Transparency of data processing as stated by Information
+Accountability
+        <xref ref-type="bibr" rid="ref42">(Weitzner et al. 2008)</xref>
+        follows the concept that
+data processing should be observed and evaluated with
+Transparency-Enhancing Technology (TET). TET aims at
+identifying an incident and its cause in order to decide on
+the accountability and trustworthiness of the affected
+participant. In contrast, control on data processing as with Privacy by
+Design
+        <xref ref-type="bibr" rid="ref16">(European Commission 2010)</xref>
+        considers the
+possibility of a violation of an isolation and aims at enforcing
+unobservability. Privacy-Enhancing Technology (PET)
+achieves at least unobservability by pseudonymity. For
+selfprotection further PETs follow the approach of additionally
+impeding secondary use of information and re-identification
+of participants for purposes of data processing, which occur
+after data collection. This may raise additional incidents and,
+thus, requires transparency in their cause and origin to decide
+on trustworthiness of the participants.
+      </p>
+      <sec id="sec-3-1">
+        <title>TET and dependencies</title>
+        <p>
+          TET aims at enforcing obligations for isolation by observing
+the current data processing and its compliance to a given
+security policy. If a policy violation occurs, an anomaly and
+its cause are analyzed to decide on accountability. It can
+establish whether the received information has been processed
+according to the corresponding security policy. A monitor
+observes data processing of an ICT system and logs it for a
+data protection audit
+          <xref ref-type="bibr" rid="ref27">(Karjoth et al. 2002)</xref>
+          . If enforcement of
+isolation of previous information exchanges and
+vulnerabilities of the ICT system of the data consumer are known, a data
+provider then can derive information about expected
+enforcement of isolation.
+        </p>
+        <p>
+          Data leakage prevention aims at confidentiality of data
+processing. However, a monitor cannot consider more than
+one trace and is vulnerable to covert channels as seen by
+virtualization in Cloud Computing
+          <xref ref-type="bibr" rid="ref35">(Ristenpart et al. 2009)</xref>
+          .
+This is an example of the vulnerability of data confidentiality
+via a dependency even though the service provider grants
+access to his services to authorized identities only. If
+confidentiality is not the highest priority for an information
+exchange but rather integrity, consensus protocols are an
+approach to tolerate incidents while resulting in a consensus of
+authentic information. Preferably different implementations of
+the same information exchange run in parallel. Consensus
+protocols assume an information exchange also between these
+implementations, e.g. by an unknown, inevitable dependency.
+However, it is impossible for consensus protocols to result in a
+consensus in the asynchronous timing model, if only one of
+the participating systems fails during the protocol run
+          <xref ref-type="bibr" rid="ref17">(Fischer
+et al. 1985)</xref>
+          . Adding extensions such as randomization, failure
+detectors, or strong primitives for shared-memory lead to
+consensus protocols coping with failed systems due to delayed
+or failed data transfer but not for malicious incidents. This is
+the case with timing restrictin
+          <xref ref-type="bibr" rid="ref20">g consensus protocols (Gärtner
+1999</xref>
+          ). Consensus protocols for a synchronous model cope
+with failed systems up to a certain number of compromised
+ICT systems, even if they send different messages to other
+systems
+          <xref ref-type="bibr" rid="ref30">(Pfitzmann and Waidner 1992)</xref>
+          . However, they
+restrict availability of the participating ICT systems. This is a
+vulnerability for any other information exchange with a
+dependency on this ICT system and out of the scope of the threat
+model of consensus protocols.
+        </p>
+        <p>
+          Latest research approaches aim at retaining detected
+anomalies by evidence on the current model of data processing. That
+means they reconstruct the current model but without restricting
+availability. Secure logging and evidence
+          <xref ref-type="bibr" rid="ref36">(Sackmann et al.
+2006)</xref>
+          consider transparent data processing of separated ICT
+systems and restrict access to logged data to authorized
+identities only. Process mining
+          <xref ref-type="bibr" rid="ref39">(Van der Aalst 2012)</xref>
+          extends
+monitoring of the activities of an information exchange between ICT
+systems. The assumptions are completeness and authenticity of
+logged events, whereas confidentiality of the logged data in
+accordance to granting access on these observations to
+authorized identities is assured
+          <xref ref-type="bibr" rid="ref2">(Accorsi 2011)</xref>
+          . A variation of process
+mining is data provenance, which also documents the history of
+data and additionally their value by ‘sticking’ it to the data and
+derived information
+          <xref ref-type="bibr" rid="ref8">(Buneman et al. 2001)</xref>
+          . Schemes are
+inversion of data processing and annotation of data. Inversion
+depends on knowledge of the granted access decisions and the
+output data. This relates to the same completeness assumption
+as for secure logging and process mining. Annotation labels
+data so that the model of data processing can be re-constructed
+if a mapping to the data exists. However, current means for data
+provenance by annotation either assume centralized monitoring
+of the complete information exchange or are suitable for some
+kind of data without the derived information. Furthermore, data
+provenance can detect an information leakage and its cause
+only if the leaked information has been found together with
+evidence on its history
+          <xref ref-type="bibr" rid="ref45">(Wohlgemuth et al. 2010)</xref>
+          .
+        </p>
+        <p>Data provenance and secure logging as a components for
+each ICT system under investigation can in principle be used to
+check the integrity and origin of information by the reconstructed
+model and its comparison to the security policy. This
+reconstructed model in turn should extend the model of the applied
+machine learning scheme. In order to detect an identity theft, it
+may not be sufficient to reconstruct the model of this data
+processing, since it ends at the identity. It may also be necessary
+to check whether an anomaly in the usage of this identity exists
+regarding the information exchange under investigation.</p>
+      </sec>
+      <sec id="sec-3-2">
+        <title>PET and dependencies</title>
+        <p>
+          After converting obligations into provisions, PET enforces
+them while considering violations of confidentiality of
+isolation. The assumption is an idealized threat model assuming
+ICT systems as being correct whereas trustworthiness of
+participants is uncertain. PET impedes re-identification,
+secondary use, and non-authorized profiling according to the
+master identity of a participating party. It can be achieved by
+restricting availability of information or the information itself
+          <xref ref-type="bibr" rid="ref21">(Gilliot et al. 2009)</xref>
+          . This, in turn, threatens Big Data analytics
+with an increase of its error probability by introducing faulty
+information or the non-availability of sufficient quantity,
+whereas this does not depend on the type of machine learning
+scheme
+          <xref ref-type="bibr" rid="ref25 ref5">(Biggio et al. 2012; Huang et al. 2011)</xref>
+          .
+        </p>
+        <p>
+          Encryption protects information before access has taken
+place. However, after decryption, protection is no longer
+provided and information can be leaked via an unknown
+dependency. Identity management with anonymized
+credentials achieves accountability and unobservability as long as
+further disclosure to third parties is not considered
+          <xref ref-type="bibr" rid="ref9">(Camenisch and Lysanskaya 2001)</xref>
+          . A non-linkable delegation
+of rights achieves unobservability and accountability in an
+information exchange with an intermediary under the
+assumption that the modeled recipient of the information as the last
+data consumer in its exchange is trustworthy and its ICT
+system has no vulnerability
+          <xref ref-type="bibr" rid="ref31 ref44">(Wohlgemuth and Müller 2006)</xref>
+          .
+However, this is not realistic for a spontaneous information
+exchange with an intermediary.
+        </p>
+        <p>Our analysis of dependencies in a spontaneous information
+exchange and today’s mechanisms to enforce its security model
+in accordance with the security and privacy interests of the
+participants shows that an incident and its propagation to a
+secure ICT system is always possible. On one hand, it is possible
+that an attacker can control the identity of this participant. On the
+other hand, strengthening transparency by consensus protocols
+or confidentiality by PET with reducing the information raises
+an incident on dependent information exchanges.</p>
+        <p>
+          Homomorphic encryption schemes
+          <xref ref-type="bibr" rid="ref13">(Dolev and Yao 1983)</xref>
+          enforce confidentiality and integrity of information and, at the
+same time, preserve its availability. Their general suitability is
+uncertain due to their required computing performance of the
+cryptographic scheme and a mismatch in abstraction of the
+information
+          <xref ref-type="bibr" rid="ref28">(Naehrig et al. 2011)</xref>
+          .
+        </p>
+      </sec>
+    </sec>
+    <sec id="sec-4">
+      <title>Resilience as an approach for IT security and privacy</title>
+      <p>At present security and privacy in business networking is based
+on a system and threat model, which includes a limited set of
+possible information exchanges and incidents. It considers
+expected states and dependencies including those, which have
+already passed. A partial model can be achieved for any
+subsystem, which does not change for an adequate time. However,
+this is not reality for many actual business networking
+applications which are highly dynamic and agile. Since vulnerabilities
+from dependencies arise during run-time and cannot be
+completely known and predicted, the ‘pure’ model-based
+approach is not adequate for preventing and reacting in this
+context. It is not (at least not efficiently) possible to model all
+possible changes and incidents and, thus, security with ‘pure’
+model-based approaches will have to follow changes in
+business networks and their underlying technology.</p>
+      <p>
+        Extending ‘pure’ model-based security and privacy
+approaches to the dynamic and unforeseeable context of actual
+business networking means having to address these
+vulnerabilities and dependencies. The general view then changes from
+achieving ‘pure’ security to preserving an acceptable level of
+service of a system that corresponds to a compromise of the
+individual security and privacy interests of the participants in an
+information exchange. Preserving an acceptable level of service
+of a system requires constantly adapting its dependencies to
+incidents
+        <xref ref-type="bibr" rid="ref24">(Holling 2001)</xref>
+        , a concept that is also known as
+resilience. However, a general statement on the resilience of a
+system cannot be made. It corresponds to a certain incident and
+the ability of a system to recover within a certain time for
+response and composite costs and risks
+        <xref ref-type="bibr" rid="ref22">(Haimes 2009)</xref>
+        . Since
+neither individual security and privacy interests (and
+compromises) nor vulnerabilities remain identical over time, an
+adaption of security and privacy enforcement is required.
+      </p>
+      <p>
+        Thus, it is worth thinking about improving security and
+privacy in business networking by using methods and tools
+that support resilience of social infrastructures, i.e. in
+particular Big Data analytics and information exchange on incidents.
+For data providers and data consumers approaches are
+required that allow both to balance the benefit and the level of
+service, respectively, the security or privacy risk associated
+with information exchange. This means that, e.g., a data
+provider should be able to check before an information
+exchange takes place whether a data consumer might violate
+obligations for the information exchange. Vice versa, a data
+consumer should be able to check a priori of an information
+exchange whether the received information is the expected
+one and the data provider has followed the agreed-upon
+security policy for this information exchange. From an
+economic theory point of view, this leads to an asymmetric
+information situation that can usually be solved (or at least
+improved) by signalling or screening mechanisms
+        <xref ref-type="bibr" rid="ref19">(Furubotn
+and Richter 2005)</xref>
+        . Thus, new technical approaches that
+address the reduction of information asymmetry are being
+discussed as suitable methods and tools for improving security
+and privacy in business networking.
+      </p>
+      <sec id="sec-4-1">
+        <title>ICT Resilience — a signaling and screening architecture</title>
+        <p>To empower data providers and data consumers to assess and
+balance the benefit and risk of entering an information
+exchange, classical security methods and tools should be
+complemented by methods and tools that support their decision
+making. To reduce information asymmetry, signalling
+components should give a participant a tool to generate evidence on
+his actual data usage to prove trustworthiness according to the
+corresponding obligations, as well as establish a reputation over
+several information exchanges. In turn, a screening component
+should give a participant a tool to prove that exchanged
+information has been used as intended (or not). These tools are to be
+combined with accountability and an (economic) incentive
+system that allows each participant to evaluate the value of an
+information exchange according to the security configuration,
+the achievable level of, e.g. unobservability or accountability,
+and individual risk preferences.</p>
+        <p>In accordance with our analysis and adapting current
+approaches for resilience to security and privacy in business
+networking, we use the following five components to
+categorize methods and tools, as well as open research issues for ICT
+Resilience.
+&amp; A Usage Control Policy Tool Box aims at formalizing
+isolation patterns for expected information exchanges
+and anti-isolation patterns for classes of anomalies of an
+isolation. On one hand, this is required for expressing the
+interest of the parties involved in an information
+exchange. On the other hand, this is a basis for detecting
+anomalies, incidents, and policy violations, as well as for
+generating correct incident reports and their exchange.
+The set of patterns should be extensible to cater for newly
+detected patterns during runtime and for previously
+unknown interferences and results.
+&amp; Privacy Control aims at self-protecting against
+information leakage. The real identities of data providers should
+remain unobservable when information is going to be
+disclosed to third parties. This requires, e.g., identity
+management supporting pseudonymity and non-linkable
+delegation of rights. Pseudonymity should be revocable in
+case of provable fraud.
+&amp; Privacy Forensics aims at deriving evidence on isolation
+by the most probable data processing including its
+dependencies and its classification to an anomaly pattern. A data
+provenance scheme could derive such evidence. However,
+since internal dependencies of an external ICT system are
+usually not known, supervised machine learning in
+combination with labeled evidence could be useful for
+deriving the probabilities of possible information exchange.
+Since not all kind of data can be annotated, mechanisms
+of unsupervised machine learning should also be
+researched according to their suitability.
+&amp; IT Risk Analysis aims at evaluating and combining both
+types of evidence to result in a qualitative (or quantitative)
+statement on isolation, on information exchanges and, thus,
+on security and privacy in the corresponding business
+networking application. This component should consider
+results from, e.g., the Big Data analytics and information
+exchange on incidents. Based on the results of the risk
+analysis, an information exchange can be balanced, i.e. the
+corresponding security policies and compromises can be
+decided according to all the participants’ risk preferences.
+&amp;</p>
+      </sec>
+      <sec id="sec-4-2">
+        <title>System Evolution aims at automatic improvement of the</title>
+        <p>security configuration for an isolation and replacement of
+compromised ICT systems or participants, respectively. A
+removal of systems implies revocation of rights, which can
+be, e.g. realized by revocation mechanisms for credentials.
+In the case of accessed data, information has to be removed
+along the subsequent data trace or at least made useless.
+Data provenance and data mining technologies can support
+auditing whether this information has indeed been removed.</p>
+        <p>We do not wish to claim that these five components are the
+silver bullet to achieving ICT Resilience, however, we expect
+that they can provide an initial categorization for topics that
+address security and privacy in future business networking.
+Summarizing, an ICT system providing a
+signaling-andscreening architecture of ICT Resilience is by itself a business
+networking application in providing ‘security-as-a-service’
+with all its dependencies, vulnerabilities, and possibilities to
+violate the privacy interests of data providers. Since security
+and privacy cannot be guaranteed by technology alone, other
+means should foster the participation of individuals and
+correctness of their data and services. Data protection acts
+combined with adequate incentives are one option, however, they
+require reliable methods and tools for signaling and screening
+of actual behavior of all participants without harming their
+privacy and security interests. We see the challenges as
+interesting areas for research and finding solutions as a prerequisite
+for exploiting the potential of business networking
+applications relying on extensive data processing.</p>
+      </sec>
+      <sec id="sec-4-3">
+        <title>Papers within ICT Resilience</title>
+        <p>All papers of this special issue contribute to one of the
+presented components of ICT Resilience. Dehling and Sunyaev
+(‘Secure provision of Patient-Centered Health Information
+Technology Services in Public Networks—Leveraging
+Security and Privacy Features Provided by the German
+Nationwide Health Information Technology Infrastructure’)
+address the component Usage Control Policy Toolbox. They
+investigate security and privacy in business networking using
+the example of patient-centered health ICT services (PHS)
+based on the German infrastructure gematik. They identify
+security and privacy requirements of PHS, which could serve
+as a starting point for specifying isolation patterns for an
+information exchange of patients’ health data between
+medical service providers and third parties.</p>
+        <p>Gogoulos, Antonakopoulou, Lioudakis, Mousas,
+Kaklamani, and Venieris (‘On the design of a privacy aware
+authorization engine for collaborative environment’) also
+address the component Usage Control Policy Toolbox with a
+proposal for enforcing isolation of cross-organization
+information exchanges. Their authorization engine derives
+authorizations for data processing from a semantic model in
+accordance with the privacy and security interests of the
+participants.</p>
+        <p>Kieseberg, Schrittwieser, Mulazzani, Echizen, and Weippl
+(‘An algorithm for collusion-resistant anonymization and
+fingerprinting of sensitive microdata’) refer to Privacy Forensics
+in case of the disclosure of anonymized information to third
+parties. They present a k-anonymization scheme, which tags
+anonymized information by the procedure of their
+anonymization. Their evaluation considers colluding data
+consumers with the aim of non-authorized re-identification
+of the related identity to this information.</p>
+        <p>Rechert, von Suchodoletz, and Valizada (‘Take Care of
+Your Belongings Today—Securing Accessibility to
+Complex Electronic Business Processes’) address
+accessibility of information for the purpose of keeping business
+processes resilient. Since the outcome and costs of reconstructing
+archived information with the configuration of the
+corresponding instance of a business process are difficult to
+estimate, their proposal is to emulate their reconstruction in
+possible future data processing environments using software.
+The aim is to identify clearly defined and controllable
+preservation strategies, which should be integrated in current
+business processes. This forecasting and emulation approach is
+one option for supporting the continuous learning of isolation
+and anti-isolation patterns for IT Risk Analysis.</p>
+        <p>We thank all authors for their valuable submissions,
+reviewers and senior editors for the thorough and constructive
+comments and recommendations, and the editorial office for
+their support in editing this special issue.</p>
+      </sec>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <ref id="ref1">
+        <mixed-citation>
+          acatech (Ed.). (
+          <year>2011</year>
+          ).
+          <article-title>Cyber-physical systems. Driving force for innovation in mobility, health, energy and production, acatech-National Academy of Science</article-title>
+          and Engineering, acatech POSITION PAPER, http://www.acatech.de/fileadmin/user_upload/Baumstruktur_nach_ Website/Acatech/root/de/Publikationen/Stellungnahmen/acatech_ POSITION_CPS_
+          <article-title>Englisch_WEB.pdf</article-title>
+          .
+          <source>Accessed 27 Feb</source>
+          <year>2014</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref2">
+        <mixed-citation>
+          <string-name>
+            <surname>Accorsi</surname>
+            ,
+            <given-names>R.</given-names>
+          </string-name>
+          (
+          <year>2011</year>
+          ).
+          <article-title>BBox: A distributed secure log architecture</article-title>
+          .
+          <source>7th European Conference on Public-Key Infrastructures, Services and Applications (EuroPKI'10)</source>
+          , pp.
+          <fpage>109</fpage>
+          -
+          <lpage>124</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref3">
+        <mixed-citation>
+          <string-name>
+            <surname>Asokan</surname>
+            ,
+            <given-names>N.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Davi</surname>
+            ,
+            <given-names>L.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Dmitrienko</surname>
+            ,
+            <given-names>A.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Heuser</surname>
+            ,
+            <given-names>S.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Kostiainen</surname>
+            ,
+            <given-names>K.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Reshetova</surname>
+            ,
+            <given-names>E.</given-names>
+          </string-name>
+          , et al. (
+          <year>2013</year>
+          ).
+          <article-title>Mobile platform security-Synthesis lectures on information security, privacy, and trust</article-title>
+          . Morgan &amp; Claypool Publishers.
+        </mixed-citation>
+      </ref>
+      <ref id="ref4">
+        <mixed-citation>
+          <string-name>
+            <surname>Avizienis</surname>
+            ,
+            <given-names>A.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Laprie</surname>
+            ,
+            <given-names>J.-C.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Randell</surname>
+            ,
+            <given-names>B.</given-names>
+          </string-name>
+          , &amp;
+          <string-name>
+            <surname>Landwehr</surname>
+            ,
+            <given-names>C.</given-names>
+          </string-name>
+          (
+          <year>2004</year>
+          ).
+          <article-title>Basic concepts and taxonomy of dependable and secure computing</article-title>
+          .
+          <source>IEEE Transactions on Dependable and Secure Computing</source>
+          ,
+          <volume>1</volume>
+          (
+          <issue>1</issue>
+          ),
+          <fpage>11</fpage>
+          -
+          <lpage>33</lpage>
+          . IEEE.
+        </mixed-citation>
+      </ref>
+      <ref id="ref5">
+        <mixed-citation>
+          <string-name>
+            <surname>Biggio</surname>
+            ,
+            <given-names>B.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Nelson</surname>
+            ,
+            <given-names>B.</given-names>
+          </string-name>
+          , &amp;
+          <string-name>
+            <surname>Laskov</surname>
+            ,
+            <given-names>P.</given-names>
+          </string-name>
+          (
+          <year>2012</year>
+          ).
+          <article-title>Poisoning attacks against support vector machines</article-title>
+          .
+          <source>29th Int. Conf. on Machine Learning (ICML).</source>
+        </mixed-citation>
+      </ref>
+      <ref id="ref6">
+        <mixed-citation>
+          <string-name>
+            <surname>Bons</surname>
+            ,
+            <given-names>R. W. H.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Alt</surname>
+            ,
+            <given-names>R.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Lee</surname>
+            ,
+            <given-names>H. G.</given-names>
+          </string-name>
+          , &amp;
+          <string-name>
+            <surname>Weber</surname>
+            ,
+            <given-names>B.</given-names>
+          </string-name>
+          (
+          <year>2012</year>
+          ).
+          <article-title>Banking in the internet and mobile era</article-title>
+          .
+          <source>EM - Electronic Markets</source>
+          ,
+          <volume>22</volume>
+          (
+          <issue>4</issue>
+          ),
+          <fpage>197</fpage>
+          -
+          <lpage>202</lpage>
+          . Springer.
+        </mixed-citation>
+      </ref>
+      <ref id="ref7">
+        <mixed-citation>
+          <article-title>Bundesamt für Sicherheit in der Informationstechnik (BSI)-Federal Office for Information Security</article-title>
+          . (
+          <year>2011</year>
+          ).
+          <article-title>The IT security situation in Germany in 2011, BSI</article-title>
+          , https://www.bsi.bund.de/EN/ Publications/SecuritySituation/SecuritySituation_node.
+          <source>html. Accessed 27 Feb</source>
+          <year>2014</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref8">
+        <mixed-citation>
+          <string-name>
+            <surname>Buneman</surname>
+            ,
+            <given-names>P.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Khanna</surname>
+            ,
+            <given-names>S.</given-names>
+          </string-name>
+          , &amp;
+          <string-name>
+            <surname>Tan</surname>
+            ,
+            <given-names>W. C.</given-names>
+          </string-name>
+          (
+          <year>2001</year>
+          ).
+          <article-title>Why and where: A characterization of data provenance</article-title>
+          .
+          <source>ICDT</source>
+          <year>2001</year>
+          ,
+          <article-title>LNCS 1973</article-title>
+          . Springer, pp.
+          <fpage>316</fpage>
+          -
+          <lpage>330</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref9">
+        <mixed-citation>
+          <string-name>
+            <surname>Camenisch</surname>
+            ,
+            <given-names>J.</given-names>
+          </string-name>
+          , &amp;
+          <string-name>
+            <surname>Lysanskaya</surname>
+            ,
+            <given-names>A.</given-names>
+          </string-name>
+          (
+          <year>2001</year>
+          ).
+          <article-title>An efficient system for nontransferable anonymous credentials with optional anonymity revocation</article-title>
+          .
+          <source>EUROCRYPT'01</source>
+          ,
+          <string-name>
+            <surname>LNCS</surname>
+          </string-name>
+          <year>2045</year>
+          . Springer, pp.
+          <fpage>93</fpage>
+          -
+          <lpage>118</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref10">
+        <mixed-citation>
+          <string-name>
+            <surname>Chaum</surname>
+            ,
+            <given-names>D.</given-names>
+          </string-name>
+          (
+          <year>1985</year>
+          ).
+          <article-title>Security without identification: transaction systems to make big brother obsolete</article-title>
+          .
+          <source>Communications of the ACM</source>
+          ,
+          <volume>28</volume>
+          (
+          <issue>10</issue>
+          ),
+          <fpage>1030</fpage>
+          -
+          <lpage>1044</lpage>
+          . ACM.
+        </mixed-citation>
+      </ref>
+      <ref id="ref11">
+        <mixed-citation>
+          <string-name>
+            <surname>Dekker</surname>
+            ,
+            <given-names>M.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Karsberg</surname>
+            ,
+            <given-names>C.</given-names>
+          </string-name>
+          , &amp;
+          <string-name>
+            <surname>Lakka</surname>
+            ,
+            <given-names>M.</given-names>
+          </string-name>
+          (
+          <year>2013</year>
+          ).
+          <article-title>Annual incident reports 2012-analysis of article 13a incident reports. European Union Agency for Network and Information Security (ENISA)</article-title>
+          , http:// www.enisa.europa.eu/activities/Resilience-and
+          <string-name>
+            <surname>-CIIP</surname>
+          </string-name>
+          /Incidentsreporting/annual-reports/annual-incident-reports-
+          <source>2012. Accessed 27 Feb</source>
+          <year>2014</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref12">
+        <mixed-citation>
+          <article-title>Deutsches Institut für Vertrauen und Sicherheit im Internet (DIVSI)</article-title>
+          .
+          <article-title>(2012). DIVSI Milieu study on trust and security on the Internet, condensed version</article-title>
+          , https://www.divsi.de/publikationen/studien/ divsi-milieu-studie/.
+          <source>Accessed 27 Feb</source>
+          <year>2014</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref13">
+        <mixed-citation>
+          <string-name>
+            <surname>Dolev</surname>
+            ,
+            <given-names>D.</given-names>
+          </string-name>
+          , &amp;
+          <string-name>
+            <surname>Yao</surname>
+            ,
+            <given-names>A. C.</given-names>
+          </string-name>
+          (
+          <year>1983</year>
+          ).
+          <article-title>On the security of public key protocols</article-title>
+          .
+          <source>IEEE Transactions on Information Theory</source>
+          ,
+          <volume>29</volume>
+          (
+          <issue>2</issue>
+          ),
+          <fpage>198</fpage>
+          -
+          <lpage>208</lpage>
+          . IEEE Computer Society.
+        </mixed-citation>
+      </ref>
+      <ref id="ref14">
+        <mixed-citation>
+          <string-name>
+            <surname>Domingos</surname>
+            ,
+            <given-names>P.</given-names>
+          </string-name>
+          (
+          <year>2012</year>
+          ).
+          <article-title>A few useful things to know about machine learning</article-title>
+          .
+          <source>Communications of the ACM</source>
+          ,
+          <volume>55</volume>
+          (
+          <issue>10</issue>
+          ),
+          <fpage>78</fpage>
+          -
+          <lpage>87</lpage>
+          . ACM.
+        </mixed-citation>
+      </ref>
+      <ref id="ref15">
+        <mixed-citation>
+          <string-name>
+            <given-names>European</given-names>
+            <surname>Commission</surname>
+          </string-name>
+          . (
+          <year>2009</year>
+          ).
+          <source>Directive</source>
+          <year>2009</year>
+          /140/EC of the
+          <source>European Parliament and of the Council of 25 November 2009 amending Directives</source>
+          <year>2002</year>
+          /
+          <article-title>21/EC on a common regulatory framework for electronic communications networks</article-title>
+          and services,
+          <year>2002</year>
+          /19/EC on access to,
+          <article-title>and interconnection of, electronic communications networks and associated facilities, and 2002/20/EC on the authorisation of electronic communications networks and services</article-title>
+          .
+          <source>Official Journal of the European Communities, L</source>
+          <volume>337</volume>
+          ,
+          <fpage>37</fpage>
+          -
+          <lpage>69</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref16">
+        <mixed-citation>
+          <string-name>
+            <given-names>European</given-names>
+            <surname>Commission</surname>
+          </string-name>
+          . (
+          <year>2010</year>
+          ).
+          <article-title>A digital agenda for Europe. Communication from the Commission to the European Parliament, the Council, the European Economic and Social Committee and the Committee of the Regions</article-title>
+          ,
+          <source>COM 245 final/2.</source>
+        </mixed-citation>
+      </ref>
+      <ref id="ref17">
+        <mixed-citation>
+          <string-name>
+            <surname>Fischer</surname>
+            ,
+            <given-names>M. J.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Lynch</surname>
+            ,
+            <given-names>N. A.</given-names>
+          </string-name>
+          , &amp;
+          <string-name>
+            <surname>Paterson</surname>
+            ,
+            <given-names>M. S.</given-names>
+          </string-name>
+          (
+          <year>1985</year>
+          ).
+          <article-title>Impossibility of distributed consensus with one faulty process</article-title>
+          .
+          <source>Journal of the ACM</source>
+          ,
+          <volume>32</volume>
+          (
+          <issue>2</issue>
+          ),
+          <fpage>374</fpage>
+          -
+          <lpage>382</lpage>
+          . ACM.
+        </mixed-citation>
+      </ref>
+      <ref id="ref18">
+        <mixed-citation>
+          <string-name>
+            <surname>Freire</surname>
+            ,
+            <given-names>E.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Hofheinz</surname>
+            ,
+            <given-names>D.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Kiltz</surname>
+            ,
+            <given-names>E.</given-names>
+          </string-name>
+          , &amp;
+          <string-name>
+            <surname>Paterson</surname>
+            ,
+            <given-names>K.</given-names>
+          </string-name>
+          (
+          <year>2013</year>
+          ).
+          <article-title>Non-interactive key exchange</article-title>
+          .
+          <source>PKC 2013. LNCS 7778</source>
+          , Springer, pp.
+          <fpage>254</fpage>
+          -
+          <lpage>271</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref19">
+        <mixed-citation>
+          <string-name>
+            <surname>Furubotn</surname>
+            ,
+            <given-names>E. G.</given-names>
+          </string-name>
+          , &amp;
+          <string-name>
+            <surname>Richter</surname>
+            ,
+            <given-names>R.</given-names>
+          </string-name>
+          (
+          <year>2005</year>
+          ).
+          <article-title>Institutions and economic theory: The contribution of the new institutional economics (2nd ed</article-title>
+          .). Ann Arbor: University of Michigan Press.
+        </mixed-citation>
+      </ref>
+      <ref id="ref20">
+        <mixed-citation>
+          <string-name>
+            <surname>Gärtner</surname>
+            ,
+            <given-names>F.</given-names>
+          </string-name>
+          (
+          <year>1999</year>
+          ).
+          <article-title>Fundaments of fault-tolerant distributed computing in asynchronous environments</article-title>
+          .
+          <source>ACM Computing Surveys</source>
+          ,
+          <volume>31</volume>
+          (
+          <issue>1</issue>
+          ),
+          <fpage>1</fpage>
+          -
+          <lpage>26</lpage>
+          . ACM.
+        </mixed-citation>
+      </ref>
+      <ref id="ref21">
+        <mixed-citation>
+          <string-name>
+            <surname>Gilliot</surname>
+            ,
+            <given-names>M.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Matyas</surname>
+            ,
+            <given-names>V.</given-names>
+          </string-name>
+          , &amp;
+          <string-name>
+            <surname>Wohlgemuth</surname>
+            ,
+            <given-names>S.</given-names>
+          </string-name>
+          (
+          <year>2009</year>
+          ).
+          <article-title>Privacy and identity</article-title>
+          .
+          <source>The Future of Identity on the Information Society</source>
+          . Springer, pp.
+          <fpage>351</fpage>
+          -
+          <lpage>390</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref22">
+        <mixed-citation>
+          <string-name>
+            <surname>Haimes</surname>
+            ,
+            <given-names>Y. Y.</given-names>
+          </string-name>
+          (
+          <year>2009</year>
+          ).
+          <article-title>On the definition of resilience in systems</article-title>
+          .
+          <source>Risk Analysis</source>
+          ,
+          <volume>29</volume>
+          (
+          <issue>4</issue>
+          ),
+          <fpage>498</fpage>
+          -
+          <lpage>501</lpage>
+          .
+          <article-title>Society for Risk Analysis</article-title>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref23">
+        <mixed-citation>
+          <string-name>
+            <surname>Hilty</surname>
+            ,
+            <given-names>M.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Basin</surname>
+            ,
+            <given-names>D.</given-names>
+          </string-name>
+          , &amp;
+          <string-name>
+            <surname>Pretschner</surname>
+            ,
+            <given-names>A.</given-names>
+          </string-name>
+          (
+          <year>2005</year>
+          ).
+          <article-title>On obligations</article-title>
+          .
+          <source>ESORICS'05, LNCS 3679</source>
+          , Springer, pp.
+          <fpage>98</fpage>
+          -
+          <lpage>117</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref24">
+        <mixed-citation>
+          <string-name>
+            <surname>Holling</surname>
+            ,
+            <given-names>C. S.</given-names>
+          </string-name>
+          (
+          <year>2001</year>
+          ).
+          <article-title>Understanding the complexity of economic, ecological, and social systems</article-title>
+          .
+          <source>Ecosystems</source>
+          ,
+          <volume>4</volume>
+          (
+          <issue>5</issue>
+          ),
+          <fpage>390</fpage>
+          -
+          <lpage>405</lpage>
+          . Springer.
+        </mixed-citation>
+      </ref>
+      <ref id="ref25">
+        <mixed-citation>
+          <string-name>
+            <surname>Huang</surname>
+            ,
+            <given-names>L.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Joseph</surname>
+            ,
+            <given-names>A. D.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Nelson</surname>
+            ,
+            <given-names>B.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Rubenstein</surname>
+            ,
+            <given-names>I.</given-names>
+          </string-name>
+          , &amp;
+          <string-name>
+            <surname>Tygar</surname>
+            ,
+            <given-names>J.</given-names>
+          </string-name>
+          (
+          <year>2011</year>
+          ).
+          <source>Adversarial Machine Learning. 4th ACM Workshop on Security and Artificial Intelligence, ACM</source>
+          , pp.
+          <fpage>43</fpage>
+          -
+          <lpage>58</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref26">
+        <mixed-citation>
+          <string-name>
+            <given-names>IBM</given-names>
+            <surname>Corporation.</surname>
+          </string-name>
+          (
+          <year>2008</year>
+          ).
+          <article-title>A mandate for change is a mandate for smart</article-title>
+          .
+          <source>IBM Smarter Planet</source>
+          , https://www.ibm.com/smarterplanet/global/ files/us__en_us__overview__
+          <volume>68655</volume>
+          _
+          <fpage>08</fpage>
+          _
+          <fpage>522</fpage>
+          _
+          <fpage>11092012</fpage>
+          .pdf.
+          <source>Accessed 27 Feb</source>
+          <year>2014</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref27">
+        <mixed-citation>
+          <string-name>
+            <surname>Karjoth</surname>
+            ,
+            <given-names>G.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Schunter</surname>
+            ,
+            <given-names>M.</given-names>
+          </string-name>
+          , &amp;
+          <string-name>
+            <surname>Waidner</surname>
+            ,
+            <given-names>M.</given-names>
+          </string-name>
+          (
+          <year>2002</year>
+          ).
+          <article-title>Platform for enterprise privacy practices: Privacy-enabled management of customer data</article-title>
+          .
+          <source>2nd International Conference on Privacy-Enhancing Technologies (PET'02)</source>
+          . Springer, pp.
+          <fpage>69</fpage>
+          -
+          <lpage>84</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref28">
+        <mixed-citation>
+          <string-name>
+            <surname>Naehrig</surname>
+            ,
+            <given-names>M.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Lauter</surname>
+            ,
+            <given-names>K.</given-names>
+          </string-name>
+          , &amp;
+          <string-name>
+            <surname>Vaikuntanathan</surname>
+            ,
+            <given-names>V.</given-names>
+          </string-name>
+          (
+          <year>2011</year>
+          ).
+          <source>Can homomorphic encryption be practical? 3rd ACM Workshop on Cloud Computing Security (CCSW'11)</source>
+          , ACM, pp.
+          <fpage>113</fpage>
+          -
+          <lpage>124</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref29">
+        <mixed-citation>
+          <string-name>
+            <surname>Pfitzmann</surname>
+            ,
+            <given-names>A.</given-names>
+          </string-name>
+          , &amp;
+          <string-name>
+            <surname>Hansen</surname>
+            ,
+            <given-names>M.</given-names>
+          </string-name>
+          (
+          <year>2010</year>
+          ).
+          <article-title>Anonymity, unlinkability, unobservability, pseudonymity, and identity management-A consolidated proposal for terminology</article-title>
+          .
+          <source>Anon Terminology v0.34</source>
+          ,
+          <string-name>
+            <given-names>TU</given-names>
+            <surname>Dresden</surname>
+          </string-name>
+          and ULD Schleswig-Holstein, http://dud.inf.tu-dresden.de/ Anon_Terminology.shtml.
+          <source>Accessed 27 Feb</source>
+          <year>2014</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref30">
+        <mixed-citation>
+          <string-name>
+            <surname>Pfitzmann</surname>
+            ,
+            <given-names>B.</given-names>
+          </string-name>
+          , &amp;
+          <string-name>
+            <surname>Waidner</surname>
+            ,
+            <given-names>M.</given-names>
+          </string-name>
+          (
+          <year>1992</year>
+          ).
+          <article-title>Unconditional byzantine agreement for any number of faulty processes</article-title>
+          .
+          <source>STACS'92, LNCS 577</source>
+          , Springer, pp.
+          <fpage>339</fpage>
+          -
+          <lpage>350</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref31">
+        <mixed-citation>
+          <string-name>
+            <surname>Pretschner</surname>
+            ,
+            <given-names>A.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Hilty</surname>
+            ,
+            <given-names>M.</given-names>
+          </string-name>
+          , &amp;
+          <string-name>
+            <surname>Basin</surname>
+            ,
+            <given-names>D.</given-names>
+          </string-name>
+          (
+          <year>2006</year>
+          ).
+          <article-title>Distributed usage control</article-title>
+          .
+          <source>Communications of the ACM</source>
+          ,
+          <volume>49</volume>
+          (
+          <issue>9</issue>
+          ),
+          <fpage>39</fpage>
+          -
+          <lpage>44</lpage>
+          . ACM.
+        </mixed-citation>
+      </ref>
+      <ref id="ref32">
+        <mixed-citation>
+          <source>Prime Minister of Japan and His Cabinet</source>
+          . (
+          <year>2013</year>
+          ).
+          <article-title>Declaration to be the world's most advanced IT nation</article-title>
+          .
+          <article-title>Strategic headquarters for the promotion of an advanced information and telecommunications network society</article-title>
+          , http://japan.kantei.go.jp/policy/it/2013/0614_ declaration.
+          <source>pdf. Accessed 27 Feb</source>
+          <year>2014</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref33">
+        <mixed-citation>
+          <string-name>
+            <surname>Rannenberg</surname>
+            ,
+            <given-names>K.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Pfitzmann</surname>
+            ,
+            <given-names>A.</given-names>
+          </string-name>
+          , &amp;
+          <string-name>
+            <surname>Müller</surname>
+            ,
+            <given-names>G.</given-names>
+          </string-name>
+          (
+          <year>1999</year>
+          ).
+          <article-title>IT security and multilateral security</article-title>
+          . Multilateral Security in CommunicationsTechnology, Infrastructure, Economy. Addison-Wesley-Longman, pp.
+          <fpage>21</fpage>
+          -
+          <lpage>29</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref34">
+        <mixed-citation>
+          <string-name>
+            <surname>Riemer</surname>
+            ,
+            <given-names>K.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Steinfield</surname>
+            ,
+            <given-names>C.</given-names>
+          </string-name>
+          , &amp;
+          <string-name>
+            <surname>Vogel</surname>
+            ,
+            <given-names>D.</given-names>
+          </string-name>
+          (
+          <year>2009</year>
+          ).
+          <article-title>eCollaboration: on the nature and emergence of communication and collaboration technologies</article-title>
+          .
+          <source>EM - Electronic Markets</source>
+          ,
+          <volume>19</volume>
+          (
+          <issue>4</issue>
+          ),
+          <fpage>181</fpage>
+          -
+          <lpage>188</lpage>
+          . Springer.
+        </mixed-citation>
+      </ref>
+      <ref id="ref35">
+        <mixed-citation>
+          <string-name>
+            <surname>Ristenpart</surname>
+            ,
+            <given-names>T.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Tromer</surname>
+            ,
+            <given-names>E.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Shacham</surname>
+            ,
+            <given-names>H.</given-names>
+          </string-name>
+          , &amp;
+          <string-name>
+            <surname>Savage</surname>
+            ,
+            <given-names>S.</given-names>
+          </string-name>
+          (
+          <year>2009</year>
+          ).
+          <article-title>Hey, you, get off of my cloud: Exploring information leakage in third-party compute clouds</article-title>
+          .
+          <source>16th ACM CCS, ACM</source>
+          , pp.
+          <fpage>199</fpage>
+          -
+          <lpage>212</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref36">
+        <mixed-citation>
+          <string-name>
+            <surname>Sackmann</surname>
+            ,
+            <given-names>S.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Strüker</surname>
+            ,
+            <given-names>J.</given-names>
+          </string-name>
+          , &amp;
+          <string-name>
+            <surname>Accorsi</surname>
+            ,
+            <given-names>R.</given-names>
+          </string-name>
+          (
+          <year>2006</year>
+          ).
+          <article-title>Personalization in privacy-aware highly dynamic systems</article-title>
+          .
+          <source>Communications of the ACM</source>
+          ,
+          <volume>49</volume>
+          (
+          <issue>9</issue>
+          ),
+          <fpage>32</fpage>
+          -
+          <lpage>38</lpage>
+          . ACM.
+        </mixed-citation>
+      </ref>
+      <ref id="ref37">
+        <mixed-citation>
+          <string-name>
+            <surname>Samarati</surname>
+            ,
+            <given-names>P.</given-names>
+          </string-name>
+          , &amp; de Capitani di Vimercati,
+          <string-name>
+            <surname>S.</surname>
+          </string-name>
+          (
+          <year>2001</year>
+          ).
+          <article-title>Access control: Policies, models, and mechanisms</article-title>
+          .
+          <source>FOSAD 2000. LNCS 2171</source>
+          , Springer, pp.
+          <fpage>134</fpage>
+          -
+          <lpage>196</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref38">
+        <mixed-citation>
+          <string-name>
+            <surname>Sonehara</surname>
+            ,
+            <given-names>N.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Echizen</surname>
+            ,
+            <given-names>I.</given-names>
+          </string-name>
+          , &amp;
+          <string-name>
+            <surname>Wohlgemuth</surname>
+            ,
+            <given-names>S.</given-names>
+          </string-name>
+          (
+          <year>2011</year>
+          ).
+          <article-title>Isolation in cloud computing and privacy-enhancing technologies</article-title>
+          .
+          <source>Special Issue 'Sustainable Cloud Computing' BISE</source>
+          ,
+          <volume>3</volume>
+          (
+          <issue>3</issue>
+          ),
+          <fpage>155</fpage>
+          -
+          <lpage>162</lpage>
+          . Gabler.
+        </mixed-citation>
+      </ref>
+      <ref id="ref39">
+        <mixed-citation>
+          <string-name>
+            <surname>Van der Aalst</surname>
+            ,
+            <given-names>W.</given-names>
+          </string-name>
+          (
+          <year>2012</year>
+          ).
+          <article-title>Process mining</article-title>
+          .
+          <source>Communications of the ACM</source>
+          ,
+          <volume>55</volume>
+          (
+          <issue>8</issue>
+          ),
+          <fpage>76</fpage>
+          -
+          <lpage>83</lpage>
+          . ACM.
+        </mixed-citation>
+      </ref>
+      <ref id="ref40">
+        <mixed-citation>
+          <string-name>
+            <surname>Wahlster</surname>
+            ,
+            <given-names>W.</given-names>
+          </string-name>
+          , &amp;
+          <string-name>
+            <surname>Müller</surname>
+            ,
+            <given-names>G.</given-names>
+          </string-name>
+          (
+          <year>2013</year>
+          ).
+          <article-title>Placing humans in the feedback loop of social infrastructures - NII research strategies on cyber-physical systems</article-title>
+          .
+          <source>Informatik Spektrum</source>
+          ,
+          <volume>36</volume>
+          (
+          <issue>6</issue>
+          ),
+          <fpage>520</fpage>
+          -
+          <lpage>529</lpage>
+          . Springer.
+        </mixed-citation>
+      </ref>
+      <ref id="ref41">
+        <mixed-citation>
+          <string-name>
+            <surname>Wang</surname>
+            ,
+            <given-names>C.</given-names>
+          </string-name>
+          , &amp;
+          <string-name>
+            <surname>Ju</surname>
+            ,
+            <given-names>S.</given-names>
+          </string-name>
+          (
+          <year>2006</year>
+          )
+          <article-title>The dilemma of covert channels searching</article-title>
+          .
+          <source>Information Security and Cryptology - ICISC</source>
+          <year>2005</year>
+          , LNCS 3935, Springer, pp.
+          <fpage>169</fpage>
+          -
+          <lpage>174</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref42">
+        <mixed-citation>
+          <string-name>
+            <surname>Weitzner</surname>
+            ,
+            <given-names>D. J.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Abelson</surname>
+            ,
+            <given-names>H.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Berners-Lee</surname>
+            ,
+            <given-names>T.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Feigenbaum</surname>
+            ,
+            <given-names>J.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Hendler</surname>
+            ,
+            <given-names>J.</given-names>
+          </string-name>
+          , &amp;
+          <string-name>
+            <surname>Sussman</surname>
+            ,
+            <given-names>G. J.</given-names>
+          </string-name>
+          (
+          <year>2008</year>
+          ).
+          <article-title>Information accountability</article-title>
+          .
+          <source>Communications of the ACM</source>
+          ,
+          <volume>51</volume>
+          (
+          <issue>6</issue>
+          ),
+          <fpage>82</fpage>
+          -
+          <lpage>87</lpage>
+          . ACM.
+        </mixed-citation>
+      </ref>
+      <ref id="ref43">
+        <mixed-citation>
+          <string-name>
+            <surname>Whitten</surname>
+            ,
+            <given-names>A.</given-names>
+          </string-name>
+          , &amp;
+          <string-name>
+            <surname>Tygar</surname>
+            ,
+            <given-names>J. D.</given-names>
+          </string-name>
+          (
+          <year>1999</year>
+          ).
+          <article-title>Why Johnny can't encrypt: A usability evaluation of PGP 5.0', 8th</article-title>
+          <source>USENIX Security Symposium Volume 8 (SSYM'99)</source>
+          , pp.
+          <fpage>169</fpage>
+          -
+          <lpage>184</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref44">
+        <mixed-citation>
+          <string-name>
+            <surname>Wohlgemuth</surname>
+            ,
+            <given-names>S.</given-names>
+          </string-name>
+          , &amp;
+          <string-name>
+            <surname>Müller</surname>
+            ,
+            <given-names>G.</given-names>
+          </string-name>
+          (
+          <year>2006</year>
+          ).
+          <article-title>Privacy with delegation of rights by identity management</article-title>
+          ,
+          <source>ETRICS</source>
+          <year>2006</year>
+          , LNCS 3995, Springer, pp.
+          <fpage>175</fpage>
+          -
+          <lpage>190</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref45">
+        <mixed-citation>
+          <string-name>
+            <surname>Wohlgemuth</surname>
+            ,
+            <given-names>S.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Echizen</surname>
+            ,
+            <given-names>I.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Sonehara</surname>
+            ,
+            <given-names>N.</given-names>
+          </string-name>
+          , &amp;
+          <string-name>
+            <surname>Müller</surname>
+            ,
+            <given-names>G.</given-names>
+          </string-name>
+          (
+          <year>2010</year>
+          ).
+          <article-title>Tagging disclosures of personal data to third parties to preserve privacy</article-title>
+          .
+          <source>SEC</source>
+          <year>2010</year>
+          ,
+          <article-title>IFIP AICT 330</article-title>
+          , IFIP, pp.
+          <fpage>241</fpage>
+          -
+          <lpage>252</lpage>
+          .
+        </mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

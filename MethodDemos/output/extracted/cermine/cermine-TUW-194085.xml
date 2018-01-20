@@ -1,0 +1,1406 @@
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN" "JATS-archivearticle1.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+  <front>
+    <journal-meta />
+    <article-meta>
+      <title-group>
+        <article-title>Topology in Distributed Computing</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <string-name>DIPLOMARBEIT</string-name>
+        </contrib>
+      </contrib-group>
+      <pub-date>
+        <year>2010</year>
+      </pub-date>
+      <fpage>21</fpage>
+      <lpage>62</lpage>
+      <abstract>
+        <p>zur Erlangung des akademischen Grades an der Fakultät für Informatik der Technischen Universität Wien Betreuer: Univ.Prof. Dr. Ulrich Schmid</p>
+      </abstract>
+    </article-meta>
+  </front>
+  <body>
+    <fig>
+      <graphic xlink:href="D:\output\methods\cermine\cermine-TUW-194085.images\img_1_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="D:\output\methods\cermine\cermine-TUW-194085.images\img_1_2.png" />
+    </fig>
+    <sec id="sec-1">
+      <title>-</title>
+      <p>Diplom-Ingenieur
+im Rahmen des Studiums</p>
+    </sec>
+    <sec id="sec-2">
+      <title>Technische Informatik</title>
+      <p>ausgeführt von</p>
+    </sec>
+    <sec id="sec-3">
+      <title>Thomas Nowak</title>
+      <p>Matrikelnummer 0425201
+_______________________
+(Unterschrift Verfasser)
+______________________
+(Unterschrift Betreuer)
+Thomas Nowak
+Rechte Wienzeile 73/23
+1050 Wien
+Hiermit erkläre ich, dass ich diese Arbeit selbstständig verfasst habe, dass ich
+die verwendeten Quellen und Hilfsmittel vollständig angegeben habe und dass
+ich die Stellen der Arbeit – einschließlich Tabellen, Karten und Abbildungen –,
+die anderen Werken oder dem Internet im Wortlaut oder dem Sinn nach
+entnommen sind, auf jeden Fall unter Angabe der Quelle als Entlehnung
+kenntlich gemacht habe.
+______________________
+(Unterschrift)
+Topology is the general mathematical theory of convergence. Distributed
+computing is the formal investigation of communicating concurrent processes. We
+explore applications of topology to distributed computing in two directions: (1)
+Point-set topology and (2) algebraic topology.</p>
+      <p>We use the former to study the topological structure of infinite execution
+trees. This enables us to unify a number of impossibility proofs, in particular,
+the impossibility of distributed consensus — the task of all processes in a system
+agreeing on a single value — in various (close to) asynchronous systems with
+crash failures.</p>
+      <p>The latter is used to look into the combinatorial structure of configurations,
+i.e., the collection of current process states in the system. Configurations are
+regarded as simplices in a simplicial complex, and topological incompatibility
+of such complexes is utilized to prove the impossibility of a generalization of
+distributed consensus in certain systems. The particular problem considered is
+k-set agreement, which is the task of letting all processes agree to values within
+a set of at most k elements.
+Topologie ist die mathematisch ada¨quate Art, um u¨ber Konvergenz zu sprechen.
+Distributed Computing ist das formale Studium von verteilten Systemen. Die
+Arbeit bescha¨ftigt sich mit zwei Anwendungen der Topologie im Bereich des
+Distributed Computing: (1) Mengentheoretische Topologie und (2) algebraische
+Topologie.</p>
+      <p>Erstere wird verwendet, um die topologische Struktur von unendlichen
+Ba¨umen, die die Information u¨ber mo¨gliche Ausfu¨hrungen der Algorithmen
+subsumieren, zu untersuchen. Dieses Wissen wird verwendet, um einen einheitlichen
+Beweis der Unmo¨glichkeit von Distributed Consensus in mehreren
+Systemmodellen zu geben. Consensus ist das Einigen aller Prozesse des Systems auf einen
+einzigen Wert.</p>
+      <p>Zweitere wird verwendet, um die kombinatorische Struktur von
+Konfigurationen, also der Zusammenfassung aller lokaler Zusta¨nde der Prozesse, zu
+untersuchen. Hierbei wird eine Konfiguration als Simplex in einem Simplizialkomplex
+aufgefasst. Die topologische Unvereinbarkeit solcher Komplexe ermo¨glicht einen
+Beweis der Unmo¨glichkeit von k-Set Agreement in gewissen Systemen. Das ist
+eine Verallgemeinerung des Consensus-Problems: Es wird nicht mehr verlangt,
+dass sich die Prozesse auf nur einen Wert einigen, sondern es wird erlaubt, dass
+bis zu k unterschiedliche Werte auftreten.
+5.3.1. Simplicial Homology . . . . . . . . . . . . . . . . . . . . . . . . 30
+5.4. Algebraic vs. Combinatorial Topology . . . . . . . . . . . . . . . . . . 32
+5.4.1. Singular Homology . . . . . . . . . . . . . . . . . . . . . . . . . 32
+5.4.2. Geometric Realization of Simplicial Complexes . . . . . . . . . 33
+5.4.3. Equivalence . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 34
+5.5. Configuration Complexes . . . . . . . . . . . . . . . . . . . . . . . . . 34
+5.5.1. Input Complexes . . . . . . . . . . . . . . . . . . . . . . . . . . 34
+5.5.2. Output Complexes . . . . . . . . . . . . . . . . . . . . . . . . . 35
+5.5.3. Protocol Complexes . . . . . . . . . . . . . . . . . . . . . . . . 36
+5.6. Impossibility of k-Set Agreement . . . . . . . . . . . . . . . . . . . . . 36
+5.6.1. Full Information Protocols . . . . . . . . . . . . . . . . . . . . . 37
+5.6.2. Properties of Full Information Protocols . . . . . . . . . . . . . 37
+5.6.3. This Implies Impossibility . . . . . . . . . . . . . . . . . . . . . 38
+6. Summary
+39</p>
+      <sec id="sec-3-1">
+        <title>1. Introduction</title>
+        <p>This thesis deals with applications of topology to distributed computing. These
+are twofold: Firstly, we use point-set topology to provide a unifying topological
+framework for consensus impossibility proofs. Secondly, we present the impossibility
+proof of k-set agreement by Herlihy and Shavit (1993) which uses algebraic topology.</p>
+        <sec id="sec-3-1-1">
+          <title>1.1. Distributed Computing</title>
+          <p>Consider a system of N processes that communicate by means of passing messages.
+All processes take steps simultaneously at times t = 0, 1, 2, . . . and in zero time. All
+message delays are equal to 1/2, i.e., processes at time t+1 have received all messages
+sent in computing steps at time t. Processes are modeled as state machines and run
+a local algorithm which governs state transitions and message sendings. Interesting
+questions to ask might include:
+(1) How many steps does it take until the last process has terminated?
+(2) How many messages are sent in the execution of the algorithm?
+(3) Is the algorithm correct, i.e., does it indeed fulfill its task specification?
+The investigation of such questions is the realm of distributed computing.</p>
+          <p>We can spice things up a bit by varying model parameters. For example, we may
+allow more general message delays than fixing them all at exactly 1/2. Likewise, we
+might choose not to fix the times at which processes take steps to exactly 0, 1, 2, . . .
+Of course, also the restriction that all processes take steps simultaneously might seem
+overly limiting.</p>
+          <p>
+            We may also introduce the possibility of lost messages: In the completely
+synchronous model with message delays equal to 1/2, suppose that in every time frame
+[t, t + 1), up to N − 1 message may be lost. That is, these messages do not get
+delivered although all other messages are delivered timely. A surprising result
+            <xref ref-type="bibr" rid="ref3">(Santoro
+and Widmayer 1989)</xref>
+            is that even in such a system with relatively few faults (there
+exist up to N 2 − N point-to-point links; at most N − 1 are lossy each round) it is
+impossible for any deterministic algorithm to solve consensus. Consensus is the task
+of all processes in the system agreeing on a single value.
+          </p>
+        </sec>
+        <sec id="sec-3-1-2">
+          <title>1.2. Topology</title>
+          <p>Topology is the general mathematical theory of convergence. Its most popular special
+case is the study of metric spaces. It tackles questions like:
+(1) Does the image of a continuous function f : [0, 1] → R have a maximum?
+(2) Does every Cauchy sequence converge?
+(3) How many holes does a given manifold have?
+(4) Can you cut two pizzas in half with a single cut, no matter how ugly they are
+shaped?
+The immediate investigation of topological spaces is called point-set topology, which
+questions (1) and (2) can be attributed to. Another common technique is to
+assign algebraic structures to topological spaces, reason about relations between these
+structures and map these insights back into the world of topological spaces. This
+method is called algebraic topology.</p>
+        </sec>
+        <sec id="sec-3-1-3">
+          <title>1.3. Structure of the Thesis</title>
+          <p>Chapter 2 introduces distributed computing as a discipline and presents formal
+system models. In Chapter 3, we talk about an important problem specification in
+distributed computing: k-set agreement and its important special case, consensus.
+Chapter 4 investigates execution spaces of distributed algorithms by means of
+pointset topology and provides a unified proof of the impossibility of consensus in some
+important system models. Chapter 5 deals with methods from algebraic topology. It
+explains the approach taken by Herlihy and Shavit (1993) to prove the impossibility
+of k-set agreement in the presence of up to k crash failures. A summary of the thesis
+is given in Chapter 6. Appendix A gives a self-contained introduction to point-set
+topology.</p>
+        </sec>
+        <sec id="sec-3-1-4">
+          <title>1.4. A Word on Notation</title>
+          <p>The purpose of this section is to introduce some conventions of the mathematical
+notation used in the thesis.</p>
+          <p>We denote the set of real numbers by R and the set of non-negative real numbers by
+R+. Real intervals are written with round and square parentheses, e.g., [0, 1) = {x ∈
+R | 0 6 x &lt; 1}. For a set X ⊂ R, inf X denotes the infimum of X and sup X denotes
+its supremum. The letter Z denotes the set of integers. We set N = {k ∈ Z | k &gt; 1}
+and ω = {k ∈ Z | k &gt; 0}.
+1.4 A Word on Notation</p>
+          <p>For arbitrary sets A and B, we write BA = {f : A → B} to denote the set of all
+functions with domain A and range B. For a mapping f : A → B and subsets A0 ⊂ A
+and B0 ⊂ B, we define f [A0] = {f (x) | x ∈ A0} and f −1[B0] = {x ∈ A | f (x) ∈ B0}.
+The predicate A ⊂ B means ∀x(x ∈ A ⇒ x ∈ B) and we set P (A) = {A0 ⊂ A}. If
+M is a set of sets, then S M denotes the set {x | ∃A ∈ M : x ∈ A}.</p>
+          <p>If (X, d) is a metric space, x ∈ X and ε &gt; 0, then we write</p>
+          <p>Additional notation will be defined when necessary.</p>
+        </sec>
+      </sec>
+      <sec id="sec-3-2">
+        <title>2. Distributed Computing Models</title>
+        <p>This chapter introduces the field of distributed computing to the extent needed to
+present the results in subsequent chapters. We start by examining some questions
+that are tackled and then introduce a number of mathematical models that are used
+in distributed computing.</p>
+        <sec id="sec-3-2-1">
+          <title>2.1. Introduction</title>
+          <p>Distributed computing (Attiya and Welch 2004, Lynch 1996) is the investigation of
+concurrent processes that communicate by means of some communication medium.
+Commonly, processes are modeled as deterministic state machines taking steps
+(performing state transitions) in zero time. Examples of communication media include
+point-to-point RS232 links, a common data bus or a shared memory area allocated
+by the Linux kernel. These types of communicating differ in a number of properties:</p>
+          <p>While changes to a shared memory are potentially visible immediately, messages
+which were sent at time t may arrive at time t + δ with δ &gt; 0, i.e., the message sent
+at time t is not immediately visible to the receiver. The transmission delay on a bus
+might be equal for all processes, while transmission delays on point-to-point links
+might be different for different links (processes).</p>
+          <p>In message-passing systems, a fundamental distinction is whether message delays
+are bounded or not. Message delays are bounded if there is a constant Δ such that
+every message sent at time t is guaranteed to have arrived at time t + Δ. Systems
+that lack this property are called message asynchronous.</p>
+          <p>Other important properties of communicating distributed systems are process
+synchrony properties. The most process synchronous system imaginable might be a
+system in which all processes run at exactly the same speed, i.e., steps of processes are
+triggered by perfectly synchronous hardware clocks. A most process asynchronous
+system is one in which no information whatsoever is available on when processes
+take a step (perform a state transition). Of course, systems with more synchrony
+allow for harder problems to be solved than systems with weaker synchrony. It is,
+for example, impossible to do any kind of real-time clock synchronization in
+completely asynchronous systems. A major problem, however, is to determine whether
+one system is “more synchronous” than some other system (e.g., Dolev, Dwork, and
+Stockmeyer 1987) and for many pairs of systems, none is more synchronous than the
+other.</p>
+          <p>2.2 Asynchronous Message Passing `a la FLP</p>
+          <p>Things get even more complicated when components may fail, in particular, in
+asynchronous systems where no upper bound on message delays or inter-step times
+of processes exist. The seminal work of Fischer, Lynch, and Paterson (1985) shows
+that it is not possible in such systems for processes to even agree on a single value
+(i.e., consensus is not possible).</p>
+          <p>The following sections introduce a number of popular models for distributed
+systems.</p>
+        </sec>
+        <sec id="sec-3-2-2">
+          <title>2.2. Asynchronous Message Passing `a la FLP</title>
+          <p>Consider a system of N concurrent processes that communicate by means of
+point-topoint links, i.e., every process can send messages to any other process. Asynchronous
+message-passing deserves its name because
+(1) there is no upper bound on the transmission delay of messages and
+(2) there is no upper bound on the inter-step time of processes, i.e., there is no Φ
+such that a process that took a step at time t is guaranteed to have taken its
+next step by time t + Φ.</p>
+          <p>The assumption coverage of this model, i.e., its ability to accurately describe real
+systems, is quite broad since it does not limit the timing behavior in any way.</p>
+          <p>An algorithm in the asynchronous message-passing system model consists of a
+state machine for each of the N processes. State changes occur when a process takes
+a step and the transition function depends on the current internal state and received
+messages. Apart from the internal state transition, a process may also send messages
+to other processes. The structure of such a computing step is depicted in Figure 2.1.</p>
+          <p>receive msg
+state transition</p>
+          <p>send msgs</p>
+          <p>Major problems arise when processes are allowed to crash, i.e., cease to take
+subsequent steps. The asynchronous nature of the system model prohibits distinguishing
+processes which have crashed from processes whose messages are very slow.
+2.2.1. A Formal Description
+In the asynchronous message-passing system model (Fischer, Lynch, and Paterson
+1985), a system consists of N processes numbered 1, 2, . . . , N which possess an
+internal state, a transition function δ and a sending function β. The transition function
+δ maps pairs (s, m), consisting of the local state and a received message, to some
+internal state. A message is a pair (p, m) where p is a process name and m is a
+message content drawn from a pool of possible message contents M or the void value ⊥.
+The sending function β maps pairs (s, m) as above to a finite set of (sent) messages.
+Every process has a distinguished subset of its set of states — the set of initial states.
+A configuration is a tuple (s1, s2, . . . , sN ) of internal states of the processes, together
+with the set of in-transit messages — the message buffer.</p>
+          <p>An important point to understand is the relationship between the two notions of
+event and step, which we will define now. An event in the classical asynchronous
+message-passing model is a message. If in some configuration C, the message buffer
+holds the message (event) e = (p, m), then we say that event e is applicable to
+configuration C and we may apply e to C by the following means: We define the
+successor configuration C0 = e(C) by the following procedure.</p>
+          <p>(1) Remove e = (p, m) from the message buffer.
+(2) Determine the internal successor state of process p by invoking the transition
+function δ using message content m and p’s current state.
+(3) Determine, and add to the message buffer, the messages (q, n) sent by process
+p to processes q by invoking the sending function β.</p>
+          <p>The pair (C, C0) where C0 = e(C) for some event e is called a step. If we can apply
+event e to configuration C, we say that e is applicable to C. An event has the ability
+to trigger different steps, depending upon the configuration it is applied to.</p>
+          <p>An infinite sequence of events that are in turn applicable to C is called a
+schedule starting from C. If (e1, e2, . . . ) is a schedule starting from configuration C,
+we define the corresponding sequence of steps as follows: We set C0 = C and
+Ck+1 = ek(Ck) for k &gt; 0; the corresponding sequence of steps is then defined to be
+(C0, C1), (C1, C2), (C2, C3), . . . . Such a corresponding sequence of steps is called a
+run or an execution.</p>
+          <p>A process is called non-faulty or correct in some run or schedule if it takes steps
+infinitely often. A process is called faulty if it is not non-faulty. A run or schedule is
+called admissible (with respect to the model parameter f &gt; 0) if every message sent
+to non-faulty processes is received and at most f processes are faulty.</p>
+        </sec>
+        <sec id="sec-3-2-3">
+          <title>2.3. Omission Failure Model</title>
+          <p>In the synchronous message-passing model (Lynch 1996, Part I), all processes
+p1, p2, . . . , pN take their steps at the same time, e.g., every process takes a step
+at times t = 0, 1, 2, 3, . . . Furthermore, there does exist an upper bound on message
+delays, namely every message sent at time t is delivered before time t + 1. That is,
+processes execute in lock-step rounds: Every process is guaranteed to have received
+all messages that were sent to it before the current computing step. Figure 2.2
+contains a space-time diagram of a synchronous execution; the diagonal arrows indicate
+messages.</p>
+          <p>
+            In the synchronous omission failure model
+            <xref ref-type="bibr" rid="ref3">(Santoro and Widmayer 1989,
+Section 4.1)</xref>
+            , in every round, i.e., in every time interval [t, t + 1), up to N − 1 messages
+may be lost. These omissions create difficulties and yield a number of impossibility
+results, because the adversary can completely silence a process by omitting all of its
+outgoing messages.
+2.3.1. A Formal Description
+In the synchronous omission failure system model, a system consists of N processes
+numbered 1, 2, . . . , N which possess an internal state, a transition function δ and a
+sending function β. The transition function δ maps pairs (s, M ), consisting of the
+local state and a set of (received) messages, to some internal state. A message is a
+pair (p, m) where p is a process and m is the message content taken from a set M
+of possible message contents. The sending function β maps an internal state s to a
+set M of messages such that every other process occurs in the first component of an
+element in M . Every process has a distinguished subset of its set of states — the set
+of initial states. A configuration is a tuple (s1, s2, . . . , sN ) of internal states of the
+processes.1
+          </p>
+          <p>An event in the model is a set O ⊂ {1, . . . , N }2 \ {(1, 1), (2, 2), . . . , (N, N )} with
+|O| 6 N − 1, the set of omissions. We define the successor configuration C0 = O(C)
+by the following procedure.</p>
+          <p>(1) Determine the sent messages of all processes by invoking the sending functions
+β.
+1Contrary to the asynchronous message passing model, it is no longer necessary to remember the
+state of the medium in a configuration. This is because every message is received in the same
+step in which it was sent. See below for the exact step semantics.
+(2) Ignore all messages over links in O.
+(3) Determine the internal successor state of all processes by invoking the transition
+functions δ using the newly received (non-ignored) messages.</p>
+          <p>The pair (C, C0) where C0 = O(C) for some event O is called a step.</p>
+          <p>An infinite sequence of events is called a schedule. If (O1, O2, . . . ) is a schedule
+and C is a configuration, we define the corresponding sequence of steps as follows:
+We set C0 = C and Ck+1 = Ok(Ck) for k &gt; 0; the corresponding sequence of steps is
+then defined to be (C0, C1), (C1, C2), (C2, C3), . . . . Such a corresponding sequence
+of steps is called a run or an execution.</p>
+          <p>A process is called non-faulty or correct in some run or schedule if infinitely many
+message sent by it get delivered. A process is called faulty if it is not non-faulty.</p>
+        </sec>
+        <sec id="sec-3-2-4">
+          <title>2.4. Asynchronous Shared Memory</title>
+          <p>In this section, we consider a system of N processes communicating by means of M
+shared read-write registers. These registers can hold an unbounded amount of
+information and support two types of operations: read and write. Operation read(R)
+returns the value of register R and operation write(R, v) writes value v to register
+R. The fundamental limitation in this model is that processes can perform only
+one of the operations read and write in a single computing step. Hence a process
+performing a write does not know which value it overwrites.</p>
+          <p>As in asynchronous message-passing, there is no upper bound on inter-step times
+of processes.2 Also, the possibility of processes crashing introduces difficulties.</p>
+          <p>A sometimes convenient simplification is to limit registers to be single-writer
+registers. That is, a shared register has a single process assigned to it which is the
+only process that may write to the register. It is known (Attiya and Welch 2004,
+Theorem 10.9) that this is not a serious restriction.
+2.4.1. A Formal Description
+In the asynchronous shared memory system model (Attiya and Welch 2004,
+Section 4.1), a system consists of (a) N processes numbered 1, 2, . . . , N which possess
+an internal state, a transition function δ and a shared memory operation function β
+and (b) M shared read-write registers which possess a value. The shared memory
+operation function β maps an internal state s to a shared memory operation, i.e.,
+read(R) or write(R, v). The transition function δ maps pairs (s, v), consisting of
+the local state and the return value of the shared memory operation β(s), to some
+internal state. Every process has a distinguished subset of its set of states — the set
+2However, there is no delay between performing a write and the time the written value becomes
+visible to other processes. Thus, message delay δ = 0 in the language of message passing models.
+of initial states. A configuration is a tuple (s1, s2, . . . , sN ) of internal states of the
+processes, together with a tuple (v1, v2, . . . , vM ) of shared memory register values.</p>
+          <p>An event in the asynchronous shared memory model is a process number j ∈
+{1, 2, . . . , N }. We define the successor configuration C0 = j(C) by the following
+procedure.</p>
+          <p>(1) Determine the next shared memory operation by process pj by invoking the
+shared memory operation function β.
+(2) Perform the shared memory operation by process pj , i.e., change the register
+value in case of a write operation.
+(3) Determine the internal successor state of process pj by invoking the transition
+function δ using the return value from (2).</p>
+          <p>The pair (C, C0) where C0 = j(C) for some event j is called a step.</p>
+          <p>An infinite sequence of events that are in turn applicable to C is called a
+schedule starting from C. If (j1, j2, . . . ) is a schedule starting from configuration C,
+we define the corresponding sequence of steps as follows: We set C0 = C and
+Ck+1 = jk(Ck) for k &gt; 0; the corresponding sequence of steps is then defined to be
+(C0, C1), (C1, C2), (C2, C3), . . . . Such a corresponding sequence of steps is called a
+run or an execution.</p>
+          <p>A process is called non-faulty or correct in some infinite run or schedule if it takes
+steps infinitely often. A process is called faulty if it is not non-faulty. A run or
+schedule is called admissible (with respect to the model parameter f &gt; 0) if at most
+f processes are faulty.</p>
+          <p>In case of single-writer registers, the set of allowed operations that may occur as
+the image of functions β is restricted such that there do not exist two processes pi
+and pj with operation functions βi and βj that can perform writes to a common
+register R.
+2.4.2. Atomic Snapshots
+A system with shared read-write registers supports atomic snapshots if there exists,
+besides read and write, a third operation, namely scan() which returns all register
+values at once, i.e., a tuple (v1, v2, . . . , vM ) of register values.</p>
+        </sec>
+        <sec id="sec-3-2-5">
+          <title>2.5. Safety and Liveness</title>
+          <p>The notions of safety and liveness properties were introduced by Lamport (1977)
+and have been well adopted in the distributed computing community. Lamport used
+these notions to subdivide correctness proofs of programs into smaller and more
+homogeneous pieces.</p>
+          <p>Intuitively, a safety property is the statement that “something will not happen”
+(Lamport 1977). For instance, take the sentence “No message is ever sent.” The
+“thing” that should not happen according to this statement is that a message is
+sent. At any time in an execution, if already a message was sent, there is no way
+that the execution fulfills the above safety property, no matter how the execution
+continues. Hence if a “bad thing” happened in an execution prefix, any execution
+that extends this prefix does not fulfill the safety property.</p>
+          <p>A liveness property is the statement that “something must happen” (Lamport
+1977). An example would be the sentence “Every message that was sent is eventually
+received.” The important point is that at any time in an execution, even if not all
+sent messages were received yet, it is still possible that the execution fulfills the
+above liveness property (because the message can be received later). Hence for any
+finite execution prefix, there exists an execution extending this prefix that fulfills the
+liveness property.</p>
+          <p>The immediate formalization of these two notions is contained in the following
+definition.</p>
+          <p>Definition 2.1. Let SA be the set of admissible executions of some algorithm A. A
+property of executions is a subset P ⊂ SA.</p>
+          <p>We call a property P a safety property if the following holds: For all E ∈ SA \ P
+exists some n ∈ N such that every E0 ∈ SA that coincides with E in the first n
+components holds E0 6∈ P. We call a property P a liveness property if the following
+holds: For all E ∈ SA and every n ∈ N there exists an E0 ∈ P that coincides with E
+in the first n components.</p>
+          <p>It should be noted that the intuitive meaning of these notions is sometimes in
+conflict with Definition 2.1, in particular in the presence of failures. An investigation
+of this problem and alternative definitions were given by Charron-Bost, Toueg, and
+Basu (2000).</p>
+        </sec>
+      </sec>
+      <sec id="sec-3-3">
+        <title>3. Problem Specifications</title>
+        <p>In this chapter, we discuss two prominent problems in distributed computing: the
+consensus problem and the k-set agreement problem which is a generalization of
+consensus. By the term “problem” we mean a specification on the behavior of an
+algorithm, which is said to “solve a problem” if all its executions satisfy the
+specification. The reason why we introduce exactly these two problems is firstly their
+fundamentality and secondly that we will prove impossibility of their solution in
+specific system models in later chapters.</p>
+        <sec id="sec-3-3-1">
+          <title>3.1. Consensus</title>
+          <p>Informally, consensus is the task of getting all processes in a distributed system to
+agree on a single value. It is known (e.g., Fischer, Lynch, and Paterson 1985, Dolev,
+Dwork, and Stockmeyer 1987, Fich and Ruppert 2003) that consensus, as easy as
+the problem specification might seem, is in fact impossible to solve in a variety of
+system models in the presence of faults.</p>
+          <p>Every process starts its execution with a prescribed input value and decides upon
+termination on an output value. We will consider consensus only in system models
+with model parameter f &gt; 1. Otherwise, consensus is trivially solvable. One
+simplification1 that we make is that the set of possible input and output values is equal to
+{0, 1}. This special case of consensus is called binary consensus.</p>
+          <p>Formally, input and output values are modeled in the following way: First, we
+impose the restriction that every process has to have at least two distinct initial
+states. For every process pj , let Sj denote its set of states and Ij ⊂ Sj its set
+of initial states. We demand |Ij | &gt; 2. Input values are modeled by a mapping
+ιj : Ij → {0, 1} which we demand to be non-trivial. Output values are modeled by
+a mapping δj : Sj → {0, 1, ⊥}. We say that process pj has decided on v ∈ {0, 1}
+in state s ∈ Sj if δj (s) = v. We demand that decisions are irrevocable, i.e., if s is
+part of some configuration C, δj (s) ∈ {0, 1}, and configuration C0 follows C in some
+execution, then δj (s0) = δj (s) where s0 is pj ’s state in C0. Hence, we may extend δj
+to execution of the algorithm.</p>
+          <p>Of course, even with f crash failures, agreement on a value can be achieved trivially
+by programming every process to decide on 0. Hence, we limit our attention to
+nontrivial consensus. We say that an algorithm solves consensus if:
+1In reality, this does not make the problem any simpler, just the notation. And since we are doing
+impossibility results, it suffices to limit ourselves to this special case.
+3.2 k-Set Agreement
+(T) For every admissible execution holds: Every process that is correct2 decides on
+some value. (Termination)
+(A) For every admissible execution holds: No two correct processes decide on
+differing values. (Agreement)
+(V) For every admissible execution holds: If the execution starts from an initial
+configuration in which all input values are equal to v, then all correct processes
+decide on v. (Validity)</p>
+        </sec>
+        <sec id="sec-3-3-2">
+          <title>3.2. k-Set Agreement</title>
+          <p>Consensus is 1-set agreement. In k-set agreement with k ∈ N, we expand the set
+of possible input (and output) values to {1, 2, . . . , M } with M &gt; N and replace
+condition (A) with
+(k-A) For every admissible execution holds: No k + 1 correct processes decide to
+pairwise differing values. (k-Agreement)
+Definition 3.1. Let S be the set of admissible executions of a k-set agreement (or
+consensus) algorithm and let C be a configuration in S. We say that C is α-valent
+if all successor configurations of C if which a decision was reached have the decision
+value α. In this case, we call C univalent , otherwise multivalent, or in the case M = 2
+bivalent.</p>
+        </sec>
+      </sec>
+      <sec id="sec-3-4">
+        <title>4. Point-Set Topology</title>
+        <p>In this chapter, we treat techniques from elementary point-set topology (see
+Appendix A for an introduction to the subject) with respect to their applicability to
+distributed computing. We show how to equip execution spaces with a natural
+topology that can be used to derive impossibility results. In particular, we re-prove FLP
+impossibility (Fischer, Lynch, and Paterson 1985) in this novel topological
+framework.</p>
+        <sec id="sec-3-4-1">
+          <title>4.1. The Topology of Execution Spaces</title>
+          <p>This section introduces the necessary tools for formulating the main result of this
+thesis in Section 4.2. We show how to equip a space of executions of some distributed
+algorithm with a certain topology that helps us express executional properties in a
+topological manner.</p>
+          <p>
+            But before we talk about execution spaces, we have to fix the term “execution”
+and explain what we mean by it.1 Common to all models of distributed computing
+is the notion of a configuration, meaning a snapshot of the state of a system. That
+is, a configuration encompasses information about the internal state of every process
+and the state of the communication medium (e.g., messages in transit or contents
+of shared memory). An execution is a sequence of configurations such that each
+configuration in the sequence is a successor of the former ones. Notice that the
+meaning of these two notions is heavily model-dependent. From the topological
+viewpoint, we are not interested in the ontological question of what a configuration
+really is; we only need to know which successor configurations are possible. Thus, we
+“shift focus from the structure of protocols for a distributed system to the structure
+of the set of possible schedules of a distributed system.”
+            <xref ref-type="bibr" rid="ref2">(Saks and Zaharoglou 2000)</xref>
+            We denote by CA the set of all configurations of algorithm A. Let SA denote
+ω of sequences of
+the set of admissible executions, which is a subset of the set CA
+configurations.2 We will equip the latter space with a natural topology that induces
+a topology on its subset SA.
+          </p>
+          <p>When there is no danger of ambiguity, we will write C and S for CA and SA,
+respectively.</p>
+          <p>1The formal definition of these terms were given in Chapter 2.
+2Executions, in models that we consider, are infinite per definitionem.
+K
+\ πm−1 {Cm} .</p>
+          <p>m=0
+πm−1[O] =</p>
+          <p>B2−m (γ)
+[
+γ∈πm−1[O]
+Proof. We have to show that the sets that are open with respect to the product
+topology (Definition A.14) are exactly those sets that are open with respect to the
+metric (Example A.3).</p>
+          <p>Let A ⊂ Cω be open with respect to the metric d. The definition of openness with
+respect to the metric asserts existence of ε(γ) &gt; 0 for every γ = (Ck) ∈ A such that
+A =
+[ Bε(γ)(γ).</p>
+          <p>γ∈A
+From this equation we derive that it suffices to show that Bε(γ) is open with respect
+to the product topology whenever ε &gt; 0. In this case, choose the integer K minimal
+with the property 2−K 6 ε. This choice implies</p>
+          <p>Bε(γ) = B2−K (γ) = {γ0 | γ and γ0 agree in the first K components}.
+(4.4)
+If πm : Cω → C denotes the projection onto the mth component, then the inverse
+image πm−1 {Cm} of the open set {Cm} ⊂ C is exactly the set of elements in Cω
+whose mth component is equal to Cm. Also, by definition, these inverse images are
+open with respect to the product topology. We thus conclude on the openness of
+Bε(γ) with respect to the product topology, because the latter set in (4.4) is equal
+to</p>
+          <p>We endow C with the discrete topology, i.e., every subset of C is defined to be
+open. This topology is induced by the metric
+dD : C × C → R+,
+dD(C, C0) =
+(0 if C = C0
+1 else.</p>
+          <p>The natural topology to endow Cω = Qn∈ω C with is the product topology (see
+Section A.2.5).</p>
+          <p>Lemma 4.1. The product topology on Cω is induced by the metric
+d (Ck), (Ck0) = 2− inf{j|Cj6=Cj0 }</p>
+          <p>To prove the converse direction, it suffices to show that all sets of the form πm−1[O]
+where O is a subset3 of C are open with respect to the metric d. But we may write
+because both sides are equal to the set of elements in Cω whose mth element is in O.
+The openness of B2−m (γ) with respect to the metric d now concludes the proof.
+3Note that all sets O ⊂ C are open, because we equipped C with the discrete topology (see
+Example A.4(2)).
+(4.1)
+(4.2)
+(4.3)
+(4.5)
+(4.6)
+|x − y|
+x
+y</p>
+          <p>R</p>
+          <p>Figure A.1.: Distances on the real line
+some positive ε such that x and y are not ε-close, for we may choose ε = d(x, y).
+This property characterizes the real line as a topological T1 space. (The properties
+Tι for ι ∈ {0, 1, 2, 3, 3 12 , 4} are the so-called separation axioms for topological spaces.)
+But R satisfies even more: it is a T2 or Hausdorff space. In subsequent sections, we
+will define for any topological space what it means to be of this important class of
+spaces, i.e., to be Hausdorff and show some of their convenient properties.</p>
+          <p>We observe that we may define the notion of ε-closeness on any set that, as in
+the previous example, has a distance function d defined on it. This generalization
+leads to the definition of metric spaces which lie in the class of topological spaces.
+But before we formally define this, we look at a slight generalization of Example A.1,
+namely the Euclidean spaces Rn, and discuss in more detail the topological structure
+and properties that these spaces carry.</p>
+          <p>Example A.2 (Euclidean spaces). As an analogue of the real absolute value, we
+have the norm of a vector x ∈ Rn:
+x1 
+ ... </p>
+          <p>xn
+kxk =</p>
+          <p>= qx21 + x22 + · · · + x2n
+Thus, the distance of two vectors x and y in Rn is defined as</p>
+          <p>d(x, y) = kx − yk .</p>
+          <p>The three properties of Example A.1 still hold. Property (3), also known as the
+triangle inequality, is depicted in Figure A.2. Its name comes from the fact that in
+a triangle, the length of any edge is less than the sum of lengths of the other two.</p>
+          <p>The ε-neighborhood of a point x is the set of all points that are ε-close to x. It is
+also called a ball with center x and radius ε and is denoted by Bε(x). Now, an open
+set is a set X ⊂ Rn such that, for every x ∈ X, there exists an ε-neighborhood of
+x that is contained in X. Intuitively, an open set is a set that has “a little room”
+around every of its points, i.e., it does not have a “sharp boundary”. The situation
+is sketched below in Figure A.3.</p>
+          <p>Examples of open sets include:
+(A.3)
+(A.4)
+6 ε</p>
+          <p>z
+ε</p>
+          <p>x
+6 ε</p>
+          <p>6 2ε
+Figure A.2.: Triangle inequality in R2
+y</p>
+          <p>Figure A.3.: Point x has an ε-neighborhood that is contained in X
+(1) In R1, the so-called “open intervals”
+(a, b) = {x ∈ R | a &lt; x &lt; b}
+(A.5)
+are in fact open. For if x ∈ (a, b), then, by definition, x − a &gt; 0 and b − x &gt; 0.
+Hence with ε = min{x − a, b − x}, we get Bε(x) ⊂ (a, b): We may assume
+without loss of generality that ε = x − a, i.e., x − a 6 b − x. But then,
+Bε(x) = (x − (x − a), x + (x − a)) ⊂ (a, x + (b − x)) = (a, b).
+(A.6)
+We have just proved that every set of the form (a, b) for real numbers a and
+b is open. Note that this result still holds if the interval (a, b) is the empty
+interval, i.e., if b 6 a. The empty set is always trivially open since there are
+no elements in it to be checked by the defining condition for open sets. The
+result even holds if a = −∞ or b = +∞. More generally, every open interval
+in a totally ordered set is indeed open in the induced order topology.
+We note that every ε-ball in R1 is of the form (x − ε, x + ε), hence an open
+interval, hence open. This is part of a more general principle.
+(2) In Rn, we may also define “open intervals” by setting</p>
+          <p>n
+(a, b) = Y(aι, bι) = {x ∈ Rn | aι &lt; xι &lt; bι for every 1 6 ι 6 n}.</p>
+          <p>ι=1
+Similar to the above case, we may choose
+ε = min{|x1 − a1| , |b1 − x1| , . . . , |xn − an| , |bn − xn|}
+(A.7)
+(A.8)
+and arrive at the insight that these open intervals are also open sets in the
+topological sense. Again, we may allow for the aι and bι to be infinity (positive
+or negative).</p>
+          <p>Contrary to the above, however, it is not the case that every ε-ball in Rn is
+an open interval, i.e., of the form (a, b) for some a, b ∈ Rn. But nonetheless,
+ε-balls are always open as we will see next.
+(3) ε-neighborhoods in Rn are open. This fact is due to the triangle inequality
+which we already discussed above. Let x ∈ Rn be any point and r &gt; 0 any
+radius. We will show that the ball</p>
+          <p>Br(x) = {y ∈ Rn | ky − xk &lt; r}
+is open in Rn: Let y ∈ Br(x). Choose ε = r − ky − xk. It remains to show
+that Bε(y) is a subset of Br(x). So, let z ∈ Bε(y), i.e.,</p>
+          <p>kz − yk &lt; r − ky − xk .</p>
+          <p>Then, by the triangle inequality and (A.10),</p>
+          <p>kz − xk 6 kz − yk + ky − xk &lt; (r − ky − xk) + ky − xk = r
+and we are done, because this implies z ∈ Br(x). The proof is pictured in
+Figure A.4.</p>
+          <p>(A.9)
+(A.10)
+(A.11)
+y
+r−ky−xk
+x
+ky−xk</p>
+          <p>r</p>
+          <p>Figure A.4.: ε-balls are open</p>
+          <p>We have defined the notion of an open set in Euclidean spaces and identified some
+important classes of sets to be open. In the following, we will generalize the ideas
+of this example to spaces that are equipped with some way of measuring distances.
+These spaces are known as metric spaces.</p>
+          <p>Metric spaces are an immediate generalization of Euclidean spaces. As with any
+generalization, the idea is to purposely ignore certain aspects and properties of the
+object in question and focus on just a very limited number of properties that these
+objects have in common. In our case, the important notion that generalizes Euclidean
+spaces to metric spaces is that of distance. The idea is to forget everything we know
+about the Euclidean norm k·k except that we may use it to define the distance of
+two points x and y by taking the norm of their difference. Thus, we take the entity
+“norm” and build a new machine out of it: A machine that takes two points as input
+and outputs a number — their distance d(x, y).</p>
+          <p>After identifying a notion that lends itself to generalization, it is crucial to work
+out which basic properties have to be attributed to it such that one can define the
+notion by means of these properties. We already have listed these properties for our
+case: Properties (1), (2), (3) from Example A.1 which we will use in the following
+definition.</p>
+          <p>Definition A.1. Let X be a non-empty set and d : X × X → [0, ∞) a function with
+the following properties.
+(M1) d(x, y) = 0 holds if and only if x = y
+(M2) d(x, y) = d(y, x) for all x, y ∈ X
+(M3) d(x, z) 6 d(x, y) + d(y, z) for all x, y, z ∈ X
+Then we call d a metric on X and X a metric space.</p>
+          <p>It will be the purpose of the next example to explore some properties of such
+spaces. Note that metric spaces are an important special case of topological spaces.
+In particular, execution spaces which will deliver our main results are in fact metric
+spaces.</p>
+          <p>Example A.3 (Metric spaces). Let X denote a metric space throughout this
+example. An ε-ball around x ∈ X is again defined as</p>
+          <p>Bε(x) = {y ∈ X | d(x, y) &lt; ε}.
+(A.12)
+We also repeat the definition of an open set: A set A ⊂ X is called open if for
+every x ∈ A, there exists some ε &gt; 0 such that Bε(x) ⊂ A. We could now repeat
+the proof of the fact that every ε-ball is open from the previous example basically
+word-by-word. But instead, we will explore properties that are a bit more advanced.</p>
+          <p>Let us begin by proving that every union of open sets is again open: Let Aι be
+open sets for every ι in some non-empty index set I and denote their set-theoretic
+union by A. We will show that A is open. For every x ∈ A, by the definition of
+union, there exists some ι0 such that x ∈ Aι0. Now, because Aι0 is open, there exists
+some ε &gt; 0 such that Bε(x) ⊂ Aι0. But Aι0 ⊂ A means that we are done.</p>
+          <p>In particular, every union of balls is open. What is interesting now, is that the
+converse also holds true: Every open set is a union of balls. To prove this, let A be an
+open set. For any x ∈ A, denote by εx some positive number such that Bεx (x) ⊂ A.
+By definition of openness of A, these numbers do exist. We claim that
+A =
+[ Bεx (x).
+x∈A
+(A.13)
+It is clear that A is contained in the right-hand side of (A.13), because x is contained
+in any ball around itself that has positive radius. For the opposing direction, note
+that any ball that appears in the union is a subset of A by construction. Hence the
+union itself is a subset of A, which concludes the proof. We have just glanced at
+a very important notion: that of a basis of a topology. With this notion, we can
+express the last result as: The balls form a basis of the topology that is induced by
+the metric.</p>
+          <p>We may now ask, of course, if intersections of open sets are again open.
+Unfortunately, this is not true in general as the following example shows: Let X = R and
+d(x, y) = |y − x|. The sets Ak = (−∞, 1/k) are all open. However, their intersection
+∞
+\ (−∞, 1/k) =
+k=1</p>
+          <p>1
+x ∈ R | x &lt; k
+for all k ∈ N
+= (−∞, 0]
+(A.14)
+is not. The fact that (−∞, 0] is not open can be seen in the following way: Of course,
+0 ∈ (−∞, 0]. But for every ε &gt; 0, we have ε/2 ∈ Bε(0), while ε/2 6∈ (−∞, 0], hence
+the first is not a subset of the latter. A picture clarifying the situation is drawn in
+−∞
+0
+ε
+2</p>
+          <p>ε</p>
+          <p>Figure A.5.: The set (−∞, 0] is not open
+Figure A.5.</p>
+          <p>A finite intersection of open sets, however, is indeed again open as the following
+reasoning shows: Let A1, A2, . . . , Ak be open sets and let A denote their set-theoretic
+intersection. We will show that A is open. So, as always, let x ∈ A. Since the Aj are
+all open, there exist ε1, ε2, . . . , εk such that Bεj (x) ⊂ Aj for all 1 6 j 6 k. We set
+ε = min{ε1, ε2, . . . , εk}. But then Bε(x) ⊂ Bεj (x) for every j and hence Bε(x) ⊂ A
+by definition of A.</p>
+          <p>By inspection of the preceding proof, we find the reason why it does not work in
+the case of infinitely many sets: The infimum of infinitely many positive numbers
+need not be positive. And this is exactly what happened in our counterexample:
+If we choose x = 0, then the maximal possible εk such that Bεk (0) is contained in
+(−∞, 1/k) is equal to 1/k. If we now try to set ε as in the proof above, we get
+ε = inf{εk | k ∈ N} = inf{1/k | k ∈ N} = 0
+(A.15)
+which is not an admissible radius in the definition of openness.</p>
+        </sec>
+        <sec id="sec-3-4-2">
+          <title>A.1.2. Compactness in Rn</title>
+          <p>This subsection introduces the concept of compactness in the special case of the
+Euclidean spaces Rn and tries to communicate a bit of its importance in topology.
+Compactness is a property of a subset of a topological space that can “make local
+things global”. An example for this would be the well-known theorem “A continuous
+real function defined on the interval [a, b] is uniformly continuous”. Here, the set
+[a, b] is compact, continuity is a local property and uniform continuity is a global
+property. We start with the
+Definition A.2. A set C ⊂ Rn is compact if it is bounded (i.e., there some ball
+with radius R &gt; 0 that contains C) and its complement is an open set.</p>
+          <p>The most important property of compact sets is the following Theorem whose
+proof’s insight-length ratio is too low to demonstrate it here.</p>
+          <p>Theorem A.1 (Heine-Borel). Let C ⊂ Rn be compact. Further, let Aι be a family
+of open sets, indexed by some set I, that covers C, i.e.,
+Then there exists some finite subfamily Aι1 , Aι2 , . . . , Aιk that covers C, i.e.,
+C ⊂
+[ Aι
+ι∈I
+C ⊂
+k
+[ Aιj
+j=1</p>
+          <p>This theorem can also hold as a definition of compactness: A subset of Rn is
+compact if and only if it satisfies the condition of Theorem A.1. The opposing
+direction is not too hard to prove and is demonstrated in order to get some feeling
+with the condition of Theorem A.1.</p>
+          <p>Lemma A.1. Let C ⊂ Rn satisfy the condition of Theorem A.1, i.e., for every family
+of open sets that covers C, there exists a finite subfamily that covers C. Then C is
+compact.</p>
+          <p>Proof. We have to show that (1) C is bounded (i.e., there exists some real R &gt; 0
+such that C ⊂ BR(0)) and (2) its complement Rn \ C is open.</p>
+          <p>To prove (1), we choose the following family of open sets: The family of all balls
+Br(0) where r &gt; 0 is a real number. We already know that these are open. Of
+course, C is covered by this family of sets, because every x ∈ C is contained in the
+ball B2kxk(0) for obvious reasons. By hypothesis now, there exists a finite subfamily
+(A.16)
+(A.17)
+Br1(0), Br2(0), . . . , Brk (0) that covers C. But these balls are subsets of the ball BR(0)
+where R = max{r1, r2, . . . , rk}. Hence</p>
+          <p>k
+C ⊂ [ Brj (0) ⊂ BR(0).</p>
+          <p>j=1</p>
+          <p>Dε = {y ∈ Rn | d(x, y) &gt; ε} .</p>
+          <p>For (2), we have to show that Rn \ C is an open set. So let x ∈ Rn \ C. We define
+for every ε &gt; 0 the following set
+In order to use the condition of Theorem A.1, we have to prove that (a) all Dε are
+open and (b) C is covered by the Dε.</p>
+          <p>Part (a) follows from the triangle inequality: Let y ∈ Dε, i.e., d(x, y) &gt; ε. We
+have to find some δ &gt; 0 such that d(x, z) &gt; ε for all z with d(y, z) &lt; δ. We claim
+that this is satisfied by δ = d(x, y) − ε. Let d(y, z) &lt; d(x, y) − ε, then
+d(x, z) &gt; d(x, y) − d(y, z) &gt; d(x, y) − (d(x, y) − ε) = ε,
+hence Dε is open. Part (b) is obvious.</p>
+          <p>By hypothesis, there exist ε1, ε2, . . . , εk such that C ⊂
+ε = min{ε1, ε2, . . . , εk} &gt; 0, we have C ⊂ Dε and thus</p>
+          <p>Bε(x) ⊂ Rn \ Dε ⊂ Rn \ C</p>
+          <p>Sjk=1 Dεj . By setting
+which shows that Rn \ C is open.</p>
+          <p>It is hoped that this proof has created some insight on the nature of the condition
+of Theorem A.1. Most important and a major source of misunderstandings is the
+following triviality: The condition does not claim that there has to exist some finite
+family of open sets that covers C. This would be trivially fulfilled by any set since
+Rn as a subset of itself is an open set and covers any other. The condition reads that
+any open covering of C, no matter how ugly it might look like, has to have a finite
+subcovering. This observation is of utmost importance.</p>
+          <p>We will now proceed by showing the result announced in the introduction to this
+subsection whose proof exemplifies the routinely used reasoning known as
+“compactness argument”. For this, we recall some basic definitions from calculus.
+Definition A.3 (Continuity). Let U be a subset of R and f : U → R a function.
+The function f is called continuous at a point x ∈ U if the following condition is
+satisfied: For every ε &gt; 0 there exists some δ &gt; 0 such that x0 ∈ U and |x − x0| &lt; δ
+implies |f (x) − f (x0)| &lt; ε.</p>
+          <p>The function f is called continuous if f is continuous at every point x ∈ U .
+Definition A.4 (Uniform continuity). Let U be a subset of R and f : U → R a
+function. The function f is called uniformly continuous if the following condition is
+satisfied: For every ε &gt; 0 exists some δ &gt; 0 such that x, x0 ∈ U and |x − x0| &lt; δ
+implies |f (x) − f (x0)| &lt; ε.
+(A.18)
+(A.19)
+(A.20)
+(A.21)</p>
+          <p>Of course, uniform continuity implies continuity, but the converse is not true in
+general as the example U = R and f (x) = x2 shows. Our goal for now, however,
+will be to show that the converse does hold in a special case, namely that of compact
+intervals. The set of compact real intervals is quite easy to determine: It is exactly
+the set of bounded closed intervals [a, b]. The following proof is a most prototypical
+compactness argument.</p>
+          <p>Theorem A.2 (Heine-Cantor). Let f : [a, b] → R be a function. If f is continuous,
+then f is uniformly continuous.</p>
+          <p>Proof. We will use Theorem A.1. Let ε &gt; 0. Since f is continuous, there exists a
+δx &gt; 0 for every x ∈ [a, b] such that |x − x0| &lt; δx implies |f (x) − f (x0)| &lt; ε/2. The
+condition |x − x0| &lt; δx can be reformulated as x0 ∈ Bδx (x). Since every δx is greater
+than zero, we have
+which means that the family Bδx (x) is an open covering of the interval [a, b]. By
+Theorem A.1, there exist x1, x2, . . . , xk such that
+(A.22)
+(A.23)
+(A.24)
+Let δj = δxj . If we now set δ = min{δ1, δ2, . . . , δk}/2, we are done:</p>
+          <p>Let x, x0 ∈ [a, b] and |x − x0| &lt; δ. There exists some j such that x ∈ Bδj/2(xj ). By
+the triangle inequality, x, x0 ∈ Bδ(x) ⊂ Bδj/2(x) ⊂ Bδj (xj ). We can hence use the
+definition of δj and conclude
+= ε.</p>
+        </sec>
+        <sec id="sec-3-4-3">
+          <title>A.2. Topologies</title>
+          <p>This section formally defines the notion “topology” resp. “topological space” and
+introduces basic properties.</p>
+          <p>A.2.1. Open Sets and Neighborhoods
+Without further ado, finally, the fundamental
+Definition A.5 (Topological space). Let X be a non-empty set. A set T ⊂ P (X)
+is called a topology on X if it satisfies the following properties.
+(O1) Every union of sets in T is an element of T .
+(O2) Every finite intersection of sets in T is an element of T .
+(O3) ∅ ∈ T and X ∈ T
+In this case, X is called a topological space. The sets O ∈ T are called open sets.</p>
+          <p>To be precise, property (O3) could be omitted from the definition since S ∅ = ∅
+and T ∅ = X by convention.</p>
+          <p>This definition is indeed a generalization of the notion of openness as defined in
+Section A.1. We have defined the notion of openness two times now: One time in
+the language of metric spaces and one time in the language of topological spaces.
+We also mentioned that every metric space is also a topological space. This can be
+done, given a metric d on the space X, by the following definition:</p>
+          <p>T = {O ⊂ X | for every x ∈ O there is some ε &gt; 0 such that Bε(x) ⊂ O} (A.25)
+We proved in the language of metric spaces (O1) that arbitrary unions of open sets
+are again open and (O2) that finite intersections of open sets are open.
+Example A.4. We will now give some examples of topologies in simple settings.
+(1) The trivial topology exists on any non-empty set X. It is defined as T = {∅, X}.
+(2) The discrete topology also exists on any non-empty set X. It is defined as</p>
+          <p>T = P (X), i.e., the power set of X.
+(3) On a two-element set X = {a, b}, there are four different topologies, namely
+{∅, {a, b}}, {∅, {a}, {a, b}}, {∅, {b}, {a, b}}, {∅, {a}, {b}, {a, b}}.
+(A.26)
+(4) There are 29 different topologies on a three-element set X = {a, b, c}, see
+Figure A.6. From there on, it gets complicated: 355 topologies on four-element
+sets, 6942 on five-element sets, 209527 on six-element sets, 9535241 on
+sevenelement sets, 642779354 on eight-element sets and so on.
+(5) Any topology in which all singleton sets {x} are open, is the discrete topology
+by (O1).</p>
+          <p>In Section A.1, we gave a number of examples of open sets, in particular we showed
+that specific sets that we called “neighborhoods” or “balls” are open. We will now
+generalize the notion of neighborhood and show some fundamental properties.
+Definition A.6 (Neighborhood). Let X be a topological space and x ∈ X. A set
+N ⊂ X is called a neighborhood of x if there exists an open set O ⊂ X such that x ∈ O
+and O is contained in N , i.e., O ⊂ N . We will denote the set of all neighborhoods
+of x by N (x).
+{∅,X},{∅,{a},X},{∅,{b},X},{∅,{c},X},
+{∅,{a,b},X},{∅,{a,c},X},{∅,{b,c},X},</p>
+          <p>Figure A.6.: The 29 topologies on the set X = {a,b,c}</p>
+          <p>We note that, in particular, every open set is neighborhood of any of its points.
+Simple consequences of the definition are:
+(1) If N ∈ N (x) and M ⊃ N, then M ∈ N (x). In particular, every union of
+neighborhoods of x is a neighborhood of x.
+(2) Every finite intersection of neighborhoods of x is a neighborhood of x.
+(3) x ∈ N for all N ∈ N (x).</p>
+          <p>Properties (1) and (2) justify the name neighborhood filter for the set N (x). A less
+trivial result is the following.</p>
+          <p>(4) For every N ∈ N (x) there exists some M ∈ N (x) such that N ∈ N (y) for
+all y ∈ M, i.e., N is is a neighborhood of all points in M.</p>
+          <p>Of course, any such M has to be a subset of N. It is sufficient to take M to be
+the open set containing x as demanded in the definition of a neighborhood. In
+fact, it is possible to take the notion of neighborhood as the primary notion in the
+definition of a topology, as opposed to taking the notion of openness as we did in
+Definition A.5. More precisely, open sets are characterized as being those sets that
+are neighborhoods of all their points. This allows to define the notion of an open set
+in terms of neighborhoods. Now, given a family N (x) indexed by x ∈ X with the
+above properties (1) to (4), we may define the family</p>
+          <p>T = {O ⊂ X | O ∈ N (x) for all x ∈ X}
+(A.27)
+which, because the N (x) satisfy properties (1) to (4), is a topology on X such that
+N (x) is exactly the set of neighborhoods of x with respect to this topology T .
+Example A.5 (Neighborhoods in metric spaces). Let X be a metric space and
+x ∈ X. We will characterize the set N (x) ⊂ P (X), more precisely we show
+N (x) = {N ∈ P (X) | there exists some ε &gt; 0 such that Bε(x) ⊂ N } .
+(A.28)
+Let N be a neighborhood of x. We want to show that N is an element of the
+right-hand side of (A.28). By definition, there exists some open set O ⊂ N that
+contains the point x. Recalling what it means for a set to open in a metric space,
+we conclude the existence of some ε &gt; 0 such that Bε(x) ⊂ O ⊂ N . Conversely, if
+N is an element of the right-hand side of (A.28), then we may set O = Bε(x) in the
+definition of neighborhood since Bε(x) is open.</p>
+          <p>We will now define what it means for a sequence in X to converge to a point.
+Definition A.7 (Convergence). Let X be a topological space and (xk)k∈N ∈ XN a
+sequence in X. We say that (xk) converges to the point x ∈ X if for every
+neighborhood N of x, there exists some integer K ∈ N such that for every k &gt; K, xk ∈ N .
+In this case, x is called limit point of (xn) and (xn) is called convergent.</p>
+          <p>Compare this definition to the definition of convergence in metric spaces: The
+sequence (xk) converges to x if “for all ε &gt; 0 there exists some integer K ∈ N such
+that for every k &gt; K, xk ∈ Bε(x)”. The generalization of Definition A.7 is that the
+prototypical neighborhoods Bε(x) were replaced by arbitrary neighborhoods of x.</p>
+          <p>One fact we recall from Example A.3 is that in the case of a metric space X, every
+open set is the union of ε-balls. In such a case, we call the set of ε-balls a basis of
+the topology. More specifically, a basis B of a topology T on X is a set of subsets
+of X such that every open set O ∈ T is a union of elements of B. Trivially, the
+topology itself is always a basis. A special case occurs when there exists a countable
+basis B of a topology. These spaces are called second countable or AA2 spaces.
+Euclidean spaces Rn have a basis consisting of the ε-balls. But they even are AA2
+spaces since the set of balls with rational radius and rational center also form a basis
+of the Euclidean topology, i.e.,</p>
+          <p>B = {Bε(x) ⊂ Rn | x ∈ Qn and ε ∈ Q ∩ (0, ∞)} .
+(A.29)
+This set B is countable by Cantor diagonalization.</p>
+          <p>AA2 spaces are spaces in which it suffices to use the term “sequence”, i.e., a
+mapping N → X, when talking about convergence. In other spaces it might be too
+restrictive for its notion of convergence that the domain N of the sequence is just
+countable. We would have to generalize sequences to either nets or filters, the former
+being mappings Λ → X where Λ is not necessarily countable, but has to carry an
+additional structure; that of a directed set 1. If this is not done, popular theorems
+such as “A map F : X → Y is continuous if and only if for each sequence xk in
+1A directed set is a set Λ together with a preorder (reflexive and transitive relation)
+that for every λ and μ in Λ, there exists a ν such that λ ν and μ ν.</p>
+          <p>on Λ such
+X converging to x, the sequence f (xk) converges to f (x)” would be plainly false.
+It is true in any topological space, however, if the word “sequence” is replaced by
+“net”. But the introduction of this generalization has a few complications attached
+to it. For example, it need not be the case that a net has only one limit, but it
+may have multiple. There even exist nets that converge to every point in the space.
+Nevertheless, we will not take on the endeavor to explore the theory in this direction
+since the spaces we will look at do not have this inconvenience.</p>
+          <p>We call a topological space Hausdorff if for every two distinct points x and y,
+there exist neighborhoods Nx and Ny of x and y, respectively, such that Nx ∩ Ny = ∅.
+Metric spaces are Hausdorff.</p>
+          <p>A.2.2. Closure, Interior, Boundary, Density
+This subsection introduces accompanying notions for talking about topological
+spaces.</p>
+          <p>Definition A.8 (Closure). Let X be a topological space. A set A ⊂ X is called
+closed if it is the complement of an open set, i.e., if X \ A is open.</p>
+          <p>The closure of a set B ⊂ X, denoted by B, is the least (with respect to set inclusion)
+closed set that contains B as a subset.</p>
+          <p>The first question that arises here is, of course, whether the notion of closure is
+indeed well-defined. To be more precise, the question is whether there does exist a
+least closed set that contains B for every B ⊂ X. Before we answer this question in
+the affirmative, we collect some simple facts:
+Lemma A.2. Let X be a topological space. The following assertions are true.
+(1) Every finite union of closed sets is closed.
+(2) Every intersection of closed sets is closed.</p>
+          <p>(3) ∅ and X are both closed.</p>
+          <p>Proof. We show (1): Let A1, A2, . . . , An be closed sets, i.e., the X \ Aj are open.
+With use of De Morgans law,
+which is open by defining property (O2).</p>
+          <p>Part (2) is proved just as easy. Let Ai be an arbitrary family of closed set indexed
+by i ∈ I. Again, De Morgans law yields
+and property (O1) tells that we are done.</p>
+          <p>The sets ∅ and X are closed since they are open and each other’s complement.</p>
+          <p>n n
+X \ [ Aj = \ X \ Aj</p>
+          <p>j=1 j=1
+X \ \ Ai = [ X \ Ai
+i∈I</p>
+          <p>i∈I
+(A.30)
+(A.31)</p>
+          <p>Note the duality of these assertions and the condition on open sets in the definition
+of a topology. It is possible to define the notion of a topology by defining what sets
+should be closed, as opposed to defining what sets should be open as in Definition A.5.
+The properties that a family of sets has to fulfill such that it appears as the family
+of closed sets of some topology are exactly the assertions of Lemma A.2.</p>
+          <p>The question whether the notion of closure is actually well-defined for any set
+B ⊂ X follows from the fact every intersection of closed sets is again closed. More
+precisely,</p>
+          <p>B = \ {A ⊂ X | A is closed and B ⊂ A} ,
+(A.32)
+i.e., the closure of B is equal to the intersection of all closed sets A that contain
+B. The set on right-hand side of (A.32) is closed by (2) of Lemma A.2 and is of
+course contained in every other closed set by definition of intersection. Hence we
+constructed B for every B ⊂ X.</p>
+          <p>For spaces in which sequences suffice to build a proper notion of convergence, in
+particular in AA2 spaces (see Section A.2.1), the following important characterization
+of closure holds:
+Lemma A.3. Let X be an AA2 space and B ⊂ X. Then the closure of B is equal
+to the set of limit points that sequences in B have, i.e.,</p>
+          <p>B =
+x ∈ X | there exists a sequence (xk)k∈N ∈ BN with xk → x .
+(A.33)
+Proof. We first prove that B is contained in the right-hand side R. It suffices to show
+that the right-hand side is closed and contains B as a subset. The latter claim is
+clear since every x ∈ B is limit of the constant sequence (x)k∈N. We show closedness
+by contradiction. Suppose that X \ R is not open. Then, by definition, there exists
+some x ∈ X \ R such that for every neighborhood N of x, we have N ∩ R 6= ∅. We
+will construct a sequence of points in B that converges to x, deriving the desired
+contradiction.</p>
+          <p>In a first step, we will show that there exists a sequence of points in R that
+converges to x and then show how this implies the claim. By hypothesis, there exists
+some countable basis B of the topology. Let (Nk)k∈N denote the family of basis sets
+that contain x. It is easy to show that for every neighborhood N of x, there exists
+a k ∈ N such that Nk ⊂ N . Now, for every k ∈ N, let xk be an arbitrary point
+in R ∩ Tik=1 Ni (which is non-empty, see above). This is a sequence of points in R
+that converges to x. For let N ∈ N (x), then there exists some K ∈ N such that
+NK ⊂ N . Hence for any k &gt; K, we have xk ∈ Tik=1 Ni ⊂ NK ⊂ N which shows
+xk → x.</p>
+          <p>To show that the existence of a sequence in R converging to x implies the existence
+of a sequence in B converging to x, we take for every point xk ∈ R from the above
+construction a sequence (ξk,j )j∈N ∈ BN converging to xk. These sequences exist by
+the definition of R. We claim that the following sequence yk converges to x. The set
+all j &gt; jk, ξk,j ∈ Tik=1 Ni. We define
+Tik=1 Ni containing xk and being open, there exists some index jk ∈ N such that for
+yk = ξk,jk ∈ B ∩
+k
+\ Ni
+i=1
+which obviously converges to x. This is a contradiction and we have shown B ⊂ R.</p>
+          <p>The converse direction R ⊂ B is much easier. Suppose that there exists some
+x ∈ R \ B. Because x lies in the open set X \ B, there exists some neighborhood N
+of x such that</p>
+          <p>N ⊂ X \ B ⊂ X \ B.</p>
+          <p>But this relation denies the existence of a sequence in B converging to x, which
+contradicts the assumption.</p>
+          <p>It is also possible to define a topological space in terms of its closure operator,
+i.e., the map P (X) → P (X) that takes a set A ⊂ X to its closure. We can retain
+the topology from the closure operator, because a set A ⊂ X is closed if and only if
+A = A. The axioms needed to define the family of closed sets of a topology by the
+above procedure are the following:
+Lemma A.4. Let X be a topological space and let C : P (X) → P (X) be its closure
+operator. The following assertions are true for any A, B ⊂ X:
+(A.34)
+(A.35)
+(1) C(∅) = ∅
+(2) A ⊂ C(A)
+(3) C(C(A)) = C(A)
+(4) C(A ∪ B) = C(A) ∪ C(B)
+Proof. (1) is clear since ∅ is a closed set. (2) and (3) are immediate consequences
+of the definition of closure. We will now prove (4). The inclusion C(A ∪ B) ⊂
+C(A)∪C(B) is a consequence of the fact that C(A)∪C(B) is closed by Lemma A.2(1)
+and of course contains both A and B as subsets. For the other inclusion, we note
+that it is sufficient to show C(A) ⊂ C(A ∪ B) which is clear since A ⊂ A ∪ B.</p>
+          <p>Dual to the notion of closure is that of interior, as defined next.</p>
+          <p>Definition A.9 (Interior). Let X be a topological space and A ⊂ X. We call the
+(with respect to set inclusion) greatest open set that is contained in A the interior
+of A, denoted by A◦.</p>
+          <p>As with closure, we have to check that this is a well-defined notion, i.e., that A◦
+exists for all A ⊂ X. This follows from the formula</p>
+          <p>A◦ = [ {B ⊂ X | B is open and B ⊂ A} .
+(A.36)
+A set A ⊂ X is open if and only if A◦ = A. The important properties of the interior
+operator P (X) → P (X), A 7→ A◦ are:
+Lemma A.5. Let X be a topological space and let I : P (X) → P (X) be its interior
+operator. The following assertions are true for any A, B ⊂ X:
+(1) I(X) = X
+(2) I(A) ⊂ A
+(3) I(I(A)) = I(A)
+(4) I(A ∩ B) = I(A) ∩ I(B)
+Proof. (1) holds because the set X is open by definition, (2) and (3) are obvious. To
+prove (4), we show both set inclusions. The inclusion from I(A ∩ B) ⊂ I(A) ∩ I(B)
+is true, because A ∩ B ⊂ A and A ∩ B ⊂ B. We now show I(A) ∩ I(B) ⊂ I(A ∩ B).
+The set I(A) ∩ I(B) is open and contained in both A and B, hence contained in
+A ∩ B. The claim now follows from the definition of interior.</p>
+          <p>The notions of closure and interior are connected by the following formula
+A◦ = Ac c , A = ((Ac)◦)c
+(A.37)
+where Bc = X \ B denotes the complement of B ⊂ X.</p>
+          <p>Example A.6 (Intervals). We will demonstrate the use of the notions interior and
+closure with real intervals. The interior and the closure of an interval do not depend
+on whether the boundary points belong to the interval or not. More precisely, the
+interiors of (a, b), (a, b], [a, b) and [a, b] are all equal to (a, b) and their closures are all
+equal to [a, b]. It follows from the fact that (a, b) is open, [a, b] is closed and neither
+(a, b] nor [a, b) are open or closed.</p>
+          <p>We may generalize this situation and identify for any set A ⊂ X a set of points
+for which it does not matter whether they are added or removed when considering
+interior and closure.</p>
+          <p>Definition A.10 (Boundary). Let X be a topological space and A ⊂ X. We call
+∂A = A \ A◦ the boundary of A.</p>
+          <p>We state the following observations.</p>
+          <p>Lemma A.6. Let X be a topological space and let A ⊂ X. The following statements
+are true.
+(1) ∂A = {x ∈ X | for all N ∈ N (x) it is N ∩ A 6= ∅ and N ∩ Ac 6= ∅}
+(2) ∂A = ∂(Ac)
+(3) (A \ ∂A)◦ = A◦
+(4) A ∪ ∂A = A
+(5) ∂A is closed
+(6) A = A ∪ ∂A. In particular, A is closed if and only if ∂A ⊂ A.</p>
+          <p>(7) A◦ = A \ ∂A. In particular, A is open if and only if ∂A ∩ A = ∅.
+Proof. (1): From the definition and equation (A.37), we deduce ∂A = Ac◦c \ A◦ =
+Ac◦c ∩ A◦c. It hence suffices to show</p>
+          <p>A◦c = {x ∈ X | for all N ∈ N (x) it is N ∩ Ac 6= ∅} .</p>
+          <p>But this is trivially equivalent (by taking complements) to</p>
+          <p>A◦ = {x ∈ X | there exists some N ∈ N (x) such that N ∩ Ac = ∅} .
+which is true, because the relation N ∩ Ac = ∅ is the same as the relation N ⊂ A.
+(2) is a trivial consequence of (1).</p>
+          <p>(3): After a simple calculation involving De Morgan’s law and R \ S = R ∩ Sc, we
+arrive at the equation
+c
+(A \ ∂A)◦ = A ∩ A ∪ A◦ ◦
+which by Lemma A.5(4) is equal to</p>
+          <p>c
+Since A◦ ⊂ A ∪ A◦ and A◦◦ = A◦, we get</p>
+          <p>c</p>
+          <p>A◦ ∩ A ∪ A◦ ◦
+(A \ ∂A)◦ ⊃ A◦ ∩ A◦ = A◦
+and we are done, the other inclusion being trivial.</p>
+          <p>(4) follows from (2), (3) and (A.37) as the following calculation shows:
+A ∪ ∂A = (A ∪ ∂A)c◦c = (Ac ∩ (∂A)c)◦c</p>
+          <p>= (Ac \ ∂ (Ac))◦c = Ac◦◦c = Ac◦c = A
+(5) is clear since ∂A = A ∩ A◦c is an intersection of two closed sets.
+(6) and (7) are simple calculations.</p>
+          <p>We now turn to a different notion that is derived from the notion of closure, namely
+density. Informally, we will call a set dense if every point in the space is arbitrarily
+close to a point of the dense set. The formal definition follows now.
+(A.38)
+(A.39)
+(A.40)
+(A.41)
+(A.42)
+(A.43)
+(A.44)
+Definition A.11 (Density). Let X be a topological space and A ⊂ X. We call A
+dense in X if the closure of A in X is equal to X, i.e., A = X.</p>
+          <p>Equivalent statements are summarized in the next
+Lemma A.7. Let X be a topological space and A ⊂ X. The following statements
+are equivalent:
+(1) A is dense in X.
+(2) For every non-empty open set O ⊂ X it follows that A ∩ O 6= ∅.
+(3) For every neighborhood N of a point x ∈ X it follows that A ∩ N 6= ∅.
+Proof. The equivalence (2)⇔(3) is trivial. Let A be dense and suppose that (2) does
+not hold. Then there exists a non-empty open set O with A ⊂ Oc where Oc denotes
+X \O. But since Oc 6= X and Oc is closed, we deduce A 6= X which is a contradiction.
+Conversely, let (2) hold and suppose that A = C 6= X. But then the complement of
+C is non-empty, open, and has trivial intersection with A. Contradiction.
+Example A.7. The set Q ⊂ R is dense: Let N ⊂ R be a neighborhood of some
+x ∈ R. Then, by definition, there exists some ε &gt; 0 such that Bε(x) ⊂ N . The
+decimal expansion of x yields a sequence (qk) that converges to x. This implies that
+there exists some K ∈ N such that qK ∈ Bε(x) ⊂ N . The claim follows because, by
+construction, qK ∈ Q.</p>
+          <p>A.2.3. Continuity
+In the previous sections, we studied the objects “topological spaces”. It is the purpose
+of this section to deal with “morphisms” of such objects, i.e., functions between
+topological spaces that preserve the topological structure. We will then have laid the
+ground to study the category of topological spaces (Herrlich and Strecker 1973).
+Definition A.12 (Continuity). Let X and Y be topological spaces. Furthermore,
+let f : X → Y be a function. We call f continuous if for every open set O ⊂ Y , it
+follows that its inverse image f −1[O] is open in X.</p>
+          <p>By taking complements and recalling f −1[Y \ A] = X \ f −1[A] for all A ⊂ Y , we
+arrive at the insight that f is continuous if and only if f −1[C] is closed in X for every
+set C that is closed in Y .</p>
+          <p>Example A.8. Let X be a set equipped with the discrete topology. Then every
+map f : X → Y is continuous, because every subset of X is open. Conversely, if Y
+is equipped with the trivial topology, i.e., only ∅ and Y are open, then again every
+map f : X → Y is continuous, because f −1[∅] = ∅ and f −1[Y ] = X which are in any
+case open in X.</p>
+          <p>If Y a topological space and X is any non-empty set, we may ask ourselves with
+which topology we must equip X such that a given mapping f : X → Y becomes
+continuous. Of course, we want to do this in the most general fashion, i.e., we do
+not want to add too many open sets to the to be defined topology on X, just enough
+to make f continuous. We are obliged to have sets of the form f −1[O] where O ⊂ Y
+is open as open sets in X. But by recalling all those useful properties of the inverse
+image, it also turns out that these sets are enough: The sets of the above form f −1[O]
+form a topology on X with respect to which f is continuous. We call this topology
+on X the initial topology with respect to f : X → Y .</p>
+          <p>Example A.9 (Subspace topology). If X ⊂ Y and Y is equipped with a topology,
+we may consider the inclusion map ι : X ,→ Y , i.e., ι(x) = x for all x ∈ X, and
+equip X with the initial topology with respect to ι. We call this topology on X the
+subspace topology inherited from Y . The open sets of X are exactly the sets X ∩ O
+where O ⊂ Y is open.</p>
+          <p>We may well go the opposite direction and ask, given a mapping f : X → Y where
+X is a topological space and Y is an arbitrary non-empty set, which topology on Y
+makes f continuous and has the least number of open sets. This time, it turns out
+that indeed the sets A ⊂ Y such that f −1[A] ⊂ X is open form a topology on Y .
+This topology on Y is called the final topology with respect to f : X → Y .</p>
+          <p>We have already seen a notion called “continuity” in Definition A.3 where we
+defined it for maps U → R where U ⊂ R. It would be embarrassing if those notions
+would not agree for maps U → R. Luckily, the following lemma holds.
+Lemma A.8. Let U ⊂ R and f : U → R. The following are equivalent:
+(1) f is continuous with respect to Definition A.3.
+(2) f is continuous with respect to Definition A.12 (where U is equipped with the
+subspace topology inherited from R).</p>
+          <p>Proof. (1)⇒(2): Let O ⊂ R be non-empty and open. Let x ∈ f −1[O]. Then there
+exists some ε &gt; 0 such that Bε(f (x)) ⊂ O since O is open. But now, by (1), there
+exists some δ &gt; 0 such that y ∈ Bδ(x) implies f (y) ∈ Bε(f (x)), i.e.,</p>
+          <p>Bδ(x) ⊂ f −1[Bε(f (x))] ⊂ f −1[O].</p>
+          <p>(2)⇒(1): Let x ∈ U and ε &gt; 0. The set Bε(f (x)) is open in R. Hence also
+f −1[Bε(f (x))] is open. Hence there exists some δ &gt; 0 such that
+(A.45)
+(A.46)</p>
+          <p>Bδ(x) ⊂ f −1[Bε(f (x)).</p>
+          <p>But this implies the condition of (1).
+A.2.4. Compactness
+We briefly discussed compactness in Section A.1.2 for the case of subsets of Rn. Since
+we do not have the notion of distance and hence boundedness in general
+topological spaces, the idea is to take the conclusion of Theorem A.1 as the definition of
+compactness. Below, we collect the most important facts about compact sets.
+Definition A.13 (Compactness). Let X be a topological space. We call X compact
+if for any collection (Aι)ι∈I of open sets for which X = S Aι, there exists some n ∈ N
+and ι1, . . . , ιn such that X = Sn</p>
+          <p>k=1 Aιk . We call a subset A of a topological space
+compact if A is compact with respect to the subspace topology inherited from X.
+Example A.10. A space equipped with the discrete topology is compact if and only
+if it is finite. This follows easily because all singleton sets {x} are open in discrete
+spaces.</p>
+          <p>Lemma A.9. Let X be a topological space and A ⊂ X. The following assertions
+are true:
+(1) If X is compact and A is closed, then A is compact.</p>
+          <p>(2) If X is Hausdorff and A is compact, then A is closed.</p>
+          <p>Proof. (1): For any open cover (Aι) of A, the family (Aι) together with the open set
+X \ A is an open cover of X. Since X is compact, there exist finitely many indices
+ι1, . . . , ιn such that X = Sn</p>
+          <p>k=1 Aιk ∪ (X \ A). By intersecting both sides with A, we
+arrive at A = Sn</p>
+          <p>k=1 Aιk which shows that A is compact.</p>
+          <p>(2): We show that the complement of A is open. Let x ∈ X \ A. By the Hausdorff
+property, for every y ∈ A, there exist disjoint open sets U (y) and V (y) such that
+y ∈ U (y) and x ∈ V (y). The family U (y) where y ∈ A is an open covering of
+A. Because A is compact, there exist y1, . . . , yn such that A = Sin=1 U (yi). Setting
+V = Tin=1 V (yi) reveals that V is an open neighborhood of x ((O2) in Definition A.5)
+which is disjoint to A, hence V ⊂ X \ A. This proves that X \ A is open, i.e., A is
+closed.</p>
+          <p>Lemma A.10. Let f : X → Y be continuous and let X be compact. Then f [X] is
+compact.</p>
+          <p>Proof. Follows immediately from the definitions.</p>
+          <p>Lemma A.11. Let X be a compact space and f : X → R continuous. Then f
+attains its minimum, i.e., there exists some x ∈ X such that
+f (x) = inf{f (y) | y ∈ X}.
+(A.47)
+Proof. By Lemma A.10, the image f [X] is a compact set in R. By Lemma A.9, this
+set is closed. We may deduce the result from order completeness of R.2
+A.2.5. Product Spaces
+In this section, we will answer the question, which topology is “natural” to equip a
+product space X = Q Xι with when all Xι are topological spaces. We do this by
+considering the projection mappings πι : X Xι and equipping X with a slight
+generalization of the initial topology. Namely, we will have to make all projection
+mapping continuous, not only one. This is done with the following
+Definition A.14. Let (Xι) be a family of topological spaces and let X = Q Xι be
+the set-theoretic product. We call the topology induced by sets of the form πι−1[O]
+where O ⊂ Xι is open the product topology on X.</p>
+          <p>A most important result that we do not prove here for space limitations is the
+following (Bourbaki 1989, Chapter I, §9, no. 5, Theorem 3).</p>
+          <p>Theorem A.3 (Tychonoff). Let X = Q Xι be equipped with the product topology.
+The following are equivalent:
+(1) X is compact.
+(2) All Xι are compact.
+Alpern, Bowen and Fred B. Schneider. Defining liveness. Technical Report TR85-650,</p>
+          <p>Cornell University, 1985.</p>
+          <p>Attiya, Hagit and Jennifer Welch. Distributed Computing: Fundamentals,
+Simulations, and Advanced Topics. John Wiley &amp; Sons, second edition, 2004.
+Bourbaki, Nicolas (pseudonym). General Topology, Chapters 1–4. Elements of
+Mathematics. Springer, 1989.</p>
+          <p>Charron-Bost, Bernadette, Sam Toueg, and Anindya Basu. Revisiting safety and
+liveness in the context of failures. In Proceedings of CONCUR 2000 —Concurrency
+Theory, pages 552–565. Springer, 2000.</p>
+          <p>Dolev, Danny, Cynthia Dwork, and Larry Stockmeyer. On the minimal synchronism
+needed for distributed consensus. Journal of the ACM 34(1):77–97, 1987.
+Fich, Faith and Eric Ruppert. Hundreds of impossibility results for distributed
+computing. Distributed Computing 16(2):121–163, 2003.</p>
+          <p>Fischer, Michael J., Nancy A. Lynch, and Michael S. Paterson. Impossibility of
+distributed consensus with one faulty process. Journal of the ACM 32(2):374–
+382, 1985.</p>
+          <p>Hatcher, Allan. Algebraic Topology. Cambridge University Press, 2002.
+Herlihy, Maurice and Sergio Rajsbaum. Algebraic spans. Mathematical Structures
+in Computer Science 10(4):549–573, 2000.</p>
+          <p>Herlihy, Maurice and Nir Shavit. The asynchronous computability theorem for
+tresilient tasks. In Proceedings of the 25th Annual ACM Symposium on Theory of
+Computing, pages 111–120. 1993.</p>
+          <p>Herrlich, Horst and George E. Strecker. Category Theory: An Introduction. Allyn
+and Bacon, 1973.</p>
+          <p>Lamport, Leslie. Proving the correctness of multiprocess programs. IEEE
+Transactions on Software Engineering SE-3(2):125–143, 1977.</p>
+          <p>Lubitch, Ronit and Shlomo Moran. Closed schedulers: A novel technique for
+analyzing asynchronous protocols. Distributed Computing 8(4):203–210, 1995.
+Lynch, Nancy A. Distributed Algorithms. Morgan Kaufmann, 1996.</p>
+          <p>Spanier, Edwin H. Algebraic Topology. McGraw-Hill, 1966.</p>
+        </sec>
+      </sec>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <ref id="ref1">
+        <mixed-citation>
+          61 Moses, Yoram and
+          <string-name>
+            <given-names>Sergio</given-names>
+            <surname>Rajsbaum</surname>
+          </string-name>
+          .
+          <article-title>A layered analysis of consensus</article-title>
+          .
+          <source>SIAM Journal on Computing</source>
+          <volume>31</volume>
+          (
+          <issue>4</issue>
+          ):
+          <fpage>989</fpage>
+          -
+          <lpage>1021</lpage>
+          ,
+          <year>2002</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref2">
+        <mixed-citation>
+          <string-name>
+            <surname>Saks</surname>
+            , Michael and
+            <given-names>Fotios</given-names>
+          </string-name>
+          <string-name>
+            <surname>Zaharoglou</surname>
+          </string-name>
+          .
+          <article-title>Wait-free k-set agreement is impossible: The topology of public knowledge</article-title>
+          .
+          <source>SIAM Journal on Computing</source>
+          <volume>29</volume>
+          (
+          <issue>5</issue>
+          ):
+          <fpage>1449</fpage>
+          -
+          <lpage>1483</lpage>
+          ,
+          <year>2000</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref3">
+        <mixed-citation>
+          <string-name>
+            <surname>Santoro</surname>
+            , Nicola and
+            <given-names>Peter</given-names>
+          </string-name>
+          <string-name>
+            <surname>Widmayer</surname>
+          </string-name>
+          .
+          <article-title>Time is not a healer</article-title>
+          .
+          <source>In Proceedings of the 6th Annual Symposium on Theoretical Aspects of Computer Science</source>
+          , pages
+          <fpage>304</fpage>
+          -
+          <lpage>313</lpage>
+          . Springer,
+          <year>1989</year>
+          .
+        </mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

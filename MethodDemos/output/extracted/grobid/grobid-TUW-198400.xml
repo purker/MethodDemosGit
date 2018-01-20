@@ -1,0 +1,653 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:20+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Model-driven Development Meets Security: An Evaluation of Current Approaches</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Kresimir</forename><surname>Kasal</surname></persName>
+							<email>kkasal@sba-research.org</email>
+							<affiliation key="aff0">
+								<orgName type="institution" key="instit1">SBA Research</orgName>
+								<orgName type="institution" key="instit2">Vienna University of Technology</orgName>
+								<orgName type="institution" key="instit3">Vienna University of Technology</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Johannes</forename><surname>Heurix</surname></persName>
+							<email>heurix@ifs.tuwien.ac.at</email>
+							<affiliation key="aff0">
+								<orgName type="institution" key="instit1">SBA Research</orgName>
+								<orgName type="institution" key="instit2">Vienna University of Technology</orgName>
+								<orgName type="institution" key="instit3">Vienna University of Technology</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Thomas</forename><surname>Neubauer</surname></persName>
+							<email>neubauer@ifs.tuwien.ac.at</email>
+							<affiliation key="aff0">
+								<orgName type="institution" key="instit1">SBA Research</orgName>
+								<orgName type="institution" key="instit2">Vienna University of Technology</orgName>
+								<orgName type="institution" key="instit3">Vienna University of Technology</orgName>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Model-driven Development Meets Security: An Evaluation of Current Approaches</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<abstract>
+				<p>Although our society is critically dependent on software systems, these systems are mainly secured by protection mechanisms during operation instead of considering security issues during software design. Deficiencies in software design are the main reasons for security incidents, resulting in severe economic consequences for (i) the organizations using the software and (ii) the development companies. Lately, model-driven development has been proposed in order to increase the quality and thereby the security of software systems. This paper evaluates current efforts that position security as a fundamental element in model-driven development, highlights their deficiencies and identifies current research challenges. The evaluation shows that applying special-purpose methods to particular aspects of the problem is more suitable than applying generic ones, since (i) the problem can be represented on the proper abstraction level, (ii) the user can build on the knowledge of experts, and (iii) the available tools are more efficient and powerful.</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.">Introduction</head><p>As our modern society is critically dependent on software systems, the importance of software security is constantly growing <ref type="bibr" target="#b0">[1]</ref>. For example, companies depend on applications to administer customer data, payment information and inventory tracking. But not only companies have a need for secure software: consumers also use software to communicate with friends or family, to check their banking accounts and to search for resources available on the Internet. Threats resulting from security breaches range from defeating copy protection mechanisms to attacks such as malicious intrusions into systems that control crucial infrastructure (cf. <ref type="bibr" target="#b1">[2]</ref>). Software vulnerabilities, arising from deficiencies in the design or implementation of the software (e.g., due to increasing complexity) are one of the main reasons for security incidents (cf. <ref type="bibr" target="#b2">[3]</ref>). These deficiencies are often caused by the increasing complexity of software systems. This is addressed with principles like abstraction, modularization, and separation of concerns, concepts which are all widely used. Although the object-oriented paradigm is mostly employed nowadays, principles like encapsulation, polymorphism, and inheritance are insufficient, and a paradigm change is necessary <ref type="bibr" target="#b3">[4]</ref>. For this reason, as a successor of the computer-aided software engineering (CASE) approach, model-driven development (MDD) has been suggested to improve the quality of complex software systems <ref type="bibr" target="#b3">[4]</ref>, <ref type="bibr" target="#b4">[5]</ref>. MDD is used to design abstractions, i.e., platform-independent concepts, which are then translated into more accurate ones that are adjusted to a particular platform. In a further step, such platform-specific models are transformed into production code. In such a development process, models and mappings between them have to be maintained instead of just the generated code. Aspect-oriented software development (AOSD) is an emerging approach with the goal of promoting advanced separation of concerns (cf. <ref type="bibr" target="#b5">[6]</ref>, <ref type="bibr" target="#b6">[7]</ref>). It allows multiple concerns (e.g., security, functionality) to be expressed separately and unifies them into a working system in an automated way. Because of good characteristics in tackling software complexity, model-driven engineering was utilized to develop secure information systems. Juerjens was the first to propose a combination of model-driven development and security using UMLsec (cf. <ref type="bibr" target="#b7">[8]</ref>). Subsequently, many proposals dealing with integrating security and modeling languages followed and were summarized under the term model-driven security (cf. <ref type="bibr" target="#b8">[9]</ref>). It represents an approach where security is applied together with model-driven architecture <ref type="bibr" target="#b3">[4]</ref> and focuses on building secure software systems by specifying models together with their security requirements. At the other end of the spectrum, researchers have proposed formal languages, called specification languages, to represent policies, models, and system descriptions. Such languages are based on mathematical logic systems and have also been applied to the field of information security, for instance for specifying formal security policies and for analyzing cryptographic security protocols <ref type="bibr" target="#b9">[10]</ref>. A great number of modeling and specification approaches for describing secure information systems are available, and the question arises which method to use for which problem. When intending to apply model-driven security, or at least to analyze a model of a system, it is fundamental to know which security mechanisms and security requirements can be modeled by a certain technique and whether an appropriate toolchain exists. As there is a multitude of available modeling approaches, it can become tedious to identify the most suitable method for solving the problem at hand. There is no common comparison framework to contrast the different methods with each other with regard to security and to identify the most suitable approach.</p><p>Therefore, this work defines a taxonomy for model- driven security based on the work of Khwaja and Urban (cf. <ref type="bibr" target="#b10">[11]</ref>). In particular, we extend Khwaja and Urban's comparison framework with security mechanisms that can be modeled using a certain specification method. In this way, we will answer the research questions (i) which approaches are applicable for solving which development problems and (ii) what specific features characterize these techniques. In the scope of this paper we regard evaluation as the "systematic assessment of the operation and/or the outcomes of a program or policy, compared to a set of explicit or implicit standards, as a means of contributing to the improvement of the program or policy" (cf. <ref type="bibr" target="#b11">[12]</ref>). We use a combination of a testing program approach and an objectives-based approach (cf. <ref type="bibr" target="#b12">[13]</ref>). The objectives used for the evaluation are taken from literature. This evaluation provides management decision makers such as chief security officers or software developers with a funded decision-making basis for the selection of model-driven security approaches. As literature does not so far provide any evaluations focusing on the comparison of model-driven security approaches, and there is as yet no common comparison framework to contrast the different methods to each other, this paper provides a major contribution to the research area of software engineering.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">The Evaluation Taxonomy</head><p>This section identifies and describes several dimensions in model-based security. The identified dimensions are orthogonal but can still affect each other. For example, if the modeling paradigm is aspect-oriented, one of the artifacts that the method requires is a set of transformation rules that are needed for model weaving. The proposed taxonomy is influenced by the comparison framework developed by Khwaja and Urban (cf. <ref type="bibr" target="#b10">[11]</ref>). The framework was intended for evaluation of specification techniques and was already used by <ref type="bibr">Villarroel et al. (cf. [14]</ref>) to evaluate development methods for secure information systems. Nevertheless, Khwaja and Urban's comparison framework did not cover aspects such as security mechanisms that can be modeled by a specific technique, and it did not classify the distribution of modeled systems, the artifacts that have to be provided by the modeler, or the applied modeling paradigm. Furthermore, there was no differentiation between several possible dimension instantiations that can occur in system verification. Therefore, these issues are handled in the proposed taxonomy. The taxonomy will provide a classification method that can easily be applied by a practitioner when comparing model-driven security methods in order to choose the appropriate one and consists of the following dimensions: Paradigm: This dimension is concerned with the modeling paradigm. In case of model-driven security, two alternatives are possible: In single, possibly hierarchical models, crosscutting concerns are modeled in each place where they are needed, which amounts to a significant redundancy in the overall model. By contrast, in models conforming to aspect-oriented development, crosscutting concerns are described in a separate model to be subsequently woven into (or integrated with) the primary model using so called weaving rules, thus eliminating redundancy. Artifacts: There are three forms of artifacts: (i) Static models describe the static structure of a system such as classes and associations between them; (ii) Dynamic models describe the behavior of a system including interactions or states of entities; (iii) Transformation rules define how models are transformed in the MDA approach and how aspects are woven into aspect-oriented models. Formality: Formal expressions allow for precise, unambiguous and verifiable specifications of models. Design patterns, for instance, are semi-formal models specifying the system's functionality by describing how entities are assembled and interact with each other to form the desired system. Metamodels are grammars describing how valid models are built. Examples of formal modeling techniques are automata, state machines, or logics and calculus systems. Distribution: This dimension deals with the existence of distributed components and their interoperability. Differences are made between single or multi-process systems, where the latter may be distributed over multiple machines acting as autonomous and possibly mobile agents. Different instances of this dimension include client/server constructs, P2P-architectures or multiple agent systems. Granularity: Coarse granularity allows abstracting from details to get a more complete picture of the system, e.g., describing the system as a composition of interacting subsystems where each subsystem consists of several other components that are left outside the scope of the model. Fine-grained models offer a more detailed view, including elements such as classes and interacting functions, but may also be of much higher complexity. Executability: If the model is executable, it contains enough information to be verified without the need to be enriched with additional information, since its semantics is represented in a mathematically precise and unambiguous way. Otherwise, the model could not be executed by a machine. In such a case, it needs to be supplemented with additional data during the transformation process. With executable models, extracting test cases from them and making them executable is a plausible technique for validating the system. Verification: The system's verification can be handled in different ways: While manual testing is error-prone and tedious, automated test case generation is more preferable where we distinguish between (i) deriving both test cases and production code from the same model (ii) and test- specific models being independent from the system built manually. Model checking verifies conformance to a specific requirement, while theorem proving involves verifying whether a theory (system specification) entails a logic formula (requirement). Tool support: If available, tool support includes assisting the user in the modeling process of the system, generating code, checking the system specification's syntax and consistency, as well as checking whether a system is consistent with its specification (verification) and completely fulfills the user requirements (validation). Applicability: In this dimension we differentiate between several application domains for which systems can be specified by applying a particular technique. Examples for application domains are information systems, Web applications, e-commerce systems, embedded systems, etc. Security mechanisms: In this section, security modeling techniques are categorized according to security mechanisms (and thus, indirectly, security requirements) that can be represented and modeled by a particular method. Possible instances for security mechanisms are access control, security protocols and intrusion detection mechanisms. Security mechanisms enforce security requirements. A security aspect represents a particular set of behavior needed by a certain system, as used in aspect- oriented software development (AOSD). A security aspect can represent a security mechanism.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">Model-driven Security Approaches</head><p>This section presents selected model-driven security and formal method approaches, starting with UMLsec, a hierarchical methodology, followed by interesting aspect- oriented approaches. Finally, general and special-purpose formal techniques will be discussed.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1.">UMLsec (Juerjens 2002)</head><p>UMLsec is a very general and powerful technique. It enhances UML's expressiveness by applying security- related stereotypes, tags, and security constraints. These are used to encapsulate knowledge on prudent security engineering such that developers need not be specialized in the domain of security <ref type="bibr" target="#b2">[3]</ref>. UMLsec is both a modeling language and a methodology, since the corresponding tool suite allows for iterative refinement and adaptation of the system models. UMLsec, as a modeling language, allows the specification of requirements regarding confidentiality, integrity, non-repudiation, and non- interference (secure information flow). These requirements are expressed as stereotypes and tagged values and are translated into constraints that evaluate the security properties of the model, since the author provides a formal semantics for the fragment of UML that is needed for UMLsec. A system is composed of subsystems which are in turn composed of further subsystems or components that can be modeled in the form of class diagrams or state charts. UMLsec can also be applied to model aspects and systems' crosscutting concerns separately. In such a case, the modeler would have to provide transformation (weaving) rules that specify and determine how specific models have to be integrated <ref type="bibr" target="#b14">[15]</ref>. By applying UMLsec, the system can be described on several levels of granularity. Even if there is no consensus on whether UML is an architecture description language (ADL) (cf. <ref type="bibr" target="#b15">[16]</ref>), it can also be used to model system architectures, since package and deployment diagrams can be expressed by using UML and therefore also by UMLsec. Formal semantics was provided <ref type="bibr" target="#b2">[3]</ref> to formally analyze the behavior of interacting components. Because interactions can be specified in UML, distributed systems can be modeled as well <ref type="bibr" target="#b16">[17]</ref>; Juerjens demonstrated this with the TLS security protocol <ref type="bibr" target="#b2">[3]</ref>.</p><p>In UMLsec the modeler has to provide static and dynamic models including secrecy (confidentiality), integrity, non-interference, non-repudiation, data authenticity (can a piece of data be traced back to its original source?), and entity authenticity (can a protocol participant be identified?) as security requirements. Although Juerjens provided a formal basis and thus the foundation for executable UML modeling to simulate whole systems, UMLsec lacks support for exact, traceable and fully automated transition from models to implementation code, thus denying executability. In the meantime, this problem has been solved in the form of a rich toolset making it possible to formally verify the designed models <ref type="bibr">[18]</ref>: With state-of-the-art model checkers and theorem provers, this toolset allows the automatic analysis of exported UML models formatted in XML Metadata Interchange (XMI) format. Although UMLsec was initially intended to tackle the problem of designing secure information systems, the author recently also addressed the development of secure embedded systems (cf. <ref type="bibr" target="#b17">[19]</ref>). As this approach evolves, further application areas may emerge.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2.">Secure Software Architectures by Using Aspects (H. Yu et al. 2005)</head><p>Yu et al. <ref type="bibr" target="#b18">[20]</ref> apply software architecture models (SAM) to define the system's software architecture and the required security aspects. The approach is a formal method for aspect-oriented modeling at an architectural level. SAM is a development framework based on two complementary formalisms: predicate transition nets (also referred to as high-level Petri nets) and temporal logic. Petri nets are used to visualize and describe the high-level static structure of the system, as well as to model the architecture's behavior. Linear temporal logic formulas (LTL) are used to specify the required security properties (that is, security requirements, such as constraints set on the information flow between the interacting components). A consequence of expressing security properties in temporal logic is that policies (i.e., sets of security properties or requirements) are expressed on a very low abstraction level. Expressible policies include safety and liveness properties and variations of these (cf. <ref type="bibr" target="#b19">[21]</ref>). In SAM, a hierarchical set of compositions is used to describe the system. Each composition consists of a set of components, a set of connectors, and a set of constraints that have to be satisfied by the interacting components (cf. <ref type="bibr" target="#b6">[7]</ref>). The approach is well suited for modeling distributed architectures. In the problem domain model, a precise description of the system's functionality is given. Once this model is established, it is divided into the base architecture model and the security aspect model by applying separation of concerns. The base architecture model defines the software architecture of the targeted application, including basic functional modules and their connections. In this model, no security properties (requirements) are specified; these are specified in the security aspect model, along with vulnerabilities, threats, and provided mechanisms that enforce security policies. Thus, security aspects in this context represent components which implement security-relevant features and mechanisms of information systems. A secure architecture model, the result of merging the base architecture model with the security aspect model, is the model where security policies are enforced. As Petri nets are the basis for the modeling formalism, model checking could also be applied to verify security properties (which are represented by LTL formulas). However, the approach lacks any tool support and no significant further work has been done in order to enhance the proposed method. oriented extensions to model attacks and thereby intrusion detection aspects (IDAs) responsible for detecting these attacks. The modeler has to provide static and dynamic views of the system's aspects. Class diagrams are used to represent the system's static attributes, and state machine diagrams are used to represent the dynamic views of intrusions, which describe how the attacker intrudes into the system. The attack scenario models are then transformed into programs (i.e., code is generated for the IDAs) and subsequently woven into the primary program. After weaving, the aspects act as intrusion detection components to automatically identify attacks against the target system. The method is not limited to a specific application domain and the framework can also be used to make distributed systems intrusion-aware. Several open source tools like ArgoUML, AspectJ, and Novasoft Metadata Framework are used to build the framework. When modeling intrusions, the level of formality is high due to state machines describing the attacks. Nevertheless, when considering the remaining application, which is written in an ordinary programming language and for which no model is available, the system is too complex to be verified formally. Therefore, the resulting intrusion-aware application needs to be tested manually by applying a set of attacks from the Web security threat classification released by the Web Application Security Consortium (WASC) <ref type="bibr" target="#b21">[23]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.4.">Automated Validation of Internet Security Protocols and Applications</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3.">A Model-Based Aspect-Oriented Framework for Building Intrusion-Aware Software Systems (Zhu et al. 2008)</head><p>Zhu et al. <ref type="bibr" target="#b20">[22]</ref> propose a model-based, aspect-oriented framework for building intrusion-aware software systems. Such a system includes a group of intrusion detection aspects (IDAs) which can automatically detect intrusions. The authors developed a UML profile with aspect- In <ref type="bibr" target="#b22">[24]</ref>, the authors propose a tool, called AVISPA, intended to speed up the development of security protocols and to improve their security. The approach provides a language called the High-Level Protocol Specification Language (HLPSL) which is used to describe the protocols and their intended security requirements, and a number of analysis tools to formally validate them <ref type="bibr" target="#b9">[10]</ref>. The authors state that the approach provides a modular and expressive formal language for specifying security protocols and properties, and integrates several different back-ends that implement a variety of automatic analysis techniques ranging from protocol falsification to abstraction-based verification methods for both finite and infinite numbers of sessions <ref type="bibr" target="#b22">[24]</ref>. The language offers an expressive formalism that allows specification of roles, control flows, data structures as well as security requirements <ref type="bibr" target="#b22">[24]</ref>. Providing four separate analysis back-ends, the specification validation is tackled from different angles. Upon termination, the analysis result is presented, stating whether the problem could be solved, whether the problem could not be solved due to exhausted resources (e.g., memory) or some other reason that prevented the tool from solving the problem.</p><p>In general, the method offers a high level of formality, since HLPSL is based on Lamport's Temporal Logic of Actions <ref type="bibr" target="#b23">[25]</ref>. The user has to provide a dynamic model of the system's behavior which is represented by a distributed system consisting of interacting processes with messages sent to and received from each other. The model is not executable, since it is an abstraction of the protocol and not its implementation. Authenticity, integrity, and confidentiality can be analyzed with this approach. However, as with all methods based on state exploration, the size and the complexity of analyzed systems are severely limited by the state explosion problem (cf. <ref type="bibr" target="#b24">[26]</ref>). traced to them <ref type="bibr" target="#b19">[21]</ref>) to be analyzable. Lastly, as with all model checking methods, the size and the complexity of analyzed systems are severely limited by the state explosion problem (cf. <ref type="bibr" target="#b24">[26]</ref>).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.4.">Alloy</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.5.">Symbolic Model Verifier</head><p>The Symbolic Model Verifier (SMV) is a model- checking system that can be used for analyzing designs of synchronous and asynchronous process systems. It provides a language for describing finite automata, and it can directly check the validity of temporal logic formulas (that is, linear temporal logic, or LTL for short, and computation tree logic, or CTL for short). The tool uses a textual description of the system's dynamic model and the corresponding specification which is expressed in LTL and CTL terms. On termination, it produces either 'true' if the specification holds or a trace showing why the required property is violated. SMV programs consist of one or more modules, which can declare variables and assign values to them. Usually, assignments give the initial value of a variable (e.g., init(var) := 0), whereas the variable's next value is specified in terms of expressions comprising the current value (e.g., next(var) := ((var + 1) mod 3)) <ref type="bibr" target="#b25">[27]</ref>, thereby modeling state transitions. Values can also be nondeterministic, in case the environment is influencing the system. In SMV, processes can be represented by modules that can be composed synchronously or asynchronously. In the latter case, the modules run at different speeds, and they are interleaving arbitrarily. Such asynchronous compositions can be used for describing communication protocols, asynchronous circuits, and other systems whose actions are not synchronized with a global clock <ref type="bibr" target="#b25">[27]</ref>.</p><p>In general, the proposed method offers a high level of formality, since it is based on temporal logic. It is well suited for modeling distributed systems, and the user has to provide a model of the system's dynamic behavior. The granularity of modeled systems can vary: On the one hand, processes that communicate with each other can be modeled, which can describe a view of the system's architecture. On the other hand, the method can be applied for modeling finite state machines, such as Mealy automata. Executable software systems cannot be modeled, but security protocols can. Properties like authenticity, integrity, confidentiality and non-repudiation can be verified. Of course, these have to be transformed into temporal logic formulas first (that is, combinations of safety and liveness properties, since all properties can be Alloy is a declarative modeling language based on first-order logic, extended with relational logic operators <ref type="bibr" target="#b26">[28]</ref>. The language was primarily designed for modeling software designs. Models written in the Alloy language can be analyzed using the so-called Alloy Analyzer, a model-finder built on a SAT (satisfiability problem) solver to simulate models and check their properties. Hereafter, we use the term Alloy to refer to both the language and the tool. The key elements of the approach are a logic, a language, and an analysis, which are introduced below <ref type="bibr" target="#b26">[28]</ref>.</p><p>• In <ref type="bibr" target="#b26">[28]</ref>, the authors describe Alloy as a first- order relational logic, which provides the building blocks of the language. All logical structures are represented as relations, and all structural properties are expressed with relational operators. States and executions are both described using constraints.</p><p>• The language adds a syntax to the underlying first-order relational logic. To support classification, the Alloy language supports typing, sub-typing and compile- time type-checking. Furthermore, the language's module system allows a reuse of generic declarations and constraints.</p><p>• Literally speaking, the analysis of Alloy models is a form of constraint solving, either by finding an instance of a model or by finding a counterexample for a given property. An instance is an example of the specified model, in which both the facts and the predicate hold. To make instance finding feasible, a user-specified scope is defined that limits the size of the analyzed instances. Within this bound, the analyzer translates the constraint into a Boolean formula and solves it using a commercial SAT solver <ref type="bibr" target="#b26">[28]</ref>. The solution is then presented to the user.</p><p>In general, the proposed method is suitable for modeling static and dynamic aspects of software systems. Furthermore, it offers a high level of formality, since the language is based on first-order relational logic. The Alloy language is abstract enough to model the problem domain's specific entities, as well as to model distributed systems, since message transmissions can be represented as dynamic operations. The modeled systems are not executable but are also not bound to a specific application area, since Alloy is expressive enough to capture several problem domains. As the approach is based on first-order logic, security requirements such as authenticity, integrity, non-repudiation, and confidentiality can be expressed. These have to be specified by the user as first- order formulas.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">Evaluation of Model-driven Security Approaches</head><p>Tables I provides a detailed overview of the surveyed methods, answering the question which modeling approaches are applicable for solving which problems. In summary, the conducted classification revealed that UMLsec is the most generally applicable approach focused on security, since all the other methods are either limited to modeling single security mechanisms (e.g., role-based access control), or they are general enough to model security as well but offer no security-specific language elements. The aspect-oriented approaches concentrate on just a single security aspect and lack the adaptability of the other methodologies, thus are unable to support the development of secure real-world applications on their own where usually several security aspects are of equal importance. Alloy is an example of such a language which is indeed very expressive but does not provide established rules of prudent security engineering to make them available for users who may not be experts in security. In such a case, the user has to model all the security aspects of the problem domain, which often requires a deep understanding of security (e.g., cryptographic protocols). Likewise, the Symbolic Model Verifier (SMV) model- checking system can be applied for analyzing dynamic behavior of parallel executing processes and can be used for the analysis of cryptographic security protocols as well. However, the level of abstraction offered by the SMV modeling language is far lower than the level adequate for describing security protocols. As a result, modeling security protocols in the SMV language is more complex than in AVISPA, since there are much more details to consider. Therefore, even if generally applicable methods (e.g., UMLsec, Alloy) can be applied to a broader range of security problems than special-purpose methods, this does not imply that they are more adequate. First, it depends on the particular problem which method fits best. And second, we have made the experience that picking the adequate special purpose method and applying it to the particular problem is more efficient and leads to better results, since (i) the problem can be represented on the proper abstraction level, (ii) the user can build on the knowledge of experts, and (iii) the available tools are more efficient and powerful.  </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Dimension</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.">Conclusion</head><p>In recent years, model-driven development has been introduced in order to increase the quality and thereby the security of software systems. This paper presented an evaluation of current efforts that position security as a fundamental element in model-driven development. Our evaluation revealed that approaches that analyze implementations of modeled systems are still missing. Due to the fact that implementations are not generated automatically from formal specifications, verification of running code is reasonable. A further insight was that all the aspect-oriented approaches modeled only a single security aspect. So even if the presented techniques worked well for modeling a single security mechanism, it has not been shown by anyone how adequate the AOSD principle is for developing secure real-world applications. Therefore, modeling several security aspects and combining them with the primary model is one of the next steps that the modeling community has to take. Further work will focus on the evaluation of how complex the weaving rules may become and how difficult it might be to verify a system consisting of several security aspects if more than one aspect is considered. Successfully modeling and thus generating a secure system including several security mechanisms, such as a security protocol (e.g., Needham-Schroeder) and access control (e.g., role- based access control), would provide the necessary confidence that the AOSD paradigm is suitable for development of complex and secure real-world applications.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1" validated="false"><head>Table 1 : Evaluation results</head><label>1</label><figDesc></figDesc><table></table></figure>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Acknowledgments</head><p>This work was supported by grants of the Austrian Government's BRIDGE Research Initiative (contract 824884), the FIT-IT Research Initiative (contract 816158) and was performed at the research center Secure Business Austria funded by the Federal Ministry of Economy, Family and Youth of the Republic of Austria and by the City of Vienna.</p></div>
+			</div>
+
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Software engineering for security: a roadmap</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><forename type="middle">T</forename><surname>Devanabu</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Stubblebine</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">ICSE &apos;00: Proceedings of the Conference on The Future of Software Engineering</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2000" />
+			<biblScope unit="page" from="227" to="239" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">The Economist</title>
+	</analytic>
+	<monogr>
+		<title level="j">The Economist</title>
+		<imprint>
+			<date type="published" when="2007" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<monogr>
+		<title level="m" type="main">Secure Systems Development with UML</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Juerjens</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2005" />
+			<publisher>Springer</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Model-driven development for secure information systems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><surname>Fernandez-Medina</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Juerjens</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Trujillo</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Jajodia</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Information and Software Technology</title>
+		<imprint>
+			<date type="published" when="2008" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Model-driven engineering</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><forename type="middle">C</forename><surname>Schmidt</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Computer</title>
+		<imprint>
+			<biblScope unit="volume">39</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<date type="published" when="2006" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<monogr>
+		<title level="m" type="main">Aspect-oriented programming</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Kiczales</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Lamping</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Mendhekar</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Maeda</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Lopes</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J.-M</forename><surname>Loingtier</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Irwin</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1997" />
+			<biblScope unit="page" from="220" to="242" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<monogr>
+		<title level="m" type="main">Architecting secure software systems using an aspect-oriented approach: A survey of current research</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Dehlinger</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">N</forename><surname>Subramanian</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2006" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">UMLsec: Extending UML for secure systems development</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Juerjens</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">UML &apos;02: Proceedings of the 5th International Conference on The Unified Modeling Language</title>
+		<imprint>
+			<date type="published" when="2002" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Model driven security for process-oriented systems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Basin</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Doser</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><surname>Lodderstedt</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SACMAT &apos;03: Proceedings of the eighth ACM Symposium on Access control models and technologies</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2003" />
+			<biblScope unit="page">100109</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Automated security protocol analysis with the AVISPA tool</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><surname>Vigano</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Electronic Notes in Theoretical Computer Science</title>
+		<imprint>
+			<biblScope unit="volume">155</biblScope>
+			<biblScope unit="page" from="61" to="86" />
+			<date type="published" when="2006" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">A synthesis of evaluation criteria for software specifications and specification techniques</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Khwaja</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Urban</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">International Journal of Software Engineering and Knowledge Engineering</title>
+		<imprint>
+			<date type="published" when="2002" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<monogr>
+		<title level="m" type="main">Evaluation: Methods for Studying Programs and Policies</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><forename type="middle">H</forename><surname>Weiss</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1998" />
+			<publisher>Prentice-Hall</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Assumptions underlying evaluation models</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">H</forename><forename type="middle">E R</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Educational Researcher</title>
+		<imprint>
+			<date type="published" when="1978" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Secure information systems development-a survey and comparison</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Villarroel</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><surname>Fernandez-Medina</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Piattini</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Computers &amp; Security</title>
+		<imprint>
+			<date type="published" when="2005" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Introducing security aspects with model transformations</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Fox</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Juerjens</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">ECBS &apos;05: Proceedings of the 12th IEEE International Conference and</title>
+		<imprint>
+			<publisher>IEEE Computer Society</publisher>
+			<date type="published" when="2005" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<monogr>
+		<title level="m" type="main">Is UML an architectural description language</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Coleman</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Booch</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Garlan</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Iyengar</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Kobryn</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">V</forename><surname>Stavridou</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1999" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Model-based security engineering of distributed information systems using UMLsec</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Best</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Juerjens</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Nuseibeh</surname></persName>
+		</author>
+		<ptr target="http://mcs.open.ac.uk/jj2924/umlsectool/index.html" />
+	</analytic>
+	<monogr>
+		<title level="m">ICSE &apos;07: Proceedings of the 29th international conference on Software Engineering</title>
+		<imprint>
+			<date type="published" when="2007" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<monogr>
+		<title level="m" type="main">Developing secure embedded systems: Pitfalls and how to avoid them</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Juerjens</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2007" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Secure software architectures design by aspect orientation</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">H</forename><surname>Yu</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">X</forename><surname>He</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Gao</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">ICECCS &apos;05: Proceedings of the 10th IEEE International Conference on Engineering of Complex Computer Systems</title>
+		<imprint>
+			<publisher>IEEE Computer Society</publisher>
+			<date type="published" when="2005" />
+			<biblScope unit="page" from="47" to="55" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Recognizing safety and liveness</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Alpern</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Alpera</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><forename type="middle">B</forename><surname>Schneider</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><forename type="middle">B</forename><surname>Schneider</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Distributed Computing</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="page" from="117" to="126" />
+			<date type="published" when="1987" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">A model-based aspect-oriented framework for building intrusion-aware software systems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Z</forename><forename type="middle">J</forename><surname>Zhu</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Zulkernine</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Information and Software Technology</title>
+		<imprint>
+			<date type="published" when="2008" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Threat classification</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Wasc</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Web Application Security Consortium</title>
+		<imprint>
+			<date type="published" when="2008" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">The AVISPA tool for the automated validation of internet security protocols and applications</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Armando</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Basin</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Y</forename><surname>Boichut</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Y</forename><surname>Chevalier</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><surname>Compagna</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Cuellar</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><forename type="middle">H</forename><surname>Drielsma</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Heam</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">O</forename><surname>Kouchnarenko</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Mantovani</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Moedersheim</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Oheimb</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Rusinowitch</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Santiago</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Turuani</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><surname>Vigano</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><surname>Vigneron</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Lecture Notes in Computer Science</title>
+		<imprint>
+			<biblScope unit="volume">3576</biblScope>
+			<date type="published" when="2005" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">The temporal logic of actions</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><surname>Lamport</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM Transactions on Programming Languages and Systems</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="page" from="872" to="923" />
+			<date type="published" when="1994" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">The state explosion problem</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Valmari</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Lectures on Petri Nets I: Basic Models</title>
+		<meeting><address><addrLine>London, UK</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer Verlag</publisher>
+			<date type="published" when="1998" />
+			<biblScope unit="page">429528</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Huth</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Ryan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Logic in Computer Science</title>
+		<imprint>
+			<publisher>Cambridge University Press</publisher>
+			<date type="published" when="2004" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Jackson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Software abstractions: Logic, Language, and Analysis</title>
+		<imprint>
+			<publisher>The MIT Press</publisher>
+			<date type="published" when="2006" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

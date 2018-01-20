@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  SYSTEM "http://dtd.nlm.nih.gov/archiving/3.0/archivearticle3.dtd">
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:mml="http://www.w3.org/1998/Math/MathML"
+         xmlns:xlink="http://www.w3.org/1999/xlink">
+   <front>
+      <journal-meta>
+         <journal-id/>
+         <journal-title-group>
+            <journal-title/>
+         </journal-title-group>
+         <issn/>
+         <publisher>
+            <publisher-name/>
+         </publisher>
+      </journal-meta>
+      <article-meta>
+         <title-group>
+            <article-title>Cooperating Memetic and Branch-and-Cut Algorithms for Solving the Multidimensional Knapsack Problem</article-title>
+         </title-group>
+         <supplement>
+            <p>Jakob Puchinger ∗ Günther R. Raidl ∗ Martin Gruber ∗ ∗ Institute of Computer Graphics and Algorithms, Vienna University of Technology Favoritenstrae 9-11/1861, 1040 Vienna, Austria { puchinger,raidl,gruber } @ads.tuwien.ac.at</p>
+         </supplement>
+      </article-meta>
+   </front>
+   <body>
+      <sec>
+         <title>1 Introduction</title>
+      </sec>
+      <sec>
+         <title>2 The Multidimensional Knapsack Problem</title>
+         <p>The MKP is a well-studied, strongly NP-hard combinatorial optimization problem occurring in many different applications. It can be defined by the following ILP:</p>
+         <p>Given are n items with profits p j &gt; 0 and m resources with capacities c i &gt; 0. Each item j consumes an amount w ij ≥ 0 from each resource i . The goal is to select a subset of the items with maximum total profit, see (1); chosen items must, however, not exceed resource capacities, see (2). The 0–1 decision variables x j indicate which items are selected. A general overview on practical and theoretical results for the MKP can be found in the monograph by Kellerer et al. [<xref id="XR19" ref-type="bibr" rid="R4">4</xref>]. Besides exact techniques for solving small to moderately sized instances, many kinds of metaheuristics have already been applied to the MKP. To our knowledge, the method currently yielding the best results, at least for commonly used benchmark instances, has been described by Vasquez and Hao [<xref id="XR20" ref-type="bibr" rid="R7">7</xref>] and was recently re- fined by Vasquez and Vimont [<xref id="XR21" ref-type="bibr" rid="R8">8</xref>]. The search space is reduced and partitioned via additional constraints, fixing the total number of items to be packed. Bounds for these constraints are calculated by solving a modified LP-relaxation. For each remaining part of the search space, tabu-search is independently applied, starting with a solution derived from the LP-relaxation of the partial problem. The improvement described in [<xref id="XR22" ref-type="bibr" rid="R8">8</xref>] lies mainly in an additional variable fixing heuristic. Besides this tabu search approach, various other metaheuristics have been described for the MKP, including several variants of hybrid evolutionary algorithms (EAs); see [<xref id="XR23" ref-type="bibr" rid="R6">6</xref>] for a recent survey and comparison of EAs for the MKP. The basics of today’s most effective EAs go back to Chu and Beasley [<xref id="XR24" ref-type="bibr" rid="R1">1</xref>]: Candidate solutions are directly represented by their 0–1 vectors x ; standard crossover and mutation operators and – most importantly – clever repair and local improvement strategies are applied. Such combinations of EAs with problem-specific local improvement strategies are in general also called memetic algorithms, and we adopt this nomenclature in the following.</p>
+      </sec>
+      <sec>
+         <title>3 The Memetic Algorithm Part</title>
+         <p>The MA, which we consider here for parallel execution with B&amp;C, is based on the principles from Chu and Beasley and includes some improvements suggested in [ <xref id="XR27" ref-type="bibr" rid="R5">5</xref>, <xref id="XR28" ref-type="bibr" rid="R3">3</xref>, <xref id="XR29" ref-type="bibr" rid="R6">6</xref>]. The MA framework is steady-state. The creation of initial solutions is guided by the LP-relaxation of the MKP, as described in [<xref id="XR30" ref-type="bibr" rid="R3">3</xref>]. Each new candidate solution is derived by selecting two parents via binary tournaments, performing uniform crossover on their characteristic vectors x , flipping each bit with probability 1 /n , performing repair if a capacity constraint is violated, and always performing local improvement. If such a new candidate solution is different to all solutions in the current population, it replaces the worst of them. Both, repair and local improvement, are based on greedy first-fit strategies and guarantee that any resulting candidate solution lies at the boundary of the feasible region, where optimal solutions are always located. The repair procedure considers all items in a specific order Π and removes selected items ( x j = 1 → x j = 0) as long as any capacity constraint is violated. Local improvement works vice-versa: It considers all items in the reverse order Π and selects items not yet appearing in the solution as long as no capacity limit is exceeded. Crucial for these strategies to work well is the choice of the ordering Π. Items that are likely to be selected in an optimal solution must appear near the end of Π. Various heuristic measures can be found in the literature for calculating utility values for estimating the likelihood with which each item appears in an optimal solution. For the unidimensional knapsack problem ( m = 1), for example, ordering items according to increasing ratios p j /w 1 j is straight-forward and works generally well. In case of the MKP, an appropriate choice is much more difficult. As in [<xref id="XR35" ref-type="bibr" rid="R1">1</xref>], we determine Π by ordering the items according to pseudo-utility ratios</p>
+         <p>where we set the surrogate multipliers a i to the dual variable values (i.e. shadow prices of the i -th constraints) of the solution to the LP-relaxation of the MKP. While this ordering Π remains fixed throughout the whole optimization if the MA runs independently, we will continuously adapt the surrogate multipliers according to more promising dual variable values when B&amp;C is performed in parallel, see Sect. 5.</p>
+      </sec>
+      <sec>
+         <title>4 The Branch-and-Cut Part</title>
+         <p>The heuristics in [<xref id="XR41" ref-type="bibr" rid="R7">7</xref>, <xref id="XR42" ref-type="bibr" rid="R8">8</xref>] exploit the property that good solutions to the MKP often lie in the neighborhood of the solution x LP to the corresponding LP relaxation. We performed an empirical in-depth examination on smaller instances of Chu and Beasley’s benchmark library [<xref id="XR43" ref-type="bibr" rid="R1">1</xref>] for which we were able to compute optimal solutions x ∗ and observed that the Hamming distance between x ∗ and the (possibly infeasible) rounded LP solution x RLP with</p>
+         <p>is almost always smaller than 10% of the total number of variables. Focusing the optimization to such a neighborhood seems therefore to be highly promising. This can be done by adding a single constraint to the MKP similar to the local branching constraints presented by Fischetti and Lodi [<xref id="XR47" ref-type="bibr" rid="R2">2</xref>]. The following inequality restricts the search space to a neighborhood of Hamming distance k around the rounded LP solution x RLP :</p>
+         <p>where S LP = { j = 1 , . . . , n | x RLP j = 1 } is the binary support of x RLP .</p>
+         <p>In our implementation we use CPLEX as B&amp;C system and initially partition the search space by constraint (6) into the more promising part and by the inverse constraint ∆( x, x RLP ) ≥ k +1 into a second, remaining part. CPLEX is forced to first completely solve the neighborhood of x RLP before considering the remaining search space.</p>
+      </sec>
+      <sec>
+         <title>5 Parallel Execution and Communication</title>
+         <p>The intention is to run the MA and the B&amp;C approach in parallel on two individual machines. In our tests, however, we executed the algorithms in a pseudo-parallel way as individual processes on a single machine. If a new so-far best solution is encountered by one of the algorithms, it is immediately sent to the partner. If the MA receives such a solution, it is included into the population by replacing the worst solution, as in the case of any other newly created solution candidate. In B&amp;C, a received solution is set as new incumbent solution, providing a new global lower bound. When B&amp;C finds a new incumbent solution, it also sends the current dual variable values associated to the MKP-constraints, which are devised from the LP relaxation of the currently processed node in the B&amp;C tree. When the MA receives these dual variable values, it recal- culates the pseudo-utility ratios and the item ordering Π for repair and local improvement as described in Sec. 3.</p>
+      </sec>
+      <sec>
+         <title>6 Computational Experiments</title>
+         <p>We considered four variants of the described algorithms: the independent MA, independent B&amp;C, the cooperative approach exchanging best solutions only (CO-b), and the cooperative approach exchanging best solutions and dual variable values (CO-bd). The MA runs for 1 000 000 iterations and then restarts, keeping only the so-far best solution. The neighborhood size k is set to 10% of the number of variables n . The approaches were tested on the three largest standard benchmark sets of Beasley’s OR-Library ( <ext-link ext-link-type="uri" href="http://people.brunel.ac.uk/">http://people.brunel.ac.uk/</ext-link> ∼ mastjjb/jeb/info.html ) consisting of a total of 90 instances with n = 500 items and m ∈ { 5 , 10 , 30 } constraints. Each of these three instance sets is divided into three subsets of 10 instances with tightness ratios α = c i / n j =1 w ij , α ∈ { 0 . 25 , 0 . 5 , 0 . 75 } . The tested algorithms were implemented using GNU C++ 3.3.1 and CPLEX 9.0. All experiments were performed on a 2.8GHz Pentium 4 machine. We consider here two different computational experiments, one with shorter total CPU- times of 850s, see <xref id="XR60" ref-type="table" rid="T1">Table 1</xref>, and one with longer total CPU-times of 1 800s, see <xref id="XR61" ref-type="table" rid="T2">Table 2</xref>. Pre- liminary tests with the cooperative approaches indicated that due to its relatively quick con- vergence, the MA mainly contributes to the finding of improved solutions during the early stages of the optimization process. We therefore started the MA and B&amp;C at the same time but terminated the MA earlier. The MA was given 250s (400s in the long runs), while B&amp;C was performed with a time limit of 600s (1 400s). The results of the short runs (<xref id="XR72" ref-type="table" rid="T1">Table 1</xref>) show an advantage for the hybrid strategies. They always yield solutions with better or equal average objective values than the independent algorithms. Obviously, exchanging dual variable information is fruitful for the optimization process since the CO-bd approach yields the best average objective values for 7 out of the 9 instance sets of the OR-Library, whereas CO-b achieves best average objective values in only 5 out of the 9 instance sets. Especially for the instances with m = 30, the benefits of CO-bd become apparent. The cooperative approach also outperforms the individual algorithms in the case of the longer runs (<xref id="XR73" ref-type="table" rid="T2">Table 2</xref>). CO-bd yields better or equal average objective values than the the independent MA and independent B&amp;C for 8 out of the 9 instance sets. Additionally the results of the longer runs are compared to the results presented in [<xref id="XR74" ref-type="bibr" rid="R7">7</xref>] and [<xref id="XR75" ref-type="bibr" rid="R8">8</xref>] obtained on different computers (a 2GHz Pentium 4 machine was used in [<xref id="XR76" ref-type="bibr" rid="R8">8</xref>]). CO-bd yields almost equally good or better results than the algorithms presented in [<xref id="XR77" ref-type="bibr" rid="R7">7</xref>] and [<xref id="XR78" ref-type="bibr" rid="R8">8</xref>] for the instances with m = 5. For m = 10 and m = 30, better or equally good results than in [<xref id="XR79" ref-type="bibr" rid="R7">7</xref>] are achieved, whereas the solution quality of [<xref id="XR80" ref-type="bibr" rid="R8">8</xref>] could in general not be reached. The approaches from [<xref id="XR85" ref-type="bibr" rid="R7">7</xref>] and [<xref id="XR86" ref-type="bibr" rid="R8">8</xref>] still achieve most of the best known solutions for the tested instances. However, the main drawbacks of these approaches are their huge running times of up to 33 hours for the largest OR-Library instances. Running CO-bd for up to 20 hours on one instance of each type indicated that the results of [<xref id="XR87" ref-type="bibr" rid="R8">8</xref>] can be reached by our approach in 6 of 9 cases.</p>
+         <table-wrap id="T1">
+            <caption>
+               <p>Table 1: Average performance over the 90 largest OR-Library instances; CPU-times: 850s.</p>
+            </caption>
+            <table>
+               <thead>
+                  <tr>
+                     <td/>
+                     <td/>
+                     <td> MA</td>
+                     <td> B&amp;C</td>
+                     <td> CO-b</td>
+                     <td> CO-bd</td>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td> m</td>
+                     <td> α</td>
+                     <td> z</td>
+                     <td> z</td>
+                     <td> z</td>
+                     <td> z</td>
+                  </tr>
+                  <tr>
+                     <td> 5</td>
+                     <td> 0 . 25</td>
+                     <td> 120 624</td>
+                     <td> 120 626</td>
+                     <td> 120 626</td>
+                     <td> 120 627</td>
+                  </tr>
+                  <tr>
+                     <td/>
+                     <td> 0 . 5</td>
+                     <td> 219 511</td>
+                     <td> 219 511</td>
+                     <td> 219 512</td>
+                     <td> 219 510</td>
+                  </tr>
+                  <tr>
+                     <td/>
+                     <td> 0 . 75</td>
+                     <td> 302 360</td>
+                     <td> 302 361</td>
+                     <td> 302 362</td>
+                     <td> 302 362</td>
+                  </tr>
+                  <tr>
+                     <td> 10</td>
+                     <td> 0 . 25</td>
+                     <td> 118 586</td>
+                     <td> 118 591</td>
+                     <td> 118 600</td>
+                     <td> 118 595</td>
+                  </tr>
+                  <tr>
+                     <td/>
+                     <td> 0 . 5</td>
+                     <td> 217 295</td>
+                     <td> 217 306</td>
+                     <td> 217 308</td>
+                     <td> 217 308</td>
+                  </tr>
+                  <tr>
+                     <td/>
+                     <td> 0 . 75</td>
+                     <td> 302 573</td>
+                     <td> 302 582</td>
+                     <td> 302 582</td>
+                     <td> 302 582</td>
+                  </tr>
+                  <tr>
+                     <td> 30</td>
+                     <td> 0 . 25</td>
+                     <td> 115 500</td>
+                     <td> 115 493</td>
+                     <td> 115 521</td>
+                     <td> 115 523</td>
+                  </tr>
+                  <tr>
+                     <td/>
+                     <td> 0 . 5</td>
+                     <td> 216 192</td>
+                     <td> 216 171</td>
+                     <td> 216 192</td>
+                     <td> 216 204</td>
+                  </tr>
+                  <tr>
+                     <td/>
+                     <td> 0 . 75</td>
+                     <td> 302 378</td>
+                     <td> 302 390</td>
+                     <td> 302 388</td>
+                     <td> 302 390</td>
+                  </tr>
+               </tbody>
+            </table>
+         </table-wrap>
+         <table-wrap id="T2">
+            <caption>
+               <p>Table 2: Average performance over the 90 largest OR-Library instances; long runs.</p>
+            </caption>
+            <table>
+               <thead>
+                  <tr>
+                     <td> m</td>
+                     <td> α</td>
+                     <td> z</td>
+                     <td> t [h]</td>
+                     <td> z</td>
+                     <td> t [h]</td>
+                     <td> z</td>
+                     <td> t [h]</td>
+                     <td> z</td>
+                     <td> t [h]</td>
+                     <td> z</td>
+                     <td> t [h]</td>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td> 5</td>
+                     <td> 0 . 25</td>
+                     <td> 120 623</td>
+                     <td> 5</td>
+                     <td> 120 628</td>
+                     <td> 8 . 5</td>
+                     <td> 120 629</td>
+                     <td> 0 . 5</td>
+                     <td> 120 629</td>
+                     <td> 0 . 5</td>
+                     <td> 120 629</td>
+                     <td> 0 . 5</td>
+                  </tr>
+                  <tr>
+                     <td/>
+                     <td> 0 . 5</td>
+                     <td> 219 507</td>
+                     <td> 5</td>
+                     <td> 219 512</td>
+                     <td> 8 . 5</td>
+                     <td> 219 509</td>
+                     <td> 0 . 5</td>
+                     <td> 219 512</td>
+                     <td> 0 . 5</td>
+                     <td> 219 511</td>
+                     <td> 0 . 5</td>
+                  </tr>
+                  <tr>
+                     <td/>
+                     <td> 0 . 75</td>
+                     <td> 302 360</td>
+                     <td> 5</td>
+                     <td> 302 363</td>
+                     <td> 8 . 5</td>
+                     <td> 302 362</td>
+                     <td> 0 . 5</td>
+                     <td> 302 362</td>
+                     <td> 0 . 5</td>
+                     <td> 302 363</td>
+                     <td> 0 . 5</td>
+                  </tr>
+                  <tr>
+                     <td> 10</td>
+                     <td> 0 . 25</td>
+                     <td> 118 600</td>
+                     <td> 9</td>
+                     <td> 118 629</td>
+                     <td> 7 . 6</td>
+                     <td> 118 589</td>
+                     <td> 0 . 5</td>
+                     <td> 118 603</td>
+                     <td> 0 . 5</td>
+                     <td> 118 605</td>
+                     <td> 0 . 5</td>
+                  </tr>
+                  <tr>
+                     <td/>
+                     <td> 0 . 5</td>
+                     <td> 217 298</td>
+                     <td> 9</td>
+                     <td> 217 326</td>
+                     <td> 7 . 6</td>
+                     <td> 217 296</td>
+                     <td> 0 . 5</td>
+                     <td> 217 310</td>
+                     <td> 0 . 5</td>
+                     <td> 217 317</td>
+                     <td> 0 . 5</td>
+                  </tr>
+                  <tr>
+                     <td/>
+                     <td> 0 . 75</td>
+                     <td> 302 575</td>
+                     <td> 9</td>
+                     <td> 302 603</td>
+                     <td> 7 . 6</td>
+                     <td> 302 575</td>
+                     <td> 0 . 5</td>
+                     <td> 302 583</td>
+                     <td> 0 . 5</td>
+                     <td> 302 584</td>
+                     <td> 0 . 5</td>
+                  </tr>
+                  <tr>
+                     <td> 30</td>
+                     <td> 0 . 25</td>
+                     <td> 115 547</td>
+                     <td> 12</td>
+                     <td> 115 624</td>
+                     <td> 33</td>
+                     <td> 115 509</td>
+                     <td> 0 . 5</td>
+                     <td> 115 520</td>
+                     <td> 0 . 5</td>
+                     <td> 115 550</td>
+                     <td> 0 . 5</td>
+                  </tr>
+                  <tr>
+                     <td/>
+                     <td> 0 . 5</td>
+                     <td> 216 211</td>
+                     <td> 12</td>
+                     <td> 216 275</td>
+                     <td> 33</td>
+                     <td> 216 196</td>
+                     <td> 0 . 5</td>
+                     <td> 216 213</td>
+                     <td> 0 . 5</td>
+                     <td> 216 222</td>
+                     <td> 0 . 5</td>
+                  </tr>
+                  <tr>
+                     <td/>
+                     <td> 0 . 75</td>
+                     <td> 302 404</td>
+                     <td> 12</td>
+                     <td> 302 447</td>
+                     <td> 33</td>
+                     <td> 302 379</td>
+                     <td> 0 . 5</td>
+                     <td> 302 400</td>
+                     <td> 0 . 5</td>
+                     <td> 302 408</td>
+                     <td> 0 . 5</td>
+                  </tr>
+               </tbody>
+            </table>
+         </table-wrap>
+      </sec>
+      <sec>
+         <title>7 Conclusions</title>
+         <p>We presented a cooperative combination of a memetic algorithm and a branch-and-cut approach for solving the MKP. The two heterogeneous algorithms run in parallel and asynchro- nously exchange information about the ongoing optimization process. Besides primal solutions, also dual variable values are communicated from B&amp;C to the MA for updating its repair and local improvement strategies. The computational experiments we performed showed the benefits of the cooperative approach, which yields better results than the individually executed algorithms. The obtained results further indicate that this research direction is promising, since many of the best known results from the literature were achieved in substantially shorter times. Future research will be directed towards the exchange of more information about the ongoing search, such as statistical or negative information, and also towards other combinatorial optimization problems.</p>
+      </sec>
+      <sec>
+         <title>References</title>
+      </sec>
+   </body>
+   <back>
+      <ref-list>
+         <ref id="R1">
+            <mixed-citation>[1] P. C. Chu and J. Beasley. A genetic algorithm for the multiconstrained knapsack problem. Journal of Heuristics , 4:63–86, 1998.</mixed-citation>
+         </ref>
+         <ref id="R2">
+            <mixed-citation>[2] M. Fischetti and A. Lodi. Local Branching. Mathematical Programming Series B , 98:23–47, 2003.</mixed-citation>
+         </ref>
+         <ref id="R3">
+            <mixed-citation>[3] J. Gottlieb. On the effectivity of evolutionary algorithms for multidimensional knapsack problems. In C. Fonlupt et al., editors, Proceedings of Artificial Evolution: Fourth European Conference , volume 1829 of LNCS , pages 22–37. Springer, 1999.</mixed-citation>
+         </ref>
+         <ref id="R4">
+            <mixed-citation>[4] H. Kellerer, U. Pferschy, and D. Pisinger. Knapsack Problems . Springer, 2004.</mixed-citation>
+         </ref>
+         <ref id="R5">
+            <mixed-citation>[5] G. R. Raidl. An improved genetic algorithm for the multiconstrained 0–1 knapsack problem. In D. Fogel et al., editors, Proceedings of the 5th IEEE International Conference on Evolutionary Computation , pages 207–211. IEEE Press, 1998.</mixed-citation>
+         </ref>
+         <ref id="R6">
+            <mixed-citation>[6] G. R. Raidl and J. Gottlieb. Empirical analysis of locality, heritability and heuristic bias in evolutionary algorithms: A case study for the multidimensional knapsack problem. Evolutionary Computation Journal , 13(4), to appear 2005.</mixed-citation>
+         </ref>
+         <ref id="R7">
+            <mixed-citation>[7] M. Vasquez and J.-K. Hao. A hybrid approach for the 0–1 multidimensional knapsack problem. In Proceedings of the International Joint Conference on Artificial Intelligence 2001 , pages 328–333, 2001.</mixed-citation>
+         </ref>
+         <ref id="R8">
+            <mixed-citation>[8] M. Vasquez and Y. Vimont. Improved results on the 0-1 multidimensional knapsack problem. European Journal of Operational Research , 165:70–81, 2005.</mixed-citation>
+         </ref>
+      </ref-list>
+   </back>
+</article>

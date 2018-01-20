@@ -1,0 +1,361 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pdfx xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://pdfx.cs.man.ac.uk/static/article-schema.xsd">
+  <meta>
+    <job>bb5732d972babb6c3622958d266b5588b572dd1c56910b693f5c6c75617d2ec6</job>
+    <base_name>l2e</base_name>
+    <doi>http://dx.doi.org/10.1007/s12293-017-0232-7</doi>
+    <warning>Name identification was not possible. </warning>
+  </meta>
+  <article>
+    <front class="DoCO:FrontMatter">
+      <outsider class="DoCO:TextBox" type="header" id="1">MIC2005. The 6th Metaheuristics International Conference</outsider>
+      <outsider class="DoCO:TextBox" type="page_nr" id="2">775</outsider>
+      <title-group>
+        <article-title class="DoCO:Title" id="3">Cooperating Memetic and Branch-and-Cut Algorithms for Solving the Multidimensional Knapsack Problem</article-title>
+      </title-group>
+      <region class="DoCO:TextChunk" id="4" confidence="possible">Jakob Puchinger ∗ Günther R. Raidl ∗ Martin Gruber ∗ ∗ Institute of Computer Graphics and Algorithms, Vienna University of Technology Favoritenstrae 9-11/1861, 1040 Vienna, Austria { puchinger,raidl,gruber } @ads.tuwien.ac.at</region>
+    </front>
+    <body class="DoCO:BodyMatter">
+      <section class="deo:Introduction">
+        <h1 class="DoCO:SectionTitle" id="5" page="1" column="1">1 Introduction</h1>
+      </section>
+      <region class="DoCO:TextChunk" id="6" page="1" column="1">Recent work in combinatorial optimization indicates the high potential of combining metaheuristics with integer linear programming (ILP) techniques. We study here a hybrid system in which a memetic algorithm (MA) and a general purpose ILP solver based on branch-and-cut (B&amp;C) are executed in parallel and continuously exchange information in a bidirectional, asynchronous way. As target problem, we consider the multidimensional knapsack problem (MKP). The memetic algorithm uses a direct binary encoding of candidate solutions and repair and local improvement strategies that are steered by pseudo-utility ratios. As B&amp;C framework we use the general purpose commercial ILP-solver CPLEX. The information exchanged between the two heterogenous algorithms are so-far best primal solutions and promising dual variable values of solutions to certain linear programming (LP) relaxations. These dual variable values are used in the MA to update the pseudo-utility ratios of local improvement and repair. We will see that this combination of a metaheuristic and an exact optimization method is able to benefit from synergy: Experimental results document that within the same limited total time, the cooperative system yields better heuristic solutions than each algorithm alone. In particular, the cooperative system also competes well with today’s best algorithms for the MKP, needing substantially shorter total running times. The next section introduces the MKP formally and gives some references to state-of-the- art algorithms for solving it. Section 3 explains the MA-part. The used ILP formulation and B&amp;C solver are described in Sect. 4. Details about the parallel execution and asynchronous communication are given in Sect. 5. Finally, Sect. 6 presents exemplary results, and conclusions are drawn in Sect. 7.</region>
+      <region class="DoCO:TextChunk" id="7" confidence="possible" page="1" column="1">This work is supported by the RTN ADONET under grant 504438 and the Austrian Science Fund (FWF) under grant P16263-N04.</region>
+      <outsider class="DoCO:TextBox" type="footer" id="8" page="1" column="1">Vienna, Austria, August 22–26, 2005</outsider>
+      <outsider class="DoCO:TextBox" type="page_nr" id="9" page="2" column="1">776</outsider>
+      <outsider class="DoCO:TextBox" type="header" id="10" page="2" column="1">MIC2005. The 6th Metaheuristics International Conference</outsider>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="11" page="2" column="1">2 The Multidimensional Knapsack Problem</h1>
+        <region class="DoCO:TextChunk" id="12" page="2" column="1">The MKP is a well-studied, strongly NP-hard combinatorial optimization problem occurring in many different applications. It can be defined by the following ILP:</region>
+        <disp-formula class="DoCO:FormulaBox" id="F1">
+          <label class="DoCO:Label" id="13">1</label>
+          <content class="DoCO:Formula" id="14" page="2" column="1">n (MKP) maximize z = p j x j j =1 n</content>
+        </disp-formula>
+        <disp-formula class="DoCO:FormulaBox" id="F2">
+          <label class="DoCO:Label" id="15">2</label>
+          <content class="DoCO:Formula" id="16" page="2" column="1">subject to w ij x j ≤ c i , i = 1 , . . . , m j =1</content>
+        </disp-formula>
+        <disp-formula class="DoCO:FormulaBox" id="F3">
+          <label class="DoCO:Label" id="17">3</label>
+          <content class="DoCO:Formula" id="18" page="2" column="1">x j ∈ { 0 , 1 } , j = 1 , . . . , n.</content>
+        </disp-formula>
+        <region class="DoCO:TextChunk" id="25" page="2" column="1">Given are n items with profits p j &gt; 0 and m resources with capacities c i &gt; 0. Each item j consumes an amount w ij ≥ 0 from each resource i . The goal is to select a subset of the items with maximum total profit, see (1); chosen items must, however, not exceed resource capacities, see (2). The 0–1 decision variables x j indicate which items are selected. A general overview on practical and theoretical results for the MKP can be found in the monograph by Kellerer et al. [<xref ref-type="bibr" rid="R4" id="19" class="deo:Reference">4</xref>]. Besides exact techniques for solving small to moderately sized instances, many kinds of metaheuristics have already been applied to the MKP. To our knowledge, the method currently yielding the best results, at least for commonly used benchmark instances, has been described by Vasquez and Hao [<xref ref-type="bibr" rid="R7" id="20" class="deo:Reference">7</xref>] and was recently re- fined by Vasquez and Vimont [<xref ref-type="bibr" rid="R8" id="21" class="deo:Reference">8</xref>]. The search space is reduced and partitioned via additional constraints, fixing the total number of items to be packed. Bounds for these constraints are calculated by solving a modified LP-relaxation. For each remaining part of the search space, tabu-search is independently applied, starting with a solution derived from the LP-relaxation of the partial problem. The improvement described in [<xref ref-type="bibr" rid="R8" id="22" class="deo:Reference">8</xref>] lies mainly in an additional variable fixing heuristic. Besides this tabu search approach, various other metaheuristics have been described for the MKP, including several variants of hybrid evolutionary algorithms (EAs); see [<xref ref-type="bibr" rid="R6" id="23" class="deo:Reference">6</xref>] for a recent survey and comparison of EAs for the MKP. The basics of today’s most effective EAs go back to Chu and Beasley [<xref ref-type="bibr" rid="R1" id="24" class="deo:Reference">1</xref>]: Candidate solutions are directly represented by their 0–1 vectors x ; standard crossover and mutation operators and – most importantly – clever repair and local improvement strategies are applied. Such combinations of EAs with problem-specific local improvement strategies are in general also called memetic algorithms, and we adopt this nomenclature in the following.</region>
+      </section>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="26" page="2" column="1">3 The Memetic Algorithm Part</h1>
+        <region class="DoCO:TextChunk" id="36" page="2" column="1">The MA, which we consider here for parallel execution with B&amp;C, is based on the principles from Chu and Beasley and includes some improvements suggested in [ <xref ref-type="bibr" rid="R5" id="27" class="deo:Reference">5</xref>, <xref ref-type="bibr" rid="R3" id="28" class="deo:Reference">3</xref>, <xref ref-type="bibr" rid="R6" id="29" class="deo:Reference">6</xref>]. The MA framework is steady-state. The creation of initial solutions is guided by the LP-relaxation of the MKP, as described in [<xref ref-type="bibr" rid="R3" id="30" class="deo:Reference">3</xref>]. Each new candidate solution is derived by selecting two parents via binary tournaments, performing uniform crossover on their characteristic vectors<marker type="page" number="3"/><marker type="block"/> x , flipping each bit with probability 1 /n , performing repair if a capacity constraint is violated, and always performing local improvement. If such a new candidate solution is different to all solutions in the current population, it replaces the worst of them. Both, repair and local improvement, are based on greedy first-fit strategies and guarantee that any resulting candidate solution lies at the boundary of the feasible region, where optimal solutions are always located. The repair procedure considers all items in a specific order Π and removes selected items ( x j = 1 → x j = 0) as long as any capacity constraint is violated. Local improvement works vice-versa: It considers all items in the reverse order Π and selects items not yet appearing in the solution as long as no capacity limit is exceeded. Crucial for these strategies to work well is the choice of the ordering Π. Items that are likely to be selected in an optimal solution must appear near the end of Π. Various heuristic measures can be found in the literature for calculating utility values for estimating the likelihood with which each item appears in an optimal solution. For the unidimensional knapsack problem ( m = 1), for example, ordering items according to increasing ratios p j /w 1 j is straight-forward and works generally well. In case of the MKP, an appropriate choice is much more difficult. As in [<xref ref-type="bibr" rid="R1" id="35" class="deo:Reference">1</xref>], we determine Π by ordering the items according to pseudo-utility ratios</region>
+        <outsider class="DoCO:TextBox" type="footer" id="32" page="2" column="1">Vienna, Austria, August 22–26, 2005</outsider>
+        <outsider class="DoCO:TextBox" type="header" id="33" page="3" column="1">MIC2005. The 6th Metaheuristics International Conference</outsider>
+        <outsider class="DoCO:TextBox" type="page_nr" id="34" page="3" column="1">777</outsider>
+        <disp-formula class="DoCO:FormulaBox" id="F4">
+          <label class="DoCO:Label" id="37">4</label>
+          <content class="DoCO:Formula" id="38" page="3" column="1">u j = i m =1 p j a w ,</content>
+        </disp-formula>
+        <region class="DoCO:TextChunk" id="39" page="3" column="1">where we set the surrogate multipliers a i to the dual variable values (i.e. shadow prices of the i -th constraints) of the solution to the LP-relaxation of the MKP. While this ordering Π remains fixed throughout the whole optimization if the MA runs independently, we will continuously adapt the surrogate multipliers according to more promising dual variable values when B&amp;C is performed in parallel, see Sect. 5.</region>
+      </section>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="40" page="3" column="1">4 The Branch-and-Cut Part</h1>
+        <region class="DoCO:TextChunk" id="44" page="3" column="1">The heuristics in [<xref ref-type="bibr" rid="R7" id="41" class="deo:Reference">7</xref>, <xref ref-type="bibr" rid="R8" id="42" class="deo:Reference">8</xref>] exploit the property that good solutions to the MKP often lie in the neighborhood of the solution x LP to the corresponding LP relaxation. We performed an empirical in-depth examination on smaller instances of Chu and Beasley’s benchmark library [<xref ref-type="bibr" rid="R1" id="43" class="deo:Reference">1</xref>] for which we were able to compute optimal solutions x ∗ and observed that the Hamming distance between x ∗ and the (possibly infeasible) rounded LP solution x RLP with</region>
+        <disp-formula class="DoCO:FormulaBox" id="F5">
+          <label class="DoCO:Label" id="45">5</label>
+          <content class="DoCO:Formula" id="46" page="3" column="1">x RLP j = x LP j − 0 . 5 , j = 1 , . . . , n,</content>
+        </disp-formula>
+        <region class="DoCO:TextChunk" id="48" page="3" column="1">is almost always smaller than 10% of the total number of variables. Focusing the optimization to such a neighborhood seems therefore to be highly promising. This can be done by adding a single constraint to the MKP similar to the local branching constraints presented by Fischetti and Lodi [<xref ref-type="bibr" rid="R2" id="47" class="deo:Reference">2</xref>]. The following inequality restricts the search space to a neighborhood of Hamming distance k around the rounded LP solution x RLP :</region>
+        <disp-formula class="DoCO:FormulaBox" id="F6">
+          <label class="DoCO:Label" id="49">6</label>
+          <content class="DoCO:Formula" id="50" page="3" column="1">∆( x, x RLP ) = (1 − x j ) + x j ≤ k, j ∈ S LP j ∈ / S LP</content>
+        </disp-formula>
+        <region class="DoCO:TextChunk" id="51" confidence="possible" page="3" column="1">where S LP = { j = 1 , . . . , n | x RLP j = 1 } is the binary support of x RLP .</region>
+        <outsider class="DoCO:TextBox" type="footer" id="52" page="3" column="1">Vienna, Austria, August 22–26, 2005</outsider>
+        <outsider class="DoCO:TextBox" type="page_nr" id="53" page="4" column="1">778</outsider>
+        <outsider class="DoCO:TextBox" type="header" id="54" page="4" column="1">MIC2005. The 6th Metaheuristics International Conference</outsider>
+        <region class="DoCO:TextChunk" id="55" page="4" column="1">In our implementation we use CPLEX as B&amp;C system and initially partition the search space by constraint (6) into the more promising part and by the inverse constraint ∆( x, x RLP ) ≥ k +1 into a second, remaining part. CPLEX is forced to first completely solve the neighborhood of x RLP before considering the remaining search space.</region>
+      </section>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="56" page="4" column="1">5 Parallel Execution and Communication</h1>
+        <region class="DoCO:TextChunk" id="57" page="4" column="1">The intention is to run the MA and the B&amp;C approach in parallel on two individual machines. In our tests, however, we executed the algorithms in a pseudo-parallel way as individual processes on a single machine. If a new so-far best solution is encountered by one of the algorithms, it is immediately sent to the partner. If the MA receives such a solution, it is included into the population by replacing the worst solution, as in the case of any other newly created solution candidate. In B&amp;C, a received solution is set as new incumbent solution, providing a new global lower bound. When B&amp;C finds a new incumbent solution, it also sends the current dual variable values associated to the MKP-constraints, which are devised from the LP relaxation of the currently processed node in the B&amp;C tree. When the MA receives these dual variable values, it recal- culates the pseudo-utility ratios and the item ordering Π for repair and local improvement as described in Sec. 3.</region>
+      </section>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="58" page="4" column="1">6 Computational Experiments</h1>
+        <region class="DoCO:TextChunk" id="88" page="4" column="1">We considered four variants of the described algorithms: the independent MA, independent B&amp;C, the cooperative approach exchanging best solutions only (CO-b), and the cooperative approach exchanging best solutions and dual variable values (CO-bd). The MA runs for 1 000 000 iterations and then restarts, keeping only the so-far best solution. The neighborhood size k is set to 10% of the number of variables n . The approaches were tested on the three largest standard benchmark sets of Beasley’s OR-Library ( <ext-link ext-link-type="uri" href="http://people.brunel.ac.uk/" id="59">http://people.brunel.ac.uk/</ext-link> ∼ mastjjb/jeb/info.html ) consisting of a total of 90 instances with n = 500 items and m ∈ { 5 , 10 , 30 } constraints. Each of these three instance sets is divided into three subsets of 10 instances with tightness ratios α = c i / n j =1 w ij , α ∈ { 0 . 25 , 0 . 5 , 0 . 75 } . The tested algorithms were implemented using GNU C++ 3.3.1 and CPLEX 9.0. All experiments were performed on a 2.8GHz Pentium 4 machine. We consider here two different computational experiments, one with shorter total CPU- times of 850s, see <xref ref-type="table" rid="T1" id="60" class="deo:Reference">Table 1</xref>, and one with longer total CPU-times of 1 800s, see <xref ref-type="table" rid="T2" id="61" class="deo:Reference">Table 2</xref>. Pre- liminary tests with the cooperative approaches indicated that due to its relatively quick con- vergence, the MA mainly contributes to the finding of improved solutions during the early stages of the optimization process. We therefore started the MA and B&amp;C at the same time but terminated the MA earlier. The MA was given 250s (400s in the long runs), while B&amp;C was performed with a time limit of 600s (1 400s).<marker type="page" number="5"/><marker type="block"/> The results of the short runs (<xref ref-type="table" rid="T1" id="72" class="deo:Reference">Table 1</xref>) show an advantage for the hybrid strategies. They always yield solutions with better or equal average objective values than the independent algorithms. Obviously, exchanging dual variable information is fruitful for the optimization process since the CO-bd approach yields the best average objective values for 7 out of the 9 instance sets of the OR-Library, whereas CO-b achieves best average objective values in only 5 out of the 9 instance sets. Especially for the instances with m = 30, the benefits of CO-bd become apparent. The cooperative approach also outperforms the individual algorithms in the case of the longer runs (<xref ref-type="table" rid="T2" id="73" class="deo:Reference">Table 2</xref>). CO-bd yields better or equal average objective values than the the independent MA and independent B&amp;C for 8 out of the 9 instance sets. Additionally the results of the longer runs are compared to the results presented in [<xref ref-type="bibr" rid="R7" id="74" class="deo:Reference">7</xref>] and [<xref ref-type="bibr" rid="R8" id="75" class="deo:Reference">8</xref>] obtained on different computers (a 2GHz Pentium 4 machine was used in [<xref ref-type="bibr" rid="R8" id="76" class="deo:Reference">8</xref>]). CO-bd yields almost equally good or better results than the algorithms presented in [<xref ref-type="bibr" rid="R7" id="77" class="deo:Reference">7</xref>] and [<xref ref-type="bibr" rid="R8" id="78" class="deo:Reference">8</xref>] for the instances with m = 5. For m = 10 and m = 30, better or equally good results than in [<xref ref-type="bibr" rid="R7" id="79" class="deo:Reference">7</xref>] are achieved, whereas the solution quality of [<xref ref-type="bibr" rid="R8" id="80" class="deo:Reference">8</xref>] could in general not be reached.<marker type="page" number="6"/><marker type="block"/> The approaches from [<xref ref-type="bibr" rid="R7" id="85" class="deo:Reference">7</xref>] and [<xref ref-type="bibr" rid="R8" id="86" class="deo:Reference">8</xref>] still achieve most of the best known solutions for the tested instances. However, the main drawbacks of these approaches are their huge running times of up to 33 hours for the largest OR-Library instances. Running CO-bd for up to 20 hours on one instance of each type indicated that the results of [<xref ref-type="bibr" rid="R8" id="87" class="deo:Reference">8</xref>] can be reached by our approach in 6 of 9 cases.</region>
+        <outsider class="DoCO:TextBox" type="footer" id="63" page="4" column="1">Vienna, Austria, August 22–26, 2005</outsider>
+        <outsider class="DoCO:TextBox" type="header" id="64" page="5" column="1">MIC2005. The 6th Metaheuristics International Conference</outsider>
+        <outsider class="DoCO:TextBox" type="page_nr" id="65" page="5" column="1">779</outsider>
+        <region class="DoCO:TableBox" id="T1">
+          <caption class="deo:Caption" id="66" page="5" column="1">Table 1: Average performance over the 90 largest OR-Library instances; CPU-times: 850s.</caption>
+          <content>
+            <table class="DoCO:Table" number="1" page="5">
+              <thead class="table">
+                <tr class="table">
+                  <th class="table"></th>
+                  <th class="table"></th>
+                  <th class="table"> MA</th>
+                  <th class="table"> B&amp;C</th>
+                  <th class="table"> CO-b</th>
+                  <th class="table"> CO-bd</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table.strange">
+                  <td class="table.strange"> m</td>
+                  <td class="table.strange"> α</td>
+                  <td class="table.strange"> z</td>
+                  <td class="table.strange"> z</td>
+                  <td class="table.strange"> z</td>
+                  <td class="table.strange"> z</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 5</td>
+                  <td class="table"> 0 . 25</td>
+                  <td class="table"> 120 624</td>
+                  <td class="table"> 120 626</td>
+                  <td class="table"> 120 626</td>
+                  <td class="table"> 120 627</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"></td>
+                  <td class="table"> 0 . 5</td>
+                  <td class="table"> 219 511</td>
+                  <td class="table"> 219 511</td>
+                  <td class="table"> 219 512</td>
+                  <td class="table"> 219 510</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"></td>
+                  <td class="table"> 0 . 75</td>
+                  <td class="table"> 302 360</td>
+                  <td class="table"> 302 361</td>
+                  <td class="table"> 302 362</td>
+                  <td class="table"> 302 362</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 10</td>
+                  <td class="table"> 0 . 25</td>
+                  <td class="table"> 118 586</td>
+                  <td class="table"> 118 591</td>
+                  <td class="table"> 118 600</td>
+                  <td class="table"> 118 595</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"></td>
+                  <td class="table"> 0 . 5</td>
+                  <td class="table"> 217 295</td>
+                  <td class="table"> 217 306</td>
+                  <td class="table"> 217 308</td>
+                  <td class="table"> 217 308</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"></td>
+                  <td class="table"> 0 . 75</td>
+                  <td class="table"> 302 573</td>
+                  <td class="table"> 302 582</td>
+                  <td class="table"> 302 582</td>
+                  <td class="table"> 302 582</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 30</td>
+                  <td class="table"> 0 . 25</td>
+                  <td class="table"> 115 500</td>
+                  <td class="table"> 115 493</td>
+                  <td class="table"> 115 521</td>
+                  <td class="table"> 115 523</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"></td>
+                  <td class="table"> 0 . 5</td>
+                  <td class="table"> 216 192</td>
+                  <td class="table"> 216 171</td>
+                  <td class="table"> 216 192</td>
+                  <td class="table"> 216 204</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"></td>
+                  <td class="table"> 0 . 75</td>
+                  <td class="table"> 302 378</td>
+                  <td class="table"> 302 390</td>
+                  <td class="table"> 302 388</td>
+                  <td class="table"> 302 390</td>
+                </tr>
+              </tbody>
+            </table>
+          </content>
+          <region class="TableInfo" id="67" confidence="possible" page="5" column="1">MA B&amp;C CO-b CO-bd m α z z z z 5 0 . 25 120 624 120 626 120 626 120 627 0 . 5 219 511 219 511 219 512 219 510 0 . 75 302 360 302 361 302 362 302 362 10 0 . 25 118 586 118 591 118 600 118 595 0 . 5 217 295 217 306 217 308 217 308 0 . 75 302 573 302 582 302 582 302 582 30 0 . 25 115 500 115 493 115 521 115 523 0 . 5 216 192 216 171 216 192 216 204 0 . 75 302 378 302 390 302 388 302 390</region>
+        </region>
+        <region class="DoCO:TableBox" id="T2">
+          <caption class="deo:Caption" id="68" page="5" column="1">Table 2: Average performance over the 90 largest OR-Library instances; long runs.</caption>
+          <content>
+            <h1 class="table"> [7] [8] MA B&amp;C CO-bd</h1>
+            <table class="DoCO:Table" number="2" page="5">
+              <thead class="table">
+                <tr class="table">
+                  <th class="table"> m</th>
+                  <th class="table"> α</th>
+                  <th class="table"> z</th>
+                  <th class="table"> t [h]</th>
+                  <th class="table"> z</th>
+                  <th class="table"> t [h]</th>
+                  <th class="table"> z</th>
+                  <th class="table"> t [h]</th>
+                  <th class="table"> z</th>
+                  <th class="table"> t [h]</th>
+                  <th class="table"> z</th>
+                  <th class="table"> t [h]</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table">
+                  <td class="table"> 5</td>
+                  <td class="table"> 0 . 25</td>
+                  <td class="table"> 120 623</td>
+                  <td class="table"> 5</td>
+                  <td class="table"> 120 628</td>
+                  <td class="table"> 8 . 5</td>
+                  <td class="table"> 120 629</td>
+                  <td class="table"> 0 . 5</td>
+                  <td class="table"> 120 629</td>
+                  <td class="table"> 0 . 5</td>
+                  <td class="table"> 120 629</td>
+                  <td class="table"> 0 . 5</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"></td>
+                  <td class="table"> 0 . 5</td>
+                  <td class="table"> 219 507</td>
+                  <td class="table"> 5</td>
+                  <td class="table"> 219 512</td>
+                  <td class="table"> 8 . 5</td>
+                  <td class="table"> 219 509</td>
+                  <td class="table"> 0 . 5</td>
+                  <td class="table"> 219 512</td>
+                  <td class="table"> 0 . 5</td>
+                  <td class="table"> 219 511</td>
+                  <td class="table"> 0 . 5</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"></td>
+                  <td class="table"> 0 . 75</td>
+                  <td class="table"> 302 360</td>
+                  <td class="table"> 5</td>
+                  <td class="table"> 302 363</td>
+                  <td class="table"> 8 . 5</td>
+                  <td class="table"> 302 362</td>
+                  <td class="table"> 0 . 5</td>
+                  <td class="table"> 302 362</td>
+                  <td class="table"> 0 . 5</td>
+                  <td class="table"> 302 363</td>
+                  <td class="table"> 0 . 5</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 10</td>
+                  <td class="table"> 0 . 25</td>
+                  <td class="table"> 118 600</td>
+                  <td class="table"> 9</td>
+                  <td class="table"> 118 629</td>
+                  <td class="table"> 7 . 6</td>
+                  <td class="table"> 118 589</td>
+                  <td class="table"> 0 . 5</td>
+                  <td class="table"> 118 603</td>
+                  <td class="table"> 0 . 5</td>
+                  <td class="table"> 118 605</td>
+                  <td class="table"> 0 . 5</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"></td>
+                  <td class="table"> 0 . 5</td>
+                  <td class="table"> 217 298</td>
+                  <td class="table"> 9</td>
+                  <td class="table"> 217 326</td>
+                  <td class="table"> 7 . 6</td>
+                  <td class="table"> 217 296</td>
+                  <td class="table"> 0 . 5</td>
+                  <td class="table"> 217 310</td>
+                  <td class="table"> 0 . 5</td>
+                  <td class="table"> 217 317</td>
+                  <td class="table"> 0 . 5</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"></td>
+                  <td class="table"> 0 . 75</td>
+                  <td class="table"> 302 575</td>
+                  <td class="table"> 9</td>
+                  <td class="table"> 302 603</td>
+                  <td class="table"> 7 . 6</td>
+                  <td class="table"> 302 575</td>
+                  <td class="table"> 0 . 5</td>
+                  <td class="table"> 302 583</td>
+                  <td class="table"> 0 . 5</td>
+                  <td class="table"> 302 584</td>
+                  <td class="table"> 0 . 5</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> 30</td>
+                  <td class="table"> 0 . 25</td>
+                  <td class="table"> 115 547</td>
+                  <td class="table"> 12</td>
+                  <td class="table"> 115 624</td>
+                  <td class="table"> 33</td>
+                  <td class="table"> 115 509</td>
+                  <td class="table"> 0 . 5</td>
+                  <td class="table"> 115 520</td>
+                  <td class="table"> 0 . 5</td>
+                  <td class="table"> 115 550</td>
+                  <td class="table"> 0 . 5</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"></td>
+                  <td class="table"> 0 . 5</td>
+                  <td class="table"> 216 211</td>
+                  <td class="table"> 12</td>
+                  <td class="table"> 216 275</td>
+                  <td class="table"> 33</td>
+                  <td class="table"> 216 196</td>
+                  <td class="table"> 0 . 5</td>
+                  <td class="table"> 216 213</td>
+                  <td class="table"> 0 . 5</td>
+                  <td class="table"> 216 222</td>
+                  <td class="table"> 0 . 5</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"></td>
+                  <td class="table"> 0 . 75</td>
+                  <td class="table"> 302 404</td>
+                  <td class="table"> 12</td>
+                  <td class="table"> 302 447</td>
+                  <td class="table"> 33</td>
+                  <td class="table"> 302 379</td>
+                  <td class="table"> 0 . 5</td>
+                  <td class="table"> 302 400</td>
+                  <td class="table"> 0 . 5</td>
+                  <td class="table"> 302 408</td>
+                  <td class="table"> 0 . 5</td>
+                </tr>
+              </tbody>
+            </table>
+          </content>
+          <region class="TableInfo" id="71" confidence="possible" page="5" column="1"> [<xref ref-type="bibr" rid="R7" id="69" class="deo:Reference">7</xref>] [<xref ref-type="bibr" rid="R8" id="70" class="deo:Reference">8</xref>] MA B&amp;C CO-bd m α z t [h] z t [h] z t [h] z t [h] z t [h] 5 0 . 25 120 623 5 120 628 8 . 5 120 629 0 . 5 120 629 0 . 5 120 629 0 . 5 0 . 5 219 507 5 219 512 8 . 5 219 509 0 . 5 219 512 0 . 5 219 511 0 . 5 0 . 75 302 360 5 302 363 8 . 5 302 362 0 . 5 302 362 0 . 5 302 363 0 . 5 10 0 . 25 118 600 9 118 629 7 . 6 118 589 0 . 5 118 603 0 . 5 118 605 0 . 5 0 . 5 217 298 9 217 326 7 . 6 217 296 0 . 5 217 310 0 . 5 217 317 0 . 5 0 . 75 302 575 9 302 603 7 . 6 302 575 0 . 5 302 583 0 . 5 302 584 0 . 5 30 0 . 25 115 547 12 115 624 33 115 509 0 . 5 115 520 0 . 5 115 550 0 . 5 0 . 5 216 211 12 216 275 33 216 196 0 . 5 216 213 0 . 5 216 222 0 . 5 0 . 75 302 404 12 302 447 33 302 379 0 . 5 302 400 0 . 5 302 408 0 . 5</region>
+        </region>
+        <outsider class="DoCO:TextBox" type="footer" id="82" page="5" column="1">Vienna, Austria, August 22–26, 2005</outsider>
+        <outsider class="DoCO:TextBox" type="page_nr" id="83" page="6" column="1">780</outsider>
+        <outsider class="DoCO:TextBox" type="header" id="84" page="6" column="1">MIC2005. The 6th Metaheuristics International Conference</outsider>
+      </section>
+      <section class="deo:Conclusion">
+        <h1 class="DoCO:SectionTitle" id="89" page="6" column="1">7 Conclusions</h1>
+        <region class="DoCO:TextChunk" id="90" page="6" column="1">We presented a cooperative combination of a memetic algorithm and a branch-and-cut approach for solving the MKP. The two heterogeneous algorithms run in parallel and asynchro- nously exchange information about the ongoing optimization process. Besides primal solutions, also dual variable values are communicated from B&amp;C to the MA for updating its repair and local improvement strategies. The computational experiments we performed showed the benefits of the cooperative approach, which yields better results than the individually executed algorithms. The obtained results further indicate that this research direction is promising, since many of the best known results from the literature were achieved in substantially shorter times. Future research will be directed towards the exchange of more information about the ongoing search, such as statistical or negative information, and also towards other combinatorial optimization problems.</region>
+      </section>
+      <section class="DoCO:Bibliography">
+        <h1 class="DoCO:SectionTitle" id="91" page="6" column="1">References</h1>
+        <ref-list class="DoCO:BiblioGraphicReferenceList">
+          <ref rid="R1" class="deo:BibliographicReference" id="92" page="6" column="1">[1] P. C. Chu and J. Beasley. A genetic algorithm for the multiconstrained knapsack problem. Journal of Heuristics , 4:63–86, 1998.</ref>
+          <ref rid="R2" class="deo:BibliographicReference" id="93" page="6" column="1">[2] M. Fischetti and A. Lodi. Local Branching. Mathematical Programming Series B , 98:23–47, 2003.</ref>
+          <ref rid="R3" class="deo:BibliographicReference" id="94" page="6" column="1">[3] J. Gottlieb. On the effectivity of evolutionary algorithms for multidimensional knapsack problems. In C. Fonlupt et al., editors, Proceedings of Artificial Evolution: Fourth European Conference , volume 1829 of LNCS , pages 22–37. Springer, 1999.</ref>
+          <ref rid="R4" class="deo:BibliographicReference" id="95" page="6" column="1">[4] H. Kellerer, U. Pferschy, and D. Pisinger. Knapsack Problems . Springer, 2004.</ref>
+          <ref rid="R5" class="deo:BibliographicReference" id="96" page="6" column="1">[5] G. R. Raidl. An improved genetic algorithm for the multiconstrained 0–1 knapsack problem. In D. Fogel et al., editors, Proceedings of the 5th IEEE International Conference on Evolutionary Computation , pages 207–211. IEEE Press, 1998.</ref>
+          <ref rid="R6" class="deo:BibliographicReference" id="97" page="6" column="1">[6] G. R. Raidl and J. Gottlieb. Empirical analysis of locality, heritability and heuristic bias in evolutionary algorithms: A case study for the multidimensional knapsack problem. Evolutionary Computation Journal , 13(4), to appear 2005.</ref>
+          <ref rid="R7" class="deo:BibliographicReference" id="98" page="6" column="1">[7] M. Vasquez and J.-K. Hao. A hybrid approach for the 0–1 multidimensional knapsack problem. In Proceedings of the International Joint Conference on Artificial Intelligence 2001 , pages 328–333, 2001.</ref>
+          <ref rid="R8" class="deo:BibliographicReference" id="99" page="6" column="1">[8] M. Vasquez and Y. Vimont. Improved results on the 0-1 multidimensional knapsack problem. European Journal of Operational Research , 165:70–81, 2005.</ref>
+        </ref-list>
+        <outsider class="DoCO:TextBox" type="footer" id="100" page="6" column="1">Vienna, Austria, August 22–26, 2005</outsider>
+      </section>
+    </body>
+  </article>
+</pdfx>

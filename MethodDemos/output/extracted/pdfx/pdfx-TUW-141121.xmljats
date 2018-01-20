@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  SYSTEM "http://dtd.nlm.nih.gov/archiving/3.0/archivearticle3.dtd">
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:mml="http://www.w3.org/1998/Math/MathML"
+         xmlns:xlink="http://www.w3.org/1999/xlink">
+   <front>
+      <journal-meta>
+         <journal-id/>
+         <journal-title-group>
+            <journal-title/>
+         </journal-title-group>
+         <issn/>
+         <publisher>
+            <publisher-name/>
+         </publisher>
+      </journal-meta>
+      <article-meta>
+         <title-group>
+            <article-title>Integration of Text and Audio Features for Genre Classification in Music Information Retrieval</article-title>
+         </title-group>
+         <supplement>
+            <p>Robert Neumayer and Andreas Rauber { neumayer,rauber } @ifs.tuwien.ac.at Vienna University of Technology Institute of Software Technology and Interactive Systems</p>
+         </supplement>
+         <abstract>
+            <sec>
+               <p>Multimedia content can be described in versatile ways as its essence is not limited to one view. For music data these multiple views could be a song’s audio features as well as its lyrics. Both of these modalities have their advantages as text may be easier to search in and could cover more of the ‘content semantics’ of a song, while omitting other types of semantic categorisation. (Psycho)acoustic feature sets, on the other hand, provide the means to identify tracks that ‘sound simi- lar’ while less supporting other kinds of semantic categorisation. Those discerning characteristics of different feature sets meet users’ differing information needs. We will explain the nature of text and audio feature sets which describe the same audio tracks. Moreover, we will propose the use of textual data on top of low level audio features for music genre classification. Further, we will show the impact of different combinations of audio features and textual features based on content words.</p>
+            </sec>
+         </abstract>
+      </article-meta>
+   </front>
+   <body>
+      <sec>
+         <title>1 Introduction</title>
+      </sec>
+      <sec>
+         <title>2 Related Work</title>
+         <p>The area of Music Information Retrieval has been heavily researched, particu- larly focusing on audio feature extraction. First experiments with content-based Music Information Retrieval were reported in [<xref id="XR10" ref-type="bibr" rid="R1">1</xref>] as well as [<xref id="XR11" ref-type="bibr" rid="R6">6</xref>], the focus being on automatic genre classification of music. In this paper we use a modified version of the Rhythm Patterns features, previously used within the SOMeJB system [<xref id="XR12" ref-type="bibr" rid="R5">5</xref>]. Based on that feature set, [<xref id="XR13" ref-type="bibr" rid="R2">2</xref>] shows that the Statistical Spectrum Descriptors yield relatively good results at a manageable dimensionality. A sophisticated semantic and structural analysis including language identi- fication of songs based on lyrics is conducted in [<xref id="XR14" ref-type="bibr" rid="R4">4</xref>]. Artist similarity based on song lyrics is performed in [<xref id="XR15" ref-type="bibr" rid="R3">3</xref>], pointing out that similarity retrieval using lyrics is inferior to acoustic similarity. It is also suggested that a combination of lyrics and acoustic similarity could improve results, further motivating the research reported in this paper.</p>
+      </sec>
+      <sec>
+         <title>3 Experiments</title>
+         <p>Due to the lack of public benchmark corpora, we created a parallel corpus of audio and song lyrics files of a music collection of 9.758 titles organised into 41 genres. Class sizes ranged from only a few songs for the ‘Classical’ genre to about 1.900 songs for ‘Punk Rock’. In order to utilise the information contained in music for genre classification, we describe sets of audio features derived from the waveform of audio tracks as well as the bag-of-word features for song lyrics.</p>
+         <sec>
+            <title>3.1 Audio Features</title>
+            <p>Three features were computed from audio tracks in standard PCM format with 44.1 kHz sampling frequency (e.g. decoded MP3 files). Rythm Patterns (RP) [ <xref id="XR20" ref-type="bibr" rid="R5">5</xref>], also called Fluctuation Patterns, denote a matrix representation of fluctuations on critical bands (parts of it describe rhythm in the narrow sense), resulting in a 1.440 dimensional feature space. Statistical Spectrum Descriptors (SSDs, 168 dimensions) are statistical moments derived from a psycho-acoustically trans- formed spectrogram [<xref id="XR21" ref-type="bibr" rid="R2">2</xref>]. Rhythm Histograms (RH, 60 dimensions) are calculated as the sums of the magnitudes of each modulation frequency bin of all 24 critical bands.</p>
+            <table-wrap id="T1">
+               <caption>
+                  <p>Table 1. Classification accuracies for different types and combinations of audio features and features based on lyrics. The experiments A1 - A3 denote audio-only, L1 - L4 lyrics-only, and C1 - C3 features combined from audio and lyrics feature sets. The type column shows the types of feature sets used, dimensionality notes the resulting dimensionality of the data.</p>
+               </caption>
+               <table>
+                  <tbody>
+                     <tr>
+                        <td> A1</td>
+                        <td> RH.</td>
+                        <td/>
+                        <td> 60</td>
+                        <td> .3100</td>
+                     </tr>
+                     <tr>
+                        <td> A2</td>
+                        <td> SSD.</td>
+                        <td/>
+                        <td> 168</td>
+                        <td> .4168</td>
+                     </tr>
+                     <tr>
+                        <td> A3</td>
+                        <td> RP.</td>
+                        <td/>
+                        <td> 1440</td>
+                        <td> .4128</td>
+                     </tr>
+                     <tr>
+                        <td> L1</td>
+                        <td> LYRICS</td>
+                        <td/>
+                        <td> 60</td>
+                        <td> .2451</td>
+                     </tr>
+                     <tr>
+                        <td> L2</td>
+                        <td> LYRICS</td>
+                        <td/>
+                        <td> 168</td>
+                        <td> .3204</td>
+                     </tr>
+                     <tr>
+                        <td> L3</td>
+                        <td> LYRICS</td>
+                        <td/>
+                        <td> 1440</td>
+                        <td> .4445</td>
+                     </tr>
+                     <tr>
+                        <td> L4</td>
+                        <td> LYRICS</td>
+                        <td/>
+                        <td> 3000</td>
+                        <td> .4708</td>
+                     </tr>
+                     <tr>
+                        <td> C1</td>
+                        <td> LYRICS +</td>
+                        <td> RH</td>
+                        <td> 120</td>
+                        <td> .3268</td>
+                     </tr>
+                     <tr>
+                        <td> C2</td>
+                        <td> LYRICS +</td>
+                        <td> SSD</td>
+                        <td> 336</td>
+                        <td> .4817</td>
+                     </tr>
+                     <tr>
+                        <td> C3</td>
+                        <td> LYRICS +</td>
+                        <td> RP</td>
+                        <td> 2880</td>
+                        <td> .4841</td>
+                     </tr>
+                  </tbody>
+               </table>
+            </table-wrap>
+         </sec>
+         <sec>
+            <title>3.2 Lyrics Features</title>
+            <p>For every piece of music, three lyrics portals were accessed, using artist name and track title as queries. If the results from lyrc.com.ar were of reasonable size, these lyrics were assigned to the track. If lyrc.com.ar fails, sing365lyrics.com will be checked for validity, then oldielyrics.com . All lyrics were processed using the bag-of-words model and weighted by tfidf information. Feature selection was done via document frequency thresholding, i.e. the omittance of terms that occur in a very high or very low number of documents. For the matrices used for the experiments terms occurring in more than half of the documents were omitted, the lower threshold was then adjusted to meet the desired dimensionality. Downscaling was performed to different dimensionalities matching the dimensionalities of the audio feature spaces.</p>
+         </sec>
+         <sec>
+            <title>3.3 Classification Results</title>
+            <p> 
+               <xref id="XR29" ref-type="table" rid="T1">Table 1</xref> shows classification accuracies for a set of experiments based on audio and lyrics features as well as combinations thereof. Experiments were performed by Weka’s implementation of Support Vector Machines for ten-fold stratified cross validation. Results shown are the macro averaged classification accuracies. Results show that a combination of lyrics and audio features improves over- all classification performance. The best results were achieved by the ‘LYRICS + RP’ setting (C3), closely followed by the ‘LYRICS + SSD’ experiment (C2). The higher-dimensional the data for the lyrics experiments is, the higher is its classification accuracy, implying that there is even more discriminating information contained in lyrics (see experiments L1 - L4), which is not covered in this context because of the limitations of the simple concatenation approach. For combination experiments (C1 - C3) we use balanced combinations of features, i.e. the dimensionality of the lyrics component always equals the dimensionality of the audio feature component. For statistical significance testing we used a paired T-test for a significance level of α = . 05. Results showed that A2 performs better than A1 ( p = . 0143), but there is no significant difference between A2 and A3 ( p = . 9353). Further, it is shown that C3 performed better than both A2 ( p = . 1934) and L3 ( p = . 0129). However, the results are not significantly different from experiment L4 ( p = . 1755), leading to the conclusion that high-dimensional lyrics data only is a strong basis for a classifier. Hence a classifier based on differing numbers of lyrics than audio features, e.g. more dimensions in the lyrics than in the audio space, might further improve classification accuracy. Yet, by combining lyrics and audio (C2) the same performance was achieved at a fraction of the dimensionality.</p>
+         </sec>
+      </sec>
+      <sec>
+         <title>4 Conclusions and Future Work</title>
+         <p>We showed that the combination of multi-modal features for information retrieval increases classification accuracy. Future work will deal with better means of combining classification results. Ensemble methods might prove useful, over- coming the limitation of implicit feature weighting encountered in the current setting. Additionally, stylistic features for text genre classification are currently being integrated.</p>
+      </sec>
+      <sec>
+         <title>References</title>
+      </sec>
+   </body>
+   <back>
+      <ref-list>
+         <ref id="R1">
+            <mixed-citation>1. Jonathan Foote. An overview of audio information retrieval. Multimedia Systems , 7(1):2–10, 1999.</mixed-citation>
+         </ref>
+         <ref id="R2">
+            <mixed-citation>2. Thomas Lidy and Andreas Rauber. Evaluation of feature extractors and psycho- acoustic transformations for music genre classification. In Proceedings of the Sixth International Conference on Music Information Retrieval (ISMIR 2005) , pages 34– 41, London, UK, September 11-15 2005.</mixed-citation>
+         </ref>
+         <ref id="R3">
+            <mixed-citation>3. Beth Logan, Andrew Kositsky, and Pedro Moreno. Semantic analysis of song lyrics. In Proceedings of the 2004 IEEE International Conference on Multimedia and Expo, ICME 2004, 27-30 June 2004, Taipei, Taiwan . IEEE, 2004.</mixed-citation>
+         </ref>
+         <ref id="R4">
+            <mixed-citation>4. Jose P. G. Mahedero, Alvaro  ́ Mart ́ ınez, Pedro Cano, Markus Koppenberger, and Fabien Gouyon. Natural language processing of lyrics. In MULTIMEDIA ’05: Proceedings of the 13th annual ACM international conference on Multimedia , pages 475–478, New York, NY, USA, 2005. ACM Press.</mixed-citation>
+         </ref>
+         <ref id="R5">
+            <mixed-citation>5. Andreas Rauber, Elias Pampalk, and Dieter Merkl. Using psycho-acoustic models and self-organizing maps to create a hierarchical structuring of music by musical styles. In Proceedings of the 3rd International Symposium on Music Information Retrieval , pages 71–80, Paris, France, October 13-17 2002.</mixed-citation>
+         </ref>
+         <ref id="R6">
+            <mixed-citation>6. George Tzanetakis and Perry Cook. Marsyas: A framework for audio analysis. Organized Sound , 4(30), 2000.</mixed-citation>
+         </ref>
+      </ref-list>
+   </back>
+</article>

@@ -1,0 +1,1770 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  SYSTEM "http://dtd.nlm.nih.gov/archiving/3.0/archivearticle3.dtd">
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:mml="http://www.w3.org/1998/Math/MathML"
+         xmlns:xlink="http://www.w3.org/1999/xlink">
+   <front>
+      <journal-meta>
+         <journal-id/>
+         <journal-title-group>
+            <journal-title/>
+         </journal-title-group>
+         <issn/>
+         <publisher>
+            <publisher-name/>
+         </publisher>
+      </journal-meta>
+      <article-meta>
+         <title-group>
+            <article-title>Clustering Heuristics for the Hierarchical Ring Network Problem</article-title>
+         </title-group>
+         <supplement>
+            <p>DIPLOMARBEIT zur Erlangung des akademischen Grades Diplom-Ingenieur im Rahmen des Studiums Computational Intelligence eingereicht von Rainer Schuster Matrikelnummer 0425205</p>
+            <p>der Fakultät für Informatik der Technischen Universität Wien</p>
+            <p>Betreuung: ao.Univ.-Prof. Dipl.-Ing. Dr. techn. Günther Raidl Mitwirkung: Univ.-Ass. Dipl.-Ing. Christian Schauer Wien, 30.11.2011</p>
+            <p>Clustering Heuristics for the Hierarchical Ring Network Problem MASTER’S THESIS submitted in partial fulfillment of the requirements for the degree of Diplom-Ingenieur in Computational Intelligence by Rainer Schuster Registration Number 0425205</p>
+            <p>the Faculty of Informatics the Vienna University of Technology</p>
+            <p>Advisor: ao.Univ.-Prof. Dipl.-Ing. Dr. techn. Günther Raidl Assistance: Univ.-Ass. Dipl.-Ing. Christian Schauer Vienna, 30.11.2011</p>
+         </supplement>
+      </article-meta>
+   </front>
+   <body>
+      <sec>
+         <title>Erklärung zur Verfassung der Arbeit</title>
+         <p>Rainer Schuster Zubergasse 147, 2020 Sonnberg Hiermit erkläre ich, dass ich diese Arbeit selbständig verfasst habe, dass ich die verwen- deten Quellen und Hilfsmittel vollständig angegeben habe und dass ich die Stellen der Arbeit – einschließlich Tabellen, Karten und Abbildungen –, die anderen Werken oder dem Internet im Wortlaut oder dem Sinn nach entnommen sind, auf jeden Fall unter Angabe der Quelle als Entlehnung kenntlich gemacht habe.</p>
+         <p>(Ort, Datum) (Unterschrift Verfasser)</p>
+         <p>i</p>
+         <p>I want to thank my advisors ao.Univ.-Prof. Dipl.-Ing. Dr. techn. Günther Raidl and Univ.-Ass. Dipl.-Ing. Christian Schauer. Their constructive feedback and their experience was a big help for writing and improving this thesis. Special thanks goes to my family and my friends. Studying can be quite time-consuming and stressful sometimes and their support is invaluable.</p>
+      </sec>
+      <sec>
+         <title>Acknowledgements</title>
+         <p>ii</p>
+         <p>In this thesis the application of clustering algorithms for solving the Hierarchical Ring Network Problem (HRNP) is investigated. When the network is represented as a graph, an informal problem definition for this NP- complete problem is: Given a set of network sites (nodes) assigned to one of three layers and the costs for establishing connections between sites (i.e., edge costs) the objective is to find a minimum cost connected network under certain constraints that are explained in detail in the thesis. The most important constraint is that the nodes have to be assigned to rings of bounded size that connect the layers hierarchically. The ring structure is a good compromise between the robustness of a network and the cost for establishing it. It is guaranteed, that the network can continue to provide its service if one network node per ring fails. The basic idea in this thesis for solving this network design problem was to cluster the sites with hierarchical clustering heuristics and to use the resulting hierarchy as support for the ring- finding heuristics. Previous apporaches for related network design problems did not use the inherent network structure in such a way. Usual approaches are based on greedy heuristics. Three clustering heuristics were implemented: Girvan-Newman, K-means and Kernighan- Lin. Especially the first algorithm is interesting, because it was successfully applied analyzing large network structures, also in the context of internet communities. For finding rings three heuristics were implemented too. Strategic variation of the maximum allowed ring size helps the first heuristic to find rings using the cluster hierarchy. The second heuristic finds rings by searching for paths that are connected to previously found rings. Third a repair heuristic was implemented that tries to add remaining nodes to existing rings. Local search heuristics are applied last to improve the solution quality. To check how the clustering approach performs for solving the problem of this thesis two test instance generators were implemented. One generates instances randomly and the second generates instances based on the popular TSPLIB archive. The evaluation of the random test instances has shown, that all three clustering heuristics were able to solve those test instances, while Girvan-Newman and Kernighan-Lin found valid solutions in each test run this was not possible for K-means. When Kernighan-Lin was used as clustering algorithm solutions could be found faster on average, but the resulting costs where slightly higher. For the TSPLIB based instances the clustering algorithms had more problems to find valid solutions, but for each test instance at least one type of clustering was successful.</p>
+         <p>Abstract</p>
+         <p>iii</p>
+      </sec>
+      <sec>
+         <title>Kurzfassung</title>
+         <p>In dieser Diplomarbeit wird die Anwendung von Clusteringalgorithmen untersucht, um das Hierarchical Ring Network Problem (HRNP) zu lösen. Wenn das Netzwerk als Graph repräsentiert ist, ist dieses NP-vollständige Problem wie folgt definiert: Gegeben ist Menge von Knoten welche jeweils einer von drei Schichten zugewiesen sind, und eine Kostenfunktion, welche die Verbindungskosten zwischen zwei Knoten (d.h. Kantenkosten) zuweist. Gesucht ist ein zusammenhängendes Netzwerk mit minimalen Gesamtkosten, wobei dieses bestimmte Struktureigenschaften zu erfüllen hat, welche im Detail in der Diplomarbeit beschrieben werden. Die wichtigste dieser Eigenschaften ist, dass Knoten gemäß einer hierarchischen Struktur zu größenbeschränkten Ringen verbunden werden. Ringstrukturen sind ein guter Kompromiss zwischen der Verfügbarkeit von Netzwerken und deren Herstellungskosten. Die Verfügbarkeit ist gewährleistet, solange maximal ein Knoten pro Ring ausfällt. Die grundlegende Idee dieser Diplomarbeit um dieses Netzwerkdesign-Problem zu lösen, ist die Knoten mit Hilfe von hierarchischen Clusteringalgorithmen anzuordnen und die resul- tierende Hierarchie für nachfolgende Heuristiken zu verwenden, welche die Ringe finden. Vorhergehende Ansätze für vergleichbare Netzwerkdesign-Probleme haben die inhärente Netzwerkstruktur nicht auf solche Weise genützt und eher Greedy-Heuristiken eingesetzt. Um gültige Ringe zu finden, wurden drei Heuristiken implementiert. Strategisches Variieren der erlaubten Ringgröße hilft der ersten Heuristik Ringe unter Benützung der Cluster-Hierarchie zu finden. Die zweite Heuristik baut auf den in der vorherigen Schicht gefundenen Ringen auf, indem sie nach gültigen Pfaden sucht, die an diese Ringe angeschlossen werden können. Drittens wird eine Reparaturheuristik angewendet, welche versucht verbleibende Knoten zu bestehenden Ringen zuzuweisen. Zuletzt werden lokale Suchverfahren eingesetzt, um die Gesamtkosten zu verbessern. Um zu überprüfen, wie gut dieser Lösungsansatz funktioniert, wurden zwei Testinstanz- Generatoren implementiert. Der Erste generiert Instanzen zufallsbasiert, der Zweite baut auf dem bekannten TSPLIB-Archiv auf. Die Evaluierung der zufallsbasierten Testinstanzen hat gezeigt, dass alle drei Heuristiken sämtliche Instanzen lösen konnten, wobei Girvan-Newman und Kernighan-Lin in jedem Testlauf Lösungen gefunden haben, war dies bei K-means nicht der Fall. Mit Kernighan-Lin konnte im Durchschnitt schneller eine Lösung gefunden werden, aber die Gesamtkosten waren bei den beiden anderen Algorithmen etwas besser. Mit den TSPLIB-basierten Testinstanzen konnte nicht mit allen Clusteringalgorithmen eine Lösung erzielt werden, aber zumindest war für jede Testinstanz mindestens ein Clustering-Verfahren erfolgreich. iv</p>
+      </sec>
+      <sec>
+         <title>Contents</title>
+         <p>1</p>
+         <p>1 Introduction 1.1 Problem Definition . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . Notation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . Definitions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . Input . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . Objective Function . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . Instance Constraints . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1.2 About the Complexity . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</p>
+         <p>2 2 2 5 5 5 9</p>
+         <p>2 Related Work 10 3 Methodology 13 3.1 Datastructures . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13 Dendrogram . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13 Cluster-Tree . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13 3.2 Algorithms . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14 Cluster Analysis . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14 Girvan-Newman Clustering . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15 K-means Clustering . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20 Kernighan-Lin Clustering . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20 Merging Rings . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21 2-Opt Heuristic . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 22 Multilevel Heuristics . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23 Floyd Algorithm . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23 4 Heuristic Solutions / Implementations 26 4.1 Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 26 4.2 Hierarchical Clustering Techniques . . . . . . . . . . . . . . . . . . . . . . . . 28 Girvan-Newman Hierarchical Clustering . . . . . . . . . . . . . . . . . . . . . 28 K-means Hierarchical Clustering . . . . . . . . . . . . . . . . . . . . . . . . . 28 Kernighan-Lin Clustering . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 30 4.3 Heuristics for Finding Rings in the Dendrogram . . . . . . . . . . . . . . . . . 30 Heuristic1: Variate Ringsize Heuristic . . . . . . . . . . . . . . . . . . . . . . 30</p>
+         <p>v</p>
+         <p>Heuristic2: Subtour Heuristic . . . . . . . . . . . . . . . . . . . . . . . . . . . 31 Heuristic3: Node Insertion Heuristic . . . . . . . . . . . . . . . . . . . . . . . 32 5 Test Results and Critical Reflection 34 5.1 Test Instance Generation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 34 Random Instance Generator . . . . . . . . . . . . . . . . . . . . . . . . . . . 34 TSPLIB Instances . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 35 5.2 Random Test Instances . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 37 5.3 TSPLIB-based Test Instances . . . . . . . . . . . . . . . . . . . . . . . . . . . 40 6 Summary and Future Work 44 Bibliography 58</p>
+         <p>vi</p>
+         <p>CHAPTER</p>
+      </sec>
+      <sec>
+         <title>Introduction</title>
+         <p>The design of networks (e.g., telecommunication, transportation etc.) is undoubtedly an important task in today’s world. As networks grow larger a need for algorithms that can handle big instances emerges. Traditionally Integer Linear Programming (ILP) Techniques are used for solving network design problems because it is able to find optimal solutions. Unfortunately they are often incapable of solving big instances. Heuristics have shown that they can produce very good results in far less time. Therefore, various heuristic algorithms are investigated in this work. A special focus lies on reliability. Reliable networks often have a ring structure in common that helps building so called self healing networks. If one hub node fails the traffic can be rerouted so that the other nodes are not affected. It is even possible to keep the network alive and continue providing services if one node per ring fails. Other network structures would ensure high availability and robustness features too, but ring structures have the important benefit that they can be built at relatively cheap costs. Nevertheless, heuristics are often not applied for rinding ring structures in networks, because it is usually difficult to find appropriate methods for establishing those structures. In this thesis clustering heuristics are taken as an approach to tackle this challenge. Moreover the input graph is in general not complete, which is closer to natural input instances. As an example telecommunication networks should be mentioned. Typically they are built on existing infrastructure, for example beside roads or railways. This implies restrictions on the design of networks. A natural approach for the design would be to use data about existing infrastructure as an input model on which the network is built. The challenge would be to select appropriate parts and to extend the model where necessary. This could mean choosing the roads where new network cables should be laid. In some situations connections are required where no appropriate infrastructure exists. Then additional connections have to be inserted in the model, usually with relatively high costs.</p>
+         <p>1</p>
+         <p>1.1 Problem Definition This section explains the formal specification of the problem. A convention for the symbolic notation is introduced first. An example input instance is illustrated in <xref id="XR41" ref-type="fig" rid="F1.1">Figure 1.1</xref> and one possible solution is shown in <xref id="XR42" ref-type="fig" rid="F1">Figure 1.2</xref>.</p>
+      </sec>
+      <sec>
+         <title>Notation</title>
+         <p>V ... Set of nodes. E ... Set of undirected edges. G = ( V, E ) ... Graph G with vertex set V and edge set E . The notation V ( G ) stands for the vertex set of graph G . K ... Number of layers. k ... The k th layer, where 1 ≤ k ≤ K . V k ... Nodes in layer k . E k ... Edges in layer k , i.e., ( i, j ) ∈ E k ⇔ ( i ∈ V k ∧ j ∈ V k ) . E k ... Edges between layer k and layer k − 1 , i.e., ( i, j ) ∈ E k ⇔ (( i ∈ V k ∧ j ∈ V k − 1 ) ∨ ( i ∈ V k − 1 ∧ j ∈ V k )) . R k,i ... The i th ring in layer k . The notation G [ R k,i ] stands for the graph representing the ring R k,i . b k l ... Lower bound of nodes for a ring in layer k , i.e., a ring in layer k can have at least l nodes. b u k ... Upper bound of nodes for a ring in layer k , i.e., a ring in layer k can have up to u nodes. c ij ... Cost of edge ( i, j ) ∈ E . x ij ... Variable which is 1 (true) exactly if the edge ( i, j ) ∈ E is part of the solution, otherwise it is 0 (false). l : V → N ... Function l that assigns a layer (level) to each node.</p>
+      </sec>
+      <sec>
+         <title>Definitions</title>
+         <p>A chain C k is a node disjoint path, i.e., a sequence of disjoint edges. All nodes that are part of the chain must be on the same level: ∀ e ∈ C k : e ∈ E k . A ring R is a node disjoint cycle, i.e., a sequence of disjoint edges e ∈ E , that start and end in the same node. It can be seen as a closed path. Ring is a figurative expression that symbolizes the intended structure. A ring R k consists of two chains, the upper chain and the lower chain and two connection-edges (uplinks) u 1 , u 2 ∈ E k . The upper chain consists of the nodes that are part of the connected ring (a path between the hub nodes). The lower chain is a path between the hub nodes that essentially consists of the nodes to be connected to the upper layer. For a ring R k the upper chain is in layer k − 1 and the lower chain is in layer k .</p>
+         <p>2</p>
+         <p>9 11 1 10</p>
+         <p>0</p>
+         <p>5</p>
+         <p>3</p>
+         <p>12</p>
+         <p>8</p>
+         <p>7</p>
+         <p>15 6 14</p>
+         <p>17</p>
+         <p>13</p>
+         <p>2 16</p>
+         <fig id="F1.1">
+            <caption>
+               <p>Figure 1.1: Sample input instance. Blue nodes (0 – 2) are assigned to layer 1, green nodes <xref id="XR61" ref-type="bibr" rid="R4">4</xref>, <xref id="XR62" ref-type="bibr" rid="R5">5</xref>, <xref id="XR63" ref-type="bibr" rid="R6">6</xref>, <xref id="XR64" ref-type="bibr" rid="R7">7</xref> – 8) to layer 2 and red nodes <xref id="XR65" ref-type="bibr" rid="R10">10</xref>, <xref id="XR66" ref-type="bibr" rid="R11">11</xref>, <xref id="XR67" ref-type="bibr" rid="R12">12</xref>, <xref id="XR68" ref-type="bibr" rid="R13">13</xref>, <xref id="XR69" ref-type="bibr" rid="R14">14</xref>, <xref id="XR70" ref-type="bibr" rid="R15">15</xref>, <xref id="XR71" ref-type="bibr" rid="R16">16</xref> – 17) to layer 3.</p>
+            </caption>
+            <graphic xlink:href=""/>
+         </fig>
+         <p>3</p>
+         <p>9 11 1 10</p>
+         <p>0</p>
+         <p>5</p>
+         <p>3</p>
+         <p>12</p>
+         <p>8</p>
+         <p>7</p>
+         <p>15 6 14</p>
+         <p>17</p>
+         <p>13</p>
+         <p>2 16</p>
+         <fig id="F1.2">
+            <caption>
+               <p>Figure 1.2: Solution for sample instance (see <xref id="XR86" ref-type="fig" rid="F1.1">Figure 1.1</xref>).</p>
+            </caption>
+            <graphic xlink:href=""/>
+         </fig>
+         <p>4  Partition Types / Cluster Types In this thesis the special case of hierarchical clustering with ring structures is used. The term cluster can have various intended meanings. The meanings used in this thesis are explained in the following: • Type R: Ring A Type R cluster contains the complete ring R k . • Type A: Ring + Subrings A Type A cluster contains the nodes of the ring and all the nodes of the lower levels that are connected to the ring.</p>
+         <p>• Type Lc A Type Lc cluster contains only the lower chain.</p>
+      </sec>
+      <sec>
+         <title>Input</title>
+         <p>• Connected (undirected) simple graph G = ( V, E ) • Each edge e = ( i, j ) has an assigned weight: c ij • Each node v has an assigned layer (level): l ( v ) • The number of layers K equals 3</p>
+         <p>• The graph is preprocessed so that it contains no edge connecting nodes in V 1 and V 3 is contained</p>
+      </sec>
+      <sec>
+         <title>Objective Function</title>
+         <p>(1.1)</p>
+         <p>min c ij · x ij i,j ∈ V Minimize the sum of edge weights of the solution.</p>
+      </sec>
+      <sec>
+         <title>Instance Constraints</title>
+         <p>The formal problem description is split into two cases: The definition for the backbone ring V 1 , which can be treated as a separate problem, and the definition for the other layers.</p>
+         <p>Formulation for k = 1 : x ij = 2 , i ∈ V 1 (1.2) ( i,j ) ∈ E 1 x ij ≥ 2 , ∀ S ⊂ V 1 , S = ∅ , V 1 (1.3) ( i,j ) ∈ E 1 | i ∈ S,j ∈ / S x ij ∈ { 0 , 1 } , ∀ ( i, j ) ∈ V 1 (1.4)</p>
+         <p>5</p>
+         <p>The constraints for the case k = 1 ensure that the nodes in the first layer build a Hamiltonian cycle. It is a classical TSP formulation [<xref id="XR101" ref-type="bibr" rid="R3">3</xref>]. Formulation for 1 &lt; k ≤ K : For each layer k a set of rings { R k, 1 , . . . R k,m k } has to be found with the following constraints: R k,i ⊂ E, ∀ i = 1 , . . . , m k (1.5) | V ( G [ R k,i ]) ∩ V k | ≥ b k l , ∀ i = 1 , . . . , m k (1.6) | V ( G [ R k,i ]) ∩ V k | ≤ b u k , ∀ i = 1 , . . . , m k (1.7) | V ( G [ R k,i ]) ∩ V k − 1 | ≥ 2 , ∀ i = 1 , . . . , m k (1.8) ( V ( G [ R k,i ]) ∩ V k ) ∩ ( V ( G [ R k,j ]) ∩ V k ) = ∅ , ∀ i, j ∈ 1 , . . . , m k ∧ i = j (1.9) m k V ( G [ R k,i ]) ∩ V k = V k (1.10) i =1 m k ≥ 1 (1.11) x ij = 1 , ∀ ( i, j ) ∈ { R k, 1 , . . . R k,m k } (1.12) Constraints 1.6 and 1.7 restrict the chain size to the lower and upper bound. Each chain has to be homed to two hubs in the upper chain 1.8. The lower chains (of the same level) must be node disjoint 1.9. Each node has to be contained in one ring 1.10. All levels must consist of at least one node 1.11 e.g., it is not possible that there is no ring in level 2. Constraint 1.12 connects these constraints with the objective function 1.1 which means that for all edges contained in rings the objective variable x has to be set to 1 (true). Informal constraints for the heuristics: In the following constraints are rewritten informally for a better understanding. • The level difference of the endpoints of each edge e = ( v 1 , v 2 ) in a ring solution must be ≤ 1 . For example an edge between a level 1 node and a level 3 node must not exist. • Each ring with k &gt; 1 has to be connected to 2 hub nodes (2-connectivity). This is also called dual-homing. For a violation see <xref id="XR102" ref-type="fig" rid="F1.4b">Figure 1.4b</xref> and <xref id="XR103" ref-type="fig" rid="F1">Figure 1.4d</xref>.</p>
+         <p>• Exactly three layers are used, i.e., K = 3 .</p>
+         <p>• The hubs a ring is connected to must be on the same ring. For a violation see <xref id="XR106" ref-type="fig" rid="F1">Figure 1.3a</xref>. • The hubs a ring is connected to must be distinct (see <xref id="XR107" ref-type="fig" rid="F1.3b">Figure 1.3b</xref>). • All nodes must be connected to form a single component. • Level of hub = level of connected node + 1 (see <xref id="XR108" ref-type="fig" rid="F1.4a">Figure 1.4a</xref>).</p>
+         <p>6</p>
+         <p>1 5 2 6 3 7 10 4 15 8 11 16 9 12 2 3 5 17 13 1 4 6 18 14 9 7 19 8 (a) Violation 1: The layer 3 ring is homed to (b) Violation 2: The layer 2 ring is homed to two different layer 2 rings. the same layer 1 node twice.</p>
+         <fig id="F1.3">
+            <caption>
+               <p>Figure 1.3: Some violations of the instance constraints. An upper bound of u = 5 is assumed.</p>
+            </caption>
+            <graphic xlink:href=""/>
+         </fig>
+         <p>• The ringsize is bounded by b k u (see <xref id="XR113" ref-type="fig" rid="F1.4c">Figure 1.4c</xref>). This avoids degenerate solutions where too long rings are built, similar to the TSP. • If b l k = 1 it is allowed that a lower chain consists of only one node. This helps finding solutions in layer k , but avoids homing subrings of layer k + 1 to this ring because it prohibits dual-homing.</p>
+         <p>7</p>
+         <p>16 17 15 6 18 5 7 1 19 8 4 2 9 2 3 14 3 5 1 4 6 13 10 9 7 12 11 8 (a) Violation 3: The layer three ring is connected to a layer 1 ring (b) Violation 4: The layer 2 ring is only con- (but it must be connected to a layer 2 ring). nected once (no dual homing). 2 3 1 5 4 6 14 2 3 7 13 1 4 5 8 6 12 9 9 11 7 10 8 (c) Violation 5: The layer 2 ring is too long (it ex- (d) Violation 6: The solution rings are not con- ceeds the bound u = 5 ). nected.</p>
+         <fig id="F1.4">
+            <caption>
+               <p>Figure 1.4: Some violations of the instance constraints. An upper bound of u = 5 is assumed.</p>
+            </caption>
+            <graphic xlink:href=""/>
+         </fig>
+         <p>8</p>
+         <p>1.2 About the Complexity To get a better understanding how difficult it is to solve a combinatorial problem is, it can be investigated by means of complexity analysis, which is a major topic in computer science. One of the most interesting questions is, if the considered problem belongs to the set of N P complete problems, which means that no algorithm with polynomial time complexity can exist to solve this problem, as long as we can assume that P = N P . If one could find an algorithm of polynomial time complexity that can solve at least one of the N P -complete problems, this would mean that all problems in this complexity class could be solved with a polynomial time algorithm. This would also have the impact that the assumption that P = N P holds could be rejected. In the case of the HRNP the first layer can be treated independently as a Traveling Salesman Problem (TSP), see [<xref id="XR119" ref-type="bibr" rid="R14">14</xref>], which is N P -complete. The optimal ring connection of all nodes of V 1 resembles an optimal TSP tour for these nodes. The problem to find appropriate rings for the other layers can be reduced from the Traveling Salesman Problem with Precedence Constraints (TSPPC), see [<xref id="XR120" ref-type="bibr" rid="R13">13</xref>], which was shown to be N P -hard. For layer 2 (layer 3) this means that if exactly two uplinks are contained that determine the precedence and b 2 u = | V 2 | ( b 3 u = | V 3 | ), the single ring connecting all nodes of V 2 ( V 3 ) resembles a TSPPC tour. To know that there is no polynomial algorithm that solves the Hierarchical Ring Network Problem motivates the use of heuristics to tackle larger instances, as it was done in this thesis.</p>
+         <p>9</p>
+         <p>Hierarchical Network Design Problem Current introduces the basic Hierarchical Network Design Problem (HNDP) in [<xref id="XR123" ref-type="bibr" rid="R5">5</xref>]. It consists of primary nodes building a primary path that from a start- to an end-node. The other nodes are the secondary nodes that have to be connected to the primary nodes via secondary paths. The total cost is the cost of the primary path plus the sum of costs of all secondary paths. The objective is to minimize the total cost. The paper contains an ILP formulation and a heuristic approach. The heuristic calculates the M shortest paths between the start- and the end-node and then calculates an MST for each of them and takes the minimum of the M solutions. Multi-level Network Design Problem In [<xref id="XR124" ref-type="bibr" rid="R1">1</xref>] the Multi-level Network Design (MLND) problem is introduced. It is a generalization of the Hierarchical Network Design (HNDP) problem, where K levels are used to describe the importance of nodes. If two levels are used then this is called the Two-level Network Design (TLND) problem. The generalization of the HNDP is that the primary layer can consist of more than exactly two designated nodes. An ILP formulation based on steiner trees and one based on multicommodity flow are provided. Aspects of Network Design Klincewicz [<xref id="XR125" ref-type="bibr" rid="R12">12</xref>] investigates various aspects of network design, like the cost, capacity, reliability, performance and demand pattern of networks. The cost can be important for hubs (nodes) and links either for creating or for using them. Also for both of them capacity constraints can apply. Reliability can be improved by multi-homing or by the more general approach that multiple paths between nodes are available for rerouting. The performance measures if enough networks resources are available for a given demand, e.g., if enough capacity is available along some path.</p>
+         <p>CHAPTER</p>
+      </sec>
+      <sec>
+         <title>Related Work</title>
+         <p>10</p>
+         <p>Demand patterns describe the needed communication between the nodes, for example many-to- many or many-to-one node relations. The paper also gives a good survey about combinations of network structures between backbone (primary) and tributionary (secondary) topologies. Survivable Networks with Bounded Rings Fortz uses in this phd thesis [<xref id="XR131" ref-type="bibr" rid="R8">8</xref>] bounded rings for the reliability of networks. The resulting network has to be connected. A branch-and-cut approach and various heuristics are used to find the rings. Some of the heuristics are shortly explained below (the names of the heuristics are from the original thesis): Ear-inserting method This method creates one ring after the other. At first a minimum length cycle is created. Then the node is chosen to be inserted into the ring that has the least insertion cost (i.e., replacing an existing edge by the two new ones that connect the node to the ring) until no node can be inserted without violating ring constraints. Then a new cycle is created and the procedure is repeated until all nodes are inserted. Cutting cycles into two equal parts A solution should be found where the bound constraint is relaxed. This may lead to a Hamiltonian cycle. Later a cycle, where the bound is violated, is split into two parts and edges are added at the splitting points to get two cycles. This procedure is repeated recursively, until the bound constraints are fulfilled. Path following method At first a Hamiltonian cycle is created. Next the algorithm follows this tour (starting at some arbitrary point in some arbitrary direction) as long as the bound constraint is satisfied. Then an edge back to the starting point is added to close the cycle and the next point (following the tour) becomes the new starting point. This procedure is repeated until the first starting point is reached again. Stringy method The noticeable feature of this method is that it starts with all edges and removes edges systematically. The crucial criterion for removing an edge is that the graph stays 2-connected after the removal. 11</p>
+         <p>Hierarchical Network Topologies Thomadsen’s phd thesis [<xref id="XR133" ref-type="bibr" rid="R18">18</xref>] focuses on hierarchical network topologies. Many properties are described as ILP formulations. A chapter about ring structures is provided. The thesis contains a formulation of the Fixed Charge Network Design (FCND) problem. It involves demand between nodes, edge costs and the cost to use edges (satisfy demand). Ring-chain Dual Homing Lee [<xref id="XR134" ref-type="bibr" rid="R15">15</xref>] describes Self Healing Rings (SHR) in the context of the Ring-chain Dual Homing (RCDH) problem. An SHR is a cycle of network nodes that can reroute the traffic in case of a node failure. A chain is a path of nodes that is linked (homed) to distinct hub nodes on the SHR at each chain end.</p>
+         <p>12</p>
+         <p>In this chapter the theoretical background is explained. It mainly contains the data structures and algorithms that are used for the implementation. 3.1 Datastructures Different ways are used to model application data. Especially the hierarchical aspect and the ring structure are important.</p>
+      </sec>
+      <sec>
+         <title>Dendrogram</title>
+         <p>A dendrogram is a tree that can be used for the hierarchical representation of data. Nodes that are closer to the root (i.e., the path length from the node to the root is shorter) are hierachically on a higher level. The root stands for all values, and the leafs represent the values that are hierachically structured. E.g., if the values are nodes in a graph, each subtree in the dendrogram can be seen as a cluster. For an example see <xref id="XR139" ref-type="fig" rid="F3">Figure 3.1</xref>.</p>
+      </sec>
+      <sec>
+         <title>Cluster-Tree</title>
+         <p>A cluster-tree is the basic abstraction for the (partial) solution graph. In the case of this topic each node in the tree represents a cluster and therefore, it stands for many nodes in the network. To be more precise it is intended to build a ring from the nodes of the cluster. The edges of the cluster-tree stand for the connections between the rings. This means if two nodes from the cluster-tree are connected via an edge their rings are connected (“homed”) in the graph. In the case of dual-homing the edge stands for the two connections from the subring to the hubs of the upper ring. Since uplinks are only allowed to the same ring, one edge is sufficient for representing this connection. It is important to note that the nodes and edges building the cluster-tree are abstract representations of the elements in the original graph, but they are not contained there.</p>
+         <p>CHAPTER</p>
+      </sec>
+      <sec>
+         <title>Methodology</title>
+         <p>13</p>
+         <p>1 2 3 4 5 6 7 8 9 10 11 12 13 14 1 2 3 4 5 6 7 8 9 10 11 12 13 14</p>
+         <p>1 2 3 4 5 6</p>
+         <p>7  8 1 2 3 4 5 6 9</p>
+         <p>9 10 11 12 13 14</p>
+         <p>10 11 12 13 14</p>
+         <fig id="F3.1">
+            <caption>
+               <p>Figure 3.1: Dendrogram sample. Nodes 1, 2 and 3, for example are hierachically on a lower level than node 7.</p>
+            </caption>
+            <graphic xlink:href=""/>
+         </fig>
+         <p>The cluster-tree is similar to the dendrogram structure of clustered graphs, with two main differences: 1. Each node in the cluster-tree should represent a ring, whereas nodes in the dendrogram stand for regions and general clusters, which need not have the same granularity. 2. A dendrogram node stands for a cluster including all subclusters (i.e. Type A). In the cluster-tree a node only stands for the nodes in the respective ring (i.e. Type R). One complete subtree (i.e., the union of its nodes) of the cluster-tree would correspond to one dendrogram node. 3.2 Algorithms The focus in this section lies on clustering algorithms. Moreover, improvement and repair heuristics are explained here too. The last part is about other algorithms that are important for the implementation.</p>
+      </sec>
+      <sec>
+         <title>Cluster Analysis</title>
+         <p>Clustering is a process where a set of data is divided into subsets so that the elements in each subset are similar according to some distance function. The subsets are called clusters and can be seen as groups of similar items. The terms cluster analysis and clustering are used synomy- mously. Cluster analysis is commonly used in statistics, where the data are usually statistical observations. For a simple illustration of a clustering example, see <xref id="XR163" ref-type="fig" rid="F3">Figure 3.2</xref>. The elements are typically represented as vectors in n -dimensional space, in which each dimension defines an element’s property. A distance metric is a function that takes two vectors as input and assigns a non-negative number based on the relative positions of the vectors to each other as output. A common distance metric is the Euclidean distance, where the distance function d for the vectors x and y is defined 14</p>
+         <fig id="Fx165">
+            <caption>
+               <p/>
+            </caption>
+            <graphic xlink:href=""/>
+         </fig>
+         <p>(a) Original set. (b) Result of the cluster analysis.</p>
+         <fig id="F3.2">
+            <caption>
+               <p>Figure 3.2: Cluster analysis example. Elements are clustered according to their color property.</p>
+            </caption>
+            <graphic xlink:href=""/>
+         </fig>
+         <p>as follows: n d ( x, y ) = ( x i − y i ) 2 i =1 Other metrics for example are the Manhattan distance, Hamming distance or Mahalanobis distance (e.g., where normalization of the vector is needed).</p>
+      </sec>
+      <sec>
+         <title>Girvan-Newman Clustering</title>
+         <p>The Girvan-Newman algorithm [<xref id="XR170" ref-type="bibr" rid="R6">6</xref>] is based on finding components in a network. It was successfully applied to various social networks. One usecase is the detection of online communities. A simple approach to cluster a network is to detect its connected components. Since real world networks are highly connected so that usually just one giant component is contained, the betweenness measure is used instead. Betweenness can be defined on the nodes V and on the edges E of a graph G = ( V, E ) . In the following σ st is defined as the number of shortest paths (SP) between the nodes s and t , σ st ( v ) is defined as the number of SP between the nodes s and t that “run through” the vertex v and σ st ( e ) is defined as the number of SP between the nodes s and t that “run along” the edge e . This leads to the following formula definitions [<xref id="XR171" ref-type="bibr" rid="R9">9</xref>, <xref id="XR172" ref-type="bibr" rid="R4">4</xref>]: Node betweenness of vertex v : σ st ( v ) σ st s = v = t ∈ V Edge betweenness of edge e : σ st ( e ) σ st s = t ∈ V Girvan-Newman algorithm in pseudocode is shown in Algorithm 3.1. The algorithm works as follows: At the beginning the graph consists of one component. In each iteration the algorithm determines the edge e with the highest betweenness value. This edge is removed. Then the algorithm checks if the graph can be split, which means that one component can be separated. If this is the case, the original component (before splitting) that</p>
+         <p>15</p>
+         <p>;</p>
+         <p>Algorithm 3.1: The Girvan-Newman algorithm. input : A connected graph G = ( V, E ) output : A hierarchical clustering of the graph G 1 while edges left in graph G do 2 calculate betweenness values for edges e ∈ E 3 delete edge e with highest betweenness; 4 if graph splits in more components then 5 build a new cluster for each component; 6 add each new cluster as subcluster to its parent cluster; 7 end 8 end 9 return cluster hierarchy; stands for a cluster is split into two subclusters, which are hierarchically attached to the original cluster. This gives two corresponding subdendrograms. After that the next iteration is started. This procedure is continued until no edges are left so that the graph is fully transformed into a dengrogram and the hierarchical clustering process is finished. Note that no edge weights are considered. Only the shortest paths influence the betweenness. To illustrate the Girvan-Newman algorithm a detailed example follows. Example Given an undirected weighted graph G = ( V, E ) with vertices V = { 1 , . . . , 11 } edges E = { (1 , 2) , (1 , 3) , (2 , 3) , (2 , 4) , (3 , 4) , (4 , 5) , (5 , 6) , (5 , 7) , (6 , 7) , (7 , 8) , (8 , 9) , (8 , 10) , (9 , 10) , (9 , 11) , (10 , 11) } and (edge) weight function w ( e ) = 1 , ∀ e ∈ E which leads to the adjacency matrix in <xref id="XR176" ref-type="table" rid="T3">Table 3.4</xref>. The graph is shown in <xref id="XR177" ref-type="fig" rid="F3">Figure 3.3</xref>. To calculate the edge betweenness values the first step is to calculate the number of shortest paths between nodes. An efficient method that is based on Breadth-First-Search is described in [<xref id="XR178" ref-type="bibr" rid="R6">6</xref>]. The resulting SP values are shown in <xref id="XR179" ref-type="table" rid="T3">Table 3.1</xref>. Next, the proportion of the number of SP passing trough each edge has to be calculated. For each node pair ( s, t ) with s = t ∈ V the set of all SP has to be determined and for each edge e ∈ E the number of paths that contain e will give the value for σ st ( e ) . 16</p>
+         <p>1 2 3 4 1 1 1 1 1 1 1 1 1 1 1</p>
+         <p>1 2 1 3 2 4 3 4 5 5 6 6 7 7 8 8 10 9 9 10 11 11</p>
+         <fig id="F3.3">
+            <caption>
+               <p>Figure 3.3: Visual representation Figure 3.4: Adjacency matrix of the example graph. of the example graph. Empty values indicate that there is no edge between the specific nodes (0-values were omitted for readability).</p>
+            </caption>
+            <graphic xlink:href=""/>
+         </fig>
+         <fig id="F3.5">
+            <caption>
+               <p>Figure 3.5: The example graph.</p>
+            </caption>
+            <graphic xlink:href=""/>
+         </fig>
+         <p>4 2 2 3 1 1 (a) First shortest path (b) Second shortest (green) between node path (green) between 1 and node 4. node 1 and node 4.</p>
+         <fig id="F3.6">
+            <caption>
+               <p>Figure 3.6: Both shortest paths between the nodes 1 and 4.</p>
+            </caption>
+            <graphic xlink:href=""/>
+         </fig>
+         <p>For example for s = 1 and t = 4 there are 2 shortest paths (therefore σ 1 , 4 = 2 ), namely (1 , 2) , (2 , 4) and (1 , 3) , (3 , 4) . This set of shortest paths contains the edges (1 , 2) , (1 , 3) , (2 , 4) and (3 , 4) . Each of these edges occurs in exactly one shortest path (between 1 and 4), so σ 1 , 4 ((1 , 2)) = σ 1 , 4 ((1 , 3)) = σ 1 , 4 ((2 , 4)) = σ 1 , 4 ((3 , 4)) = 1 . Therefore, each of the proportions σ 1 , 4 ( e ) is 1 . See <xref id="XR187" ref-type="fig" rid="F3.6">Figure 3.6</xref> for illustration. σ 1 , 4 2 The resulting betweenness values after the first iteration are shown in <xref id="XR188" ref-type="table" rid="T3.2">Table 3.2</xref> and the graph</p>
+         <p>5 6 7  1 1 1 1 1 1 1 1</p>
+         <p>4 3</p>
+         <p>8 9</p>
+         <p>10 11</p>
+         <p>1 1 1 1 1 1 1 1 1 1 1</p>
+         <p>17</p>
+         <p>1 2 3 4 5 6 7 8 9 1 1 2 2 2 2 2 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</p>
+         <table-wrap id="Tx198">
+            <caption>
+               <p>Table 3.1: Number of shortest paths between nodes ( σ st ). Only the upper triangle matrix is shown, the other half is symmetric since the graph is undirected.</p>
+            </caption>
+            <table>
+               <tbody>
+                  <tr>
+                     <td/>
+                     <td> 10</td>
+                     <td> 11</td>
+                  </tr>
+                  <tr>
+                     <td> 1</td>
+                     <td> 2</td>
+                     <td> 4</td>
+                  </tr>
+                  <tr>
+                     <td> 2</td>
+                     <td> 1</td>
+                     <td> 2</td>
+                  </tr>
+                  <tr>
+                     <td> 3</td>
+                     <td> 1</td>
+                     <td> 2</td>
+                  </tr>
+                  <tr>
+                     <td> 4</td>
+                     <td> 1</td>
+                     <td> 2</td>
+                  </tr>
+                  <tr>
+                     <td> 5</td>
+                     <td> 1</td>
+                     <td> 2</td>
+                  </tr>
+                  <tr>
+                     <td> 6</td>
+                     <td> 1</td>
+                     <td> 2</td>
+                  </tr>
+                  <tr>
+                     <td> 7</td>
+                     <td> 1</td>
+                     <td> 2</td>
+                  </tr>
+                  <tr>
+                     <td> 8</td>
+                     <td> 1</td>
+                     <td> 2</td>
+                  </tr>
+                  <tr>
+                     <td> 9</td>
+                     <td> 1</td>
+                     <td> 1</td>
+                  </tr>
+                  <tr>
+                     <td> 10</td>
+                     <td/>
+                     <td> 1</td>
+                  </tr>
+                  <tr>
+                     <td> 11</td>
+                     <td/>
+                     <td/>
+                  </tr>
+               </tbody>
+            </table>
+         </table-wrap>
+         <p>1 2 3 4 5 6 7 8 9 10 11 1 10 10 2 2 24 3 24 4 56 5 10 50 6 10 7 56 8 24 24 9 2 10 10 10 11 <xref id="XR202" ref-type="table" rid="T3.2">Table 3.2</xref>: Betweenness values after the first iteration. in <xref id="XR203" ref-type="fig" rid="F3">Figure 3.7a</xref>. The edges (4 , 5) and (7 , 8) have the highest betweenness value of 56. If binary clustering is desired, only one of those edges will be removed, otherwise all edges with the highest value are removed from the graph. In this case the graph splits into three components. After that the betweenness calculation process starts again (for each component). For the next iteration, the exact values are omitted, but the resulting graph is shown in <xref id="XR204" ref-type="fig" rid="F3">Figure 3.7b</xref>. The result of the clustering process can now be seen in <xref id="XR205" ref-type="fig" rid="F3">Figure 3.8</xref>. 18</p>
+         <p>1 1 2 2 3 3 4 5 6 7 8 10 9 11 (a) Graph after the first iteration. (b) Graph after the second iteration.</p>
+         <fig id="F3.7">
+            <caption>
+               <p>Figure 3.7: Example graph after iteration 1 and 2. Edges of highest betweenness value (red) are removed at that iteration.</p>
+            </caption>
+            <graphic xlink:href=""/>
+         </fig>
+         <p>1 2 3 4 5 6 7 8 9 10 11 1 2 3 4 5 6 7 1 2 3 4 5 6 7 2 3</p>
+         <fig id="F3.8">
+            <caption>
+               <p>Figure 3.8: Resulting clustering of the example graph respresented as a dendrogram.</p>
+            </caption>
+            <graphic xlink:href=""/>
+         </fig>
+         <p>4 5 7 8 9 11</p>
+         <p>8 9 10 11 8 9 10 9 10</p>
+         <p>6 10</p>
+         <p>11</p>
+         <p>19</p>
+      </sec>
+      <sec>
+         <title>K-means Clustering</title>
+         <p>K-means is a popular clustering technique that partitions the node set of a graph into k distinct clusters. For each cluster one node acts as a special element (the centroid) from which the distance can be calculated. K-means in pseudocode can be found in Algorithm 3.2. Algorithm 3.2: Pseudocode of the K-means algorithm. input : The set V of elements to be clustered. A weight function w . The number of expected clusters k . output : An assignment from elements to centroids. 1 Choose k distinct elements from V as the centroids; 2 repeat 3 Assign each element from V to the nearest centroid; 4 Calculate the new center of each cluster; 5 until stop criterion ; 6 return assignment; A typical stop critertion is met if the centroids did not change between two iterations, or if a maximum number of iterations was executed. The initial centroids (first step in pseudocode) are usually chosen randomly. The Floyd- Algorithm 3.6 is one possible method to find such a random selection. K-means++ is a variant that chooses the initial centroids in a more uniformly distributed way to avoid a selection where the centroids are too close. A fast method for K-means clustering is described in [<xref id="XR217" ref-type="bibr" rid="R17">17</xref>]. Partitioning Around Medoids is a variant of K-means. The medoids are analogous to the centroids from K-means. This algorithm systematically checks new medoid assignments by swapping current medoids with non-medoids one-by-one and checks if this new assignment gives an improvement. The pseudocode is shown in Algorithm 3.3.</p>
+      </sec>
+      <sec>
+         <title>Kernighan-Lin Clustering</title>
+         <p>The Kernighan-Lin-Algorithm [<xref id="XR220" ref-type="bibr" rid="R11">11</xref>] is another approach to solve the graph partitioning problem. It splits the set of vertices of a weighted graph into two subsets. The subsets have to be disjoint and of equal size. The sum of weights of the edges between the subsets has to be minimized. For the pseudocode see Algorithm 3.4. More formally: Given a weighted graph G = ( V, E ) with weight function w e a partition of V into the sets A and B with A ∩ B = ∅ and | A | = | B | should be found, with the following objective function: min w ( a,b ) ( a,b ) ∈ E : a ∈ A ∧ b ∈ B 20</p>
+         <p>Algorithm 3.3: Pseudocode of the Partitioning Around Medoids algorithm. input : The set V of elements to be clustered. A weight function w . The number of expected clusters k . output : An assignment from elements to medoids. Choose k distinct elements from V as the medoids;</p>
+         <p>Assign each element from to the nearest medoid;</p>
+         <p>1 2 repeat 3 V 4 foreach medoid m do 5 foreach element e that is no medoid do 6 Swap m and e ; 7 if new minimal cost assignment found then 8 Save assignment as new minimum; 9 end 10 end 11 end 12 until medoids not changed ; 13 return assignment;</p>
+         <p>V must contain an equal number of elements (if this is not the case, an artificial element can be added). Additionally the following terms are introduced: The external cost E a of an element a ∈ A is defined as w ( a,b ) . b ∈ B The internal cost I a of an element a ∈ A is defined as w ( a,b ) . b ∈ A The cost difference D a is defined as D a = E a − I a . If a node a ∈ A is moved to B and a node b ∈ B is moved to A , the cost reduction can be calculated by D a + D b − 2 w ( a,b ) . This formula is an important ingredient for the Kernighan-Lin algorithm, which tries to maximize the cost reduction. In each iteration of the algorithm the cost difference for each element is calculated (i.e., the | V | cost difference if the element is moved to the other set). For a pair of items (one item from 2 each set) is searched to maximize the cost reduction. This gives a sequence of cost reductions | V | with items. Note that cost reduction can also be positive. The subsequence starting at the 2 first element that has the best total cost reduction is chosen in each iteration. The corresponding items are then swapped between the sets. These iterations are repeated until no cost reduction (gain) can be found.</p>
+      </sec>
+      <sec>
+         <title>Merging Rings</title>
+         <p>Some ring-finding heuristics tend to produce small rings. To improve the resulting cost, and – even more important – for finding rings in lower layers, rings that are close to the upper bound are better. Merging rings is a simple improvement heuristic, that tries to connect pairs of rings by concatenating their lower chains. There are four possibilities how the chains can 21</p>
+         <p>compute</p>
+         <p>compute</p>
+         <p>find that maximizes</p>
+         <p>Algorithm 3.4: Pseudocode of the Kernighan-Lin algorithm. input : The set V of elements to be partitioned. A weight function w . output : The resulting partitions A and B . 1 split V into equal initial sets A and B ; 2 repeat 3 A  ̄ ← A ; 4 B  ̄ ← B ; 5 foreach a ∈ A  ̄ do 6 D a ; 7 end 8 foreach b ∈ B  ̄ do 9 D b ; 10 end 11 for p ← 1 to | V | do 2 12 find a ∈ A  ̄ and  ̄ b ∈ B  ̄ that maximize cost reduction g ; 13 a p ← a , b p ←  ̄ b , g p ← g ; 14 move a to B  ̄ ; 15 move  ̄ b to A  ̄ ; 16 update affected D values; 17 end k 18 k gain ← g i ; i ← 1 19 if gain &gt; 0 then 20 move a 1 . . . a k to B ; 21 move b 1 . . . b k to A ; 22 end 23 until gain ≤ 0 ; 24 return A and B ;</p>
+         <p>be concatenated at their endpoints. A reversal of the order of edges in the sequence might be necessary, depending on the representation of chains.</p>
+      </sec>
+      <sec>
+         <title>2-Opt Heuristic</title>
+         <p>The 2-Opt heuristic is an optimization heuristic, that is often used to improve TSP solutions. For all pairs (therefore 2) of edges { ( a, b ) , ( c, d ) } the algorithm checks whether a new ordering of the four considered vertices { ( a, d ) , ( c, b ) } improves the solution or not. If a solution in Eucledian space contains closing edges (i.e., they are part of the same cycle and they “cross”), it can be improved by the 2-Opt heuristic. A generalization of 2-Opt is the k -Opt heuristic, where an enhancement of k edges are checked. A common variant of the k -Opt heuristic is the Lin-Kernighan algorithm [<xref id="XR234" ref-type="bibr" rid="R16">16</xref>]. If k - 22</p>
+         <p>Opt heuristic with higher k is used better solutions can be found, but the processing is also much higher. The variant 3-Opt is usually a good compromise between runtime and optimization gained.</p>
+      </sec>
+      <sec>
+         <title>Multilevel Heuristics</title>
+         <p>The multilevel paradigm can be used for optimization problems, especially in the case of combinatorial optimization problems [<xref id="XR238" ref-type="bibr" rid="R20">20</xref>]. The approach is to coarsen the problem to get an approx- imate solution. Each coarsening iteration stands for a level in the multilevel algorithm. Various methods exist that make use of this paradigm. Concerning problems in the field of graph theory for example, one could try to coarsen the graph (e.g., by reducing nodes) and to solve the problem on the reduced graph. In this thesis a multilevel approach will be used for the variation of the bound constraint (i.e., the restricted ring size b u k ). Note that a valid solution for a ring bound b  ̄ k u with b  ̄ u k ≤ b k u is also a valid solution for the problem with ring bound b u k .</p>
+      </sec>
+      <sec>
+         <title>Floyd Algorithm</title>
+         <p>Selecting a random subset of items is a problem that occurs in various situations. A good example would be the test instance generator (from Section 5.1). In this case k neighbors should be chosen randomly for each node (where k can also vary randomly). A naive approach would be to choose items randomly until k distinct items have been selected, see Algorithm 3.5. Nevertheless, much better approaches exist (e.g., [<xref id="XR241" ref-type="bibr" rid="R19">19</xref>], [<xref id="XR242" ref-type="bibr" rid="R7">7</xref>] and [<xref id="XR243" ref-type="bibr" rid="R10">10</xref>]), especially when a large fraction of all the items has to be chosen. In this case the naive algorithm would have to generate many random values until one element is selected, that was not selected before, since the probability of choosing an item, that was already chosen grows with every successful iteration, making this approach unusable for practical applications.</p>
+         <p>Algorithm 3.5: Naive Sampling Algorithm [<xref id="XR245" ref-type="bibr" rid="R2">2</xref>] input : The number of integers k that should be selected out of n . output : A set S of randomly selected integers. 1 S ← ∅ ; 2 while | S | &lt; k do 3 t ← RandomInteger( 1 , n ) ; 4 if t ∈ / S then 5 insert t in S ; 6 end 7 end 8 return S ;</p>
+         <p>In this thesis Floyd’s algorithm [<xref id="XR247" ref-type="bibr" rid="R2">2</xref>] was chosen to generate random subsets, see Algorithm 3.6. In each iteration an element is chosen. Either a random number from 1 to j is added, or the current value of the iterator variable j . 23</p>
+         <p>Algorithm 3.6: Floyd’s Iterative Sampling Algorithm [<xref id="XR249" ref-type="bibr" rid="R2">2</xref>] input : The number of integers k that should be selected out of n . output : A set S of randomly selected integers. 1 S ← ∅ ; 2 for j ← n − k + 1 to n do 3 t ← RandomInteger( 1 , j ) ; 4 if t ∈ / S then 5 insert t in S ; 6 else 7 insert j in S ; 8 end 9 end 10 return S ;</p>
+         <p>3.7: Floyd’s Permutation Algorithm [<xref id="XR251" ref-type="bibr" rid="R2">2</xref>] : The number of integers k that should be selected out of n . : A sequence S (i.e., permutation) of randomly selected integers. ;</p>
+         <p>Algorithm input output 1 S ← 2 for j ← n − k + 1 to n do 3 t ← RandomInteger( 1 , j ) ; 4 if t ∈ / S then 5 prefix t to S ; 6 else 7 insert j in S after t ; 8 end 9 end 10 return S ;</p>
+         <p>The permutation version, of the Algorithm 3.7, uses the same basic approach, but uses a list (sequence) structure instead of a set to obtain an order of the elements. The insertion order differs, as can be seen in pseudocode. For implementation purposes the elements, from which a subset has to be selected, are contained in some collection data structure. The mapping from integers to elements can be done quite easily by constructing an ordered data structure (if it is not already ordered) and interpret- ing the integer as the element’s index. Therefore, generic methods can be implemented, that produce those random subsets. 24</p>
+         <p>Full example for Floyd’s permutation algorithm with mapped elements (see Algorithm 3.7): Index 1 2 3 4 5 6 7 8 9 Element A B C D E F G H I Execution ( k = 3 ): Start: n = 9 , S = Iteration 1: j = 7 , t = Randomly chosen number 6 , S = F Iteration 2: j = 8 , t = Randomly chosen number 3 , S = C, F Iteration 3: j = 9 , t = Randomly chosen number 3 (conflict), S = C, I, F</p>
+         <p>25</p>
+      </sec>
+      <sec>
+         <title>Heuristic Solutions / Implementations</title>
+         <p>This chapter uses the theoretical foundation of the previous chapter and explains how the techniques are combined to solve the problem of this thesis. Some insight on the implementation is also given. 4.1 Overview The generic approach used for this thesis is explained in pseudocode (see Algorithm 4.1), the heuristics mentioned there will be described in detail later within this chapter. First the input graph is clustered hierarchically and then rings are searched according to the hierarchy. For clustering three algorithms were implemented: The Girvan-Newman algorithm, K-means-clustering and Kernighan-Lin-clustering. Girvan-Newman is already a hierarchical clustering technique, but the other two had to be slightly adopted to produce the desired dendrogram. Therefore they are applied in a recursive manner, which means that starting from one cluster (i.e., the whole graph) the same clustering technique is applied to each subcluster again until all clusters are split into singletons (i.e., containing only one node that cannot be clustered anymore). The second step is to find rings in the dendrogram, according to the constraints of the Hierarchical Ring Network Problem. For this purpose three heuristics were developed. They are applied layer-by-layer (i.e., from layer 2 to layer 3). Per layer the heuristics are applied sequen- tially, and each heuristic is repeatedly executed as long as nodes can be assigned to rings. The first layer is treated separately because it is a Hamiltonian Cycle Problem and need not consider uplink constraints. The first heuristic walks through the cluster hierarchy and tries to find valid rings within clusters. In each cluster that is investigated the Hamiltonian Path Problem is applied to check for rings (i.e., the lower chain of subrings) within this cluster. The order in which the heuristic visits each cluster was chosen to vary depending on the upper bound. Resulting rings strongly depend on the quality of the clustering.</p>
+         <p>CHAPTER</p>
+         <p>26</p>
+         <p>Algorithm 4.1: Generic algorithm. input : A graph G = ( V, E ) . A weight function output : A solution graph. 1 Hierarchical clustering; // Solve Hamiltonian Cycle Problem on V 1 nodes 2 Find Hamiltonian cycle in V 1 ; 3 if no Hamiltonian cycle found then 4 return Error! 5 end 6 for l ← 2 to 3 do // Variate Ringsize Heuristic 7 Heuristic1( l ); 8 foreach ring r in V l − 1 do // Subtour Heuristic 9 Heuristic2( l , r ); 10 end // Node Insertion Heuristic 11 Heuristic3( l ); 12 if nodes in V l left then 13 return Error! 14 end 15 Merge rings; 16 end 17 Improvement heuristics; 18 return solution graph; Since it is already difficult to find valid solutions at all (because the graph is in general not complete), the second heuristic was intended to consume as many remaining nodes as possible. It starts from existing rings (from the previous heuristic) and tries to find chains that can be added to those rings. A depth-first-seach (DFS) based method is used to find the chains that start and end in rings from the upper layer. Because this DFS can have a very long running time, it had to be slightly modified. To insert remaining nodes in rings the third heuristic tries to insert remaining nodes between edges of rings from the layer. In some cases rather small rings are created. This can lead to difficulties in the lower layers to satisfy the dual-homing constraint. Therefore an improvement algorithm is applied, that merges rings at the end of each layer iteration. The last phase after all nodes were assigned to rings is local improvement. Therefore, techniques like 2-Opt, 3-Opt and node exchange between rings were implemented. Node exchange is a local search technique that swaps two nodes from two distinct rings from the same layer if this improves the total cost.  w .</p>
+         <p>27</p>
+         <p>4 5 3 11 16 14 12</p>
+         <fig id="F4.1">
+            <caption>
+               <p>Figure 4.1: Girvan-Newman clustering of the sample instance (see <xref id="XR266" ref-type="fig" rid="F1.1">Figure 1.1</xref>).</p>
+            </caption>
+            <graphic xlink:href=""/>
+         </fig>
+         <p>An example input instance is illustrated in <xref id="XR268" ref-type="fig" rid="F1.1">Figure 1.1</xref> and one possible solution is shown in <xref id="XR269" ref-type="fig" rid="F1">Figure 1.2</xref>. 4.2 Hierarchical Clustering Techniques The goal of the first step in Algorithm 4.1 is to cluster the input data hierarchically to obtain a dendrogram structure. This section explains how to obtain a dendrogram from an input graph.</p>
+      </sec>
+      <sec>
+         <title>Girvan-Newman Hierarchical Clustering</title>
+         <p>The Girvan-Newman algorithm already produces a dendrogram structure as a result of the clustering process. The output of the algorithm is a tree of regions, where each region is a cluster that contains the subclusters as subregions. This determines the hierarchy, because nodes of a subregion are hierarchically lower than the nodes of their parent region. For illustration purposes the sample instance (see <xref id="XR272" ref-type="fig" rid="F1.1">Figure 1.1</xref>) was clustered with this method and its result is shown in <xref id="XR273" ref-type="fig" rid="F4">Figure 4.1</xref>. A corresponding dendrogram can be seen in <xref id="XR274" ref-type="fig" rid="F4">Figure 4.2</xref>.</p>
+      </sec>
+      <sec>
+         <title>K-means Hierarchical Clustering</title>
+         <p>To get a hierarchy from K-means clustering, k = 2 was chosen. The initial graph is seen as one cluster, which is then clustered by the K-means algorithm. The result are subclusters of the initial single root-cluster. This process is repeated recursively for each of the subclusters until</p>
+         <p>1 13 17 15</p>
+         <p>2 0 7 6 8 9 10</p>
+         <p>28</p>
+         <p>0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 0 1 2 3 4 5 6 7 8 11 12 13 14 15 16 17 11 0 1 2 3 4 5 6 7 8 12 13 14 15 16 17 3 4 5 12 13 14 15 16 17 0 1 2 6 7 8 15 3 4 5 12 13 14 16 17 8 0 1 2 6 7 17 3 4 5 12 13 14 16 1 16 3 4 5 12 13 14 13 3 4 5 12 14 12 3 4 5 14 14</p>
+         <fig id="F4.2">
+            <caption>
+               <p>Figure 4.2: Dendrogram respresentation of the sample instance (see <xref id="XR282" ref-type="fig" rid="F1.1">Figure 1.1</xref>) that was clustered by the Girvan-Newman algorithm.</p>
+            </caption>
+            <graphic xlink:href=""/>
+         </fig>
+         <p>9 10 9 10</p>
+         <p>0 2 6 7 2 0 6 7 6 3 4 5 3 4 5 4</p>
+         <p>0 7 0 7</p>
+         <p>5</p>
+         <p>29</p>
+         <p>only single node clusters are left. The result can also be seen as a binary tree that determines the dendrogram structure.</p>
+      </sec>
+      <sec>
+         <title>Kernighan-Lin Clustering</title>
+         <p>The Kernighan-Lin algorithm partitions a graph into two clusters. The process of recursive application of the algorithm is analogous to K-means hierarchical clustering described in the previous section. 4.3 Heuristics for Finding Rings in the Dendrogram In this section various heuristics will be described that will use the dendrogram to extract rings for the solution.</p>
+      </sec>
+      <sec>
+         <title>Heuristic1: Variate Ringsize Heuristic</title>
+         <p>The intention of Heuristic1 (see Algorithm 4.2 and Algorithm 4.3) is to determine clusters with a maximum number of b k u nodes at level k and to find a ring, i.e., solve the Hamiltonian Path Problem (HPP) within this cluster. If the HPP can be solved and the uplink constraints can be satisfied, a valid ring was found. Finding a Hamiltonian path is sufficient, but if a complete tour is found it is easier to choose the connections to the upper-level hubs. For larger chains the use of Ant Colony Optimization or Genetic Algorithms would lead to better tours, but since the chains are rather small, a simple approach is recommendable. Since the graph is not complete, typical TSP heuristics cannot be used directly. A possible solution would be to extend the cluster to a complete subgraph by adding edges with very high cost (like ∞ ) and then to apply heuristics like the nearest-neighbour-algorithm. In this thesis the HPP was solved directly on the non-complete graph. It works by iterating over distinct pairs of nodes and applying DFS – starting at the first node of the pair – in each iteration. If all nodes can be visited in the iteration and the second node from the pair can be visited as last one a valid Hamiltonian path was found. If there is even a closing edge between the two nodes of the pair a Hamiltonian cycle was found. Note that the order in which the DFS iterates over neighbors is not determined. Ordering the neighbors (for example by their distance) may improve the time needed for computation. An essential enhancement is the variation part. The maximum ring size constraint is tight- ened such that it varies from 2 to the bound b k u . This enhances the probability of finding a cluster that contains a valid ring. A fundamental part of the heuristic is to find subdendrograms of subregions with nodes of the appropriate level. The algorithm uses depth-first-search until it reaches a subdendrogram of appropriate size, which is the varying bound. Whenever such a subdendrogram is reached, the algorithm tries to solve the HPP. If it is successful, it searches for valid uplinks (two uplinks with disjoint endpoints that link to the same parent ring). If such valid uplinks can be found the ring is added to the solution. The rings found by this heuristic depend strongly on the quality of the clustering. With good clustering techniques this heuristic can find rings very efficiently. 30</p>
+         <p>Algorithm 4.2: Heuristic1 : Variate Ringsize Heuristic input : The current level k . output : All rings that were found in this heuristic. 1 for varsize ← 2 to b u k do // Check TSP in cluster according to hierarchy with maximum size varsize over unused nodes of V k 2 ClusterDFS( cluster, k, varsize ) ; 3 end 4 return solution rings;  Algorithm 4.3: ClusterDFS : The DFS part of the Variate Ringsize Heuristic. input : The current (sub-)cluster cluster . The current level k . The current variating upper bound varsize . 1 fetch unused nodes of level k in cluster; 2 if | unused nodes | ≤ varsize then 3 try to find Hamiltonian path in unused nodes; 4 if path found then 5 try to find 2 valid uplinks; 6 if uplinks found then 7 add ring to partial solution; 8 mark nodes as used; 9 end 10 end 11 else 12 foreach subcluster in cluster do 13 ClusterDFS( subcluster, k, varsize ) ; 14 end 15 end</p>
+      </sec>
+      <sec>
+         <title>Heuristic2: Subtour Heuristic</title>
+         <p>Heuristic2 , see Algorithm 4.4, works on rings of the previous layer starting with layer 2. This means for layer 2 the previous ring is the backbone ring (i.e., layer 1 ring). For level 3 the set of rings contains all rings from the current partial solution that were found in level 2 (from all heuristics). For each ring the heuristic tries to find rings of lower level that are connected to this ring. If the (parent) ring is of level k − 1 , all unused nodes of level k are investigated in the search. The algorithm works as follows: For all distinct pairs of nodes ( v, u ) of level k − 1 from the parent ring r , try to find a path of unused nodes of level k between v and u . A pseudocode for iterating over the pairs can be found in Algorithm 6.1. To find a path simple depth first search is used. Only unused nodes from the layer V k ∪ u are 31</p>
+         <p>considered. The search starts at node v and looks for node u . A path has to fulfill the ring size constraint. This also means that the depth of DFS is restricted by the maximum ring size b u k . The ring size constraint b k l also prohibts that the DFS only takes the edge between v and u if it exists. To improve the possibility of finding a path by this DFS the neighbors are ordered according to their insertion cost, which is the cost of the edge of the current node to the neighbor plus the cost from the neighbor to the target node. Another enhancement is that neighbors within the same cluster are preferred. Algorithm 4.4: Heuristic2 : Subtour Heuristic input : The current level k . The parent ring r to be investigated. output : All rings that were found in this heuristic. // Check if a path of unused nodes from v to u , u, v ∈ V k − 1 can be found in V k 1 for i ← 1 ; i &lt; | parent ring r | − 1 ; i ← i + 1 do 2 for j ← i + 1 ; j &lt; | parent ring r | ; j ← j + 1 do 3 u ← i th node in parent ring; 4 v ← j th node in parent ring; 5 try to find restricted path from u to v using DFS; 6 if path found then 7 add ring to partial solution; 8 mark nodes as used; 9 end 10 end 11 end 12 return solution rings;</p>
+      </sec>
+      <sec>
+         <title>Heuristic3: Node Insertion Heuristic</title>
+         <p>After the other heuristics were executed a repair heuristic is applied for unassigned nodes. Heuristic3 , see Algorithm 4.5, tries to insert the remaining nodes into rings that were found by the previous heuristics, without violating any constraints. There are many ways in which order the rings should be visited. The simplest way would be to iterate in the same order as the rings were added to the solution. To reduce the cost of adding a node a greedy method that visits the rings by the minimum distance between node and ring is recommendable, but it has the disadvantage, that it reduces the probability of finding rings in lower levels slightly. Another method is to order the rings by the number of nodes already contained and begin with the ring with least nodes. In this implementation the first method was chosen because it provided the best prerequisites for finding valid rings and could in some cases enhanced by the node exchange heuristic (similar to the second choice). For each remaining node v from layer k = l ( v ) the heuristic checks the lower chain of each ring R k . If any edge e = ( i, j ) in the lower chain can be replaced by edges ( v, i ) ∈ E k and ( v, j ) ∈ E k the node can be successfully inserted and marked as used. 32</p>
+         <p>Algorithm 4.5: Heuristic3 : Node Insertion Heuristic input : The current level k 1 foreach unused node v in V k do // Check if node can be inserted in any ring from level k 2 foreach ring r in partial solution from level k do 3 foreach edge e in lower chain of ring r do 4 if node v can be inserted between the start of e and the end of e then 5 insert node v between endpoints of edge e into ring r ; 6 mark node v as used; 7 remove edge e ; 8 continue in first loop with next unused node; 9 end 10 end 11 end 12 end</p>
+         <p>33</p>
+         <p>CHAPTER</p>
+      </sec>
+      <sec>
+         <title>Test Results and Critical Reflection</title>
+         <p>In the end the algorithm presented in Chapter 4 was intensely tested. Therefore, a set of test instances was generated. <xref id="XR306" ref-type="table" rid="T5.1">Table 5.1</xref> shows, which properties were chosen for the instances. For example the first block ( | V | &lt; 60 ) can be explained as follows: The graph of a testinstance of this block less than 60 nodes. In layer 1 there are 3 to 5 nodes which is about 10 percent of all nodes. In the second layer there should be 10 to 15 nodes which makes about 20 to 30 percent of all nodes. The rest should be layer 3 nodes. Instances of this block should be solved with a level 2 bound-parameter of 5 (i.e., b 2 u = 5 ) and with a level 3 bound-parameter of 5 and 7, respectively. Each single configuration was performed 30 times on a single core of an Intel Xeon E5540 with 2,53 GHz and 3 GB RAM. Two kinds of test instances were generated, random instances and instances based on the TSPLIB. See section 5.1 for more information. 5.1 Test Instance Generation Good test instances are needed to measure the quality of the algorithms and their solutions. To provide realistic instances the network needs to be big enough and the connectivity should have a natural distribution.</p>
+      </sec>
+      <sec>
+         <title>Random Instance Generator</title>
+         <p>The random instance generator assumes a normalized circular area, where the radius r is 1. The polar coordinate system is used to determine positions of nodes. If there should be n rings in level two, the graph is split into segments of 2Π . Each of those segments is then split again n into the according number of level 3 rings. After that, one ring is generated in each of the segments, where the coordinates of the nodes are generated randomly. The parameter values like the number of nodes in a chain, or the number of rings that are connected to a ring are also determined in a restricted random way. 34</p>
+         <table-wrap id="Tx310">
+            <caption>
+               <p>Table 5.1: Test instance specification.</p>
+            </caption>
+            <table>
+               <thead>
+                  <tr>
+                     <td/>
+                     <td> | V | &lt; 60</td>
+                     <td> L1:</td>
+                     <td> 3 – 5 nodes</td>
+                     <td> ∼ 10%</td>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td/>
+                     <td/>
+                     <td> L2:</td>
+                     <td> 10 – 15 nodes</td>
+                     <td> 20% – 30%</td>
+                  </tr>
+                  <tr>
+                     <td/>
+                     <td> b u 2</td>
+                     <td> L2:</td>
+                     <td> 5</td>
+                     <td/>
+                  </tr>
+                  <tr>
+                     <td/>
+                     <td> b 3 u</td>
+                     <td> L3:</td>
+                     <td> 5/7</td>
+                     <td/>
+                  </tr>
+                  <tr>
+                     <td> 60 ≤</td>
+                     <td> | V | &lt; 100</td>
+                     <td> L1:</td>
+                     <td> 5 – 8 nodes</td>
+                     <td> ∼ 7%</td>
+                  </tr>
+                  <tr>
+                     <td/>
+                     <td/>
+                     <td> L2:</td>
+                     <td> 20 – 30 nodes</td>
+                     <td> 20% – 30%</td>
+                  </tr>
+                  <tr>
+                     <td/>
+                     <td> b u 2</td>
+                     <td> L2:</td>
+                     <td> 5/8</td>
+                     <td/>
+                  </tr>
+                  <tr>
+                     <td/>
+                     <td> b u 3</td>
+                     <td> L3:</td>
+                     <td> 5/8/12</td>
+                     <td/>
+                  </tr>
+                  <tr>
+                     <td> 100 ≤</td>
+                     <td> | V | &lt; 200</td>
+                     <td> L1:</td>
+                     <td> 8 – 12 nodes</td>
+                     <td> ∼ 5%</td>
+                  </tr>
+                  <tr>
+                     <td/>
+                     <td/>
+                     <td> L2:</td>
+                     <td> 35 – 50 nodes</td>
+                     <td> 17% – 25%</td>
+                  </tr>
+                  <tr>
+                     <td/>
+                     <td> b 2 u</td>
+                     <td> L2:</td>
+                     <td> 8 / 12</td>
+                     <td/>
+                  </tr>
+                  <tr>
+                     <td/>
+                     <td> b 3 u</td>
+                     <td> L3:</td>
+                     <td> 8 / 12 / 15</td>
+                     <td/>
+                  </tr>
+                  <tr>
+                     <td> 200 ≤</td>
+                     <td> | V | &lt; 500</td>
+                     <td> L1:</td>
+                     <td> 12 – 17 nodes</td>
+                     <td> ∼ 3%</td>
+                  </tr>
+                  <tr>
+                     <td/>
+                     <td/>
+                     <td> L2:</td>
+                     <td> 80 – 120 nodes</td>
+                     <td> 18% – 24%</td>
+                  </tr>
+                  <tr>
+                     <td/>
+                     <td> b u 2</td>
+                     <td> L2:</td>
+                     <td> 12 / 17</td>
+                     <td/>
+                  </tr>
+                  <tr>
+                     <td/>
+                     <td> b u 3</td>
+                     <td> L3:</td>
+                     <td> 12 / 17 / 20</td>
+                     <td/>
+                  </tr>
+               </tbody>
+            </table>
+         </table-wrap>
+         <p>Up to this point a valid solution is generated that has to be extended to a reasonable input instance. A desireable property is 2-connectivity for each level. This can be achieved by computing two edge disjoint Minimum Spanning Trees (MSTs) on a complete version of the graph. The edges of both MSTs are added to the test instance. Then additional random edges are added to the graph. Those are added within each Type R cluster, between nodes of the same layer and between nodes of different layers (i.e., more random uplinks). At last all edges between V 1 and V 3 are removed. An overview of the generated testinstances that were used for evaluation can be found in <xref id="XR313" ref-type="table" rid="T6">Table 6.1a</xref>.</p>
+      </sec>
+      <sec>
+         <title>TSPLIB Instances</title>
+         <p>TSPLIB95 1 is a collection of TSP instances. Also instances of the Hamiltonian Cycle Problem (HCP), Asymmetric Traveling Salesman Problem (ATSP), Sequential Ordering Problem (SOP) and Capacitated Vehicle Routing Problem (CVRP) are available. 1 <ext-link ext-link-type="uri"
+                      href="http://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/">http://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/</ext-link> 35</p>
+         <p>The specification for the TSPLIB format is available in the online documentation. A simple adapter was implemented to import the TSPLIB files into the test instance generation framework. To assign levels to the instances a simple partitioning algorithm is applied: K-means. For the first layer K-means is applied with specified k -value. The centroid nodes are assigned to layer 1. For the second layer this process is repeated for the whole graph, but nodes that were already assigned to layer 1 are not part of the consideration. The remaining nodes are assigned to layer 3. Edges must be added too, since they are usually either not part of the TSPLIB instances or contain no valid solution for the Hierarchical Ring Network Problem. The layer 1 nodes build a complete graph. For layer 2 and 3 two edge disjoint MSTs are created to ensure 2-connectivity. Then edges are added to ensure a valid solution. As a last step random edges are added. The instances have to be postprocessed, so that no edges between layer 1 and 3 exist. The generated test instances can be found in <xref id="XR318" ref-type="table" rid="T6">Table 6.1b</xref>.</p>
+         <p>36</p>
+         <p>Average Invalid Nodes per Input Instance 70 Girvan-Newman Kernighan-Lin 60 K-means 50 nodes 40 invalid 30 20 10 0 test_34_4_10_20 test_38_5_10_23 test_43_5_12_26 test_45_3_14_28 test_49_4_12_33 test_72_6_22_44 test_88_6_20_62 test_91_6_20_65 test_95_5_30_60 test_96_7_21_68 test_151_10_42_99 test_162_8_40_114 test_166_10_42_114 test_170_9_38_123 test_182_8_45_129 test_407_14_95_298 test_441_17_89_335 test_472_12_84_376 test_493_13_86_394 test_494_16_89_389</p>
+         <fig id="F5.1">
+            <caption>
+               <p>Figure 5.1: The average number of nodes that could not be assigned to rings, see <xref id="XR322" ref-type="table" rid="T6">Table 6.2</xref>.</p>
+            </caption>
+            <graphic xlink:href=""/>
+         </fig>
+         <p>5.2 Random Test Instances The primary and very challenging goal in the Hierarchical Ring Network Problem is to find a valid solution. With the Girvan-Newman clustering and Kernighan-Lin each single run for each test instance could be solved by the proposed heuristics. With K-means 768 of 3000 test runs could not be solved completely. The average number of nodes that could not be assigned to rings is shown in <xref id="XR324" ref-type="fig" rid="F5">Figure 5.1</xref>. For the valid solutions the resulting costs are investigated next. An overview of the average costs (over valid solutions) are shown in <xref id="XR325" ref-type="fig" rid="F5">Figure 5.2</xref>. It can be seen that Girvan-Newman clustering usually gives the lowest total cost, followed by K-means. Kernighan-Lin performs slightly worse, but with the smallest deviaton of the three algorithms. Therefore, the result of Kernighan-Lin is more predictable. The results for each of the clustering algorithms were also statistically tested with the student t-test at a significance level of 5% (see <xref id="XR326" ref-type="table" rid="T6.4">Table 6.4</xref>). Those tests confirm the observations that Girvan-Newman and Kernighan-Lin lead to better results on average. The average computation time needed for the solutions is shown in <xref id="XR327" ref-type="fig" rid="F5">Figure 5.3</xref>. Instances with up to 200 nodes could be solved within some seconds. On average Kernighan-Lin performed best. Girvan-Newman needed the most time, which was partially due to the fact that the clustering algorithm itself was the most expensive regarding computation effort. 37</p>
+         <p>Average Costs per Input Instance 30000 Girvan-Newman Kernighan-Lin K-means 25000 20000 costs 15000 10000 5000 0 test_34_4_10_20 test_38_5_10_23 test_43_5_12_26 test_45_3_14_28 test_49_4_12_33 test_72_6_22_44 test_88_6_20_62 test_91_6_20_65 test_95_5_30_60 test_96_7_21_68 test_151_10_42_99 test_162_8_40_114 test_166_10_42_114 test_170_9_38_123 test_182_8_45_129 test_407_14_95_298 test_441_17_89_335 test_472_12_84_376 test_493_13_86_394 test_494_16_89_389</p>
+         <fig id="F5.2">
+            <caption>
+               <p>Figure 5.2: The average resulting cost of the solutions, see <xref id="XR330" ref-type="table" rid="T6">Table 6.4</xref>.</p>
+            </caption>
+            <graphic xlink:href=""/>
+         </fig>
+         <p>Average Time per Input Instance (logarithmic scale) 10000 Girvan-Newman Kernighan-Lin K-means 1000 100 log(seconds) 10 1 0.1 test_34_4_10_20 test_38_5_10_23 test_43_5_12_26 test_45_3_14_28 test_49_4_12_33 test_72_6_22_44 test_88_6_20_62 test_91_6_20_65 test_95_5_30_60 test_96_7_21_68 test_151_10_42_99 test_162_8_40_114 test_166_10_42_114 test_170_9_38_123 test_182_8_45_129 test_407_14_95_298 test_441_17_89_335 test_472_12_84_376 test_493_13_86_394 test_494_16_89_389</p>
+         <fig id="F5.3">
+            <caption>
+               <p>Figure 5.3: The average time in seconds needed to find a solution, see <xref id="XR333" ref-type="table" rid="T6">Table 6.5</xref>.</p>
+            </caption>
+            <graphic xlink:href=""/>
+         </fig>
+         <p>38</p>
+         <p>Average Gain per Input Instance 0.14 0.12 gained 0.1 costs 0.08 relative 0.06 0.04 0.02 test_34_4_10_20 test_38_5_10_23 test_43_5_12_26 test_45_3_14_28 test_49_4_12_33 test_72_6_22_44 test_88_6_20_62 test_91_6_20_65 test_95_5_30_60 test_96_7_21_68 test_151_10_42_99 test_162_8_40_114 test_166_10_42_114 test_170_9_38_123 test_182_8_45_129</p>
+         <fig id="F5.4">
+            <caption>
+               <p>Figure 5.4: The average relative gain achieved (cf. <xref id="XR337" ref-type="table" rid="T6.3">Table 6.3</xref> and <xref id="XR338" ref-type="table" rid="T6.4">Table 6.4</xref>). This shows how much the optimization step could improve the solution.</p>
+            </caption>
+            <graphic xlink:href=""/>
+         </fig>
+         <p>The cost reduction that could be achieved by the improvement heuristics is shown in <xref id="XR340" ref-type="fig" rid="F5">Figure 5.4</xref>. Instances that were solved with the Kernighan-Lin clustering could usually be improved most, altough the total cost was higher than the total cost of other algorithms. The costs before and after the optimization were tested with the student t-test at a significance level of 5% (see <xref id="XR341" ref-type="table" rid="T6.3">Table 6.3</xref> and <xref id="XR342" ref-type="table" rid="T6.4">Table 6.4</xref>). The relative performance of the clustering techniques is the same before and after the optimization. But it can also be seen from the statistical tests, that the difference between Girvan-Newman and Kernighan-Lin is smaller after the optimization so that the total costs are more similar.</p>
+         <p>Girvan-Newman Kernighan-Lin K-means</p>
+         <p>test_407_14_95_298 test_441_17_89_335 test_472_12_84_376 test_493_13_86_394 test_494_16_89_389</p>
+         <p>39</p>
+         <p>Average Invalid Nodes per Input Instance 25 Girvan-Newman Kernighan-Lin K-means 20 nodes 15 invalid 10 5 0 ulysses22.tsp.3-10 att48.tsp.4-10 eil51.tsp.4-10 eil51.tsp.5-15 berlin52.tsp.4-10 berlin52.tsp.5-15 eil76.tsp.5-20 eil76.tsp.7-25 gr96.tsp.5-20 gr96.tsp.7-25 gr96.tsp.8-30 kroA100.tsp.5-20 kroA100.tsp.7-25 kroA100.tsp.8-30 kroB100.tsp.5-20 kroB100.tsp.7-25 kroB100.tsp.8-30 bier127.tsp.8-35 bier127.tsp.10-40 ch150.tsp.8-35 ch150.tsp.10-40 ch150.tsp.12-45 kroA200.tsp.8-35 kroA200.tsp.10-40 kroA200.tsp.12-45 kroB200.tsp.8-35 kroB200.tsp.10-40 kroB200.tsp.12-45 pr299.tsp.12-80 gr431.tsp.12-80 pr439.tsp.12-80</p>
+         <fig id="F5.5">
+            <caption>
+               <p>Figure 5.5: The average number of nodes that could not be assigned to rings, see <xref id="XR348" ref-type="table" rid="T6">Table 6.6</xref>.</p>
+            </caption>
+            <graphic xlink:href=""/>
+         </fig>
+         <p>5.3 TSPLIB-based Test Instances A valid solution for the TSPLIB-based test instances could not be found in all cases. Here the student t-tests were omitted, because for some instances too few valid solutions were available to compare all the clustering heuristics. For each instance at least one of the clustering techniques lead to a valid solution. In <xref id="XR350" ref-type="fig" rid="F5.5">Figure 5.5</xref> the average number of nodes that could not be assigned to rings can be seen. For most test instances only few nodes could not be assigned to rings. The average cost per instance can be seen in <xref id="XR351" ref-type="fig" rid="F5">Figure 5.6</xref>. Missing bars indicate that the corresponding clustering algorithm could not even find a valid solution in 1 of the 30 test runs performed. Since some instances have very low total costs, an appropriate scaled view of those instances can be seen in <xref id="XR352" ref-type="fig" rid="F5">Figure 5.7</xref>.</p>
+         <p>40</p>
+         <p>Average Cost per Input Instance 350000 Girvan-Newman Kernighan-Lin 300000 K-means 250000 200000 costs 150000 100000 50000 0 ulysses22.tsp.3-10 att48.tsp.4-10 eil51.tsp.4-10 eil51.tsp.5-15 berlin52.tsp.4-10 berlin52.tsp.5-15 eil76.tsp.5-20 eil76.tsp.7-25 gr96.tsp.5-20 gr96.tsp.7-25 gr96.tsp.8-30 kroA100.tsp.5-20 kroA100.tsp.7-25 kroA100.tsp.8-30 kroB100.tsp.5-20 kroB100.tsp.7-25 kroB100.tsp.8-30 bier127.tsp.8-35 bier127.tsp.10-40 ch150.tsp.8-35 ch150.tsp.10-40 ch150.tsp.12-45 kroA200.tsp.8-35 kroA200.tsp.10-40 kroA200.tsp.12-45 kroB200.tsp.8-35 kroB200.tsp.10-40 kroB200.tsp.12-45 pr299.tsp.12-80 gr431.tsp.12-80 pr439.tsp.12-80</p>
+         <fig id="F5.6">
+            <caption>
+               <p>Figure 5.6: The average resulting cost of the solutions, see <xref id="XR356" ref-type="table" rid="T6">Table 6.4</xref>.</p>
+            </caption>
+            <graphic xlink:href=""/>
+         </fig>
+         <p>Average Cost per Input Instance 25000 Girvan-Newman Kernighan-Lin K-means 20000 15000 costs 10000 5000 0 ulysses22.tsp.3-10 eil51.tsp.4-10 eil51.tsp.5-15 berlin52.tsp.4-10 berlin52.tsp.5-15 eil76.tsp.7-25 eil76.tsp.5-20 gr96.tsp.7-25m gr96.tsp.8-30m gr96.tsp.5-20m</p>
+         <fig id="F5.7">
+            <caption>
+               <p>Figure 5.7: The average resulting cost of the solutions of instances with low total cost.</p>
+            </caption>
+            <graphic xlink:href=""/>
+         </fig>
+         <p>ch150.tsp.10-40 ch150.tsp.12-45 ch150.tsp.8-35 gr431.tsp.12-80</p>
+         <p>41</p>
+         <p>Average Time per Input Instance (logarithmic scale) 1000 Girvan-Newman Kernighan-Lin K-means 100 log(seconds) 10 1 0.1 ulysses22.tsp.3-10 att48.tsp.4-10 eil51.tsp.4-10 eil51.tsp.5-15 berlin52.tsp.4-10 berlin52.tsp.5-15 eil76.tsp.5-20 eil76.tsp.7-25 gr96.tsp.5-20 gr96.tsp.7-25 gr96.tsp.8-30 kroA100.tsp.5-20 kroA100.tsp.7-25 kroA100.tsp.8-30 kroB100.tsp.5-20 kroB100.tsp.7-25 kroB100.tsp.8-30 bier127.tsp.8-35 bier127.tsp.10-40 ch150.tsp.8-35 ch150.tsp.10-40 ch150.tsp.12-45 kroA200.tsp.8-35 kroA200.tsp.10-40 kroA200.tsp.12-45 kroB200.tsp.8-35 kroB200.tsp.10-40 kroB200.tsp.12-45 pr299.tsp.12-80 gr431.tsp.12-80 pr439.tsp.12-80</p>
+         <fig id="F5.8">
+            <caption>
+               <p>Figure 5.8: The average time in seconds needed to find a solution, see <xref id="XR363" ref-type="table" rid="T6">Table 6.9</xref>.</p>
+            </caption>
+            <graphic xlink:href=""/>
+         </fig>
+         <p>The time overview (see <xref id="XR365" ref-type="fig" rid="F5.3">Figure 5.3</xref>) shows that the instances, where valid solutions were found, could be solved fast. Most of the smaller instances could be solved in less than 1 second. The improvement gained by the local search (see <xref id="XR366" ref-type="fig" rid="F5.9">Figure 5.9</xref>) is for most instances higher than the gain achieved for the random instances. In this case Kernighan-Lin cannot benefit as much from the improvement as it is the case with the random instances.</p>
+         <p>42</p>
+         <p>Average Gain per Input Instance 0.2 Girvan-Newman 0.18 Kernighan-Lin K-means 0.16 0.14 gained 0.12 costs 0.1 relative 0.08 0.06 0.04 0.02 0 ulysses22.tsp.3-10 att48.tsp.4-10 eil51.tsp.4-10 eil51.tsp.5-15 berlin52.tsp.4-10 berlin52.tsp.5-15 eil76.tsp.5-20 eil76.tsp.7-25 gr96.tsp.5-20 gr96.tsp.7-25 gr96.tsp.8-30 kroA100.tsp.5-20 kroA100.tsp.7-25 kroA100.tsp.8-30 kroB100.tsp.5-20 kroB100.tsp.7-25 kroB100.tsp.8-30 bier127.tsp.8-35 bier127.tsp.10-40 ch150.tsp.8-35 ch150.tsp.10-40 ch150.tsp.12-45 kroA200.tsp.8-35 kroA200.tsp.10-40 kroA200.tsp.12-45 kroB200.tsp.8-35 kroB200.tsp.10-40 kroB200.tsp.12-45 pr299.tsp.12-80 gr431.tsp.12-80 pr439.tsp.12-80</p>
+         <fig id="F5.9">
+            <caption>
+               <p>Figure 5.9: The average relative gain achieved(cf. <xref id="XR370" ref-type="table" rid="T6.7">Table 6.7</xref> and <xref id="XR371" ref-type="table" rid="T6.8">Table 6.8</xref>). This shows how much the optimization step could improve the solution.</p>
+            </caption>
+            <graphic xlink:href=""/>
+         </fig>
+         <p>43</p>
+         <p>CHAPTER</p>
+      </sec>
+      <sec>
+         <title>Summary and Future Work</title>
+         <p>Using heuristics for finding hierarchical ring structures on non-complete graphs is a difficult task. In this thesis heuristic approaches for solving the Hierarchical Ring Network Problem were investigated. A formal definition for this problem was given. Some related work was explained too. Clustering heuristics were implemented to get a hierachical structure of the input instances. This hierarchy was an important basis for the subsequent solution heuristics. For clustering three algorithms were implemented, the Girvan-Newman algorithm, K-means and Kernighan-Lin clustering. K-means and Kernighan-Lin had to be adopted to get a hierarchical structure, because the original algorithms would have created only a single clustering layer. The result of this process was represented as a dendrogram. Next three heuristics were implemented to form rings out of the nodes, according to the constraints. The Variate Ringsize Heuristic uses the hierarchy (from the previous clustering step) to find find rings within clusters. The clusters are chosen to match a variating ringsize constraint. More precisely, the variation takes place between 2 and the maximum bound b u k . The second heuristic uses depth first search (DFS) to find chains that can be attached to existing rings. This heuristic has shown to be inefficient in some cases in terms of performance. This gives room for improvements in future work. A third heuristic was implemented that tries to add single remaining nodes to rings, that could not be used in the first two heuristics. That heuristic is simple, but also necessary, because some instances could only be completely solved with the help of this heuristic. As a last step local improvement heuristics were applied. 2-Opt was worth applying, altough not all instances could be improved by this post optimization. Merging rings was an important improvement, since many rings of small size were found. Accepting small rings was crucial to find solutions at all, but reduced the probability to find valid rings in the third layer. By merging rings this disadvantage could be lifted. Using hierarchical clustering for network design is a noteworthy approach. Considering it for more applications would be worth the effort. Moreover, it would be interesting to adopt and apply the algorithms designed for this thesis to related problems. 44</p>
+         <p>In the case of the Hierarchical Ring Network Problem more clustering heuristics could be investigated. For some clustering candidates see [<xref id="XR378" ref-type="bibr" rid="R21">21</xref>]. There is still room for improvements for finding rings with support of cluster hierarchies. One could consider centrality measures like modularity to find good subclusters. Metaheuristics like the Variable Neighborhood Search (VNS) or Greedy Randomized Adaptive Search Procedures (GRASP) may enhance the generic solution algorithm. Clever use of clustering techniques can speed up heuristics for finding rings and improve the solutions.</p>
+         <p>45</p>
+      </sec>
+      <sec>
+         <title>Appendix</title>
+         <p>Input Data Format Description As an input format the Graph Modelling Language (GML) is used. A detailed description of the format can be found at the website 1 . The format is text based and has a tree structure. It is recursively defined as a list of key/value pairs where the key is an identifier and the value can be of type integer, real, string or list(!), where a list has to be enclosed in square brackets. A graph starts with the key graph and a list as value. This value (i.e. the list) contains node properties which must have an id property of type integer. A graph might also contain edges, that can have an id property and additionally a source and a target property that reference the id-values of previously defined nodes. In this thesis nodes will have two additional properties. First the coordinates have to be specified with x and y properties within a graphics and a center property. The graphics property is often found in GML files as an information for the graphical representation. Here it is also needed to calculate distances. The center property is a way of expressing that the coordinate stands for the center of the node (and not for example for the upper left corner). The second additonal property layer specifies the layer every node belongs to. It can have a value between 0 and 2 which stands for the layer 1 to 3, resp. The edges do not require any additional properties. Example file: graph [ node [ id 0 graphics [ center [ x 11.59845781564943 y 25.504837521414355 ] ] layer 0 ] 1 <ext-link ext-link-type="uri"
+                      href="http://www.fim.uni-passau.de/fileadmin/files/lehrstuhl/brandenburg/">http://www.fim.uni-passau.de/fileadmin/files/lehrstuhl/brandenburg/</ext-link> projekte/gml/gml-technical-report.pdf 46</p>
+         <p>node [ id 1 graphics [ center [ x -13.616151400557554 y 23.787374664549787 ] ] layer 1 ] edge [ id 1 source 0 target 1 ] ] Additional Techniques</p>
+      </sec>
+      <sec>
+         <title>Loop Transformation</title>
+         <p>In imperative programming languages loops are usually written in iterative form, with the statements the language provides, like while , do while or for . Due to the fact that the algorithms used for this thesis use backtracking, this approach is often problematic, because one usually has to provide methods to undo the operations done so far. Therefore, it is proposed to use recursive variants of loops. In each step only one iteration is done, so that the backtracking can be implemented much easier. In the following a typical while -loop is considered to be implemented recursively: The while statement has the form while ( Expression ) Statement Unwinding it one time would lead to the following structure: if ( Expression ) { Statement while ( Expression ) Statement } To get recursion, some function is needed. Therefore, the loop is (without restriction) contained in a method: function iterative() { while ( Expression ) Statement }</p>
+         <p>47</p>
+         <p>This can now be written as a recursive function: function recursive() { if ( Expression ) { Statement recursive() } } In practice additional context has to be provided by method parameters and also additional statements occur. Both should not impose problems on this transformation.</p>
+      </sec>
+      <sec>
+         <title>Distinct Pairs Iterator</title>
+         <p>Combinatorial enumeration of distinct pairs over a set or sequence is a task that is often needed. To avoid mistakes a simple skeleton code is provided in Algorithm 6.1. Algorithm 6.1: Iterating over all distinct pairs of nodes in the list. input : The list of input elements list . 1 for i ← 1 to | list | − 1 do 2 for j ← i + 1 to | list | do 3 do something with distinct index pair ( i, j ) , where the pair of elements is ( list [ i ] , list [ j ]) ; 4 end 5 end</p>
+         <p>48</p>
+         <p>Test Result Tables An overview of the tested instances is given in <xref id="XR392" ref-type="table" rid="T6">Table 6.1</xref>. instance | V | | E | test_34_4_10_20 34 143 test_38_5_10_23 38 169 test_43_5_12_26 43 183 test_45_3_14_28 45 193 test_49_4_12_33 49 210 test_72_6_22_44 72 341 test_88_6_20_62 88 423 test_91_6_20_65 91 426 test_95_5_30_60 95 464 test_96_7_21_68 96 450 test_151_10_42_99 151 768 test_162_8_40_114 162 816 test_166_10_42_114 166 834 test_170_9_38_123 170 854 test_182_8_45_129 182 914 test_407_14_95_298 407 2145 test_441_17_89_335 441 2301 test_472_12_84_376 472 2426 test_493_13_86_394 493 2512 test_494_16_89_389 494 2570 (a) Generated random test instances.</p>
+         <table-wrap id="T6.1">
+            <caption>
+               <p>Table 6.1: Test instance overview.</p>
+            </caption>
+            <table>
+               <tbody>
+                  <tr/>
+               </tbody>
+            </table>
+         </table-wrap>
+         <p>(b) Generated test instances based on the TSPLIB.</p>
+         <p>instance | V | | E | ulysses22.tsp.3-10 22 67 att48.tsp.4-10 48 167 eil51.tsp.4-10 51 172 eil51.tsp.5-15 51 185 berlin52.tsp.4-10 52 197 berlin52.tsp.5-15 52 201 eil76.tsp.5-20 76 281 eil76.tsp.7-25 76 299 gr96.tsp.5-20 96 383 gr96.tsp.7-25 96 395 gr96.tsp.8-30 96 384 kroA100.tsp.5-20 100 429 kroA100.tsp.7-25 100 421 kroA100.tsp.8-30 100 420 kroB100.tsp.5-20 100 429 kroB100.tsp.7-25 100 432 kroB100.tsp.8-30 100 426 bier127.tsp.8-35 127 559 bier127.tsp.10-40 127 559 ch150.tsp.8-35 150 672 ch150.tsp.10-40 150 684 ch150.tsp.12-45 150 681 kroA200.tsp.8-35 200 940 kroB200.tsp.10-40 200 964 kroA200.tsp.12-45 200 1005 kroB200.tsp.8-35 200 952 kroA200.tsp.10-40 200 964 kroB200.tsp.12-45 200 1005 pr299.tsp.12-80 299 1566 gr431.tsp.12-80 431 2152 pr439.tsp.12-80 439 2194</p>
+      </sec>
+      <sec>
+         <title>Results from the Random Instances</title>
+         <table-wrap id="T6.2">
+            <caption>
+               <p>Table 6.2: The average number of invalid nodes per instance and their standard deviation are shown in this table. For Girvan-Newman and Kernighan-Lin all instances could be solved.</p>
+            </caption>
+            <table>
+               <thead>
+                  <tr>
+                     <td> instance</td>
+                     <td> | V |</td>
+                     <td> | E |</td>
+                     <td/>
+                     <td/>
+                     <td/>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td/>
+                     <td/>
+                     <td/>
+                     <td> mean</td>
+                     <td/>
+                     <td> dev</td>
+                  </tr>
+                  <tr>
+                     <td> test_34_4_10_20</td>
+                     <td> 34</td>
+                     <td> 143</td>
+                     <td> 0 00</td>
+                     <td> 0</td>
+                     <td> 00</td>
+                  </tr>
+                  <tr>
+                     <td> test_38_5_10_23</td>
+                     <td> 38</td>
+                     <td> 169</td>
+                     <td> 0 00</td>
+                     <td> 0</td>
+                     <td> 00</td>
+                  </tr>
+                  <tr>
+                     <td> test_43_5_12_26</td>
+                     <td> 43</td>
+                     <td> 183</td>
+                     <td> 0 00</td>
+                     <td> 0</td>
+                     <td> 00</td>
+                  </tr>
+                  <tr>
+                     <td> test_45_3_14_28</td>
+                     <td> 45</td>
+                     <td> 193</td>
+                     <td> 0 00</td>
+                     <td> 0</td>
+                     <td> 00</td>
+                  </tr>
+                  <tr>
+                     <td> test_49_4_12_33</td>
+                     <td> 49</td>
+                     <td> 210</td>
+                     <td> 0 00</td>
+                     <td> 0</td>
+                     <td> 00</td>
+                  </tr>
+                  <tr>
+                     <td> test_72_6_22_44</td>
+                     <td> 72</td>
+                     <td> 341</td>
+                     <td> 0 00</td>
+                     <td> 0</td>
+                     <td> 00</td>
+                  </tr>
+                  <tr>
+                     <td> test_88_6_20_62</td>
+                     <td> 88</td>
+                     <td> 423</td>
+                     <td> 0 00</td>
+                     <td> 0</td>
+                     <td> 00</td>
+                  </tr>
+                  <tr>
+                     <td> test_91_6_20_65</td>
+                     <td> 91</td>
+                     <td> 426</td>
+                     <td> 0 00</td>
+                     <td> 0</td>
+                     <td> 00</td>
+                  </tr>
+                  <tr>
+                     <td> test_95_5_30_60</td>
+                     <td> 95</td>
+                     <td> 464</td>
+                     <td> 0 00</td>
+                     <td> 0</td>
+                     <td> 00</td>
+                  </tr>
+                  <tr>
+                     <td> test_96_7_21_68</td>
+                     <td> 96</td>
+                     <td> 450</td>
+                     <td> 0 00</td>
+                     <td> 0</td>
+                     <td> 00</td>
+                  </tr>
+                  <tr>
+                     <td> test_151_10_42_99</td>
+                     <td> 151</td>
+                     <td> 768</td>
+                     <td> 0 00</td>
+                     <td> 0</td>
+                     <td> 00</td>
+                  </tr>
+                  <tr>
+                     <td> test_162_8_40_114</td>
+                     <td> 162</td>
+                     <td> 816</td>
+                     <td> 0 00</td>
+                     <td> 0</td>
+                     <td> 00</td>
+                  </tr>
+                  <tr>
+                     <td> test_166_10_42_114</td>
+                     <td> 166</td>
+                     <td> 834</td>
+                     <td> 0 00</td>
+                     <td> 0</td>
+                     <td> 00</td>
+                  </tr>
+                  <tr>
+                     <td> test_170_9_38_123</td>
+                     <td> 170</td>
+                     <td> 854</td>
+                     <td> 0 00</td>
+                     <td> 0</td>
+                     <td> 00</td>
+                  </tr>
+                  <tr>
+                     <td> test_182_8_45_129</td>
+                     <td> 182</td>
+                     <td> 914</td>
+                     <td> 0 00</td>
+                     <td> 0</td>
+                     <td> 00</td>
+                  </tr>
+                  <tr>
+                     <td> test_407_14_95_298</td>
+                     <td> 407</td>
+                     <td> 2145</td>
+                     <td> 0 00</td>
+                     <td> 0</td>
+                     <td> 00</td>
+                  </tr>
+                  <tr>
+                     <td> test_441_17_89_335</td>
+                     <td> 441</td>
+                     <td> 2301</td>
+                     <td> 0 00</td>
+                     <td> 0</td>
+                     <td> 00</td>
+                  </tr>
+                  <tr>
+                     <td> test_472_12_84_376</td>
+                     <td> 472</td>
+                     <td> 2426</td>
+                     <td> 0 00</td>
+                     <td> 0</td>
+                     <td> 00</td>
+                  </tr>
+                  <tr>
+                     <td> test_493_13_86_394</td>
+                     <td> 493</td>
+                     <td> 2512</td>
+                     <td> 0 00</td>
+                     <td> 0</td>
+                     <td> 00</td>
+                  </tr>
+                  <tr>
+                     <td> test_494_16_89_389</td>
+                     <td> 494</td>
+                     <td> 2570</td>
+                     <td> 0 00</td>
+                     <td/>
+                     <td/>
+                  </tr>
+               </tbody>
+            </table>
+         </table-wrap>
+         <p>. . . . . . . . . . . . . . . . . . . .  . . . . . . . . . . . . . . . . . . . . 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 0 . 00 1 . 50 0 . 50 2 . 00 1 . 41 1 . 80 0 . 40 2 . 50 1 . 12 0 . 00 0 . 00 5 . 63 3 . 99 9 . 00 2 . 77 9 . 36 3 . 78 4 . 50 2 . 87 11 . 83 4 . 83 15 . 58 6 . 06 15 . 74 6 . 98 11 . 92 5 . 06 15 . 88 6 . 34 18 . 29 5 . 76 49 . 34 9 . 73 53 . 73 12 . 95 64 . 68 16 . 85 68 . 38 14 . 84 62 . 08 13 . 50</p>
+         <p>0 00</p>
+         <p>Kernighan-Lin mean dev</p>
+         <p>K-means mean dev</p>
+         <p>50</p>
+         <table-wrap id="T6.3">
+            <caption>
+               <p>Table 6.3: This table contains the average cost values (and their standard deviation) before the optimization. The clustering heuristics were compaired pairwise with the statistical student t-test on a significance level of 5%. p A stands for the comparison between Girvan- Newman and Kernighan-Lin, p B between Kernighan-Lin and K-means, and p C between Girvan- Newman and K-means.</p>
+            </caption>
+            <table>
+               <thead>
+                  <tr>
+                     <td/>
+                     <td> mean</td>
+                     <td> dev p A mean dev p B mean dev p C</td>
+                  </tr>
+                  <tr>
+                     <td> test_34_4_10_20 34 143</td>
+                     <td> 2592 32</td>
+                     <td> 206 15</td>
+                  </tr>
+               </thead>
+               <tbody/>
+            </table>
+         </table-wrap>
+         <p>&lt; 2800 34 68 63 &gt; 2399 71 201 33 &gt; test_38_5_10_23 38 169 2419 22 136 37 &lt; 3079 41 71 93 &gt; 2728 22 224 59 &lt; test_43_5_12_26 43 183 2613 77 128 24 &lt; 2718 09 33 73 &gt; 2623 52 155 11 ≈ test_45_3_14_28 45 193 2591 00 157 50 &lt; 3264 10 82 50 &gt; 2715 53 144 99 &lt; test_49_4_12_33 49 210 3517 08 395 33 &gt; 3191 40 95 74 &lt; 3467 01 336 20 ≈ test_72_6_22_44 72 341 4817 46 225 08 ≈ 4804 19 489 00 &gt; 4338 89 367 64 &gt; test_88_6_20_62 88 423 5656 04 371 71 ≈ 5623 56 407 55 ≈ 5601 14 442 94 ≈ test_91_6_20_65 91 426 5961 23 380 60 &lt; 6755 90 375 13 &gt; 5665 59 542 62 &gt; test_95_5_30_60 95 464 5251 04 373 36 &lt; 5472 78 370 04 ≈ 5522 57 523 15 &lt; test_96_7_21_68 96 450 5656 75 352 16 &lt; 6313 49 491 00 &gt; 5474 53 503 09 &gt; test_151_10_42_99 151 768 8843 29 506 19 &lt; 9309 03 348 64 &gt; 8769 04 448 31 ≈ test_162_8_40_114 162 816 9170 89 423 98 &lt; 10106 08 378 97 &gt; 9188 13 397 35 ≈ test_166_10_42_114 166 834 9497 89 396 48 ≈ 9514 29 354 33 &gt; 8940 10 522 41 &gt; test_170_9_38_123 170 854 9447 74 457 26 &lt; 9872 69 595 08 &gt; 9164 44 648 80 &gt; test_182_8_45_129 182 914 9515 14 155 78 &lt; 10325 14 274 09 &gt; 9947 06 612 15 &lt; test_407_14_95_298 407 2145 20568 98 566 98 &lt; 21988 48 335 30 &gt; 21092 78 975 90 &lt; test_441_17_89_335 441 2301 25263 67 920 29 &lt; 25617 17 634 99 &gt; 24757 12 968 42 &gt; test_472_12_84_376 472 2426 23841 81 438 76 &lt; 24860 34 578 74 &gt; 24207 02 966 78 &lt; test_493_13_86_394 493 2512 25208 76 1049 73 &lt; 26687 84 810 11 &gt; 26409 71 1556 31 &lt; test_494_16_89_389 494 2570 26929 54 882 96 &lt; 29110 80 1119 83 &gt; 27680 42 1455 72 &lt;</p>
+         <p>. . . . . . . . . . . . . . . . . . . .  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</p>
+         <p>51</p>
+         <table-wrap id="T6.4">
+            <caption>
+               <p>Table 6.4: This table contains the average cost values (and their standard deviation) after the optimization. The clustering heuristics were compaired pairwise with the statistical student t-test on a significance level of 5%. p A stands for the comparison between Girvan-Newman and Kernighan-Lin, p B between Kernighan-Lin and K-means, and p C between Girvan-Newman and</p>
+            </caption>
+            <table>
+               <tbody>
+                  <tr>
+                     <td/>
+                     <td/>
+                     <td/>
+                     <td> Girvan-Newman</td>
+                     <td> Kernighan-Lin</td>
+                     <td> K-means</td>
+                  </tr>
+                  <tr>
+                     <td> instance</td>
+                     <td> | V |</td>
+                     <td> | E |</td>
+                     <td/>
+                     <td/>
+                     <td/>
+                  </tr>
+                  <tr>
+                     <td/>
+                     <td/>
+                     <td/>
+                     <td> mean dev p A</td>
+                     <td> mean dev p B</td>
+                     <td> mean dev p C</td>
+                  </tr>
+                  <tr>
+                     <td> test_34_4_10_20</td>
+                     <td> 34</td>
+                     <td> 143</td>
+                     <td> 2466 61 200 47 ≈</td>
+                     <td> 2450 25 144 92</td>
+                     <td/>
+                  </tr>
+               </tbody>
+            </table>
+         </table-wrap>
+         <p>&gt; 2272 31 199 92 &gt; test_38_5_10_23 38 169 2190 95 181 62 &lt; 2907 08 81 20 &gt; 2467 81 195 51 &lt; test_43_5_12_26 43 183 2456 40 91 79 ≈ 2454 64 27 06 &gt; 2381 13 150 88 &gt; test_45_3_14_28 45 193 2425 55 174 76 &lt; 2858 26 52 56 &gt; 2570 18 152 93 &lt; test_49_4_12_33 49 210 3324 98 392 35 &gt; 3001 75 31 20 &lt; 3263 44 330 35 ≈ test_72_6_22_44 72 341 4562 97 217 29 &gt; 4422 07 570 24 &gt; 4066 32 365 14 &gt; test_88_6_20_62 88 423 5250 94 388 25 ≈ 5268 41 384 92 ≈ 5236 42 408 65 ≈ test_91_6_20_65 91 426 5530 19 339 18 &lt; 6115 62 301 98 &gt; 5208 86 504 47 &gt; test_95_5_30_60 95 464 4850 54 372 32 &lt; 5216 63 369 79 &gt; 5039 75 503 30 &lt; test_96_7_21_68 96 450 5414 95 315 59 &lt; 5881 73 523 29 &gt; 5154 12 464 56 &gt; test_151_10_42_99 151 768 8335 13 457 80 &lt; 8700 35 336 04 &gt; 8189 90 393 37 &gt; test_162_8_40_114 162 816 8618 47 370 67 &lt; 9124 67 379 17 &gt; 8568 53 374 32 ≈ test_166_10_42_114 166 834 9001 16 373 79 &gt; 8828 83 330 99 &gt; 8439 90 524 49 &gt; test_170_9_38_123 170 854 8757 22 418 50 &lt; 9358 19 551 41 &gt; 8702 07 578 01 ≈ test_182_8_45_129 182 914 9094 63 166 13 &lt; 9853 01 332 87 &gt; 9567 29 609 29 &lt; test_407_14_95_298 407 2145 19736 36 530 69 &lt; 21177 50 318 80 &gt; 20275 79 889 13 &lt; test_441_17_89_335 441 2301 24313 60 895 51 ≈ 24425 53 647 75 &gt; 23942 06 985 10 &gt; test_472_12_84_376 472 2426 22960 97 528 67 &lt; 24276 89 447 93 &gt; 23470 15 932 35 &lt; test_493_13_86_394 493 2512 24266 31 1065 72 &lt; 25497 62 737 20 &gt; 25464 88 1442 48 &lt; test_494_16_89_389 494 2570 25886 62 880 14 &lt; 28106 46 1099 50 ≈ 26775 41 1419 14 &lt;</p>
+         <p>. . . . . . . . . . . . . . . . . . . .  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</p>
+         <p>52</p>
+         <table-wrap id="T6.5">
+            <caption>
+               <p>Table 6.5: The average time needed for finding a valid solution is listed here. Values are scaled in milliseconds.</p>
+            </caption>
+            <table>
+               <thead>
+                  <tr>
+                     <td/>
+                     <td/>
+                     <td/>
+                     <td> mean</td>
+                     <td/>
+                     <td> dev</td>
+                     <td> mean</td>
+                     <td> dev</td>
+                     <td> mean</td>
+                     <td> dev</td>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td> test_34_4_10_20</td>
+                     <td> 34</td>
+                     <td> 143</td>
+                     <td> 779</td>
+                     <td> 42</td>
+                     <td> 215 24</td>
+                     <td> 426 35</td>
+                     <td> 130 70</td>
+                     <td> 360 33</td>
+                     <td> 112</td>
+                  </tr>
+                  <tr>
+                     <td> test_38_5_10_23</td>
+                     <td> 38</td>
+                     <td> 169</td>
+                     <td> 897</td>
+                     <td> 00</td>
+                     <td> 202 17</td>
+                     <td> 523 07</td>
+                     <td> 154 99</td>
+                     <td> 435 93</td>
+                     <td> 106</td>
+                  </tr>
+                  <tr>
+                     <td> test_43_5_12_26</td>
+                     <td> 43</td>
+                     <td> 183</td>
+                     <td> 999</td>
+                     <td> 70</td>
+                     <td> 215 95</td>
+                     <td> 572 67</td>
+                     <td> 164 19</td>
+                     <td> 445 07</td>
+                     <td> 130</td>
+                  </tr>
+                  <tr>
+                     <td> test_45_3_14_28</td>
+                     <td> 45</td>
+                     <td> 193</td>
+                     <td> 1025</td>
+                     <td> 97</td>
+                     <td> 264 12</td>
+                     <td> 634 55</td>
+                     <td> 180 81</td>
+                     <td> 495 76</td>
+                     <td> 155</td>
+                  </tr>
+                  <tr>
+                     <td> test_49_4_12_33</td>
+                     <td> 49</td>
+                     <td> 210</td>
+                     <td> 1197</td>
+                     <td> 80</td>
+                     <td> 247 52</td>
+                     <td> 543 40</td>
+                     <td> 193 32</td>
+                     <td> 567 65</td>
+                     <td> 212</td>
+                  </tr>
+                  <tr>
+                     <td> test_72_6_22_44</td>
+                     <td> 72</td>
+                     <td> 341</td>
+                     <td> 2151</td>
+                     <td> 73</td>
+                     <td> 412 15</td>
+                     <td> 1020 72</td>
+                     <td> 358 66</td>
+                     <td> 962 91</td>
+                     <td> 375</td>
+                  </tr>
+                  <tr>
+                     <td> test_88_6_20_62</td>
+                     <td> 88</td>
+                     <td> 423</td>
+                     <td> 2825</td>
+                     <td> 67</td>
+                     <td> 367 36</td>
+                     <td> 956 17</td>
+                     <td> 347 06</td>
+                     <td> 812 82</td>
+                     <td> 280</td>
+                  </tr>
+                  <tr>
+                     <td> test_91_6_20_65</td>
+                     <td> 91</td>
+                     <td> 426</td>
+                     <td> 3522</td>
+                     <td> 37</td>
+                     <td> 564 02</td>
+                     <td> 1778 87</td>
+                     <td> 824 56</td>
+                     <td> 1214 82</td>
+                     <td> 426</td>
+                  </tr>
+                  <tr>
+                     <td> test_95_5_30_60</td>
+                     <td> 95</td>
+                     <td> 464</td>
+                     <td> 3832</td>
+                     <td> 99</td>
+                     <td> 479 19</td>
+                     <td> 1585 72</td>
+                     <td> 556 56</td>
+                     <td> 1372 24</td>
+                     <td> 567</td>
+                  </tr>
+                  <tr>
+                     <td> test_96_7_21_68</td>
+                     <td> 96</td>
+                     <td> 450</td>
+                     <td> 3689</td>
+                     <td> 13</td>
+                     <td> 659 73</td>
+                     <td> 1893 84</td>
+                     <td> 908 76</td>
+                     <td> 1312 68</td>
+                     <td> 495</td>
+                  </tr>
+                  <tr>
+                     <td> test_151_10_42_99</td>
+                     <td> 151</td>
+                     <td> 768</td>
+                     <td> 12753</td>
+                     <td> 56</td>
+                     <td> 953 71</td>
+                     <td> 1861 11</td>
+                     <td> 627 29</td>
+                     <td> 1872 24</td>
+                     <td> 1173</td>
+                  </tr>
+                  <tr>
+                     <td> test_162_8_40_114</td>
+                     <td> 162</td>
+                     <td> 816</td>
+                     <td> 16840</td>
+                     <td> 67</td>
+                     <td> 1110 27</td>
+                     <td> 2371 99</td>
+                     <td> 872 27</td>
+                     <td> 2922 67</td>
+                     <td> 2813</td>
+                  </tr>
+                  <tr>
+                     <td> test_166_10_42_114</td>
+                     <td> 166</td>
+                     <td> 834</td>
+                     <td> 17064</td>
+                     <td> 56</td>
+                     <td> 1038 38</td>
+                     <td> 2165 17</td>
+                     <td> 595 70</td>
+                     <td> 2202 84</td>
+                     <td> 1453</td>
+                  </tr>
+                  <tr>
+                     <td> test_170_9_38_123</td>
+                     <td> 170</td>
+                     <td> 854</td>
+                     <td> 19859</td>
+                     <td> 08</td>
+                     <td> 1443 88</td>
+                     <td> 2322 46</td>
+                     <td> 620 24</td>
+                     <td> 2749 57</td>
+                     <td> 2621</td>
+                  </tr>
+                  <tr>
+                     <td> test_182_8_45_129</td>
+                     <td> 182</td>
+                     <td> 914</td>
+                     <td> 24914</td>
+                     <td> 21</td>
+                     <td> 1464 62</td>
+                     <td> 2421 59</td>
+                     <td> 838 50</td>
+                     <td> 2260 06</td>
+                     <td> 1243</td>
+                  </tr>
+                  <tr>
+                     <td> test_407_14_95_298</td>
+                     <td> 407</td>
+                     <td> 2145</td>
+                     <td> 433817</td>
+                     <td> 37</td>
+                     <td> 32292 82</td>
+                     <td> 24021 82</td>
+                     <td> 19330 93</td>
+                     <td> 412309 07</td>
+                     <td> 2212615</td>
+                  </tr>
+                  <tr>
+                     <td> test_441_17_89_335</td>
+                     <td> 441</td>
+                     <td> 2301</td>
+                     <td> 663820</td>
+                     <td> 41</td>
+                     <td> 38670 66</td>
+                     <td> 41232 09</td>
+                     <td> 21988 88</td>
+                     <td> 139776 22</td>
+                     <td> 216975</td>
+                  </tr>
+                  <tr>
+                     <td> test_472_12_84_376</td>
+                     <td> 472</td>
+                     <td> 2426</td>
+                     <td> 802348</td>
+                     <td> 48</td>
+                     <td> 39844 76</td>
+                     <td> 28302 61</td>
+                     <td> 21940 88</td>
+                     <td> 331089 58</td>
+                     <td> 1638352</td>
+                  </tr>
+                  <tr>
+                     <td> test_493_13_86_394</td>
+                     <td> 493</td>
+                     <td> 2512</td>
+                     <td> 922606</td>
+                     <td> 57</td>
+                     <td> 47059 81</td>
+                     <td> 135591 82</td>
+                     <td> 194549 87</td>
+                     <td> 880866 70</td>
+                     <td> 2279635</td>
+                  </tr>
+                  <tr>
+                     <td> test_494_16_89_389</td>
+                     <td> 494</td>
+                     <td> 2570</td>
+                     <td> 1035306</td>
+                     <td> 86</td>
+                     <td/>
+                     <td/>
+                     <td/>
+                     <td/>
+                     <td/>
+                  </tr>
+               </tbody>
+            </table>
+         </table-wrap>
+         <p>. . . . . . . . . . . . . . . . . . . .  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</p>
+         <p>54769 42</p>
+         <p>196222 99 303653 02</p>
+         <p>1041982 37 2782957 35</p>
+         <p>53</p>
+      </sec>
+      <sec>
+         <title>Results from the TSPLIB-based Instances</title>
+         <table-wrap id="T6.6">
+            <caption>
+               <p>Table 6.6: The average number of invalid nodes per instance and their standard deviation are shown in this table.</p>
+            </caption>
+            <table>
+               <thead>
+                  <tr>
+                     <td> instance</td>
+                     <td> | V |</td>
+                     <td> | E |</td>
+                     <td/>
+                     <td/>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td/>
+                     <td/>
+                     <td/>
+                     <td> mean</td>
+                     <td> dev</td>
+                  </tr>
+                  <tr>
+                     <td> ulysses22.tsp.3-10</td>
+                     <td> 22</td>
+                     <td> 67</td>
+                     <td> 8 00</td>
+                     <td> 1 00</td>
+                  </tr>
+                  <tr>
+                     <td> att48.tsp.4-10</td>
+                     <td> 48</td>
+                     <td> 167</td>
+                     <td> 9 50</td>
+                     <td> 2 50</td>
+                  </tr>
+                  <tr>
+                     <td> eil51.tsp.4-10</td>
+                     <td> 51</td>
+                     <td> 172</td>
+                     <td> 4 00</td>
+                     <td> 0 00</td>
+                  </tr>
+                  <tr>
+                     <td> eil51.tsp.5-15</td>
+                     <td> 51</td>
+                     <td> 185</td>
+                     <td> 0 00</td>
+                     <td> 0 00</td>
+                  </tr>
+                  <tr>
+                     <td> berlin52.tsp.4-10</td>
+                     <td> 52</td>
+                     <td> 197</td>
+                     <td> 2 45</td>
+                     <td> 1 40</td>
+                  </tr>
+                  <tr>
+                     <td> berlin52.tsp.5-15</td>
+                     <td> 52</td>
+                     <td> 201</td>
+                     <td> 6 00</td>
+                     <td> 0 00</td>
+                  </tr>
+                  <tr>
+                     <td> eil76.tsp.5-20</td>
+                     <td> 76</td>
+                     <td> 281</td>
+                     <td> 2 99</td>
+                     <td> 1 14</td>
+                  </tr>
+                  <tr>
+                     <td> eil76.tsp.7-25</td>
+                     <td> 76</td>
+                     <td> 299</td>
+                     <td> 3 00</td>
+                     <td> 1 15</td>
+                  </tr>
+                  <tr>
+                     <td> gr96.tsp.5-20</td>
+                     <td> 96</td>
+                     <td> 383</td>
+                     <td> 6 34</td>
+                     <td> 4 13</td>
+                  </tr>
+                  <tr>
+                     <td> gr96.tsp.7-25</td>
+                     <td> 96</td>
+                     <td> 395</td>
+                     <td> 4 40</td>
+                     <td> 3 32</td>
+                  </tr>
+                  <tr>
+                     <td> gr96.tsp.8-30</td>
+                     <td> 96</td>
+                     <td> 384</td>
+                     <td> 6 51</td>
+                     <td> 4 71</td>
+                  </tr>
+                  <tr>
+                     <td> kroA100.tsp.5-20</td>
+                     <td> 100</td>
+                     <td> 429</td>
+                     <td> 5 30</td>
+                     <td> 3 00</td>
+                  </tr>
+                  <tr>
+                     <td> kroA100.tsp.7-25</td>
+                     <td> 100</td>
+                     <td> 421</td>
+                     <td> 5 88</td>
+                     <td> 3 55</td>
+                  </tr>
+                  <tr>
+                     <td> kroA100.tsp.8-30</td>
+                     <td> 100</td>
+                     <td> 420</td>
+                     <td> 3 29</td>
+                     <td> 1 86</td>
+                  </tr>
+                  <tr>
+                     <td> kroB100.tsp.5-20</td>
+                     <td> 100</td>
+                     <td> 429</td>
+                     <td> 18 22</td>
+                     <td> 4 09</td>
+                  </tr>
+                  <tr>
+                     <td> kroB100.tsp.7-25</td>
+                     <td> 100</td>
+                     <td> 432</td>
+                     <td> 4 83</td>
+                     <td> 2 74</td>
+                  </tr>
+                  <tr>
+                     <td> kroB100.tsp.8-30</td>
+                     <td> 100</td>
+                     <td> 426</td>
+                     <td> 2 79</td>
+                     <td> 1 18</td>
+                  </tr>
+                  <tr>
+                     <td> bier127.tsp.8-35</td>
+                     <td> 127</td>
+                     <td> 559</td>
+                     <td> 11 97</td>
+                     <td> 7 95</td>
+                  </tr>
+                  <tr>
+                     <td> bier127.tsp.10-40</td>
+                     <td> 127</td>
+                     <td> 559</td>
+                     <td> 4 00</td>
+                     <td> 4 05</td>
+                  </tr>
+                  <tr>
+                     <td> ch150.tsp.8-35</td>
+                     <td> 150</td>
+                     <td> 672</td>
+                     <td> 2 25</td>
+                     <td> 0 43</td>
+                  </tr>
+                  <tr>
+                     <td> ch150.tsp.10-40</td>
+                     <td> 150</td>
+                     <td> 684</td>
+                     <td> 2 07</td>
+                     <td> 1 51</td>
+                  </tr>
+                  <tr>
+                     <td> ch150.tsp.12-45</td>
+                     <td> 150</td>
+                     <td> 681</td>
+                     <td> 1 60</td>
+                     <td> 0 80</td>
+                  </tr>
+                  <tr>
+                     <td> kroA200.tsp.8-35</td>
+                     <td> 200</td>
+                     <td> 940</td>
+                     <td> 5 31</td>
+                     <td> 2 24</td>
+                  </tr>
+                  <tr>
+                     <td> kroA200.tsp.10-40</td>
+                     <td> 200</td>
+                     <td> 964</td>
+                     <td> 6 66</td>
+                     <td> 3 78</td>
+                  </tr>
+                  <tr>
+                     <td> kroA200.tsp.12-45</td>
+                     <td> 200</td>
+                     <td> 1005</td>
+                     <td> 4 50</td>
+                     <td> 3 40</td>
+                  </tr>
+                  <tr>
+                     <td> kroB200.tsp.8-35</td>
+                     <td> 200</td>
+                     <td> 952</td>
+                     <td> 4 75</td>
+                     <td> 1 48</td>
+                  </tr>
+                  <tr>
+                     <td> kroB200.tsp.10-40</td>
+                     <td> 200</td>
+                     <td> 964</td>
+                     <td> 3 69</td>
+                     <td> 1 80</td>
+                  </tr>
+                  <tr>
+                     <td> kroB200.tsp.12-45</td>
+                     <td> 200</td>
+                     <td> 1005</td>
+                     <td> 3 67</td>
+                     <td> 2 05</td>
+                  </tr>
+                  <tr>
+                     <td> pr299.tsp.12-80</td>
+                     <td> 299</td>
+                     <td> 1566</td>
+                     <td> 1 80</td>
+                     <td> 1 60</td>
+                  </tr>
+                  <tr>
+                     <td> gr431.tsp.12-80</td>
+                     <td> 431</td>
+                     <td> 2152</td>
+                     <td> 2 61</td>
+                     <td> 0 95</td>
+                  </tr>
+                  <tr>
+                     <td> pr439.tsp.12-80</td>
+                     <td> 439</td>
+                     <td> 2194</td>
+                     <td> 22 64</td>
+                     <td/>
+                  </tr>
+               </tbody>
+            </table>
+         </table-wrap>
+         <p>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4 . 00 1 . 00 10 . 50 3 . 50 7 . 00 1 . 00 2 . 50 0 . 50 7 . 50 1 . 50 8 . 50 3 . 50 4 . 83 1 . 57 4 . 00 2 . 38 5 . 00 2 . 68 5 . 17 2 . 19 1 . 80 0 . 75 15 . 20 7 . 60 7 . 33 2 . 56 7 . 33 2 . 13 11 . 33 4 . 42 5 . 67 3 . 64 4 . 20 2 . 64 8 . 50 2 . 81 3 . 00 1 . 90 3 . 60 2 . 58 4 . 40 2 . 65 2 . 80 1 . 83 10 . 20 3 . 87 4 . 17 2 . 27 6 . 17 4 . 88 4 . 17 3 . 98 5 . 83 3 . 89 4 . 20 3 . 12 2 . 50 1 . 12 4 . 40 2 . 94 2 . 50 1 . 61 2 . 70 1 . 78 4 . 39 2 . 86 3 . 64 2 . 28 2 . 55 1 . 68 5 . 56 4 . 20 4 . 04 2 . 14 4 . 03 2 . 68 3 . 12 2 . 24 7 . 50 4 . 93 5 . 82 3 . 78 4 . 58 3 . 44 7 . 96 4 . 85 4 . 59 3 . 32 5 . 39 3 . 96 9 . 03 7 . 38 4 . 49 2 . 93 4 . 74 3 . 78 7 . 32 4 . 27 3 . 51 2 . 96 3 . 03 2 . 24 4 . 39 2 . 69 3 . 51 2 . 84 5 . 17 3 . 75 3 . 09 1 . 86 6 . 15 4 . 62 7 . 53 6 . 74 5 . 35 4 . 47 6 . 38 5 . 92 3 . 11 2 . 61 12 . 86 10 . 26 12 . 81 8 . 70</p>
+         <p>20 39</p>
+         <p>Kernighan-Lin mean dev</p>
+         <p>K-means mean dev</p>
+         <p>54</p>
+         <table-wrap id="T6.7">
+            <caption>
+               <p>Table 6.7: This table contains the average cost values (and their standard deviation) before the optimization. For these instances a statistical test was not performed, because too few valid solutions were available for a statistically significant statement. Missing values indicate, that no valid solution was found with the corresponding clustering technique.</p>
+            </caption>
+            <table>
+               <thead>
+                  <tr>
+                     <td> instance</td>
+                     <td> | V |</td>
+                     <td> | E |</td>
+                     <td/>
+                     <td/>
+                     <td/>
+                     <td/>
+                     <td/>
+                     <td/>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td/>
+                     <td/>
+                     <td/>
+                     <td> mean</td>
+                     <td> dev mean dev</td>
+                     <td> mean</td>
+                     <td/>
+                     <td> dev</td>
+                     <td/>
+                  </tr>
+                  <tr>
+                     <td> ulysses22.tsp.3-10</td>
+                     <td> 22</td>
+                     <td> 67</td>
+                     <td/>
+                     <td/>
+                     <td> 139</td>
+                     <td> 29</td>
+                     <td> 1</td>
+                     <td> 52</td>
+                  </tr>
+                  <tr>
+                     <td> att48.tsp.4-10</td>
+                     <td> 48</td>
+                     <td> 167</td>
+                     <td/>
+                     <td/>
+                     <td> 79829</td>
+                     <td> 42</td>
+                     <td> 2847</td>
+                     <td> 31</td>
+                  </tr>
+                  <tr>
+                     <td> eil51.tsp.4-10</td>
+                     <td> 51</td>
+                     <td> 172</td>
+                     <td> 955 63</td>
+                     <td> 0 00</td>
+                     <td> 988</td>
+                     <td> 25</td>
+                     <td> 34</td>
+                     <td> 74</td>
+                  </tr>
+                  <tr>
+                     <td> eil51.tsp.5-15</td>
+                     <td> 51</td>
+                     <td> 185</td>
+                     <td> 1029 26</td>
+                     <td/>
+                     <td/>
+                     <td/>
+                     <td/>
+                     <td/>
+                  </tr>
+               </tbody>
+            </table>
+         </table-wrap>
+         <p>8 88 1005 25 39 92 berlin52.tsp.4-10 52 197 17391 68 396 38 berlin52.tsp.5-15 52 201 17659 09 0 00 16845 10 301 33 eil76.tsp.5-20 76 281 1201 44 30 96 eil76.tsp.7-25 76 299 1283 12 39 48 gr96.tsp.5-20 96 383 1337 27 59 16 gr96.tsp.7-25 96 395</p>
+         <p>kroA100.tsp.8-30 100 420 65012 50 4006 51 kroB100.tsp.5-20 100 429 60702 60 3332 30 kroB100.tsp.7-25 100 432 64867 73 3944 71 kroB100.tsp.8-30 100 426 66489 93 3399 81 70425 01 0 00 67952 05 3098 30 bier127.tsp.8-35 127 559 295720 75 14806 29 bier127.tsp.10-40 127 559 311425 84 8964 34 ch150.tsp.8-35 150 672 17633 88 165 55 18892 15 0 00 18348 63 450 84 ch150.tsp.10-40 150 684 18395 72 244 73 19649 49 0 00 18777 73 511 83 ch150.tsp.12-45 150 681 19210 06 714 57 kroA200.tsp.8-35 200 940 92110 19 4388 56 kroA200.tsp.10-40 200 964 98762 71 1947 35 93422 87 3042 44</p>
+         <p>. . . . . . . . . . . . . . . . . . 1191 . 89 30 . 38 . . . . 1275 . 39 0 . 00 . . 1470 . 70 24 . 84 1397 . 71 43 . 69 gr96.tsp.8-30 96 384 1472 . 15 0 . 00 1386 . 63 70 . 22 kroA100.tsp.5-20 100 429 58415 . 57 0 . 00 61696 . 27 2965 . 25 kroA100.tsp.7-25 100 421 63880 . 86 4204 . 33 61055 . 40 2760 . 80 . . . . . . . . . . . . 300284 . 54 8709 . 27 310733 . 37 0 . 00 . . . . . . . . . . . . . . . . 18808 . 69 0 . 00 21815 . 09 0 . 00 . . . . . . 96122 . 10 0 . 00 . . kroA200.tsp.12-45 200 1005 100334 . 28 1120 . 95 96620 . 25 3626 . 95 kroB200.tsp.8-35 200 952 97032 . 00 585 . 51 83834 . 45 0 . 00 90279 . 74 3088 . 04 kroB200.tsp.10-40 200 964 94205 . 60 4828 . 49 93253 . 56 2734 . 53 . . . . 299 1566 168499 . 60 2141 . 54 . . 5845 . 89 0 . 00 . . . .</p>
+         <p>kroB200.tsp.12-45 200 1005 96745 32 2475 37 97947 67 4372 56 pr299.tsp.12-80 169112 22 7826 76 gr431.tsp.12-80 431 2152 5837 78 312 91 pr439.tsp.12-80 439 2194 349691 59 6821 11</p>
+         <p>55</p>
+         <table-wrap id="T6.8">
+            <caption>
+               <p>Table 6.8: This table contains the average cost values (and their standard deviation) after the optimization. For these instances a statistical test was not performed, because too few valid solutions were available for a statistically significant statement. Missing values indicate, that no valid solution was found with the corresponding clustering technique.</p>
+            </caption>
+            <table>
+               <thead>
+                  <tr>
+                     <td/>
+                     <td/>
+                     <td/>
+                     <td> mean</td>
+                     <td/>
+                     <td> dev mean dev</td>
+                     <td> mean</td>
+                     <td/>
+                     <td> dev</td>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td> ulysses22.tsp.3-10</td>
+                     <td> 22</td>
+                     <td> 67</td>
+                     <td/>
+                     <td/>
+                     <td/>
+                     <td> 134</td>
+                     <td> 01</td>
+                     <td> 2 26</td>
+                  </tr>
+                  <tr>
+                     <td> att48.tsp.4-10</td>
+                     <td> 48</td>
+                     <td> 167</td>
+                     <td/>
+                     <td/>
+                     <td/>
+                     <td> 73334</td>
+                     <td> 12</td>
+                     <td> 2873 18</td>
+                  </tr>
+                  <tr>
+                     <td> eil51.tsp.4-10</td>
+                     <td> 51</td>
+                     <td> 172</td>
+                     <td> 918</td>
+                     <td> 38</td>
+                     <td> 0 00</td>
+                     <td> 921</td>
+                     <td> 05</td>
+                     <td> 33 10</td>
+                  </tr>
+                  <tr>
+                     <td> eil51.tsp.5-15</td>
+                     <td> 51</td>
+                     <td> 185</td>
+                     <td> 926</td>
+                     <td> 76</td>
+                     <td/>
+                     <td/>
+                     <td/>
+                     <td/>
+                  </tr>
+               </tbody>
+            </table>
+         </table-wrap>
+         <p>7 05 921 20 33 51 berlin52.tsp.4-10 52 197 16367 85 657 32 berlin52.tsp.5-15 52 201 16806 68 0 00 15779 50 253 80 eil76.tsp.5-20 76 281 1111 04 37 27 eil76.tsp.7-25 76 299 1167 91 39 99 gr96.tsp.5-20 96 383 1231 78 54 51 gr96.tsp.7-25 96 395</p>
+         <p>kroA100.tsp.8-30 100 420 54572 78 1622 92 kroB100.tsp.5-20 100 429 56097 94 1790 72 kroB100.tsp.7-25 100 432 56475 88 1972 91 kroB100.tsp.8-30 100 426 54807 79 1818 98 61485 37 0 00 57300 69 1989 45 bier127.tsp.8-35 127 559 267210 45 8912 25 bier127.tsp.10-40 127 559 280890 62 8280 53 ch150.tsp.8-35 150 672 15748 55 134 39 17117 63 0 00 16362 82 438 19 ch150.tsp.10-40 150 684 16359 75 303 18 17653 24 0 00 16674 03 415 89 ch150.tsp.12-45 150 681 16968 55 568 45 kroA200.tsp.8-35 200 940 80681 50 2341 70 kroA200.tsp.10-40 200 964 84877 65 1043 81 81348 50 2206 81</p>
+         <p>. . . . . . . . . . . . . . . . . . 1068 . 30 19 . 20 . . . . 1165 . 98 0 . 00 . . 1194 . 06 18 . 54 1191 . 70 30 . 60 gr96.tsp.8-30 96 384 1255 . 34 0 . 00 1216 . 58 42 . 73 kroA100.tsp.5-20 100 429 54562 . 78 0 . 00 55475 . 48 1797 . 28 kroA100.tsp.7-25 100 421 54673 . 38 2172 . 82 50549 . 72 950 . 83 . . . . . . . . . . . . 266143 . 87 2424 . 85 281308 . 72 0 . 00 . . . . . . . . . . . . . . . . 16225 . 87 0 . 00 19394 . 48 0 . 00 . . . . . . 83283 . 31 0 . 00 . . kroA200.tsp.12-45 200 1005 84315 . 91 521 . 23 82788 . 86 2456 . 76 kroB200.tsp.8-35 200 952 83315 . 39 585 . 51 75002 . 83 0 . 00 79603 . 75 2120 . 49 kroB200.tsp.10-40 200 964 82344 . 44 2003 . 62 79925 . 20 2303 . 95 . . . . 299 1566 140888 . 81 1981 . 84 . . 5164 . 10 0 . 00 . . . .</p>
+         <p>kroB200.tsp.12-45 200 1005 83292 68 2498 21 84901 59 3736 16 pr299.tsp.12-80 143990 83 5334 69 gr431.tsp.12-80 431 2152 5164 62 306 84 pr439.tsp.12-80 439 2194 305452 69 8985 96</p>
+         <p>56</p>
+         <table-wrap id="T6.9">
+            <caption>
+               <p>Table 6.9: The average time needed for finding a valid solution is listed here. Values are scaled in milliseconds. Empty cells indicate, that no valid solution was found with the corresponding clustering technique.</p>
+            </caption>
+            <table>
+               <thead>
+                  <tr>
+                     <td> instance</td>
+                     <td> | V |</td>
+                     <td> | E |</td>
+                     <td/>
+                     <td/>
+                     <td/>
+                     <td/>
+                     <td/>
+                     <td/>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td/>
+                     <td/>
+                     <td/>
+                     <td> mean</td>
+                     <td> dev mean dev</td>
+                     <td> mean</td>
+                     <td/>
+                     <td> dev</td>
+                     <td/>
+                  </tr>
+                  <tr>
+                     <td> ulysses22.tsp.3-10</td>
+                     <td> 22</td>
+                     <td> 67</td>
+                     <td/>
+                     <td/>
+                     <td> 393</td>
+                     <td> 82</td>
+                     <td> 63</td>
+                     <td> 11</td>
+                  </tr>
+                  <tr>
+                     <td> att48.tsp.4-10</td>
+                     <td> 48</td>
+                     <td> 167</td>
+                     <td/>
+                     <td/>
+                     <td> 498</td>
+                     <td> 11</td>
+                     <td> 128</td>
+                     <td> 38</td>
+                  </tr>
+                  <tr>
+                     <td> eil51.tsp.4-10</td>
+                     <td> 51</td>
+                     <td> 172</td>
+                     <td> 1124 17</td>
+                     <td> 188 53</td>
+                     <td> 406</td>
+                     <td> 00</td>
+                     <td> 127</td>
+                     <td> 76</td>
+                  </tr>
+                  <tr>
+                     <td> eil51.tsp.5-15</td>
+                     <td> 51</td>
+                     <td> 185</td>
+                     <td> 1098 72</td>
+                     <td/>
+                     <td/>
+                     <td/>
+                     <td/>
+                     <td/>
+                  </tr>
+               </tbody>
+            </table>
+         </table-wrap>
+         <p>. .  . . . 1434 . 00 . 372 . 23 1764 . 80 517 . 24 3042 . 17 1072 . 26 . . 2951 . 10 1163 . 51 2340 . 43 663 . 15 . 4528 . 10 . 640 . 24 . . 3803 . 83 1077 . 28 . . 58334 . 81 . . 669 . 10 . . . . 49185 . 70 1244 . 60 11380 . 40 2191 . 00 11049 . 40 2038 . 93 . . . . . . . . . . 299 1566 305541 . 69 110524 . 01 433551 . 97 8976 . 75 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</p>
+         <p>245 12 571 11 156 20 berlin52.tsp.4-10 52 197 753 33 234 89 berlin52.tsp.5-15 52 201 1213 20 148 36 667 33 157 56 eil76.tsp.5-20 76 281 969 07 419 63 eil76.tsp.7-25 76 299 982 20 415 77 gr96.tsp.5-20 96 383 2526 33 896 76 gr96.tsp.7-25 96 395 1483 35 626 91 gr96.tsp.8-30 96 384 1876 23 711 13 1256 29 482 36 kroA100.tsp.5-20 100 429 2099 75 860 32 kroA100.tsp.7-25 100 421 1080 97 413 59 kroA100.tsp.8-30 100 420 1337 30 508 55 kroB100.tsp.5-20 100 429 1629 16 600 75 kroB100.tsp.7-25 100 432 1597 07 684 15 kroB100.tsp.8-30 100 426 2542 73 705 47 1561 40 646 42 1463 95 537 66 bier127.tsp.8-35 127 559 2123 56 499 66 bier127.tsp.10-40 127 559 2873 33 763 96 ch150.tsp.8-35 150 672 5848 57 442 34 4233 70 1319 93 2808 27 631 01 ch150.tsp.10-40 150 684 6853 78 661 18 8196 17 1570 85 3195 87 715 06 ch150.tsp.12-45 150 681 48985 03 1258 87 kroA200.tsp.8-35 200 940 5909 42 2410 54 kroA200.tsp.10-40 200 964 12013 37 686 94 6595 05 1906 44 kroA200.tsp.12-45 200 1005 71852 48 2082 34 54663 54 1913 65 kroB200.tsp.8-35 200 952 15057 07 688 18 6330 35 1150 47 kroB200.tsp.10-40 200 964 11906 62 1320 17 5920 29 1541 49 kroB200.tsp.12-45 200 1005 69448 70 1953 91 53501 21 2016 59 pr299.tsp.12-80 217407 84 172403 10 gr431.tsp.12-80 431 2152 395681 80 291287 06 pr439.tsp.12-80 439 2194 864114 33 1015110 56</p>
+         <p>57</p>
+      </sec>
+      <sec>
+         <title>Bibliography</title>
+      </sec>
+   </body>
+   <back>
+      <ref-list>
+         <ref id="R1">
+            <mixed-citation>[1] A. Balakrishnan, T. L. Magnanti, and P. Mirchandani. The multi-level network design problem. Working papers 3366-91., Massachusetts Institute of Technology (MIT), Sloan School of Management, 1991.</mixed-citation>
+         </ref>
+         <ref id="R2">
+            <mixed-citation>[2] J. Bentley and B. Floyd. Programming pearls: a sample of brilliance. Communications ACM , 30:754–757, 1987.</mixed-citation>
+         </ref>
+         <ref id="R3">
+            <mixed-citation>[3] D. Bertsimas and R. Weismantel. Optimization over Integers . Dynamic Ideas, 1st edition, 2005.</mixed-citation>
+         </ref>
+         <ref id="R4">
+            <mixed-citation>[4] U. Brandes. A faster algorithm for betweenness centrality. Journal of Mathematical Soci- ology , 25:163–177, 2001.</mixed-citation>
+         </ref>
+         <ref id="R5">
+            <mixed-citation>[5] J. R. Current, C. S. ReVelle, and J. L. Cohon. The hierarchical network design problem. European Journal of Operational Research , 27(1):57–66, 1986.</mixed-citation>
+         </ref>
+         <ref id="R6">
+            <mixed-citation>[6] D. Easley and J. Kleinberg. Networks, Crowds, and Markets: Reasoning About a Highly Connected World . Cambridge University Press, 2010.</mixed-citation>
+         </ref>
+         <ref id="R7">
+            <mixed-citation>[7] C. T. Fan, M. E. Muller, and I. Rezucha. Development of sampling plans by using sequential (item by item) selection techniques and digital computers. Journal of the American Statistical Association , 57:387–402, 1962.</mixed-citation>
+         </ref>
+         <ref id="R8">
+            <mixed-citation>[8] B. Fortz. Design of Survivable Networks with Bounded Rings . PhD thesis, Universite libre de Bruxelles, 2000.</mixed-citation>
+         </ref>
+         <ref id="R9">
+            <mixed-citation>[9] M. Girvan and M. E. J. Newman. Community structure in social and biological networks. Proceedings of the National Academy of Science , 99:7821–7826, 2002.</mixed-citation>
+         </ref>
+         <ref id="R10">
+            <mixed-citation>[10] T. G. Jones. A note on sampling a tape-file. Communications ACM , 5:343, 1962.</mixed-citation>
+         </ref>
+         <ref id="R11">
+            <mixed-citation>[11] B. W. Kernighan and S. Lin. An Efficient Heuristic Procedure for Partitioning Graphs. The Bell system technical journal , 49(1):291–307, 1970.</mixed-citation>
+         </ref>
+         <ref id="R12">
+            <mixed-citation>[12] J. G. Klincewicz. Hub location in backbone/tributary network design: a review. Location Science , 6(1-4):307 – 335, 1998.  58</mixed-citation>
+         </ref>
+         <ref id="R13">
+            <mixed-citation>[13] G. Laporte and I. R. Martín. Locating a cycle in a transportation or a telecommunications network. Networks , 50:92–108, 2007.</mixed-citation>
+         </ref>
+         <ref id="R14">
+            <mixed-citation>[14] E. L. Lawler, J. K. Lenstra, A. H. G. R. Kan, and D. B. Shmoys. The Traveling Salesman Problem: A Guided Tour of Combinatorial Optimization . Wiley, New York, 1985.</mixed-citation>
+         </ref>
+         <ref id="R15">
+            <mixed-citation>[15] C. Y. Lee and S. J. Koh. A design of the minimum cost ring-chain network with dual- homing survivability: A tabu search approach. Computers &amp; Operations Research , 24(9):883 – 897, 1997.</mixed-citation>
+         </ref>
+         <ref id="R16">
+            <mixed-citation>[16] S. Lin and B. W. Kernighan. An effective heuristic algorithm for the travelling-salesman problem. Operations Research , 21:498–516, 1973.</mixed-citation>
+         </ref>
+         <ref id="R17">
+            <mixed-citation>[17] R. Salman, V. Kecman, Q. Li, R. Strack, and E. Test. Fast k-means algorithm clustering. CoRR , abs/1108.1351, 2011.</mixed-citation>
+         </ref>
+         <ref id="R18">
+            <mixed-citation>[18] T. Thomadsen. Hierarchical Network Design . PhD thesis, Technical University of Den- mark, 2005.</mixed-citation>
+         </ref>
+         <ref id="R19">
+            <mixed-citation>[19] J. S. Vitter. An efficient algorithm for sequential random sampling. In ACM Transactions Mathematical Software , volume 13, pages 58–67, New York, NY, USA, 1987. ACM.</mixed-citation>
+         </ref>
+         <ref id="R20">
+            <mixed-citation>[20] C. Walshaw. Multilevel refinement for combinatorial optimisation problems. Annals of Operations Research , 131:325–372, 2004.</mixed-citation>
+         </ref>
+         <ref id="R21">
+            <mixed-citation>[21] J. Xie, S. Kelley, and B. K. Szymanski. Overlapping community detection in networks: the state of the art and comparative study. CoRR , abs/1110.5813, 2011.  59</mixed-citation>
+         </ref>
+      </ref-list>
+   </back>
+</article>
