@@ -31,7 +31,7 @@ public class Demos
 	// public static File inputDirTxt = new File("D:/output/methods/Cermine");
 
 	public static File cermineOutputDir = Config.cermineOutputDir;
-	public static File grobIdOutputDir = Config.grobIdOutputDir;
+	public static File grobIdOutputDir = Config.grobidOutputDir;
 	public static File parsCitOutputDir = Config.parsCitOutputDir;
 	public static File pdfxOutputDir = Config.pdfxOutputDir;
 	public static File[] outputDirs = {cermineOutputDir, grobIdOutputDir, parsCitOutputDir, pdfxOutputDir};
@@ -46,17 +46,17 @@ public class Demos
 
 	public static void executeDemos() throws IOException, JAXBException
 	{
-		List<String> idList = Arrays.asList("137078", "138011", "138447", "138544", "138547", "139299", "139761", "139769", "139781", "139785", "140047", "140048", "140229", "140253", "140308", "140533", "140867", "140895", "140983", "141024", "141065", "141121", "141140", "141336", "141618", "141758", "168222", "168482", "169511", "172697", "174216", "175428", "176087", "177140", "179146", "180162", "181199", "182414", "182899", "185321", "185441", "186227", "189842", "191715", "191977", "192724", "194085", "194561", "194660", "197422", "197852", "198400", "198401", "198405", "198408", "200745", "200748", "200948", "200950", "200959", "201066", "201160", "201167", "202034", "225252", "202824", "203409", "203924", "201821", "204724", "205557", "205933", "213513", "216744", "217690", "217971", "221215", "223906", "223973", "226000", "226016", "228620", "231707", "233317", "233657", "236063", "236120", "237297", "240858", "245336", "245799", "247301", "247741", "247743", "251544", "252847", "255712", "256654", "257397", "257870");
+		List<String> idList = Config.groundTruthIds;
 		// List<String> idList = Arrays.asList("200745", "200948", "225252", "201821", "247743");
 
-		boolean runDemos = true;
+		boolean runDemos = false;
 		boolean runCermineDemo = false;
 		boolean runGrobidDemo = false;
 		boolean runParsCitDemo = false;
 		boolean runPdfxDemo = false;
-		boolean runCermineMapper = false;
+		boolean runCermineMapper = true;
 		boolean runGrobidMapper = false;
-		boolean runParsCitMapper = true;
+		boolean runParsCitMapper = false;
 		boolean runPdfxMapper = false;
 		// List<File> groundTruthFiles = getFileById("226016");
 		List<File> groundTruthFiles = getAllGroundTruthFilesByIds(idList);
@@ -113,7 +113,7 @@ public class Demos
 		{
 			String fileName = "TUW-" + string + "-omnipage.xml";
 			File file = new File(inputDir, fileName);
-			System.out.println(file + " " + file.exists());
+			// System.out.println(file + " " + file.exists());
 			list.add(file);
 		}
 
@@ -128,7 +128,7 @@ public class Demos
 		{
 			String fileName = "TUW-" + string + ".pdf";
 			File file = new File(inputDir, fileName);
-			System.out.println(file + " " + file.exists());
+			// System.out.println(file + " " + file.exists());
 			list.add(file);
 		}
 
