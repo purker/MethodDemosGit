@@ -47,6 +47,7 @@ import com.itextpdf.text.pdf.PdfReader;
 
 import config.Config;
 import demos.Demos;
+import evaluation.tools.EvalInformationType;
 import factory.PublicationFactory;
 import mapping.Worker;
 import mapping.cermine.ReferenceAuthorNameConcatenationWorker;
@@ -65,6 +66,7 @@ import mapping.result.AbstractMetaPublication;
 import mapping.result.Affiliation;
 import mapping.result.Author;
 import mapping.result.Publication;
+import mapping.result.PublicationType;
 import mapping.result.Reference;
 import mapping.result.ReferenceAuthor;
 import mapping.result.ReferenceCitation;
@@ -136,11 +138,16 @@ public class StepsHistory
 	private static File file40pdfx = new File("D:/output/methods/pdfx/pdfx-TUW-174216.xml");
 	private static File file41 = new File("D:/output/methods/resultsource/result-TUW-175428-xstream.xml");
 	private static File file42 = new File("D:/output/methods/resultsource/result-TUW-177140-xstream.xml");
-	private static List<String> idList = Arrays.asList("137078", "138011", "138447", "138544", "138547", "139299", "139761", "139769", "139781", "139785", "140047", "140048", "140229", "140253", "140308", "140533", "140867", "140895", "140983", "141024", "141065", "141121", "141140", "141336", "141618", "141758", "168222", "168482", "169511", "172697", "174216", "175428", "176087", "177140", "179146", "180162", "181199", "182414", "182899", "185321", "185441", "186227", "189842", "191715", "191977", "192724", "194085", "194561", "194660", "197422", "197852", "198400", "198401", "198405", "198408", "200745", "200748", "200948", "200950", "200959", "201066", "201160", "201167", "202034", "225252", "202824", "203409", "203924", "201821", "204724", "205557", "205933", "213513", "216744", "217690", "217971", "221215", "223906", "223973", "226000", "226016", "228620", "231707", "233317", "233657", "236063", "236120", "237297", "240858", "245336", "245799", "247301", "247741", "247743", "251544", "252847", "255712", "256654", "257397", "257870");
+	private static List<String> idList = Config.groundTruthIds;
 
 	public static void main(String[] args) throws Exception
 	{
-		keywordsToKeywordsList();
+		setPublicationTypeFromMap(FileCollectionUtil.getResultFiles());
+		// rewriteXStreamFiles(FileCollectionUtil.getResultFiles());
+		// searchNotEmpty(FileCollectionUtil.getGrobidResultFiles(), EvalInformationType.DOI);
+		// useWorkerFiles(FileCollectionUtil.getResultFiles(), new AffiliationCollectorWorker());
+		// useWorkerFiles(FileCollectionUtil.getCermineResultFiles(), new AffiliationCollectorWorker());
+		// keywordsToKeywordsList();
 		// findNotProcessedParscitFiles();
 		// setRefCounter(file28_247743, (-1), 18, true, true);
 		// checkAllGroundTruthAreInIdList();
@@ -298,6 +305,59 @@ public class StepsHistory
 		// setRefCounter(result15_182899, (2), null);
 		// changeSectionReferenceIdsToIdsWithMarker(result15_182899);
 		// removeMarkersFromIds(result15_182899);
+	}
+
+	private static void setPublicationTypeFromMap(List<File> resultFiles)
+	{
+		Map<String, PublicationType> map = new HashMap();
+		map = GroundTruthMap.addtoMap(map);
+
+		for(File file : resultFiles)
+		{
+			try
+			{
+				Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
+
+				PublicationType type = map.get(publication.getId());
+
+				if(type != null)
+				{
+					publication.setPublicationType(type);
+					System.err.println("type found for " + publication.getId() + " " + type);
+				}
+				else
+				{
+					System.err.println("no type found for " + publication.getId());
+				}
+
+				XStreamUtil.convertToXmL(publication, file, System.out, true);
+			}
+			catch(Exception e)
+			{
+				System.out.println(file);
+				e.printStackTrace();
+				break;
+			}
+		}
+
+	}
+
+	private static void searchNotEmpty(List<File> files, EvalInformationType source)
+	{
+		for(File file : files)
+		{
+			Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
+
+			if(source == EvalInformationType.DOI && publication.getDoi() != null)
+			{
+				System.out.println(publication.getId());
+			}
+			if(source == EvalInformationType.SOURCE && publication.getSource() != null)
+			{
+				System.out.println(publication.getId());
+			}
+
+		}
 	}
 
 	private static void keywordsToKeywordsList()
@@ -1609,10 +1669,18 @@ public class StepsHistory
 		}
 	}
 
+	private static void useWorkerFiles(List<File> files, Worker worker)
+	{
+		for(File file : files)
+		{
+			useWorkerFile(file, worker);
+		}
+	}
+
 	private static void useWorkerFile(File file, Worker worker)
 	{
-		AbstractMetaPublication publication = XStreamUtil.convertFromXML(file, Publication.class);
-		// worker.doWork(publication);
+		Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
+		worker.doWork(publication);
 		XStreamUtil.convertToXmL(publication, file, System.out, true);
 	}
 
@@ -1705,9 +1773,9 @@ public class StepsHistory
 		return new File(groundTruthNoSubdir, id + ".pdf");
 	}
 
-	private static void rewriteXStreamFiles(File directory)
+	private static void rewriteXStreamFiles(List<File> list)
 	{
-		for(File file : directory.listFiles())
+		for(File file : list)
 		{
 			try
 			{
