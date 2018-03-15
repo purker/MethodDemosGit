@@ -19,13 +19,22 @@
 package evaluation;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
-import config.Config;
+import evaluation.tools.EvalInformationType;
+import method.Method;
 import utils.FileCollectionUtil;
 
 public class CermineXStreamFileEvaluator extends SystemEvaluator
 {
+	private static final Method METHOD = Method.CERMINE;
+
+	public CermineXStreamFileEvaluator(ArrayList<EvalInformationType> types)
+	{
+		super(types);
+	}
+
 	@Override
 	protected List<File> getExtractedFiles()
 	{
@@ -33,8 +42,9 @@ public class CermineXStreamFileEvaluator extends SystemEvaluator
 	}
 
 	@Override
-	public File getCSVFile()
+	protected Method getMethod()
 	{
-		return Config.cermineCSVFile;
+		return METHOD;
 	}
+
 }

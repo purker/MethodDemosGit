@@ -19,13 +19,22 @@
 package evaluation;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
-import config.Config;
+import evaluation.tools.EvalInformationType;
+import method.Method;
 import utils.FileCollectionUtil;
 
 public class PdfxXStreamFileEvaluator extends SystemEvaluator
 {
+	private static final Method METHOD = Method.PDFX;
+
+	public PdfxXStreamFileEvaluator(ArrayList<EvalInformationType> types)
+	{
+		super(types);
+	}
+
 	@Override
 	protected List<File> getExtractedFiles()
 	{
@@ -33,8 +42,8 @@ public class PdfxXStreamFileEvaluator extends SystemEvaluator
 	}
 
 	@Override
-	public File getCSVFile()
+	protected Method getMethod()
 	{
-		return Config.pdfxCSVFile;
+		return METHOD;
 	}
 }
