@@ -23,6 +23,8 @@ import mapping.result.Section;
 
 public class XStreamUtil
 {
+	private static final String[] fieldOrder = new String[]{"serialVersionUID", "id", "marker", "title", "editor", "source", "publisher", "authors", "edition", "location", "volume", "issue", "chapter", "note", "pageFrom", "pageTo", "publicationDateString", "publicationDay", "publicationMonth", "publicationYear", "publicationDate", "doi", "type", "url"};
+
 	public static void convertToXmL(Object object, File file, PrintStream out, boolean exitOnError)
 	{
 		try
@@ -56,7 +58,7 @@ public class XStreamUtil
 		// sorter.registerFieldOrder(Reference.class, new String[]
 		// {"serialVersionUID", "id", "marker", "authors", "title", "editor", "source", "edition", "publisher", "location", "volume", "issue", "pageFrom", "pageTo", "publicationDateString",
 		// "publicationDay", "publicationMonth", "publicationYear", "publicationDate", "doi", "type", "url", "note"});
-		sorter.registerFieldOrder(Reference.class, new String[]{"serialVersionUID", "id", "marker", "title", "editor", "source", "publisher", "authors", "edition", "location", "volume", "issue", "chapter", "note", "pageFrom", "pageTo", "publicationDateString", "publicationDay", "publicationMonth", "publicationYear", "publicationDate", "doi", "type", "url"});
+		sorter.registerFieldOrder(Reference.class, fieldOrder);
 
 		XStream xStream = new XStream(new SunUnsafeReflectionProvider(new FieldDictionary(sorter)), new DomDriver(StandardCharsets.UTF_8.name()));
 
