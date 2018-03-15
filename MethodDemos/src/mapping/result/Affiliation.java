@@ -1,7 +1,5 @@
 package mapping.result;
 
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-
 public class Affiliation extends BaseEntity
 {
 	private static final long serialVersionUID = -3698496426249593692L;
@@ -90,27 +88,27 @@ public class Affiliation extends BaseEntity
 		{
 			if(other.country != null) return false;
 		}
-		else if(!country.equals(other.country)) return false;
+		else
+			if(!country.equals(other.country)) return false;
 		if(countryCode == null)
 		{
 			if(other.countryCode != null) return false;
 		}
-		else if(!countryCode.equals(other.countryCode)) return false;
+		else
+			if(!countryCode.equals(other.countryCode)) return false;
 		if(department == null)
 		{
 			if(other.department != null) return false;
 		}
-		else if(!department.equals(other.department)) return false;
+		else
+			if(!department.equals(other.department)) return false;
 		if(institution == null)
 		{
 			if(other.institution != null) return false;
 		}
-		else if(!institution.equals(other.institution)) return false;
+		else
+			if(!institution.equals(other.institution)) return false;
 		return true;
 	}
 
-	public String getRawText()
-	{
-		return new ReflectionToStringBuilder(this).toString();
-	}
 }

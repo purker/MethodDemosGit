@@ -11,6 +11,7 @@ public class Author extends AbstractAuthor
 
 	private String type;
 	private List<Affiliation> affiliations = new ArrayList<>();
+	// TODO public Affiliation affiliation;
 
 	public String getEmail()
 	{

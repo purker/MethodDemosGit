@@ -25,7 +25,7 @@ import mapping.result.Publication;
 public class AffiliationWorker extends Worker
 {
 	@Override
-	protected void doWork(Publication publication)
+	public void doWork(Publication publication)
 	{
 		List<Affiliation> existedList = new ArrayList<>();
 		for(Author author : publication.getAuthors())

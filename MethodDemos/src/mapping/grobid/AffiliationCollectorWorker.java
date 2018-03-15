@@ -1,14 +1,13 @@
 package mapping.grobid;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.Collection;
 
 import mapping.Worker;
 import mapping.result.Affiliation;
-import mapping.result.Author;
 import mapping.result.Publication;
 import utils.CollectionUtil;
+import utils.PublicationUtil;
 
 /**
  * Sets publication.affiliations to collection of all author.publications
@@ -16,19 +15,10 @@ import utils.CollectionUtil;
 public class AffiliationCollectorWorker extends Worker
 {
 	@Override
-	protected void doWork(Publication publication)
+	public void doWork(Publication publication)
 	{
-		Set<Affiliation> affiliations = new LinkedHashSet<>();
-		for(Author author : publication.getAuthors())
-		{
-			if(author.getAffiliations() != null)
-			{
-				for(Affiliation affiliation : author.getAffiliations())
-				{
-					affiliations.add(affiliation);
-				}
-			}
-		}
+		Collection<Affiliation> affiliations = PublicationUtil.getDistinctAffiliations(publication);
+
 		if(CollectionUtil.isNotEmpty(affiliations))
 		{
 			publication.setAffiliations(new ArrayList<>(affiliations));
