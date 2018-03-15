@@ -3,10 +3,9 @@ package mapping.result;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import utils.PublicationUtil;
+import utils.StringUtil;
 
 public class Reference extends AbstractMetaPublication
 {
@@ -17,11 +16,8 @@ public class Reference extends AbstractMetaPublication
 
 	private List<ReferenceAuthor> authors = new ArrayList<>();
 	private String publisher;
-	private String location;
 	private String editor;
 	private String type; // book, colletion, inproceedings, ...
-
-	private String note;
 
 	public String getMarker()
 	{
@@ -31,16 +27,6 @@ public class Reference extends AbstractMetaPublication
 	public void setMarker(String marker)
 	{
 		this.marker = marker;
-	}
-
-	public String getLocation()
-	{
-		return location;
-	}
-
-	public void setLocation(String location)
-	{
-		this.location = location;
 	}
 
 	public String getPublisher()
@@ -83,63 +69,55 @@ public class Reference extends AbstractMetaPublication
 		this.authors = authors;
 	}
 
-	public String getNote()
-	{
-		return note;
-	}
-
-	public void setNote(String note)
-	{
-		this.note = note;
-	}
-
 	@Override
 	public String toString()
 	{
-		return new ReflectionToStringBuilder(this, new ToStringStyle()
-		{
-			private static final long serialVersionUID = -6243515731657791041L;
+		return StringUtil.getAllValuesOfObject(this);
 
-			@SuppressWarnings("unchecked")
-			@Override
-			public void append(StringBuffer buffer, String fieldName, Object value, Boolean fullDetail)
-			{
-				// boolean isEmptyList = value instanceof List;
-				// System.out.println(isEmptyList + " " + fieldName + isFullDetail(fullDetail));
-
-				if(value != null)
-				{
-					if(fieldName.equals("authors"))
-					{
-						if(!((List<?>)value).isEmpty())
-						{
-							// appendFieldStart(buffer, fieldName);
-							value = PublicationUtil.concatinateAllAuthorNames((List<ReferenceAuthor>)value);
-							appendInternal(buffer, fieldName, value, isFullDetail(fullDetail));
-							appendFieldEnd(buffer, fieldName);
-						}
-					}
-					else
-					{
-						// appendFieldStart(buffer, fieldName);
-						appendInternal(buffer, fieldName, value, isFullDetail(fullDetail));
-						appendFieldEnd(buffer, fieldName);
-					}
-				}
-			}
-
-			@Override
-			public void appendStart(StringBuffer buffer, Object object)
-			{
-
-			}
-
-			@Override
-			public void appendEnd(StringBuffer buffer, Object object)
-			{
-
-			}
-		}).toString();
+		// return new ReflectionToStringBuilder(this, new ToStringStyle()
+		// {
+		// private static final long serialVersionUID = -6243515731657791041L;
+		//
+		// @SuppressWarnings("unchecked")
+		// @Override
+		// public void append(StringBuffer buffer, String fieldName, Object value, Boolean fullDetail)
+		// {
+		// // boolean isEmptyList = value instanceof List;
+		// // System.out.println(isEmptyList + " " + fieldName + isFullDetail(fullDetail));
+		//
+		// if(value != null)
+		// {
+		// if(fieldName.equals("authors"))
+		// {
+		// if(!((List<?>)value).isEmpty())
+		// {
+		// // appendFieldStart(buffer, fieldName);
+		// value = PublicationUtil.concatinateAllAuthorNames((List<ReferenceAuthor>)value);
+		// appendInternal(buffer, fieldName, value, isFullDetail(fullDetail));
+		// appendFieldEnd(buffer, fieldName);
+		// }
+		// }
+		// else
+		// {
+		// // appendFieldStart(buffer, fieldName);
+		// appendInternal(buffer, fieldName, value, isFullDetail(fullDetail));
+		// appendFieldEnd(buffer, fieldName);
+		// }
+		// }
+		// }
+		//
+		// @Override
+		// public void appendStart(StringBuffer buffer, Object object)
+		// {
+		//
+		// }
+		//
+		// @Override
+		// public void appendEnd(StringBuffer buffer, Object object)
+		// {
+		//
+		// }
+		// }).toString();
 	}
 
 	public final static class NotNullToStringStyle extends ToStringStyle

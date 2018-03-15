@@ -7,6 +7,7 @@ public class Publication extends AbstractMetaPublication
 {
 	private static final long serialVersionUID = 8605009499117151049L;
 
+	private PublicationType publicationType;
 	private String abstractText;
 	private String abstractTextGerman;
 	// private String keywords; // with "; " as delimiter
@@ -18,16 +19,14 @@ public class Publication extends AbstractMetaPublication
 	private List<CitationContext> citationContexts = new ArrayList<>();
 	private List<Reference> references = new ArrayList<>();
 
-	@Override
-	public String getTitle()
+	public PublicationType getPublicationType()
 	{
-		return title;
+		return publicationType;
 	}
 
-	@Override
-	public void setTitle(String title)
+	public void setPublicationType(PublicationType publicationType)
 	{
-		this.title = title;
+		this.publicationType = publicationType;
 	}
 
 	public String getAbstractText()
@@ -78,30 +77,6 @@ public class Publication extends AbstractMetaPublication
 	public void setAffiliations(List<Affiliation> affiliations)
 	{
 		this.affiliations = affiliations;
-	}
-
-	@Override
-	public String getSource()
-	{
-		return source;
-	}
-
-	@Override
-	public void setSource(String source)
-	{
-		this.source = source;
-	}
-
-	@Override
-	public String getEdition()
-	{
-		return edition;
-	}
-
-	@Override
-	public void setEdition(String edition)
-	{
-		this.edition = edition;
 	}
 
 	public List<Section> getSections()
