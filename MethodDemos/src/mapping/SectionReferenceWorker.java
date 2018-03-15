@@ -18,7 +18,7 @@ public class SectionReferenceWorker extends Worker
 	}
 
 	@Override
-	protected void doWork(Publication publication)
+	public void doWork(Publication publication)
 	{
 		// Map<String, Reference> referenceMap = publication.getReferences().stream().collect(Collectors.toMap(Reference::getId, Function.identity()));
 

@@ -9,7 +9,7 @@ public class SectionTypeNormalizerWorker extends Worker
 {
 
 	@Override
-	protected void doWork(Publication publication)
+	public void doWork(Publication publication)
 	{
 		for(Section section : publication.getSections())
 		{

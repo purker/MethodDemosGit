@@ -24,6 +24,7 @@ import org.eclipse.persistence.jaxb.JAXBMarshaller;
 import org.eclipse.persistence.jaxb.JAXBUnmarshaller;
 
 import mapping.result.Publication;
+import method.Method;
 import utils.CollectionUtil;
 import utils.PublicationUtil;
 import utils.XStreamUtil;
@@ -44,8 +45,7 @@ public abstract class Mapper
 
 		try
 		{
-			jc = (JAXBContext)JAXBContextFactory.createContext(new Class[]
-			{Publication.class}, properties);
+			jc = (JAXBContext)JAXBContextFactory.createContext(new Class[]{Publication.class}, properties);
 		}
 		catch(JAXBException e)
 		{
@@ -70,7 +70,7 @@ public abstract class Mapper
 			@Override
 			public boolean accept(File file, String fileName)
 			{
-				return fileName.startsWith(getMethodName()) && fileName.endsWith(".xml");
+				return fileName.startsWith(getMethod().getName()) && fileName.endsWith(".xml");
 			}
 		}));
 		unmarshallFiles(inputFiles);
@@ -95,7 +95,7 @@ public abstract class Mapper
 				public boolean accept(File file, String fileName)
 				{
 					String id = PublicationUtil.getIdFromFileNameWithoutPrefix(fileName);
-					return fileName.startsWith(getMethodName()) && idList.contains(id) && fileName.endsWith(".xml") && !fileName.endsWith("xstream.xml");
+					return fileName.startsWith(getMethod().getName()) && idList.contains(id) && fileName.endsWith(".xml") && !fileName.endsWith("xstream.xml");
 				}
 			}));
 			unmarshallFiles(inputFiles);
@@ -134,12 +134,12 @@ public abstract class Mapper
 
 	private File getErrorFile(String id)
 	{
-		return new File(getDirectory(), getMethodName() + "-" + id + "-mapping.errxml");
+		return new File(getDirectory(), getMethod().getName() + "-" + id + "-mapping.errxml");
 	}
 
 	private File getOutputFile(String id)
 	{
-		return new File(getDirectory(), getMethodName() + "-" + id + "-xstream.xml");
+		return new File(getDirectory(), getMethod().getName() + "-" + id + "-xstream.xml");
 	}
 
 	protected void unmarshallToXmlFile(File inputFileXML, File outputFileObjectAsXML) throws JAXBException, XMLStreamException
@@ -207,7 +207,7 @@ public abstract class Mapper
 
 	protected abstract String getBindingFile();
 
-	protected abstract String getMethodName();
+	protected abstract Method getMethod();
 
 	protected abstract File getDirectory();
 

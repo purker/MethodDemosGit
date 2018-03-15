@@ -2,12 +2,17 @@ package utils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import mapping.result.AbstractAuthor;
 import mapping.result.AbstractMetaPublication;
+import mapping.result.Affiliation;
+import mapping.result.Author;
 import mapping.result.Publication;
 import mapping.result.Reference;
 
@@ -94,14 +99,15 @@ public class PublicationUtil
 			{
 				return authors.get(0).getLastName();
 			}
-			else if(authors.size() == 2)
-			{
-				return authors.get(0).getLastName() + " and " + authors.get(1).getLastName();
-			}
 			else
-			{
-				return authors.get(0).getLastName() + " et al.";
-			}
+				if(authors.size() == 2)
+				{
+					return authors.get(0).getLastName() + " and " + authors.get(1).getLastName();
+				}
+				else
+				{
+					return authors.get(0).getLastName() + " et al.";
+				}
 		}
 
 		return null;
@@ -123,18 +129,20 @@ public class PublicationUtil
 			{
 				return authors.get(0).getLastName();
 			}
-			else if(authors.size() == 2)
-			{
-				return authors.get(0).getLastName() + " and " + authors.get(1).getLastName();
-			}
-			else if(authors.size() == 3)
-			{
-				return authors.get(0).getLastName() + ", " + authors.get(1).getLastName() + ", and " + authors.get(2).getLastName();
-			}
 			else
-			{
-				return authors.get(0).getLastName() + " et al.";
-			}
+				if(authors.size() == 2)
+				{
+					return authors.get(0).getLastName() + " and " + authors.get(1).getLastName();
+				}
+				else
+					if(authors.size() == 3)
+					{
+						return authors.get(0).getLastName() + ", " + authors.get(1).getLastName() + ", and " + authors.get(2).getLastName();
+					}
+					else
+					{
+						return authors.get(0).getLastName() + " et al.";
+					}
 		}
 
 		return null;
@@ -176,5 +184,21 @@ public class PublicationUtil
 	public static String getConcatinatedLastNamesOfAuthors(Reference reference)
 	{
 		return getConcatinatedLastNamesOfAuthors(reference.getAuthors());
+	}
+
+	public static Collection<Affiliation> getDistinctAffiliations(Publication publication)
+	{
+		Set<Affiliation> affiliations = new LinkedHashSet<>();
+		for(Author author : publication.getAuthors())
+		{
+			if(author.getAffiliations() != null)
+			{
+				for(Affiliation affiliation : author.getAffiliations())
+				{
+					affiliations.add(affiliation);
+				}
+			}
+		}
+		return affiliations;
 	}
 }
