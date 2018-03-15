@@ -10,6 +10,7 @@ public class AbstractMetaPublication extends BaseEntity
 	protected String title;
 	protected String source;
 	protected String edition;
+	protected String location;
 	protected String volume;
 	protected String issue;
 	protected String chapter;
@@ -22,6 +23,8 @@ public class AbstractMetaPublication extends BaseEntity
 	protected String publicationMonth;
 	protected String publicationYear; // if null, information found in date
 	protected Date publicationDate;
+
+	protected String note;
 
 	protected String url;
 	protected String doi;
@@ -64,6 +67,16 @@ public class AbstractMetaPublication extends BaseEntity
 	public void setEdition(String edition)
 	{
 		this.edition = edition;
+	}
+
+	public String getLocation()
+	{
+		return location;
+	}
+
+	public void setLocation(String location)
+	{
+		this.location = location;
 	}
 
 	public String getVolume()
@@ -164,6 +177,16 @@ public class AbstractMetaPublication extends BaseEntity
 	public void setPublicationDate(Date publicationDate)
 	{
 		this.publicationDate = publicationDate;
+	}
+
+	public String getNote()
+	{
+		return note;
+	}
+
+	public void setNote(String note)
+	{
+		this.note = note;
 	}
 
 	public String getUrl()
