@@ -19,7 +19,8 @@
 package evaluation.tools;
 
 import java.io.IOException;
-import java.io.OutputStreamWriter;
+
+import com.opencsv.CSVWriter;
 
 /**
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
@@ -52,6 +53,7 @@ public interface SingleInformationDocResult<T>
 
 	void prettyPrint();
 
-	void printCSV(OutputStreamWriter csvWriter) throws IOException;
+	// TODO
+	String printCSV(CSVWriter csvWriter) throws IOException;
 
 }

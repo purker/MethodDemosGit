@@ -86,4 +86,10 @@ public class PublicationPair
 		this.extractedFile = extractedFile;
 	}
 
+	@Override
+	public String toString()
+	{
+		return originalFile + " " + extractedFile;
+	}
+
 }

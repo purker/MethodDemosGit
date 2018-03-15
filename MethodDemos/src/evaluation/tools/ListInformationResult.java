@@ -120,14 +120,15 @@ public class ListInformationResult extends AbstractSingleInformationDocResult<Li
 			{
 				System.out.print("null");
 			}
-			else if(!hasExtracted() || !hasExpected())
-			{
-				System.out.print("0");
-			}
 			else
-			{
-				System.out.print(getF1());
-			}
+				if(!hasExtracted() || !hasExpected())
+				{
+					System.out.print("0");
+				}
+				else
+				{
+					System.out.print(getF1());
+				}
 			System.out.print(",");
 		}
 	}

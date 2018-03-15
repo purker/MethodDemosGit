@@ -35,8 +35,6 @@ import utils.XStreamUtil;
  */
 public class PublicationIterator implements Iterable<PublicationPair>
 {
-	private int curItemIdx = -1;
-
 	private List<PublicationPair> entries = new ArrayList<>();
 
 	public PublicationIterator(Publication pub1, Publication pub2)
