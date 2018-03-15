@@ -18,16 +18,15 @@ package evaluation;
  */
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.lang.StringUtils;
-
+import evaluation.tools.AbstractSingleInformationDocResult;
 import evaluation.tools.DocumentSetResult;
 import evaluation.tools.EvalInformationType;
 import evaluation.tools.ListInformationResult;
@@ -41,21 +40,26 @@ import mapping.result.Author;
 import mapping.result.Publication;
 import mapping.result.Reference;
 import mapping.result.Section;
+import method.Method;
 import pl.edu.icm.cermine.evaluation.exception.EvaluationException;
 import utils.CollectionUtil;
 import utils.FileCollectionUtil;
 
 public abstract class SystemEvaluator
 {
-	private static final EvaluationMode EVALUATION_MODE = EvaluationMode.CSV;
-
-	public static final String CSV_DELIMITER = ";";
-
 	protected PublicationIterator iter;
+	protected Collection<EvalInformationType> types;
+	private PrintStream fieldDiffWriter;
 
 	public SystemEvaluator()
 	{
 		this.iter = new PublicationIterator(getOriginalFiles(), getExtractedFiles());
+	}
+
+	public SystemEvaluator(Collection<EvalInformationType> types)
+	{
+		this();
+		this.types = types;
 	}
 
 	protected List<File> getOriginalFiles()
@@ -65,29 +69,19 @@ public abstract class SystemEvaluator
 
 	protected abstract List<File> getExtractedFiles();
 
-	public void evaluate() throws EvaluationException, IOException
+	public void evaluate(List<EvaluationMode> modes) throws EvaluationException, IOException
 	{
-		EvaluationMode mode = EVALUATION_MODE;
-		evaluate(mode, iter);
+		evaluate(modes, iter);
 	}
 
-	protected ArrayList<EvalInformationType> getTypes()
+	protected Collection<EvalInformationType> getTypes()
 	{
-		return Evaluators.getTypes();
+		return this.types;
 	}
 
-	public DocumentSetResult evaluate(EvaluationMode mode, PublicationIterator files) throws EvaluationException, IOException
+	public DocumentSetResult evaluate(List<EvaluationMode> modes, PublicationIterator files) throws EvaluationException, IOException
 	{
-		DocumentSetResult results = new DocumentSetResult(getTypes());
-
-		// only for csv mode
-		File csvFile = getCSVFile();
-		FileWriter csvWriter = new FileWriter(csvFile);
-
-		if(mode == EvaluationMode.CSV)
-		{
-			csvWriter.write("path" + CSV_DELIMITER + StringUtils.join(getTypes(), CSV_DELIMITER) + "\n");
-		}
+		DocumentSetResult results = new DocumentSetResult(modes, getMethod(), getTypes());
 
 		int i = 0;
 		for(PublicationPair pair : files)
@@ -110,230 +104,228 @@ public abstract class SystemEvaluator
 
 			for(EvalInformationType type : getTypes())
 			{
-				switch(type)
-				{
-					case TITLE:
-						results.addResult(id, new SimpleInformationResult(type, origPub.getTitle(), testPub.getTitle()));
-						break;
-					case ABSTRACT:
-						results.addResult(id, new SimpleInformationResult(type, origPub.getAbstractText(), testPub.getAbstractText()));
-						break;
-					case ABSTRACTGERMAN:
-						results.addResult(id, new SimpleInformationResult(type, origPub.getAbstractTextGerman(), testPub.getAbstractTextGerman()));
-						break;
-					case KEYWORDS:
-						List<String> origKeywords = new ArrayList<>();
-						List<String> testKeywords = new ArrayList<>();
-
-						if(origPub.getKeywords() != null)
-						{
-							origKeywords = Arrays.asList(origPub.getKeywords().split(Publication.KEYWORD_DELIMITER));
-						}
-						if(testPub.getKeywords() != null)
-						{
-							testKeywords = Arrays.asList(testPub.getKeywords().split(Publication.KEYWORD_DELIMITER));
-						}
-						results.addResult(id, new ListInformationResult(type, origKeywords, testKeywords));
-						break;
-					case AUTHORS:
-						List<String> authorOrig = new ArrayList<>();
-						for(Author author : origPub.getAuthors())
-						{
-							authorOrig.add(author.getName());
-						}
-						List<String> authorTest = new ArrayList<>();
-						for(Author author : testPub.getAuthors())
-						{
-							authorTest.add(author.getName());
-						}
-						results.addResult(id, new ListInformationResult(type, authorOrig, authorTest));
-						break;
-					case AFFILIATIONS:
-						List<String> affOrig = new ArrayList<>();
-						for(Affiliation aff : CollectionUtil.emptyIfNull(origPub.getAffiliations()))
-						{
-							affOrig.add(aff.getRawText());
-						}
-						List<String> affTest = new ArrayList<>();
-						for(Affiliation aff : CollectionUtil.emptyIfNull(testPub.getAffiliations()))
-						{
-							affTest.add(aff.getRawText());
-						}
-						results.addResult(id, new ListInformationResult(type, affOrig, affTest));
-						break;
-					case AUTHOR_AFFILIATIONS:
-						Set<StringRelation> relOrig = new HashSet<>();
-						for(Author author : CollectionUtil.emptyIfNull(origPub.getAuthors()))
-						{
-							for(Affiliation aff : CollectionUtil.emptyIfNull(author.getAffiliations()))
-							{
-								relOrig.add(new StringRelation(author.getName(), aff.getRawText()));
-							}
-						}
-						Set<StringRelation> relTest = new HashSet<>();
-						for(Author author : CollectionUtil.emptyIfNull(testPub.getAuthors()))
-						{
-							for(Affiliation aff : CollectionUtil.emptyIfNull(author.getAffiliations()))
-							{
-								relTest.add(new StringRelation(author.getName(), aff.getRawText()));
-							}
-
-						}
-						results.addResult(id, new RelationInformationResult(type, relOrig, relTest));
-						break;
-					case EMAILS:
-					{
-						List<String> emailsOrig = new ArrayList<>();
-						List<String> emailsTest = new ArrayList<>();
-						for(Author author : origPub.getAuthors())
-						{
-							if(author.getEmail() != null)
-							{
-								emailsOrig.add(author.getEmail());
-							}
-						}
-						for(Author author : testPub.getAuthors())
-						{
-							if(author.getEmail() != null)
-							{
-								emailsTest.add(author.getEmail());
-							}
-						}
-						results.addResult(id, new ListInformationResult(type, emailsOrig, emailsTest));
-					}
-						break;
-					case AUTHOR_EMAILS:
-						Set<StringRelation> emailsOrig = new HashSet<>();
-						for(Author author : origPub.getAuthors())
-						{
-							emailsOrig.add(new StringRelation(author.getName(), author.getEmail()));
-						}
-						Set<StringRelation> emailsTest = new HashSet<>();
-						for(Author author : testPub.getAuthors())
-						{
-							emailsTest.add(new StringRelation(author.getName(), author.getEmail()));
-						}
-						results.addResult(id, new RelationInformationResult(type, emailsOrig, emailsTest));
-						break;
-					case SOURCE:
-						results.addResult(id, new SimpleInformationResult(type, origPub.getSource(), testPub.getSource()));
-						break;
-					case VOLUME:
-						results.addResult(id, new SimpleInformationResult(type, origPub.getVolume(), testPub.getVolume()));
-						break;
-					case ISSUE:
-						results.addResult(id, new SimpleInformationResult(type, origPub.getIssue(), testPub.getIssue()));
-						break;
-					case PAGE_FROM:
-						results.addResult(id, new SimpleInformationResult(type, origPub.getPageFrom(), testPub.getPageFrom()));
-						break;
-					case PAGE_TO:
-						results.addResult(id, new SimpleInformationResult(type, origPub.getPageTo(), testPub.getPageTo()));
-						break;
-					case YEAR:
-						String origYear = null;
-						if(origPub.getPublicationYear() != null)
-						{
-							origYear = origPub.getPublicationYear();
-						}
-						String testYear = null;
-						if(testPub.getPublicationYear() != null)
-						{
-							testYear = origPub.getPublicationYear();
-						}
-						results.addResult(id, new SimpleInformationResult(type, origYear, testYear));
-						break;
-					case DOI:
-						results.addResult(id, new SimpleInformationResult(type, origPub.getDoi(), testPub.getDoi()));
-						break;
-					case SECTIONS:
-						List<String> headerOrig = new ArrayList<>();
-						for(Section section : origPub.getSections())
-						{
-							headerOrig.add(section.getTitle());
-						}
-						List<String> headerTest = new ArrayList<>();
-						for(Section section : testPub.getSections())
-						{
-							headerTest.add(section.getTitle());
-						}
-						results.addResult(id, new ListInformationResult(type, headerOrig, headerTest));
-						break;
-					case SECTION_LEVELS:
-						Set<StringRelation> headersOrig = new HashSet<>();
-						for(Section section : origPub.getSections())
-						{
-							headersOrig.add(new StringRelation(String.valueOf(section.getLevel()), section.getTitle()));
-						}
-						Set<StringRelation> headersTest = new HashSet<>();
-						for(Section section : testPub.getSections())
-						{
-							headersTest.add(new StringRelation(String.valueOf(section.getLevel()), section.getTitle()));
-						}
-						results.addResult(id, new RelationInformationResult(type, headersOrig, headersTest));
-						break;
-					case REFERENCES:
-						List<String> origRefs = new ArrayList<>();
-						for(Reference entry : origPub.getReferences())
-						{
-							origRefs.add(entry.toString());
-						}
-						List<String> testRefs = new ArrayList<>();
-						for(Reference entry : testPub.getReferences())
-						{
-							testRefs.add(entry.toString());
-						}
-						results.addResult(id, new ListInformationResult(type, origRefs, testRefs));
-
-						// List<EvalInformationType> subTypes = EvalInformationType.getSubTypes(EvalInformationType.REFERENCES, getTypes());
-						// DocumentSetResult referenceResults = new DocumentSetResult(subTypes);
-						// for(Reference reference : subTypes)
-						// {
-						//
-						// }
-						// for(EvalInformationType subType : subTypes)
-						// {
-						// switch(subType)
-						// {
-						// case REFERENCE_TITLE:
-						// referenceResults.addResult(reference., new SimpleInformationResult(type, origPub.getTitle(), testPub.getTitle()));
-						// break;
-						// }
-						// }
-
-						break;
-					case REFERENCE_TITLE:
-						results.addResult(id, new SimpleInformationResult(type, origPub.getTitle(), testPub.getTitle()));
-						break;
-				}
+				AbstractSingleInformationDocResult<?> result = getResultFromType(type, origPub, testPub);
+				results.addResult(id, result);
 			}
 
-			if(mode == EvaluationMode.CSV)
+			if(modes.contains(EvaluationMode.SYSOUT_DETAILED))
 			{
-				results.printCSV(id, csvWriter, CSV_DELIMITER);
+				results.printDocument(id, i);
+				// results.printDocumentCSV(id, i, fieldDiffWriter);
 			}
-			else
-				if(mode == EvaluationMode.SYSOUT_DETAILED)
-				{
-					results.printDocument(id, i);
-				}
 		}
+
+		// TODO fieldDiffWriter.flush();
 
 		results.evaluate();
 
-		if(mode != EvaluationMode.CSV)
-		{
-			System.out.println("==== Summary (" + files.size() + " docs)====");
-			for(EvalInformationType type : getTypes())
-			{
-				results.printTypeSummary(type);
-			}
-			results.printTotalSummary();
-		}
+		results.printResults();
+
 		return results;
 	}
 
-	public abstract File getCSVFile();
+	private AbstractSingleInformationDocResult<?> getResultFromType(EvalInformationType type, Publication origPub, Publication testPub) throws EvaluationException
+	{
+		switch(type)
+		{
+			case TITLE:
+				return new SimpleInformationResult(type, origPub.getTitle(), testPub.getTitle());
+
+			case ABSTRACT:
+				return new SimpleInformationResult(type, origPub.getAbstractText(), testPub.getAbstractText());
+
+			case ABSTRACTGERMAN:
+				return new SimpleInformationResult(type, origPub.getAbstractTextGerman(), testPub.getAbstractTextGerman());
+
+			case KEYWORDS:
+				List<String> origKeywords = new ArrayList<>();
+				List<String> testKeywords = new ArrayList<>();
+
+				if(origPub.getKeywords() != null)
+				{
+					origKeywords = origPub.getKeywords();
+				}
+				if(testPub.getKeywords() != null)
+				{
+					testKeywords = testPub.getKeywords();
+				}
+				return new ListInformationResult(type, origKeywords, testKeywords);
+
+			case AUTHORS:
+				List<String> authorOrig = new ArrayList<>();
+				for(Author author : origPub.getAuthors())
+				{
+					authorOrig.add(author.getFullName());
+				}
+				List<String> authorTest = new ArrayList<>();
+				for(Author author : testPub.getAuthors())
+				{
+					authorTest.add(author.getFullName());
+				}
+				return new ListInformationResult(type, authorOrig, authorTest);
+
+			case AFFILIATIONS:
+				List<String> affOrig = new ArrayList<>();
+				for(Affiliation aff : CollectionUtil.emptyIfNull(origPub.getAffiliations()))
+				{
+					// affOrig.add(aff.getRawText());
+				}
+				List<String> affTest = new ArrayList<>();
+				for(Affiliation aff : CollectionUtil.emptyIfNull(testPub.getAffiliations()))
+				{
+					// affTest.add(aff.getRawText());
+				}
+				return new ListInformationResult(type, affOrig, affTest);
+
+			case AUTHOR_AFFILIATIONS:
+				Set<StringRelation> relOrig = new HashSet<>();
+				for(Author author : CollectionUtil.emptyIfNull(origPub.getAuthors()))
+				{
+					for(Affiliation aff : CollectionUtil.emptyIfNull(author.getAffiliations()))
+					{
+						// relOrig.add(new StringRelation(author.getFullName(), aff.getRawText()));
+					}
+				}
+				Set<StringRelation> relTest = new HashSet<>();
+				for(Author author : CollectionUtil.emptyIfNull(testPub.getAuthors()))
+				{
+					for(Affiliation aff : CollectionUtil.emptyIfNull(author.getAffiliations()))
+					{
+						// relTest.add(new StringRelation(author.getFullName(), aff.getRawText()));
+					}
+
+				}
+				return new RelationInformationResult(type, relOrig, relTest);
+
+			case EMAILS:
+			{
+				List<String> emailsOrig = new ArrayList<>();
+				List<String> emailsTest = new ArrayList<>();
+				for(Author author : origPub.getAuthors())
+				{
+					if(author.getEmail() != null)
+					{
+						emailsOrig.add(author.getEmail());
+					}
+				}
+				for(Author author : testPub.getAuthors())
+				{
+					if(author.getEmail() != null)
+					{
+						emailsTest.add(author.getEmail());
+					}
+				}
+				return new ListInformationResult(type, emailsOrig, emailsTest);
+
+			}
+			case AUTHOR_EMAILS:
+				Set<StringRelation> emailsOrig = new HashSet<>();
+				for(Author author : origPub.getAuthors())
+				{
+					emailsOrig.add(new StringRelation(author.getFullName(), author.getEmail()));
+				}
+				Set<StringRelation> emailsTest = new HashSet<>();
+				for(Author author : testPub.getAuthors())
+				{
+					emailsTest.add(new StringRelation(author.getFullName(), author.getEmail()));
+				}
+				return new RelationInformationResult(type, emailsOrig, emailsTest);
+
+			case SOURCE:
+				return new SimpleInformationResult(type, origPub.getSource(), testPub.getSource());
+
+			case VOLUME:
+				return new SimpleInformationResult(type, origPub.getVolume(), testPub.getVolume());
+
+			case ISSUE:
+				return new SimpleInformationResult(type, origPub.getIssue(), testPub.getIssue());
+
+			case PAGE_FROM:
+				return new SimpleInformationResult(type, origPub.getPageFrom(), testPub.getPageFrom());
+
+			case PAGE_TO:
+				return new SimpleInformationResult(type, origPub.getPageTo(), testPub.getPageTo());
+
+			case YEAR:
+				String origYear = null;
+				if(origPub.getPublicationYear() != null)
+				{
+					origYear = origPub.getPublicationYear();
+				}
+				String testYear = null;
+				if(testPub.getPublicationYear() != null)
+				{
+					testYear = origPub.getPublicationYear();
+				}
+				return new SimpleInformationResult(type, origYear, testYear);
+
+			case DOI:
+				return new SimpleInformationResult(type, origPub.getDoi(), testPub.getDoi());
+
+			case SECTIONS:
+				List<String> headerOrig = new ArrayList<>();
+				for(Section section : origPub.getSections())
+				{
+					headerOrig.add(section.getTitle());
+				}
+				List<String> headerTest = new ArrayList<>();
+				for(Section section : testPub.getSections())
+				{
+					headerTest.add(section.getTitle());
+				}
+				return new ListInformationResult(type, headerOrig, headerTest);
+
+			case SECTION_LEVELS:
+				Set<StringRelation> headersOrig = new HashSet<>();
+				for(Section section : origPub.getSections())
+				{
+					headersOrig.add(new StringRelation(String.valueOf(section.getLevel()), section.getTitle()));
+				}
+				Set<StringRelation> headersTest = new HashSet<>();
+				for(Section section : testPub.getSections())
+				{
+					headersTest.add(new StringRelation(String.valueOf(section.getLevel()), section.getTitle()));
+				}
+				return new RelationInformationResult(type, headersOrig, headersTest);
+
+			case REFERENCES:
+				List<String> origRefs = new ArrayList<>();
+				for(Reference entry : origPub.getReferences())
+				{
+					origRefs.add(entry.toString());
+				}
+				List<String> testRefs = new ArrayList<>();
+				for(Reference entry : testPub.getReferences())
+				{
+					testRefs.add(entry.toString());
+				}
+				return new ListInformationResult(type, origRefs, testRefs);
+
+			// List<EvalInformationType> subTypes = EvalInformationType.getSubTypes(EvalInformationType.REFERENCES, getTypes());
+			// DocumentSetResult referenceResults = new DocumentSetResult(subTypes);
+			// for(Reference reference : subTypes)
+			// {
+			//
+			// }
+			// for(EvalInformationType subType : subTypes)
+			// {
+			// switch(subType)
+			// {
+			// case REFERENCE_TITLE:
+			// referenceResults.addResult(reference., new SimpleInformationResult(type, origPub.getTitle(), testPub.getTitle()));
+			//
+			// }
+			// }
+
+			case REFERENCE_TITLE:
+				return new SimpleInformationResult(type, origPub.getTitle(), testPub.getTitle());
+
+			default:
+				throw new EvaluationException("type not known");
+		}
+	}
+
+	abstract Method getMethod();
 
 	// public void process(String[] args) throws EvaluationException
 	// {
