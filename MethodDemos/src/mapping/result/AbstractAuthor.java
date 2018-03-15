@@ -34,8 +34,12 @@ public class AbstractAuthor extends BaseEntity
 		this.lastName = lastName;
 	}
 
-	public String getName()
+	public String getFullName()
 	{
+		if(name != null)
+		{
+			return name;
+		}
 		return PublicationUtil.getNameFromAuthor(this);
 	}
 }

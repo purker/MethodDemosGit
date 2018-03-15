@@ -7,7 +7,7 @@ import config.Config;
 public enum Method
 {
 	CERMINE("cermine", Config.cermineOutputDir),
-	GROBID("grobid", Config.grobIdOutputDir),
+	GROBID("grobid", Config.grobidOutputDir),
 	PARSCIT("parscit", Config.parsCitOutputDir),
 	PDFX("pdfx", Config.pdfxOutputDir);
 
