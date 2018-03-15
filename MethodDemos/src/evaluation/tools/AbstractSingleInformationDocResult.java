@@ -19,7 +19,10 @@
 package evaluation.tools;
 
 import java.io.IOException;
-import java.io.OutputStreamWriter;
+
+import com.opencsv.CSVWriter;
+
+import utils.FormatingUtil;
 
 /**
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
@@ -51,21 +54,21 @@ public abstract class AbstractSingleInformationDocResult<T> implements SingleInf
 	}
 
 	@Override
-	public void printCSV(OutputStreamWriter csvWriter) throws IOException
+	public String printCSV(CSVWriter csvWriter) throws IOException
 	{
 		if(!hasExtracted() && !hasExpected())
 		{
-			csvWriter.write("NA");
+			return "NA";
 		}
 		else
 		{
 			if(!hasExtracted() || !hasExpected())
 			{
-				csvWriter.write("0");
+				return "0";
 			}
 			else
 			{
-				csvWriter.write(getF1().toString());
+				return FormatingUtil.roundAndFormatX100(getF1());
 			}
 		}
 	}
