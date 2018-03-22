@@ -35,10 +35,10 @@ public class RelationInformationResult extends AbstractSingleInformationDocResul
 
 	public RelationInformationResult(EvalInformationType type, Set<StringRelation> expected, Set<StringRelation> extracted) throws EvaluationException
 	{
-		RelationComparators relationComparators = EvalInformationTyeComparatorMapping.getComparatorsByType(type);
+		RelationComparators relationComparators = EvalInformationTypeComparatorMapping.getComparatorsByType(type);
 		if(relationComparators == null)
 		{
-			throw new EvaluationException("comparator for type \"" + type + "\" is not defined (in class " + EvalInformationTyeComparatorMapping.class.getSimpleName() + ")");
+			throw new EvaluationException("comparator for type \"" + type + "\" is not defined (in class " + EvalInformationTypeComparatorMapping.class.getSimpleName() + ")");
 		}
 
 		this.type = type;
@@ -65,9 +65,7 @@ public class RelationInformationResult extends AbstractSingleInformationDocResul
 		{
 			for(StringRelation partExp : tmp)
 			{
-				if(
-				    comp1.compare(partExt.element1, partExp.element1) == 0 && comp2.compare(partExt.element2, partExp.element2) == 0
-				)
+				if(comp1.compare(partExt.element1, partExp.element1) == 0 && comp2.compare(partExt.element2, partExp.element2) == 0)
 				{
 					++correct;
 					tmp.remove(partExp);
@@ -96,9 +94,7 @@ public class RelationInformationResult extends AbstractSingleInformationDocResul
 		{
 			internal: for(StringRelation partExp : tmp)
 			{
-				if(
-				    comp1.compare(partExt.element1, partExp.element1) == 0 && comp2.compare(partExt.element2, partExp.element2) == 0
-				)
+				if(comp1.compare(partExt.element1, partExp.element1) == 0 && comp2.compare(partExt.element2, partExp.element2) == 0)
 				{
 					++correct;
 					tmp.remove(partExp);
@@ -152,9 +148,7 @@ public class RelationInformationResult extends AbstractSingleInformationDocResul
 				return false;
 			}
 			final StringRelation other = (StringRelation)obj;
-			if(
-			    (this.element1 == null) ? (other.element1 != null) : !this.element1.equals(other.element1)
-			)
+			if((this.element1 == null) ? (other.element1 != null) : !this.element1.equals(other.element1))
 			{
 				return false;
 			}

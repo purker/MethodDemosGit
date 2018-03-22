@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EvalInformationTyeComparatorMapping
+public class EvalInformationTypeComparatorMapping
 {
 	private static Map<EvalInformationType, Comparator<String>> map = new HashMap<>();
 	private static Map<EvalInformationType, RelationComparators> relationMap = new HashMap<>();
@@ -17,9 +17,9 @@ public class EvalInformationTyeComparatorMapping
 		map.put(EvalInformationType.KEYWORDS, EvaluationUtils.defaultComparator);
 		map.put(EvalInformationType.AUTHORS, EvaluationUtils.authorComparator);
 		map.put(EvalInformationType.EMAILS, EvaluationUtils.emailComparator);
-		relationMap.put(EvalInformationType.AUTHOR_EMAILS, new RelationComparators(map.get(EvalInformationType.AUTHORS), map.get(EvalInformationType.EMAILS)));
+		relationMap.put(EvalInformationType.AUTHOR_EMAILS, new RelationComparators(map.get(EvalInformationType.AUTHORS), "authors", map.get(EvalInformationType.EMAILS), "emails"));
 		map.put(EvalInformationType.AFFILIATIONS, EvaluationUtils.cosineComparator());
-		relationMap.put(EvalInformationType.AUTHOR_AFFILIATIONS, new RelationComparators(map.get(EvalInformationType.AUTHORS), map.get(EvalInformationType.AFFILIATIONS)));
+		relationMap.put(EvalInformationType.AUTHOR_AFFILIATIONS, new RelationComparators(map.get(EvalInformationType.AUTHORS), "authors", map.get(EvalInformationType.AFFILIATIONS), "affiliations"));
 		map.put(EvalInformationType.SOURCE, EvaluationUtils.journalComparator);
 		map.put(EvalInformationType.VOLUME, EvaluationUtils.defaultComparator);
 		map.put(EvalInformationType.ISSUE, EvaluationUtils.defaultComparator);
@@ -28,9 +28,11 @@ public class EvalInformationTyeComparatorMapping
 		map.put(EvalInformationType.YEAR, EvaluationUtils.defaultComparator);
 		map.put(EvalInformationType.DOI, EvaluationUtils.defaultComparator);
 		map.put(EvalInformationType.SECTIONS, EvaluationUtils.swComparator);
-		// map.put( SECTION_LEVELS, EvaluationUtils.d
-		// relationMap.put(EvalInformationType.SECTION_REFERENCES, new RelationComparators(map.get(EvalInformationType.SECTIONS)));
 		map.put(EvalInformationType.REFERENCES, EvaluationUtils.cosineComparator(.6));
+
+		relationMap.put(EvalInformationType.SECTION_LEVELS, new RelationComparators(map.get(EvalInformationType.SECTIONS), "sections", EvaluationUtils.defaultComparator, "level-default"));
+		relationMap.put(EvalInformationType.SECTION_REFERENCES, new RelationComparators(map.get(EvalInformationType.SECTIONS), "sections", map.get(EvalInformationType.REFERENCES), "references-default"));
+		// relationMap.put(EvalInformationType.SECTION_REFERENCES, new RelationComparators(map.get(EvalInformationType.SECTIONS)));
 		// map.put(EvalInformationType.REFERENCE_AUTHORS, EvaluationUtils.);
 		// map.put(EvalInformationType.REFERENCE_TITLE, EvaluationUtils.);
 		// map.put(EvalInformationType.REFERENCE_SOURCE, EvaluationUtils.);
