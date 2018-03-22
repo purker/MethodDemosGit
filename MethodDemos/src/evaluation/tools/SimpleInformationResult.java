@@ -34,7 +34,7 @@ public class SimpleInformationResult extends AbstractSingleInformationDocResult<
 		this.extractedValue = extractedValue;
 		this.correct = null;
 		this.type = type;
-		this.comp = EvalInformationTyeComparatorMapping.getComparatorByType(type);
+		this.comp = EvalInformationTypeComparatorMapping.getComparatorByType(type);
 	}
 
 	@Override
