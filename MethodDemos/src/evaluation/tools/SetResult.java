@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.opencsv.CSVWriter;
@@ -14,6 +15,11 @@ import utils.CSVWriterUtil;
 import utils.FileCollectionUtil;
 import utils.FormatingUtil;
 
+/**
+ *
+ * @param <T>
+ *            for each distinct key of type <T> the average value of its EvaluationResults will be calculated
+ */
 public class SetResult<T>
 {
 	private Map<T, EvaluationResult> map = new HashMap<>();
@@ -108,6 +114,14 @@ public class SetResult<T>
 
 	public void printKeyEntry(T key)
 	{
+		if(key == null)
+		{
+			System.out.println("key is null");
+		}
+		if(getResultForKey(key) == null)
+		{
+			System.out.println("no value for key "+key + " found");
+		}
 		String precision = getResultForKey(key).getAveragePrecisionFormatted();
 		String recall = getResultForKey(key).getAverageRecallFormatted();
 		String f1 = getResultForKey(key).getAverageF1Formatted();
@@ -134,4 +148,8 @@ public class SetResult<T>
 		csvWriter.flush();
 	}
 
+	public Set<T> getKeysSet()
+	{
+		return map.keySet();
+	}
 }

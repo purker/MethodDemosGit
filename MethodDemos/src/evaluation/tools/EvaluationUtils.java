@@ -111,9 +111,7 @@ public class EvaluationUtils
 			@Override
 			public int compare(String t1, String t2)
 			{
-				if(
-				    new CosineDistance().compare(TextUtils.tokenize(t1), TextUtils.tokenize(t2)) > threshold
-				)
+				if(new CosineDistance().compare(TextUtils.tokenize(t1), TextUtils.tokenize(t2)) > threshold)
 				{
 					return 0;
 				}
@@ -144,9 +142,7 @@ public class EvaluationUtils
 		@Override
 		public int compare(String t1, String t2)
 		{
-			if(
-			    t1.toLowerCase(Locale.ENGLISH).replaceAll("[^a-z]", "").equals(t2.toLowerCase(Locale.ENGLISH).replaceAll("[^a-z]", ""))
-			)
+			if(t1.toLowerCase(Locale.ENGLISH).replaceAll("[^a-z]", "").equals(t2.toLowerCase(Locale.ENGLISH).replaceAll("[^a-z]", "")))
 			{
 				return 0;
 			}
@@ -186,9 +182,7 @@ public class EvaluationUtils
 		@Override
 		public int compare(String t1, String t2)
 		{
-			if(
-			    EvaluationUtils.isSubsequence(t1.toLowerCase(Locale.ENGLISH).replaceAll("[^a-z]", ""), t2.toLowerCase(Locale.ENGLISH).replaceAll("[^a-z]", ""))
-			)
+			if(EvaluationUtils.isSubsequence(t1.toLowerCase(Locale.ENGLISH).replaceAll("[^a-z]", ""), t2.toLowerCase(Locale.ENGLISH).replaceAll("[^a-z]", "")))
 			{
 				return 0;
 			}
@@ -217,9 +211,7 @@ public class EvaluationUtils
 			if((expectedText.length() > 0) && (extractedText.length() > 0))
 			{
 				Option<Object> similarityObject = RatcliffObershelpMetric.compare(expectedText, extractedText);
-				if(
-				    (similarityObject != null) && (similarityObject.get() != null)
-				) similarity = (Double)similarityObject.get();
+				if((similarityObject != null) && (similarityObject.get() != null)) similarity = (Double)similarityObject.get();
 			}
 
 			System.err.println(similarity);
@@ -227,7 +219,8 @@ public class EvaluationUtils
 			{
 				return 0;
 			}
-			else return -1;
+			else
+				return -1;
 		}
 	};
 
@@ -253,9 +246,7 @@ public class EvaluationUtils
 					}
 					String trimmed1 = t1Lines.get(i).trim();
 					String trimmed2 = t2Lines.get(i).trim();
-					if(
-					    t1Lines.get(i).length() - trimmed1.length() != t2Lines.get(i).length() - trimmed2.length()
-					)
+					if(t1Lines.get(i).length() - trimmed1.length() != t2Lines.get(i).length() - trimmed2.length())
 					{
 						return -1;
 					}

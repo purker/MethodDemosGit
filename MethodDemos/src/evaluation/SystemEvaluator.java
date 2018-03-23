@@ -45,6 +45,10 @@ import pl.edu.icm.cermine.evaluation.exception.EvaluationException;
 import utils.CollectionUtil;
 import utils.FileCollectionUtil;
 
+/**
+ * @author Angela
+ *
+ */
 public abstract class SystemEvaluator
 {
 	protected PublicationIterator iter;
@@ -79,6 +83,14 @@ public abstract class SystemEvaluator
 		return this.types;
 	}
 
+	/**
+	 * @param modes
+	 *            which outputs should be generated, if empty -> no output (for test purposes)
+	 * @param files
+	 * @return
+	 * @throws EvaluationException
+	 * @throws IOException
+	 */
 	public DocumentSetResult evaluate(List<EvaluationMode> modes, PublicationIterator files) throws EvaluationException, IOException
 	{
 		DocumentSetResult results = new DocumentSetResult(modes, getMethod(), getTypes());
@@ -105,7 +117,7 @@ public abstract class SystemEvaluator
 			for(EvalInformationType type : getTypes())
 			{
 				AbstractSingleInformationDocResult<?> result = getResultFromType(type, origPub, testPub);
-				results.addResult(id, result);
+				results.addResult(id, result, origPub);
 			}
 
 			if(modes.contains(EvaluationMode.SYSOUT_DETAILED))
@@ -168,12 +180,12 @@ public abstract class SystemEvaluator
 				List<String> affOrig = new ArrayList<>();
 				for(Affiliation aff : CollectionUtil.emptyIfNull(origPub.getAffiliations()))
 				{
-					// affOrig.add(aff.getRawText());
+					affOrig.add(aff.getRawText());
 				}
 				List<String> affTest = new ArrayList<>();
 				for(Affiliation aff : CollectionUtil.emptyIfNull(testPub.getAffiliations()))
 				{
-					// affTest.add(aff.getRawText());
+					affTest.add(aff.getRawText());
 				}
 				return new ListInformationResult(type, affOrig, affTest);
 
@@ -183,7 +195,7 @@ public abstract class SystemEvaluator
 				{
 					for(Affiliation aff : CollectionUtil.emptyIfNull(author.getAffiliations()))
 					{
-						// relOrig.add(new StringRelation(author.getFullName(), aff.getRawText()));
+						relOrig.add(new StringRelation(author.getFullName(), aff.getRawText()));
 					}
 				}
 				Set<StringRelation> relTest = new HashSet<>();
@@ -191,7 +203,7 @@ public abstract class SystemEvaluator
 				{
 					for(Affiliation aff : CollectionUtil.emptyIfNull(author.getAffiliations()))
 					{
-						// relTest.add(new StringRelation(author.getFullName(), aff.getRawText()));
+						relTest.add(new StringRelation(author.getFullName(), aff.getRawText()));
 					}
 
 				}
@@ -279,14 +291,27 @@ public abstract class SystemEvaluator
 				Set<StringRelation> headersOrig = new HashSet<>();
 				for(Section section : origPub.getSections())
 				{
-					headersOrig.add(new StringRelation(String.valueOf(section.getLevel()), section.getTitle()));
+					headersOrig.add(new StringRelation(section.getTitle(), section.getLevel()));
 				}
 				Set<StringRelation> headersTest = new HashSet<>();
 				for(Section section : testPub.getSections())
 				{
-					headersTest.add(new StringRelation(String.valueOf(section.getLevel()), section.getTitle()));
+					headersTest.add(new StringRelation(section.getTitle(), section.getLevel()));
 				}
 				return new RelationInformationResult(type, headersOrig, headersTest);
+
+			case SECTION_REFERENCES:
+				Set<StringRelation> sectionReferencesOrig = new HashSet<>();
+				for(Section section : origPub.getSections())
+				{
+					sectionReferencesOrig.add(new StringRelation(section.getTitle(), String.join(" ", section.getReferenceIds())));
+				}
+				Set<StringRelation> sectionReferencesTest = new HashSet<>();
+				for(Section section : testPub.getSections())
+				{
+					sectionReferencesTest.add(new StringRelation(section.getTitle(), String.join(" ", section.getReferenceIds())));
+				}
+				return new RelationInformationResult(type, sectionReferencesOrig, sectionReferencesTest);
 
 			case REFERENCES:
 				List<String> origRefs = new ArrayList<>();

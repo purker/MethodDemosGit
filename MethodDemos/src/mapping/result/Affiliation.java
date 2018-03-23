@@ -111,4 +111,9 @@ public class Affiliation extends BaseEntity
 		return true;
 	}
 
+	public String getRawText()
+	{
+		return id + " " + institution + " " + department + " " + country + " " + countryCode;
+	}
+
 }

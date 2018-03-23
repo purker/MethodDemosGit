@@ -42,4 +42,9 @@ public class AbstractAuthor extends BaseEntity
 		}
 		return PublicationUtil.getNameFromAuthor(this);
 	}
+
+	public void setName(String name)
+	{
+		this.name = name;
+	}
 }

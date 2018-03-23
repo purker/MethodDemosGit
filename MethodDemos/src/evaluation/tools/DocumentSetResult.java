@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -25,6 +26,9 @@ import utils.XStreamUtil;
 public class DocumentSetResult
 {
 	private final Collection<EvalInformationType> evalTypes;
+
+	// <id, publication>
+	private Map<String, Publication> publications = new HashMap<>();
 
 	// <id, <type, value>>
 	private final Map<String, Map<EvalInformationType, SingleInformationDocResult<?>>> detailedResults = new TreeMap<>();
@@ -80,22 +84,29 @@ public class DocumentSetResult
 
 	}
 
-	public void addResult(String doc, SingleInformationDocResult<?> result)
+	public void addResult(String id, SingleInformationDocResult<?> result, Publication publication)
 	{
-		if(detailedResults.get(doc) == null)
+		if(id == null)
 		{
-			detailedResults.put(doc, new EnumMap<EvalInformationType, SingleInformationDocResult<?>>(EvalInformationType.class));
+			System.err.println("id of publication has to be set");
+			return;
 		}
-		detailedResults.get(doc).put(result.getType(), result);
+		if(detailedResults.get(id) == null)
+		{
+			detailedResults.put(id, new EnumMap<EvalInformationType, SingleInformationDocResult<?>>(EvalInformationType.class));
+		}
+		detailedResults.get(id).put(result.getType(), result);
+		publications.put(id, publication);
 	}
 
 	public void evaluate()
 	{
+		// foreach publication in map
 		for(Map.Entry<String, Map<EvalInformationType, SingleInformationDocResult<?>>> result : detailedResults.entrySet())
 		{
 			String id = result.getKey();
 			Map<EvalInformationType, SingleInformationDocResult<?>> values = result.getValue();
-			Publication publication = XStreamUtil.convertFromXML(new File(id), Publication.class);
+			Publication publication = publications.get(id);
 
 			for(EvalInformationType type : evalTypes)
 			{
@@ -104,6 +115,14 @@ public class DocumentSetResult
 				// {
 				// throw new IllegalArgumentException("Document " + result.getKey() + " does not contain result for " + type);
 				// }
+				if(type == null)
+				{
+					throw new IllegalArgumentException("EvalInformationType for publication (id=" + id + ") not set");
+				}
+				if(publication.getPublicationType() == null)
+				{
+					throw new IllegalArgumentException("PublicationType for publication (id=" + id + ") not set");
+				}
 				perType.addResult(type, sResult);
 				perId.addResult(id, sResult);
 				perPublicationType.addResult(publication.getPublicationType(), sResult);
@@ -264,7 +283,7 @@ public class DocumentSetResult
 				perType.printKeyEntry(type);
 			}
 			System.out.println("\n                    ---------- PublicationTypes ----------");
-			for(PublicationType publicationType : PublicationType.values())
+			for(PublicationType publicationType : perPublicationType.getKeysSet())
 			{
 				perPublicationType.printKeyEntry(publicationType);
 			}
@@ -282,7 +301,7 @@ public class DocumentSetResult
 
 		if(modes.contains(EvaluationMode.CSV_PER_PUBLICATIONTYPE))
 		{
-			for(PublicationType publicationType : PublicationType.values())
+			for(PublicationType publicationType : perPublicationType.getKeysSet())
 			{
 				getPerPublicationType().printKeyEntryCSV(publicationType);
 			}

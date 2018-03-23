@@ -75,8 +75,8 @@ public class Evaluators
 		types.add(EvalInformationType.YEAR);
 		types.add(EvalInformationType.DOI);
 		types.add(EvalInformationType.SECTIONS);
-		// types.add(EvalInformationType.SECTION_LEVELS);
-		// types.add(EvalInformationType.SECTION_REFERENCES);
+		types.add(EvalInformationType.SECTION_LEVELS);
+		types.add(EvalInformationType.SECTION_REFERENCES);
 		types.add(EvalInformationType.REFERENCES);
 		// types.add(EvalInformationType.REFERENCE_AUTHORS);
 		// types.add(EvalInformationType.REFERENCE_TITLE);
