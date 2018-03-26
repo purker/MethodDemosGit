@@ -4,13 +4,12 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
+import config.Config;
 import demos.Demos;
-import factory.PublicationFactory;
 import mapping.Mapper;
 import mapping.SectionReferenceWorker;
 import mapping.Worker;
 import mapping.grobid.AffiliationCollectorWorker;
-import mapping.result.Publication;
 import method.Method;
 
 public class CermineMapper extends Mapper
@@ -51,7 +50,7 @@ public class CermineMapper extends Mapper
 	@Override
 	protected List<? extends Worker> getWorkers()
 	{
-		return Arrays.asList(new AffiliationCollectorWorker(), new AuthorNameCorrectionWorker(), new SectionReferenceWorker());
+		return Arrays.asList(new AffiliationCollectorWorker(), /* new AuthorNameCorrectionWorker(), */ new SectionLevelWorker(), new SectionReferenceWorker());
 	}
 
 	@Override
