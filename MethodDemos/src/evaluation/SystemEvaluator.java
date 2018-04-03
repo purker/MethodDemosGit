@@ -234,12 +234,18 @@ public abstract class SystemEvaluator
 				Set<StringRelation> emailsOrig = new HashSet<>();
 				for(Author author : origPub.getAuthors())
 				{
-					emailsOrig.add(new StringRelation(author.getFullName(), author.getEmail()));
+					if(author.getFullName() != null && author.getEmail() != null)
+					{
+						emailsOrig.add(new StringRelation(author.getFullName(), author.getEmail()));
+					}
 				}
 				Set<StringRelation> emailsTest = new HashSet<>();
 				for(Author author : testPub.getAuthors())
 				{
-					emailsTest.add(new StringRelation(author.getFullName(), author.getEmail()));
+					if(author.getFullName() != null && author.getEmail() != null)
+					{
+						emailsTest.add(new StringRelation(author.getFullName(), author.getEmail()));
+					}
 				}
 				return new RelationInformationResult(type, emailsOrig, emailsTest);
 
