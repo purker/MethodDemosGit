@@ -297,12 +297,18 @@ public abstract class SystemEvaluator
 				Set<StringRelation> headersOrig = new HashSet<>();
 				for(Section section : origPub.getSections())
 				{
-					headersOrig.add(new StringRelation(section.getTitle(), section.getLevel()));
+					if(section.getTitle() != null && section.getLevel() != null)
+					{
+						headersOrig.add(new StringRelation(section.getTitle(), section.getLevel()));
+					}
 				}
 				Set<StringRelation> headersTest = new HashSet<>();
 				for(Section section : testPub.getSections())
 				{
-					headersTest.add(new StringRelation(section.getTitle(), section.getLevel()));
+					if(section.getTitle() != null && section.getLevel() != null)
+					{
+						headersTest.add(new StringRelation(section.getTitle(), section.getLevel()));
+					}
 				}
 				return new RelationInformationResult(type, headersOrig, headersTest);
 
