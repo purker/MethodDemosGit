@@ -304,12 +304,20 @@ public abstract class SystemEvaluator
 				Set<StringRelation> sectionReferencesOrig = new HashSet<>();
 				for(Section section : origPub.getSections())
 				{
-					sectionReferencesOrig.add(new StringRelation(section.getTitle(), section.getReferenceIds() == null ? "null" : String.join(" ", section.getReferenceIds())));
+					if(CollectionUtil.isNotEmpty(section.getReferenceIds()))
+					{
+						String referenceIds = String.join(" ", section.getReferenceIds());
+						sectionReferencesOrig.add(new StringRelation(section.getTitle(), referenceIds));
+					}
 				}
 				Set<StringRelation> sectionReferencesTest = new HashSet<>();
 				for(Section section : testPub.getSections())
 				{
-					sectionReferencesTest.add(new StringRelation(section.getTitle(), section.getReferenceIds() == null ? "null" : String.join(" ", section.getReferenceIds())));
+					if(CollectionUtil.isNotEmpty(section.getReferenceIds()))
+					{
+						String referenceIds = String.join(" ", section.getReferenceIds());
+						sectionReferencesTest.add(new StringRelation(section.getTitle(), referenceIds));
+					}
 				}
 				return new RelationInformationResult(type, sectionReferencesOrig, sectionReferencesTest);
 
