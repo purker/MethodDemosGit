@@ -13,6 +13,7 @@ Evaluations of experimental results of a concrete implementation indicate that t
   <abstractTextGerman>Im Rahmen dieser Arbeit wird eine konkrete Problemstellung aus dem Bereich der Lagerverwaltung behandelt. Dabei soll die benötigte Zeit zum Ausfassen von Artikeln aus dem Lager unter Berücksichtigung von domänenspezifischen Nebenbedingungen minimiert werden. Ausgehend von durch Kunden laufend aufgegebenen Bestellungen sollen feste Lieferzeiten eingehalten werden und Einschränkungen wie etwa Kapazit ätslimits oder das Vermeiden von Kollisionen zwischen Arbeitern beachtet werden. Die für die gegebene Problemstellung zentrale Bestimmung effizienter Touren steht im Mittelpunkt der Arbeit, welche mit Ergebnissen aus einer konkreten Implementierung des vorgestellten Ansatzes abschließt.
 Es wird ein Algorithmus vorgestellt, der ein eigens entwickeltes Dynamisches Programm zur Berechnung optimaler Wege durch das Warenlager mit der Umsetzung einer Variablen Nachbarschaftssuche (engl.: Variable Neighborhood Search) (VNS) verbindet. In mehreren Phasen werden dabei die vorliegenden Bestellungen zerlegt und davon ausgehend Touren gebildet, welche zuletzt auf alle verfügbaren Lagerarbeiter verteilt werden. Innerhalb der VNS kommt eine Variante des Variable Neighborhood Descent (VND) als lokale Verbesserungskomponente zum Einsatz. Während über die definierten Nachbarschaftsstrukturen unterschiedliche potentielle Lösungen erzeugt werden, erfolgt deren Bewertung durch die Berechnung von konkreten Touren mittels eines für diesen Zweck entwickelten Dynamischen Programms. Dabei werden spezielle Eigenschaften der zugrundeliegenden Lagerstruktur ausgenutzt, um so in polynomieller Zeit die bestmögliche Wegführung durch das Lager berechnen zu können. Für die Zuordnung von Arbeitern zu den auf diese Weise berechneten Touren wird schließlich eine zusätzliche VNS verwendet, deren Aufgabe es ist, die notwendigen Touren derart zu verteilen, dass der letzte Artikel zum frühest möglichen Zeitpunkt ausgefasst werden kann.
 Die anhand des implementierten Programms durchgeführten Tests zeigen, dass die erfolgte Tourenplanung wertvolle Ergebnisse liefert und die notwendige Rechenzeit niedrig gehalten werden kann. Getestet wurde mit Bezug auf eine Referenzlösung, welche auf Basis eines aus der Literatur entnommenen Ansatzes erzeugt werden konnte. Eine ausführliche Auswertung der Testergebnisse zeigte, dass die Anwendung des hier vorgestellten Ansatzes im Echtbetrieb als sehr vielversprechend gilt und erhebliche Einsparungen bezüglich der benötigten Arbeitszeit erreicht werden können. Insgesamt betrachtet wird ein effizientes und zielführendes Verfahren zur Lösung des vorliegenden Problems vorgestellt.</abstractTextGerman>
+  <maxSectionLayer>3</maxSectionLayer>
   <authors>
     <Author>
       <firstNames>
@@ -34,12 +35,14 @@ Die anhand des implementierten Programms durchgeführten Tests zeigen, dass die 
   <sections>
     <Section>
       <level>1</level>
+      <layer>1</layer>
       <title>Einleitung</title>
       <referenceIds/>
       <referenceCitations/>
     </Section>
     <Section>
       <level>2</level>
+      <layer>1</layer>
       <title>Problembeschreibung</title>
       <referenceIds/>
       <referenceCitations/>
@@ -51,6 +54,7 @@ Die anhand des implementierten Programms durchgeführten Tests zeigen, dass die 
     </Section>
     <Section>
       <level>3</level>
+      <layer>1</layer>
       <title>Verwandte Arbeiten</title>
       <referenceIds>
         <string>ref18</string>
@@ -63,12 +67,14 @@ Die anhand des implementierten Programms durchgeführten Tests zeigen, dass die 
     </Section>
     <Section>
       <level>3.1</level>
+      <layer>2</layer>
       <title>Vehicle Routing Problem</title>
       <referenceIds/>
       <referenceCitations/>
     </Section>
     <Section>
       <level>3.1.1</level>
+      <layer>3</layer>
       <title>Capacitated Vehicle Routing Problem</title>
       <referenceIds>
         <string>ref17</string>
@@ -78,6 +84,7 @@ Die anhand des implementierten Programms durchgeführten Tests zeigen, dass die 
     </Section>
     <Section>
       <level>3.1.2</level>
+      <layer>3</layer>
       <title>Split Delivery Vehicle Routing Problem</title>
       <referenceIds>
         <string>ref2</string>
@@ -90,6 +97,7 @@ Die anhand des implementierten Programms durchgeführten Tests zeigen, dass die 
     </Section>
     <Section>
       <level>3.1.3</level>
+      <layer>3</layer>
       <title>Vehicle Routing Problem with Time Windows</title>
       <referenceIds>
         <string>ref19</string>
@@ -98,12 +106,14 @@ Die anhand des implementierten Programms durchgeführten Tests zeigen, dass die 
     </Section>
     <Section>
       <level>3.2</level>
+      <layer>2</layer>
       <title>Generalisierte Netzwerkprobleme</title>
       <referenceIds/>
       <referenceCitations/>
     </Section>
     <Section>
       <level>3.3</level>
+      <layer>2</layer>
       <title>Traveling Salesman Problem</title>
       <referenceIds>
         <string>ref1</string>
@@ -113,6 +123,7 @@ Die anhand des implementierten Programms durchgeführten Tests zeigen, dass die 
     </Section>
     <Section>
       <level>3.4</level>
+      <layer>2</layer>
       <title>Bekannte Lösungsansätze</title>
       <referenceIds>
         <string>ref13</string>
@@ -124,6 +135,7 @@ Die anhand des implementierten Programms durchgeführten Tests zeigen, dass die 
     </Section>
     <Section>
       <level>4</level>
+      <layer>1</layer>
       <title>Dynamische Programmierung</title>
       <referenceIds>
         <string>ref3</string>
@@ -140,6 +152,7 @@ Die anhand des implementierten Programms durchgeführten Tests zeigen, dass die 
     </Section>
     <Section>
       <level>5</level>
+      <layer>1</layer>
       <title>Variable Nachbarschaftssuche</title>
       <referenceIds>
         <string>ref16</string>
@@ -150,66 +163,77 @@ Die anhand des implementierten Programms durchgeführten Tests zeigen, dass die 
     </Section>
     <Section>
       <level>5.1</level>
+      <layer>2</layer>
       <title>Lokale Suche und Shaking</title>
       <referenceIds/>
       <referenceCitations/>
     </Section>
     <Section>
       <level>5.1</level>
+      <layer>2</layer>
       <title>Lokale Suche und Shaking</title>
       <referenceIds/>
       <referenceCitations/>
     </Section>
     <Section>
       <level>5.2</level>
+      <layer>2</layer>
       <title>Genereller Ansatz für die Variable Nachbarschaftssuche</title>
       <referenceIds/>
       <referenceCitations/>
     </Section>
     <Section>
       <level>6</level>
+      <layer>1</layer>
       <title>Ein hybrides Verfahren</title>
       <referenceIds/>
       <referenceCitations/>
     </Section>
     <Section>
       <level>6.1</level>
+      <layer>2</layer>
       <title>Der grundsätzliche Ablauf</title>
       <referenceIds/>
       <referenceCitations/>
     </Section>
     <Section>
       <level>6.2</level>
+      <layer>2</layer>
       <title>Variable Nachbarschaftssuche und Dynamische Programmierung</title>
       <referenceIds/>
       <referenceCitations/>
     </Section>
     <Section>
       <level>7</level>
+      <layer>1</layer>
       <title>Der Algorithmus im Detailg</title>
       <referenceIds/>
       <referenceCitations/>
     </Section>
     <Section>
       <level>7.1</level>
+      <layer>2</layer>
       <title>Partitionierung vorhandener Bestellungen</title>
       <referenceIds/>
       <referenceCitations/>
     </Section>
     <Section>
       <level>7.2</level>
+      <layer>2</layer>
       <title>Zuordnung von Artikeln zu Touren</title>
       <referenceIds/>
       <referenceCitations/>
     </Section>
     <Section>
       <level>7.2.1</level>
+      <layer>3</layer>
       <title>Konstruktionsheuristiken</title>
       <referenceIds/>
       <referenceCitations/>
     </Section>
     <Section>
       <level>7.2.2</level>
+      <layer>3</layer>
       <title>Reparatur-und Verbesserungsheuristik</title>
       <referenceIds>
         <string>ref12</string>
@@ -218,12 +242,14 @@ Die anhand des implementierten Programms durchgeführten Tests zeigen, dass die 
     </Section>
     <Section>
       <level>7.2.3</level>
+      <layer>3</layer>
       <title>Durchsuchen der Nachbarschaften</title>
       <referenceIds/>
       <referenceCitations/>
     </Section>
     <Section>
       <level>7.2.4</level>
+      <layer>3</layer>
       <title>Dynamische Reihenfolge der Nachbarschaften</title>
       <referenceIds>
         <string>ref14</string>
@@ -233,24 +259,28 @@ Die anhand des implementierten Programms durchgeführten Tests zeigen, dass die 
     </Section>
     <Section>
       <level>7.3</level>
+      <layer>2</layer>
       <title>Berechnung einzelner Touren</title>
       <referenceIds/>
       <referenceCitations/>
     </Section>
     <Section>
       <level>7.3.1</level>
+      <layer>3</layer>
       <title>Repräsentation als Graph</title>
       <referenceIds/>
       <referenceCitations/>
     </Section>
     <Section>
       <level>7.3.2</level>
+      <layer>3</layer>
       <title>Ein Dynamisches Programm</title>
       <referenceIds/>
       <referenceCitations/>
     </Section>
     <Section>
       <level>7.3.3</level>
+      <layer>3</layer>
       <title>S-Shape-Heuristik</title>
       <referenceIds>
         <string>ref4</string>
@@ -260,72 +290,84 @@ Die anhand des implementierten Programms durchgeführten Tests zeigen, dass die 
     </Section>
     <Section>
       <level>7.4</level>
+      <layer>2</layer>
       <title>Zuordnung von Arbeitern zu Touren</title>
       <referenceIds/>
       <referenceCitations/>
     </Section>
     <Section>
       <level>7.4.1</level>
+      <layer>3</layer>
       <title>Konstruktionsheuristik</title>
       <referenceIds/>
       <referenceCitations/>
     </Section>
     <Section>
       <level>7.4.2</level>
+      <layer>3</layer>
       <title>Reparatur-und Verbesserungsheuristik</title>
       <referenceIds/>
       <referenceCitations/>
     </Section>
     <Section>
       <level>7.5</level>
+      <layer>2</layer>
       <title>Erweiterter Algorithmus</title>
       <referenceIds/>
       <referenceCitations/>
     </Section>
     <Section>
       <level>8</level>
+      <layer>1</layer>
       <title>Testergebnisse</title>
       <referenceIds/>
       <referenceCitations/>
     </Section>
     <Section>
       <level>8.1</level>
+      <layer>2</layer>
       <title>Wahl der Konstruktionsheuristik</title>
       <referenceIds/>
       <referenceCitations/>
     </Section>
     <Section>
       <level>8.2</level>
+      <layer>2</layer>
       <title>Wahl von Berechnungsparametern</title>
       <referenceIds/>
       <referenceCitations/>
     </Section>
     <Section>
       <level>8.3</level>
+      <layer>2</layer>
       <title>Effizienz einzelner Nachbarschaften</title>
       <referenceIds/>
       <referenceCitations/>
     </Section>
     <Section>
       <level>8.4</level>
+      <layer>2</layer>
       <title>Rechenzeit der Nachbarschaften</title>
       <referenceIds/>
       <referenceCitations/>
     </Section>
     <Section>
       <level>8.5</level>
+      <layer>2</layer>
       <title>Laufzeit und Lösungsverbesserung</title>
       <referenceIds/>
       <referenceCitations/>
     </Section>
     <Section>
       <level>8.6</level>
+      <layer>2</layer>
       <title>Lösungsqualität bei Verwendung zusätzlicher Nachbarschaften</title>
       <referenceIds/>
       <referenceCitations/>
     </Section>
     <Section>
       <level>9</level>
+      <layer>1</layer>
       <title>Fazit</title>
       <referenceIds/>
       <referenceCitations/>

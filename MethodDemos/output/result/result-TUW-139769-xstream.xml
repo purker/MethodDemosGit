@@ -4,6 +4,7 @@
   <publicationType>DIPLOM_UND_MASTERARBEITEN</publicationType>
   <abstractText>This thesis deals with local branching, a local search algorithm applied on top of a Branch and Cut algorithm for mixed integer programming problems. Local branching defines custom sized neighborhoods around given feasible solutions and solves them partially or completely before exploring the rest of the search space. Its goal is to improve the heuristic behavior of a given exact integer programming solver, i.e. to focus on finding good solutions early in the computation. Local branching is implemented as an extension to the open source Branch and Cut solver COIN/BCP. The framework&apos;s main goal is to provide a generic implementation of local branching for integer programming problems. IP problems are optimization problems where some or all variables are integer values and must satisfy one or more (linear) constraints. Several extensions to the standard local branching algorithm were added to the framework. Pseudo-concurrent exploration of multiple local trees, aborting local trees and a variable fixing heuristic allow the user to implement sophisticated search metaheuristics that adjust the local branching parameters adaptively during the computation. A major design goal was to provide a clean encapsulation of the local branching algorithm to facilitate embedding of the framework in other, higher-level search algorithms, for example in evolutionary algorithms. As an example application, a solver for the multidimensional knapsack problem is implemented. A custom local branching metaheuristic imposes node limits on local subtrees and adaptively tightens the search space by fixing variables and reducing the size of the neighborhood. Test results show that local branching can offer significant advantages to standard Branch and Cut algorithms and eventually proves optimality in shorter time. Especially for large, complex test instances exploring the local neighborhood of a good feasible solution often yields better short-term results than the unguided standard Branch and Cut algorithm. Improving the solutions found early in the computation also helps to remove additional parts of the search tree, potentially leading to better solutions in longer runs. </abstractText>
   <abstractTextGerman>Diese Diplomarbeit beschäftigt sich mit Local Branching, einem lokalen Suchalgorithmus, der auf einem Branch and Cut Algorithmus für ganzzahlige Optimierungsprobleme aufsetzt. Local Branching definiert beliebig große Nachbarschaften um gegebene gültige Lösungen und löst diese teilweise oder komplett, bevor der Rest des Lösungsraums durchsucht wird. Das Ziel ist eine Verbesserung des heuristischen Verhaltens des gegebenen Solvers für ganzzahlige Optimierungsprobleme, d.h. sich auf das möglichst frühe Finden guter Lösungen zu konzentrieren. Local Branching ist als Erweiterung des Open Source Branch and Cut Solvers COIN/BCP implementiert. Das Hauptziel des Frameworks ist eine generische Implementierung von Local Branching für ganzzahlige Optimierungsprobleme, also Probleme, bei denen alle oder einige Variablen ganzzahlig sein müssen, und zusätzlich eine oder mehrere (lineare) Bedingungen in Form von Ungleichungen erfüllen müssen. Es wurden mehrere Erweiterungen zum Framework hinzugefügt: die pseudo-parallele Abarbeitung mehrerer lokaler Suchbäume, das vorzeitige Terminieren lokaler Suchbäume sowie eine unabhängige Variablen-Fixing-Heuristik. Durch diese Erweiterungen können die Parameter für Local Branching im Laufe der Berechnung beliebig verändert werden. Ein wesentliches Ziel beim Entwurf des Frameworks war eine klare Kapselung des Local Branching Algorithmus, um die Einbettung in andere, höhere Suchalgorithmen zu ermöglichen, etwa in evolutionäre Algorithmen. Als Beispielapplikation wurde ein Solver für das mehrdimensionale Rucksackproblem implementiert. Eine eigene Local Branching Metaheuristik beschränkt die Größe lokaler Bäume durch Knotenlimits und kann den Suchraum durch Anwendung der Variablen-Fixing-Heuristik weiter einschränken. Die Testergebnisse zeigen signifikante Vorteile für Local Branching im Vergleich zum normalen Branch and Cut Algorithmus. Vor allem für große, komplexe Testinstanzen liefert die Suche in lokalen Bäumen oft bessere Resultate am Anfang der Berechnung. Dadurch wird auch die Zeit zum Finden (und Beweisen) der optimalen Lösung potentiell verringert, da dadurch früher zusätzliche Teile des Suchbaums weggeschnitten werden können.</abstractTextGerman>
+  <maxSectionLayer>3</maxSectionLayer>
   <authors>
     <Author>
       <firstNames>
@@ -25,6 +26,7 @@
   <sections>
     <Section>
       <level>1</level>
+      <layer>1</layer>
       <title>Introduction</title>
       <referenceIds>
         <string>ref25</string>
@@ -34,6 +36,7 @@
     </Section>
     <Section>
       <level>1.1</level>
+      <layer>2</layer>
       <title>Thesis Overview</title>
       <referenceIds>
         <string>ref13</string>
@@ -41,6 +44,7 @@
     </Section>
     <Section>
       <level>2</level>
+      <layer>1</layer>
       <title>Branch and Cut</title>
       <referenceIds>
         <string>ref26</string>
@@ -51,16 +55,19 @@
     </Section>
     <Section>
       <level>2.1</level>
+      <layer>2</layer>
       <title>Integer Programming Problems</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>2.1.1</level>
+      <layer>3</layer>
       <title>Convex Hull of an Integer Program</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>2.1.2</level>
+      <layer>3</layer>
       <title>Relaxations</title>
       <referenceIds>
         <string>ref22</string>
@@ -69,6 +76,7 @@
     </Section>
     <Section>
       <level>2.2</level>
+      <layer>2</layer>
       <title>Branch and Bound</title>
       <referenceIds>
         <string>ref25</string>
@@ -77,6 +85,7 @@
     </Section>
     <Section>
       <level>2.3</level>
+      <layer>2</layer>
       <title>Cutting Plane Algorithms</title>
       <referenceIds>
         <string>ref30</string>
@@ -92,6 +101,7 @@
     </Section>
     <Section>
       <level>2.4</level>
+      <layer>2</layer>
       <title>Branch and Cut</title>
       <referenceIds>
         <string>ref31</string>
@@ -99,6 +109,7 @@
     </Section>
     <Section>
       <level>3</level>
+      <layer>1</layer>
       <title>Local Branching</title>
       <referenceIds>
         <string>ref13</string>
@@ -106,16 +117,19 @@
     </Section>
     <Section>
       <level>3.1</level>
+      <layer>2</layer>
       <title>Soft vs. Hard Variable Fixing</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>3.2</level>
+      <layer>2</layer>
       <title>A Basic Local Branching Framework</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>3.3</level>
+      <layer>2</layer>
       <title>Local Branching Extensions</title>
       <referenceIds>
         <string>ref13</string>
@@ -124,36 +138,43 @@
     </Section>
     <Section>
       <level>4</level>
+      <layer>1</layer>
       <title>An Advanced Local Branching Framework</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>4.1</level>
+      <layer>2</layer>
       <title>Basic Functionality</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>4.1.1</level>
+      <layer>3</layer>
       <title>Limitations</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>4.2</level>
+      <layer>2</layer>
       <title>Extending the Basic Algorithm</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>4.2.1</level>
+      <layer>3</layer>
       <title>Using Multiple Local Trees</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>4.2.2</level>
+      <layer>3</layer>
       <title>Aborting Local Trees</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>4.2.3</level>
+      <layer>3</layer>
       <title>Tightening the Search Tree by Variable Fixing</title>
       <referenceIds>
         <string>ref8</string>
@@ -161,11 +182,13 @@
     </Section>
     <Section>
       <level>4.2.4</level>
+      <layer>3</layer>
       <title>Utilizing the Extensions</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>5</level>
+      <layer>1</layer>
       <title>COIN/BCP</title>
       <referenceIds>
         <string>ref28</string>
@@ -173,11 +196,13 @@
     </Section>
     <Section>
       <level>5.1</level>
+      <layer>2</layer>
       <title>COIN Overview</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>5.1.1</level>
+      <layer>3</layer>
       <title>History</title>
       <referenceIds>
         <string>ref12</string>
@@ -185,11 +210,13 @@
     </Section>
     <Section>
       <level>5.1.2</level>
+      <layer>3</layer>
       <title>Components</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>5.2</level>
+      <layer>2</layer>
       <title>Design of COIN/BCP</title>
       <referenceIds>
         <string>ref36</string>
@@ -197,71 +224,85 @@
     </Section>
     <Section>
       <level>5.2.1</level>
+      <layer>3</layer>
       <title>Variables and Cuts</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>5.3</level>
+      <layer>2</layer>
       <title>COIN/BCP modules</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>5.3.1</level>
+      <layer>3</layer>
       <title>The Tree Manager Module</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>5.3.2</level>
+      <layer>3</layer>
       <title>The Linear Programming Module</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>5.3.3</level>
+      <layer>3</layer>
       <title>The Cut Generator Module</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>5.3.4</level>
+      <layer>3</layer>
       <title>The Variable Generator Module</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>5.4</level>
+      <layer>2</layer>
       <title>The Linear Programming Module</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>5.4.1</level>
+      <layer>3</layer>
       <title>The LP Engine</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>5.4.2</level>
+      <layer>3</layer>
       <title>Managing the LP Relaxation</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>5.4.3</level>
+      <layer>3</layer>
       <title>Branching</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>5.5</level>
+      <layer>2</layer>
       <title>Parallelizing COIN/BCP</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>5.5.1</level>
+      <layer>3</layer>
       <title>Inter-Process Communication</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>5.5.2</level>
+      <layer>3</layer>
       <title>Fault Tolerance</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>5.6</level>
+      <layer>2</layer>
       <title>Developing Applications with COIN/BCP</title>
       <referenceIds>
         <string>ref36</string>
@@ -270,6 +311,7 @@
     </Section>
     <Section>
       <level>5.6.1</level>
+      <layer>3</layer>
       <title>The BCP_tm_user Class</title>
       <referenceIds/>
     </Section>
@@ -279,31 +321,37 @@
     </Section>
     <Section>
       <level>5.6.2</level>
+      <layer>3</layer>
       <title>The BCP_lp_user Class</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>6</level>
+      <layer>1</layer>
       <title>Implementation of the Framework</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>6.1</level>
+      <layer>2</layer>
       <title>Integrating Local Branching into COIN/BCP</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>6.1.1</level>
+      <layer>3</layer>
       <title>Identifying Local Tree Nodes</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>6.1.2</level>
+      <layer>3</layer>
       <title>The LB tm Module</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>6.1.3</level>
+      <layer>3</layer>
       <title>The LB lp Module</title>
       <referenceIds/>
     </Section>
@@ -313,11 +361,13 @@
     </Section>
     <Section>
       <level>6.2</level>
+      <layer>2</layer>
       <title>Managing Local Trees</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>6.2.1</level>
+      <layer>3</layer>
       <title>The LocalTreeIndex</title>
       <referenceIds/>
     </Section>
@@ -331,26 +381,31 @@
     </Section>
     <Section>
       <level>6.2.2</level>
+      <layer>3</layer>
       <title>The LocalTreeManager</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>6.3</level>
+      <layer>2</layer>
       <title>Controlling Local Branching</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>6.3.1</level>
+      <layer>3</layer>
       <title>Implementing a Basic Local Branching Algorithm</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>7</level>
+      <layer>1</layer>
       <title>Multidimensional Knapsack Problems</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>7.1</level>
+      <layer>2</layer>
       <title>Introduction</title>
       <referenceIds>
         <string>ref21</string>
@@ -358,6 +413,7 @@
     </Section>
     <Section>
       <level>7.1.1</level>
+      <layer>3</layer>
       <title>Algorithms for Knapsack Problems</title>
       <referenceIds>
         <string>ref32</string>
@@ -367,6 +423,7 @@
     </Section>
     <Section>
       <level>7.1.2</level>
+      <layer>3</layer>
       <title>Multidimensional Knapsack Problems</title>
       <referenceIds>
         <string>ref24</string>
@@ -375,11 +432,13 @@
     </Section>
     <Section>
       <level>7.2</level>
+      <layer>2</layer>
       <title>Heuristic Algorithms</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>7.2.1</level>
+      <layer>3</layer>
       <title>Greedy Heuristics</title>
       <referenceIds>
         <string>ref38</string>
@@ -389,6 +448,7 @@
     </Section>
     <Section>
       <level>7.2.2</level>
+      <layer>3</layer>
       <title>Relaxation-Based Heuristics</title>
       <referenceIds>
         <string>ref3</string>
@@ -396,6 +456,7 @@
     </Section>
     <Section>
       <level>7.2.3</level>
+      <layer>3</layer>
       <title>Hybrid Algorithms</title>
       <referenceIds>
         <string>ref27</string>
@@ -405,6 +466,7 @@
     </Section>
     <Section>
       <level>7.2.4</level>
+      <layer>3</layer>
       <title>Evolutionary Algorithms</title>
       <referenceIds>
         <string>ref33</string>
@@ -420,16 +482,19 @@
     </Section>
     <Section>
       <level>8</level>
+      <layer>1</layer>
       <title>A Sample Application: MD-KP</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>8.1</level>
+      <layer>2</layer>
       <title>KS tm implementation</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>8.1.1</level>
+      <layer>3</layer>
       <title>Test File Format</title>
       <referenceIds>
         <string>ref6</string>
@@ -437,81 +502,97 @@
     </Section>
     <Section>
       <level>8.1.2</level>
+      <layer>3</layer>
       <title>Setting up the Core Matrix</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>8.1.3</level>
+      <layer>3</layer>
       <title>Packing and Unpacking of Cuts</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>8.1.4</level>
+      <layer>3</layer>
       <title>Sending the Problem Description to the LP Module</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>8.1.5</level>
+      <layer>3</layer>
       <title>Creating a KS MetaHeuristic Object</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>8.2</level>
+      <layer>2</layer>
       <title>KS lp Implementation</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>8.2.1</level>
+      <layer>3</layer>
       <title>Generating Feasible Solutions</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>8.2.2</level>
+      <layer>3</layer>
       <title>Generating Cuts</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>8.3</level>
+      <layer>2</layer>
       <title>KS init Implementation</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>8.4</level>
+      <layer>2</layer>
       <title>KS MetaHeuristic Implementation</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>8.4.1</level>
+      <layer>3</layer>
       <title>Configuring Local Branching</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>8.4.2</level>
+      <layer>3</layer>
       <title>Setting up Local Branching</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>8.4.3</level>
+      <layer>3</layer>
       <title>Creating the Initial Solution</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>8.4.4</level>
+      <layer>3</layer>
       <title>Imposing Node Limits on Local Trees</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>8.4.5</level>
+      <layer>3</layer>
       <title>Handling Terminated Local Trees</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>8.5</level>
+      <layer>2</layer>
       <title>Finishing Touches</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>9</level>
+      <layer>1</layer>
       <title>Test Results</title>
       <referenceIds>
         <string>ref2</string>
@@ -520,36 +601,43 @@
     </Section>
     <Section>
       <level>9.1</level>
+      <layer>2</layer>
       <title>Test Environment</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>9.2</level>
+      <layer>2</layer>
       <title>Test Results Overview</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>9.2.1</level>
+      <layer>3</layer>
       <title>Final Objective Comparison</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>9.2.2</level>
+      <layer>3</layer>
       <title>Online Performance</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>9.3</level>
+      <layer>2</layer>
       <title>Local Branching Configurations</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>9.4</level>
+      <layer>2</layer>
       <title>Short-Time Tests</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>9.4.1</level>
+      <layer>3</layer>
       <title>Local Branching and Node Limits</title>
       <referenceIds>
         <string>ref2</string>
@@ -575,6 +663,7 @@
     </Section>
     <Section>
       <level>9.4.2</level>
+      <layer>3</layer>
       <title>Cut Generation</title>
       <referenceIds/>
     </Section>
@@ -584,6 +673,7 @@
     </Section>
     <Section>
       <level>9.4.3</level>
+      <layer>3</layer>
       <title>Multiple Initial Solutions</title>
       <referenceIds/>
     </Section>
@@ -601,6 +691,7 @@
     </Section>
     <Section>
       <level>9.5</level>
+      <layer>2</layer>
       <title>Long Runs</title>
       <referenceIds>
         <string>ref2</string>
@@ -609,76 +700,91 @@
     </Section>
     <Section>
       <level>10</level>
+      <layer>1</layer>
       <title>Summary and Outlook</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>A</level>
+      <layer>1</layer>
       <title>COIN/BCP patches</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>A.1</level>
+      <layer>2</layer>
       <title>Adding User-Defined Messages</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>A.2</level>
+      <layer>2</layer>
       <title>Extending the Candidate List</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>A.2.1.</level>
+      <layer>3</layer>
       <title>include/BCP_tm_node.hpp</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>A.2.2</level>
+      <layer>3</layer>
       <title>include/BCP_tm_node.cpp</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>A.2.3</level>
+      <layer>3</layer>
       <title>TM/BCP_tm_functions.cpp</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>A.3</level>
+      <layer>2</layer>
       <title>Counting Pruned Nodes</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>A.3.1</level>
+      <layer>3</layer>
       <title>TM/BCP tm msg node rec.cpp</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>A.3.2</level>
+      <layer>3</layer>
       <title>TM/BCP tm msgproc.cpp</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>A.4</level>
+      <layer>2</layer>
       <title>Aborting Local Trees</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>A.4.1</level>
+      <layer>3</layer>
       <title>include/BCP tm node.hpp</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>A.4.2</level>
+      <layer>3</layer>
       <title>TM/BCP tm functions</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>B</level>
+      <layer>1</layer>
       <title>Test Scripts</title>
       <referenceIds/>
     </Section>
     <Section>
       <level>B.1</level>
+      <layer>2</layer>
       <title>Generating Log Files</title>
       <referenceIds>
         <string>ref2</string>
@@ -686,6 +792,7 @@
     </Section>
     <Section>
       <level>B.2</level>
+      <layer>2</layer>
       <title>Analyzing Log Files</title>
       <referenceIds/>
     </Section>
