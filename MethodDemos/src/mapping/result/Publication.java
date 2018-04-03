@@ -10,6 +10,8 @@ public class Publication extends AbstractMetaPublication
 	private PublicationType publicationType;
 	private String abstractText;
 	private String abstractTextGerman;
+	private Integer maxSectionLayer;
+
 	// private String keywords; // with "; " as delimiter
 	private List<String> keywords = new ArrayList<>();
 	private List<Author> authors = new ArrayList<>();
@@ -47,6 +49,16 @@ public class Publication extends AbstractMetaPublication
 	public void setAbstractTextGerman(String abstractTextGerman)
 	{
 		this.abstractTextGerman = abstractTextGerman;
+	}
+
+	public Integer getMaxSectionLayer()
+	{
+		return maxSectionLayer;
+	}
+
+	public void setMaxSectionLayer(Integer maxSectionLayer)
+	{
+		this.maxSectionLayer = maxSectionLayer;
 	}
 
 	public List<String> getKeywords()
