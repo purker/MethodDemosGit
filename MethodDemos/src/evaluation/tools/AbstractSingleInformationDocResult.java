@@ -20,8 +20,6 @@ package evaluation.tools;
 
 import java.io.IOException;
 
-import com.opencsv.CSVWriter;
-
 import utils.FormatingUtil;
 
 /**
@@ -54,7 +52,35 @@ public abstract class AbstractSingleInformationDocResult<T> implements SingleInf
 	}
 
 	@Override
-	public String printCSV(CSVWriter csvWriter) throws IOException
+	public String getPrecisionAsString() throws IOException
+	{
+		if(!hasExtracted()) return "none extracted value";
+		return FormatingUtil.roundAndFormat(getPrecision());
+	}
+
+	@Override
+	public String getPrecisionX100AsString() throws IOException
+	{
+		if(!hasExtracted()) return "none extracted value";
+		return FormatingUtil.roundAndFormatX100(getPrecision());
+	}
+
+	@Override
+	public String getRecallAsString() throws IOException
+	{
+		if(!hasExpected()) return "none expected";
+		return FormatingUtil.roundAndFormat(getRecall());
+	}
+
+	@Override
+	public String getRecallX100AsString() throws IOException
+	{
+		if(!hasExpected()) return "none expected";
+		return FormatingUtil.roundAndFormatX100(getRecall());
+	}
+
+	@Override
+	public String getF1X100AsString() throws IOException
 	{
 		if(!hasExtracted() && !hasExpected())
 		{
@@ -69,6 +95,26 @@ public abstract class AbstractSingleInformationDocResult<T> implements SingleInf
 			else
 			{
 				return FormatingUtil.roundAndFormatX100(getF1());
+			}
+		}
+	}
+
+	@Override
+	public String getF1AsString() throws IOException
+	{
+		if(!hasExtracted() && !hasExpected())
+		{
+			return "NA";
+		}
+		else
+		{
+			if(!hasExtracted() || !hasExpected())
+			{
+				return "0";
+			}
+			else
+			{
+				return FormatingUtil.roundAndFormat(getF1());
 			}
 		}
 	}

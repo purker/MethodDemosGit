@@ -20,8 +20,6 @@ package evaluation.tools;
 
 import java.io.IOException;
 
-import com.opencsv.CSVWriter;
-
 /**
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  * @param <T>
@@ -41,6 +39,10 @@ public interface SingleInformationDocResult<T>
 
 	T getExtracted();
 
+	String getExpectedAsString();
+
+	String getExtractedAsString();
+
 	void setExpected(T expected);
 
 	void setExtracted(T extracted);
@@ -53,7 +55,16 @@ public interface SingleInformationDocResult<T>
 
 	void prettyPrint();
 
-	// TODO
-	String printCSV(CSVWriter csvWriter) throws IOException;
+	String getPrecisionAsString() throws IOException;
+
+	String getPrecisionX100AsString() throws IOException;
+
+	String getRecallAsString() throws IOException;
+
+	String getRecallX100AsString() throws IOException;
+
+	String getF1X100AsString() throws IOException;
+
+	String getF1AsString() throws IOException;
 
 }

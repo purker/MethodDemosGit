@@ -19,7 +19,6 @@ package evaluation;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -53,7 +52,6 @@ public abstract class SystemEvaluator
 {
 	protected PublicationIterator iter;
 	protected Collection<EvalInformationType> types;
-	private PrintStream fieldDiffWriter;
 
 	public SystemEvaluator()
 	{
@@ -123,11 +121,8 @@ public abstract class SystemEvaluator
 			if(modes.contains(EvaluationMode.SYSOUT_DETAILED))
 			{
 				results.printDocument(id, i);
-				// results.printDocumentCSV(id, i, fieldDiffWriter);
 			}
 		}
-
-		// TODO fieldDiffWriter.flush();
 
 		results.evaluate();
 
@@ -180,12 +175,12 @@ public abstract class SystemEvaluator
 				List<String> affOrig = new ArrayList<>();
 				for(Affiliation aff : CollectionUtil.emptyIfNull(origPub.getAffiliations()))
 				{
-					affOrig.add(aff.getRawText());
+					affOrig.add(aff.getComparisonText());
 				}
 				List<String> affTest = new ArrayList<>();
 				for(Affiliation aff : CollectionUtil.emptyIfNull(testPub.getAffiliations()))
 				{
-					affTest.add(aff.getRawText());
+					affTest.add(aff.getComparisonText());
 				}
 				return new ListInformationResult(type, affOrig, affTest);
 
@@ -195,7 +190,7 @@ public abstract class SystemEvaluator
 				{
 					for(Affiliation aff : CollectionUtil.emptyIfNull(author.getAffiliations()))
 					{
-						relOrig.add(new StringRelation(author.getFullName(), aff.getRawText()));
+						relOrig.add(new StringRelation(author.getFullName(), aff.getComparisonText()));
 					}
 				}
 				Set<StringRelation> relTest = new HashSet<>();
@@ -203,7 +198,7 @@ public abstract class SystemEvaluator
 				{
 					for(Affiliation aff : CollectionUtil.emptyIfNull(author.getAffiliations()))
 					{
-						relTest.add(new StringRelation(author.getFullName(), aff.getRawText()));
+						relTest.add(new StringRelation(author.getFullName(), aff.getComparisonText()));
 					}
 
 				}

@@ -20,7 +20,6 @@ package evaluation;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import evaluation.tools.EvalInformationType;
@@ -34,7 +33,11 @@ public class Evaluators
 	{
 		try
 		{
-			List<EvaluationMode> modes = Arrays.asList(EvaluationMode.values());
+			// List<EvaluationMode> modes = Arrays.asList(EvaluationMode.values());
+
+			List<EvaluationMode> modes = new ArrayList<>();
+			modes.add(EvaluationMode.CSV_PER_FILE_WITH_EVALUATIONTYPEVALUE);
+
 			// Demos.executeDemos();
 			evaluateMethods(modes, getTypes());
 			// evaluateMethods(EvaluationMode.CSV, getTypes());
