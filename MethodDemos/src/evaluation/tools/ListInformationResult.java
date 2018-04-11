@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import utils.StringUtil;
+
 public class ListInformationResult extends AbstractSingleInformationDocResult<List<String>>
 {
 	private Comparator<String> comp = EvaluationUtils.defaultComparator;
@@ -31,7 +33,7 @@ public class ListInformationResult extends AbstractSingleInformationDocResult<Li
 		this.expectedValue = expectedValue;
 		this.extractedValue = extractedValue;
 		this.type = type;
-		this.comp = EvalInformationTyeComparatorMapping.getComparatorByType(type);
+		this.comp = EvalInformationTypeComparatorMapping.getComparatorByType(type);
 	}
 
 	@Override
@@ -160,6 +162,18 @@ public class ListInformationResult extends AbstractSingleInformationDocResult<Li
 	protected boolean checkValueEmpty(List<String> value)
 	{
 		return value.isEmpty();
+	}
+
+	@Override
+	public String getExpectedAsString()
+	{
+		return StringUtil.notNullJoinedList(getExpected(), "\n");
+	}
+
+	@Override
+	public String getExtractedAsString()
+	{
+		return StringUtil.notNullJoinedList(getExtracted(), "\n");
 	}
 
 }

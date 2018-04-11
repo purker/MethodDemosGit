@@ -18,7 +18,6 @@ import evaluation.EvaluationMode;
 import mapping.result.Publication;
 import mapping.result.PublicationType;
 import method.Method;
-import utils.CSVWriterUtil;
 import utils.FileCollectionUtil;
 import utils.PublicationUtil;
 import utils.XStreamUtil;
@@ -47,9 +46,7 @@ public class DocumentSetResult
 
 	private final Method method;
 
-	CSVWriter fieldDiffWriter = CSVWriterUtil.createCSVWriter(new File("output/statistics/test.csv"));
-
-	private CSVWriter csvPerIdAndEvalTypeWriter;
+	private AbstractWriter csvPerIdAndEvalTypeWriter;
 	private List<EvaluationMode> modes;
 
 	public DocumentSetResult(List<EvaluationMode> modes, Method method, Collection<EvalInformationType> types) throws IOException
@@ -67,7 +64,7 @@ public class DocumentSetResult
 		// if(modes.contains(EvaluationMode.CSV_PER_FILE_AND_EVALUATIONTYPE))
 		{
 			File csvFile = FileCollectionUtil.getFileByMethod(Config.CSVperFileAndEvalTypeFile, method);
-			csvPerIdAndEvalTypeWriter = CSVWriterUtil.createCSVWriter(csvFile);
+			csvPerIdAndEvalTypeWriter = AbstractWriter.createWriter(csvFile);
 
 			List<String> headers = new ArrayList<>();
 			headers.add("path");
@@ -236,7 +233,7 @@ public class DocumentSetResult
 			line.add(publication.getPublicationType().name());
 			for(EvalInformationType type : evalTypes)
 			{
-				line.add(docResults.get(type).printCSV(csvPerIdAndEvalTypeWriter));
+				line.add(docResults.get(type).getF1X100AsString());
 			}
 
 			line.add(perId.getResultForKey(id).getAveragePrecisionFormatted());
@@ -245,7 +242,7 @@ public class DocumentSetResult
 
 			csvPerIdAndEvalTypeWriter.writeNext(line.stream().toArray(String[]::new), true);
 		}
-		csvPerIdAndEvalTypeWriter.flush();
+		csvPerIdAndEvalTypeWriter.close();
 	}
 
 	public SetResult<EvalInformationType> getPerType()
@@ -316,6 +313,35 @@ public class DocumentSetResult
 			}
 			getPerId().printSummaryCSV();
 		}
+		if(modes.contains(EvaluationMode.CSV_PER_FILE_WITH_EVALUATIONTYPEVALUE))
+		{
+			for(EvalInformationType type : perType.getKeysSet())
+			{
+				File csvFile = FileCollectionUtil.getFileByMethodAndType(Config.CSVperFileWithEvalTypeValueFile, method, type);
+				AbstractWriter writer = AbstractWriter.createWriter(csvFile);
+
+				for(String file : detailedResults.keySet())
+				{
+					SingleInformationDocResult<?> result = detailedResults.get(file).get(type);
+
+					String path = PublicationUtil.getIdFromFile(new File(file));
+					String pdfPath = "=HYPERLINK(\"" + FileCollectionUtil.getPdfFileById(PublicationUtil.getIdFromFileNameWithoutPrefix(file)).getAbsolutePath() + "\")";
+					String originalPath = "=HYPERLINK(\"" + new File(file).getAbsolutePath() + "\")";
+					String extractedPath = "=HYPERLINK(\"" + FileCollectionUtil.getResultFilesByMethodAndId(method, PublicationUtil.getIdFromFileNameWithoutPrefix(file)).getAbsolutePath() + "\")";
+					String expected = result.getExpectedAsString();
+					String extracted = result.getExtractedAsString();
+					String precision = result.getPrecisionAsString();
+					String recall = result.getRecallAsString();
+					String f1 = result.getF1AsString();
+					String[] s = {path, pdfPath, originalPath, extractedPath, expected, extracted, precision, recall, f1};
+
+					writer.writeNext(s);
+				}
+				writer.close();
+			}
+
+		}
+
 	}
 
 }

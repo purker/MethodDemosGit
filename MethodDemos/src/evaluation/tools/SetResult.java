@@ -8,10 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.opencsv.CSVWriter;
-
 import method.Method;
-import utils.CSVWriterUtil;
 import utils.FileCollectionUtil;
 import utils.FormatingUtil;
 
@@ -28,15 +25,15 @@ public class SetResult<T>
 	private Double averageRecall;
 	private Double averageF1;
 
-	private CSVWriter csvWriter;
+	private AbstractWriter writer;
 
 	public SetResult(String methodFile, Method method, String keyLabel) throws IOException
 	{
 		File file = FileCollectionUtil.getFileByMethod(methodFile, method);
-		this.csvWriter = CSVWriterUtil.createCSVWriter(file);
+		this.writer = AbstractWriter.createWriter(file);
 
 		String[] headers = {keyLabel, "Precision", "Recall", "F1"};
-		csvWriter.writeNext(headers);
+		writer.writeNext(headers);
 	}
 
 	void addResult(T key, SingleInformationDocResult<?> sResult)
@@ -120,7 +117,7 @@ public class SetResult<T>
 		}
 		if(getResultForKey(key) == null)
 		{
-			System.out.println("no value for key "+key + " found");
+			System.out.println("no value for key " + key + " found");
 		}
 		String precision = getResultForKey(key).getAveragePrecisionFormatted();
 		String recall = getResultForKey(key).getAverageRecallFormatted();
@@ -130,22 +127,34 @@ public class SetResult<T>
 		// System.out.printf("%20s: precision: %6.2f" + ", recall: %6.2f" + ", F1: %6.2f\n", type, getPrecisionFormated(type), getRecallFormated(type), getF1Formated(type));
 	}
 
-	public void printKeyEntryCSV(T key)
+	public void printKeyValueCSV(T key)
 	{
 		String precision = getResultForKey(key).getAveragePrecisionFormatted();
 		String recall = getResultForKey(key).getAverageRecallFormatted();
 		String f1 = getResultForKey(key).getAverageF1Formatted();
 		String[] s = {key.toString(), precision, recall, f1};
 
-		csvWriter.writeNext(s);
+		writer.writeNext(s);
+	}
+
+	public void printKeyEntryCSV(T key)
+	{
+		EvaluationResult evaluationResult = getResultForKey(key);
+
+		String precision = evaluationResult.getAveragePrecisionFormatted();
+		String recall = evaluationResult.getAverageRecallFormatted();
+		String f1 = evaluationResult.getAverageF1Formatted();
+		String[] s = {key.toString(), precision, recall, f1};
+
+		writer.writeNext(s);
 	}
 
 	public void printSummaryCSV() throws IOException
 	{
 		String[] s = {"", getAveragePrecisionFormated(), getAverageRecallFormated(), getAverageF1Formated()};
-		csvWriter.writeNext(s);
+		writer.writeNext(s);
 
-		csvWriter.flush();
+		writer.close();
 	}
 
 	public Set<T> getKeysSet()

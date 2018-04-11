@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -90,7 +91,6 @@ public class EvaluationUtils
 
 	public static final Comparator<String> defaultComparator = new Comparator<String>()
 	{
-
 		@Override
 		public int compare(String t1, String t2)
 		{
@@ -122,7 +122,6 @@ public class EvaluationUtils
 
 	public static final Comparator<String> swComparator = new Comparator<String>()
 	{
-
 		@Override
 		public int compare(String t1, String t2)
 		{
@@ -138,17 +137,21 @@ public class EvaluationUtils
 
 	public static final Comparator<String> authorComparator = new Comparator<String>()
 	{
-
 		@Override
 		public int compare(String t1, String t2)
 		{
-			if(t1.toLowerCase(Locale.ENGLISH).replaceAll("[^a-z]", "").equals(t2.toLowerCase(Locale.ENGLISH).replaceAll("[^a-z]", "")))
+			if(authorReplace(t1).equals(authorReplace(t2)))
 			{
 				return 0;
 			}
 			return t1.trim().compareToIgnoreCase(t2.trim());
 		}
 	};
+
+	public static String authorReplace(String s)
+	{
+		return s.toLowerCase(Locale.ENGLISH).replaceAll("[^a-z]", "");
+	}
 
 	public static final Comparator<String> emailComparator = new Comparator<String>()
 	{
@@ -193,7 +196,7 @@ public class EvaluationUtils
 	/**
 	 * Adapted from {@link org.grobid.core.utilities.TextUtilities#getLevenshteinDistance(String, String)}
 	 * 
-	 * Levenstein distance between two strings
+	 * Levenshtein distance between two strings
 	 *
 	 * @param expectedText
 	 *            the first string to be compared.
@@ -201,7 +204,7 @@ public class EvaluationUtils
 	 *            the second string to be compared.
 	 * @return Returns the Levenshtein distance.
 	 */
-	public static final Comparator<String> levensteinComparator = new Comparator<String>()
+	public static final Comparator<String> levenshteinComparator = new Comparator<String>()
 	{
 
 		@Override
@@ -259,5 +262,14 @@ public class EvaluationUtils
 			}
 		};
 	}
+
+	public static final Comparator<String> exactComparator = new Comparator<String>()
+	{
+		@Override
+		public int compare(String expectedText, String extractedText)
+		{
+			return Objects.equals(expectedText, extractedText) ? 0 : 1;
+		}
+	};
 
 }

@@ -82,4 +82,16 @@ public class SimpleInformationResult extends AbstractSingleInformationDocResult<
 		return value.isEmpty();
 	}
 
+	@Override
+	public String getExpectedAsString()
+	{
+		return getExpected();
+	}
+
+	@Override
+	public String getExtractedAsString()
+	{
+		return getExtracted();
+	}
+
 }

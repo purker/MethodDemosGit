@@ -30,7 +30,7 @@ public class EvalInformationTypeComparatorMapping
 		map.put(EvalInformationType.SECTIONS, EvaluationUtils.swComparator);
 		map.put(EvalInformationType.REFERENCES, EvaluationUtils.cosineComparator(.6));
 
-		relationMap.put(EvalInformationType.SECTION_LEVELS, new RelationComparators(map.get(EvalInformationType.SECTIONS), "sections", EvaluationUtils.defaultComparator, "level-default"));
+		relationMap.put(EvalInformationType.SECTION_LEVELS, new RelationComparators(map.get(EvalInformationType.SECTIONS), "sections", EvaluationUtils.exactComparator, "level-exact"));
 		relationMap.put(EvalInformationType.SECTION_REFERENCES, new RelationComparators(map.get(EvalInformationType.SECTIONS), "sections", map.get(EvalInformationType.REFERENCES), "references-default"));
 		// relationMap.put(EvalInformationType.SECTION_REFERENCES, new RelationComparators(map.get(EvalInformationType.SECTIONS)));
 		// map.put(EvalInformationType.REFERENCE_AUTHORS, EvaluationUtils.);

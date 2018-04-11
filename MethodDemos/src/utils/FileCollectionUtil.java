@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import config.Config;
+import evaluation.tools.EvalInformationType;
 import method.Method;
 
 public class FileCollectionUtil
@@ -143,6 +144,17 @@ public class FileCollectionUtil
 
 	public static File getFileByMethod(String file, Method method)
 	{
-		return new File(file.replace("<method>", method.getName()));
+		String replaced = file.replace("<method>", method.getName());
+		replaced = replaced.replace("<fileext>", Config.writerType.getFileExtension());
+		return new File(replaced);
+	}
+
+	public static File getFileByMethodAndType(String file, Method method, EvalInformationType type)
+	{
+		String replaced = file.replace("<method>", method.getName());
+		replaced = replaced.replace("<evaltype>", type.name());
+		replaced = replaced.replace("<fileext>", Config.writerType.getFileExtension());
+
+		return new File(replaced);
 	}
 }

@@ -19,11 +19,14 @@
 package evaluation.tools;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import pl.edu.icm.cermine.evaluation.exception.EvaluationException;
+import utils.StringUtil;
 
 /**
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
@@ -182,5 +185,24 @@ public class RelationInformationResult extends AbstractSingleInformationDocResul
 	protected boolean checkValueEmpty(Set<StringRelation> value)
 	{
 		return value.isEmpty();
+	}
+
+	@Override
+	public String getExpectedAsString()
+	{
+		return StringUtil.notNullJoinedList(getAsStringList(getExpected()), "\n");
+	}
+
+	@Override
+	public String getExtractedAsString()
+	{
+		return StringUtil.notNullJoinedList(getAsStringList(getExtracted()), "\n");
+	}
+
+	public List<String> getAsStringList(Collection<?> collection)
+	{
+		List<String> list = collection.stream().map(Object::toString).collect(Collectors.toList());
+
+		return list;
 	}
 }
