@@ -1,5 +1,10 @@
 package mapping.result;
 
+import java.util.Arrays;
+import java.util.List;
+
+import utils.StringUtil;
+
 public class Affiliation extends BaseEntity
 {
 	private static final long serialVersionUID = -3698496426249593692L;
@@ -111,9 +116,9 @@ public class Affiliation extends BaseEntity
 		return true;
 	}
 
-	public String getRawText()
+	public String getComparisonText()
 	{
-		return id + " " + institution + " " + department + " " + country + " " + countryCode;
+		List<String> list = Arrays.asList(institution, department, country, countryCode);
+		return StringUtil.notNullJoinedList(list, ",");
 	}
-
 }
