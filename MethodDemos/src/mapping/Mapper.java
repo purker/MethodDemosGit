@@ -1,12 +1,10 @@
 package mapping;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +23,7 @@ import org.eclipse.persistence.jaxb.JAXBUnmarshaller;
 
 import mapping.result.Publication;
 import method.Method;
-import utils.CollectionUtil;
+import utils.FileCollectionUtil;
 import utils.PublicationUtil;
 import utils.XStreamUtil;
 
@@ -65,46 +63,67 @@ public abstract class Mapper
 	 */
 	public void unmarshallFiles(File inputDir)
 	{
-		List<File> inputFiles = Arrays.asList(inputDir.listFiles(new FilenameFilter()
-		{
-			@Override
-			public boolean accept(File file, String fileName)
-			{
-				return fileName.startsWith(getMethod().getName()) && fileName.endsWith(".xml");
-			}
-		}));
-		unmarshallFiles(inputFiles);
+		unmarshallFiles(FileCollectionUtil.getExtractedFiles(inputDir, this.getMethod()));
 	}
 
-	/**
-	 * @param inputDir
-	 *            all xml-files with {methodName} will be mapped
-	 * @throws JAXBException
-	 */
-	public void unmarshallFilesWithId(File inputDir, List<String> idList)
+	private File getErrorFile(String id)
 	{
-		if(CollectionUtil.isEmpty(idList))
+		return new File(getDirectory(), getMethod().getName() + "-" + id + "-mapping.errxml");
+	}
+
+	private File getOutputFile(String id)
+	{
+		return new File(getDirectory(), getMethod().getName() + "-" + id + "-xstream.xml");
+	}
+
+	protected void unmarshallToXmlFile(File inputFileXML, File outputFileObjectAsXML) throws JAXBException, XMLStreamException
+	{
+		if(!OVERRIDE_EXISTING && outputFileObjectAsXML.exists())
 		{
-			unmarshallFiles(inputDir);
+			System.out.println("already exists: " + outputFileObjectAsXML);
+			return;
+		}
+		Publication publication = unmarshallFile(inputFileXML);
+
+		XStreamUtil.convertToXmL(publication, outputFileObjectAsXML, System.out, false);
+
+		// System.out.println(publication);
+	}
+
+	public Publication unmarshallFile(File inputFileXML) throws JAXBException, XMLStreamException
+	{
+		JAXBUnmarshaller unmarshaller = jc.createUnmarshaller();
+		Publication publication;
+		if(getIgnoreDTD())
+		{
+			XMLInputFactory xif = XMLInputFactory.newFactory();
+			xif.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+			XMLStreamReader xsr = xif.createXMLStreamReader(new StreamSource(inputFileXML));
+			publication = (Publication)unmarshaller.unmarshal(xsr);
 		}
 		else
 		{
-			List<File> inputFiles = Arrays.asList(inputDir.listFiles(new FilenameFilter()
-			{
-				@Override
-				public boolean accept(File file, String fileName)
-				{
-					String id = PublicationUtil.getIdFromFileNameWithoutPrefix(fileName);
-					return fileName.startsWith(getMethod().getName()) && idList.contains(id) && fileName.endsWith(".xml") && !fileName.endsWith("xstream.xml");
-				}
-			}));
-			unmarshallFiles(inputFiles);
+			publication = (Publication)unmarshaller.unmarshal(inputFileXML);
 		}
+		String id = PublicationUtil.getIdFromFile(inputFileXML);
+		publication.setId(id);
+
+		for(Worker worker : getWorkers())
+		{
+			worker.doWork(publication);
+		}
+
+		return publication;
 	}
 
-	public void unmarshallFiles(List<File> inputFilesXML)
+	public void unmarshallFiles()
 	{
-		for(File inputFile : inputFilesXML)
+		unmarshallFiles(FileCollectionUtil.getExtractedFiles(getMethod()));
+	}
+
+	public void unmarshallFiles(List<File> extractedFiles)
+	{
+		for(File inputFile : extractedFiles)
 		{
 			// id="TUW-000000"
 			String id = PublicationUtil.getIdFromFile(inputFile);
@@ -130,56 +149,7 @@ public abstract class Mapper
 				}
 			}
 		}
-	}
 
-	private File getErrorFile(String id)
-	{
-		return new File(getDirectory(), getMethod().getName() + "-" + id + "-mapping.errxml");
-	}
-
-	private File getOutputFile(String id)
-	{
-		return new File(getDirectory(), getMethod().getName() + "-" + id + "-xstream.xml");
-	}
-
-	protected void unmarshallToXmlFile(File inputFileXML, File outputFileObjectAsXML) throws JAXBException, XMLStreamException
-	{
-		if(!OVERRIDE_EXISTING && outputFileObjectAsXML.exists())
-		{
-			System.out.println("already exists: " + outputFileObjectAsXML);
-			return;
-		}
-		Publication publication = unmarshall(inputFileXML);
-
-		XStreamUtil.convertToXmL(publication, outputFileObjectAsXML, System.out, false);
-
-		// System.out.println(publication);
-	}
-
-	public Publication unmarshall(File inputFileXML) throws JAXBException, XMLStreamException
-	{
-		JAXBUnmarshaller unmarshaller = jc.createUnmarshaller();
-		Publication publication;
-		if(getIgnoreDTD())
-		{
-			XMLInputFactory xif = XMLInputFactory.newFactory();
-			xif.setProperty(XMLInputFactory.SUPPORT_DTD, false);
-			XMLStreamReader xsr = xif.createXMLStreamReader(new StreamSource(inputFileXML));
-			publication = (Publication)unmarshaller.unmarshal(xsr);
-		}
-		else
-		{
-			publication = (Publication)unmarshaller.unmarshal(inputFileXML);
-		}
-		String id = PublicationUtil.getIdFromFile(inputFileXML);
-		publication.setId(id);
-
-		for(Worker worker : getWorkers())
-		{
-			worker.doWork(publication);
-		}
-
-		return publication;
 	}
 
 	/**

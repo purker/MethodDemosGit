@@ -55,9 +55,9 @@ public class Demos
 		boolean runParsCitDemo = false;
 		boolean runPdfxDemo = false;
 		boolean runCermineMapper = true;
-		boolean runGrobidMapper = false;
-		boolean runParsCitMapper = false;
-		boolean runPdfxMapper = false;
+		boolean runGrobidMapper = true;
+		boolean runParsCitMapper = true;
+		boolean runPdfxMapper = true;
 		// List<File> groundTruthFiles = getFileById("226016");
 		List<File> groundTruthFiles = getAllGroundTruthFilesByIds(idList);
 		List<File> groundTruthFilesOmnipage = getAllGroundTruthFilesAsOmnipage(idList);
@@ -97,11 +97,15 @@ public class Demos
 			if(runParsCitDemo) new ParsCitDemo().runDemo(groundTruthFilesOmnipage, parsCitOutputDir);
 			if(runPdfxDemo) new PDFXDemo().runDemo(groundTruthFiles, pdfxOutputDir);
 		}
+		// files=(cermineOutputDir, idList);
+		// files=(grobIdOutputDir, idList);
+		// files=(parsCitOutputDir, idList);
+		// files=(pdfxOutputDir, idList);
 
-		if(runCermineMapper) new CermineMapper().unmarshallFilesWithId(cermineOutputDir, idList);
-		if(runGrobidMapper) new GROBIDMapper().unmarshallFilesWithId(grobIdOutputDir, idList);
-		if(runParsCitMapper) new ParsCitMapper().unmarshallFilesWithId(parsCitOutputDir, idList);
-		if(runPdfxMapper) new PDFXMapper().unmarshallFilesWithId(pdfxOutputDir, idList);
+		if(runCermineMapper) new CermineMapper().unmarshallFiles();
+		if(runGrobidMapper) new GROBIDMapper().unmarshallFiles();
+		if(runParsCitMapper) new ParsCitMapper().unmarshallFiles();
+		if(runPdfxMapper) new PDFXMapper().unmarshallFiles();
 
 	}
 

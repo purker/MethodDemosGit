@@ -25,9 +25,8 @@ public class ParsCitMapper extends Mapper
 	{
 		ParsCitMapper parscitMapper = new ParsCitMapper();
 		File inputFile = new File("D:/output/all/parscit-TUW-138011.xml");
-		File outputFile = new File("D:/output/all/parscit-TUW-138011-xstream.xml");
 
-		parscitMapper.unmarshall(inputFile);
+		parscitMapper.unmarshallFile(inputFile);
 
 		// parscitMapper.marshall(PublicationFactory.createPublication(), System.out);
 	}

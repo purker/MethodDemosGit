@@ -22,37 +22,31 @@ public class SectionLayerWorker extends Worker
 	@Override
 	public void doWork(Publication publication)
 	{
-		try
+		Integer maxSectionLayer = 0;
+		for(Section section : publication.getSections())
 		{
-			Integer maxSectionLayer = 0;
-			for(Section section : publication.getSections())
+			if(StringUtil.isNotEmpty(section.getLevel()))
 			{
-				if(StringUtil.isNotEmpty(section.getLevel()))
+				// Gruppen von Zahlen mit optionalem Punkt ("1", "11.1.")Leerzeichen(Zeichen)
+				Pattern pattern = Pattern.compile("([\\dA-Z]+\\.?)");
+				Matcher matcher = pattern.matcher(section.getLevel());
+
+				int count = 0;
+				while(matcher.find())
 				{
-					// Gruppen von Zahlen mit optionalem Punkt ("1", "11.1.")Leerzeichen(Zeichen)
-					Pattern pattern = Pattern.compile("([\\dA-Z]+\\.?)");
-					Matcher matcher = pattern.matcher(section.getLevel());
-
-					int count = 0;
-					while(matcher.find())
-					{
-						count++;
-					}
-					if(maxSectionLayer < count)
-					{
-						maxSectionLayer = count;
-					}
-
-					System.out.println(section.getLevel() + " " + count);
-					section.setLayer(count);
+					count++;
+				}
+				if(maxSectionLayer < count)
+				{
+					maxSectionLayer = count;
 				}
 
+				// System.out.println(section.getLevel() + " " + count);
+				section.setLayer(count);
 			}
-			publication.setMaxSectionLayer(maxSectionLayer);
+
 		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
+		publication.setMaxSectionLayer(maxSectionLayer);
+
 	}
 }

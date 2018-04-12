@@ -1,12 +1,12 @@
 package mapping.cermine;
 
 import java.io.File;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
-import config.Config;
 import demos.Demos;
 import mapping.Mapper;
+import mapping.SectionLayerWorker;
 import mapping.SectionReferenceWorker;
 import mapping.Worker;
 import mapping.grobid.AffiliationCollectorWorker;
@@ -29,10 +29,10 @@ public class CermineMapper extends Mapper
 		// List<File> files = new ArrayList<>();
 		// files.add(new File("D:\\output\\methods\\cermine\\cermine-TUW-176845.xml"));
 		//
-		// new CermineMapper().unmarshallFiles(files);
+		new CermineMapper().unmarshallFiles();
 
-		Publication publication = PublicationFactory.createPublication();
-		new CermineMapper().marshall(publication, System.out);
+		// Publication publication = PublicationFactory.createPublication();
+		// new CermineMapper().marshall(publication, System.out);
 	}
 
 	@Override
@@ -50,7 +50,15 @@ public class CermineMapper extends Mapper
 	@Override
 	protected List<? extends Worker> getWorkers()
 	{
-		return Arrays.asList(new AffiliationCollectorWorker(), /* new AuthorNameCorrectionWorker(), */ new SectionLevelWorker(), new SectionReferenceWorker());
+		List<Worker> workers = new ArrayList<>();
+		workers.add(new AffiliationCollectorWorker());
+		workers.add(new AuthorNameCorrectionWorker());
+		workers.add(new AffiliationNameCorrectionWorker());
+		workers.add(new SectionLevelWorker());
+		workers.add(new SectionLayerWorker());
+		workers.add(new SectionReferenceWorker());
+
+		return workers;
 	}
 
 	@Override
@@ -58,4 +66,5 @@ public class CermineMapper extends Mapper
 	{
 		return DIRECTORY_NAME;
 	}
+
 }
