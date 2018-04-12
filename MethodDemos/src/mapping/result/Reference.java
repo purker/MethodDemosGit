@@ -15,8 +15,6 @@ public class Reference extends AbstractMetaPublication
 	private String marker; // "[1]", "[Hun97]", if defined for this method
 
 	private List<ReferenceAuthor> authors = new ArrayList<>();
-	private String publisher;
-	private String editor;
 	private String type; // book, colletion, inproceedings, ...
 
 	public String getMarker()
@@ -27,26 +25,6 @@ public class Reference extends AbstractMetaPublication
 	public void setMarker(String marker)
 	{
 		this.marker = marker;
-	}
-
-	public String getPublisher()
-	{
-		return publisher;
-	}
-
-	public void setPublisher(String publisher)
-	{
-		this.publisher = publisher;
-	}
-
-	public String getEditor()
-	{
-		return editor;
-	}
-
-	public void setEditor(String editor)
-	{
-		this.editor = editor;
 	}
 
 	public String getType()

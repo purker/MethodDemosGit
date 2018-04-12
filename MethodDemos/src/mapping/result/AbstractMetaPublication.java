@@ -14,6 +14,8 @@ public class AbstractMetaPublication extends BaseEntity
 	protected String volume;
 	protected String issue;
 	protected String chapter;
+	protected String publisher;
+	protected String editors;
 
 	protected String pageFrom;
 	protected String pageTo;
@@ -107,6 +109,26 @@ public class AbstractMetaPublication extends BaseEntity
 	public void setChapter(String chapter)
 	{
 		this.chapter = chapter;
+	}
+
+	public String getPublisher()
+	{
+		return publisher;
+	}
+
+	public void setPublisher(String publisher)
+	{
+		this.publisher = publisher;
+	}
+
+	public String getEditors()
+	{
+		return editors;
+	}
+
+	public void setEditors(String editors)
+	{
+		this.editors = editors;
 	}
 
 	public String getPageFrom()

@@ -49,7 +49,6 @@ import config.Config;
 import demos.Demos;
 import evaluation.tools.EvalInformationType;
 import factory.PublicationFactory;
-import mapping.SectionLayerWorker;
 import mapping.Worker;
 import mapping.cermine.ReferenceAuthorNameConcatenationWorker;
 import mapping.grobid.AuthorNameConcatenationWorker;
@@ -143,9 +142,9 @@ public class StepsHistory
 
 	public static void main(String[] args) throws Exception
 	{
-		useWorkerFiles(FileCollectionUtil.getResultFiles(), new SectionLayerWorker());
+		// useWorkerFiles(FileCollectionUtil.getResultFiles(), new SectionLayerWorker());
 		// setPublicationTypeFromMap(FileCollectionUtil.getResultFiles());
-		// rewriteXStreamFiles(FileCollectionUtil.getResultFiles());
+		rewriteXStreamFiles(FileCollectionUtil.getResultFiles());
 		// searchNotEmpty(FileCollectionUtil.getGrobidResultFiles(), EvalInformationType.DOI);
 		// useWorkerFiles(FileCollectionUtil.getResultFiles(), new AffiliationCollectorWorker());
 		// useWorkerFiles(FileCollectionUtil.getCermineResultFiles(), new AffiliationCollectorWorker());

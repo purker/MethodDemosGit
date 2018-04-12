@@ -23,7 +23,7 @@ import mapping.result.Section;
 
 public class XStreamUtil
 {
-	private static final String[] fieldOrder = new String[]{"serialVersionUID", "id", "marker", "title", "editor", "source", "publisher", "authors", "edition", "location", "volume", "issue", "chapter", "note", "pageFrom", "pageTo", "publicationDateString", "publicationDay", "publicationMonth", "publicationYear", "publicationDate", "doi", "type", "url", "maxSectionLayer"};
+	private static final String[] fieldOrder = new String[]{"serialVersionUID", "id", "marker", "title", "source", "publisher", "editors", "authors", "edition", "location", "volume", "issue", "chapter", "note", "pageFrom", "pageTo", "publicationDateString", "publicationDay", "publicationMonth", "publicationYear", "publicationDate", "doi", "type", "url", "maxSectionLayer"};
 
 	public static void convertToXmL(Object object, File file, PrintStream out, boolean exitOnError)
 	{
