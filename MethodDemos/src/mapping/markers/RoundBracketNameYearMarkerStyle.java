@@ -27,11 +27,12 @@ public class RoundBracketNameYearMarkerStyle extends AbstractMarkerStyle
 				sb.append(reference.getPublisher());
 				sb.append(", ");
 			}
-			else if(reference.getEditor() != null)
-			{
-				sb.append(reference.getEditor());
-				sb.append(", ");
-			}
+			else
+				if(reference.getEditors() != null)
+				{
+					sb.append(reference.getEditors());
+					sb.append(", ");
+				}
 		}
 		sb.append(reference.getPublicationYear());
 		sb.append(")");

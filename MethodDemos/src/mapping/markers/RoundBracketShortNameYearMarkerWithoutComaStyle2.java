@@ -27,10 +27,11 @@ public class RoundBracketShortNameYearMarkerWithoutComaStyle2 extends AbstractMa
 			{
 				pre = reference.getPublisher();
 			}
-			else if(reference.getEditor() != null)
-			{
-				pre = reference.getEditor();
-			}
+			else
+				if(reference.getEditors() != null)
+				{
+					pre = reference.getEditors();
+				}
 		}
 		if(pre != null)
 		{
