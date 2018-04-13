@@ -22,16 +22,8 @@ public class AuthorNameCorrectionWorker extends Worker
 		{
 			if(StringUtil.isNotEmpty(author.getFullName()))
 			{
-				// TODO delete
-				// Pattern p = Pattern.compile("^\\d+"); // the pattern to search for
-				// Matcher m = p.matcher(author.getFullName());
-				//
-				// if(m.lookingAt())
-				// {
-				// System.out.println(author.getFullName());
 				author.setName(author.getFullName().replaceFirst("\\d+", ""));
-				System.out.println(author.getFullName());
-				// }
+				// System.out.println(author.getFullName());
 			}
 		}
 

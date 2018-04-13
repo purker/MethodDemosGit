@@ -11,34 +11,37 @@
         <java-type name="Publication">
             <xml-root-element name="article"/>
             <!-- TODO abstractTextGerman-->
-            <xml-type prop-order="publicationType title abstractText keywords authors affiliations publicationYear publicationMonth publicationDay source edition location volume issue chapter pageFrom pageTo url doi note sections references"/>
+            <xml-type prop-order="id title publicationType abstractText abstractTextGerman editors source edition publisher location volume issue chapter note pageFrom pageTo publicationDateString publicationYear publicationMonth publicationDay publicationDate doi url maxSectionLayer keywords authors affiliations sections citationContexts references"/>
             <java-attributes>
-                <xml-element java-attribute="publicationType" xml-transient="true"/>
+               	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="id"/>
                 <xml-element java-attribute="title" xml-path="front/article-meta/title-group/article-title/text()"/>
+                <xml-element java-attribute="publicationType" xml-transient="true"/>
             	<xml-element java-attribute="abstractText" xml-path="front/article-meta/abstract/p/text()"/>
-            	<xml-element java-attribute="keywords" xml-path="front/article-meta/kwd-group/kwd/text()"/>
-            	<xml-element java-attribute="authors" xml-path="front/article-meta/contrib-group/contrib"/>
-                <xml-element java-attribute="affiliations" xml-path="front/article-meta/contrib-group/aff"/>
+            	<xml-element java-attribute="abstractTextGerman" />
+               	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="editors"/>
+                <xml-element java-attribute="source" xml-path="front/journal-meta/journal-title-group/journal-title/text()"/>
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="edition"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="publisher"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="location"/>
+                <xml-element java-attribute="volume" xml-path="front/article-meta/volume/text()"/>
+                <xml-element java-attribute="issue" xml-path="front/article-meta/issue/text()"/>
+                <xml-element java-attribute="chapter"/>
+                <xml-element java-attribute="note" />
+                <xml-element java-attribute="pageFrom" xml-path="front/article-meta/fpage/text()"/>
+                <xml-element java-attribute="pageTo" xml-path="front/article-meta/lpage/text()"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="publicationDateString"/>
                 <xml-element java-attribute="publicationYear" xml-path="front/article-meta/pub-date/year/text()"/>
             	<xml-element java-attribute="publicationMonth" xml-path="front/article-meta/pub-date/month/text()"/>
                 <xml-element java-attribute="publicationDay" xml-path="front/article-meta/pub-date/day/text()"/>
-                <xml-element java-attribute="source" xml-path="front/journal-meta/journal-title-group/journal-title/text()"/>
-               	<!-- TODO -->               <xml-element java-attribute="editors"/>
-            	<!-- TODO -->               <xml-element java-attribute="publisher"/>
-            	<!-- TODO -->               <xml-element java-attribute="location"/>
-                <!-- TODO -->
-                  <xml-element java-attribute="edition"/>
-            	<!-- TODO -->               <xml-element java-attribute="location"/>
-                 <xml-element java-attribute="volume" xml-path="front/article-meta/volume/text()"/>
-                <xml-element java-attribute="issue" xml-path="front/article-meta/issue/text()"/>
-                <xml-element java-attribute="chapter"/>
-                <xml-element java-attribute="pageFrom" xml-path="front/article-meta/fpage/text()"/>
-                <xml-element java-attribute="pageTo" xml-path="front/article-meta/lpage/text()"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="publicationDate"/>
                 <xml-element java-attribute="doi" />
-                <xml-element java-attribute="note" />
                 <xml-element java-attribute="url" />
-                
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="maxSectionLayer"/>
+            	<xml-element java-attribute="keywords" xml-path="front/article-meta/kwd-group/kwd/text()"/>
+            	<xml-element java-attribute="authors" xml-path="front/article-meta/contrib-group/contrib"/>
+                <xml-element java-attribute="affiliations" xml-path="front/article-meta/contrib-group/aff"/>                
             	<xml-element java-attribute="sections" xml-path="body/sec"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="citationContexts"/>
             	<xml-element java-attribute="references" xml-path="back/ref-list/ref"/>
             </java-attributes>
         </java-type>
@@ -62,30 +65,32 @@
         </java-type>
         <java-type name="Reference">
             <xml-root-element name="ref"/>
-            <xml-type prop-order="id marker authors title editor source edition publisher location volume issue chapter pageFrom pageTo publicationDay publicationMonth publicationYear doi type url note"/>
+            <xml-type prop-order="id marker title source publisher editors authors edition location volume issue chapter note pageFrom pageTo publicationDateString publicationYear publicationMonth publicationDay publicationDate doi url type"/>
             <java-attributes>
             	<xml-attribute java-attribute="id" name="id" xml-id="true"/>
-            	<!-- TODO -->               <xml-element java-attribute="marker"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="marker"/>
                 <xml-element java-attribute="title" xml-path="mixed-citation/article-title/text()"/>
-            	<!-- TODO -->               <xml-element java-attribute="editors"/>
-            	<!-- TODO -->               <xml-element java-attribute="publisher"/>
-            	<!-- TODO -->               <xml-element java-attribute="location"/>
                 <xml-element java-attribute="source" xml-path="mixed-citation/source/text()"/>
-                 <!-- TODO -->               <xml-element java-attribute="edition"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="publisher"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="editors"/>
                 <xml-element java-attribute="authors" xml-path="mixed-citation/string-name"/>
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="edition"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="publisher"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="location"/>
                 <xml-element java-attribute="volume" xml-path="mixed-citation/volume/text()"/>
                 <xml-element java-attribute="issue" xml-path="mixed-citation/issue/text()"/>
-                 <!-- TODO --> <xml-element java-attribute="chapter"/>
+                <!-- TODO --> 				<xml-element java-attribute="chapter"/>
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="note"/>
                 <xml-element java-attribute="pageFrom" xml-path="mixed-citation/fpage/text()"/>
                 <xml-element java-attribute="pageTo" xml-path="mixed-citation/lpage/text()"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="publicationDateString"/>
                 <xml-element java-attribute="publicationYear" xml-path="mixed-citation/year/text()"/>
             	<xml-element java-attribute="publicationMonth" xml-path="mixed-citation/month/text()"/>
                 <xml-element java-attribute="publicationDay" xml-path="mixed-citation/day/text()"/>
-                
-                 <!-- TODO -->               <xml-element java-attribute="doi"/>
-                 <!-- TODO -->               <xml-element java-attribute="url"/>
-                 <!-- TODO -->               <xml-element java-attribute="type"/>
-                 <!-- TODO -->               <xml-element java-attribute="note"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="publicationDate"/>
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="doi"/>
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="url"/>
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="type"/>
             </java-attributes>
         </java-type>
         <java-type name="ReferenceAuthor">

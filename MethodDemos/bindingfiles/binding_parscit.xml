@@ -12,15 +12,37 @@
         <java-type name="AbstractMetaPublication" xml-transient="true"/>
         <java-type name="Publication">
             <xml-root-element name="algorithms"/>
-            <xml-type prop-order="publicationType id title abstractText abstractTextGerman keywords authors affiliations publicationYear publicationMonth publicationDay publicationDateString publicationDate source edition location volume issue chapter pageFrom pageTo url doi note maxSectionLayer sections citationContexts references"/>
+            <xml-type prop-order="id title publicationType abstractText abstractTextGerman editors source edition publisher location volume issue chapter note pageFrom pageTo publicationDateString publicationYear publicationMonth publicationDay publicationDate doi url maxSectionLayer keywords authors affiliations sections citationContexts references"/>
             <java-attributes>
-                <xml-element java-attribute="publicationType" xml-transient="true"/>
                 <xml-element java-attribute="title" xml-path="/algorithm/variant/title/text()"/>
-            	<!-- <xml-element java-attribute="abstractText" xml-path="//bodyText[0]/text()"/> -->
+                <xml-element java-attribute="publicationType" xml-transient="true"/>
+            	<!-- TODO -->				<xml-element java-attribute="abstractText" xml-path="//bodyText[0]/text()"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="abstractTextGerman" />
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="editors"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="source"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="edition"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="publisher"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="location"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="volume"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="issue"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="chapter"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="note"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="pageFrom"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="pageTo"/>
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="publicationDateString"/>
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="publicationYear"/>
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="publicationMonth"/>
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="publicationDay"/>
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="publicationDate"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="doi"/>
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="url" />
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="maxSectionLayer" />
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="keywords" />
             	<xml-element java-attribute="authors" xml-path="/algorithm/variant/author"/>
             	<xml-element java-attribute="sections" xml-path="/algorithm/variant/sectionHeader"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="citationContexts"/>
             	<xml-element java-attribute="references" xml-path="/algorithm/citationList/citation[@valid='true']"/>
-            	<!-- <xml-any-element java-attribute="references" lax="true"/> -->
+            	<!-- TODO -->				<xml-any-element java-attribute="references" lax="true"/>
             </java-attributes>
         </java-type>
         <java-type name="AbstractAuthor" xml-transient="true"/>
@@ -52,20 +74,31 @@
         </java-type>
         <java-type name="Reference">
             <xml-root-element name="citation" />
-            <xml-type prop-order="id marker authors title editor source edition publisher location volume issue chapter pageFrom pageTo publicationDateString publicationDay publicationMonth publicationYear publicationDate doi type url note"/>
+            <xml-type prop-order="id marker title source publisher editors authors edition location volume issue chapter note pageFrom pageTo publicationDateString publicationYear publicationMonth publicationDay publicationDate doi url type"/>
             <java-attributes>
-               <!--  <xml-attribute java-attribute="id" name="xml:id"/> -->
+                <!-- TODO -->				<xml-attribute java-attribute="id" name="xml:id"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="marker"/>
                 <xml-element java-attribute="title" name="title"/>
                 <xml-element java-attribute="source" name="booktitle" />
-                <!-- <xml-attribute java-attribute="type" xml-path="/monogr/title/@level" /> -->
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="publisher"/>
+            	<xml-element java-attribute="editors" name="editor"/>
                 <xml-element java-attribute="authors" xml-path="/authors/author" />
-                <xml-element java-attribute="volume" name="volume" />
-                <xml-element java-attribute="issue" name="issue" />
-                <!-- <xml-attribute java-attribute="pageFrom" xml-path="/monogr/imprint/biblScope[@unit='page']/@from" />
-                <xml-attribute java-attribute="pageTo" xml-path="/monogr/imprint/biblScope[@unit='page']/@to" />-->
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="edition"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="location"/>
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="volume" />
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="issue" />
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="chapter" />
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="note" />
+                <!-- TODO                   <xml-attribute java-attribute="pageFrom" xml-path="/monogr/imprint/biblScope[@unit='page']/@from" /-->
+                <!-- TODO                   <xml-attribute java-attribute="pageTo" xml-path="/monogr/imprint/biblScope[@unit='page']/@to" />-->
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="publicationDateString" />
                 <xml-element java-attribute="publicationYear" name="date" />
-            	<!-- <xml-element java-attribute="publicationMonth" name="month"/>
-                <xml-element java-attribute="publicationDay" name="day" /> -->
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="publicationMonth" name="month" />
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="publicationDay" name="day" />
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="publicationDate" />
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="doi"/>
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="url"/>
+                <!-- TODO                   <xml-attribute java-attribute="type" xml-path="/monogr/title/@level" / -->
             </java-attributes>
         </java-type>
         <java-type name="ReferenceAuthor">

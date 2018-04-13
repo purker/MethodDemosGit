@@ -12,24 +12,35 @@
         <java-type name="AbstractMetaPublication" xml-transient="true"/>
     	<java-type name="Publication">
             <xml-root-element name="TEI" />
-            <xml-type prop-order="publicationType id title abstractText abstractTextGerman keywords authors affiliations publicationYear publicationMonth publicationDay publicationDateString publicationDate source edition location volume issue chapter pageFrom pageTo url doi note maxSectionLayer sections citationContexts references"/>
+            <xml-type prop-order="id title publicationType abstractText abstractTextGerman editors source edition publisher location volume issue chapter note pageFrom pageTo publicationDateString publicationYear publicationMonth publicationDay publicationDate doi url maxSectionLayer keywords authors affiliations sections citationContexts references"/>
             <java-attributes>
-                <xml-element java-attribute="publicationType" xml-transient="true"/>
                 <xml-element java-attribute="title" xml-path="teiHeader/fileDesc/titleStmt/title/text()"/>
+                <xml-element java-attribute="publicationType" xml-transient="true"/>
             	<xml-element java-attribute="abstractText" xml-path="teiHeader/profileDesc/abstract/p/text()"/>
-            	<xml-element java-attribute="keywords" xml-path="teiHeader/profileDesc/textClass/keywords/term/text()"/>
-            	<xml-element java-attribute="authors" xml-path="teiHeader/fileDesc/sourceDesc/biblStruct/analytic/author"/>
+            	<xml-element java-attribute="abstractTextGerman" />
+               	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="editors"/>
                 <xml-element java-attribute="source" xml-path="teiHeader/fileDesc/sourceDesc/biblStruct/monogr/title/text()"/>
-            	<xml-element java-attribute="edition"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="edition"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="publisher"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="location"/>
                 <xml-element java-attribute="volume" xml-path="teiHeader/fileDesc/sourceDesc/biblStruct/monogr/imprint/biblScope[@unit='volume']/text()"/>
                 <xml-element java-attribute="issue" xml-path="teiHeader/fileDesc/sourceDesc/biblStruct/monogr/imprint/biblScope[@unit='issue']/text()"/>
                 <xml-element java-attribute="chapter"/>
-                <xml-element java-attribute="pageFrom" xml-path="teiHeader/fileDesc/sourceDesc/biblStruct/monogr/imprint/biblScope[@unit='page']/@from"/>
-                <xml-element java-attribute="pageTo" xml-path="teiHeader/fileDesc/sourceDesc/biblStruct/monogr/imprint/biblScope[@unit='page']/@to"/>
                 <xml-element java-attribute="note" xml-path="teiHeader/fileDesc/sourceDesc/biblStruct/note/text()"/>
+            	<xml-element java-attribute="pageFrom" xml-path="teiHeader/fileDesc/sourceDesc/biblStruct/monogr/imprint/biblScope[@unit='page']/@from"/>
+                <xml-element java-attribute="pageTo" xml-path="teiHeader/fileDesc/sourceDesc/biblStruct/monogr/imprint/biblScope[@unit='page']/@to"/>
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="publicationDateString"/>
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="publicationYear"/>
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="publicationMonth"/>
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="publicationDay"/>
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="publicationDate"/>
                 <xml-element java-attribute="doi" xml-path="teiHeader/fileDesc/sourceDesc/biblStruct/idno[@type='DOI']/text()"/>
-                <xml-element java-attribute="url" />
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="url" />
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="maxSectionLayer" />
+                <xml-element java-attribute="keywords" xml-path="teiHeader/profileDesc/textClass/keywords/term/text()"/>
+            	<xml-element java-attribute="authors" xml-path="teiHeader/fileDesc/sourceDesc/biblStruct/analytic/author"/>
             	<xml-element java-attribute="sections" xml-path="text/body/div"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="citationContexts"/>
             	<xml-element java-attribute="references" xml-path="text/back/div[@type='references']/listBibl/biblStruct"/>
             </java-attributes>
         </java-type>
@@ -68,20 +79,21 @@
         </java-type>
         <java-type name="Reference">
             <xml-root-element name="biblStruct" />
-            <xml-type prop-order="id marker authors title editor source edition publisher location volume issue chapter pageFrom pageTo publicationDateString publicationDay publicationMonth publicationYear publicationDate doi type url note"/>
+            <xml-type prop-order="id marker title source publisher editors authors edition location volume issue chapter note pageFrom pageTo publicationDateString publicationYear publicationMonth publicationDay publicationDate doi url type"/>
             <java-attributes>
                 <xml-attribute java-attribute="id" name="xml:id"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="marker"/>
                 <xml-element java-attribute="title" xml-path="analytic/title/text()"/>
                 <xml-element java-attribute="source" xml-path="monogr/title/text()" />
-                <xml-element java-attribute="location" xml-path="monogr/imprint/pubPlace/text()" />
                 <xml-element java-attribute="publisher" xml-path="monogr/imprint/publisher/text()" />
-                <xml-element java-attribute="doi" xml-path="analytic/idno/[@type='doi']/text()" />
-                <xml-element java-attribute="url" xml-path="analytic/ptr/@target" />
-                <xml-attribute java-attribute="type" xml-path="monogr/title/@level" xml-transient="true"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="editors"/>
                 <xml-element java-attribute="authors" xml-path="analytic/author/persName" />
-                <xml-element java-attribute="authors" xml-path="monogr/author/persName" />
+                <xml-element java-attribute="authors" xml-path="monogr/author/persName" /> <!-- doppelt -->
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="edition"/>
+                <xml-element java-attribute="location" xml-path="monogr/imprint/pubPlace/text()" />
                 <xml-element java-attribute="volume" name="volume" xml-path="monogr/imprint/biblScope[@unit='volume']/text()" />
                 <xml-element java-attribute="issue" name="issue" xml-path="monogr/imprint/biblScope[@unit='issue']/text()"/>
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="chapter"/>
                 <xml-element java-attribute="note" name="note" xml-path="note/text()"/>
 	           	<xml-transformation java-attribute="pageFrom">
 	           		<xml-read-transformer transformer-class="mapping.grobid.PageScopeReadTransformer" />
@@ -90,6 +102,13 @@
 	           	</xml-transformation>
                 <xml-attribute java-attribute="pageTo" xml-path="monogr/imprint/biblScope[@unit='page']/@to" />
                 <xml-element java-attribute="publicationDateString" name="/monogr/imprint/date[@type='published']/@when" />
+                <xml-element java-attribute="publicationYear" />
+            	<xml-element java-attribute="publicationMonth" />
+                <xml-element java-attribute="publicationDay" />
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="publicationDate" />
+                <xml-element java-attribute="doi" xml-path="analytic/idno/[@type='doi']/text()" />
+                <xml-element java-attribute="url" xml-path="analytic/ptr/@target" />
+                <xml-attribute java-attribute="type" xml-path="monogr/title/@level" xml-transient="true"/>
             </java-attributes>
         </java-type>
         <java-type name="ReferenceAuthor">
