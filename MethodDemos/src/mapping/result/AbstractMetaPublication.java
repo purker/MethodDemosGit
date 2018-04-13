@@ -21,9 +21,9 @@ public class AbstractMetaPublication extends BaseEntity
 	protected String pageTo;
 
 	protected String publicationDateString; // as in the extraction xml
-	protected String publicationDay;
-	protected String publicationMonth;
 	protected String publicationYear; // if null, information found in date
+	protected String publicationMonth;
+	protected String publicationDay;
 	protected Date publicationDate;
 
 	protected String note;
