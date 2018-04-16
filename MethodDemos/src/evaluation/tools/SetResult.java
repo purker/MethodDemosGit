@@ -1,6 +1,5 @@
 package evaluation.tools;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
@@ -25,12 +24,12 @@ public class SetResult<T>
 	private Double averageRecall;
 	private Double averageF1;
 
-	private AbstractWriter writer;
+	private WriterWrapper writer;
 
 	public SetResult(String methodFile, Method method, String keyLabel) throws IOException
 	{
-		File file = FileCollectionUtil.getFileByMethod(methodFile, method);
-		this.writer = AbstractWriter.createWriter(file);
+		String file = FileCollectionUtil.getFileByMethod(methodFile, method);
+		this.writer = new WriterWrapper(file);
 
 		String[] headers = {keyLabel, "Precision", "Recall", "F1"};
 		writer.writeNext(headers);

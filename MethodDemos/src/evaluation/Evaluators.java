@@ -56,6 +56,7 @@ public class Evaluators
 		new GrobidXStreamFileEvaluator(types).evaluate(modes);
 		new ParscitXStreamFileEvaluator(types).evaluate(modes);
 		new PdfxXStreamFileEvaluator(types).evaluate(modes);
+		System.out.println("Evaluation finished");
 	}
 
 	public static ArrayList<EvalInformationType> getTypes()

@@ -1,31 +1,33 @@
 package evaluation.tools;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
 import com.opencsv.CSVWriter;
 
+import utils.FileCollectionUtil;
+
 public class MyCSVWriter extends AbstractWriter
 {
-	com.opencsv.CSVWriter csvWriter;
+	private static final WriterType WRITERTYPE = WriterType.CSV;
+	CSVWriter csvWriter;
 
-	public MyCSVWriter(File csvFile) throws IOException
+	public MyCSVWriter(String csvFile) throws IOException
 	{
-		csvWriter = new com.opencsv.CSVWriter(new FileWriter(csvFile), ';', CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.NO_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
+		FileWriter fileWriter = new FileWriter(FileCollectionUtil.replaceFileExtension(csvFile, getWriterType()));
+		csvWriter = new CSVWriter(fileWriter, ';', CSVWriter.DEFAULT_QUOTE_CHARACTER, CSVWriter.NO_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
+	}
+
+	@Override
+	public WriterType getWriterType()
+	{
+		return WRITERTYPE;
 	}
 
 	@Override
 	public void writeNext(String[] line)
 	{
 		csvWriter.writeNext(line);
-	}
-
-	@Override
-	public void writeNext(String[] line, boolean applyQuotesToAll)
-	{
-		csvWriter.writeNext(line, applyQuotesToAll);
-
 	}
 
 	@Override

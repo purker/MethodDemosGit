@@ -55,6 +55,7 @@ public abstract class SystemEvaluator
 
 	public SystemEvaluator()
 	{
+		System.out.println("Starting Evaluation: " + getMethod());
 		this.iter = new PublicationIterator(getOriginalFiles(), getExtractedFiles());
 	}
 

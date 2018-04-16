@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import config.Config;
 import evaluation.tools.EvalInformationType;
+import evaluation.tools.WriterType;
 import method.Method;
 
 public class FileCollectionUtil
@@ -142,20 +143,25 @@ public class FileCollectionUtil
 		return ids;
 	}
 
-	public static File getFileByMethod(String file, Method method)
+	public static String getFileByMethod(String file, Method method)
 	{
 		String replaced = file.replace("<method>", method.getName());
-		replaced = replaced.replace("<fileext>", Config.writerType.getFileExtension());
-		return new File(replaced);
+		return replaced;
 	}
 
-	public static File getFileByMethodAndType(String file, Method method, EvalInformationType type)
+	public static String replaceMethodAndType(String file, Method method, EvalInformationType type)
 	{
 		String replaced = file.replace("<method>", method.getName());
 		replaced = replaced.replace("<evaltype>", type.name());
-		replaced = replaced.replace("<fileext>", Config.writerType.getFileExtension());
 
-		return new File(replaced);
+		return replaced;
+	}
+
+	public static String replaceFileExtension(String file, WriterType writerType)
+	{
+		String replaced = file.replace("<fileext>", writerType.getFileExtension());
+
+		return replaced;
 	}
 
 	public static List<File> getExtractedFiles(Method method)

@@ -13,20 +13,30 @@ import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import utils.FileCollectionUtil;
+
 public class ExcelWriter extends AbstractWriter
 {
+	private static final WriterType WRITERTYPE = WriterType.EXCEL;
+
 	private XSSFWorkbook workbook;
 	private XSSFSheet sheet;
-	private File fileName;
+	private File file;
 
 	private int rowNum = 0;
 	private int columnCount = 0;
 
-	public ExcelWriter(File fileName)
+	public ExcelWriter(String fileName)
 	{
 		this.workbook = new XSSFWorkbook();
 		this.sheet = workbook.createSheet("Tabelle 1");
-		this.fileName = fileName;
+		this.file = new File(FileCollectionUtil.replaceFileExtension(fileName, getWriterType()));
+	}
+
+	@Override
+	public WriterType getWriterType()
+	{
+		return WRITERTYPE;
 	}
 
 	@Override
@@ -92,16 +102,10 @@ public class ExcelWriter extends AbstractWriter
 		IntStream.range(0, columnCount).forEach((columnIndex) -> sheet.autoSizeColumn(columnIndex));
 		// IntStream.range(0, rowNum).forEach((columnIndex) -> sheet.aut(columnIndex));
 
-		FileOutputStream outputStream = new FileOutputStream(fileName);
+		FileOutputStream outputStream = new FileOutputStream(file);
 		workbook.write(outputStream);
 		workbook.close();
 
-	}
-
-	@Override
-	public void writeNext(String[] line, boolean applyQuotesToAll)
-	{
-		System.exit(-1);
 	}
 
 }

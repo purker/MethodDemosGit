@@ -63,8 +63,8 @@ public class DocumentSetResult
 		perType = new SetResult<>(Config.CSVperEvalTypeFile, method, "EvaluationType");
 		// if(modes.contains(EvaluationMode.CSV_PER_FILE_AND_EVALUATIONTYPE))
 		{
-			File csvFile = FileCollectionUtil.getFileByMethod(Config.CSVperFileAndEvalTypeFile, method);
-			csvPerIdAndEvalTypeWriter = AbstractWriter.createWriter(csvFile);
+			String writerFile = FileCollectionUtil.getFileByMethod(Config.CSVperFileAndEvalTypeFile, method);
+			csvPerIdAndEvalTypeWriter = new WriterWrapper(writerFile);
 
 			List<String> headers = new ArrayList<>();
 			headers.add("path");
@@ -240,7 +240,7 @@ public class DocumentSetResult
 			line.add(perId.getResultForKey(id).getAverageRecallFormatted());
 			line.add(perId.getResultForKey(id).getAverageF1Formatted());
 
-			csvPerIdAndEvalTypeWriter.writeNext(line.stream().toArray(String[]::new), true);
+			csvPerIdAndEvalTypeWriter.writeNext(line.stream().toArray(String[]::new));
 		}
 		csvPerIdAndEvalTypeWriter.close();
 	}
@@ -317,8 +317,8 @@ public class DocumentSetResult
 		{
 			for(EvalInformationType type : perType.getKeysSet())
 			{
-				File csvFile = FileCollectionUtil.getFileByMethodAndType(Config.CSVperFileWithEvalTypeValueFile, method, type);
-				AbstractWriter writer = AbstractWriter.createWriter(csvFile);
+				String writerFile = FileCollectionUtil.replaceMethodAndType(Config.CSVperFileWithEvalTypeValueFile, method, type);
+				WriterWrapper writer = new WriterWrapper(writerFile);
 
 				for(String file : detailedResults.keySet())
 				{
