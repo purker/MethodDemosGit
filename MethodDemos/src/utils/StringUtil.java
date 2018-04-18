@@ -1,9 +1,6 @@
 package utils;
 
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -21,72 +18,37 @@ public class StringUtil
 		return !isEmpty(s);
 	}
 
-	public static String getAllValuesOfObject(Object object)
+	public static String objectListToString(List<Object> objectList, String separator)
 	{
-		if(object == null)
-		{
-			return "null";
-		}
+		List<String> stringList = objectListToStringList(objectList, separator);
 
-		Field[] declaredFields = object.getClass().getDeclaredFields();
-
-		System.out.println(Arrays.toString(declaredFields));
-		String s = Arrays.stream(object.getClass().getDeclaredFields()).filter(f -> f.getType() == String.class).map(f ->
-		{
-			try
-			{
-				f.setAccessible(true);
-				System.err.print(f.getName());
-				System.err.println(": " + f.get(object));
-				return (String)f.get(object);
-			}
-			catch(IllegalAccessException e)
-			{
-				return null;
-			}
-		}).filter(Objects::nonNull).collect(Collectors.joining(" "));
-		System.err.println(s);
-		return Arrays.stream(object.getClass().getDeclaredFields()).filter(f -> f.getType() == String.class).map(f ->
-		{
-			try
-			{
-				f.setAccessible(true);
-				return (String)f.get(object);
-			}
-			catch(IllegalAccessException e)
-			{
-				return null;
-			}
-		}).filter(Objects::nonNull).collect(Collectors.joining("|"));
+		return StringUtil.notNullJoinedList(stringList, ",");
 	}
 
-	public static String getListAsStrings(List<?> list) throws IOException
+	public static List<String> objectListToStringList(List<?> list, String separator)
 	{
-		if(list instanceof List)
+		List<String> stringList = new ArrayList<>();
+		for(Object object : list)
 		{
-			StringBuffer sb = new StringBuffer();
-			sb.append("\"");
-			for(Iterator<?> iterator = ((List<?>)list).iterator(); iterator.hasNext();)
+			if(object != null)
 			{
-				Object o = iterator.next();
-
-				sb.append(getAllValuesOfObject(o));
-				if(iterator.hasNext())
+				if(object instanceof List)
 				{
-					sb.append("\n");
+					String listString = notNullJoinedList((List<?>)object, separator);
+					stringList.add(listString);
+				}
+				else
+				{
+					stringList.add(object.toString());
 				}
 			}
-			sb.append("\"");
-			return sb.toString();
 		}
-		else
-		{
-			throw new IOException("no list");
-		}
+		return stringList;
 	}
 
-	public static String notNullJoinedList(List<String> list, String separaptor)
+	public static String notNullJoinedList(List<?> list, String separator)
 	{
-		return list.stream().filter(Objects::nonNull).collect(Collectors.joining(separaptor));
+		return list.stream().filter(Objects::nonNull).map(Object::toString).collect(Collectors.joining(separator));
 	}
+
 }

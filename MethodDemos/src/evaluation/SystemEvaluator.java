@@ -163,12 +163,12 @@ public abstract class SystemEvaluator
 				List<String> authorOrig = new ArrayList<>();
 				for(Author author : origPub.getAuthors())
 				{
-					authorOrig.add(author.getFullName());
+					authorOrig.add(author.toString());
 				}
 				List<String> authorTest = new ArrayList<>();
 				for(Author author : testPub.getAuthors())
 				{
-					authorTest.add(author.getFullName());
+					authorTest.add(author.toString());
 				}
 				return new ListInformationResult(type, authorOrig, authorTest);
 
@@ -176,12 +176,12 @@ public abstract class SystemEvaluator
 				List<String> affOrig = new ArrayList<>();
 				for(Affiliation aff : CollectionUtil.emptyIfNull(origPub.getAffiliations()))
 				{
-					affOrig.add(aff.getComparisonText());
+					affOrig.add(aff.toString());
 				}
 				List<String> affTest = new ArrayList<>();
 				for(Affiliation aff : CollectionUtil.emptyIfNull(testPub.getAffiliations()))
 				{
-					affTest.add(aff.getComparisonText());
+					affTest.add(aff.toString());
 				}
 				return new ListInformationResult(type, affOrig, affTest);
 
@@ -191,7 +191,7 @@ public abstract class SystemEvaluator
 				{
 					for(Affiliation aff : CollectionUtil.emptyIfNull(author.getAffiliations()))
 					{
-						relOrig.add(new StringRelation(author.getFullName(), aff.getComparisonText()));
+						relOrig.add(new StringRelation(author.toString(), aff.toString()));
 					}
 				}
 				Set<StringRelation> relTest = new HashSet<>();
@@ -199,7 +199,7 @@ public abstract class SystemEvaluator
 				{
 					for(Affiliation aff : CollectionUtil.emptyIfNull(author.getAffiliations()))
 					{
-						relTest.add(new StringRelation(author.getFullName(), aff.getComparisonText()));
+						relTest.add(new StringRelation(author.toString(), aff.toString()));
 					}
 
 				}
@@ -230,17 +230,17 @@ public abstract class SystemEvaluator
 				Set<StringRelation> emailsOrig = new HashSet<>();
 				for(Author author : origPub.getAuthors())
 				{
-					if(author.getFullName() != null && author.getEmail() != null)
+					if(author.toString() != null && author.getEmail() != null)
 					{
-						emailsOrig.add(new StringRelation(author.getFullName(), author.getEmail()));
+						emailsOrig.add(new StringRelation(author.toString(), author.getEmail()));
 					}
 				}
 				Set<StringRelation> emailsTest = new HashSet<>();
 				for(Author author : testPub.getAuthors())
 				{
-					if(author.getFullName() != null && author.getEmail() != null)
+					if(author.toString() != null && author.getEmail() != null)
 					{
-						emailsTest.add(new StringRelation(author.getFullName(), author.getEmail()));
+						emailsTest.add(new StringRelation(author.toString(), author.getEmail()));
 					}
 				}
 				return new RelationInformationResult(type, emailsOrig, emailsTest);

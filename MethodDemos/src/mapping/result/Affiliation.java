@@ -116,9 +116,10 @@ public class Affiliation extends BaseEntity
 		return true;
 	}
 
-	public String getComparisonText()
+	@Override
+	public String toString()
 	{
-		List<String> list = Arrays.asList(institution, department, country, countryCode);
+		List<Object> list = Arrays.asList(institution, department, country, countryCode);
 		return StringUtil.notNullJoinedList(list, ",");
 	}
 }
