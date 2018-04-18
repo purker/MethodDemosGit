@@ -47,4 +47,10 @@ public class AbstractAuthor extends BaseEntity
 	{
 		this.name = name;
 	}
+
+	@Override
+	public String toString()
+	{
+		return getFullName();
+	}
 }

@@ -1,9 +1,8 @@
 package mapping.result;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import utils.StringUtil;
 
@@ -50,95 +49,8 @@ public class Reference extends AbstractMetaPublication
 	@Override
 	public String toString()
 	{
-		return StringUtil.getAllValuesOfObject(this);
+		List<Object> list = Arrays.asList(id, marker, title, source, publisher, editors, authors, edition, location, volume, issue, chapter, note, pageFrom, pageTo, publicationDateString, publicationYear, publicationMonth, publicationDay, publicationDate, doi, url, type);
 
-		// return new ReflectionToStringBuilder(this, new ToStringStyle()
-		// {
-		// private static final long serialVersionUID = -6243515731657791041L;
-		//
-		// @SuppressWarnings("unchecked")
-		// @Override
-		// public void append(StringBuffer buffer, String fieldName, Object value, Boolean fullDetail)
-		// {
-		// // boolean isEmptyList = value instanceof List;
-		// // System.out.println(isEmptyList + " " + fieldName + isFullDetail(fullDetail));
-		//
-		// if(value != null)
-		// {
-		// if(fieldName.equals("authors"))
-		// {
-		// if(!((List<?>)value).isEmpty())
-		// {
-		// // appendFieldStart(buffer, fieldName);
-		// value = PublicationUtil.concatinateAllAuthorNames((List<ReferenceAuthor>)value);
-		// appendInternal(buffer, fieldName, value, isFullDetail(fullDetail));
-		// appendFieldEnd(buffer, fieldName);
-		// }
-		// }
-		// else
-		// {
-		// // appendFieldStart(buffer, fieldName);
-		// appendInternal(buffer, fieldName, value, isFullDetail(fullDetail));
-		// appendFieldEnd(buffer, fieldName);
-		// }
-		// }
-		// }
-		//
-		// @Override
-		// public void appendStart(StringBuffer buffer, Object object)
-		// {
-		//
-		// }
-		//
-		// @Override
-		// public void appendEnd(StringBuffer buffer, Object object)
-		// {
-		//
-		// }
-		// }).toString();
+		return StringUtil.objectListToString(list, ",");
 	}
-
-	public final static class NotNullToStringStyle extends ToStringStyle
-	{
-		public static ToStringStyle NOT_NULL_STYLE = new NotNullToStringStyle();
-
-		private static final long serialVersionUID = 1L;
-
-		/**
-		 * <p>
-		 * Use the static constant rather than instantiating.
-		 * </p>
-		 */
-		NotNullToStringStyle()
-		{
-			super();
-			this.setFieldSeparator("  ");
-			this.setFieldSeparatorAtStart(true);
-			this.setContentEnd(".");
-		}
-
-		/**
-		 * <p>
-		 * Ensure <code>Singleton</code> after serialization.
-		 * </p>
-		 *
-		 * @return the singleton
-		 */
-		private Object readResolve()
-		{
-			return NOT_NULL_STYLE;
-		}
-
-		@Override
-		public void append(StringBuffer buffer, String fieldName, Object value, Boolean fullDetail)
-		{
-			if(value != null)
-			{
-				appendFieldStart(buffer, fieldName);
-				appendInternal(buffer, fieldName, value, isFullDetail(fullDetail));
-				appendFieldEnd(buffer, fieldName);
-			}
-		}
-	}
-
 }
