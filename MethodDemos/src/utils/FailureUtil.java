@@ -8,6 +8,10 @@ public class FailureUtil
 	{
 		ex.printStackTrace(errorWriter);
 		errorWriter.println(string);
-		if(exitProgram) System.exit(-1);
+		if(exitProgram)
+		{
+			System.err.println("aborting program after failure");
+			System.exit(-1);
+		}
 	}
 }

@@ -3,6 +3,7 @@ package evaluation.tools;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -76,7 +77,7 @@ public class DocumentSetResult
 			headers.add("Precision");
 			headers.add("Recall");
 			headers.add("F1");
-			csvPerIdAndEvalTypeWriter.writeNext(headers.stream().toArray(String[]::new));
+			csvPerIdAndEvalTypeWriter.writeNext(headers);
 		}
 
 	}
@@ -240,7 +241,7 @@ public class DocumentSetResult
 			line.add(perId.getResultForKey(id).getAverageRecallFormatted());
 			line.add(perId.getResultForKey(id).getAverageF1Formatted());
 
-			csvPerIdAndEvalTypeWriter.writeNext(line.stream().toArray(String[]::new));
+			csvPerIdAndEvalTypeWriter.writeNext(line);
 		}
 		csvPerIdAndEvalTypeWriter.close();
 	}
@@ -269,10 +270,14 @@ public class DocumentSetResult
 	{
 		if(modes.contains(EvaluationMode.CSV_PER_FILE_AND_EVALUATIONTYPE))
 		{
+			System.out.println(EvaluationMode.CSV_PER_FILE_AND_EVALUATIONTYPE);
+
 			printCSVPerId();
 		}
 		if(modes.contains(EvaluationMode.SYSOUT_DETAILED) || modes.contains(EvaluationMode.SYSOUT_SUMMARY))
 		{
+			System.out.println(EvaluationMode.SYSOUT_DETAILED + " " + EvaluationMode.SYSOUT_SUMMARY);
+
 			System.out.println("==== Summary (" + detailedResults.keySet().size() + " docs)====");
 			System.out.println("\n                    ---------- EvaluationTypes ----------");
 			for(EvalInformationType type : evalTypes)
@@ -289,6 +294,7 @@ public class DocumentSetResult
 
 		if(modes.contains(EvaluationMode.CSV_PER_EVALUTATIONTYPE))
 		{
+			System.out.println(EvaluationMode.CSV_PER_EVALUTATIONTYPE);
 			for(EvalInformationType type : evalTypes)
 			{
 				getPerType().printKeyEntryCSV(type);
@@ -298,6 +304,8 @@ public class DocumentSetResult
 
 		if(modes.contains(EvaluationMode.CSV_PER_PUBLICATIONTYPE))
 		{
+			System.out.println(EvaluationMode.CSV_PER_PUBLICATIONTYPE);
+
 			for(PublicationType publicationType : perPublicationType.getKeysSet())
 			{
 				getPerPublicationType().printKeyEntryCSV(publicationType);
@@ -307,6 +315,8 @@ public class DocumentSetResult
 
 		if(modes.contains(EvaluationMode.CSV_PER_FILE))
 		{
+			System.out.println(EvaluationMode.CSV_PER_FILE);
+
 			for(String file : detailedResults.keySet())
 			{
 				getPerId().printKeyEntryCSV(file);
@@ -315,6 +325,8 @@ public class DocumentSetResult
 		}
 		if(modes.contains(EvaluationMode.CSV_PER_FILE_WITH_EVALUATIONTYPEVALUE))
 		{
+			System.out.println(EvaluationMode.CSV_PER_FILE_WITH_EVALUATIONTYPEVALUE);
+
 			for(EvalInformationType type : perType.getKeysSet())
 			{
 				String writerFile = FileCollectionUtil.replaceMethodAndType(Config.CSVperFileWithEvalTypeValueFile, method, type);
@@ -339,7 +351,6 @@ public class DocumentSetResult
 				}
 				writer.close();
 			}
-
 		}
 
 	}

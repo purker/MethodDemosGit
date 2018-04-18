@@ -2,6 +2,7 @@ package evaluation.tools;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import config.Config;
@@ -37,7 +38,7 @@ public class WriterWrapper extends AbstractWriter
 	}
 
 	@Override
-	public void writeNext(String[] line)
+	public void writeNext(Collection<String> line)
 	{
 		for(AbstractWriter writer : writers)
 		{

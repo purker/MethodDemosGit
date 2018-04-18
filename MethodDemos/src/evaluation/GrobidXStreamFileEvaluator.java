@@ -19,7 +19,6 @@
 package evaluation;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import evaluation.tools.EvalInformationType;
@@ -30,7 +29,7 @@ public class GrobidXStreamFileEvaluator extends SystemEvaluator
 {
 	private static final Method METHOD = Method.GROBID;
 
-	public GrobidXStreamFileEvaluator(ArrayList<EvalInformationType> types)
+	public GrobidXStreamFileEvaluator(List<EvalInformationType> types)
 	{
 		super(types);
 	}

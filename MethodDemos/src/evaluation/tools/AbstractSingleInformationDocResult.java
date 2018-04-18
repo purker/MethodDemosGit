@@ -110,7 +110,7 @@ public abstract class AbstractSingleInformationDocResult<T> implements SingleInf
 		{
 			if(!hasExtracted() || !hasExpected())
 			{
-				return "0";
+				return FormatingUtil.roundAndFormat(0.);
 			}
 			else
 			{

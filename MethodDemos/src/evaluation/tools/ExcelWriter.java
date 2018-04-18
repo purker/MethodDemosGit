@@ -3,8 +3,10 @@ package evaluation.tools;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.stream.IntStream;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CellType;
@@ -13,6 +15,7 @@ import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import config.Config;
 import utils.FileCollectionUtil;
 
 public class ExcelWriter extends AbstractWriter
@@ -40,11 +43,11 @@ public class ExcelWriter extends AbstractWriter
 	}
 
 	@Override
-	public void writeNext(String[] array)
+	public void writeNext(Collection<String> line)
 	{
 		Row row = sheet.createRow(rowNum++);
 		int colNum = 0;
-		for(String field : array)
+		for(String field : line)
 		{
 			Cell cell = row.createCell(colNum++);
 
@@ -59,15 +62,22 @@ public class ExcelWriter extends AbstractWriter
 
 				try
 				{
-					double value = Double.parseDouble(field.replace(",", "."));
+					String valueString = field.replace(",", ".");
+					double value = Double.parseDouble(valueString);
 
-					String pattern = "0.00";
+					String pattern = "0";
+					if(valueString.contains("."))
+					{
+						String decimalPattern = StringUtils.repeat("0", Config.decimalPlaces);
+						if(!decimalPattern.equals(""))
+						{
+							pattern += "." + decimalPattern;
+						}
+					}
 
 					style.setDataFormat(workbook.createDataFormat().getFormat(pattern));
 					cell.setCellType(CellType.NUMERIC);
 					cell.setCellValue(value);
-
-					System.out.println(value);
 				}
 				catch(NumberFormatException e)
 				{
@@ -85,15 +95,8 @@ public class ExcelWriter extends AbstractWriter
 
 				cell.setCellStyle(style);
 			}
-
-			// if(field instanceof Integer)
-			// {
-			// cell.setCellValue((Integer)field);
-			// }
-
 		}
 		columnCount = Integer.max(row.getLastCellNum(), row.getLastCellNum());
-
 	}
 
 	@Override

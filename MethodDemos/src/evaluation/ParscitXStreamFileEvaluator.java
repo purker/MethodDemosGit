@@ -19,7 +19,6 @@
 package evaluation;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import evaluation.tools.EvalInformationType;
@@ -30,7 +29,7 @@ public class ParscitXStreamFileEvaluator extends SystemEvaluator
 {
 	private static final Method METHOD = Method.PARSCIT;
 
-	public ParscitXStreamFileEvaluator(ArrayList<EvalInformationType> types)
+	public ParscitXStreamFileEvaluator(List<EvalInformationType> types)
 	{
 		super(types);
 	}

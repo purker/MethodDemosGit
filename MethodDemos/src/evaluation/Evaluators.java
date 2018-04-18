@@ -20,6 +20,7 @@ package evaluation;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import evaluation.tools.EvalInformationType;
@@ -27,21 +28,22 @@ import pl.edu.icm.cermine.evaluation.exception.EvaluationException;
 
 public class Evaluators
 {
-	private static ArrayList<EvalInformationType> types;
+	private static List<EvalInformationType> types;
 
 	public static void main(String[] args)
 	{
 		try
 		{
-			// List<EvaluationMode> modes = Arrays.asList(EvaluationMode.values());
+			List<EvaluationMode> modes = Arrays.asList(EvaluationMode.values());
 
-			List<EvaluationMode> modes = new ArrayList<>();
-			modes.add(EvaluationMode.CSV_PER_FILE_WITH_EVALUATIONTYPEVALUE);
+			// List<EvaluationMode> modes = new ArrayList<>();
+			// modes.add(EvaluationMode.CSV_PER_FILE_WITH_EVALUATIONTYPEVALUE);
 
 			// Demos.executeDemos();
-			evaluateMethods(modes, getTypes());
+			evaluateMethods(EvaluationMode.getCSVModes(), getTypes());
 			// evaluateMethods(EvaluationMode.CSV, getTypes());
 			// evaluateMethods(EvaluationMode.CSV_SUMMARY, getTypes());
+			// evaluateMethods(Arrays.asList(EvaluationMode.CSV_PER_FILE_WITH_EVALUATIONTYPEVALUE), Arrays.asList(EvalInformationType.AUTHORS));
 		}
 		catch(Exception e)
 		{
@@ -50,7 +52,7 @@ public class Evaluators
 		}
 	}
 
-	private static void evaluateMethods(List<EvaluationMode> modes, ArrayList<EvalInformationType> types) throws EvaluationException, IOException
+	private static void evaluateMethods(List<EvaluationMode> modes, List<EvalInformationType> types) throws EvaluationException, IOException
 	{
 		new CermineXStreamFileEvaluator(types).evaluate(modes);
 		new GrobidXStreamFileEvaluator(types).evaluate(modes);
@@ -59,7 +61,7 @@ public class Evaluators
 		System.out.println("Evaluation finished");
 	}
 
-	public static ArrayList<EvalInformationType> getTypes()
+	public static List<EvalInformationType> getTypes()
 	{
 		types = new ArrayList<>();
 		types.add(EvalInformationType.TITLE);
@@ -112,7 +114,7 @@ public class Evaluators
 		return types;
 	}
 
-	public static ArrayList<EvalInformationType> getTypes2()
+	public static List<EvalInformationType> getTypes2()
 	{
 		types = new ArrayList<>();
 		types.add(EvalInformationType.AUTHOR_AFFILIATIONS);

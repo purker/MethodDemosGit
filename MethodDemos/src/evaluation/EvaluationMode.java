@@ -1,5 +1,8 @@
 package evaluation;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum EvaluationMode
 {
 	CSV_PER_FILE,
@@ -10,4 +13,9 @@ public enum EvaluationMode
 
 	SYSOUT_DETAILED,
 	SYSOUT_SUMMARY;
+
+	public static List<EvaluationMode> getCSVModes()
+	{
+		return Arrays.asList(CSV_PER_FILE, CSV_PER_PUBLICATIONTYPE, CSV_PER_EVALUTATIONTYPE, CSV_PER_FILE_AND_EVALUATIONTYPE, CSV_PER_FILE_WITH_EVALUATIONTYPEVALUE);
+	}
 }
