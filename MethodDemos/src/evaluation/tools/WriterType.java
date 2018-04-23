@@ -2,7 +2,7 @@ package evaluation.tools;
 
 public enum WriterType
 {
-	CSV("csv"), EXCEL("xlsx");
+	CSV("csv"), EXCEL("xls");
 
 	private String fileExtension;
 

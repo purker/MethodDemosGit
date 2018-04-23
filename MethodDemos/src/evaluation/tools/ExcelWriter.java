@@ -4,16 +4,18 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Date;
 import java.util.stream.IntStream;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.hpsf.SummaryInformation;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import config.Config;
 import utils.FileCollectionUtil;
@@ -22,8 +24,8 @@ public class ExcelWriter extends AbstractWriter
 {
 	private static final WriterType WRITERTYPE = WriterType.EXCEL;
 
-	private XSSFWorkbook workbook;
-	private XSSFSheet sheet;
+	private HSSFWorkbook workbook;
+	private HSSFSheet sheet;
 	private File file;
 
 	private int rowNum = 0;
@@ -31,9 +33,19 @@ public class ExcelWriter extends AbstractWriter
 
 	public ExcelWriter(String fileName)
 	{
-		this.workbook = new XSSFWorkbook();
+		this.workbook = new HSSFWorkbook();
 		this.sheet = workbook.createSheet("Tabelle 1");
 		this.file = new File(FileCollectionUtil.replaceFileExtension(fileName, getWriterType()));
+
+		// // XSSF=xlsx version
+		// POIXMLProperties props = workbook.getProperties();
+		// PackagePropertiesPart ppropsPart = props.getCoreProperties().getUnderlyingProperties();
+		// ppropsPart.setCreatedProperty(new Nullable<>(new Date(0))); // for same creationdate, that files with same data are equal
+
+		// HSSF=xls version
+		workbook.createInformationProperties();
+		SummaryInformation props = workbook.getSummaryInformation();
+		props.setCreateDateTime(new Date(0)); // for same creationdate, that files with same data are equal
 	}
 
 	@Override
@@ -105,8 +117,7 @@ public class ExcelWriter extends AbstractWriter
 		IntStream.range(0, columnCount).forEach((columnIndex) -> sheet.autoSizeColumn(columnIndex));
 		// IntStream.range(0, rowNum).forEach((columnIndex) -> sheet.aut(columnIndex));
 
-		FileOutputStream outputStream = new FileOutputStream(file);
-		workbook.write(outputStream);
+		workbook.write(new FileOutputStream(file));
 		workbook.close();
 
 	}
