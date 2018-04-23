@@ -34,10 +34,24 @@ public abstract class AbstractSingleInformationDocResult<T> implements SingleInf
 	protected T expectedValue;
 	protected T extractedValue;
 
+	// initialisation in evaluate()
 	protected Double precision;
 	protected Double recall;
+	protected Boolean correct;
 
 	protected abstract boolean checkValueEmpty(T value);
+
+	@Override
+	public Double getPrecision()
+	{
+		return precision;
+	}
+
+	@Override
+	public Double getRecall()
+	{
+		return recall;
+	}
 
 	@Override
 	public boolean hasExpected()
@@ -90,7 +104,7 @@ public abstract class AbstractSingleInformationDocResult<T> implements SingleInf
 		{
 			if(!hasExtracted() || !hasExpected())
 			{
-				return "0";
+				return FormatingUtil.roundAndFormatX100(0.);
 			}
 			else
 			{
@@ -138,6 +152,17 @@ public abstract class AbstractSingleInformationDocResult<T> implements SingleInf
 	}
 
 	@Override
+	public Boolean getCorrect()
+	{
+		if(correct == null)
+		{
+			System.err.println("evaluate() has to be called for initialisation");
+			System.exit(-1);
+		}
+		return correct;
+	}
+
+	@Override
 	public EvalInformationType getType()
 	{
 		return type;
@@ -166,4 +191,5 @@ public abstract class AbstractSingleInformationDocResult<T> implements SingleInf
 	{
 		this.extractedValue = extractedValue;
 	}
+
 }

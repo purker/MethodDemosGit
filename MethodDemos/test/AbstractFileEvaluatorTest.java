@@ -2,7 +2,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
@@ -27,7 +26,7 @@ import pl.edu.icm.cermine.evaluation.exception.EvaluationException;
 @RunWith(JUnitParamsRunner.class)
 public abstract class AbstractFileEvaluatorTest
 {
-	protected static ArrayList<EvalInformationType> types = Evaluators.getTypes();
+	protected static List<EvalInformationType> types = Evaluators.getTypes();
 	private static List<EvaluationMode> modes = Arrays.asList();// EvaluationMode.SYSOUT_SUMMARY);
 
 	protected abstract SystemEvaluator getEvalutator();

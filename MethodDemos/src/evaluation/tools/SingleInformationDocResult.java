@@ -27,13 +27,13 @@ import java.io.IOException;
  */
 public interface SingleInformationDocResult<T>
 {
+	void evaluate();
+
 	EvalInformationType getType();
 
 	boolean hasExpected();
 
 	boolean hasExtracted();
-
-	boolean isCorrect();
 
 	T getExpected();
 
@@ -52,6 +52,8 @@ public interface SingleInformationDocResult<T>
 	Double getRecall();
 
 	Double getF1();
+
+	Boolean getCorrect();
 
 	void prettyPrint();
 

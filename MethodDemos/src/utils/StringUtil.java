@@ -1,6 +1,7 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -46,9 +47,16 @@ public class StringUtil
 		return stringList;
 	}
 
-	public static String notNullJoinedList(List<?> list, String separator)
+	public static String notNullJoinedList(Collection<?> list, String separator)
 	{
 		return list.stream().filter(Objects::nonNull).map(Object::toString).collect(Collectors.joining(separator));
+	}
+
+	public static List<String> getAsStringList(Collection<?> collection)
+	{
+		List<String> list = collection.stream().map(Object::toString).collect(Collectors.toList());
+
+		return list;
 	}
 
 }

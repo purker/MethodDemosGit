@@ -3,7 +3,6 @@ package evaluation.tools;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -169,7 +168,7 @@ public class DocumentSetResult
 			if(docResult != null)// TODO <-- if entfernen war nur zum testen, evtl mit throw wie in csv
 			// throw new IllegalArgumentException("Document " + result.getKey() + " does not contain result for " + type);
 			{
-				if(!docResult.isCorrect())
+				if(!docResult.getCorrect())
 				{
 					System.out.println("");
 					System.out.println(type);
@@ -209,7 +208,7 @@ public class DocumentSetResult
 			{
 				line.add("");
 			}
-			line.add(new Boolean(docResult.isCorrect()).toString());
+			line.add(docResult.getCorrect().toString());
 
 			csvWriter.writeNext(line.stream().toArray(size -> new String[size]));
 		}

@@ -25,7 +25,6 @@ import java.util.Comparator;
  */
 public class SimpleInformationResult extends AbstractSingleInformationDocResult<String>
 {
-	private Boolean correct;
 	private Comparator<String> comp;
 
 	public SimpleInformationResult(EvalInformationType type, String expectedValue, String extractedValue)
@@ -38,42 +37,11 @@ public class SimpleInformationResult extends AbstractSingleInformationDocResult<
 	}
 
 	@Override
-	public boolean isCorrect()
-	{
-		if(correct != null)
-		{
-			return correct;
-		}
-		correct = hasExpected() && hasExtracted() && comp.compare(expectedValue, extractedValue) == 0;
-		return correct;
-	}
-
-	@Override
-	public Double getPrecision()
-	{
-		if(!hasExtracted())
-		{
-			return null;
-		}
-		return isCorrect() ? 1. : 0.;
-	}
-
-	@Override
-	public Double getRecall()
-	{
-		if(!hasExpected())
-		{
-			return null;
-		}
-		return isCorrect() ? 1. : 0.;
-	}
-
-	@Override
 	public void prettyPrint()
 	{
 		System.out.println("Expected " + type + ": " + expectedValue);
 		System.out.println("Extracted " + type + ": " + extractedValue);
-		System.out.println("Correct: " + (isCorrect() ? "yes" : "no"));
+		System.out.println("Correct: " + (getCorrect() ? "yes" : "no"));
 	}
 
 	@Override
@@ -92,6 +60,28 @@ public class SimpleInformationResult extends AbstractSingleInformationDocResult<
 	public String getExtractedAsString()
 	{
 		return getExtracted();
+	}
+
+	@Override
+	public void evaluate()
+	{
+		int correctCount = 0;
+		if(hasExpected() && hasExtracted())
+		{
+			correctCount = equalExpectedAndExtractedValueCount();
+		}
+		correct = (correctCount == 1);
+
+		if(hasExtracted()) precision = getCorrect() ? 1. : 0.;
+		if(hasExpected()) recall = getCorrect() ? 1. : 0.;
+	}
+
+	public int equalExpectedAndExtractedValueCount()
+	{
+		if(comp.compare(expectedValue, extractedValue) == 0)
+			return 1;
+		else
+			return 0;
 	}
 
 }

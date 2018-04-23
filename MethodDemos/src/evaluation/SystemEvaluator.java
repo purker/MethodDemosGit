@@ -116,6 +116,7 @@ public abstract class SystemEvaluator
 			for(EvalInformationType type : getTypes())
 			{
 				AbstractSingleInformationDocResult<?> result = getResultFromType(type, origPub, testPub);
+				result.evaluate();
 				results.addResult(id, result, origPub);
 			}
 

@@ -36,68 +36,6 @@ public class ListInformationResult extends AbstractSingleInformationDocResult<Li
 		this.comp = EvalInformationTypeComparatorMapping.getComparatorByType(type);
 	}
 
-	@Override
-	public Double getPrecision()
-	{
-		if(!hasExtracted())
-		{
-			return null;
-		}
-		if(precision != null)
-		{
-			return precision;
-		}
-
-		int correct = 0;
-		List<String> tmp = new ArrayList<>(expectedValue);
-		external: for(String partExt : extractedValue)
-		{
-			for(String partExp : tmp)
-			{
-				if(comp.compare(partExp, partExt) == 0)
-				{
-					++correct;
-					tmp.remove(partExp);
-					continue external;
-				}
-			}
-		}
-		precision = (double)correct / extractedValue.size();
-
-		return precision;
-	}
-
-	@Override
-	public Double getRecall()
-	{
-		if(!hasExpected())
-		{
-			return null;
-		}
-		if(recall != null)
-		{
-			return recall;
-		}
-
-		int correct = 0;
-		List<String> tmp = new ArrayList<>(expectedValue);
-		external: for(String partExt : extractedValue)
-		{
-			internal: for(String partExp : tmp)
-			{
-				if(comp.compare(partExp, partExt) == 0)
-				{
-					++correct;
-					tmp.remove(partExp);
-					continue external;
-				}
-			}
-		}
-		recall = (double)correct / expectedValue.size();
-
-		return recall;
-	}
-
 	public void print(int mode, String name)
 	{
 		if(mode == 0)
@@ -153,12 +91,6 @@ public class ListInformationResult extends AbstractSingleInformationDocResult<Li
 	}
 
 	@Override
-	public boolean isCorrect()
-	{
-		return new Double(1).equals(getF1());
-	}
-
-	@Override
 	protected boolean checkValueEmpty(List<String> value)
 	{
 		return value.isEmpty();
@@ -176,4 +108,36 @@ public class ListInformationResult extends AbstractSingleInformationDocResult<Li
 		return StringUtil.notNullJoinedList(getExtracted(), "\n");
 	}
 
+	@Override
+	public void evaluate()
+	{
+		int correctCount = equalExpectedAndExtractedValueCount();
+
+		if(hasExpected()) recall = (double)correctCount / expectedValue.size();
+		if(hasExtracted()) precision = (double)correctCount / extractedValue.size();
+		correct = hasExpected() && hasExtracted() && new Double(1).equals(getF1());
+	}
+
+	public int equalExpectedAndExtractedValueCount()
+	{
+		int correctCount = 0;
+
+		if(hasExpected() && hasExtracted())
+		{
+			List<String> tmp = new ArrayList<>(expectedValue);
+			external: for(String partExt : extractedValue)
+			{
+				for(String partExp : tmp)
+				{
+					if(comp.compare(partExp, partExt) == 0)
+					{
+						++correctCount;
+						tmp.remove(partExp);
+						continue external;
+					}
+				}
+			}
+		}
+		return correctCount;
+	}
 }

@@ -19,11 +19,9 @@
 package evaluation.tools;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import pl.edu.icm.cermine.evaluation.exception.EvaluationException;
 import utils.StringUtil;
@@ -52,61 +50,36 @@ public class RelationInformationResult extends AbstractSingleInformationDocResul
 	}
 
 	@Override
-	public Double getPrecision()
+	public void evaluate()
 	{
-		if(!hasExtracted())
-		{
-			return null;
-		}
-		if(precision != null)
-		{
-			return precision;
-		}
-		int correct = 0;
-		List<StringRelation> tmp = new ArrayList<>(expectedValue);
-		external: for(StringRelation partExt : extractedValue)
-		{
-			for(StringRelation partExp : tmp)
-			{
-				if(comp1.compare(partExt.element1, partExp.element1) == 0 && comp2.compare(partExt.element2, partExp.element2) == 0)
-				{
-					++correct;
-					tmp.remove(partExp);
-					continue external;
-				}
-			}
-		}
-		precision = (double)correct / extractedValue.size();
-		return precision;
+		int correctCount = equalExpectedAndExtractedValueCount();
+
+		if(hasExpected()) recall = (double)correctCount / expectedValue.size();
+		if(hasExtracted()) precision = (double)correctCount / extractedValue.size();
+		correct = hasExpected() && hasExtracted() && new Double(1).equals(getF1());
 	}
 
-	@Override
-	public Double getRecall()
+	public int equalExpectedAndExtractedValueCount()
 	{
-		if(!hasExpected())
+		int correctCount = 0;
+
+		if(hasExpected() && hasExtracted())
 		{
-			return null;
-		}
-		if(recall != null)
-		{
-			return recall;
-		}
-		int correct = 0;
-		List<StringRelation> tmp = new ArrayList<>(expectedValue);
-		external: for(StringRelation partExt : extractedValue)
-		{
-			internal: for(StringRelation partExp : tmp)
+			List<StringRelation> tmp = new ArrayList<>(expectedValue);
+			external: for(StringRelation partExt : extractedValue)
 			{
-				if(comp1.compare(partExt.element1, partExp.element1) == 0 && comp2.compare(partExt.element2, partExp.element2) == 0)
+				for(StringRelation partExp : tmp)
 				{
-					++correct;
-					tmp.remove(partExp);
-					continue external;
+					if(comp1.compare(partExt.element1, partExp.element1) == 0 && comp2.compare(partExt.element2, partExp.element2) == 0)
+					{
+						++correctCount;
+						tmp.remove(partExp);
+						continue external;
+					}
 				}
 			}
 		}
-		recall = (double)correct / expectedValue.size();
-		return recall;
+		return correctCount;
 	}
 
 	@Override
@@ -175,13 +148,6 @@ public class RelationInformationResult extends AbstractSingleInformationDocResul
 	}
 
 	@Override
-	public boolean isCorrect()
-	{
-		// TODO do right
-		return new Double(100).equals(getRecall());
-	}
-
-	@Override
 	protected boolean checkValueEmpty(Set<StringRelation> value)
 	{
 		return value.isEmpty();
@@ -190,19 +156,13 @@ public class RelationInformationResult extends AbstractSingleInformationDocResul
 	@Override
 	public String getExpectedAsString()
 	{
-		return StringUtil.notNullJoinedList(getAsStringList(getExpected()), "\n");
+		return StringUtil.notNullJoinedList(getExpected(), "\n");
 	}
 
 	@Override
 	public String getExtractedAsString()
 	{
-		return StringUtil.notNullJoinedList(getAsStringList(getExtracted()), "\n");
+		return StringUtil.notNullJoinedList(getExtracted(), "\n");
 	}
 
-	public List<String> getAsStringList(Collection<?> collection)
-	{
-		List<String> list = collection.stream().map(Object::toString).collect(Collectors.toList());
-
-		return list;
-	}
 }
