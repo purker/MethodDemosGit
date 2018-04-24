@@ -26,13 +26,16 @@ public class SetResult<T>
 
 	private WriterWrapper writer;
 
-	public SetResult(String methodFile, Method method, String keyLabel) throws IOException
+	public SetResult(String methodFile, Method method, boolean createFile, String keyLabel) throws IOException
 	{
-		String file = FileCollectionUtil.getFileByMethod(methodFile, method);
-		this.writer = new WriterWrapper(file);
+		if(createFile)
+		{
+			String file = FileCollectionUtil.getFileByMethod(methodFile, method);
+			this.writer = new WriterWrapper(file);
 
-		String[] headers = {keyLabel, "Precision", "Recall", "F1"};
-		writer.writeNext(headers);
+			String[] headers = {keyLabel, "Precision", "Recall", "F1"};
+			writer.writeNext(headers);
+		}
 	}
 
 	void addResult(T key, SingleInformationDocResult<?> sResult)

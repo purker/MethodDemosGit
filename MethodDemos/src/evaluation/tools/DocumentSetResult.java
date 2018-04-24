@@ -55,13 +55,10 @@ public class DocumentSetResult
 		this.evalTypes = types;
 		this.modes = modes;
 
-		// if(modes.contains(EvaluationMode.CSV_PER_FILE))
-		perId = new SetResult<>(Config.CSVperIdFile, method, "File");
-		// if(modes.contains(EvaluationMode.CSV_PER_PUBLICATIONTYPE))
-		perPublicationType = new SetResult<>(Config.CSVperPublicationTypeFile, method, "PublicationType");
-		// if(modes.contains(EvaluationMode.CSV_PER_EVALUTATIONTYPE))
-		perType = new SetResult<>(Config.CSVperEvalTypeFile, method, "EvaluationType");
-		// if(modes.contains(EvaluationMode.CSV_PER_FILE_AND_EVALUATIONTYPE))
+		perId = new SetResult<>(Config.CSVperIdFile, method, modes.contains(EvaluationMode.CSV_PER_FILE), "File");
+		perPublicationType = new SetResult<>(Config.CSVperPublicationTypeFile, method, modes.contains(EvaluationMode.CSV_PER_PUBLICATIONTYPE), "PublicationType");
+		perType = new SetResult<>(Config.CSVperEvalTypeFile, method, modes.contains(EvaluationMode.CSV_PER_EVALUTATIONTYPE), "EvaluationType");
+		if(modes.contains(EvaluationMode.CSV_PER_FILE_AND_EVALUATIONTYPE))
 		{
 			String writerFile = FileCollectionUtil.getFileByMethod(Config.CSVperFileAndEvalTypeFile, method);
 			csvPerIdAndEvalTypeWriter = new WriterWrapper(writerFile);
@@ -120,16 +117,16 @@ public class DocumentSetResult
 				{
 					throw new IllegalArgumentException("PublicationType for publication (id=" + id + ") not set");
 				}
-				perType.addResult(type, sResult);
 				perId.addResult(id, sResult);
 				perPublicationType.addResult(publication.getPublicationType(), sResult);
+				perType.addResult(type, sResult);
 				documentResult.addResult(sResult);
 			}
 		}
 
-		perType.evaluate();
 		perId.evaluate();
 		perPublicationType.evaluate();
+		perType.evaluate();
 		documentResult.evaluate();
 	}
 
