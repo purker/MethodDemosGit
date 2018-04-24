@@ -10,8 +10,14 @@ public class FailureUtil
 		errorWriter.println(string);
 		if(exitProgram)
 		{
-			System.err.println("aborting program after failure");
-			System.exit(-1);
+			exit("aborting program after failure");
 		}
+	}
+
+	public static void exit(String string)
+	{
+		System.err.println("aborting program after failure");
+		System.exit(-1);
+
 	}
 }

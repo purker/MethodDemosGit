@@ -16,41 +16,40 @@ import com.opencsv.CSVWriter;
 import config.Config;
 import evaluation.EvaluationMode;
 import evaluation.informationresults.SingleInformationDocResult;
-import mapping.result.Publication;
+import mapping.result.AbstractMetaPublication;
 import mapping.result.PublicationType;
 import method.Method;
 import utils.FileCollectionUtil;
 import utils.PublicationUtil;
-import utils.XStreamUtil;
 
-public class DocumentSetResult
+public abstract class AbstractSetResult<T extends AbstractMetaPublication>
 {
-	private final Collection<EvalInformationType> evalTypes;
+	protected final Collection<EvalInformationType> evalTypes;
 
-	// <id, publication>
-	private Map<String, Publication> publications = new HashMap<>();
+	// <id, publication> or <id, reference>
+	protected Map<String, T> elements = new HashMap<>();
 
 	// <id, <type, value>>
-	private final Map<String, Map<EvalInformationType, SingleInformationDocResult<?>>> detailedResults = new TreeMap<>();
+	protected final Map<String, Map<EvalInformationType, SingleInformationDocResult<?>>> detailedResults = new TreeMap<>();
 
 	// <type, value>
-	private SetResult<EvalInformationType> perType = null;
+	protected SetResult<EvalInformationType> perType = null;
 
 	// <id, value>
-	private SetResult<String> perId = null;
+	protected SetResult<String> perId = null;
 
 	// <publicationType, value>
-	private SetResult<PublicationType> perPublicationType = null;
+	protected SetResult<PublicationType> perPublicationType = null;
 
 	// for overall evaluation
-	private final EvaluationResult documentResult = new EvaluationResult();
+	protected final EvaluationResult documentResult = new EvaluationResult();
 
-	private final Method method;
+	protected final Method method;
 
-	private AbstractWriter csvPerIdAndEvalTypeWriter;
-	private List<EvaluationMode> modes;
+	protected AbstractWriter csvPerIdAndEvalTypeWriter;
+	protected List<EvaluationMode> modes;
 
-	public DocumentSetResult(List<EvaluationMode> modes, Method method, Collection<EvalInformationType> types) throws IOException
+	public AbstractSetResult(List<EvaluationMode> modes, Method method, Collection<EvalInformationType> types) throws IOException
 	{
 		this.method = method;
 		this.evalTypes = types;
@@ -79,7 +78,7 @@ public class DocumentSetResult
 
 	}
 
-	public void addResult(String id, SingleInformationDocResult<?> result, Publication publication)
+	public void addResult(String id, SingleInformationDocResult<?> result, T setElement)
 	{
 		if(id == null)
 		{
@@ -91,7 +90,7 @@ public class DocumentSetResult
 			detailedResults.put(id, new EnumMap<EvalInformationType, SingleInformationDocResult<?>>(EvalInformationType.class));
 		}
 		detailedResults.get(id).put(result.getType(), result);
-		publications.put(id, publication);
+		elements.put(id, setElement);
 	}
 
 	public void evaluate()
@@ -101,7 +100,7 @@ public class DocumentSetResult
 		{
 			String id = result.getKey();
 			Map<EvalInformationType, SingleInformationDocResult<?>> values = result.getValue();
-			Publication publication = publications.get(id);
+			AbstractMetaPublication publication = elements.get(id);
 
 			for(EvalInformationType type : evalTypes)
 			{
@@ -220,28 +219,25 @@ public class DocumentSetResult
 			String id = result.getKey();
 			Map<EvalInformationType, SingleInformationDocResult<?>> docResults = result.getValue();
 
-			List<String> line = new ArrayList<>();
+			List<String> lines = new ArrayList<>();
 
-			Publication publication = XStreamUtil.convertFromXML(new File(id), Publication.class);
-
-			line.add(PublicationUtil.getIdFromFile(new File(id)));
-			line.add("=HYPERLINK(\"" + FileCollectionUtil.getPdfFileById(PublicationUtil.getIdFromFileNameWithoutPrefix(id)).getAbsolutePath() + "\")");
-			line.add("=HYPERLINK(\"" + new File(id).getAbsolutePath() + "\")");
-			line.add("=HYPERLINK(\"" + FileCollectionUtil.getResultFilesByMethodAndId(method, PublicationUtil.getIdFromFileNameWithoutPrefix(id)).getAbsolutePath() + "\")");
-			line.add(publication.getPublicationType().name());
+			lines.add(id);
+			addCustomElementColumns(id, lines);
 			for(EvalInformationType type : evalTypes)
 			{
-				line.add(docResults.get(type).getF1X100AsString());
+				lines.add(docResults.get(type).getF1X100AsString());
 			}
 
-			line.add(perId.getResultForKey(id).getAveragePrecisionFormatted());
-			line.add(perId.getResultForKey(id).getAverageRecallFormatted());
-			line.add(perId.getResultForKey(id).getAverageF1Formatted());
+			lines.add(perId.getResultForKey(id).getAveragePrecisionFormatted());
+			lines.add(perId.getResultForKey(id).getAverageRecallFormatted());
+			lines.add(perId.getResultForKey(id).getAverageF1Formatted());
 
-			csvPerIdAndEvalTypeWriter.writeNext(line);
+			csvPerIdAndEvalTypeWriter.writeNext(lines);
 		}
 		csvPerIdAndEvalTypeWriter.close();
 	}
+
+	protected abstract void addCustomElementColumns(String id, List<String> lines);
 
 	public SetResult<EvalInformationType> getPerType()
 	{

@@ -9,6 +9,7 @@ import java.util.stream.IntStream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hpsf.SummaryInformation;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -24,12 +25,28 @@ public class ExcelWriter extends AbstractWriter
 {
 	private static final WriterType WRITERTYPE = WriterType.EXCEL;
 
+	private static final String patternNonDecimal = "0";
+	private static String patternDecimal;
+
+	static
+	{
+		patternDecimal = StringUtils.repeat("0", Config.decimalPlaces);
+		if(!patternDecimal.equals(""))
+			patternDecimal = "0." + patternDecimal;
+		else
+			patternDecimal = patternNonDecimal;
+	}
+
 	private HSSFWorkbook workbook;
 	private HSSFSheet sheet;
 	private File file;
 
 	private int rowNum = 0;
 	private int columnCount = 0;
+
+	private HSSFCellStyle styleDefault;
+	private HSSFCellStyle styleNumberNonDecimal;
+	private HSSFCellStyle styleNumberDecimal;
 
 	public ExcelWriter(String fileName)
 	{
@@ -46,6 +63,18 @@ public class ExcelWriter extends AbstractWriter
 		workbook.createInformationProperties();
 		SummaryInformation props = workbook.getSummaryInformation();
 		props.setCreateDateTime(new Date(0)); // for same creationdate, that files with same data are equal
+
+		styleDefault = workbook.createCellStyle(); // Font and alignment
+		styleDefault.setVerticalAlignment(VerticalAlignment.TOP);
+
+		styleNumberNonDecimal = workbook.createCellStyle();
+		styleNumberNonDecimal.cloneStyleFrom(styleDefault);
+		styleNumberNonDecimal.setDataFormat(workbook.createDataFormat().getFormat(patternNonDecimal));
+
+		styleNumberDecimal = workbook.createCellStyle();
+		styleNumberDecimal.cloneStyleFrom(styleDefault);
+		styleNumberDecimal.setDataFormat(workbook.createDataFormat().getFormat(patternDecimal));
+
 	}
 
 	@Override
@@ -69,25 +98,22 @@ public class ExcelWriter extends AbstractWriter
 			}
 			else
 			{
-				CellStyle style = workbook.createCellStyle(); // Font and alignment
-				style.setVerticalAlignment(VerticalAlignment.TOP);
+				CellStyle style = styleDefault;
 
 				try
 				{
 					String valueString = field.replace(",", ".");
 					double value = Double.parseDouble(valueString);
 
-					String pattern = "0";
 					if(valueString.contains("."))
 					{
-						String decimalPattern = StringUtils.repeat("0", Config.decimalPlaces);
-						if(!decimalPattern.equals(""))
-						{
-							pattern += "." + decimalPattern;
-						}
+						style = styleNumberDecimal;
+					}
+					else
+					{
+						style = styleNumberNonDecimal;
 					}
 
-					style.setDataFormat(workbook.createDataFormat().getFormat(pattern));
 					cell.setCellType(CellType.NUMERIC);
 					cell.setCellValue(value);
 				}

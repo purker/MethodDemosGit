@@ -14,7 +14,7 @@ import org.junit.runner.RunWith;
 import evaluation.EvaluationMode;
 import evaluation.Evaluators;
 import evaluation.SystemEvaluator;
-import evaluation.tools.DocumentSetResult;
+import evaluation.tools.AbstractSetResult;
 import evaluation.tools.EvalInformationType;
 import evaluation.tools.EvaluationResult;
 import evaluation.tools.PublicationIterator;
@@ -38,7 +38,7 @@ public abstract class AbstractFileEvaluatorTest
 		Publication extractedPub = PublicationFactory.createPublication("1");
 
 		PublicationIterator iter = new PublicationIterator(originalPub, extractedPub);
-		DocumentSetResult result = getEvalutator().evaluate(modes, iter);
+		AbstractSetResult result = getEvalutator().evaluate(modes, iter);
 
 		assertEquals(new Double(100.), result.getDocumentResult().getAveragePrecision(), "average precsision");
 		assertEquals(new Double(100.), result.getDocumentResult().getAverageRecall(), "average recall");
@@ -52,7 +52,7 @@ public abstract class AbstractFileEvaluatorTest
 		Publication extractedPub = new Publication();
 
 		PublicationIterator iter = new PublicationIterator(originalPub, extractedPub);
-		DocumentSetResult result = getEvalutator().evaluate(modes, iter);
+		AbstractSetResult result = getEvalutator().evaluate(modes, iter);
 
 		EvaluationResult evaluationResult = result.getDocumentResult();
 		assertEquals(new Double(Double.NaN), evaluationResult.getAveragePrecision(), "average precsision");
@@ -72,7 +72,7 @@ public abstract class AbstractFileEvaluatorTest
 		Publication extractedPub = PublicationFactory.createPublication("1");
 
 		PublicationIterator iter = new PublicationIterator(originalPub, extractedPub);
-		DocumentSetResult result = getEvalutator().evaluate(modes, iter);
+		AbstractSetResult result = getEvalutator().evaluate(modes, iter);
 
 		// EvalInformationType evalInfoType = EvalInformationType.TITLE;
 		EvaluationResult evaluationResult = result.getPerType().getResultForKey(evalInfoType);

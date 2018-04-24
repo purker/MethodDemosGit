@@ -19,6 +19,7 @@
 package evaluation;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.List;
 
 import evaluation.tools.EvalInformationType;
@@ -29,9 +30,9 @@ public class CermineXStreamFileEvaluator extends SystemEvaluator
 {
 	private static final Method METHOD = Method.CERMINE;
 
-	public CermineXStreamFileEvaluator(List<EvalInformationType> types)
+	public CermineXStreamFileEvaluator(Collection<EvalInformationType> types, Collection<EvalInformationType> referenceTypes)
 	{
-		super(types);
+		super(types, referenceTypes);
 	}
 
 	@Override

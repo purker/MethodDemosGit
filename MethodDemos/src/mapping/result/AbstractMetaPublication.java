@@ -2,12 +2,13 @@ package mapping.result;
 
 import java.util.Date;
 
-public class AbstractMetaPublication extends BaseEntity
+public abstract class AbstractMetaPublication extends BaseEntity
 {
 	private static final long serialVersionUID = 5037061578663513484L;
 
 	protected String id;
 	protected String title;
+	private PublicationType publicationType;
 	protected String source;
 	protected String edition;
 	protected String location;
@@ -49,6 +50,16 @@ public class AbstractMetaPublication extends BaseEntity
 	public void setTitle(String title)
 	{
 		this.title = title;
+	}
+
+	public PublicationType getPublicationType()
+	{
+		return publicationType;
+	}
+
+	public void setPublicationType(PublicationType publicationType)
+	{
+		this.publicationType = publicationType;
 	}
 
 	public String getSource()

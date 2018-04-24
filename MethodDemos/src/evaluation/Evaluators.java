@@ -28,19 +28,19 @@ import pl.edu.icm.cermine.evaluation.exception.EvaluationException;
 
 public class Evaluators
 {
-	private static List<EvalInformationType> types;
 
 	public static void main(String[] args)
 	{
 		try
 		{
-			List<EvaluationMode> modes = Arrays.asList(EvaluationMode.values());
+			List<EvaluationMode> allModes = Arrays.asList(EvaluationMode.values());
 
-			// List<EvaluationMode> modes = new ArrayList<>();
-			// modes.add(EvaluationMode.CSV_PER_FILE_WITH_EVALUATIONTYPEVALUE);
+			List<EvaluationMode> modes = new ArrayList<>();
+			modes.add(EvaluationMode.CSV_PER_FILE_WITH_EVALUATIONTYPEVALUE);
 
 			// Demos.executeDemos();
-			evaluateMethods(EvaluationMode.getCSVModes(), getTypes());
+			// evaluateMethods(modes, getTypes(), getReferenceTypes());
+			evaluateMethods(EvaluationMode.getCSVModes(), getTypes(), getReferenceTypes());
 			// evaluateMethods(EvaluationMode.CSV, getTypes());
 			// evaluateMethods(EvaluationMode.CSV_SUMMARY, getTypes());
 			// evaluateMethods(Arrays.asList(EvaluationMode.CSV_PER_FILE_WITH_EVALUATIONTYPEVALUE), Arrays.asList(EvalInformationType.AUTHORS));
@@ -52,17 +52,41 @@ public class Evaluators
 		}
 	}
 
-	private static void evaluateMethods(List<EvaluationMode> modes, List<EvalInformationType> types) throws EvaluationException, IOException
+	private static List<EvalInformationType> getReferenceTypes()
 	{
-		new CermineXStreamFileEvaluator(types).evaluate(modes);
-		new GrobidXStreamFileEvaluator(types).evaluate(modes);
-		new ParscitXStreamFileEvaluator(types).evaluate(modes);
-		new PdfxXStreamFileEvaluator(types).evaluate(modes);
+		List<EvalInformationType> types = new ArrayList<>();
+		// types.add(EvalInformationType.REFERENCE_AUTHORS);
+		types.add(EvalInformationType.REFERENCE_TITLE);
+		// types.add(EvalInformationType.REFERENCE_SOURCE);
+		// types.add(EvalInformationType.REFERENCE_LOCATION);
+		// types.add(EvalInformationType.REFERENCE_PUBLISHER);
+		// types.add(EvalInformationType.REFERENCE_EDITOR);
+		// types.add(EvalInformationType.REFERENCE_DOI);
+		// types.add(EvalInformationType.REFERENCE_URL);
+		// types.add(EvalInformationType.REFERENCE_EDITION);
+		// types.add(EvalInformationType.REFERENCE_VOLUME);
+		// types.add(EvalInformationType.REFERENCE_ISSUE);
+		// types.add(EvalInformationType.REFERENCE_NOTE);
+		// types.add(EvalInformationType.REFERENCE_PAGEFROM);
+		// types.add(EvalInformationType.REFERENCE_PAGETO);
+		// types.add(EvalInformationType.REFERENCE_DATE);
+
+		// TODO error message when not implemented
+		return types;
+	}
+
+	private static void evaluateMethods(List<EvaluationMode> modes, List<EvalInformationType> types, List<EvalInformationType> referenceTypes) throws EvaluationException, IOException
+	{
+		new CermineXStreamFileEvaluator(types, referenceTypes).evaluate(modes);
+		// new GrobidXStreamFileEvaluator(types, referenceTypes).evaluate(modes);
+		// new ParscitXStreamFileEvaluator(types, referenceTypes).evaluate(modes);
+		// new PdfxXStreamFileEvaluator(types, referenceTypes).evaluate(modes);
 		System.out.println("Evaluation finished");
 	}
 
 	public static List<EvalInformationType> getTypes()
 	{
+		List<EvalInformationType> types;
 		types = new ArrayList<>();
 		types.add(EvalInformationType.TITLE);
 		types.add(EvalInformationType.ABSTRACT);
@@ -84,40 +108,6 @@ public class Evaluators
 		types.add(EvalInformationType.SECTION_LEVELS);
 		types.add(EvalInformationType.SECTION_REFERENCES);
 		types.add(EvalInformationType.REFERENCES);
-		// types.add(EvalInformationType.REFERENCE_AUTHORS);
-		// types.add(EvalInformationType.REFERENCE_TITLE);
-		// types.add(EvalInformationType.REFERENCE_SOURCE);
-		// types.add(EvalInformationType.REFERENCE_LOCATION);
-		// types.add(EvalInformationType.REFERENCE_PUBLISHER);
-		// types.add(EvalInformationType.REFERENCE_EDITOR);
-		// types.add(EvalInformationType.REFERENCE_DOI);
-		// types.add(EvalInformationType.REFERENCE_URL);
-		// types.add(EvalInformationType.REFERENCE_EDITION);
-		// types.add(EvalInformationType.REFERENCE_VOLUME);
-		// types.add(EvalInformationType.REFERENCE_ISSUE);
-		// types.add(EvalInformationType.REFERENCE_NOTE);
-		// types.add(EvalInformationType.REFERENCE_PAGEFROM);
-		// types.add(EvalInformationType.REFERENCE_PAGETO);
-		// types.add(EvalInformationType.REFERENCE_DATE);
-
-		// return Lists.newArrayList(EvalInformationType.TITLE, EvalInformationType.ABSTRACT, EvalInformationType.ABSTRACTGERMAN, EvalInformationType.KEYWORDS, EvalInformationType.AUTHORS//
-		// EvalInformationType.AFFILIATIONS,
-		// // EvalInformationType.AUTHOR_AFFILIATIONS,
-		// , EvalInformationType.EMAILS, EvalInformationType.AUTHOR_EMAILS,
-		// // EvalInformationType.JOURNAL,
-		// // EvalInformationType.VOLUME,
-		// // EvalInformationType.ISSUE,
-		// // EvalInformationType.PAGES,
-		// EvalInformationType.YEAR, // EvalInformationType.DOI,
-		// EvalInformationType.REFERENCES);
-
-		return types;
-	}
-
-	public static List<EvalInformationType> getTypes2()
-	{
-		types = new ArrayList<>();
-		types.add(EvalInformationType.AUTHOR_AFFILIATIONS);
 
 		return types;
 	}

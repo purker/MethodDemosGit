@@ -7,7 +7,6 @@ public class Publication extends AbstractMetaPublication
 {
 	private static final long serialVersionUID = 8605009499117151049L;
 
-	private PublicationType publicationType;
 	private String abstractText;
 	private String abstractTextGerman;
 	private Integer maxSectionLayer;
@@ -20,16 +19,6 @@ public class Publication extends AbstractMetaPublication
 	private List<Section> sections = new ArrayList<>();
 	private List<CitationContext> citationContexts = new ArrayList<>();
 	private List<Reference> references = new ArrayList<>();
-
-	public PublicationType getPublicationType()
-	{
-		return publicationType;
-	}
-
-	public void setPublicationType(PublicationType publicationType)
-	{
-		this.publicationType = publicationType;
-	}
 
 	public String getAbstractText()
 	{

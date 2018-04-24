@@ -19,6 +19,7 @@
 package evaluation;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.List;
 
 import evaluation.tools.EvalInformationType;
@@ -29,9 +30,9 @@ public class PdfxXStreamFileEvaluator extends SystemEvaluator
 {
 	private static final Method METHOD = Method.PDFX;
 
-	public PdfxXStreamFileEvaluator(List<EvalInformationType> types)
+	public PdfxXStreamFileEvaluator(Collection<EvalInformationType> types, Collection<EvalInformationType> referenceTypes)
 	{
-		super(types);
+		super(types, referenceTypes);
 	}
 
 	@Override

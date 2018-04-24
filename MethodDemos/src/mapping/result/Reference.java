@@ -26,11 +26,6 @@ public class Reference extends AbstractMetaPublication
 		this.marker = marker;
 	}
 
-	public String getType()
-	{
-		return type;
-	}
-
 	public void setType(String type)
 	{
 		this.type = type;

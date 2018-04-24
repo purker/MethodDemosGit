@@ -4,6 +4,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
+import utils.FailureUtil;
+
 public class EvalInformationTypeComparatorMapping
 {
 	private static Map<EvalInformationType, Comparator<String>> map = new HashMap<>();
@@ -34,7 +36,8 @@ public class EvalInformationTypeComparatorMapping
 		relationMap.put(EvalInformationType.SECTION_REFERENCES, new RelationComparators(map.get(EvalInformationType.SECTIONS), "sections", map.get(EvalInformationType.REFERENCES), "references-default"));
 		// relationMap.put(EvalInformationType.SECTION_REFERENCES, new RelationComparators(map.get(EvalInformationType.SECTIONS)));
 		// map.put(EvalInformationType.REFERENCE_AUTHORS, EvaluationUtils.);
-		// map.put(EvalInformationType.REFERENCE_TITLE, EvaluationUtils.);
+
+		map.put(EvalInformationType.REFERENCE_TITLE, EvaluationUtils.swComparator);
 		// map.put(EvalInformationType.REFERENCE_SOURCE, EvaluationUtils.);
 		// map.put(EvalInformationType.REFERENCE_LOCATION, EvaluationUtils.);
 		// map.put(EvalInformationType.REFERENCE_PUBLISHER, EvaluationUtils.);
@@ -53,11 +56,24 @@ public class EvalInformationTypeComparatorMapping
 
 	public static Comparator<String> getComparatorByType(EvalInformationType evalInformationType)
 	{
-		return map.get(evalInformationType);
+		Comparator<String> comp = map.get(evalInformationType);
+
+		if(comp == null)
+		{
+			FailureUtil.exit("comparator for type " + evalInformationType + " not specified");
+		}
+
+		return comp;
 	}
 
 	public static RelationComparators getComparatorsByType(EvalInformationType evalInformationType)
 	{
-		return relationMap.get(evalInformationType);
+		RelationComparators comps = relationMap.get(evalInformationType);
+
+		if(comps == null)
+		{
+			FailureUtil.exit("comparators for relation " + evalInformationType + " not specified");
+		}
+		return comps;
 	}
 }

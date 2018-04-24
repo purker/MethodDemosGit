@@ -33,10 +33,12 @@ import evaluation.informationresults.ReferenceInformationResult;
 import evaluation.informationresults.RelationInformationResult;
 import evaluation.informationresults.RelationInformationResult.StringRelation;
 import evaluation.informationresults.SimpleInformationResult;
-import evaluation.tools.DocumentSetResult;
+import evaluation.tools.AbstractSetResult;
 import evaluation.tools.EvalInformationType;
 import evaluation.tools.PublicationIterator;
 import evaluation.tools.PublicationPair;
+import evaluation.tools.PublicationSetResult;
+import evaluation.tools.ReferenceSetResult;
 import mapping.result.Affiliation;
 import mapping.result.Author;
 import mapping.result.Publication;
@@ -55,17 +57,14 @@ public abstract class SystemEvaluator
 {
 	protected PublicationIterator iter;
 	protected Collection<EvalInformationType> types;
+	protected Collection<EvalInformationType> referenceTypes;
 
-	public SystemEvaluator()
+	public SystemEvaluator(Collection<EvalInformationType> types, Collection<EvalInformationType> referenceTypes)
 	{
 		System.out.println("Starting Evaluation: " + getMethod());
 		this.iter = new PublicationIterator(getOriginalFiles(), getExtractedFiles());
-	}
-
-	public SystemEvaluator(Collection<EvalInformationType> types)
-	{
-		this();
 		this.types = types;
+		this.referenceTypes = referenceTypes;
 	}
 
 	protected List<File> getOriginalFiles()
@@ -85,6 +84,11 @@ public abstract class SystemEvaluator
 		return this.types;
 	}
 
+	public Collection<EvalInformationType> getReferenceTypes()
+	{
+		return referenceTypes;
+	}
+
 	/**
 	 * @param modes
 	 *            which outputs should be generated, if empty -> no output (for test purposes)
@@ -93,9 +97,10 @@ public abstract class SystemEvaluator
 	 * @throws EvaluationException
 	 * @throws IOException
 	 */
-	public DocumentSetResult evaluate(List<EvaluationMode> modes, PublicationIterator files) throws EvaluationException, IOException
+	public AbstractSetResult evaluate(List<EvaluationMode> modes, PublicationIterator files) throws EvaluationException, IOException
 	{
-		DocumentSetResult results = new DocumentSetResult(modes, getMethod(), getTypes());
+		PublicationSetResult results = new PublicationSetResult(modes, getMethod(), getTypes());
+		ReferenceSetResult refResults = new ReferenceSetResult(modes, getMethod(), getReferenceTypes());
 
 		int i = 0;
 		for(PublicationPair pair : files)
@@ -116,33 +121,60 @@ public abstract class SystemEvaluator
 				id = origPub.getId();
 			}
 
-			for(EvalInformationType type : getTypes())
-			{
-				AbstractSingleInformationDocResult<?> result = getResultFromType(type, origPub, testPub);
-				result.evaluate();
-				if(type.equals(EvalInformationType.REFERENCES))
-				{
-					for(Pair<Reference, Reference> referencePair : ((ReferenceInformationResult)result).getMatchingReferences())
-					{
-						System.out.println(referencePair.getLeft());
-						System.out.println(referencePair.getRight());
-						System.out.println();
-					}
-				}
-				results.addResult(id, result, origPub);
-			}
-
 			if(modes.contains(EvaluationMode.SYSOUT_DETAILED))
 			{
 				results.printDocument(id, i);
 			}
+
+			for(EvalInformationType type : getTypes())
+			{
+				AbstractSingleInformationDocResult<?> result = getResultFromType(type, origPub, testPub);
+				result.evaluate();
+				results.addResult(id, result, origPub);
+
+				if(type.equals(EvalInformationType.REFERENCES))
+				{
+					List<Pair<Reference, Reference>> matchingReferences = ((ReferenceInformationResult)result).getMatchingReferences();
+					for(Pair<Reference, Reference> refPair : matchingReferences)
+					{
+						for(EvalInformationType refType : getReferenceTypes())
+						{
+							AbstractSingleInformationDocResult<?> refResult = getResultFromReferenceType(refType, refPair.getLeft(), refPair.getRight());
+							if(refResult == null) continue;
+							refResult.evaluate();
+							refPair.getLeft().setPublicationType(origPub.getPublicationType()); // TODO eventuell schöner, wenn geht
+							refResults.addResult(origPub, refResult, refPair.getLeft());
+
+							// System.out.println(refPair.getLeft());
+							// System.out.println(refPair.getRight());
+							// System.out.println();
+						}
+					}
+				}
+			}
 		}
 
 		results.evaluate();
-
 		results.printResults();
 
+		refResults.evaluate();
+		refResults.printResults();
+
 		return results;
+	}
+
+	private AbstractSingleInformationDocResult<?> getResultFromReferenceType(EvalInformationType type, Reference reference, Reference reference2) throws EvaluationException
+	{
+		switch(type)
+		{
+			case REFERENCE_TITLE:
+				return new SimpleInformationResult(type, reference.getTitle(), reference2.getTitle());
+
+			// TODO
+			// default:
+			// throw new EvaluationException("referencetype not known");
+		}
+		return null;
 	}
 
 	private AbstractSingleInformationDocResult<?> getResultFromType(EvalInformationType type, Publication origPub, Publication testPub) throws EvaluationException
@@ -343,26 +375,7 @@ public abstract class SystemEvaluator
 				return new RelationInformationResult(type, sectionReferencesOrig, sectionReferencesTest);
 
 			case REFERENCES:
-				return new ReferenceInformationResult(type, origPub.getReferences(), testPub.getReferences());
-
-			// List<EvalInformationType> subTypes = EvalInformationType.getSubTypes(EvalInformationType.REFERENCES, getTypes());
-			// DocumentSetResult referenceResults = new DocumentSetResult(subTypes);
-			// for(Reference reference : subTypes)
-			// {
-			//
-			// }
-			// for(EvalInformationType subType : subTypes)
-			// {
-			// switch(subType)
-			// {
-			// case REFERENCE_TITLE:
-			// referenceResults.addResult(reference., new SimpleInformationResult(type, origPub.getTitle(), testPub.getTitle()));
-			//
-			// }
-			// }
-
-			case REFERENCE_TITLE:
-				return new SimpleInformationResult(type, origPub.getTitle(), testPub.getTitle());
+				return new ReferenceInformationResult(type, origPub.getReferences(), testPub.getReferences(), origPub);
 
 			default:
 				throw new EvaluationException("type not known");
