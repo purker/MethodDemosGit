@@ -25,11 +25,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import evaluation.informationresults.AbstractSingleInformationDocResult;
 import evaluation.informationresults.ListInformationResult;
+import evaluation.informationresults.ReferenceInformationResult;
 import evaluation.informationresults.RelationInformationResult;
-import evaluation.informationresults.SimpleInformationResult;
 import evaluation.informationresults.RelationInformationResult.StringRelation;
+import evaluation.informationresults.SimpleInformationResult;
 import evaluation.tools.DocumentSetResult;
 import evaluation.tools.EvalInformationType;
 import evaluation.tools.PublicationIterator;
@@ -117,6 +120,15 @@ public abstract class SystemEvaluator
 			{
 				AbstractSingleInformationDocResult<?> result = getResultFromType(type, origPub, testPub);
 				result.evaluate();
+				if(type.equals(EvalInformationType.REFERENCES))
+				{
+					for(Pair<Reference, Reference> referencePair : ((ReferenceInformationResult)result).getMatchingReferences())
+					{
+						System.out.println(referencePair.getLeft());
+						System.out.println(referencePair.getRight());
+						System.out.println();
+					}
+				}
 				results.addResult(id, result, origPub);
 			}
 
@@ -331,17 +343,7 @@ public abstract class SystemEvaluator
 				return new RelationInformationResult(type, sectionReferencesOrig, sectionReferencesTest);
 
 			case REFERENCES:
-				List<String> origRefs = new ArrayList<>();
-				for(Reference entry : origPub.getReferences())
-				{
-					origRefs.add(entry.toString());
-				}
-				List<String> testRefs = new ArrayList<>();
-				for(Reference entry : testPub.getReferences())
-				{
-					testRefs.add(entry.toString());
-				}
-				return new ListInformationResult(type, origRefs, testRefs);
+				return new ReferenceInformationResult(type, origPub.getReferences(), testPub.getReferences());
 
 			// List<EvalInformationType> subTypes = EvalInformationType.getSubTypes(EvalInformationType.REFERENCES, getTypes());
 			// DocumentSetResult referenceResults = new DocumentSetResult(subTypes);

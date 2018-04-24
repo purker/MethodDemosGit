@@ -29,7 +29,7 @@ import utils.StringUtil;
 
 public class ListInformationResult extends AbstractSingleInformationDocResult<List<String>>
 {
-	private Comparator<String> comp = EvaluationUtils.defaultComparator;
+	protected Comparator<String> comp = EvaluationUtils.defaultComparator;
 
 	public ListInformationResult(EvalInformationType type, List<String> expectedValue, List<String> extractedValue)
 	{
