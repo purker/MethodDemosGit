@@ -16,13 +16,16 @@
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package evaluation.tools;
+package evaluation.informationresults;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
+import evaluation.tools.EvalInformationType;
+import evaluation.tools.EvalInformationTypeComparatorMapping;
+import evaluation.tools.RelationComparators;
 import pl.edu.icm.cermine.evaluation.exception.EvaluationException;
 import utils.StringUtil;
 

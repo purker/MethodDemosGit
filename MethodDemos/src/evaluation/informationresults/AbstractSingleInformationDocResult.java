@@ -16,10 +16,11 @@
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package evaluation.tools;
+package evaluation.informationresults;
 
 import java.io.IOException;
 
+import evaluation.tools.EvalInformationType;
 import utils.FormatingUtil;
 
 /**

@@ -16,12 +16,15 @@
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package evaluation.tools;
+package evaluation.informationresults;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import evaluation.tools.EvalInformationType;
+import evaluation.tools.EvalInformationTypeComparatorMapping;
+import evaluation.tools.EvaluationUtils;
 import utils.StringUtil;
 
 public class ListInformationResult extends AbstractSingleInformationDocResult<List<String>>

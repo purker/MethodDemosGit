@@ -16,9 +16,12 @@
  * along with CERMINE. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package evaluation.tools;
+package evaluation.informationresults;
 
 import java.util.Comparator;
+
+import evaluation.tools.EvalInformationType;
+import evaluation.tools.EvalInformationTypeComparatorMapping;
 
 /**
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)

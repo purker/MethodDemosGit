@@ -15,6 +15,7 @@ import com.opencsv.CSVWriter;
 
 import config.Config;
 import evaluation.EvaluationMode;
+import evaluation.informationresults.SingleInformationDocResult;
 import mapping.result.Publication;
 import mapping.result.PublicationType;
 import method.Method;

@@ -1,5 +1,6 @@
 package evaluation.tools;
 
+import evaluation.informationresults.SingleInformationDocResult;
 import utils.FormatingUtil;
 
 public class EvaluationResult
