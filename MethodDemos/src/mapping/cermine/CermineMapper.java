@@ -6,6 +6,8 @@ import java.util.List;
 
 import demos.Demos;
 import mapping.Mapper;
+import mapping.ReferenceIdReplaceWorker;
+import mapping.ReferenceSetPublicationWorker;
 import mapping.SectionLayerWorker;
 import mapping.SectionReferenceWorker;
 import mapping.Worker;
@@ -54,6 +56,8 @@ public class CermineMapper extends Mapper
 		workers.add(new AffiliationCollectorWorker());
 		workers.add(new AuthorNameCorrectionWorker());
 		workers.add(new AffiliationNameCorrectionWorker());
+		workers.add(new ReferenceIdReplaceWorker());
+		workers.add(new ReferenceSetPublicationWorker());
 		workers.add(new SectionLevelWorker());
 		workers.add(new SectionLayerWorker());
 		workers.add(new SectionReferenceWorker());

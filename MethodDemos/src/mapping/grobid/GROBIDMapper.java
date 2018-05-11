@@ -1,12 +1,13 @@
 package mapping.grobid;
 
 import java.io.File;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import demos.Demos;
 import factory.PublicationFactory;
 import mapping.Mapper;
+import mapping.ReferenceSetPublicationWorker;
 import mapping.Worker;
 import method.Method;
 import utils.XStreamUtil;
@@ -45,7 +46,15 @@ public class GROBIDMapper extends Mapper
 	@Override
 	protected List<? extends Worker> getWorkers()
 	{
-		return Arrays.asList(new AffiliationWorker(), /* dort auch wieder einkommentieren new AuthorNameConcatenationWorker(), */new ReferenceIdReplaceWorker(), new ReferenceEditionWorker(), new ReferenceDateWorker());
+		List<Worker> workers = new ArrayList<>();
+		workers.add(new ReferenceSetPublicationWorker());
+		workers.add(new AffiliationWorker());
+		/* TODO dort auch wieder einkommentieren new AuthorNameConcatenationWorker(), */
+		workers.add(new ReferenceIdReplaceWorkerGrobid());
+		workers.add(new ReferenceEditionWorker());
+		workers.add(new ReferenceDateWorker());
+
+		return workers;
 	}
 
 	@Override

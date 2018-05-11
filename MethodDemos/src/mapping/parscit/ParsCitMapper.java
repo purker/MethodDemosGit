@@ -1,11 +1,12 @@
 package mapping.parscit;
 
 import java.io.File;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import demos.Demos;
 import mapping.Mapper;
+import mapping.ReferenceSetPublicationWorker;
 import mapping.Worker;
 import method.Method;
 
@@ -40,7 +41,11 @@ public class ParsCitMapper extends Mapper
 	@Override
 	protected List<? extends Worker> getWorkers()
 	{
-		return Arrays.asList(new SectionTypeNormalizerWorker());
+		List<Worker> workers = new ArrayList<>();
+		workers.add(new ReferenceSetPublicationWorker());
+		workers.add(new SectionTypeNormalizerWorker());
+
+		return workers;
 	}
 
 	@Override

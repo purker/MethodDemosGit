@@ -49,6 +49,7 @@ import config.Config;
 import demos.Demos;
 import evaluation.tools.EvalInformationType;
 import factory.PublicationFactory;
+import mapping.ReferenceSetPublicationWorker;
 import mapping.Worker;
 import mapping.cermine.ReferenceAuthorNameConcatenationWorker;
 import mapping.grobid.AuthorNameConcatenationWorker;
@@ -65,6 +66,7 @@ import mapping.result.AbstractAuthor;
 import mapping.result.AbstractMetaPublication;
 import mapping.result.Affiliation;
 import mapping.result.Author;
+import mapping.result.Id;
 import mapping.result.Publication;
 import mapping.result.PublicationType;
 import mapping.result.Reference;
@@ -75,13 +77,14 @@ import utils.CollectionUtil;
 import utils.FileCollectionUtil;
 import utils.FileNameUtil;
 import utils.PublicationUtil;
-import utils.ReferenceUtil;
 import utils.XStreamUtil;
 
 /**
  * @author Angela
  *
  */
+
+@SuppressWarnings("unused")
 public class StepsHistory
 {
 	static File file1 = new File("D:/Java/git/MethodDemosGit/MethodDemos/output/result/result-TUW-137078-xstream.xml");
@@ -142,9 +145,10 @@ public class StepsHistory
 
 	public static void main(String[] args) throws Exception
 	{
+		useWorkerFiles(FileCollectionUtil.getResultFiles(), new ReferenceSetPublicationWorker());
 		// useWorkerFiles(FileCollectionUtil.getResultFiles(), new SectionLayerWorker());
 		// setPublicationTypeFromMap(FileCollectionUtil.getResultFiles());
-		rewriteXStreamFiles(FileCollectionUtil.getResultFiles());
+		// rewriteXStreamFiles(FileCollectionUtil.getResultFiles());
 		// searchNotEmpty(FileCollectionUtil.getGrobidResultFiles(), EvalInformationType.DOI);
 		// useWorkerFiles(FileCollectionUtil.getResultFiles(), new AffiliationCollectorWorker());
 		// useWorkerFiles(FileCollectionUtil.getCermineResultFiles(), new AffiliationCollectorWorker());
@@ -310,7 +314,7 @@ public class StepsHistory
 
 	private static void setPublicationTypeFromMap(List<File> resultFiles)
 	{
-		Map<String, PublicationType> map = new HashMap();
+		Map<String, PublicationType> map = new HashMap<>();
 		map = GroundTruthMap.addtoMap(map);
 
 		for(File file : resultFiles)
@@ -817,8 +821,6 @@ public class StepsHistory
 	private static String printAllFirstLastNames(File file)
 	{
 		Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
-
-		Map<String, String> map = getReferenceMarkerIdMap(publication);
 		StringBuffer sb = new StringBuffer();
 
 		for(Reference reference : publication.getReferences())
@@ -838,8 +840,6 @@ public class StepsHistory
 	{
 		Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
 
-		Map<String, String> map = getReferenceMarkerIdMap(publication);
-
 		for(Reference reference : publication.getReferences())
 		{
 			if(StringUtils.isEmpty(reference.getTitle()))
@@ -855,7 +855,7 @@ public class StepsHistory
 	{
 		Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
 
-		Map<String, String> map = getReferenceMarkerIdMap(publication);
+		Map<String, Integer> map = getReferenceMarkerIdMap(publication);
 
 		for(Section section : publication.getSections())
 		{
@@ -867,7 +867,7 @@ public class StepsHistory
 
 					string = "[" + string + "]";
 
-					String refId = map.get(string);
+					Integer refId = map.get(string);
 
 					if(refId == null)
 					{
@@ -876,7 +876,7 @@ public class StepsHistory
 					}
 					else
 					{
-						iterator.set(refId);
+						iterator.set(refId.toString());
 					}
 				}
 			}
@@ -957,10 +957,10 @@ public class StepsHistory
 	{
 		Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
 
-		Integer x = 1;
+		int x = 1;
 		for(Reference reference : publication.getReferences())
 		{
-			reference.setId(ReferenceUtil.getRefIdFromNumber(x++));
+			reference.setId(new Id(x++));
 		}
 
 		XStreamUtil.convertToXmL(publication, file, System.out, true);
@@ -1013,7 +1013,7 @@ public class StepsHistory
 	{
 		Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
 
-		Map<String, String> map = getReferenceMarkerIdMap(publication);
+		Map<String, Integer> map = getReferenceMarkerIdMap(publication);
 
 		for(Section section : publication.getSections())
 		{
@@ -1022,12 +1022,12 @@ public class StepsHistory
 				List<String> newIds = new ArrayList<>();
 				for(String id : section.getReferenceIds())
 				{
-					String newId = map.get(id);
+					Integer newId = map.get(id);
 					if(newId == null)
 					{
 						System.err.println(id);
 					}
-					newIds.add(new String(newId));
+					newIds.add(newId.toString());
 				}
 				section.getReferenceIds().clear();
 				section.getReferenceIds().addAll(newIds);
@@ -1043,24 +1043,24 @@ public class StepsHistory
 		Map<String, Reference> map = new HashMap<>();
 		for(Reference reference : publication.getReferences())
 		{
-			map.put(reference.getId(), reference);
+			map.put(reference.getId().toString(), reference);
 		}
 		return map;
 	}
 
-	private static Map<String, String> getReferenceMarkerIdMap(Publication publication)
+	private static Map<String, Integer> getReferenceMarkerIdMap(Publication publication)
 	{
-		Map<String, String> map = new HashMap<>();
+		Map<String, Integer> map = new HashMap<>();
 		for(Reference reference : publication.getReferences())
 		{
-			map.put(reference.getMarker(), reference.getId());
+			map.put(reference.getMarker(), reference.getId().getId());
 		}
 		return map;
 	}
 
-	private static Map<String, String> getReferenceIdMarkerMap(Publication publication)
+	private static Map<Id, String> getReferenceIdMarkerMap(Publication publication)
 	{
-		Map<String, String> map = new HashMap<>();
+		Map<Id, String> map = new HashMap<>();
 		for(Reference reference : publication.getReferences())
 		{
 			map.put(reference.getId(), reference.getMarker());
@@ -1103,7 +1103,7 @@ public class StepsHistory
 		Map<String, String> map = new HashMap<>();
 		for(Reference reference : publication.getReferences())
 		{
-			map.put(reference.getMarker(), reference.getId());
+			map.put(reference.getMarker(), reference.getRefString());
 		}
 
 		for(Section section : publication.getSections())
@@ -1252,7 +1252,7 @@ public class StepsHistory
 		if(changeReferences)
 		{
 			List<Reference> references = publication.getReferences();
-			references.forEach(p -> p.setId(setId(p.getId(), i, fromIndex)));
+			references.forEach(r -> r.setId(setId(r.getId().getId(), i, fromIndex)));
 		}
 
 		// section references
@@ -1267,7 +1267,7 @@ public class StepsHistory
 						for(final ListIterator<String> iterator = section.getReferenceIds().listIterator(); iterator.hasNext();)
 						{
 							final String refString = iterator.next();
-							iterator.set(setId(refString, i, fromIndex));
+							iterator.set(setId(refString, i, fromIndex).toString());
 						}
 						if(section.getReferenceCitations() == null)
 						{
@@ -1276,7 +1276,7 @@ public class StepsHistory
 						for(ReferenceCitation referenceCitation : section.getReferenceCitations())
 						{
 							String refString = referenceCitation.getReferenceId();
-							referenceCitation.setReferenceId(setId(refString, i, fromIndex));
+							referenceCitation.setReferenceId(setId(refString, i, fromIndex).toString());
 						}
 					}
 				}
@@ -1332,7 +1332,7 @@ public class StepsHistory
 		{
 			if(CollectionUtils.isNotEmpty(reference.getAuthors()))
 			{
-				Integer refNumber = ReferenceUtil.getReferenceIdNumber(reference);
+				Integer refNumber = reference.getId().getId();
 
 				if(from == null || (from != null && refNumber != null && refNumber >= from))
 				{
@@ -1416,7 +1416,7 @@ public class StepsHistory
 		{
 			if(CollectionUtils.isNotEmpty(reference.getAuthors()))
 			{
-				Integer refNumber = ReferenceUtil.getReferenceIdNumber(reference);
+				Integer refNumber = reference.getId().getId();
 
 				if(from == null || (from != null && refNumber != null && refNumber >= from))
 				{
@@ -1474,7 +1474,7 @@ public class StepsHistory
 		try
 		{
 			Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
-			AbstractMarkerStyle markerStyle = markerStyleMap.get(publication.getId());
+			AbstractMarkerStyle markerStyle = markerStyleMap.get(publication.getId().getId());
 
 			// Setzt die Marker an den Referencen in den Referencen
 			for(Reference reference : publication.getReferences())
@@ -1499,7 +1499,7 @@ public class StepsHistory
 					{
 						if(markerStyle != null)
 						{
-							int referenceIndex = ReferenceUtil.getReferenceIdNumber(referenceId) - 1;
+							int referenceIndex = new Integer(referenceId) - 1;
 							Reference reference = publication.getReferences().get(referenceIndex);
 
 							ReferenceCitation referenceCitation = new ReferenceCitation(referenceId, reference.getMarker());
@@ -1552,10 +1552,10 @@ public class StepsHistory
 						String referenceId = iterator.next();
 						if(markerStyle != null)
 						{
-							int referenceIndex = ReferenceUtil.getReferenceIdNumber(referenceId) - 1;
+							int referenceIndex = new Integer(referenceId) - 1;
 							Reference reference = publication.getReferences().get(referenceIndex);
 
-							if(!reference.getId().equals(referenceId))
+							if(!reference.getId().toString().equals(referenceId))
 							{
 								System.err.println("wrong indices");
 							}
@@ -1907,13 +1907,13 @@ public class StepsHistory
 	{
 		Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
 
-		AbstractMarkerStyle markerStyle = markerStyleMap.get(publication.getId());
+		AbstractMarkerStyle markerStyle = markerStyleMap.get(publication);
 		TreeMap<String, String> map = new TreeMap<>();
 
 		for(Reference reference : publication.getReferences())
 		{
 			String refString = markerStyle.getMarkerString(reference); // + reference.getNote();
-			String refIdString = "[" + ReferenceUtil.getReferenceIdNumber(reference) + "] ";
+			String refIdString = "[" + reference.getId() + "] ";
 
 			String s = map.put(refString, refIdString);
 			// if(s != null)
@@ -1936,10 +1936,10 @@ public class StepsHistory
 	{
 		Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
 
-		int x = 1;
+		long x = 1;
 		for(Reference reference : publication.getReferences())
 		{
-			System.out.println(ReferenceUtil.getReferenceIdNumber(reference) + new Boolean(ReferenceUtil.getReferenceIdNumber(reference) == x).toString());
+			System.out.println(reference.getId() + new Boolean(reference.getId().getId() == x).toString());
 
 			x++;
 		}
@@ -1954,7 +1954,7 @@ public class StepsHistory
 		Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
 
 		Map<String, Reference> map = getReferenceMap(publication);
-		AbstractMarkerStyle markerStyle = markerStyleMap.get(publication.getId());
+		AbstractMarkerStyle markerStyle = markerStyleMap.get(publication.getKeyString());
 
 		for(Section section : publication.getSections())
 		{
@@ -2053,7 +2053,7 @@ public class StepsHistory
 		List<Reference> references = publication.getReferences();
 		for(Reference reference : references)
 		{
-			Integer referenceNumber = ReferenceUtil.getReferenceIdNumber(reference);
+			Integer referenceNumber = reference.getId().getId();
 			if(referenceNumber != null)
 			{
 				reference.setMarker(markers.get(referenceNumber - 1));
@@ -2064,19 +2064,22 @@ public class StepsHistory
 
 	}
 
-	private static String setId(String id, Integer i, Integer fromIndex)
+	private static Id setId(Integer id, Integer i, Integer fromIndex)
 	{
 		if(id == null) return null;
-		Integer idAsInteger = new Integer(id.replaceFirst("ref", ""));
-		if(fromIndex == null || idAsInteger >= fromIndex)
+		if(fromIndex == null || id >= fromIndex)
 		{
-			String s = "ref" + (idAsInteger + i);
-			return s;
+			return new Id(id + i);
 		}
 		else
 		{
-			return id; // change nothing
+			return new Id(id); // change nothing
 		}
+	}
+
+	private static Id setId(String refString, Integer i, Integer fromIndex)
+	{
+		return setId(new Integer(refString), i, fromIndex);
 	}
 
 	private static void checkSerialization(File file) throws IOException
