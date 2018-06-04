@@ -3,6 +3,7 @@ package evaluation.tools;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 
 import evaluation.EvaluationMode;
@@ -23,10 +24,16 @@ public class PublicationSetResult extends AbstractSetResult<Publication>
 	protected void addCustomElementColumns(String id, List<String> lines)
 	{
 		AbstractMetaPublication publication = elements.get(id);
-		lines.add("=HYPERLINK(\"" + FileCollectionUtil.getPdfFileById(PublicationUtil.getIdFromFileNameWithoutPrefix(id)).getAbsolutePath() + "\")");
+		lines.add("=HYPERLINK(\"" + FileCollectionUtil.getPdfFileById(PublicationUtil.getNumberFromIdAsString(id)).getAbsolutePath() + "\")");
 		lines.add("=HYPERLINK(\"" + new File(id).getAbsolutePath() + "\")");
-		lines.add("=HYPERLINK(\"" + FileCollectionUtil.getResultFilesByMethodAndId(method, PublicationUtil.getIdFromFileNameWithoutPrefix(id)).getAbsolutePath() + "\")");
+		lines.add("=HYPERLINK(\"" + FileCollectionUtil.getResultFilesByMethodAndId(method, PublicationUtil.getNumberFromIdAsString(id)).getAbsolutePath() + "\")");
 		lines.add(publication.getPublicationType().name());
+	}
+
+	@Override
+	protected Comparator<String> getComparator()
+	{
+		return Comparator.comparing(String::toString);
 	}
 
 }

@@ -2,13 +2,13 @@ package mapping.result;
 
 import java.util.Date;
 
-public abstract class AbstractMetaPublication extends BaseEntity
+public abstract class AbstractMetaPublication extends BaseEntity implements KeyStringInterface
 {
 	private static final long serialVersionUID = 5037061578663513484L;
 
-	protected String id;
+	protected Id id;
 	protected String title;
-	private PublicationType publicationType;
+	protected PublicationType publicationType;
 	protected String source;
 	protected String edition;
 	protected String location;
@@ -32,12 +32,12 @@ public abstract class AbstractMetaPublication extends BaseEntity
 	protected String url;
 	protected String doi;
 
-	public String getId()
+	public Id getId()
 	{
 		return id;
 	}
 
-	public void setId(String id)
+	public void setId(Id id)
 	{
 		this.id = id;
 	}

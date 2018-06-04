@@ -44,6 +44,7 @@ public class PDFXMapper extends Mapper
 	{
 		List<Worker> workers = new ArrayList<>();
 		workers.add(new ReferenceSetPublicationWorker());
+		workers.add(new ReferenceIdInitializerPdfx());
 		workers.add(new SectionTypeNormalizerWorker());
 
 		return workers;

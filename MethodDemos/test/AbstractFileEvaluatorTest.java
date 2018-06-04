@@ -1,6 +1,7 @@
+import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +14,6 @@ import org.junit.runner.RunWith;
 
 import evaluation.EvaluationMode;
 import evaluation.Evaluators;
-import evaluation.SystemEvaluator;
 import evaluation.tools.AbstractSetResult;
 import evaluation.tools.EvalInformationType;
 import evaluation.tools.EvaluationResult;
@@ -22,14 +22,15 @@ import factory.PublicationFactory;
 import junitparams.JUnitParamsRunner;
 import mapping.result.Publication;
 import pl.edu.icm.cermine.evaluation.exception.EvaluationException;
+import utils.FileCollectionUtil;
+import utils.XStreamUtil;
 
 @RunWith(JUnitParamsRunner.class)
-public abstract class AbstractFileEvaluatorTest
+public abstract class AbstractFileEvaluatorTest extends AbstractTest
 {
 	protected static List<EvalInformationType> types = Evaluators.getTypes();
+	protected static List<EvalInformationType> referenceTypes = Evaluators.getReferenceTypes();
 	private static List<EvaluationMode> modes = Arrays.asList();// EvaluationMode.SYSOUT_SUMMARY);
-
-	protected abstract SystemEvaluator getEvalutator();
 
 	@Test
 	void testDocumentResult100() throws EvaluationException, IOException
@@ -38,7 +39,7 @@ public abstract class AbstractFileEvaluatorTest
 		Publication extractedPub = PublicationFactory.createPublication("1");
 
 		PublicationIterator iter = new PublicationIterator(originalPub, extractedPub);
-		AbstractSetResult result = getEvalutator().evaluate(modes, iter);
+		AbstractSetResult<?> result = getEvalutator().evaluate(modes, iter);
 
 		assertEquals(new Double(100.), result.getDocumentResult().getAveragePrecision(), "average precsision");
 		assertEquals(new Double(100.), result.getDocumentResult().getAverageRecall(), "average recall");
@@ -52,7 +53,7 @@ public abstract class AbstractFileEvaluatorTest
 		Publication extractedPub = new Publication();
 
 		PublicationIterator iter = new PublicationIterator(originalPub, extractedPub);
-		AbstractSetResult result = getEvalutator().evaluate(modes, iter);
+		AbstractSetResult<?> result = getEvalutator().evaluate(modes, iter);
 
 		EvaluationResult evaluationResult = result.getDocumentResult();
 		assertEquals(new Double(Double.NaN), evaluationResult.getAveragePrecision(), "average precsision");
@@ -72,7 +73,7 @@ public abstract class AbstractFileEvaluatorTest
 		Publication extractedPub = PublicationFactory.createPublication("1");
 
 		PublicationIterator iter = new PublicationIterator(originalPub, extractedPub);
-		AbstractSetResult result = getEvalutator().evaluate(modes, iter);
+		AbstractSetResult<?> result = getEvalutator().evaluate(modes, iter);
 
 		// EvalInformationType evalInfoType = EvalInformationType.TITLE;
 		EvaluationResult evaluationResult = result.getPerType().getResultForKey(evalInfoType);
@@ -85,6 +86,17 @@ public abstract class AbstractFileEvaluatorTest
 	private static Stream<EvalInformationType> evalInformationTypeValues()
 	{
 		return Stream.of(EvalInformationType.values());
+	}
+
+	@Test
+	void testPublicationSetOnReferences() throws EvaluationException, IOException
+	{
+		File file = FileCollectionUtil.getCermineResultFiles().get(0);
+		Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
+
+		System.out.println(publication.getReferences().get(0).getPublication());
+		assertNotNull("publiation not null", publication.getReferences().get(0).getPublication());
+
 	}
 	// @Test
 	// void test() throws EvaluationException, IOException

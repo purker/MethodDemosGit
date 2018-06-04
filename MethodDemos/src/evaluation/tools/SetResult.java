@@ -150,6 +150,7 @@ public class SetResult<T>
 		String[] s = {key.toString(), precision, recall, f1};
 
 		writer.writeNext(s);
+
 	}
 
 	public void printSummaryCSV() throws IOException

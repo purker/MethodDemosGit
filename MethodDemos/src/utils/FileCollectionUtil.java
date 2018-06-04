@@ -113,6 +113,12 @@ public class FileCollectionUtil
 		return file;
 	}
 
+	public static File getGroundTruthResultFileById(String pubId)
+	{
+		File file = new File(Config.groundTruthResults, FileNameUtil.getResultFileNameFromID(pubId));
+		return file;
+	}
+
 	public static File getPdfFileById(String pubId)
 	{
 		File file = new File(Config.groundTruth, FileNameUtil.getPdfFileNameFromID(pubId));

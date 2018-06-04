@@ -2,11 +2,10 @@ package evaluation.tools;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 
 import evaluation.EvaluationMode;
-import evaluation.informationresults.AbstractSingleInformationDocResult;
-import mapping.result.Publication;
 import mapping.result.Reference;
 import method.Method;
 
@@ -24,14 +23,10 @@ public class ReferenceSetResult extends AbstractSetResult<Reference>
 		// add nothing
 	}
 
-	public String getIdFromElement(Publication pub, Reference ref)
+	@Override
+	protected Comparator<String> getComparator()
 	{
-		return pub.getId() + "-" + ref.getId();
-	}
-
-	public void addResult(Publication pub, AbstractSingleInformationDocResult<?> refResult, Reference ref)
-	{
-		addResult(getIdFromElement(pub, ref), refResult, ref);
+		return Comparator.comparingInt(Reference::getPublicationIdFromKeyString).thenComparingInt(Reference::getReferenceIdFromKeyString);
 	}
 
 }

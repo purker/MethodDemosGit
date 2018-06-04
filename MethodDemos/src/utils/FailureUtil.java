@@ -6,16 +6,17 @@ public class FailureUtil
 {
 	public static void failureExit(Throwable ex, PrintStream errorWriter, String string, boolean exitProgram)
 	{
-		ex.printStackTrace(errorWriter);
 		errorWriter.println(string);
+		ex.printStackTrace(errorWriter);
 		if(exitProgram)
 		{
-			exit("aborting program after failure");
+			exit("");
 		}
 	}
 
 	public static void exit(String string)
 	{
+		System.err.println(string);
 		System.err.println("aborting program after failure");
 		System.exit(-1);
 

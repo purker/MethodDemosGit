@@ -23,6 +23,7 @@ import org.eclipse.persistence.jaxb.JAXBUnmarshaller;
 
 import mapping.result.Publication;
 import method.Method;
+import utils.FailureUtil;
 import utils.FileCollectionUtil;
 import utils.PublicationUtil;
 import utils.XStreamUtil;
@@ -47,7 +48,7 @@ public abstract class Mapper
 		}
 		catch(JAXBException e)
 		{
-			e.printStackTrace();
+			FailureUtil.failureExit(e, System.err, "initialisation of JAXBContext", true);
 		}
 	}
 
@@ -85,7 +86,7 @@ public abstract class Mapper
 		}
 		Publication publication = unmarshallFile(inputFileXML);
 
-		XStreamUtil.convertToXmL(publication, outputFileObjectAsXML, System.out, false);
+		XStreamUtil.convertToXmL(publication, outputFileObjectAsXML, System.out, true);
 
 		// System.out.println(publication);
 	}
@@ -105,12 +106,11 @@ public abstract class Mapper
 		{
 			publication = (Publication)unmarshaller.unmarshal(inputFileXML);
 		}
-		String id = PublicationUtil.getIdFromFile(inputFileXML);
-		publication.setId(id);
+		publication.setIdFromFileName(inputFileXML);
 
 		for(Worker worker : getWorkers())
 		{
-			worker.doWork(publication);
+			worker.doWorkCatchException(publication);
 		}
 
 		return publication;
@@ -139,13 +139,12 @@ public abstract class Mapper
 				{
 					System.out.println(inputFile);
 					// Desktop.getDesktop().open(inputFile);
-					e.printStackTrace();
 					e.printStackTrace(new PrintStream(errorFile));
+					FailureUtil.failureExit(e, System.err, "Error unmarshalling file " + inputFile, true);
 				}
 				catch(IOException e1)
 				{
-					System.err.println("Error writing errorFile for " + inputFile);
-					e.printStackTrace();
+					FailureUtil.failureExit(e, System.err, "Error writing errorFile for " + inputFile, true);
 				}
 			}
 		}

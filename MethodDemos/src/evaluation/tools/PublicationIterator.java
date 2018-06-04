@@ -57,9 +57,16 @@ public class PublicationIterator implements Iterable<PublicationPair>
 
 			if(extractedFile != null)
 			{
-				Publication originalPub = getPublicationFromFile(originalFile);
-				Publication extractedPub = getPublicationFromFile(extractedFile);
-				entries.add(new PublicationPair(originalFile, extractedFile, originalPub, extractedPub));
+				try
+				{
+					Publication originalPub = getPublicationFromFile(originalFile);
+					Publication extractedPub = getPublicationFromFile(extractedFile);
+					entries.add(new PublicationPair(originalFile, extractedFile, originalPub, extractedPub));
+				}
+				catch(Exception e)
+				{
+					System.out.println(originalFile);
+				}
 			}
 			else
 			{

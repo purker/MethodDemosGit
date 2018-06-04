@@ -5,6 +5,7 @@ import java.util.Date;
 
 import mapping.result.Affiliation;
 import mapping.result.Author;
+import mapping.result.Id;
 import mapping.result.Publication;
 import mapping.result.PublicationType;
 import mapping.result.Reference;
@@ -50,7 +51,7 @@ public class PublicationFactory
 	public static Publication createPublication(String id)
 	{
 		Publication publication = createPublication();
-		publication.setId(id);
+		publication.setId(new Id(id));
 
 		return publication;
 	}

@@ -1,11 +1,15 @@
 package mapping.result;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import config.Config;
+import utils.PublicationUtil;
+
 public class Publication extends AbstractMetaPublication
 {
-	private static final long serialVersionUID = 8605009499117151049L;
+	private static final long serialVersionUID = -4851500364596210321L;
 
 	private String abstractText;
 	private String abstractTextGerman;
@@ -108,6 +112,17 @@ public class Publication extends AbstractMetaPublication
 	public void setReferences(List<Reference> references)
 	{
 		this.references = references;
+	}
+
+	@Override
+	public String getKeyString()
+	{
+		return Config.publicationPrefix + id.getId();
+	}
+
+	public void setIdFromFileName(File inputFileXML)
+	{
+		this.id = PublicationUtil.getPublicationIdFromFileNameAsInteger(inputFileXML);
 	}
 
 }

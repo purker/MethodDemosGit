@@ -43,6 +43,7 @@ public class ParsCitMapper extends Mapper
 	{
 		List<Worker> workers = new ArrayList<>();
 		workers.add(new ReferenceSetPublicationWorker());
+		workers.add(new ReferenceIdInitializerParscit());
 		workers.add(new SectionTypeNormalizerWorker());
 
 		return workers;

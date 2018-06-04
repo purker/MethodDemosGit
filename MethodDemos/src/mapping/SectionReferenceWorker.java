@@ -1,5 +1,6 @@
 package mapping;
 
+import config.Config;
 import mapping.result.Publication;
 import mapping.result.Section;
 
@@ -30,7 +31,7 @@ public class SectionReferenceWorker extends Worker
 				{
 					if(replaceDiamond)
 					{
-						referenceId = referenceId.replaceFirst("#b", "ref");
+						referenceId = referenceId.replaceFirst("#b", Config.referencePrefix);
 					}
 					// Reference reference = referenceMap.get(referenceId);
 					// section.getReferences().add(reference);

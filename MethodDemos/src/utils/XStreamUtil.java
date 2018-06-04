@@ -6,6 +6,11 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.reflect.FieldUtils;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.reflection.FieldDictionary;
@@ -13,6 +18,7 @@ import com.thoughtworks.xstream.converters.reflection.SortableFieldKeySorter;
 import com.thoughtworks.xstream.converters.reflection.SunUnsafeReflectionProvider;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
+import mapping.IdConverter;
 import mapping.result.Affiliation;
 import mapping.result.Author;
 import mapping.result.Publication;
@@ -23,7 +29,7 @@ import mapping.result.Section;
 
 public class XStreamUtil
 {
-	private static final String[] fieldOrder = new String[]{"serialVersionUID", "id", "marker", "title", "publicationType", "source", "publisher", "editors", "authors", "edition", "location", "volume", "issue", "chapter", "note", "pageFrom", "pageTo", "publicationDateString", "publicationYear", "publicationMonth", "publicationDay", "publicationDate", "doi", "url", "type"};
+	private static final String[] referenceFieldOrder = new String[]{"serialVersionUID", "id", "referenceIdString", "marker", "title", "publicationType", "source", "publisher", "editors", "authors", "edition", "location", "volume", "issue", "chapter", "note", "pageFrom", "pageTo", "publicationDateString", "publicationYear", "publicationMonth", "publicationDay", "publicationDate", "doi", "url", "type", "referenceText", "publication"};
 
 	public static void convertToXmL(Object object, File file, PrintStream out, boolean exitOnError)
 	{
@@ -58,7 +64,9 @@ public class XStreamUtil
 		// sorter.registerFieldOrder(Reference.class, new String[]
 		// {"serialVersionUID", "id", "marker", "authors", "title", "editor", "source", "edition", "publisher", "location", "volume", "issue", "pageFrom", "pageTo", "publicationDateString",
 		// "publicationDay", "publicationMonth", "publicationYear", "publicationDate", "doi", "type", "url", "note"});
-		sorter.registerFieldOrder(Reference.class, fieldOrder);
+		sorter.registerFieldOrder(Reference.class, referenceFieldOrder);
+
+		checkAllFieldsMapped();
 
 		XStream xStream = new XStream(new SunUnsafeReflectionProvider(new FieldDictionary(sorter)), new DomDriver(StandardCharsets.UTF_8.name()));
 
@@ -72,7 +80,22 @@ public class XStreamUtil
 		xStream.alias("Reference", Reference.class);
 		xStream.alias("ReferenceAuthor", ReferenceAuthor.class);
 
+		xStream.registerConverter(new IdConverter());
+
 		return xStream;
+	}
+
+	private static void checkAllFieldsMapped()
+	{
+		List<String> fields = FieldUtils.getAllFieldsList(Reference.class).stream().map(f -> f.getName()).collect(Collectors.toList());
+
+		fields.removeAll(Arrays.asList(referenceFieldOrder));
+
+		if(CollectionUtil.isNotEmpty(fields))
+		{
+			FailureUtil.exit("fields " + StringUtil.notNullJoinedList(fields, ",") + " of Class Reference not in XStreamUtil.referenceFieldOrder");
+		}
+
 	}
 
 	public static <T> T convertFromXML(File file, Class<T> clazz)

@@ -41,12 +41,15 @@ import evaluation.tools.PublicationSetResult;
 import evaluation.tools.ReferenceSetResult;
 import mapping.result.Affiliation;
 import mapping.result.Author;
+import mapping.result.FileId;
+import mapping.result.KeyStringInterface;
 import mapping.result.Publication;
 import mapping.result.Reference;
 import mapping.result.Section;
 import method.Method;
 import pl.edu.icm.cermine.evaluation.exception.EvaluationException;
 import utils.CollectionUtil;
+import utils.FailureUtil;
 import utils.FileCollectionUtil;
 
 /**
@@ -97,7 +100,7 @@ public abstract class SystemEvaluator
 	 * @throws EvaluationException
 	 * @throws IOException
 	 */
-	public AbstractSetResult evaluate(List<EvaluationMode> modes, PublicationIterator files) throws EvaluationException, IOException
+	public AbstractSetResult<?> evaluate(List<EvaluationMode> modes, PublicationIterator files) throws EvaluationException, IOException
 	{
 		PublicationSetResult results = new PublicationSetResult(modes, getMethod(), getTypes());
 		ReferenceSetResult refResults = new ReferenceSetResult(modes, getMethod(), getReferenceTypes());
@@ -111,14 +114,14 @@ public abstract class SystemEvaluator
 			Publication testPub = pair.getExtractedPub();
 			File originalFile = pair.getOriginalFile();
 
-			String id; // for identification of the result
+			KeyStringInterface id; // for identification of the result
 			if(originalFile != null)
 			{
-				id = pair.getOriginalFile().getPath();
+				id = new FileId(origPub, pair.getOriginalFile());
 			}
 			else
 			{
-				id = origPub.getId();
+				id = origPub;
 			}
 
 			if(modes.contains(EvaluationMode.SYSOUT_DETAILED))
@@ -130,33 +133,43 @@ public abstract class SystemEvaluator
 			{
 				AbstractSingleInformationDocResult<?> result = getResultFromType(type, origPub, testPub);
 				result.evaluate();
-				results.addResult(id, result, origPub);
+				results.addResult(origPub, result);
 
 				if(type.equals(EvalInformationType.REFERENCES))
 				{
 					List<Pair<Reference, Reference>> matchingReferences = ((ReferenceInformationResult)result).getMatchingReferences();
+
 					for(Pair<Reference, Reference> refPair : matchingReferences)
 					{
 						for(EvalInformationType refType : getReferenceTypes())
 						{
-							AbstractSingleInformationDocResult<?> refResult = getResultFromReferenceType(refType, refPair.getLeft(), refPair.getRight());
-							if(refResult == null) continue;
-							refResult.evaluate();
-							refPair.getLeft().setPublicationType(origPub.getPublicationType()); // TODO eventuell schöner, wenn geht
-							refResults.addResult(origPub, refResult, refPair.getLeft());
+							try
+							{
+								AbstractSingleInformationDocResult<?> refResult = getResultFromReferenceType(refType, refPair.getLeft(), refPair.getRight());
+								// todo löschen if(refResult == null) continue;
+								refResult.evaluate();
+								refPair.getLeft().setPublicationType(origPub.getPublicationType()); // TODO eventuell schöner, wenn geht
+								refResults.addResult(refPair.getLeft(), refResult);
 
-							// System.out.println(refPair.getLeft());
-							// System.out.println(refPair.getRight());
-							// System.out.println();
+								// System.out.println(refPair.getLeft());
+								// System.out.println(refPair.getRight());
+								// System.out.println();
+							}
+							catch(Exception e)
+							{
+								FailureUtil.failureExit(e, System.err, "reference " + refPair.getKey(), true);
+							}
 						}
 					}
 				}
 			}
 		}
 
+		System.out.println("Evaluation of PUBLICATIONS");
 		results.evaluate();
 		results.printResults();
 
+		System.out.println("Evaluation of REFERENCES");
 		refResults.evaluate();
 		refResults.printResults();
 

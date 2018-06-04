@@ -13,6 +13,7 @@ import mapping.result.AbstractAuthor;
 import mapping.result.AbstractMetaPublication;
 import mapping.result.Affiliation;
 import mapping.result.Author;
+import mapping.result.Id;
 import mapping.result.Publication;
 import mapping.result.Reference;
 
@@ -21,25 +22,56 @@ public class PublicationUtil
 
 	public static String getIdFromFileWithoutPrefix(File file)
 	{
-		String id = getIdFromFileNameWithoutPrefix(file.getName());
+		String id = getNumberFromIdAsString(file.getName());
 		return id;
 	}
 
-	public static String getIdFromFileNameWithoutPrefix(String fileName)
+	public static Id getPublicationIdFromFileNameAsInteger(File file)
 	{
-		String id = fileName.replaceAll("\\D+", "");
+		return getPublicationIdFromFileNameAsInteger(file.getName());
+	}
+
+	public static Id getPublicationIdFromFileNameAsInteger(String fileName)
+	{
+		Id id = getNumberFromIdAsInteger(fileName);
 		return id;
 	}
 
-	public static String getIdFromFileName(String fileName)
+	/**
+	 * "TUW-1" -> "1"<br>
+	 * "ref-1" -> "1"
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public static String getNumberFromIdAsString(String id)
 	{
-		String id = getIdFromFileNameWithoutPrefix(fileName);
+		String idNumber = id.replaceAll("\\D+", "");
+		return idNumber;
+	}
+
+	/**
+	 * "TUW-1" -> 1<br>
+	 * "ref-1" -> 1
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public static Id getNumberFromIdAsInteger(String id)
+	{
+		Integer idNumber = new Integer(id.replaceAll("\\D+", ""));
+		return new Id(idNumber);
+	}
+
+	public static String getPublicationIdFromFileName(String fileName)
+	{
+		String id = getNumberFromIdAsString(fileName);
 		return "TUW-" + id;
 	}
 
 	public static String getIdFromFile(File file)
 	{
-		return getIdFromFileName(file.getName());
+		return getPublicationIdFromFileName(file.getName());
 	}
 
 	public static String getNameFromAuthor(AbstractAuthor author)

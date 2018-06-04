@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +18,7 @@ import config.Config;
 import evaluation.EvaluationMode;
 import evaluation.informationresults.SingleInformationDocResult;
 import mapping.result.AbstractMetaPublication;
+import mapping.result.KeyStringInterface;
 import mapping.result.PublicationType;
 import method.Method;
 import utils.FileCollectionUtil;
@@ -30,7 +32,7 @@ public abstract class AbstractSetResult<T extends AbstractMetaPublication>
 	protected Map<String, T> elements = new HashMap<>();
 
 	// <id, <type, value>>
-	protected final Map<String, Map<EvalInformationType, SingleInformationDocResult<?>>> detailedResults = new TreeMap<>();
+	protected final Map<String, Map<EvalInformationType, SingleInformationDocResult<?>>> detailedResults = new TreeMap<>(getComparator());
 
 	// <type, value>
 	protected SetResult<EvalInformationType> perType = null;
@@ -78,19 +80,23 @@ public abstract class AbstractSetResult<T extends AbstractMetaPublication>
 
 	}
 
-	public void addResult(String id, SingleInformationDocResult<?> result, T setElement)
+	protected abstract Comparator<String> getComparator();
+
+	public void addResult(T element, SingleInformationDocResult<?> result)
 	{
-		if(id == null)
+		KeyStringInterface idElement = element;
+		if(idElement == null)
 		{
 			System.err.println("id of publication has to be set");
 			return;
 		}
+		String id = idElement.getKeyString();
 		if(detailedResults.get(id) == null)
 		{
 			detailedResults.put(id, new EnumMap<EvalInformationType, SingleInformationDocResult<?>>(EvalInformationType.class));
 		}
 		detailedResults.get(id).put(result.getType(), result);
-		elements.put(id, setElement);
+		elements.put(id, element);
 	}
 
 	public void evaluate()
@@ -100,7 +106,7 @@ public abstract class AbstractSetResult<T extends AbstractMetaPublication>
 		{
 			String id = result.getKey();
 			Map<EvalInformationType, SingleInformationDocResult<?>> values = result.getValue();
-			AbstractMetaPublication publication = elements.get(id);
+			T publication = elements.get(id);
 
 			for(EvalInformationType type : evalTypes)
 			{
@@ -153,12 +159,12 @@ public abstract class AbstractSetResult<T extends AbstractMetaPublication>
 		System.out.printf("Average F1 score \t%4.2f%n", documentResult.getAverageF1());
 	}
 
-	public void printDocument(String doc, int i)
+	public void printDocument(KeyStringInterface id, int i)
 	{
-		Map<EvalInformationType, SingleInformationDocResult<?>> docResults = detailedResults.get(doc);
+		Map<EvalInformationType, SingleInformationDocResult<?>> docResults = detailedResults.get(id.getKeyString());
 		System.out.println("");
 		System.out.println(">>>>>>>>> " + i);
-		System.out.println(doc);
+		System.out.println(id);
 		for(EvalInformationType type : evalTypes)
 		{
 			SingleInformationDocResult<?> docResult = docResults.get(type);
@@ -325,20 +331,19 @@ public abstract class AbstractSetResult<T extends AbstractMetaPublication>
 				String writerFile = FileCollectionUtil.replaceMethodAndType(Config.CSVperFileWithEvalTypeValueFile, method, type);
 				WriterWrapper writer = new WriterWrapper(writerFile);
 
-				for(String file : detailedResults.keySet())
+				for(String id : detailedResults.keySet())
 				{
-					SingleInformationDocResult<?> result = detailedResults.get(file).get(type);
+					SingleInformationDocResult<?> result = detailedResults.get(id).get(type);
 
-					String path = PublicationUtil.getIdFromFile(new File(file));
-					String pdfPath = "=HYPERLINK(\"" + FileCollectionUtil.getPdfFileById(PublicationUtil.getIdFromFileNameWithoutPrefix(file)).getAbsolutePath() + "\")";
-					String originalPath = "=HYPERLINK(\"" + new File(file).getAbsolutePath() + "\")";
-					String extractedPath = "=HYPERLINK(\"" + FileCollectionUtil.getResultFilesByMethodAndId(method, PublicationUtil.getIdFromFileNameWithoutPrefix(file)).getAbsolutePath() + "\")";
+					String pdfPath = "=HYPERLINK(\"" + FileCollectionUtil.getPdfFileById(PublicationUtil.getNumberFromIdAsString(id)).getAbsolutePath() + "\")";
+					String originalPath = "=HYPERLINK(\"" + FileCollectionUtil.getGroundTruthResultFileById(id).getAbsolutePath() + "\")";
+					String extractedPath = "=HYPERLINK(\"" + FileCollectionUtil.getResultFilesByMethodAndId(method, PublicationUtil.getNumberFromIdAsString(id)).getAbsolutePath() + "\")";
 					String expected = result.getExpectedAsString();
 					String extracted = result.getExtractedAsString();
 					String precision = result.getPrecisionAsString();
 					String recall = result.getRecallAsString();
 					String f1 = result.getF1AsString();
-					String[] s = {path, pdfPath, originalPath, extractedPath, expected, extracted, precision, recall, f1};
+					String[] s = {id, pdfPath, originalPath, extractedPath, expected, extracted, precision, recall, f1};
 
 					writer.writeNext(s);
 				}

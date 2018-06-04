@@ -20,7 +20,6 @@ package evaluation;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import evaluation.tools.EvalInformationType;
@@ -33,10 +32,10 @@ public class Evaluators
 	{
 		try
 		{
-			List<EvaluationMode> allModes = Arrays.asList(EvaluationMode.values());
-
-			List<EvaluationMode> modes = new ArrayList<>();
-			modes.add(EvaluationMode.CSV_PER_FILE_WITH_EVALUATIONTYPEVALUE);
+			// List<EvaluationMode> allModes = Arrays.asList(EvaluationMode.values());
+			//
+			// List<EvaluationMode> modes = new ArrayList<>();
+			// modes.add(EvaluationMode.CSV_PER_FILE_WITH_EVALUATIONTYPEVALUE);
 
 			// Demos.executeDemos();
 			// evaluateMethods(modes, getTypes(), getReferenceTypes());
@@ -52,7 +51,7 @@ public class Evaluators
 		}
 	}
 
-	private static List<EvalInformationType> getReferenceTypes()
+	public static List<EvalInformationType> getReferenceTypes()
 	{
 		List<EvalInformationType> types = new ArrayList<>();
 		// types.add(EvalInformationType.REFERENCE_AUTHORS);
@@ -78,9 +77,9 @@ public class Evaluators
 	private static void evaluateMethods(List<EvaluationMode> modes, List<EvalInformationType> types, List<EvalInformationType> referenceTypes) throws EvaluationException, IOException
 	{
 		new CermineXStreamFileEvaluator(types, referenceTypes).evaluate(modes);
-		// new GrobidXStreamFileEvaluator(types, referenceTypes).evaluate(modes);
-		// new ParscitXStreamFileEvaluator(types, referenceTypes).evaluate(modes);
-		// new PdfxXStreamFileEvaluator(types, referenceTypes).evaluate(modes);
+		new GrobidXStreamFileEvaluator(types, referenceTypes).evaluate(modes);
+		new ParscitXStreamFileEvaluator(types, referenceTypes).evaluate(modes);
+		new PdfxXStreamFileEvaluator(types, referenceTypes).evaluate(modes);
 		System.out.println("Evaluation finished");
 	}
 
