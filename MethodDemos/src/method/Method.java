@@ -11,6 +11,7 @@ public enum Method
 	PARSCIT("parscit", Config.parsCitOutputDir),
 	PDFX("pdfx", Config.pdfxOutputDir);
 
+	private static String toReplace = "<method>";
 	private String name;
 	private File resultDirectory;
 
@@ -29,4 +30,10 @@ public enum Method
 	{
 		return resultDirectory;
 	}
+
+	public String replace(String file)
+	{
+		return file.replace(toReplace, name);
+	}
+
 }

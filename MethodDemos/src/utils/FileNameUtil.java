@@ -1,5 +1,6 @@
 package utils;
 
+import config.Config;
 import method.Method;
 
 public class FileNameUtil
@@ -11,7 +12,7 @@ public class FileNameUtil
 
 	public static String getResultFileNameFromID(String pubId)
 	{
-		return "result-TUW-" + pubId + "-xstream.xml";
+		return "result-" + Config.publicationPrefix + pubId + "-xstream.xml";
 	}
 
 	public static String getCermineFileNameFromID(String pubId)

@@ -18,15 +18,14 @@ public class ReferenceSetResult extends AbstractSetResult<Reference>
 	}
 
 	@Override
-	protected void addCustomElementColumns(String id, List<String> lines)
-	{
-		// add nothing
-	}
-
-	@Override
 	protected Comparator<String> getComparator()
 	{
 		return Comparator.comparingInt(Reference::getPublicationIdFromKeyString).thenComparingInt(Reference::getReferenceIdFromKeyString);
 	}
 
+	@Override
+	protected SetResultEnum getSetResultType()
+	{
+		return SetResultEnum.REFERENCES;
+	}
 }

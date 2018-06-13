@@ -9,6 +9,10 @@ public class FormatingUtil
 {
 	public static String formatDouble(Double value)
 	{
+		if(value.isNaN())
+		{
+			return "NAN";
+		}
 		return Config.decimalFormatter.format(value);
 	}
 

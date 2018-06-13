@@ -88,4 +88,9 @@ public enum EvalInformationType
 
 	}
 
+	public String replace(String file)
+	{
+		return file.replace("<evaltype>", this.name());
+	}
+
 }

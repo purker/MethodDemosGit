@@ -125,4 +125,10 @@ public class Publication extends AbstractMetaPublication
 		this.id = PublicationUtil.getPublicationIdFromFileNameAsInteger(inputFileXML);
 	}
 
+	@Override
+	public Integer getPublicationId()
+	{
+		return getId().getId();
+	}
+
 }

@@ -19,4 +19,9 @@ public class FileId implements KeyStringInterface
 		return file.getPath();
 	}
 
+	@Override
+	public Integer getPublicationId()
+	{
+		return publication.getId().getId();
+	}
 }

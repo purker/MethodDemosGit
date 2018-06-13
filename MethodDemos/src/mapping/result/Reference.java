@@ -120,4 +120,10 @@ public class Reference extends AbstractMetaPublication
 		}
 	}
 
+	@Override
+	public Integer getPublicationId()
+	{
+		return getPublication().getPublicationId();
+	}
+
 }

@@ -1,17 +1,13 @@
 package evaluation.tools;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
 import evaluation.EvaluationMode;
-import mapping.result.AbstractMetaPublication;
 import mapping.result.Publication;
 import method.Method;
-import utils.FileCollectionUtil;
-import utils.PublicationUtil;
 
 public class PublicationSetResult extends AbstractSetResult<Publication>
 {
@@ -21,19 +17,15 @@ public class PublicationSetResult extends AbstractSetResult<Publication>
 	}
 
 	@Override
-	protected void addCustomElementColumns(String id, List<String> lines)
-	{
-		AbstractMetaPublication publication = elements.get(id);
-		lines.add("=HYPERLINK(\"" + FileCollectionUtil.getPdfFileById(PublicationUtil.getNumberFromIdAsString(id)).getAbsolutePath() + "\")");
-		lines.add("=HYPERLINK(\"" + new File(id).getAbsolutePath() + "\")");
-		lines.add("=HYPERLINK(\"" + FileCollectionUtil.getResultFilesByMethodAndId(method, PublicationUtil.getNumberFromIdAsString(id)).getAbsolutePath() + "\")");
-		lines.add(publication.getPublicationType().name());
-	}
-
-	@Override
 	protected Comparator<String> getComparator()
 	{
 		return Comparator.comparing(String::toString);
+	}
+
+	@Override
+	protected SetResultEnum getSetResultType()
+	{
+		return SetResultEnum.PUBLICATION;
 	}
 
 }

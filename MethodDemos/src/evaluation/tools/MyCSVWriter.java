@@ -6,8 +6,6 @@ import java.util.Collection;
 
 import com.opencsv.CSVWriter;
 
-import utils.FileCollectionUtil;
-
 public class MyCSVWriter extends AbstractWriter
 {
 	private static final WriterType WRITERTYPE = WriterType.CSV;
@@ -15,7 +13,8 @@ public class MyCSVWriter extends AbstractWriter
 
 	public MyCSVWriter(String csvFile) throws IOException
 	{
-		FileWriter fileWriter = new FileWriter(FileCollectionUtil.replaceFileExtension(csvFile, getWriterType()));
+		csvFile = getWriterType().replace(csvFile);
+		FileWriter fileWriter = new FileWriter(csvFile);
 		csvWriter = new CSVWriter(fileWriter, ';', CSVWriter.DEFAULT_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
 	}
 

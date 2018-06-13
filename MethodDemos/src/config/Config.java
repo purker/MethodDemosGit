@@ -24,11 +24,16 @@ public interface Config
 	String parscitFileExtension = ".xml";
 	// String pdfxFileExtension = xStreamFileExtension;
 
-	String CSVperIdFile = "output/statistics/<method>-statistics-per-id.<fileext>";
-	String CSVperFileAndEvalTypeFile = "output/statistics/<method>-statistics-per-id-and-evaltype.<fileext>";
-	String CSVperPublicationTypeFile = "output/statistics/<method>-statistics-per-publicationtype.<fileext>";
-	String CSVperEvalTypeFile = "output/statistics/<method>-statistics-per-evaltype.<fileext>";
-	String CSVperFileWithEvalTypeValueFile = "output/statistics/singlevalues/<method>-<evaltype>.<fileext>";
+	// <method> = cermine | grobid | parscit | pdfx
+	// <fileext> = csv | xlsx
+	// <type> = publication | reference
+	// <evaltype> = ABSTRACT | AFFILIATIONS | ...
+	//
+	String CSVperIdFile = "output/statistics/<method>-per-id-<type>-statistics.<fileext>";
+	String CSVperFileAndEvalTypeFile = "output/statistics/<method>-per-id-and-evaltype-<type>-statistics.<fileext>";
+	String CSVperPublicationTypeFile = "output/statistics/<method>-per-publicationtype-<type>-statistics.<fileext>";
+	String CSVperEvalTypeFile = "output/statistics/<method>-per-evaltype-<type>-statistics.<fileext>";
+	String CSVperFileWithEvalTypeValueFile = "output/statistics/singlevalues/<method>-<evaltype>-<type>-statistics.<fileext>";
 
 	DecimalFormat decimalFormatter = new DecimalFormat("#,##0.00");
 	int decimalPlaces = 2;

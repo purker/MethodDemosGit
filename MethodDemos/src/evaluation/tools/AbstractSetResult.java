@@ -57,12 +57,14 @@ public abstract class AbstractSetResult<T extends AbstractMetaPublication>
 		this.evalTypes = types;
 		this.modes = modes;
 
-		perId = new SetResult<>(Config.CSVperIdFile, method, modes.contains(EvaluationMode.CSV_PER_FILE), "File");
-		perPublicationType = new SetResult<>(Config.CSVperPublicationTypeFile, method, modes.contains(EvaluationMode.CSV_PER_PUBLICATIONTYPE), "PublicationType");
-		perType = new SetResult<>(Config.CSVperEvalTypeFile, method, modes.contains(EvaluationMode.CSV_PER_EVALUTATIONTYPE), "EvaluationType");
+		perId = new SetResult<>(Config.CSVperIdFile, method, getSetResultType(), modes.contains(EvaluationMode.CSV_PER_FILE), "File");
+		perPublicationType = new SetResult<>(Config.CSVperPublicationTypeFile, method, getSetResultType(), modes.contains(EvaluationMode.CSV_PER_PUBLICATIONTYPE), "PublicationType");
+		perType = new SetResult<>(Config.CSVperEvalTypeFile, method, getSetResultType(), modes.contains(EvaluationMode.CSV_PER_EVALUTATIONTYPE), "EvaluationType");
 		if(modes.contains(EvaluationMode.CSV_PER_FILE_AND_EVALUATIONTYPE))
 		{
-			String writerFile = FileCollectionUtil.getFileByMethod(Config.CSVperFileAndEvalTypeFile, method);
+			String file = Config.CSVperFileAndEvalTypeFile;
+
+			String writerFile = FileCollectionUtil.getFileByMethodAndSetResultType(file, getSetResultType(), method);
 			csvPerIdAndEvalTypeWriter = new WriterWrapper(writerFile);
 
 			List<String> headers = new ArrayList<>();
@@ -77,10 +79,11 @@ public abstract class AbstractSetResult<T extends AbstractMetaPublication>
 			headers.add("F1");
 			csvPerIdAndEvalTypeWriter.writeNext(headers);
 		}
-
 	}
 
 	protected abstract Comparator<String> getComparator();
+
+	protected abstract SetResultEnum getSetResultType();
 
 	public void addResult(T element, SingleInformationDocResult<?> result)
 	{
@@ -228,7 +231,13 @@ public abstract class AbstractSetResult<T extends AbstractMetaPublication>
 			List<String> lines = new ArrayList<>();
 
 			lines.add(id);
-			addCustomElementColumns(id, lines);
+			String publicationId = PublicationUtil.getNumberFromIdAsString(id);
+
+			AbstractMetaPublication publication = elements.get(id);
+			lines.add("=HYPERLINK(\"" + FileCollectionUtil.getPdfFileById(publicationId).getAbsolutePath() + "\")");
+			lines.add("=HYPERLINK(\"" + FileCollectionUtil.getGroundTruthResultFileById(publicationId).getAbsolutePath() + "\")");
+			lines.add("=HYPERLINK(\"" + FileCollectionUtil.getResultFilesByMethodAndId(method, publicationId).getAbsolutePath() + "\")");
+			lines.add(publication.getPublicationType().name());
 			for(EvalInformationType type : evalTypes)
 			{
 				lines.add(docResults.get(type).getF1X100AsString());
@@ -242,8 +251,6 @@ public abstract class AbstractSetResult<T extends AbstractMetaPublication>
 		}
 		csvPerIdAndEvalTypeWriter.close();
 	}
-
-	protected abstract void addCustomElementColumns(String id, List<String> lines);
 
 	public SetResult<EvalInformationType> getPerType()
 	{
@@ -328,21 +335,34 @@ public abstract class AbstractSetResult<T extends AbstractMetaPublication>
 
 			for(EvalInformationType type : perType.getKeysSet())
 			{
-				String writerFile = FileCollectionUtil.replaceMethodAndType(Config.CSVperFileWithEvalTypeValueFile, method, type);
+				String writerFile = FileCollectionUtil.replaceMethodAndTypeAndSetResultEnum(Config.CSVperFileWithEvalTypeValueFile, method, type, getSetResultType());
 				WriterWrapper writer = new WriterWrapper(writerFile);
+
+				List<String> headers = new ArrayList<>();
+				headers.add("path");
+				headers.add("PDF");
+				headers.add("original");
+				headers.add("extracted");
+				headers.add("original value");
+				headers.add("extracted value");
+				headers.add("Precision");
+				headers.add("Recall");
+				headers.add("F1");
+				writer.writeNext(headers);
 
 				for(String id : detailedResults.keySet())
 				{
 					SingleInformationDocResult<?> result = detailedResults.get(id).get(type);
 
-					String pdfPath = "=HYPERLINK(\"" + FileCollectionUtil.getPdfFileById(PublicationUtil.getNumberFromIdAsString(id)).getAbsolutePath() + "\")";
-					String originalPath = "=HYPERLINK(\"" + FileCollectionUtil.getGroundTruthResultFileById(id).getAbsolutePath() + "\")";
-					String extractedPath = "=HYPERLINK(\"" + FileCollectionUtil.getResultFilesByMethodAndId(method, PublicationUtil.getNumberFromIdAsString(id)).getAbsolutePath() + "\")";
+					String publicationId = PublicationUtil.getNumberFromIdAsString(id);
+					String pdfPath = "=HYPERLINK(\"" + FileCollectionUtil.getPdfFileById(publicationId).getAbsolutePath() + "\")";
+					String originalPath = "=HYPERLINK(\"" + FileCollectionUtil.getGroundTruthResultFileById(publicationId).getAbsolutePath() + "\")";
+					String extractedPath = "=HYPERLINK(\"" + FileCollectionUtil.getResultFilesByMethodAndId(method, publicationId).getAbsolutePath() + "\")";
 					String expected = result.getExpectedAsString();
 					String extracted = result.getExtractedAsString();
-					String precision = result.getPrecisionAsString();
-					String recall = result.getRecallAsString();
-					String f1 = result.getF1AsString();
+					String precision = result.getPrecisionX100AsString();
+					String recall = result.getRecallX100AsString();
+					String f1 = result.getF1X100AsString();
 					String[] s = {id, pdfPath, originalPath, extractedPath, expected, extracted, precision, recall, f1};
 
 					writer.writeNext(s);

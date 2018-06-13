@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import config.Config;
 import evaluation.tools.EvalInformationType;
+import evaluation.tools.SetResultEnum;
 import evaluation.tools.WriterType;
 import method.Method;
 
@@ -149,23 +150,9 @@ public class FileCollectionUtil
 		return ids;
 	}
 
-	public static String getFileByMethod(String file, Method method)
-	{
-		String replaced = file.replace("<method>", method.getName());
-		return replaced;
-	}
-
-	public static String replaceMethodAndType(String file, Method method, EvalInformationType type)
-	{
-		String replaced = file.replace("<method>", method.getName());
-		replaced = replaced.replace("<evaltype>", type.name());
-
-		return replaced;
-	}
-
 	public static String replaceFileExtension(String file, WriterType writerType)
 	{
-		String replaced = file.replace("<fileext>", writerType.getFileExtension());
+		String replaced = writerType.replace(file);
 
 		return replaced;
 	}
@@ -188,5 +175,22 @@ public class FileCollectionUtil
 		}));
 
 		return list;
+	}
+
+	public static String getFileByMethodAndSetResultType(String file, SetResultEnum setResultEnum, Method method)
+	{
+		file = setResultEnum.replace(file);
+		file = method.replace(file);
+
+		return file;
+	}
+
+	public static String replaceMethodAndTypeAndSetResultEnum(String file, Method method, EvalInformationType type, SetResultEnum setResultType)
+	{
+		file = method.replace(file);
+		file = type.replace(file);
+		file = setResultType.replace(file);
+
+		return file;
 	}
 }

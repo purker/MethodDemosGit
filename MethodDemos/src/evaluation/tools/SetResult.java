@@ -27,11 +27,11 @@ public class SetResult<T>
 
 	private WriterWrapper writer;
 
-	public SetResult(String methodFile, Method method, boolean createFile, String keyLabel) throws IOException
+	public SetResult(String methodFile, Method method, SetResultEnum setResultEnum, boolean createFile, String keyLabel) throws IOException
 	{
 		if(createFile)
 		{
-			String file = FileCollectionUtil.getFileByMethod(methodFile, method);
+			String file = FileCollectionUtil.getFileByMethodAndSetResultType(methodFile, setResultEnum, method);
 			this.writer = new WriterWrapper(file);
 
 			String[] headers = {keyLabel, "Precision", "Recall", "F1"};
@@ -147,6 +147,7 @@ public class SetResult<T>
 		String precision = evaluationResult.getAveragePrecisionFormatted();
 		String recall = evaluationResult.getAverageRecallFormatted();
 		String f1 = evaluationResult.getAverageF1Formatted();
+
 		String[] s = {key.toString(), precision, recall, f1};
 
 		writer.writeNext(s);

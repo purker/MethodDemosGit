@@ -15,4 +15,9 @@ public enum WriterType
 	{
 		return this.fileExtension;
 	}
+
+	public String replace(String file)
+	{
+		return file.replace("<fileext>", fileExtension);
+	}
 }
