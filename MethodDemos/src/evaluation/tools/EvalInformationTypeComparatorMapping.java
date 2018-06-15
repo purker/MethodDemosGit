@@ -37,20 +37,25 @@ public class EvalInformationTypeComparatorMapping
 		// relationMap.put(EvalInformationType.SECTION_REFERENCES, new RelationComparators(map.get(EvalInformationType.SECTIONS)));
 		// map.put(EvalInformationType.REFERENCE_AUTHORS, EvaluationUtils.);
 
+		map.put(EvalInformationType.REFERENCE_MARKER, EvaluationUtils.defaultComparator);
 		map.put(EvalInformationType.REFERENCE_TITLE, EvaluationUtils.swComparator);
-		// map.put(EvalInformationType.REFERENCE_SOURCE, EvaluationUtils.);
-		// map.put(EvalInformationType.REFERENCE_LOCATION, EvaluationUtils.);
-		// map.put(EvalInformationType.REFERENCE_PUBLISHER, EvaluationUtils.);
-		// map.put(EvalInformationType.REFERENCE_EDITOR, EvaluationUtils.);
-		// map.put(EvalInformationType.REFERENCE_DOI, EvaluationUtils.);
-		// map.put(EvalInformationType.REFERENCE_URL, EvaluationUtils.);
-		// map.put(EvalInformationType.REFERENCE_EDITION, EvaluationUtils.);
-		// map.put(EvalInformationType.REFERENCE_VOLUME, EvaluationUtils.);
-		// map.put(EvalInformationType.REFERENCE_ISSUE, EvaluationUtils.);
-		// map.put(EvalInformationType.REFERENCE_NOTE, EvaluationUtils.);
-		// map.put(EvalInformationType.REFERENCE_PAGEFROM, EvaluationUtils.);
-		// map.put(EvalInformationType.REFERENCE_PAGETO, EvaluationUtils.);
-		// map.put(EvalInformationType.REFERENCE_DATE, EvaluationUtils.);
+		// TODOmap.put(EvalInformationType.REFERENCE_PUBLICATIONTYPE, EvaluationUtils.);
+		map.put(EvalInformationType.REFERENCE_SOURCE, EvaluationUtils.journalComparator);
+		map.put(EvalInformationType.REFERENCE_PUBLISHER, EvaluationUtils.defaultComparator);
+		map.put(EvalInformationType.REFERENCE_EDITOR, EvaluationUtils.defaultComparator);
+		map.put(EvalInformationType.REFERENCE_AUTHORS, EvaluationUtils.authorComparator);
+		map.put(EvalInformationType.REFERENCE_EDITION, EvaluationUtils.defaultComparator);
+		map.put(EvalInformationType.REFERENCE_LOCATION, EvaluationUtils.defaultComparator);
+		map.put(EvalInformationType.REFERENCE_VOLUME, EvaluationUtils.defaultComparator);
+		map.put(EvalInformationType.REFERENCE_ISSUE, EvaluationUtils.defaultComparator);
+		map.put(EvalInformationType.REFERENCE_CHAPTER, EvaluationUtils.defaultComparator);
+		map.put(EvalInformationType.REFERENCE_NOTE, EvaluationUtils.defaultComparator);
+		map.put(EvalInformationType.REFERENCE_PAGES, EvaluationUtils.defaultComparator);
+		map.put(EvalInformationType.REFERENCE_PAGEFROM, EvaluationUtils.defaultComparator);
+		map.put(EvalInformationType.REFERENCE_PAGETO, EvaluationUtils.defaultComparator);
+		map.put(EvalInformationType.REFERENCE_DATE, EvaluationUtils.defaultComparator);
+		map.put(EvalInformationType.REFERENCE_DOI, EvaluationUtils.defaultComparator);
+		map.put(EvalInformationType.REFERENCE_URL, EvaluationUtils.defaultComparator);
 
 	}
 

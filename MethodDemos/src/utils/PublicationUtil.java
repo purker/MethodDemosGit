@@ -233,4 +233,24 @@ public class PublicationUtil
 		}
 		return affiliations;
 	}
+
+	/**
+	 * @param keyString
+	 *            "TUW-123456" or "TUW-123456-ref1"
+	 * @return 123456
+	 */
+	public static Integer getPublicationIdFromKeyString(String keyString)
+	{
+		return new Integer(getPublicationIdFromKeyStringToString(keyString));
+	}
+
+	/**
+	 * @param keyString
+	 *            "TUW-123456" or "TUW-123456-ref1"
+	 * @return "123456"
+	 */
+	public static String getPublicationIdFromKeyStringToString(String keyString)
+	{
+		return keyString.substring(4, 10);
+	}
 }

@@ -21,22 +21,61 @@ package evaluation.informationresults;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
 
 import evaluation.tools.EvalInformationType;
 import evaluation.tools.EvalInformationTypeComparatorMapping;
 import evaluation.tools.EvaluationUtils;
+import utils.CollectionUtil;
 import utils.StringUtil;
 
 public class ListInformationResult extends AbstractSingleInformationDocResult<List<String>>
 {
 	protected Comparator<String> comp = EvaluationUtils.defaultComparator;
 
-	public ListInformationResult(EvalInformationType type, List<String> expectedValue, List<String> extractedValue)
+	public ListInformationResult(EvalInformationType type)
 	{
-		this.expectedValue = expectedValue;
-		this.extractedValue = extractedValue;
 		this.type = type;
 		this.comp = EvalInformationTypeComparatorMapping.getComparatorByType(type);
+	}
+
+	/**
+	 * @param type
+	 * @param origPub
+	 * @param testPub
+	 * @param toListMethod
+	 * @param toString
+	 */
+	public <B, T> ListInformationResult(EvalInformationType type, B origPub, B testPub, Function<B, List<T>> toListMethod, Function<T, String> toString)
+	{
+		this(type, toListMethod.apply(origPub), toListMethod.apply(testPub), toString);
+	}
+
+	public <B, T> ListInformationResult(EvalInformationType type, List<T> origList, List<T> testList, Function<T, String> toString)
+	{
+		this(type);
+
+		List<String> orig = new ArrayList<>();
+		for(T obj1 : CollectionUtil.emptyIfNull(origList))
+		{
+			String s = toString.apply(obj1);
+			if(StringUtil.isNotEmpty(s))
+			{
+				orig.add(s);
+			}
+		}
+		List<String> test = new ArrayList<>();
+		for(T obj2 : CollectionUtil.emptyIfNull(testList))
+		{
+			String s = toString.apply(obj2);
+			if(StringUtil.isNotEmpty(s))
+			{
+				test.add(s);
+			}
+		}
+
+		this.expectedValue = orig;
+		this.extractedValue = test;
 	}
 
 	public void print(int mode, String name)

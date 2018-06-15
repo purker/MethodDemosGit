@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import config.Config;
+import utils.PublicationUtil;
 import utils.StringUtil;
 
 public class Reference extends AbstractMetaPublication
@@ -110,14 +111,7 @@ public class Reference extends AbstractMetaPublication
 
 	public static Integer getPublicationIdFromKeyString(String keyString)
 	{
-		try
-		{
-			return new Integer(keyString.substring(4, 10));
-		}
-		catch(Exception e)
-		{
-			return null;
-		}
+		return PublicationUtil.getPublicationIdFromKeyString(keyString);
 	}
 
 	@Override

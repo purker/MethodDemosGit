@@ -354,7 +354,7 @@ public abstract class AbstractSetResult<T extends AbstractMetaPublication>
 				{
 					SingleInformationDocResult<?> result = detailedResults.get(id).get(type);
 
-					String publicationId = PublicationUtil.getNumberFromIdAsString(id);
+					String publicationId = PublicationUtil.getPublicationIdFromKeyStringToString(id);
 					String pdfPath = "=HYPERLINK(\"" + FileCollectionUtil.getPdfFileById(publicationId).getAbsolutePath() + "\")";
 					String originalPath = "=HYPERLINK(\"" + FileCollectionUtil.getGroundTruthResultFileById(publicationId).getAbsolutePath() + "\")";
 					String extractedPath = "=HYPERLINK(\"" + FileCollectionUtil.getResultFilesByMethodAndId(method, publicationId).getAbsolutePath() + "\")";

@@ -19,7 +19,6 @@ package evaluation;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -45,6 +44,7 @@ import mapping.result.FileId;
 import mapping.result.KeyStringInterface;
 import mapping.result.Publication;
 import mapping.result.Reference;
+import mapping.result.ReferenceAuthor;
 import mapping.result.Section;
 import method.Method;
 import pl.edu.icm.cermine.evaluation.exception.EvaluationException;
@@ -180,14 +180,51 @@ public abstract class SystemEvaluator
 	{
 		switch(type)
 		{
-			case REFERENCE_TITLE:
-				return new SimpleInformationResult(type, reference.getTitle(), reference2.getTitle());
+			case REFERENCE_MARKER:
+				return new SimpleInformationResult(type, reference, reference2, Reference::getMarker);
 
-			// TODO
-			// default:
-			// throw new EvaluationException("referencetype not known");
+			case REFERENCE_TITLE:
+				return new SimpleInformationResult(type, reference, reference2, Reference::getTitle);
+
+			// TODO case REFERENCE_PUBLICATIONTYPE:
+			// return new SimpleInformationResult(type, reference, reference2, )Reference::getPublication));
+			case REFERENCE_SOURCE:
+				return new SimpleInformationResult(type, reference, reference2, Reference::getSource);
+			case REFERENCE_PUBLISHER:
+				return new SimpleInformationResult(type, reference, reference2, Reference::getPublisher);
+			case REFERENCE_EDITOR:
+				return new SimpleInformationResult(type, reference, reference2, Reference::getEditors);
+			case REFERENCE_AUTHORS:
+				return new ListInformationResult(type, reference, reference2, Reference::getAuthors, ReferenceAuthor::toString);
+
+			case REFERENCE_EDITION:
+				return new SimpleInformationResult(type, reference, reference2, Reference::getEdition);
+			case REFERENCE_LOCATION:
+				return new SimpleInformationResult(type, reference, reference2, Reference::getLocation);
+			case REFERENCE_VOLUME:
+				return new SimpleInformationResult(type, reference, reference2, Reference::getVolume);
+			case REFERENCE_ISSUE:
+				return new SimpleInformationResult(type, reference, reference2, Reference::getIssue);
+			case REFERENCE_CHAPTER:
+				return new SimpleInformationResult(type, reference, reference2, Reference::getChapter);
+			case REFERENCE_NOTE:
+				return new SimpleInformationResult(type, reference, reference2, Reference::getNote);
+			// TODO case REFERENCE_PAGES:
+			// return new SimpleInformationResult(type, reference, reference2, Reference::getPage);
+			case REFERENCE_PAGEFROM:
+				return new SimpleInformationResult(type, reference, reference2, Reference::getPageFrom);
+			case REFERENCE_PAGETO:
+				return new SimpleInformationResult(type, reference, reference2, Reference::getPageTo);
+			case REFERENCE_DATE:
+				return new SimpleInformationResult(type, reference, reference2, Reference::getPublicationDateString); // TODO?
+			case REFERENCE_DOI:
+				return new SimpleInformationResult(type, reference, reference2, Reference::getDoi);
+			case REFERENCE_URL:
+				return new SimpleInformationResult(type, reference, reference2, Reference::getUrl);
+
+			default:
+				throw new EvaluationException("referencetype " + type + " not known");
 		}
-		return null;
 	}
 
 	private AbstractSingleInformationDocResult<?> getResultFromType(EvalInformationType type, Publication origPub, Publication testPub) throws EvaluationException
@@ -195,53 +232,22 @@ public abstract class SystemEvaluator
 		switch(type)
 		{
 			case TITLE:
-				return new SimpleInformationResult(type, origPub.getTitle(), testPub.getTitle());
+				return new SimpleInformationResult(type, origPub, testPub, Publication::getTitle);
 
 			case ABSTRACT:
-				return new SimpleInformationResult(type, origPub.getAbstractText(), testPub.getAbstractText());
+				return new SimpleInformationResult(type, origPub, testPub, Publication::getAbstractText);
 
 			case ABSTRACTGERMAN:
-				return new SimpleInformationResult(type, origPub.getAbstractTextGerman(), testPub.getAbstractTextGerman());
+				return new SimpleInformationResult(type, origPub, testPub, Publication::getAbstractTextGerman);
 
 			case KEYWORDS:
-				List<String> origKeywords = new ArrayList<>();
-				List<String> testKeywords = new ArrayList<>();
-
-				if(origPub.getKeywords() != null)
-				{
-					origKeywords = origPub.getKeywords();
-				}
-				if(testPub.getKeywords() != null)
-				{
-					testKeywords = testPub.getKeywords();
-				}
-				return new ListInformationResult(type, origKeywords, testKeywords);
+				return new ListInformationResult(type, origPub, testPub, Publication::getKeywords, String::toString);
 
 			case AUTHORS:
-				List<String> authorOrig = new ArrayList<>();
-				for(Author author : origPub.getAuthors())
-				{
-					authorOrig.add(author.toString());
-				}
-				List<String> authorTest = new ArrayList<>();
-				for(Author author : testPub.getAuthors())
-				{
-					authorTest.add(author.toString());
-				}
-				return new ListInformationResult(type, authorOrig, authorTest);
+				return new ListInformationResult(type, origPub, testPub, Publication::getAuthors, Author::toString);
 
 			case AFFILIATIONS:
-				List<String> affOrig = new ArrayList<>();
-				for(Affiliation aff : CollectionUtil.emptyIfNull(origPub.getAffiliations()))
-				{
-					affOrig.add(aff.toString());
-				}
-				List<String> affTest = new ArrayList<>();
-				for(Affiliation aff : CollectionUtil.emptyIfNull(testPub.getAffiliations()))
-				{
-					affTest.add(aff.toString());
-				}
-				return new ListInformationResult(type, affOrig, affTest);
+				return new ListInformationResult(type, origPub, testPub, Publication::getAffiliations, Affiliation::toString);
 
 			case AUTHOR_AFFILIATIONS:
 				Set<StringRelation> relOrig = new HashSet<>();
@@ -265,24 +271,7 @@ public abstract class SystemEvaluator
 
 			case EMAILS:
 			{
-				List<String> emailsOrig = new ArrayList<>();
-				List<String> emailsTest = new ArrayList<>();
-				for(Author author : origPub.getAuthors())
-				{
-					if(author.getEmail() != null)
-					{
-						emailsOrig.add(author.getEmail());
-					}
-				}
-				for(Author author : testPub.getAuthors())
-				{
-					if(author.getEmail() != null)
-					{
-						emailsTest.add(author.getEmail());
-					}
-				}
-				return new ListInformationResult(type, emailsOrig, emailsTest);
-
+				return new ListInformationResult(type, origPub, testPub, Publication::getAuthors, Author::getEmail);
 			}
 			case AUTHOR_EMAILS:
 				Set<StringRelation> emailsOrig = new HashSet<>();
@@ -304,48 +293,28 @@ public abstract class SystemEvaluator
 				return new RelationInformationResult(type, emailsOrig, emailsTest);
 
 			case SOURCE:
-				return new SimpleInformationResult(type, origPub.getSource(), testPub.getSource());
+				return new SimpleInformationResult(type, origPub, testPub, Publication::getSource);
 
 			case VOLUME:
-				return new SimpleInformationResult(type, origPub.getVolume(), testPub.getVolume());
+				return new SimpleInformationResult(type, origPub, testPub, Publication::getVolume);
 
 			case ISSUE:
-				return new SimpleInformationResult(type, origPub.getIssue(), testPub.getIssue());
+				return new SimpleInformationResult(type, origPub, testPub, Publication::getIssue);
 
 			case PAGE_FROM:
-				return new SimpleInformationResult(type, origPub.getPageFrom(), testPub.getPageFrom());
+				return new SimpleInformationResult(type, origPub, testPub, Publication::getPageFrom);
 
 			case PAGE_TO:
-				return new SimpleInformationResult(type, origPub.getPageTo(), testPub.getPageTo());
+				return new SimpleInformationResult(type, origPub, testPub, Publication::getPageTo);
 
 			case YEAR:
-				String origYear = null;
-				if(origPub.getPublicationYear() != null)
-				{
-					origYear = origPub.getPublicationYear();
-				}
-				String testYear = null;
-				if(testPub.getPublicationYear() != null)
-				{
-					testYear = origPub.getPublicationYear();
-				}
-				return new SimpleInformationResult(type, origYear, testYear);
+				return new SimpleInformationResult(type, origPub, testPub, Publication::getPublicationYear);
 
 			case DOI:
-				return new SimpleInformationResult(type, origPub.getDoi(), testPub.getDoi());
+				return new SimpleInformationResult(type, origPub, testPub, Publication::getDoi);
 
 			case SECTIONS:
-				List<String> headerOrig = new ArrayList<>();
-				for(Section section : origPub.getSections())
-				{
-					headerOrig.add(section.getTitle());
-				}
-				List<String> headerTest = new ArrayList<>();
-				for(Section section : testPub.getSections())
-				{
-					headerTest.add(section.getTitle());
-				}
-				return new ListInformationResult(type, headerOrig, headerTest);
+				return new ListInformationResult(type, origPub, testPub, Publication::getSections, Section::getTitle);
 
 			case SECTION_LEVELS:
 				Set<StringRelation> headersOrig = new HashSet<>();

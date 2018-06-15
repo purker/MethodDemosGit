@@ -54,21 +54,25 @@ public class Evaluators
 	public static List<EvalInformationType> getReferenceTypes()
 	{
 		List<EvalInformationType> types = new ArrayList<>();
-		// types.add(EvalInformationType.REFERENCE_AUTHORS);
+		types.add(EvalInformationType.REFERENCE_MARKER);
 		types.add(EvalInformationType.REFERENCE_TITLE);
-		// types.add(EvalInformationType.REFERENCE_SOURCE);
-		// types.add(EvalInformationType.REFERENCE_LOCATION);
-		// types.add(EvalInformationType.REFERENCE_PUBLISHER);
-		// types.add(EvalInformationType.REFERENCE_EDITOR);
-		// types.add(EvalInformationType.REFERENCE_DOI);
-		// types.add(EvalInformationType.REFERENCE_URL);
-		// types.add(EvalInformationType.REFERENCE_EDITION);
-		// types.add(EvalInformationType.REFERENCE_VOLUME);
-		// types.add(EvalInformationType.REFERENCE_ISSUE);
-		// types.add(EvalInformationType.REFERENCE_NOTE);
-		// types.add(EvalInformationType.REFERENCE_PAGEFROM);
-		// types.add(EvalInformationType.REFERENCE_PAGETO);
-		// types.add(EvalInformationType.REFERENCE_DATE);
+		// TODO ?types.add(EvalInformationType.REFERENCE_PUBLICATIONTYPE);
+		types.add(EvalInformationType.REFERENCE_SOURCE);
+		types.add(EvalInformationType.REFERENCE_PUBLISHER);
+		types.add(EvalInformationType.REFERENCE_EDITOR);
+		types.add(EvalInformationType.REFERENCE_AUTHORS);
+		types.add(EvalInformationType.REFERENCE_EDITION);
+		types.add(EvalInformationType.REFERENCE_LOCATION);
+		types.add(EvalInformationType.REFERENCE_VOLUME);
+		types.add(EvalInformationType.REFERENCE_ISSUE);
+		types.add(EvalInformationType.REFERENCE_CHAPTER);
+		types.add(EvalInformationType.REFERENCE_NOTE);
+		// TODOtypes.add(EvalInformationType.REFERENCE_PAGES);
+		types.add(EvalInformationType.REFERENCE_PAGEFROM);
+		types.add(EvalInformationType.REFERENCE_PAGETO);
+		types.add(EvalInformationType.REFERENCE_DATE);
+		types.add(EvalInformationType.REFERENCE_DOI);
+		types.add(EvalInformationType.REFERENCE_URL);
 
 		// TODO error message when not implemented
 		return types;

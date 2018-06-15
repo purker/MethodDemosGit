@@ -26,7 +26,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import evaluation.tools.EvalInformationType;
 import mapping.result.Publication;
 import mapping.result.Reference;
-import utils.StringUtil;
 
 public class ReferenceInformationResult extends ListInformationResult
 {
@@ -35,12 +34,12 @@ public class ReferenceInformationResult extends ListInformationResult
 	private List<Reference> extractedReferences;
 	private Publication publication;
 
-	public ReferenceInformationResult(EvalInformationType type, List<Reference> expectedReference, List<Reference> extractedReference, Publication publication)
+	public ReferenceInformationResult(EvalInformationType type, List<Reference> expectedReferences, List<Reference> extractedReferences, Publication publication)
 	{
-		super(type, StringUtil.getAsStringList(expectedReference), StringUtil.getAsStringList(extractedReference));
+		super(type, expectedReferences, extractedReferences, Reference::toString);
 
-		this.expectedReferences = expectedReference;
-		this.extractedReferences = extractedReference;
+		this.expectedReferences = expectedReferences;
+		this.extractedReferences = extractedReferences;
 		this.publication = publication;
 	}
 
