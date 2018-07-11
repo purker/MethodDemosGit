@@ -3,7 +3,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -12,9 +11,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.runner.RunWith;
 
-import evaluation.EvaluationMode;
 import evaluation.Evaluators;
-import evaluation.tools.AbstractSetResult;
+import evaluation.tools.AbstractCollectionResult;
 import evaluation.tools.EvalInformationType;
 import evaluation.tools.EvaluationResult;
 import evaluation.tools.PublicationIterator;
@@ -30,7 +28,6 @@ public abstract class AbstractFileEvaluatorTest extends AbstractTest
 {
 	protected static List<EvalInformationType> types = Evaluators.getTypes();
 	protected static List<EvalInformationType> referenceTypes = Evaluators.getReferenceTypes();
-	private static List<EvaluationMode> modes = Arrays.asList();// EvaluationMode.SYSOUT_SUMMARY);
 
 	@Test
 	void testDocumentResult100() throws EvaluationException, IOException
@@ -39,7 +36,7 @@ public abstract class AbstractFileEvaluatorTest extends AbstractTest
 		Publication extractedPub = PublicationFactory.createPublication("1");
 
 		PublicationIterator iter = new PublicationIterator(originalPub, extractedPub);
-		AbstractSetResult<?> result = getEvalutator().evaluate(modes, iter);
+		AbstractCollectionResult<?> result = getEvalutator().evaluate(iter);
 
 		assertEquals(new Double(100.), result.getDocumentResult().getAveragePrecision(), "average precsision");
 		assertEquals(new Double(100.), result.getDocumentResult().getAverageRecall(), "average recall");
@@ -53,7 +50,7 @@ public abstract class AbstractFileEvaluatorTest extends AbstractTest
 		Publication extractedPub = new Publication();
 
 		PublicationIterator iter = new PublicationIterator(originalPub, extractedPub);
-		AbstractSetResult<?> result = getEvalutator().evaluate(modes, iter);
+		AbstractCollectionResult<?> result = getEvalutator().evaluate(iter);
 
 		EvaluationResult evaluationResult = result.getDocumentResult();
 		assertEquals(new Double(Double.NaN), evaluationResult.getAveragePrecision(), "average precsision");
@@ -73,7 +70,7 @@ public abstract class AbstractFileEvaluatorTest extends AbstractTest
 		Publication extractedPub = PublicationFactory.createPublication("1");
 
 		PublicationIterator iter = new PublicationIterator(originalPub, extractedPub);
-		AbstractSetResult<?> result = getEvalutator().evaluate(modes, iter);
+		AbstractCollectionResult<?> result = getEvalutator().evaluate(iter);
 
 		// EvalInformationType evalInfoType = EvalInformationType.TITLE;
 		EvaluationResult evaluationResult = result.getPerType().getResultForKey(evalInfoType);

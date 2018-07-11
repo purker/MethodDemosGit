@@ -28,7 +28,7 @@ public abstract class AbstractDemo
 	 * @param outputFolder
 	 * @throws IOException
 	 */
-	public void runDemo(List<File> files, File outputFolder) throws IOException
+	public void runDemoList(List<File> files, File outputFolder) throws IOException
 	{
 		int i = 0;
 		for(File inputFile : files)
@@ -54,7 +54,7 @@ public abstract class AbstractDemo
 							System.out.println("already exists: " + outputFile);
 							continue;
 						}
-						errorString = runDemo(inputFile, outputFile);
+						errorString = runDemoSingleFile(inputFile, outputFile);
 						// write result xml to outputfolder
 						if(errorString != null && !errorString.isEmpty())
 						{
@@ -136,12 +136,12 @@ public abstract class AbstractDemo
 	 * @return null or error text if an exception occurs
 	 * @throws IOException
 	 */
-	abstract String runDemo(File inputFile, File outputFile) throws IOException;
+	abstract String runDemoSingleFile(File inputFile, File outputFile) throws IOException;
 
-	public void runDemo(List<File> groundTruthFiles, File grobIdOutputDir, List<String> idList) throws IOException
+	public void runDemoListWithinIdList(List<File> groundTruthFiles, File outputDir, List<String> idList) throws IOException
 	{
 		List<File> files = groundTruthFiles.stream().filter(f -> idList.contains(PublicationUtil.getIdFromFileWithoutPrefix(f))).collect(Collectors.toList());
-		runDemo(files, grobIdOutputDir);
+		runDemoList(files, outputDir);
 
 	}
 

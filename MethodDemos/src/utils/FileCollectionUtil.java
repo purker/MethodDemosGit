@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import config.Config;
 import evaluation.tools.EvalInformationType;
-import evaluation.tools.SetResultEnum;
+import evaluation.tools.CollectionEnum;
 import evaluation.tools.WriterType;
 import method.Method;
 
@@ -177,7 +177,7 @@ public class FileCollectionUtil
 		return list;
 	}
 
-	public static String getFileByMethodAndSetResultType(String file, SetResultEnum setResultEnum, Method method)
+	public static String getFileByMethodAndSetResultType(String file, CollectionEnum setResultEnum, Method method)
 	{
 		file = setResultEnum.replace(file);
 		file = method.replace(file);
@@ -185,7 +185,7 @@ public class FileCollectionUtil
 		return file;
 	}
 
-	public static String replaceMethodAndTypeAndSetResultEnum(String file, Method method, EvalInformationType type, SetResultEnum setResultType)
+	public static String replaceMethodAndTypeAndSetResultEnum(String file, Method method, EvalInformationType type, CollectionEnum setResultType)
 	{
 		file = method.replace(file);
 		file = type.replace(file);

@@ -19,20 +19,16 @@
 package evaluation.informationresults;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 
 import evaluation.tools.EvalInformationType;
 import evaluation.tools.EvalInformationTypeComparatorMapping;
-import evaluation.tools.EvaluationUtils;
 import utils.CollectionUtil;
 import utils.StringUtil;
 
-public class ListInformationResult extends AbstractSingleInformationDocResult<List<String>>
+public class ListInformationResult extends AbstractSingleInformationResult<List<String>>
 {
-	protected Comparator<String> comp = EvaluationUtils.defaultComparator;
-
 	public ListInformationResult(EvalInformationType type)
 	{
 		this.type = type;
@@ -78,42 +74,43 @@ public class ListInformationResult extends AbstractSingleInformationDocResult<Li
 		this.extractedValue = test;
 	}
 
-	public void print(int mode, String name)
-	{
-		if(mode == 0)
-		{
-			System.out.println("");
-			System.out.println("Expected " + name + ":");
-			for(String expected : expectedValue)
-			{
-				System.out.println("    " + expected);
-			}
-			System.out.println("Extracted " + name + ":");
-			for(String extracted : extractedValue)
-			{
-				System.out.println("    " + extracted);
-			}
-			System.out.printf("Precision: %4.2f%n", getPrecision());
-			System.out.printf("Recall: %4.2f%n", getRecall());
-		}
-		if(mode == 1)
-		{
-			if(!hasExtracted() && !hasExpected())
-			{
-				System.out.print("null");
-			}
-			else
-				if(!hasExtracted() || !hasExpected())
-				{
-					System.out.print("0");
-				}
-				else
-				{
-					System.out.print(getF1());
-				}
-			System.out.print(",");
-		}
-	}
+	// TODO delete
+	// public void print(int mode, String name)
+	// {
+	// if(mode == 0)
+	// {
+	// System.out.println("");
+	// System.out.println("Expected " + name + ":");
+	// for(String expected : expectedValue)
+	// {
+	// System.out.println(" " + expected);
+	// }
+	// System.out.println("Extracted " + name + ":");
+	// for(String extracted : extractedValue)
+	// {
+	// System.out.println(" " + extracted);
+	// }
+	// System.out.printf("Precision: %4.2f%n", getPrecision());
+	// System.out.printf("Recall: %4.2f%n", getRecall());
+	// }
+	// if(mode == 1)
+	// {
+	// if(!hasExtracted() && !hasExpected())
+	// {
+	// System.out.print("null");
+	// }
+	// else
+	// if(!hasExtracted() || !hasExpected())
+	// {
+	// System.out.print("0");
+	// }
+	// else
+	// {
+	// System.out.print(getF1());
+	// }
+	// System.out.print(",");
+	// }
+	// }
 
 	@Override
 	public void prettyPrint()

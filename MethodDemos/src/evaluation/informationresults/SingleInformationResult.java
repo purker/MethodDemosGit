@@ -27,7 +27,7 @@ import evaluation.tools.EvalInformationType;
  * @param <T>
  *            result type
  */
-public interface SingleInformationDocResult<T>
+public interface SingleInformationResult<T>
 {
 	void evaluate();
 

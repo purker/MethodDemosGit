@@ -80,10 +80,17 @@ public class Evaluators
 
 	private static void evaluateMethods(List<EvaluationMode> modes, List<EvalInformationType> types, List<EvalInformationType> referenceTypes) throws EvaluationException, IOException
 	{
-		new CermineXStreamFileEvaluator(types, referenceTypes).evaluate(modes);
-		new GrobidXStreamFileEvaluator(types, referenceTypes).evaluate(modes);
-		new ParscitXStreamFileEvaluator(types, referenceTypes).evaluate(modes);
-		new PdfxXStreamFileEvaluator(types, referenceTypes).evaluate(modes);
+		SystemEvaluator cermine = new CermineXStreamFileEvaluator(types, referenceTypes, modes);
+		SystemEvaluator grobid = new GrobidXStreamFileEvaluator(types, referenceTypes, modes);
+		// SystemEvaluator parscit = new ParscitXStreamFileEvaluator(types, referenceTypes, modes);
+		// SystemEvaluator pdfx = new PdfxXStreamFileEvaluator(types, referenceTypes, modes);
+
+		cermine.evaluate();
+		grobid.evaluate();
+		// parscit.evaluate();
+		// pdfx.evaluate();
+
+		SystemEvaluator.printOverallStatistics(modes, cermine, grobid);// , parscit, pdfx);
 		System.out.println("Evaluation finished");
 	}
 

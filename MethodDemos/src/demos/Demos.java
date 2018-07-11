@@ -92,10 +92,10 @@ public class Demos
 		}
 		if(runDemos)
 		{
-			if(runCermineDemo) new CERMINEDemo().runDemo(groundTruthFiles, cermineOutputDir);
-			if(runGrobidDemo) new GROBIDDemo().runDemo(groundTruthFiles, grobIdOutputDir);
-			if(runParsCitDemo) new ParsCitDemo().runDemo(groundTruthFilesOmnipage, parsCitOutputDir);
-			if(runPdfxDemo) new PDFXDemo().runDemo(groundTruthFiles, pdfxOutputDir);
+			if(runCermineDemo) new CermineDemo().runDemoList(groundTruthFiles, cermineOutputDir);
+			if(runGrobidDemo) new GrobidDemo().runDemoList(groundTruthFiles, grobIdOutputDir);
+			if(runParsCitDemo) new ParscitDemo().runDemoList(groundTruthFilesOmnipage, parsCitOutputDir);
+			if(runPdfxDemo) new PdfxDemo().runDemoList(groundTruthFiles, pdfxOutputDir);
 		}
 		// files=(cermineOutputDir, idList);
 		// files=(grobIdOutputDir, idList);

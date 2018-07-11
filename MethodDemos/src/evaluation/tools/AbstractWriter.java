@@ -11,13 +11,13 @@ public abstract class AbstractWriter
 		return null;
 	}
 
-	public abstract void writeNext(Collection<String> line);
+	public abstract void writeNext(Collection<String> lines);
 
 	public abstract void close() throws IOException;
 
-	public void writeNext(String[] headers)
+	public void writeNext(String[] lines)
 	{
-		writeNext(Arrays.asList(headers));
+		writeNext(Arrays.asList(lines));
 	}
 
 }

@@ -9,7 +9,8 @@ public enum Method
 	CERMINE("cermine", Config.cermineOutputDir),
 	GROBID("grobid", Config.grobidOutputDir),
 	PARSCIT("parscit", Config.parsCitOutputDir),
-	PDFX("pdfx", Config.pdfxOutputDir);
+	PDFX("pdfx", Config.pdfxOutputDir),
+	ALL("all", null);
 
 	private static String toReplace = "<method>";
 	private String name;

@@ -18,7 +18,6 @@
 
 package evaluation.informationresults;
 
-import java.util.Comparator;
 import java.util.function.Function;
 
 import evaluation.tools.EvalInformationType;
@@ -27,10 +26,8 @@ import evaluation.tools.EvalInformationTypeComparatorMapping;
 /**
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public class SimpleInformationResult extends AbstractSingleInformationDocResult<String>
+public class SimpleInformationResult extends AbstractSingleInformationResult<String>
 {
-	private Comparator<String> comp;
-
 	public <B> SimpleInformationResult(EvalInformationType type, B reference, B reference2, Function<B, String> toString)
 	{
 		this.expectedValue = toString.apply(reference);

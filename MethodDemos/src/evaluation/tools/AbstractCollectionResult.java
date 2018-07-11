@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
@@ -16,23 +16,25 @@ import com.opencsv.CSVWriter;
 
 import config.Config;
 import evaluation.EvaluationMode;
-import evaluation.informationresults.SingleInformationDocResult;
+import evaluation.informationresults.SingleInformationResult;
 import mapping.result.AbstractMetaPublication;
 import mapping.result.KeyStringInterface;
 import mapping.result.PublicationType;
 import method.Method;
+import utils.FailureUtil;
 import utils.FileCollectionUtil;
 import utils.PublicationUtil;
 
-public abstract class AbstractSetResult<T extends AbstractMetaPublication>
+public abstract class AbstractCollectionResult<T extends AbstractMetaPublication>
 {
+	// TODO final generell in der klasse notwendig?
 	protected final Collection<EvalInformationType> evalTypes;
 
 	// <id, publication> or <id, reference>
-	protected Map<String, T> elements = new HashMap<>();
+	protected Map<String, T> elements = new TreeMap<>(getComparator());
 
 	// <id, <type, value>>
-	protected final Map<String, Map<EvalInformationType, SingleInformationDocResult<?>>> detailedResults = new TreeMap<>(getComparator());
+	protected final Map<String, Map<EvalInformationType, SingleInformationResult<?>>> detailedResults = new TreeMap<>(getComparator());
 
 	// <type, value>
 	protected SetResult<EvalInformationType> perType = null;
@@ -48,23 +50,23 @@ public abstract class AbstractSetResult<T extends AbstractMetaPublication>
 
 	protected final Method method;
 
-	protected AbstractWriter csvPerIdAndEvalTypeWriter;
+	protected WriterWrapper csvPerIdAndEvalTypeWriter;
 	protected List<EvaluationMode> modes;
 
-	public AbstractSetResult(List<EvaluationMode> modes, Method method, Collection<EvalInformationType> types) throws IOException
+	public AbstractCollectionResult(List<EvaluationMode> modes, Method method, Collection<EvalInformationType> types) throws IOException
 	{
 		this.method = method;
 		this.evalTypes = types;
 		this.modes = modes;
 
-		perId = new SetResult<>(Config.CSVperIdFile, method, getSetResultType(), modes.contains(EvaluationMode.CSV_PER_FILE), "File");
-		perPublicationType = new SetResult<>(Config.CSVperPublicationTypeFile, method, getSetResultType(), modes.contains(EvaluationMode.CSV_PER_PUBLICATIONTYPE), "PublicationType");
-		perType = new SetResult<>(Config.CSVperEvalTypeFile, method, getSetResultType(), modes.contains(EvaluationMode.CSV_PER_EVALUTATIONTYPE), "EvaluationType");
+		perId = new SetResult<>(EvaluationMode.CSV_PER_FILE, Config.CSVperIdFile, method, getCollectionEnum(), modes);
+		perPublicationType = new SetResult<>(EvaluationMode.CSV_PER_PUBLICATIONTYPE, Config.CSVperPublicationTypeFile, method, getCollectionEnum(), modes);
+		perType = new SetResult<>(EvaluationMode.CSV_PER_EVALUTATIONTYPE, Config.CSVperEvalTypeFile, method, getCollectionEnum(), modes);
 		if(modes.contains(EvaluationMode.CSV_PER_FILE_AND_EVALUATIONTYPE))
 		{
 			String file = Config.CSVperFileAndEvalTypeFile;
 
-			String writerFile = FileCollectionUtil.getFileByMethodAndSetResultType(file, getSetResultType(), method);
+			String writerFile = FileCollectionUtil.getFileByMethodAndSetResultType(file, getCollectionEnum(), method);
 			csvPerIdAndEvalTypeWriter = new WriterWrapper(writerFile);
 
 			List<String> headers = new ArrayList<>();
@@ -83,9 +85,14 @@ public abstract class AbstractSetResult<T extends AbstractMetaPublication>
 
 	protected abstract Comparator<String> getComparator();
 
-	protected abstract SetResultEnum getSetResultType();
+	protected abstract CollectionEnum getCollectionEnum();
 
-	public void addResult(T element, SingleInformationDocResult<?> result)
+	public Collection<EvalInformationType> getEvalTypes()
+	{
+		return evalTypes;
+	}
+
+	public void addResult(T element, SingleInformationResult<?> result)
 	{
 		KeyStringInterface idElement = element;
 		if(idElement == null)
@@ -96,24 +103,29 @@ public abstract class AbstractSetResult<T extends AbstractMetaPublication>
 		String id = idElement.getKeyString();
 		if(detailedResults.get(id) == null)
 		{
-			detailedResults.put(id, new EnumMap<EvalInformationType, SingleInformationDocResult<?>>(EvalInformationType.class));
+			detailedResults.put(id, new EnumMap<EvalInformationType, SingleInformationResult<?>>(EvalInformationType.class));
 		}
 		detailedResults.get(id).put(result.getType(), result);
 		elements.put(id, element);
 	}
 
+	public Set<String> getIdSet()
+	{
+		return elements.keySet();
+	}
+
 	public void evaluate()
 	{
 		// foreach publication in map
-		for(Map.Entry<String, Map<EvalInformationType, SingleInformationDocResult<?>>> result : detailedResults.entrySet())
+		for(Map.Entry<String, Map<EvalInformationType, SingleInformationResult<?>>> result : detailedResults.entrySet())
 		{
 			String id = result.getKey();
-			Map<EvalInformationType, SingleInformationDocResult<?>> values = result.getValue();
+			Map<EvalInformationType, SingleInformationResult<?>> values = result.getValue();
 			T publication = elements.get(id);
 
 			for(EvalInformationType type : evalTypes)
 			{
-				SingleInformationDocResult<?> sResult = values.get(type);
+				SingleInformationResult<?> sResult = values.get(type);
 				// if(sResult == null)
 				// {
 				// throw new IllegalArgumentException("Document " + result.getKey() + " does not contain result for " + type);
@@ -164,13 +176,13 @@ public abstract class AbstractSetResult<T extends AbstractMetaPublication>
 
 	public void printDocument(KeyStringInterface id, int i)
 	{
-		Map<EvalInformationType, SingleInformationDocResult<?>> docResults = detailedResults.get(id.getKeyString());
+		Map<EvalInformationType, SingleInformationResult<?>> docResults = detailedResults.get(id.getKeyString());
 		System.out.println("");
 		System.out.println(">>>>>>>>> " + i);
 		System.out.println(id);
 		for(EvalInformationType type : evalTypes)
 		{
-			SingleInformationDocResult<?> docResult = docResults.get(type);
+			SingleInformationResult<?> docResult = docResults.get(type);
 			if(docResult != null)// TODO <-- if entfernen war nur zum testen, evtl mit throw wie in csv
 			// throw new IllegalArgumentException("Document " + result.getKey() + " does not contain result for " + type);
 			{
@@ -187,14 +199,14 @@ public abstract class AbstractSetResult<T extends AbstractMetaPublication>
 
 	public void printDocumentCSV(String doc, int i, CSVWriter csvWriter)
 	{
-		Map<EvalInformationType, SingleInformationDocResult<?>> docResults = detailedResults.get(doc);
+		Map<EvalInformationType, SingleInformationResult<?>> docResults = detailedResults.get(doc);
 		System.out.println("");
 		System.out.println(">>>>>>>>> " + i);
 		System.out.println(doc);
 		for(EvalInformationType type : evalTypes)
 		{
 			if(type != EvalInformationType.DOI) continue;
-			SingleInformationDocResult<?> docResult = docResults.get(type);
+			SingleInformationResult<?> docResult = docResults.get(type);
 
 			List<String> line = new ArrayList<>();
 			line.add("=HYPERLINK(\"" + new File(doc).getAbsolutePath() + "\")");
@@ -223,10 +235,10 @@ public abstract class AbstractSetResult<T extends AbstractMetaPublication>
 
 	public void printCSVPerId() throws IOException
 	{
-		for(Map.Entry<String, Map<EvalInformationType, SingleInformationDocResult<?>>> result : detailedResults.entrySet())
+		for(Map.Entry<String, Map<EvalInformationType, SingleInformationResult<?>>> result : detailedResults.entrySet())
 		{
 			String id = result.getKey();
-			Map<EvalInformationType, SingleInformationDocResult<?>> docResults = result.getValue();
+			Map<EvalInformationType, SingleInformationResult<?>> docResults = result.getValue();
 
 			List<String> lines = new ArrayList<>();
 
@@ -274,6 +286,21 @@ public abstract class AbstractSetResult<T extends AbstractMetaPublication>
 
 	public void printResults() throws IOException
 	{
+		if(modes.contains(EvaluationMode.CSV_PER_EVALUTATIONTYPE))
+		{
+			System.out.println(EvaluationMode.CSV_PER_EVALUTATIONTYPE);
+			getPerType().printCSVStatistics();
+		}
+		if(modes.contains(EvaluationMode.CSV_PER_PUBLICATIONTYPE))
+		{
+			System.out.println(EvaluationMode.CSV_PER_PUBLICATIONTYPE);
+			getPerPublicationType().printCSVStatistics();
+		}
+		if(modes.contains(EvaluationMode.CSV_PER_FILE))
+		{
+			System.out.println(EvaluationMode.CSV_PER_FILE);
+			getPerId().printCSVStatistics();
+		}
 		if(modes.contains(EvaluationMode.CSV_PER_FILE_AND_EVALUATIONTYPE))
 		{
 			System.out.println(EvaluationMode.CSV_PER_FILE_AND_EVALUATIONTYPE);
@@ -297,45 +324,13 @@ public abstract class AbstractSetResult<T extends AbstractMetaPublication>
 			}
 			printTotalSummary();
 		}
-
-		if(modes.contains(EvaluationMode.CSV_PER_EVALUTATIONTYPE))
-		{
-			System.out.println(EvaluationMode.CSV_PER_EVALUTATIONTYPE);
-			for(EvalInformationType type : evalTypes)
-			{
-				getPerType().printKeyEntryCSV(type);
-			}
-			getPerType().printSummaryCSV();
-		}
-
-		if(modes.contains(EvaluationMode.CSV_PER_PUBLICATIONTYPE))
-		{
-			System.out.println(EvaluationMode.CSV_PER_PUBLICATIONTYPE);
-
-			for(PublicationType publicationType : perPublicationType.getKeysSet())
-			{
-				getPerPublicationType().printKeyEntryCSV(publicationType);
-			}
-			getPerPublicationType().printSummaryCSV();
-		}
-
-		if(modes.contains(EvaluationMode.CSV_PER_FILE))
-		{
-			System.out.println(EvaluationMode.CSV_PER_FILE);
-
-			for(String file : detailedResults.keySet())
-			{
-				getPerId().printKeyEntryCSV(file);
-			}
-			getPerId().printSummaryCSV();
-		}
 		if(modes.contains(EvaluationMode.CSV_PER_FILE_WITH_EVALUATIONTYPEVALUE))
 		{
 			System.out.println(EvaluationMode.CSV_PER_FILE_WITH_EVALUATIONTYPEVALUE);
 
 			for(EvalInformationType type : perType.getKeysSet())
 			{
-				String writerFile = FileCollectionUtil.replaceMethodAndTypeAndSetResultEnum(Config.CSVperFileWithEvalTypeValueFile, method, type, getSetResultType());
+				String writerFile = FileCollectionUtil.replaceMethodAndTypeAndSetResultEnum(Config.CSVperFileWithEvalTypeValueFile, method, type, getCollectionEnum());
 				WriterWrapper writer = new WriterWrapper(writerFile);
 
 				List<String> headers = new ArrayList<>();
@@ -352,7 +347,7 @@ public abstract class AbstractSetResult<T extends AbstractMetaPublication>
 
 				for(String id : detailedResults.keySet())
 				{
-					SingleInformationDocResult<?> result = detailedResults.get(id).get(type);
+					SingleInformationResult<?> result = detailedResults.get(id).get(type);
 
 					String publicationId = PublicationUtil.getPublicationIdFromKeyStringToString(id);
 					String pdfPath = "=HYPERLINK(\"" + FileCollectionUtil.getPdfFileById(publicationId).getAbsolutePath() + "\")";
@@ -371,6 +366,22 @@ public abstract class AbstractSetResult<T extends AbstractMetaPublication>
 			}
 		}
 
+	}
+
+	public SetResult<?> getSetResultByMode(EvaluationMode mode)
+	{
+		switch(mode)
+		{
+			case CSV_PER_FILE:
+				return perId;
+			case CSV_PER_PUBLICATIONTYPE:
+				return perPublicationType;
+			case CSV_PER_EVALUTATIONTYPE:
+				return perType;
+			default:
+				FailureUtil.exit("mode not supported");
+				return null;
+		}
 	}
 
 }

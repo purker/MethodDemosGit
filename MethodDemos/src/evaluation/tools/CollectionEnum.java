@@ -1,13 +1,13 @@
 package evaluation.tools;
 
-public enum SetResultEnum
+public enum CollectionEnum
 {
-	PUBLICATION("publication"), REFERENCES("reference");
+	PUBLICATION("publication"), REFERENCE("reference");
 
 	private static String toReplace = "<type>";
 	private String name;
 
-	private SetResultEnum(String replaceString)
+	private CollectionEnum(String replaceString)
 	{
 		this.name = replaceString;
 	}

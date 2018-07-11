@@ -19,6 +19,7 @@
 package evaluation.informationresults;
 
 import java.io.IOException;
+import java.util.Comparator;
 
 import evaluation.tools.EvalInformationType;
 import utils.FormatingUtil;
@@ -28,7 +29,7 @@ import utils.FormatingUtil;
  * @param <T>
  *            result type
  */
-public abstract class AbstractSingleInformationDocResult<T> implements SingleInformationDocResult<T>
+public abstract class AbstractSingleInformationResult<T> implements SingleInformationResult<T>
 {
 	protected EvalInformationType type;
 
@@ -39,6 +40,8 @@ public abstract class AbstractSingleInformationDocResult<T> implements SingleInf
 	protected Double precision;
 	protected Double recall;
 	protected Boolean correct;
+
+	protected Comparator<String> comp;
 
 	protected abstract boolean checkValueEmpty(T value);
 

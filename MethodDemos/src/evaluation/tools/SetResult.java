@@ -1,13 +1,17 @@
 package evaluation.tools;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import evaluation.informationresults.SingleInformationDocResult;
+import evaluation.EvaluationMode;
+import evaluation.informationresults.SingleInformationResult;
 import method.Method;
 import utils.FileCollectionUtil;
 import utils.FormatingUtil;
@@ -19,7 +23,8 @@ import utils.FormatingUtil;
  */
 public class SetResult<T>
 {
-	private Map<T, EvaluationResult> map = new HashMap<>();
+	// TODO private
+	public Map<T, EvaluationResult> map = new HashMap<>();
 
 	private Double averagePrecision;
 	private Double averageRecall;
@@ -27,19 +32,20 @@ public class SetResult<T>
 
 	private WriterWrapper writer;
 
-	public SetResult(String methodFile, Method method, SetResultEnum setResultEnum, boolean createFile, String keyLabel) throws IOException
+	public SetResult(EvaluationMode evaluationMode, String methodFile, Method method, CollectionEnum setResultEnum, List<EvaluationMode> modes) throws IOException
 	{
+		boolean createFile = modes.contains(evaluationMode);
 		if(createFile)
 		{
 			String file = FileCollectionUtil.getFileByMethodAndSetResultType(methodFile, setResultEnum, method);
 			this.writer = new WriterWrapper(file);
 
-			String[] headers = {keyLabel, "Precision", "Recall", "F1"};
+			String[] headers = {evaluationMode.getKeyLabel(), "Precision", "Recall", "F1"};
 			writer.writeNext(headers);
 		}
 	}
 
-	void addResult(T key, SingleInformationDocResult<?> sResult)
+	void addResult(T key, SingleInformationResult<?> sResult)
 	{
 		EvaluationResult result = map.get(key);
 		if(result == null)
@@ -144,13 +150,11 @@ public class SetResult<T>
 	{
 		EvaluationResult evaluationResult = getResultForKey(key);
 
-		String precision = evaluationResult.getAveragePrecisionFormatted();
-		String recall = evaluationResult.getAverageRecallFormatted();
-		String f1 = evaluationResult.getAverageF1Formatted();
+		List<String> columns = new ArrayList<>();
+		columns.add(key.toString());
+		columns.addAll(getStatisticValues(evaluationResult));
 
-		String[] s = {key.toString(), precision, recall, f1};
-
-		writer.writeNext(s);
+		writer.writeNext(columns);
 
 	}
 
@@ -165,5 +169,23 @@ public class SetResult<T>
 	public Set<T> getKeysSet()
 	{
 		return map.keySet();
+	}
+
+	public List<String> getStatisticValues(EvaluationResult evaluationResult)
+	{
+		String precision = evaluationResult.getAveragePrecisionFormatted();
+		String recall = evaluationResult.getAverageRecallFormatted();
+		String f1 = evaluationResult.getAverageF1Formatted();
+
+		return Arrays.asList(precision, recall, f1);
+	}
+
+	public void printCSVStatistics() throws IOException
+	{
+		for(T key : getKeysSet())
+		{
+			printKeyEntryCSV(key);
+		}
+		printSummaryCSV();
 	}
 }

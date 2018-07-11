@@ -9,9 +9,9 @@ import evaluation.EvaluationMode;
 import mapping.result.Publication;
 import method.Method;
 
-public class PublicationSetResult extends AbstractSetResult<Publication>
+public class PublicationCollectionResult extends AbstractCollectionResult<Publication>
 {
-	public PublicationSetResult(List<EvaluationMode> modes, Method method, Collection<EvalInformationType> types) throws IOException
+	public PublicationCollectionResult(List<EvaluationMode> modes, Method method, Collection<EvalInformationType> types) throws IOException
 	{
 		super(modes, method, types);
 	}
@@ -23,9 +23,9 @@ public class PublicationSetResult extends AbstractSetResult<Publication>
 	}
 
 	@Override
-	protected SetResultEnum getSetResultType()
+	protected CollectionEnum getCollectionEnum()
 	{
-		return SetResultEnum.PUBLICATION;
+		return CollectionEnum.PUBLICATION;
 	}
 
 }

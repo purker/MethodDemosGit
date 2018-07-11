@@ -32,9 +32,8 @@ import utils.StringUtil;
 /**
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public class RelationInformationResult extends AbstractSingleInformationDocResult<Set<RelationInformationResult.StringRelation>>
+public class RelationInformationResult extends AbstractSingleInformationResult<Set<RelationInformationResult.StringRelation>>
 {
-	private Comparator<String> comp1;
 	private Comparator<String> comp2;
 
 	public RelationInformationResult(EvalInformationType type, Set<StringRelation> expected, Set<StringRelation> extracted) throws EvaluationException
@@ -46,7 +45,7 @@ public class RelationInformationResult extends AbstractSingleInformationDocResul
 		}
 
 		this.type = type;
-		this.comp1 = relationComparators.getComparator1();
+		this.comp = relationComparators.getComparator1();
 		this.comp2 = relationComparators.getComparator2();
 		this.expectedValue = expected;
 		this.extractedValue = extracted;
@@ -73,7 +72,7 @@ public class RelationInformationResult extends AbstractSingleInformationDocResul
 			{
 				for(StringRelation partExp : tmp)
 				{
-					if(comp1.compare(partExt.element1, partExp.element1) == 0 && comp2.compare(partExt.element2, partExp.element2) == 0)
+					if(comp.compare(partExt.element1, partExp.element1) == 0 && comp2.compare(partExt.element2, partExp.element2) == 0)
 					{
 						++correctCount;
 						tmp.remove(partExp);
@@ -105,7 +104,6 @@ public class RelationInformationResult extends AbstractSingleInformationDocResul
 
 	public static class StringRelation
 	{
-
 		private String element1;
 		private String element2;
 

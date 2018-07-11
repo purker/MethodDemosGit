@@ -19,6 +19,7 @@
 package evaluation;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -30,9 +31,9 @@ public class ParscitXStreamFileEvaluator extends SystemEvaluator
 {
 	private static final Method METHOD = Method.PARSCIT;
 
-	public ParscitXStreamFileEvaluator(Collection<EvalInformationType> types, Collection<EvalInformationType> referenceTypes)
+	public ParscitXStreamFileEvaluator(Collection<EvalInformationType> types, Collection<EvalInformationType> referenceTypes, List<EvaluationMode> modes) throws IOException
 	{
-		super(types, referenceTypes);
+		super(types, referenceTypes, modes);
 	}
 
 	@Override

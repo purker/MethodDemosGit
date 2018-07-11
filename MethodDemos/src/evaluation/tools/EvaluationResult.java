@@ -1,6 +1,6 @@
 package evaluation.tools;
 
-import evaluation.informationresults.SingleInformationDocResult;
+import evaluation.informationresults.SingleInformationResult;
 import utils.FormatingUtil;
 
 public class EvaluationResult
@@ -17,7 +17,7 @@ public class EvaluationResult
 	private Double averageRecall;
 	private Double averageF1;
 
-	void addResult(SingleInformationDocResult<?> sResult)
+	void addResult(SingleInformationResult<?> sResult)
 	{
 		if(sResult != null) // TODO voriges if verwenden, entfernen war nur zum Testen
 		{

@@ -9,10 +9,10 @@ import evaluation.EvaluationMode;
 import mapping.result.Reference;
 import method.Method;
 
-public class ReferenceSetResult extends AbstractSetResult<Reference>
+public class ReferenceCollectionResult extends AbstractCollectionResult<Reference>
 {
 
-	public ReferenceSetResult(List<EvaluationMode> modes, Method method, Collection<EvalInformationType> types) throws IOException
+	public ReferenceCollectionResult(List<EvaluationMode> modes, Method method, Collection<EvalInformationType> types) throws IOException
 	{
 		super(modes, method, types);
 	}
@@ -24,8 +24,8 @@ public class ReferenceSetResult extends AbstractSetResult<Reference>
 	}
 
 	@Override
-	protected SetResultEnum getSetResultType()
+	protected CollectionEnum getCollectionEnum()
 	{
-		return SetResultEnum.REFERENCES;
+		return CollectionEnum.REFERENCE;
 	}
 }
