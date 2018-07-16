@@ -3,7 +3,7 @@ import evaluation.SystemEvaluator;
 
 class CermineFileEvaluatorTest extends AbstractFileEvaluatorTest
 {
-	private static CermineXStreamFileEvaluator e = new CermineXStreamFileEvaluator(types, referenceTypes);
+	private static CermineXStreamFileEvaluator e = new CermineXStreamFileEvaluator();
 
 	@Override
 	protected SystemEvaluator getEvalutator()

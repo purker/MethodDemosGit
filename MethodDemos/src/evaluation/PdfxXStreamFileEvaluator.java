@@ -31,6 +31,11 @@ public class PdfxXStreamFileEvaluator extends SystemEvaluator
 {
 	private static final Method METHOD = Method.PDFX;
 
+	public PdfxXStreamFileEvaluator()
+	{
+		super();
+	}
+
 	public PdfxXStreamFileEvaluator(Collection<EvalInformationType> types, Collection<EvalInformationType> referenceTypes, List<EvaluationMode> modes) throws IOException
 	{
 		super(types, referenceTypes, modes);

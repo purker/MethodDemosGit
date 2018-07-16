@@ -31,6 +31,11 @@ public class ParscitXStreamFileEvaluator extends SystemEvaluator
 {
 	private static final Method METHOD = Method.PARSCIT;
 
+	public ParscitXStreamFileEvaluator()
+	{
+		super();
+	}
+
 	public ParscitXStreamFileEvaluator(Collection<EvalInformationType> types, Collection<EvalInformationType> referenceTypes, List<EvaluationMode> modes) throws IOException
 	{
 		super(types, referenceTypes, modes);

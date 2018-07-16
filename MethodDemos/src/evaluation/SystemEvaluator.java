@@ -20,9 +20,11 @@ package evaluation;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -34,15 +36,16 @@ import evaluation.informationresults.RelationInformationResult;
 import evaluation.informationresults.RelationInformationResult.StringRelation;
 import evaluation.informationresults.SimpleInformationResult;
 import evaluation.tools.AbstractCollectionResult;
+import evaluation.tools.CollectionEnum;
 import evaluation.tools.EvalInformationType;
 import evaluation.tools.EvaluationResult;
+import evaluation.tools.PublicationCollectionResult;
 import evaluation.tools.PublicationIterator;
 import evaluation.tools.PublicationPair;
-import evaluation.tools.PublicationCollectionResult;
 import evaluation.tools.ReferenceCollectionResult;
 import evaluation.tools.SetResult;
 import evaluation.tools.WriterWrapper;
-import evaluation.tools.CollectionEnum;
+import mapping.result.AbstractMetaPublication;
 import mapping.result.Affiliation;
 import mapping.result.Author;
 import mapping.result.FileId;
@@ -69,7 +72,7 @@ public abstract class SystemEvaluator
 	protected ReferenceCollectionResult refResults;
 	protected Collection<EvaluationMode> modes;
 
-	public SystemEvaluator(Collection<EvalInformationType> types, Collection<EvalInformationType> referenceTypes, List<EvaluationMode> modes) throws IOException
+	public SystemEvaluator(Collection<EvalInformationType> types, Collection<EvalInformationType> referenceTypes, List<EvaluationMode> modes)
 	{
 		System.out.println("Starting Evaluation: " + getMethod());
 		this.iter = new PublicationIterator(getOriginalFiles(), getExtractedFiles());
@@ -77,6 +80,11 @@ public abstract class SystemEvaluator
 		this.results = new PublicationCollectionResult(modes, getMethod(), types);
 		this.refResults = new ReferenceCollectionResult(modes, getMethod(), referenceTypes);
 		this.modes = modes;
+	}
+
+	public SystemEvaluator()
+	{
+		this(EvalInformationType.getTypesForPublications(), EvalInformationType.getTypesForReferences(), EvaluationMode.getCSVModes());
 	}
 
 	protected List<File> getOriginalFiles()
@@ -170,6 +178,11 @@ public abstract class SystemEvaluator
 							}
 						}
 					}
+					for(Pair<Reference, Reference> p : ((ReferenceInformationResult)result).getNotMatchingReferences())
+					{
+						refResults.addNotMatchingReferences(p.getLeft());
+					}
+					refResults.initializeAllReferences();
 				}
 			}
 		}
@@ -375,53 +388,16 @@ public abstract class SystemEvaluator
 
 	public static void printOverallStatistics(List<EvaluationMode> modes, SystemEvaluator... evaluators) throws IOException
 	{
-		AbstractCollectionResult<?> s0 = evaluators[0].getSetResultBySetResultEnum(CollectionEnum.REFERENCE);
-		SetResult<String> setResult0 = (SetResult<String>)s0.getSetResultByMode(EvaluationMode.CSV_PER_FILE);
-		AbstractCollectionResult<?> s1 = evaluators[1].getSetResultBySetResultEnum(CollectionEnum.REFERENCE);
-		SetResult<String> setResult1 = (SetResult<String>)s1.getSetResultByMode(EvaluationMode.CSV_PER_FILE);
-
-		System.out.println(setResult0.map.keySet());
-		System.out.println(setResult1.map.keySet());
 		if(modes.contains(EvaluationMode.CSV_PER_FILE))
 		{
 			EvaluationMode mode = EvaluationMode.CSV_PER_FILE;
 			System.out.println(EvaluationMode.CSV_PER_FILE);
-			for(CollectionEnum setResultEnum : CollectionEnum.values())
-			{
-				String file = FileCollectionUtil.getFileByMethodAndSetResultType(mode.getStatisticsFile(), setResultEnum, Method.ALL);
-				WriterWrapper writer = new WriterWrapper(file);
 
-				AbstractCollectionResult<?> setResultOfFirstEvaluator = evaluators[0].getSetResultBySetResultEnum(setResultEnum);
+			CollectionEnum setResultEnum = CollectionEnum.PUBLICATION;
+			printOverallStatisticsForElements(evaluators, mode, setResultEnum);
 
-				// System.out.println(setResultOfFirstEvaluator.getIdSet());
-				for(String key : setResultOfFirstEvaluator.getIdSet())
-				{
-					System.out.println(key);
-
-					List<String> columns = new ArrayList<>();
-					columns.add(key);
-					for(SystemEvaluator evaluator : evaluators)
-					{
-						// System.out.println(evaluator.getClass().getSimpleName() + evaluator.getSetResultBySetResultEnum(setResultEnum, mode).getIdSet());
-						AbstractCollectionResult<?> abstractSetResult = evaluator.getSetResultBySetResultEnum(setResultEnum);
-						SetResult<String> setResult = (SetResult<String>)abstractSetResult.getSetResultByMode(mode);
-						EvaluationResult evaluationResult = setResult.getResultForKey(key);
-
-						if(evaluationResult == null)
-						{
-							System.out.println(abstractSetResult.getIdSet());
-							System.err.println("empty:" + key);
-							System.err.println("mode:" + mode);
-							System.err.println("evaluator:" + evaluator.getClass().getSimpleName());
-
-						}
-						List<String> statisticValues = setResult.getStatisticValues(evaluationResult);
-						columns.addAll(statisticValues);
-					}
-					writer.writeNext(columns);
-				}
-				writer.close();
-			}
+			setResultEnum = CollectionEnum.REFERENCE;
+			printOverallStatisticsForElements(evaluators, mode, setResultEnum);
 		}
 		// if(modes.contains(EvaluationMode.CSV_PER_PUBLICATIONTYPE))
 		// {
@@ -436,7 +412,66 @@ public abstract class SystemEvaluator
 
 	}
 
-	private AbstractCollectionResult<?> getSetResultBySetResultEnum(CollectionEnum setResultEnum)
+	private static void printOverallStatisticsForElements(SystemEvaluator[] evaluators, EvaluationMode mode, CollectionEnum setResultEnum) throws IOException
+	{
+		String file = FileCollectionUtil.getFileByMethodAndSetResultType(mode.getStatisticsFile(), setResultEnum, Method.ALL);
+		WriterWrapper writer = new WriterWrapper(file);
+
+		// headers
+		List<String> headers = new ArrayList<>();
+		headers.add("");
+		headers.add(Method.CERMINE.getName());
+		headers.add("");
+		headers.add("");
+		headers.add(Method.GROBID.getName());
+		headers.add("");
+		headers.add("");
+		headers.add(Method.PARSCIT.getName());
+		headers.add("");
+		headers.add("");
+		headers.add(Method.PDFX.getName());
+		writer.writeNext(headers);
+
+		List<String> valueNames = Arrays.asList("Recall", "Precision", "F1");
+		headers = new ArrayList<>();
+		headers.add("Id");
+		headers.addAll(valueNames);
+		headers.addAll(valueNames);
+		headers.addAll(valueNames);
+		headers.addAll(valueNames);
+		writer.writeNext(headers);
+
+		Collection<String> elements = evaluators[0].getElementsBySetResultEnum(setResultEnum).keySet();
+		for(Object key : elements)
+		{
+			System.out.println(key);
+			List<String> columns = new ArrayList<>();
+			columns.add(key.toString());
+			for(SystemEvaluator evaluator : evaluators)
+			{
+				AbstractCollectionResult<?> abstractSetResult = evaluator.getSetResultBySetResultEnum(setResultEnum);
+				SetResult<?> setResult = abstractSetResult.getSetResultByMode(mode);
+				EvaluationResult evaluationResult = setResult.getResultForKey(key);
+
+				if(evaluationResult != null)
+				{
+					// {precision, recall, f1}
+					List<String> statisticValues = setResult.getStatisticValues(evaluationResult);
+					columns.addAll(statisticValues);
+				}
+				else
+				{
+					List<String> notMatched = Arrays.asList("notMatched", "notMatched", "notMatched");
+					columns.addAll(notMatched);
+				}
+			}
+			writer.writeNext(columns);
+		}
+		writer.close();
+
+	}
+
+	protected AbstractCollectionResult<?> getSetResultBySetResultEnum(CollectionEnum setResultEnum)
 	{
 		AbstractCollectionResult<?> abstractSetResult = null;
 		if(setResultEnum.equals(CollectionEnum.PUBLICATION))
@@ -447,6 +482,26 @@ public abstract class SystemEvaluator
 			if(setResultEnum.equals(CollectionEnum.REFERENCE))
 			{
 				abstractSetResult = this.refResults;
+			}
+			else
+			{
+				FailureUtil.exit("SetResultEnum not supported");
+			}
+
+		return abstractSetResult;
+	}
+
+	protected Map<String, ? extends AbstractMetaPublication> getElementsBySetResultEnum(CollectionEnum setResultEnum)
+	{
+		Map<String, ? extends AbstractMetaPublication> abstractSetResult = null;
+		if(setResultEnum.equals(CollectionEnum.PUBLICATION))
+		{
+			abstractSetResult = this.results.getElements();
+		}
+		else
+			if(setResultEnum.equals(CollectionEnum.REFERENCE))
+			{
+				abstractSetResult = this.refResults.getAllReferences();
 			}
 			else
 			{

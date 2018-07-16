@@ -4,7 +4,7 @@ import evaluation.SystemEvaluator;
 
 class GrobidFileEvaluatorTest extends AbstractFileEvaluatorTest
 {
-	private static GrobidXStreamFileEvaluator e = new GrobidXStreamFileEvaluator(types, referenceTypes);
+	private static GrobidXStreamFileEvaluator e = new GrobidXStreamFileEvaluator();
 
 	@Override
 	protected SystemEvaluator getEvalutator()

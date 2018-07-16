@@ -31,6 +31,11 @@ public class CermineXStreamFileEvaluator extends SystemEvaluator
 {
 	private static final Method METHOD = Method.CERMINE;
 
+	public CermineXStreamFileEvaluator()
+	{
+		super();
+	}
+
 	public CermineXStreamFileEvaluator(Collection<EvalInformationType> types, Collection<EvalInformationType> referenceTypes, List<EvaluationMode> modes) throws IOException
 	{
 		super(types, referenceTypes, modes);

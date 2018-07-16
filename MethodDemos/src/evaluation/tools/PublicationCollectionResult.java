@@ -1,6 +1,5 @@
 package evaluation.tools;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -11,7 +10,7 @@ import method.Method;
 
 public class PublicationCollectionResult extends AbstractCollectionResult<Publication>
 {
-	public PublicationCollectionResult(List<EvaluationMode> modes, Method method, Collection<EvalInformationType> types) throws IOException
+	public PublicationCollectionResult(List<EvaluationMode> modes, Method method, Collection<EvalInformationType> types)
 	{
 		super(modes, method, types);
 	}

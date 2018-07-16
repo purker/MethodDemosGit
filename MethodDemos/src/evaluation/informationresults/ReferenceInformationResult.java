@@ -30,6 +30,7 @@ import mapping.result.Reference;
 public class ReferenceInformationResult extends ListInformationResult
 {
 	private List<Pair<Reference, Reference>> matchingReferences = new ArrayList<>();
+	private List<Pair<Reference, Reference>> notMatchingReferences = new ArrayList<>();
 	private List<Reference> expectedReferences;
 	private List<Reference> extractedReferences;
 	private Publication publication;
@@ -59,6 +60,10 @@ public class ReferenceInformationResult extends ListInformationResult
 						tmp.remove(partExp);
 						continue external;
 					}
+					else
+					{
+						notMatchingReferences.add(Pair.of(partExp, partExt));
+					}
 				}
 			}
 		}
@@ -68,5 +73,10 @@ public class ReferenceInformationResult extends ListInformationResult
 	public List<Pair<Reference, Reference>> getMatchingReferences()
 	{
 		return matchingReferences;
+	}
+
+	public List<Pair<Reference, Reference>> getNotMatchingReferences()
+	{
+		return notMatchingReferences;
 	}
 }

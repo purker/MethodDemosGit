@@ -26,8 +26,8 @@ import utils.XStreamUtil;
 @RunWith(JUnitParamsRunner.class)
 public abstract class AbstractFileEvaluatorTest extends AbstractTest
 {
-	protected static List<EvalInformationType> types = Evaluators.getTypes();
-	protected static List<EvalInformationType> referenceTypes = Evaluators.getReferenceTypes();
+	protected static List<EvalInformationType> types = EvalInformationType.getTypesForPublications();
+	protected static List<EvalInformationType> referenceTypes = EvalInformationType.getTypesForReferences();
 
 	@Test
 	void testDocumentResult100() throws EvaluationException, IOException

@@ -31,6 +31,11 @@ public class GrobidXStreamFileEvaluator extends SystemEvaluator
 {
 	private static final Method METHOD = Method.GROBID;
 
+	public GrobidXStreamFileEvaluator()
+	{
+		super();
+	}
+
 	public GrobidXStreamFileEvaluator(Collection<EvalInformationType> types, Collection<EvalInformationType> referenceTypes, List<EvaluationMode> modes) throws IOException
 	{
 		super(types, referenceTypes, modes);

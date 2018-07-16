@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import evaluation.EvaluationMode;
 import evaluation.informationresults.SingleInformationResult;
 import method.Method;
+import utils.FailureUtil;
 import utils.FileCollectionUtil;
 import utils.FormatingUtil;
 
@@ -24,7 +25,7 @@ import utils.FormatingUtil;
 public class SetResult<T>
 {
 	// TODO private
-	public Map<T, EvaluationResult> map = new HashMap<>();
+	public Map<T, EvaluationResult> map = new LinkedHashMap<>();
 
 	private Double averagePrecision;
 	private Double averageRecall;
@@ -32,13 +33,20 @@ public class SetResult<T>
 
 	private WriterWrapper writer;
 
-	public SetResult(EvaluationMode evaluationMode, String methodFile, Method method, CollectionEnum setResultEnum, List<EvaluationMode> modes) throws IOException
+	public SetResult(EvaluationMode evaluationMode, String methodFile, Method method, CollectionEnum setResultEnum, List<EvaluationMode> modes)
 	{
 		boolean createFile = modes.contains(evaluationMode);
 		if(createFile)
 		{
 			String file = FileCollectionUtil.getFileByMethodAndSetResultType(methodFile, setResultEnum, method);
-			this.writer = new WriterWrapper(file);
+			try
+			{
+				this.writer = new WriterWrapper(file);
+			}
+			catch(IOException e)
+			{
+				FailureUtil.failureExit(e, System.err, "not able to create writer for file " + file, true);
+			}
 
 			String[] headers = {evaluationMode.getKeyLabel(), "Precision", "Recall", "F1"};
 			writer.writeNext(headers);
@@ -83,7 +91,7 @@ public class SetResult<T>
 		return FormatingUtil.round(avgSum / avgCount);
 	}
 
-	public EvaluationResult getResultForKey(T key)
+	public EvaluationResult getResultForKey(Object key)
 	{
 		return map.get(key);
 	}
@@ -184,6 +192,7 @@ public class SetResult<T>
 	{
 		for(T key : getKeysSet())
 		{
+			System.out.println(key);
 			printKeyEntryCSV(key);
 		}
 		printSummaryCSV();

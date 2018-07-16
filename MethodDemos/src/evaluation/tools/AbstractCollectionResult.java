@@ -53,7 +53,7 @@ public abstract class AbstractCollectionResult<T extends AbstractMetaPublication
 	protected WriterWrapper csvPerIdAndEvalTypeWriter;
 	protected List<EvaluationMode> modes;
 
-	public AbstractCollectionResult(List<EvaluationMode> modes, Method method, Collection<EvalInformationType> types) throws IOException
+	public AbstractCollectionResult(List<EvaluationMode> modes, Method method, Collection<EvalInformationType> types)
 	{
 		this.method = method;
 		this.evalTypes = types;
@@ -67,7 +67,14 @@ public abstract class AbstractCollectionResult<T extends AbstractMetaPublication
 			String file = Config.CSVperFileAndEvalTypeFile;
 
 			String writerFile = FileCollectionUtil.getFileByMethodAndSetResultType(file, getCollectionEnum(), method);
-			csvPerIdAndEvalTypeWriter = new WriterWrapper(writerFile);
+			try
+			{
+				csvPerIdAndEvalTypeWriter = new WriterWrapper(writerFile);
+			}
+			catch(IOException e)
+			{
+				FailureUtil.failureExit(e, System.err, "not able to create writer for file " + writerFile, true);
+			}
 
 			List<String> headers = new ArrayList<>();
 			headers.add("path");
@@ -94,19 +101,24 @@ public abstract class AbstractCollectionResult<T extends AbstractMetaPublication
 
 	public void addResult(T element, SingleInformationResult<?> result)
 	{
-		KeyStringInterface idElement = element;
-		if(idElement == null)
-		{
-			System.err.println("id of publication has to be set");
-			return;
-		}
-		String id = idElement.getKeyString();
+		String id = checkNotNullGetKeyString(element);
 		if(detailedResults.get(id) == null)
 		{
 			detailedResults.put(id, new EnumMap<EvalInformationType, SingleInformationResult<?>>(EvalInformationType.class));
 		}
 		detailedResults.get(id).put(result.getType(), result);
 		elements.put(id, element);
+	}
+
+	protected String checkNotNullGetKeyString(T element)
+	{
+		KeyStringInterface idElement = element;
+		if(idElement == null)
+		{
+			FailureUtil.exit("id of element (publication or reference) has to be set");
+		}
+		String id = idElement.getKeyString();
+		return id;
 	}
 
 	public Set<String> getIdSet()
@@ -365,7 +377,6 @@ public abstract class AbstractCollectionResult<T extends AbstractMetaPublication
 				writer.close();
 			}
 		}
-
 	}
 
 	public SetResult<?> getSetResultByMode(EvaluationMode mode)
@@ -382,6 +393,11 @@ public abstract class AbstractCollectionResult<T extends AbstractMetaPublication
 				FailureUtil.exit("mode not supported");
 				return null;
 		}
+	}
+
+	public Map<String, T> getElements()
+	{
+		return elements;
 	}
 
 }

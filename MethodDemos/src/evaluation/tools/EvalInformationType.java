@@ -96,4 +96,59 @@ public enum EvalInformationType
 		return file.replace("<evaltype>", this.name());
 	}
 
+	public static List<EvalInformationType> getTypesForPublications()
+	{
+		List<EvalInformationType> types;
+		types = new ArrayList<>();
+		types.add(EvalInformationType.TITLE);
+		types.add(EvalInformationType.ABSTRACT);
+		types.add(EvalInformationType.ABSTRACTGERMAN);
+		types.add(EvalInformationType.KEYWORDS);
+		types.add(EvalInformationType.AUTHORS);
+		types.add(EvalInformationType.EMAILS);
+		types.add(EvalInformationType.AUTHOR_EMAILS);
+		types.add(EvalInformationType.AFFILIATIONS);
+		types.add(EvalInformationType.AUTHOR_AFFILIATIONS);
+		types.add(EvalInformationType.SOURCE);
+		types.add(EvalInformationType.VOLUME);
+		types.add(EvalInformationType.ISSUE);
+		types.add(EvalInformationType.PAGE_FROM);
+		types.add(EvalInformationType.PAGE_TO);
+		types.add(EvalInformationType.YEAR);
+		types.add(EvalInformationType.DOI);
+		types.add(EvalInformationType.SECTIONS);
+		types.add(EvalInformationType.SECTION_LEVELS);
+		types.add(EvalInformationType.SECTION_REFERENCES);
+		types.add(EvalInformationType.REFERENCES);
+
+		return types;
+	}
+
+	public static List<EvalInformationType> getTypesForReferences()
+	{
+		List<EvalInformationType> types = new ArrayList<>();
+		types.add(EvalInformationType.REFERENCE_MARKER);
+		types.add(EvalInformationType.REFERENCE_TITLE);
+		// TODO ?types.add(EvalInformationType.REFERENCE_PUBLICATIONTYPE);
+		types.add(EvalInformationType.REFERENCE_SOURCE);
+		types.add(EvalInformationType.REFERENCE_PUBLISHER);
+		types.add(EvalInformationType.REFERENCE_EDITOR);
+		types.add(EvalInformationType.REFERENCE_AUTHORS);
+		types.add(EvalInformationType.REFERENCE_EDITION);
+		types.add(EvalInformationType.REFERENCE_LOCATION);
+		types.add(EvalInformationType.REFERENCE_VOLUME);
+		types.add(EvalInformationType.REFERENCE_ISSUE);
+		types.add(EvalInformationType.REFERENCE_CHAPTER);
+		types.add(EvalInformationType.REFERENCE_NOTE);
+		// TODOtypes.add(EvalInformationType.REFERENCE_PAGES);
+		types.add(EvalInformationType.REFERENCE_PAGEFROM);
+		types.add(EvalInformationType.REFERENCE_PAGETO);
+		types.add(EvalInformationType.REFERENCE_DATE);
+		types.add(EvalInformationType.REFERENCE_DOI);
+		types.add(EvalInformationType.REFERENCE_URL);
+
+		// TODO error message when not implemented
+		return types;
+	}
+
 }
