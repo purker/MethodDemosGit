@@ -6,25 +6,32 @@ import config.Config;
 
 public enum Method
 {
-	CERMINE("cermine", Config.cermineOutputDir),
-	GROBID("grobid", Config.grobidOutputDir),
-	PARSCIT("parscit", Config.parsCitOutputDir),
-	PDFX("pdfx", Config.pdfxOutputDir),
-	ALL("all", null);
+	CERMINE("cermine", "Cermine", Config.cermineOutputDir),
+	GROBID("grobid", "Grobid", Config.grobidOutputDir),
+	PARSCIT("parscit", "ParsCit", Config.parsCitOutputDir),
+	PDFX("pdfx", "PDFX", Config.pdfxOutputDir),
+	ALL("all", "All", null);
 
 	private static String toReplace = "<method>";
 	private String name;
+	private String printName;
 	private File resultDirectory;
 
-	private Method(String name, File resultDirectory)
+	private Method(String name, String printName, File resultDirectory)
 	{
 		this.name = name;
+		this.printName = printName;
 		this.resultDirectory = resultDirectory;
 	}
 
 	public String getName()
 	{
 		return name;
+	}
+
+	public String getPrintName()
+	{
+		return printName;
 	}
 
 	public File getResultDirectory()

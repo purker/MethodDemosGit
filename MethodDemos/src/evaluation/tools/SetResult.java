@@ -168,10 +168,22 @@ public class SetResult<T>
 
 	public void printSummaryCSV() throws IOException
 	{
-		String[] s = {"", getAveragePrecisionFormated(), getAverageRecallFormated(), getAverageF1Formated()};
-		writer.writeNext(s);
+		List<String> columns = new ArrayList<>();
+		columns.add("Average");
+		columns.addAll(getStatisticValuesSummary());
+
+		writer.writeNext(columns);
 
 		writer.close();
+	}
+
+	public Collection<String> getStatisticValuesSummary()
+	{
+		String precision = getAveragePrecisionFormated();
+		String recall = getAverageRecallFormated();
+		String f1 = getAverageF1Formated();
+
+		return Arrays.asList(precision, recall, f1);
 	}
 
 	public Set<T> getKeysSet()
@@ -192,7 +204,7 @@ public class SetResult<T>
 	{
 		for(T key : getKeysSet())
 		{
-			System.out.println(key);
+			// TODO löschen System.out.println(key);
 			printKeyEntryCSV(key);
 		}
 		printSummaryCSV();

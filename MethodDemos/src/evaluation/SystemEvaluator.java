@@ -24,7 +24,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -45,7 +44,6 @@ import evaluation.tools.PublicationPair;
 import evaluation.tools.ReferenceCollectionResult;
 import evaluation.tools.SetResult;
 import evaluation.tools.WriterWrapper;
-import mapping.result.AbstractMetaPublication;
 import mapping.result.Affiliation;
 import mapping.result.Author;
 import mapping.result.FileId;
@@ -399,17 +397,24 @@ public abstract class SystemEvaluator
 			setResultEnum = CollectionEnum.REFERENCE;
 			printOverallStatisticsForElements(evaluators, mode, setResultEnum);
 		}
-		// if(modes.contains(EvaluationMode.CSV_PER_PUBLICATIONTYPE))
-		// {
-		// System.out.println(EvaluationMode.CSV_PER_PUBLICATIONTYPE);
-		// getPerPublicationType().printCSVStatistics();
-		// }
-		// if(modes.contains(EvaluationMode.CSV_PER_FILE))
-		// {
-		// System.out.println(EvaluationMode.CSV_PER_FILE);
-		// getPerId().printCSVStatistics();
-		// }
+		if(modes.contains(EvaluationMode.CSV_PER_PUBLICATIONTYPE))
+		{
+			EvaluationMode mode = EvaluationMode.CSV_PER_PUBLICATIONTYPE;
+			CollectionEnum setResultEnum = CollectionEnum.PUBLICATION;
+			printOverallStatisticsForElements(evaluators, mode, setResultEnum);
 
+			setResultEnum = CollectionEnum.REFERENCE;
+			printOverallStatisticsForElements(evaluators, mode, setResultEnum);
+		}
+		if(modes.contains(EvaluationMode.CSV_PER_EVALUTATIONTYPE))
+		{
+			EvaluationMode mode = EvaluationMode.CSV_PER_EVALUTATIONTYPE;
+			CollectionEnum setResultEnum = CollectionEnum.PUBLICATION;
+			printOverallStatisticsForElements(evaluators, mode, setResultEnum);
+
+			setResultEnum = CollectionEnum.REFERENCE;
+			printOverallStatisticsForElements(evaluators, mode, setResultEnum);
+		}
 	}
 
 	private static void printOverallStatisticsForElements(SystemEvaluator[] evaluators, EvaluationMode mode, CollectionEnum setResultEnum) throws IOException
@@ -420,16 +425,16 @@ public abstract class SystemEvaluator
 		// headers
 		List<String> headers = new ArrayList<>();
 		headers.add("");
-		headers.add(Method.CERMINE.getName());
+		headers.add(Method.CERMINE.getPrintName());
 		headers.add("");
 		headers.add("");
-		headers.add(Method.GROBID.getName());
+		headers.add(Method.GROBID.getPrintName());
 		headers.add("");
 		headers.add("");
-		headers.add(Method.PARSCIT.getName());
+		headers.add(Method.PARSCIT.getPrintName());
 		headers.add("");
 		headers.add("");
-		headers.add(Method.PDFX.getName());
+		headers.add(Method.PDFX.getPrintName());
 		writer.writeNext(headers);
 
 		List<String> valueNames = Arrays.asList("Recall", "Precision", "F1");
@@ -441,7 +446,18 @@ public abstract class SystemEvaluator
 		headers.addAll(valueNames);
 		writer.writeNext(headers);
 
-		Collection<String> elements = evaluators[0].getElementsBySetResultEnum(setResultEnum).keySet();
+		Collection<?> elements;
+		AbstractCollectionResult<?> firstCollectionResult = evaluators[0].getCollectionResultByCollectionEnum(setResultEnum);
+		if(mode.equals(EvaluationMode.CSV_PER_FILE))
+		{
+			elements = firstCollectionResult.getAllElements().keySet();
+		}
+		else
+		{
+			// !!! only allowed for CSV_PER_PUBLICATIONTYPE, CSV_PER_EVALUTATIONTYPE
+			elements = firstCollectionResult.getSetResultByMode(mode).getKeysSet();
+		}
+		// SINGLE lines for each element
 		for(Object key : elements)
 		{
 			System.out.println(key);
@@ -449,7 +465,7 @@ public abstract class SystemEvaluator
 			columns.add(key.toString());
 			for(SystemEvaluator evaluator : evaluators)
 			{
-				AbstractCollectionResult<?> abstractSetResult = evaluator.getSetResultBySetResultEnum(setResultEnum);
+				AbstractCollectionResult<?> abstractSetResult = evaluator.getCollectionResultByCollectionEnum(setResultEnum);
 				SetResult<?> setResult = abstractSetResult.getSetResultByMode(mode);
 				EvaluationResult evaluationResult = setResult.getResultForKey(key);
 
@@ -467,11 +483,24 @@ public abstract class SystemEvaluator
 			}
 			writer.writeNext(columns);
 		}
-		writer.close();
 
+		// SUMMARY Line
+		List<String> summaryLine = new ArrayList<>();
+		summaryLine.add("Average");
+		for(SystemEvaluator evaluator : evaluators)
+		{
+			AbstractCollectionResult<?> abstractSetResult = evaluator.getCollectionResultByCollectionEnum(setResultEnum);
+			SetResult<?> setResult = abstractSetResult.getSetResultByMode(mode);
+
+			// {precision, recall, f1}
+			Collection<String> statisticValues = setResult.getStatisticValuesSummary();
+			summaryLine.addAll(statisticValues);
+		}
+		writer.writeNext(summaryLine);
+		writer.close();
 	}
 
-	protected AbstractCollectionResult<?> getSetResultBySetResultEnum(CollectionEnum setResultEnum)
+	protected AbstractCollectionResult<?> getCollectionResultByCollectionEnum(CollectionEnum setResultEnum)
 	{
 		AbstractCollectionResult<?> abstractSetResult = null;
 		if(setResultEnum.equals(CollectionEnum.PUBLICATION))
@@ -482,26 +511,6 @@ public abstract class SystemEvaluator
 			if(setResultEnum.equals(CollectionEnum.REFERENCE))
 			{
 				abstractSetResult = this.refResults;
-			}
-			else
-			{
-				FailureUtil.exit("SetResultEnum not supported");
-			}
-
-		return abstractSetResult;
-	}
-
-	protected Map<String, ? extends AbstractMetaPublication> getElementsBySetResultEnum(CollectionEnum setResultEnum)
-	{
-		Map<String, ? extends AbstractMetaPublication> abstractSetResult = null;
-		if(setResultEnum.equals(CollectionEnum.PUBLICATION))
-		{
-			abstractSetResult = this.results.getElements();
-		}
-		else
-			if(setResultEnum.equals(CollectionEnum.REFERENCE))
-			{
-				abstractSetResult = this.refResults.getAllReferences();
 			}
 			else
 			{

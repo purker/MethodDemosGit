@@ -400,4 +400,9 @@ public abstract class AbstractCollectionResult<T extends AbstractMetaPublication
 		return elements;
 	}
 
+	public Map<String, T> getAllElements()
+	{
+		return elements;
+	}
+
 }

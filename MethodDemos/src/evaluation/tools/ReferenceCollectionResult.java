@@ -43,7 +43,8 @@ public class ReferenceCollectionResult extends AbstractCollectionResult<Referenc
 		allReferences.putAll(notMatchingReferences);
 	}
 
-	public Map<String, Reference> getAllReferences()
+	@Override
+	public Map<String, Reference> getAllElements()
 	{
 		return allReferences;
 	}

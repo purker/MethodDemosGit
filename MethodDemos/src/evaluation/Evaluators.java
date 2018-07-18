@@ -19,7 +19,6 @@
 package evaluation;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 import evaluation.tools.EvalInformationType;
@@ -33,20 +32,15 @@ public class Evaluators
 		try
 		{
 			// List<EvaluationMode> allModes = Arrays.asList(EvaluationMode.values());
-			//
 			// List<EvaluationMode> modes = new ArrayList<>();
 			// modes.add(EvaluationMode.CSV_PER_FILE_WITH_EVALUATIONTYPEVALUE);
+			List<EvaluationMode> allModes = EvaluationMode.getCSVModes();
 
 			// Demos.executeDemos();
-			// evaluateMethods(modes, getTypes(), getReferenceTypes());
-			evaluateMethods(Arrays.asList(EvaluationMode.CSV_PER_FILE), EvalInformationType.getTypesForPublications(), EvalInformationType.getTypesForReferences());
-			// evaluateMethods(EvaluationMode.CSV, getTypes());
-			// evaluateMethods(EvaluationMode.CSV_SUMMARY, getTypes());
-			// evaluateMethods(Arrays.asList(EvaluationMode.CSV_PER_FILE_WITH_EVALUATIONTYPEVALUE), Arrays.asList(EvalInformationType.AUTHORS));
+			evaluateMethods(allModes, EvalInformationType.getTypesForPublications(), EvalInformationType.getTypesForReferences());
 		}
 		catch(Exception e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
