@@ -300,28 +300,28 @@ public abstract class AbstractCollectionResult<T extends AbstractMetaPublication
 	{
 		if(modes.contains(EvaluationMode.CSV_PER_EVALUTATIONTYPE))
 		{
-			System.out.println(EvaluationMode.CSV_PER_EVALUTATIONTYPE);
+			System.out.println("\t" + EvaluationMode.CSV_PER_EVALUTATIONTYPE);
 			getPerType().printCSVStatistics();
 		}
 		if(modes.contains(EvaluationMode.CSV_PER_PUBLICATIONTYPE))
 		{
-			System.out.println(EvaluationMode.CSV_PER_PUBLICATIONTYPE);
+			System.out.println("\t" + EvaluationMode.CSV_PER_PUBLICATIONTYPE);
 			getPerPublicationType().printCSVStatistics();
 		}
 		if(modes.contains(EvaluationMode.CSV_PER_FILE))
 		{
-			System.out.println(EvaluationMode.CSV_PER_FILE);
+			System.out.println("\t" + EvaluationMode.CSV_PER_FILE);
 			getPerId().printCSVStatistics();
 		}
 		if(modes.contains(EvaluationMode.CSV_PER_FILE_AND_EVALUATIONTYPE))
 		{
-			System.out.println(EvaluationMode.CSV_PER_FILE_AND_EVALUATIONTYPE);
+			System.out.println("\t" + EvaluationMode.CSV_PER_FILE_AND_EVALUATIONTYPE);
 
 			printCSVPerId();
 		}
 		if(modes.contains(EvaluationMode.SYSOUT_DETAILED) || modes.contains(EvaluationMode.SYSOUT_SUMMARY))
 		{
-			System.out.println(EvaluationMode.SYSOUT_DETAILED + " " + EvaluationMode.SYSOUT_SUMMARY);
+			System.out.println("\t" + EvaluationMode.SYSOUT_DETAILED + " " + EvaluationMode.SYSOUT_SUMMARY);
 
 			System.out.println("==== Summary (" + detailedResults.keySet().size() + " docs)====");
 			System.out.println("\n                    ---------- EvaluationTypes ----------");
@@ -338,7 +338,7 @@ public abstract class AbstractCollectionResult<T extends AbstractMetaPublication
 		}
 		if(modes.contains(EvaluationMode.CSV_PER_FILE_WITH_EVALUATIONTYPEVALUE))
 		{
-			System.out.println(EvaluationMode.CSV_PER_FILE_WITH_EVALUATIONTYPEVALUE);
+			System.out.println("\t" + EvaluationMode.CSV_PER_FILE_WITH_EVALUATIONTYPEVALUE);
 
 			for(EvalInformationType type : perType.getKeysSet())
 			{

@@ -72,7 +72,7 @@ public abstract class SystemEvaluator
 
 	public SystemEvaluator(Collection<EvalInformationType> types, Collection<EvalInformationType> referenceTypes, List<EvaluationMode> modes)
 	{
-		System.out.println("Starting Evaluation: " + getMethod());
+		System.out.println("Initialize Evaluation: " + getMethod());
 		this.iter = new PublicationIterator(getOriginalFiles(), getExtractedFiles());
 
 		this.results = new PublicationCollectionResult(modes, getMethod(), types);
@@ -119,6 +119,7 @@ public abstract class SystemEvaluator
 	 */
 	public AbstractCollectionResult<?> evaluate(PublicationIterator files) throws EvaluationException, IOException
 	{
+		System.out.println("Starting Evaluation: " + getMethod());
 
 		int i = 0;
 		for(PublicationPair pair : files)
