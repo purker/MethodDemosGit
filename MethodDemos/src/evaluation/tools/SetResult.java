@@ -16,6 +16,7 @@ import method.Method;
 import utils.FailureUtil;
 import utils.FileCollectionUtil;
 import utils.FormatingUtil;
+import utils.StringUtil;
 
 /**
  *
@@ -159,7 +160,7 @@ public class SetResult<T>
 		EvaluationResult evaluationResult = getResultForKey(key);
 
 		List<String> columns = new ArrayList<>();
-		columns.add(key.toString());
+		columns.add(StringUtil.getLabelIfPresent(key));
 		columns.addAll(getStatisticValues(evaluationResult));
 
 		writer.writeNext(columns);

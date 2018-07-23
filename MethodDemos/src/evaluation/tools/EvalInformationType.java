@@ -21,60 +21,72 @@ package evaluation.tools;
 import java.util.ArrayList;
 import java.util.List;
 
+import mapping.result.Label;
+
 /**
  * @author Dominika Tkaczyk (d.tkaczyk@icm.edu.pl)
  */
-public enum EvalInformationType
+public enum EvalInformationType implements Label
 {
-	TITLE,
-	ABSTRACT,
-	ABSTRACTGERMAN,
-	KEYWORDS,
-	AUTHORS,
-	EMAILS,
-	AUTHOR_EMAILS,
-	AFFILIATIONS,
-	AUTHOR_AFFILIATIONS,
-	SOURCE,
-	VOLUME,
-	ISSUE,
-	PAGES,
-	PAGE_FROM(PAGES),
-	PAGE_TO(PAGES),
-	YEAR,
-	DOI,
-	SECTIONS,
-	SECTION_LEVELS,
-	SECTION_REFERENCES,
-	REFERENCES,
-	REFERENCE_MARKER(REFERENCES),
-	REFERENCE_TITLE(REFERENCES),
-	REFERENCE_PUBLICATIONTYPE(REFERENCES),
-	REFERENCE_SOURCE(REFERENCES),
-	REFERENCE_PUBLISHER(REFERENCES),
-	REFERENCE_EDITOR(REFERENCES),
-	REFERENCE_AUTHORS(REFERENCES),
-	REFERENCE_EDITION(REFERENCES),
-	REFERENCE_LOCATION(REFERENCES),
-	REFERENCE_VOLUME(REFERENCES),
-	REFERENCE_ISSUE(REFERENCES),
-	REFERENCE_CHAPTER(REFERENCES),
-	REFERENCE_NOTE(REFERENCES),
-	REFERENCE_PAGES(REFERENCES),
-	REFERENCE_PAGEFROM(PAGES),
-	REFERENCE_PAGETO(PAGES),
-	REFERENCE_DATE(REFERENCES),
-	REFERENCE_DOI(REFERENCES),
-	REFERENCE_URL(REFERENCES);
+	TITLE("Title"),
+	ABSTRACT("Abstract"),
+	ABSTRACTGERMAN("Abstract (german)"),
+	KEYWORDS("Keywords"),
+	AUTHORS("Authors"),
+	EMAILS("Emails"),
+	AUTHOR_EMAILS("Author-Emails"),
+	AFFILIATIONS("Affiliations"),
+	AUTHOR_AFFILIATIONS("Author-Affiliations"),
+	SOURCE("Source"),
+	VOLUME("Volume"),
+	ISSUE("Issue"),
+	PAGES("Pages"),
+	PAGE_FROM(PAGES, "Page from"),
+	PAGE_TO(PAGES, "Page to"),
+	YEAR("Year"),
+	DOI("Doi"),
+	SECTIONS("Sections"),
+	SECTION_LEVELS("Section-Levels"),
+	SECTION_REFERENCES("Section-References"),
+	REFERENCES("References"),
+	REFERENCE_MARKER(REFERENCES, "Marker"),
+	REFERENCE_TITLE(REFERENCES, "Title"),
+	REFERENCE_PUBLICATIONTYPE(REFERENCES, "PublicationType"),
+	REFERENCE_SOURCE(REFERENCES, "Source"),
+	REFERENCE_PUBLISHER(REFERENCES, "Publisher"),
+	REFERENCE_EDITOR(REFERENCES, "Editor"),
+	REFERENCE_AUTHORS(REFERENCES, "Authors"),
+	REFERENCE_EDITION(REFERENCES, "Edition"),
+	REFERENCE_LOCATION(REFERENCES, "Location"),
+	REFERENCE_VOLUME(REFERENCES, "Volume"),
+	REFERENCE_ISSUE(REFERENCES, "Issue"),
+	REFERENCE_CHAPTER(REFERENCES, "Chapter"),
+	REFERENCE_NOTE(REFERENCES, "Note"),
+	REFERENCE_PAGES(REFERENCES, "Pages"),
+	REFERENCE_PAGEFROM(REFERENCE_PAGES, "Page from"),
+	REFERENCE_PAGETO(REFERENCE_PAGES, "Page to"),
+	REFERENCE_DATE(REFERENCES, "Date"),
+	REFERENCE_DOI(REFERENCES, "Doi"),
+	REFERENCE_URL(REFERENCES, "Url");
 
+	private String label;
 	private EvalInformationType mainType;
 
-	private EvalInformationType()
-	{}
-
-	private EvalInformationType(EvalInformationType mainType)
+	private EvalInformationType(String label)
 	{
+		this.label = label;
+	}
+
+	private EvalInformationType(EvalInformationType mainType, String label)
+	{
+		this.label = label;
 		this.mainType = mainType;
+	}
+
+	@Override
+	public String getLabel()
+	{
+		return label;
 	}
 
 	public static List<EvalInformationType> getSubTypes(EvalInformationType mainType, List<EvalInformationType> list)
@@ -140,7 +152,7 @@ public enum EvalInformationType
 		types.add(EvalInformationType.REFERENCE_ISSUE);
 		types.add(EvalInformationType.REFERENCE_CHAPTER);
 		types.add(EvalInformationType.REFERENCE_NOTE);
-		// TODOtypes.add(EvalInformationType.REFERENCE_PAGES);
+		// TODO types.add(EvalInformationType.REFERENCE_PAGES);
 		types.add(EvalInformationType.REFERENCE_PAGEFROM);
 		types.add(EvalInformationType.REFERENCE_PAGETO);
 		types.add(EvalInformationType.REFERENCE_DATE);

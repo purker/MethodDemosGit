@@ -57,6 +57,7 @@ import pl.edu.icm.cermine.evaluation.exception.EvaluationException;
 import utils.CollectionUtil;
 import utils.FailureUtil;
 import utils.FileCollectionUtil;
+import utils.StringUtil;
 
 /**
  * @author Angela
@@ -420,6 +421,11 @@ public abstract class SystemEvaluator
 
 	private static void printOverallStatisticsForElements(SystemEvaluator[] evaluators, EvaluationMode mode, CollectionEnum setResultEnum) throws IOException
 	{
+		if(!Arrays.asList(EvaluationMode.CSV_PER_EVALUTATIONTYPE, EvaluationMode.CSV_PER_FILE, EvaluationMode.CSV_PER_PUBLICATIONTYPE).contains(mode))
+		{
+			FailureUtil.exit("mode " + mode + " not supported");
+		}
+
 		String file = FileCollectionUtil.getFileByMethodAndSetResultType(mode.getStatisticsFile(), setResultEnum, Method.ALL);
 		WriterWrapper writer = new WriterWrapper(file);
 
@@ -436,9 +442,11 @@ public abstract class SystemEvaluator
 		headers.add("");
 		headers.add("");
 		headers.add(Method.PDFX.getPrintName());
+		headers.add("");
+		headers.add("");
 		writer.writeNext(headers);
 
-		List<String> valueNames = Arrays.asList("Recall", "Precision", "F1");
+		List<String> valueNames = Arrays.asList("Precision", "Recall", "F1");
 		headers = new ArrayList<>();
 		headers.add("Id");
 		headers.addAll(valueNames);
@@ -461,9 +469,9 @@ public abstract class SystemEvaluator
 		// SINGLE lines for each element
 		for(Object key : elements)
 		{
-			System.out.println(key);
+			// TODO delete System.out.println(key);
 			List<String> columns = new ArrayList<>();
-			columns.add(key.toString());
+			columns.add(StringUtil.getLabelIfPresent(key));
 			for(SystemEvaluator evaluator : evaluators)
 			{
 				AbstractCollectionResult<?> abstractSetResult = evaluator.getCollectionResultByCollectionEnum(setResultEnum);

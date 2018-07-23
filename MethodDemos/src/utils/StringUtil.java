@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import mapping.result.Label;
+
 public class StringUtil
 {
 	public static boolean isEmpty(String s)
@@ -57,6 +59,14 @@ public class StringUtil
 		List<String> list = collection.stream().map(Object::toString).collect(Collectors.toList());
 
 		return list;
+	}
+
+	public static String getLabelIfPresent(Object key)
+	{
+		if(key instanceof Label)
+			return ((Label)key).getLabel();
+		else
+			return key.toString();
 	}
 
 }

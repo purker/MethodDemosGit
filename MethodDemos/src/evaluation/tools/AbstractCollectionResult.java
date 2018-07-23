@@ -19,6 +19,7 @@ import evaluation.EvaluationMode;
 import evaluation.informationresults.SingleInformationResult;
 import mapping.result.AbstractMetaPublication;
 import mapping.result.KeyStringInterface;
+import mapping.result.Label;
 import mapping.result.PublicationType;
 import method.Method;
 import utils.FailureUtil;
@@ -82,7 +83,7 @@ public abstract class AbstractCollectionResult<T extends AbstractMetaPublication
 			headers.add("original");
 			headers.add("extracted");
 			headers.add("PublicationType");
-			headers.addAll(evalTypes.stream().map(Object::toString).collect(Collectors.toList()));
+			headers.addAll(evalTypes.stream().map(Label::getLabel).collect(Collectors.toList()));
 			headers.add("Precision");
 			headers.add("Recall");
 			headers.add("F1");
@@ -261,7 +262,7 @@ public abstract class AbstractCollectionResult<T extends AbstractMetaPublication
 			lines.add("=HYPERLINK(\"" + FileCollectionUtil.getPdfFileById(publicationId).getAbsolutePath() + "\")");
 			lines.add("=HYPERLINK(\"" + FileCollectionUtil.getGroundTruthResultFileById(publicationId).getAbsolutePath() + "\")");
 			lines.add("=HYPERLINK(\"" + FileCollectionUtil.getResultFilesByMethodAndId(method, publicationId).getAbsolutePath() + "\")");
-			lines.add(publication.getPublicationType().name());
+			lines.add(publication.getPublicationType().getLabel());
 			for(EvalInformationType type : evalTypes)
 			{
 				lines.add(docResults.get(type).getF1X100AsString());
