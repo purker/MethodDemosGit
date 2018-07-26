@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.Comparator;
 
 import evaluation.tools.EvalInformationType;
+import utils.FailureUtil;
 import utils.FormatingUtil;
 
 /**
@@ -160,8 +161,7 @@ public abstract class AbstractSingleInformationResult<T> implements SingleInform
 	{
 		if(correct == null)
 		{
-			System.err.println("evaluate() has to be called for initialisation");
-			System.exit(-1);
+			FailureUtil.exit("evaluate() has to be called for initialisation");
 		}
 		return correct;
 	}
