@@ -388,34 +388,15 @@ public abstract class SystemEvaluator
 
 	public static void printOverallStatistics(List<EvaluationMode> modes, SystemEvaluator... evaluators) throws IOException
 	{
-		if(modes.contains(EvaluationMode.CSV_PER_FILE))
+		for(EvaluationMode mode : Arrays.asList(EvaluationMode.CSV_PER_EVALUTATIONTYPE, EvaluationMode.CSV_PER_FILE, EvaluationMode.CSV_PER_PUBLICATIONTYPE))
 		{
-			EvaluationMode mode = EvaluationMode.CSV_PER_FILE;
-			System.out.println(EvaluationMode.CSV_PER_FILE);
+			if(modes.contains(mode))
+			{
+				System.out.println(mode);
 
-			CollectionEnum setResultEnum = CollectionEnum.PUBLICATION;
-			printOverallStatisticsForElements(evaluators, mode, setResultEnum);
-
-			setResultEnum = CollectionEnum.REFERENCE;
-			printOverallStatisticsForElements(evaluators, mode, setResultEnum);
-		}
-		if(modes.contains(EvaluationMode.CSV_PER_PUBLICATIONTYPE))
-		{
-			EvaluationMode mode = EvaluationMode.CSV_PER_PUBLICATIONTYPE;
-			CollectionEnum setResultEnum = CollectionEnum.PUBLICATION;
-			printOverallStatisticsForElements(evaluators, mode, setResultEnum);
-
-			setResultEnum = CollectionEnum.REFERENCE;
-			printOverallStatisticsForElements(evaluators, mode, setResultEnum);
-		}
-		if(modes.contains(EvaluationMode.CSV_PER_EVALUTATIONTYPE))
-		{
-			EvaluationMode mode = EvaluationMode.CSV_PER_EVALUTATIONTYPE;
-			CollectionEnum setResultEnum = CollectionEnum.PUBLICATION;
-			printOverallStatisticsForElements(evaluators, mode, setResultEnum);
-
-			setResultEnum = CollectionEnum.REFERENCE;
-			printOverallStatisticsForElements(evaluators, mode, setResultEnum);
+				printOverallStatisticsForElements(evaluators, mode, CollectionEnum.PUBLICATION);
+				printOverallStatisticsForElements(evaluators, mode, CollectionEnum.REFERENCE);
+			}
 		}
 	}
 
