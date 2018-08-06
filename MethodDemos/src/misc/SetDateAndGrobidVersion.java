@@ -28,7 +28,7 @@ public class SetDateAndGrobidVersion
 	{
 		List<File> files = FileCollectionUtil.getGrobidExtractedFiles();
 
-		String dateReplace = "2018-07-30T19:54+0200";
+		String dateReplace = "2017-12-29T00:16+0000";
 		// String dateReplace = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ").format(new Date());
 
 		System.out.println(dateReplace);
@@ -42,13 +42,13 @@ public class SetDateAndGrobidVersion
 			{
 				if(string.startsWith("xsi:schemaLocation="))
 				{
-					newLines.add("xsi:schemaLocation=\"http://www.tei-c.org/ns/1.0 D:\\Java\\git\\grobid-gradle\\grobid-home/schemas/xsd/Grobid.xsd\"");
+					newLines.add("xsi:schemaLocation=\"http://www.tei-c.org/ns/1.0 C:\\Users\\Angela\\git\\grobid\\grobid-home/schemas/xsd/Grobid.xsd\"");
 				}
 				else
 					if(string.trim().startsWith("<application "))
 					{
 
-						newLines.add(String.format("\t\t\t\t<application version=\"%s\" ident=\"GROBID\" when=\"%s\">", "0.5.1", dateReplace));
+						newLines.add(String.format("\t\t\t\t<application version=\"%s\" ident=\"GROBID\" when=\"%s\">", "0.4.5-dummy", dateReplace));
 					}
 					else
 					{
