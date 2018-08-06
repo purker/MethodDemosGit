@@ -1,6 +1,42 @@
 Evaluieren welche Vergleichsmethoden was liefern
-Schauen wo welche Methode am Besten
+Modell mit 5 Dateien trainieren
+
+
+done:
+-beste methode
+Schauen wo welche Methode am Besten -> MethodDemos/output/statistics/all-best-method-per-evaltype-<publication|reference>-statistics.xlsx
+
+-5 schlechtesten grobid
 Schauen wo Grobid am schlechtestens (dort verbeseser)
+EvaluationType	Precision	Recall	F1	
+Year	NAN	0	0	32
+Abstract (german)	NAN	0	0	15
+Source	66,67	21,05	20	19
+Section-References	62,71	47,77	48,73	97
+Page from	100	50	50	4
+Page to	100	50	50	4
+
+-delta precision recall
 Große Unterschiede Recall Precision überprüfen
-Nach Zahlenwerten, Texten auswerten, obs da nen Unterschied gibt
-Schlechtestes uns bestes Paper raussuchen (bei Grobid)
+
+-worst and best papers grobid
+Schlechteste uns beste 3 Papers raussuchen (bei Grobid)
+3 besten:
+File	Precision	Recall	F1
+TUW-141024	100	100	100
+TUW-203409	100	100	100
+TUW-200948	100	98,48	99,17
+
+best:
+path	PDF	original	extracted	References	Precision	Recall	F1
+TUW-141024	D:\Java\git\MethodDemosGit\MethodDemos\output\groundtruth\TUW-141024.pdf	D:\Java\git\MethodDemosGit\MethodDemos\output\result\result-TUW-141024-xstream.xml	D:\Java\git\MethodDemosGit\MethodDemos\output\extracted\grobid\grobid-TUW-141024-xstream.xml	100	100	100	100
+TUW-203409	D:\Java\git\MethodDemosGit\MethodDemos\output\groundtruth\TUW-203409.pdf	D:\Java\git\MethodDemosGit\MethodDemos\output\result\result-TUW-203409-xstream.xml	D:\Java\git\MethodDemosGit\MethodDemos\output\extracted\grobid\grobid-TUW-203409-xstream.xml	NA	100	100	100
+TUW-200948	D:\Java\git\MethodDemosGit\MethodDemos\output\groundtruth\TUW-200948.pdf	D:\Java\git\MethodDemosGit\MethodDemos\output\result\result-TUW-200948-xstream.xml	D:\Java\git\MethodDemosGit\MethodDemos\output\extracted\grobid\grobid-TUW-200948-xstream.xml	100	100	98,48	99,17
+
+worst:
+path	PDF	original	extracted	PublicationType	Precision	Recall	F1
+TUW-168482	D:\Java\git\MethodDemosGit\MethodDemos\output\groundtruth\TUW-168482.pdf	D:\Java\git\MethodDemosGit\MethodDemos\output\result\result-TUW-168482-xstream.xml	D:\Java\git\MethodDemosGit\MethodDemos\output\extracted\grobid\grobid-TUW-168482-xstream.xml	Diplom- oder Masterarbeiten	32,04	34,35	27,64
+TUW-189842	D:\Java\git\MethodDemosGit\MethodDemos\output\groundtruth\TUW-189842.pdf	D:\Java\git\MethodDemosGit\MethodDemos\output\result\result-TUW-189842-xstream.xml	D:\Java\git\MethodDemosGit\MethodDemos\output\extracted\grobid\grobid-TUW-189842-xstream.xml	Beiträge in Tagungsbänden	49,17	29,33	29,33
+TUW-226016	D:\Java\git\MethodDemosGit\MethodDemos\output\groundtruth\TUW-226016.pdf	D:\Java\git\MethodDemosGit\MethodDemos\output\result\result-TUW-226016-xstream.xml	D:\Java\git\MethodDemosGit\MethodDemos\output\extracted\grobid\grobid-TUW-226016-xstream.xml	Diplom- oder Masterarbeiten	39,86	52,41	32,2
+
+- net gemacht, weil (mir) keinen mehrwert bringt: Nach Zahlenwerten, Texten auswerten, obs da nen Unterschied gibt
