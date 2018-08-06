@@ -155,13 +155,14 @@ public class SetResult<T>
 		writer.writeNext(s);
 	}
 
-	public void printKeyEntryCSV(T key)
+	public void printKeyEntryCSV(T key, boolean printExpectedCount)
 	{
 		EvaluationResult evaluationResult = getResultForKey(key);
 
 		List<String> columns = new ArrayList<>();
 		columns.add(StringUtil.getLabelIfPresent(key));
 		columns.addAll(getStatisticValues(evaluationResult));
+		if(printExpectedCount) columns.add(evaluationResult.getHasExpectedCount().toString());
 
 		writer.writeNext(columns);
 
@@ -203,10 +204,15 @@ public class SetResult<T>
 
 	public void printCSVStatistics() throws IOException
 	{
+		printCSVStatistics(false);
+	}
+
+	public void printCSVStatistics(boolean printExpectedCount) throws IOException
+	{
 		for(T key : getKeysSet())
 		{
 			// TODO löschen System.out.println(key);
-			printKeyEntryCSV(key);
+			printKeyEntryCSV(key, printExpectedCount);
 		}
 		printSummaryCSV();
 	}

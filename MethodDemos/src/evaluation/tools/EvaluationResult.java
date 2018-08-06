@@ -5,6 +5,8 @@ import utils.FormatingUtil;
 
 public class EvaluationResult
 {
+	private Integer hasExpectedCount = 0;
+
 	private Double precisionSum = 0.;
 	private Double recallSum = 0.;
 	private Double f1Sum = 0.;
@@ -21,6 +23,10 @@ public class EvaluationResult
 	{
 		if(sResult != null) // TODO voriges if verwenden, entfernen war nur zum Testen
 		{
+			if(sResult.hasExpected())
+			{
+				hasExpectedCount++;
+			}
 			if(sResult.getPrecision() != null)
 			{
 				precisionSum += sResult.getPrecision();
@@ -44,6 +50,16 @@ public class EvaluationResult
 		averagePrecision = FormatingUtil.x100AndRound(precisionSum / precisionCount);
 		averageRecall = FormatingUtil.x100AndRound(recallSum / recallCount);
 		averageF1 = FormatingUtil.x100AndRound(f1Sum / f1Count);
+	}
+
+	public Integer getHasExpectedCount()
+	{
+		return hasExpectedCount;
+	}
+
+	public void setHasExpectedCount(Integer hasExpectedCount)
+	{
+		this.hasExpectedCount = hasExpectedCount;
 	}
 
 	public Double getAveragePrecision()

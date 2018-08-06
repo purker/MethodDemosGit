@@ -246,7 +246,7 @@ public abstract class AbstractCollectionResult<T extends AbstractMetaPublication
 		System.out.println("");
 	}
 
-	public void printCSVPerId() throws IOException
+	public void printCSVPerIdAndEvaluationType() throws IOException
 	{
 		for(Map.Entry<String, Map<EvalInformationType, SingleInformationResult<?>>> result : detailedResults.entrySet())
 		{
@@ -317,8 +317,7 @@ public abstract class AbstractCollectionResult<T extends AbstractMetaPublication
 		if(modes.contains(EvaluationMode.CSV_PER_FILE_AND_EVALUATIONTYPE))
 		{
 			System.out.println("\t" + EvaluationMode.CSV_PER_FILE_AND_EVALUATIONTYPE);
-
-			printCSVPerId();
+			printCSVPerIdAndEvaluationType();
 		}
 		if(modes.contains(EvaluationMode.SYSOUT_DETAILED) || modes.contains(EvaluationMode.SYSOUT_SUMMARY))
 		{
