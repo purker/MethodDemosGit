@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
+import config.Config;
 import method.Method;
 import utils.PublicationUtil;
 import utils.SimplestFormatter;
@@ -112,7 +113,7 @@ public abstract class AbstractDemo
 	{
 		try
 		{
-			FileHandler fileHandler = new FileHandler(Demos.loggingDir + "/result.log", false);
+			FileHandler fileHandler = new FileHandler(Config.loggingDir + "/result.log", true);
 			fileHandler.setFormatter(new SimplestFormatter());
 			logger.addHandler(fileHandler);
 		}

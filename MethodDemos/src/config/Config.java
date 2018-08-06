@@ -17,11 +17,16 @@ public interface Config
 	File parsCitOutputDir = new File("output/extracted/parscit");
 	File pdfxOutputDir = new File("output/extracted/pdfx");
 
+	File loggingDir = new File("output/");
+
+	String pGrobidHome = "D:/Java/git/grobid-0.5.1/grobid-home";
+	String pGrobidProperties = pGrobidHome + "/config/grobid.properties";
+
 	String xStreamFileExtension = "-xstream.xml";
 
 	// String cermineFileExtension = xStreamFileExtension;
 	// String grobidFileExtension = xStreamFileExtension;
-	String parscitFileExtension = ".xml";
+	String extractedFileExtension = ".xml";
 	// String pdfxFileExtension = xStreamFileExtension;
 
 	// <method> = cermine | grobid | parscit | pdfx
@@ -29,11 +34,12 @@ public interface Config
 	// <type> = publication | reference
 	// <evaltype> = ABSTRACT | AFFILIATIONS | ...
 	//
-	String CSVperIdFile = "output/statistics/<method>-per-id-<type>-statistics.<fileext>";
-	String CSVperFileAndEvalTypeFile = "output/statistics/<method>-per-id-and-evaltype-<type>-statistics.<fileext>";
-	String CSVperPublicationTypeFile = "output/statistics/<method>-per-publicationtype-<type>-statistics.<fileext>";
-	String CSVperEvalTypeFile = "output/statistics/<method>-per-evaltype-<type>-statistics.<fileext>";
-	String CSVperFileWithEvalTypeValueFile = "output/statistics/singlevalues/<method>-<evaltype>-<type>-statistics.<fileext>";
+	String statisticsFolder = "output/statistics/";
+	String CSVperIdFile = statisticsFolder + "<method>-per-id-<type>-statistics.<fileext>";
+	String CSVperFileAndEvalTypeFile = statisticsFolder + "<method>-per-id-and-evaltype-<type>-statistics.<fileext>";
+	String CSVperPublicationTypeFile = statisticsFolder + "<method>-per-publicationtype-<type>-statistics.<fileext>";
+	String CSVperEvalTypeFile = statisticsFolder + "<method>-per-evaltype-<type>-statistics.<fileext>";
+	String CSVperFileWithEvalTypeValueFile = statisticsFolder + "singlevalues/<method>-<evaltype>-<type>-statistics.<fileext>";
 
 	DecimalFormat decimalFormatter = new DecimalFormat("#,##0.00");
 	int decimalPlaces = 2;
@@ -43,4 +49,21 @@ public interface Config
 
 	String publicationPrefix = "TUW-";
 	String referencePrefix = "ref";
+
+	File allPerEvalTypePublicationFormatedArrows = new File(Config.statisticsFolder + "all-per-evaltype-publication-statistics (formated - arrows).xlsx");
+	File allPerEvalTypePublicationFormatedBars = new File(Config.statisticsFolder + "all-per-evaltype-publication-statistics (formated - bars).xlsx");
+	File allPerEvalTypePublicationFormatedColors = new File(Config.statisticsFolder + "all-per-evaltype-publication-statistics (formated - colors).xlsx");
+
+	File allPerEvalTypeReferenceFormatedArrows = new File(Config.statisticsFolder + "all-per-evaltype-reference-statistics (formated - arrows).xlsx");
+	File allPerEvalTypeReferenceFormatedBars = new File(Config.statisticsFolder + "all-per-evaltype-reference-statistics (formated - bars).xlsx");
+	File allPerEvalTypeReferenceFormatedColors = new File(Config.statisticsFolder + "all-per-evaltype-reference-statistics (formated - colors).xlsx");
+
+	File allPerEvalTypePublication = new File(Config.statisticsFolder + "all-per-evaltype-publication-statistics.xls");
+	File allPerEvalTypeReference = new File(Config.statisticsFolder + "all-per-evaltype-reference-statistics.xls");
+
+	File allBestPerEvalTypePublication = new File(Config.statisticsFolder + "all-best-method-per-evaltype-publication-statistics.xls");
+	File allBestPerEvalTypeReference = new File(Config.statisticsFolder + "all-best-method-per-evaltype-reference-statistics.xls");
+
+	File allDeltaPublication = new File(Config.statisticsFolder + "all-delta-precision-recall-publication-statistics.xlsx");
+	File allDeltaReference = new File(Config.statisticsFolder + "all-delta-precision-recall-reference-statistics.xlsx");
 }

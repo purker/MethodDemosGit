@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import config.Config;
-import evaluation.tools.EvalInformationType;
 import evaluation.tools.CollectionEnum;
+import evaluation.tools.EvalInformationType;
 import evaluation.tools.WriterType;
 import method.Method;
 
@@ -61,10 +61,29 @@ public class FileCollectionUtil
 		return getResultFilesByMethod(Method.PDFX);
 	}
 
-	// TODO brauch ich?
-	public static List<File> getParscitXmlFiles()
+	public static List<File> getCermineExtractedFiles()
 	{
-		File directory = Config.parsCitOutputDir;
+		return getExtractedFilesByMethod(Method.CERMINE);
+	}
+
+	public static List<File> getGrobidExtractedFiles()
+	{
+		return getExtractedFilesByMethod(Method.GROBID);
+	}
+
+	public static List<File> getParscitExtractedFiles()
+	{
+		return getExtractedFilesByMethod(Method.PARSCIT);
+	}
+
+	public static List<File> getPdfxExtractedFiles()
+	{
+		return getExtractedFilesByMethod(Method.PDFX);
+	}
+
+	public static List<File> getExtractedFilesByMethod(Method method)
+	{
+		File directory = method.getResultDirectory();
 
 		checkIfContainsFiles(directory);
 
@@ -73,7 +92,7 @@ public class FileCollectionUtil
 			@Override
 			public boolean accept(File dir, String name)
 			{
-				return name.endsWith(Config.parscitFileExtension);
+				return name.endsWith(Config.extractedFileExtension) && !name.endsWith(Config.xStreamFileExtension);
 			}
 		}));
 		return files;

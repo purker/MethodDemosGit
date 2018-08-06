@@ -387,7 +387,7 @@ public class StepsHistory
 
 	private static void findNotProcessedParscitFiles()
 	{
-		List<String> processed = FileCollectionUtil.getFilesIdsWithoutPrefix(FileCollectionUtil.getParscitXmlFiles());
+		List<String> processed = FileCollectionUtil.getFilesIdsWithoutPrefix(FileCollectionUtil.getParscitExtractedFiles());
 
 		List<String> toProcess = new ArrayList(idList);
 

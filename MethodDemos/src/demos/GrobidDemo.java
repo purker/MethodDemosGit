@@ -13,6 +13,7 @@ import org.grobid.core.factory.GrobidFactory;
 import org.grobid.core.mock.MockContext;
 import org.grobid.core.utilities.GrobidProperties;
 
+import config.Config;
 import method.Method;
 
 /**
@@ -22,10 +23,6 @@ import method.Method;
 public class GrobidDemo extends AbstractDemo
 {
 	private static final Method METHOD = Method.GROBID;
-
-	private static final String GROBID_DIRECTORY = "C:/Users/Angela/git/";
-	private static final String pGrobidHome = GROBID_DIRECTORY + "grobid/grobid-home";
-	private static final String pGrobidProperties = GROBID_DIRECTORY + "grobid/grobid-home/config/grobid.properties";
 
 	private boolean consolidate = false;
 	private boolean consolidateCitations = consolidate;
@@ -52,7 +49,7 @@ public class GrobidDemo extends AbstractDemo
 		boolean consolidateHeader = false;
 		try
 		{
-			MockContext.setInitialContext(pGrobidHome, pGrobidProperties);
+			MockContext.setInitialContext(Config.pGrobidHome, Config.pGrobidProperties);
 			GrobidProperties.getInstance();
 
 			Engine engine = GrobidFactory.getInstance().createEngine();
@@ -86,7 +83,7 @@ public class GrobidDemo extends AbstractDemo
 	{
 		try
 		{
-			MockContext.setInitialContext(pGrobidHome, pGrobidProperties);
+			MockContext.setInitialContext(Config.pGrobidHome, Config.pGrobidProperties);
 			GrobidProperties.getInstance();
 
 			Engine engine = GrobidFactory.getInstance().createEngine();
