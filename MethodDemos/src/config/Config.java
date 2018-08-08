@@ -61,8 +61,8 @@ public interface Config
 	File allPerEvalTypePublication = new File(Config.statisticsFolder + "all-per-evaltype-publication-statistics.xls");
 	File allPerEvalTypeReference = new File(Config.statisticsFolder + "all-per-evaltype-reference-statistics.xls");
 
-	File allBestPerEvalTypePublication = new File(Config.statisticsFolder + "all-best-method-per-evaltype-publication-statistics.xls");
-	File allBestPerEvalTypeReference = new File(Config.statisticsFolder + "all-best-method-per-evaltype-reference-statistics.xls");
+	File allBestPerEvalTypePublication = new File(Config.statisticsFolder + "all-best-method-per-evaltype-publication-statistics.xlsx");
+	File allBestPerEvalTypeReference = new File(Config.statisticsFolder + "all-best-method-per-evaltype-reference-statistics.xlsx");
 
 	File allDeltaPublication = new File(Config.statisticsFolder + "all-delta-precision-recall-publication-statistics.xlsx");
 	File allDeltaReference = new File(Config.statisticsFolder + "all-delta-precision-recall-reference-statistics.xlsx");

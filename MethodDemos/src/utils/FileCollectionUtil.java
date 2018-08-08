@@ -3,8 +3,11 @@ package utils;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.apache.commons.io.FileUtils;
 
 import config.Config;
 import evaluation.tools.CollectionEnum;
@@ -211,5 +214,12 @@ public class FileCollectionUtil
 		file = setResultType.replace(file);
 
 		return file;
+	}
+
+	public static Collection<File> getStatisticsCSVFiles()
+	{
+		Collection<File> list = FileUtils.listFiles(new File(Config.statisticsFolder), new String[]{"csv"}, true);
+
+		return list;
 	}
 }

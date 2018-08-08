@@ -19,9 +19,12 @@
 package evaluation;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import evaluation.tools.EvalInformationType;
+import misc.ExcelRefreshFormulas;
+import misc.XlsxToCsv;
 import pl.edu.icm.cermine.evaluation.exception.EvaluationException;
 
 public class Evaluators
@@ -32,12 +35,16 @@ public class Evaluators
 		try
 		{
 			// List<EvaluationMode> allModes = Arrays.asList(EvaluationMode.values());
-			// List<EvaluationMode> modes = new ArrayList<>();
-			// modes.add(EvaluationMode.CSV_PER_FILE_WITH_EVALUATIONTYPEVALUE);
-			List<EvaluationMode> allModes = EvaluationMode.getCSVModes();
+			List<EvaluationMode> modes = new ArrayList<>();
+			// modes.add(EvaluationMode.CSV_PER_EVALUTATIONTYPE);
+			// modes.add(EvaluationMode.CSV_PER_FILE);
+			// modes.add(EvaluationMode.CSV_PER_PUBLICATIONTYPE);
+
+			modes.add(EvaluationMode.CSV_PER_FILE_WITH_EVALUATIONTYPEVALUE);
+			List<EvaluationMode> allmodes = EvaluationMode.getCSVModes();
 
 			// Demos.executeDemos();
-			evaluateMethods(allModes, EvalInformationType.getTypesForPublications(), EvalInformationType.getTypesForReferences());
+			evaluateMethods(allmodes, EvalInformationType.getTypesForPublications(), EvalInformationType.getTypesForReferences());
 		}
 		catch(Exception e)
 		{
@@ -59,6 +66,11 @@ public class Evaluators
 
 		SystemEvaluator.printOverallStatistics(modes, cermine, grobid, parscit, pdfx);
 		System.out.println("Evaluation finished");
+
+		ExcelRefreshFormulas.refreshReferences();
+		XlsxToCsv.convertToCsv();
+
+		System.out.println("Afterwork finished");
 	}
 
 }

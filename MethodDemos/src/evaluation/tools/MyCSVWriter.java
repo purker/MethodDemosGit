@@ -2,6 +2,7 @@ package evaluation.tools;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import com.opencsv.CSVWriter;
@@ -15,7 +16,7 @@ public class MyCSVWriter extends AbstractWriter
 	{
 		csvFile = getWriterType().replace(csvFile);
 		FileWriter fileWriter = new FileWriter(csvFile);
-		csvWriter = new CSVWriter(fileWriter, ';', CSVWriter.DEFAULT_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
+		csvWriter = new CSVWriter(fileWriter, ';', CSVWriter.DEFAULT_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.RFC4180_LINE_END);
 	}
 
 	@Override
@@ -27,7 +28,15 @@ public class MyCSVWriter extends AbstractWriter
 	@Override
 	public void writeNext(Collection<String> line)
 	{
-		writeNext(line.stream().toArray(String[]::new));
+		Collection<String> newline = new ArrayList<>();
+		for(String string : line)
+		{
+			if(string != null)
+				newline.add(string.replace("\n", "\r\n"));
+			else
+				newline.add(null);
+		}
+		writeNext(newline.stream().toArray(String[]::new));
 	}
 
 	@Override

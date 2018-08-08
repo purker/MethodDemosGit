@@ -20,7 +20,12 @@ import utils.FormatingUtil;
 
 public class XlsxToCsv
 {
-	public static void convertToCsv() throws Exception
+	public static void main(String[] args) throws Exception
+	{
+		convertToCsv();
+	}
+
+	public static void convertToCsv()
 	{
 		List<File> files = new ArrayList<>();
 		files.add(new File(Config.statisticsFolder + "all-best-method-per-evaltype-publication-statistics.xlsx"));
@@ -30,7 +35,15 @@ public class XlsxToCsv
 
 		for(File file : files)
 		{
-			writeAsCsv(file);
+			try
+			{
+				writeAsCsv(file);
+			}
+			catch(Exception e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 

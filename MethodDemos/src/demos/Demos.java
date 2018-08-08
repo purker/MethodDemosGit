@@ -16,6 +16,7 @@ import mapping.cermine.CermineMapper;
 import mapping.grobid.GROBIDMapper;
 import mapping.parscit.ParsCitMapper;
 import mapping.pdfx.PDFXMapper;
+import misc.SetDateAndGrobidVersion;
 
 /**
  * Runs all Demos with Ground Truth files from inputDir
@@ -35,7 +36,6 @@ public class Demos
 	public static File parsCitOutputDir = Config.parsCitOutputDir;
 	public static File pdfxOutputDir = Config.pdfxOutputDir;
 	public static File[] outputDirs = {cermineOutputDir, grobIdOutputDir, parsCitOutputDir, pdfxOutputDir};
-	public static File loggingDir = new File("D:/output/methods");
 
 	static File allOutputDir = new File("D:/output/methods/all");
 
@@ -93,7 +93,11 @@ public class Demos
 		if(runDemos)
 		{
 			if(runCermineDemo) new CermineDemo().runDemoList(groundTruthFiles, cermineOutputDir);
-			if(runGrobidDemo) new GrobidDemo().runDemoList(groundTruthFiles, grobIdOutputDir);
+			if(runGrobidDemo)
+			{
+				new GrobidDemo().runDemoList(groundTruthFiles, grobIdOutputDir);
+				SetDateAndGrobidVersion.replaceDateAndGrobidVersion();
+			}
 			if(runParsCitDemo) new ParscitDemo().runDemoList(groundTruthFilesOmnipage, parsCitOutputDir);
 			if(runPdfxDemo) new PdfxDemo().runDemoList(groundTruthFiles, pdfxOutputDir);
 		}
