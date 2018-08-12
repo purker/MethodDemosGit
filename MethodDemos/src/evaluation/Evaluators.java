@@ -25,7 +25,6 @@ import java.util.List;
 import evaluation.tools.EvalInformationType;
 import misc.ExcelRefreshFormulas;
 import misc.XlsxToCsv;
-import pl.edu.icm.cermine.evaluation.exception.EvaluationException;
 
 public class Evaluators
 {
@@ -52,7 +51,7 @@ public class Evaluators
 		}
 	}
 
-	private static void evaluateMethods(List<EvaluationMode> modes, List<EvalInformationType> types, List<EvalInformationType> referenceTypes) throws EvaluationException, IOException
+	private static void evaluateMethods(List<EvaluationMode> modes, List<EvalInformationType> types, List<EvalInformationType> referenceTypes) throws IOException
 	{
 		SystemEvaluator cermine = new CermineXStreamFileEvaluator(types, referenceTypes, modes);
 		SystemEvaluator grobid = new GrobidXStreamFileEvaluator(types, referenceTypes, modes);

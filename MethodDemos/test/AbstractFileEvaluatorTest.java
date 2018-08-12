@@ -11,7 +11,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.runner.RunWith;
 
-import evaluation.Evaluators;
 import evaluation.tools.AbstractCollectionResult;
 import evaluation.tools.EvalInformationType;
 import evaluation.tools.EvaluationResult;
@@ -19,7 +18,6 @@ import evaluation.tools.PublicationIterator;
 import factory.PublicationFactory;
 import junitparams.JUnitParamsRunner;
 import mapping.result.Publication;
-import pl.edu.icm.cermine.evaluation.exception.EvaluationException;
 import utils.FileCollectionUtil;
 import utils.XStreamUtil;
 
@@ -30,7 +28,7 @@ public abstract class AbstractFileEvaluatorTest extends AbstractTest
 	protected static List<EvalInformationType> referenceTypes = EvalInformationType.getTypesForReferences();
 
 	@Test
-	void testDocumentResult100() throws EvaluationException, IOException
+	void testDocumentResult100() throws IOException
 	{
 		Publication originalPub = PublicationFactory.createPublication("1");
 		Publication extractedPub = PublicationFactory.createPublication("1");
@@ -44,7 +42,7 @@ public abstract class AbstractFileEvaluatorTest extends AbstractTest
 	}
 
 	@Test
-	void testDocumentResult0() throws EvaluationException, IOException
+	void testDocumentResult0() throws IOException
 	{
 		Publication originalPub = PublicationFactory.createPublication("1");
 		Publication extractedPub = new Publication();
@@ -64,7 +62,7 @@ public abstract class AbstractFileEvaluatorTest extends AbstractTest
 	@ParameterizedTest
 	@MethodSource(value = "evalInformationTypeValues")
 	// @ValueSource(strings = {"TITLE"}) also works
-	void testTitle100(EvalInformationType evalInfoType) throws EvaluationException, IOException
+	void testTitle100(EvalInformationType evalInfoType) throws IOException
 	{
 		Publication originalPub = PublicationFactory.createPublication("1");
 		Publication extractedPub = PublicationFactory.createPublication("1");
@@ -86,7 +84,7 @@ public abstract class AbstractFileEvaluatorTest extends AbstractTest
 	}
 
 	@Test
-	void testPublicationSetOnReferences() throws EvaluationException, IOException
+	void testPublicationSetOnReferences() throws IOException
 	{
 		File file = FileCollectionUtil.getCermineResultFiles().get(0);
 		Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
