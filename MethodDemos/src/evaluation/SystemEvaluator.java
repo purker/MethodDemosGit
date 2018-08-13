@@ -53,7 +53,6 @@ import mapping.result.Reference;
 import mapping.result.ReferenceAuthor;
 import mapping.result.Section;
 import method.Method;
-import pl.edu.icm.cermine.evaluation.exception.EvaluationException;
 import utils.CollectionUtil;
 import utils.FailureUtil;
 import utils.FileCollectionUtil;
@@ -74,7 +73,6 @@ public abstract class SystemEvaluator
 	public SystemEvaluator(Collection<EvalInformationType> types, Collection<EvalInformationType> referenceTypes, List<EvaluationMode> modes)
 	{
 		System.out.println("Initialize Evaluation: " + getMethod());
-		this.iter = new PublicationIterator(getOriginalFiles(), getExtractedFiles());
 
 		this.results = new PublicationCollectionResult(modes, getMethod(), types);
 		this.refResults = new ReferenceCollectionResult(modes, getMethod(), referenceTypes);
@@ -91,12 +89,16 @@ public abstract class SystemEvaluator
 		return FileCollectionUtil.getResultFiles();
 	}
 
-	protected abstract List<File> getExtractedFiles();
+	protected List<File> getExtractedFiles()
+	{
+		return FileCollectionUtil.getResultFilesByMethod(getMethod());
+	}
 
 	protected abstract Method getMethod();
 
-	public void evaluate() throws EvaluationException, IOException
+	public void evaluate() throws IOException
 	{
+		this.iter = new PublicationIterator(getOriginalFiles(), getExtractedFiles());
 		evaluate(iter);
 	}
 
@@ -115,15 +117,14 @@ public abstract class SystemEvaluator
 	 *            which outputs should be generated, if empty -> no output (for test purposes)
 	 * @param files
 	 * @return
-	 * @throws EvaluationException
 	 * @throws IOException
 	 */
-	public AbstractCollectionResult<?> evaluate(PublicationIterator files) throws EvaluationException, IOException
+	public AbstractCollectionResult<?> evaluate(PublicationIterator files) throws IOException
 	{
-		System.out.println("Starting Evaluation: " + getMethod());
+		System.out.println("Starting Evaluation: " + getMethod() + " (" + iter.size() + " files)");
 
 		int i = 0;
-		for(PublicationPair pair : files)
+		for(PublicationPair pair : iter)
 		{
 			i++;
 
@@ -198,7 +199,7 @@ public abstract class SystemEvaluator
 		return results;
 	}
 
-	private AbstractSingleInformationResult<?> getResultFromReferenceType(EvalInformationType type, Reference reference, Reference reference2) throws EvaluationException
+	private AbstractSingleInformationResult<?> getResultFromReferenceType(EvalInformationType type, Reference reference, Reference reference2)
 	{
 		switch(type)
 		{
@@ -245,11 +246,12 @@ public abstract class SystemEvaluator
 				return new SimpleInformationResult(type, reference, reference2, Reference::getUrl);
 
 			default:
-				throw new EvaluationException("referencetype " + type + " not known");
+				FailureUtil.exit("referencetype " + type + " not known");
+				return null;
 		}
 	}
 
-	private AbstractSingleInformationResult<?> getResultFromType(EvalInformationType type, Publication origPub, Publication testPub) throws EvaluationException
+	private AbstractSingleInformationResult<?> getResultFromType(EvalInformationType type, Publication origPub, Publication testPub)
 	{
 		switch(type)
 		{
@@ -382,7 +384,8 @@ public abstract class SystemEvaluator
 				return new ReferenceInformationResult(type, origPub.getReferences(), testPub.getReferences(), origPub);
 
 			default:
-				throw new EvaluationException("type not known");
+				FailureUtil.exit("type not known");
+				return null;
 		}
 	}
 

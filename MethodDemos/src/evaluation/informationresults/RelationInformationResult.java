@@ -26,7 +26,7 @@ import java.util.Set;
 import evaluation.tools.EvalInformationType;
 import evaluation.tools.EvalInformationTypeComparatorMapping;
 import evaluation.tools.RelationComparators;
-import pl.edu.icm.cermine.evaluation.exception.EvaluationException;
+import utils.FailureUtil;
 import utils.StringUtil;
 
 /**
@@ -36,12 +36,12 @@ public class RelationInformationResult extends AbstractSingleInformationResult<S
 {
 	private Comparator<String> comp2;
 
-	public RelationInformationResult(EvalInformationType type, Set<StringRelation> expected, Set<StringRelation> extracted) throws EvaluationException
+	public RelationInformationResult(EvalInformationType type, Set<StringRelation> expected, Set<StringRelation> extracted)
 	{
 		RelationComparators relationComparators = EvalInformationTypeComparatorMapping.getComparatorsByType(type);
 		if(relationComparators == null)
 		{
-			throw new EvaluationException("comparator for type \"" + type + "\" is not defined (in class " + EvalInformationTypeComparatorMapping.class.getSimpleName() + ")");
+			FailureUtil.exit("comparator for type \"" + type + "\" is not defined (in class " + EvalInformationTypeComparatorMapping.class.getSimpleName() + ")");
 		}
 
 		this.type = type;
