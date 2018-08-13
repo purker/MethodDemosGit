@@ -4,13 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.grobid.core.engines.Engine;
 import org.grobid.core.engines.config.GrobidAnalysisConfig;
 import org.grobid.core.factory.GrobidFactory;
-import org.grobid.core.mock.MockContext;
+import org.grobid.core.main.GrobidHomeFinder;
 import org.grobid.core.utilities.GrobidProperties;
 
 import config.Config;
@@ -24,9 +25,24 @@ public class GrobidDemo extends AbstractDemo
 {
 	private static final Method METHOD = Method.GROBID;
 
+	private Engine engine;
+	private GrobidAnalysisConfig config;
+
 	private boolean consolidate = false;
 	private boolean consolidateCitations = consolidate;
 	private boolean consolidateHeader = consolidate;
+
+	public GrobidDemo()
+	{
+		// in old version
+		// MockContext.setInitialContext(Config.pGrobidHome, Config.pGrobidProperties);
+		// GrobidProperties.getInstance();
+		GrobidHomeFinder grobidHomeFinder = new GrobidHomeFinder(Arrays.asList(Config.pGrobidHome));
+		GrobidProperties.getInstance(grobidHomeFinder);
+
+		engine = GrobidFactory.getInstance().createEngine();
+		config = GrobidAnalysisConfig.builder().consolidateHeader(consolidateHeader).consolidateCitations(consolidateCitations).build();
+	}
 
 	public static void main(String[] args) throws IOException
 	{
@@ -45,33 +61,14 @@ public class GrobidDemo extends AbstractDemo
 
 	public void runDemoInBatch(String inputDir, String outputDir)
 	{
-		boolean consolidateCitations = false;
-		boolean consolidateHeader = false;
 		try
 		{
-			MockContext.setInitialContext(Config.pGrobidHome, Config.pGrobidProperties);
-			GrobidProperties.getInstance();
-
-			Engine engine = GrobidFactory.getInstance().createEngine();
-
 			int tei = engine.batchProcessFulltext(inputDir, outputDir, consolidateHeader, consolidateCitations);
 			System.out.println(tei);
 		}
 		catch(Exception e)
 		{
-			// If an exception is generated, print a stack trace
 			e.printStackTrace();
-		}
-		finally
-		{
-			try
-			{
-				MockContext.destroyInitialContext();
-			}
-			catch(Exception e)
-			{
-				e.printStackTrace();
-			}
 		}
 	}
 
@@ -83,12 +80,6 @@ public class GrobidDemo extends AbstractDemo
 	{
 		try
 		{
-			MockContext.setInitialContext(Config.pGrobidHome, Config.pGrobidProperties);
-			GrobidProperties.getInstance();
-
-			Engine engine = GrobidFactory.getInstance().createEngine();
-
-			GrobidAnalysisConfig config = GrobidAnalysisConfig.builder().consolidateHeader(consolidateHeader).consolidateCitations(consolidateCitations).build();
 			String resultString = engine.fullTextToTEI(inputFile, config);
 			FileUtils.writeStringToFile(outputFile, resultString, StandardCharsets.UTF_8);
 
@@ -99,17 +90,6 @@ public class GrobidDemo extends AbstractDemo
 		catch(Exception e)
 		{
 			return e.getMessage();
-		}
-		finally
-		{
-			try
-			{
-				MockContext.destroyInitialContext();
-			}
-			catch(Exception e)
-			{
-				e.printStackTrace();
-			}
 		}
 	}
 

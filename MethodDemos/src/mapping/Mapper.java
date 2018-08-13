@@ -1,6 +1,7 @@
 package mapping;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -77,7 +78,7 @@ public abstract class Mapper
 		return new File(getDirectory(), getMethod().getName() + "-" + id + "-xstream.xml");
 	}
 
-	protected void unmarshallToXmlFile(File inputFileXML, File outputFileObjectAsXML) throws JAXBException, XMLStreamException
+	protected void unmarshallToXmlFile(File inputFileXML, File outputFileObjectAsXML) throws JAXBException, XMLStreamException, FileNotFoundException
 	{
 		if(!OVERRIDE_EXISTING && outputFileObjectAsXML.exists())
 		{
@@ -91,7 +92,7 @@ public abstract class Mapper
 		// System.out.println(publication);
 	}
 
-	public Publication unmarshallFile(File inputFileXML) throws JAXBException, XMLStreamException
+	public Publication unmarshallFile(File inputFileXML) throws JAXBException, XMLStreamException, FileNotFoundException
 	{
 		JAXBUnmarshaller unmarshaller = jc.createUnmarshaller();
 		Publication publication;
@@ -119,6 +120,11 @@ public abstract class Mapper
 	public void unmarshallFiles()
 	{
 		unmarshallFiles(FileCollectionUtil.getExtractedFiles(getMethod()));
+	}
+
+	public void unmarshallFilesWithId(List<String> idList)
+	{
+		unmarshallFiles(FileCollectionUtil.getExtractedFiles(getMethod(), idList));
 	}
 
 	public void unmarshallFiles(List<File> extractedFiles)
