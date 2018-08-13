@@ -12,6 +12,7 @@ import javax.xml.bind.JAXBException;
 import org.apache.commons.io.FileUtils;
 
 import config.Config;
+import evaluation.Evaluators;
 import mapping.cermine.CermineMapper;
 import mapping.grobid.GROBIDMapper;
 import mapping.parscit.ParsCitMapper;
@@ -47,18 +48,21 @@ public class Demos
 	public static void executeDemos() throws IOException, JAXBException
 	{
 		List<String> idList = Config.groundTruthIds;
-		// List<String> idList = Arrays.asList("200745", "200948", "225252", "201821", "247743");
+		// List<String> idList = Arrays.asList("139761");
 
-		boolean runDemos = false;
+		boolean runDemos = true;
 		boolean runCermineDemo = false;
-		boolean runGrobidDemo = false;
+		boolean runGrobidDemo = true;
 		boolean runParsCitDemo = false;
 		boolean runPdfxDemo = false;
-		boolean runCermineMapper = true;
+		boolean runCermineMapper = false;
 		boolean runGrobidMapper = true;
-		boolean runParsCitMapper = true;
-		boolean runPdfxMapper = true;
-		// List<File> groundTruthFiles = getFileById("226016");
+		boolean runParsCitMapper = false;
+		boolean runPdfxMapper = false;
+
+		boolean startEvaluation = true;
+
+		// List<File> groundTruthFiles = FileCollectionUtil.getExtractedFilesByMethod(method)
 		List<File> groundTruthFiles = getAllGroundTruthFilesByIds(idList);
 		List<File> groundTruthFilesOmnipage = getAllGroundTruthFilesAsOmnipage(idList);
 
@@ -80,14 +84,15 @@ public class Demos
 		{
 			if(runDemos)
 			{
+				// pdf -> xml
 				if(runCermineDemo) cleanOrCreateDirectory(cermineOutputDir);
 				if(runGrobidDemo) cleanOrCreateDirectory(grobIdOutputDir);
-				// if(runParsCitDemo) cleanOrCreateDirectory(parsCitOutputDir);
-				// if(runPdfxDemo) cleanOrCreateDirectory(pdfxOutputDir);
+				if(runParsCitDemo) cleanOrCreateDirectory(parsCitOutputDir);
+				if(runPdfxDemo) cleanOrCreateDirectory(pdfxOutputDir);
 			}
 			if(runCermineMapper) deleteResultAndErrorFiles(cermineOutputDir);
 			if(runGrobidMapper) deleteResultAndErrorFiles(grobIdOutputDir);
-			// if(runParsCitMapper) deleteResultAndErrorFiles(parsCitOutputDir);
+			if(runParsCitMapper) deleteResultAndErrorFiles(parsCitOutputDir);
 			if(runPdfxMapper) deleteResultAndErrorFiles(pdfxOutputDir);
 		}
 		if(runDemos)
@@ -101,16 +106,15 @@ public class Demos
 			if(runParsCitDemo) new ParscitDemo().runDemoList(groundTruthFilesOmnipage, parsCitOutputDir);
 			if(runPdfxDemo) new PdfxDemo().runDemoList(groundTruthFiles, pdfxOutputDir);
 		}
-		// files=(cermineOutputDir, idList);
-		// files=(grobIdOutputDir, idList);
-		// files=(parsCitOutputDir, idList);
-		// files=(pdfxOutputDir, idList);
 
-		if(runCermineMapper) new CermineMapper().unmarshallFiles();
-		if(runGrobidMapper) new GROBIDMapper().unmarshallFiles();
-		if(runParsCitMapper) new ParsCitMapper().unmarshallFiles();
-		if(runPdfxMapper) new PDFXMapper().unmarshallFiles();
+		// xml -> xstream.xml
+		if(runCermineMapper) new CermineMapper().unmarshallFilesWithId(idList);
+		if(runGrobidMapper) new GROBIDMapper().unmarshallFilesWithId(idList);
+		if(runParsCitMapper) new ParsCitMapper().unmarshallFilesWithId(idList);
+		if(runPdfxMapper) new PDFXMapper().unmarshallFilesWithId(idList);
 
+		// Evaluation
+		if(startEvaluation) Evaluators.main(null);
 	}
 
 	private static List<File> getAllGroundTruthFilesAsOmnipage(List<String> idList)
