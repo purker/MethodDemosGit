@@ -3,7 +3,7 @@
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
  xmlns:xlink="http://www.w3.org/1999/xlink">
-	<teiHeader xml:lang="de">
+	<teiHeader xml:lang="en">
 		<encodingDesc>
 			<appInfo>
 				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
@@ -77,12 +77,12 @@ xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobi
 			</sourceDesc>
 		</fileDesc>
 		<profileDesc>
-			<abstract xml:lang="en">
+			<abstract xml:lang="de">
 				<p>Hiermit erkläre ich, dass ich diese Arbeit selbstständig verfasst habe, dass ich die verwen-deten Quellen und Hilfsmittel vollständig angegeben habe und dass ich die Stellen der Arbeit-einschließlich Tabellen, Karten und Abbildungen-, die anderen Werken oder dem Internet im Wortlaut oder dem Sinn nach entnommen sind, auf jeden Fall unter Angabe der Quelle als Entlehnung kenntlich gemacht habe. i Acknowledgements I would like to thank my advisor, Prof. Dr. Günther Raidl, for letting me work on this thesis and for his help and suggestions with creating it. I also thank the Vienna University of Technology for the years of education I received there, and for the prolific scientific environment it provided. My special thanks go to my mentor for this thesis, Dipl.-Ing. Mario Ruthmair. Without his countless suggestions, our numerous discussions, his help and his thorough reviews, this thesis would never have been completed. Lastly, I want to sincerely thank my parents, who supported me in every possible way throughout my education and without whom none of this would have been possible. iii Abstract The Rooted Delay-Constrained Steiner Tree Problem (RDCSTP) is a variant of the well-known Steiner Tree Problem on a graph in which the paths to all terminal nodes are restricted by a certain maximum delay. The problem mostly appears in the context of network routing for multicasts, i.e., sending packages from a fixed source to a subset of other participants in the network. Since the RDCSTP belongs to the class of N P-hard problems it is in general not possible to solve large instances exactly in a reasonable amount of time. Therefore, the focus mostly lies on developing good heuristics that can still solve large instances comparatively fast to near optimality. In this thesis a Multilevel Refinement heuristic-which has already been successfully applied to other problems like the Graph Partitioning Problem-is implemented as an improvement heuristic for the RDCSTP. In the general approach of this metaheuristic the problem&apos;s complexity is first iteratively reduced while still maintaining its general characteristics. The problem is thereby simplified and can at the top level finally easily be solved. Then, the solution on this highest level is refined until a solution for the original problem is obtained. The algorithm introduced here implements the Multilevel Refinement approach as an improvement heuristic, iteratively changing an existing solution. However, it is designed in a way that also allows it to be used to construct an initial solution. Another distinctiveness is that, due to the additional delay constraints, supplementary data structures have to be used to avoid creating invalid solutions on higher levels as much as possible. In the refinement phase an additional improvement algorithm, the Key Path Improvement, is executed on each level, drastically increasing result quality. Experimental tests are carried out, evaluating the performance of the algorithm on large instances and comparing it to other algorithms in the literature. The obtained results are promising and indicate that the Multilevel Refinement metaheuristic is indeed a competitive approach for the RDCSTP. v Kurzfassung Das Rooted Delay-Constrained Steiner Tree Problem (RDCSTP) ist eine Variante des bekannten Steinerbaum-Problems auf einem Graphen in welcher die Pfade zu allen Zielknoten durch eine bestimmte maximale Verzögerung beschränkt sind. Das Problem tritt hauptsächlich im Bereich des Netzwerk-Routings beim Multicast auf, das heißt wenn Pakete von einer einzelnen Quelle zu einer bestimmten Untermenge der anderen Netzwerk-Teilnehmer gesendet werden sollen. Da das RDCSTP, wie das ursprüngliche Steiner-Problem, zur Klasse der N P-schwierigen Probleme gehört, ist es allgemein nicht möglich die exakte Lösung einer großen Probleminstanz in vertret-barer Zeit zu finden. Der Fokus der Forschung liegt daher großteils auf der Entwicklung guter Heuristiken, die auch bei großen Probleminstanzen in der Lage sind in vergleichbar kurzer Zeit zu möglichst guten Lösungen zu kommen. In dieser Arbeit wird hierfür die Multilevel-Refinement-Heuristik-die bereits erfolgreich auf etliche andere Probleme, wie das Graph Partitioning Problem, angewandt wurde-als Ver-besserungsheuristik für das RDCSTP entwickelt. Grundsätzlich werden bei dieser Metaheuristik in einem ersten Schritt Knoten sukzessive zusammengefasst um den Graphen auf höheren &quot;Lev-els&quot;, mit weniger Knoten, darzustellen. Das so vereinfachte Problem kann dann auf der höchsten Abstraktionsebene in simpler Weise gelöst werden. Dann wird diese Lösung schrittweise wieder soweit verfeinert, bis eine Lösung für das ursprüngliche Problem erreicht wird. Der hier vorgestellte Algorithmus für das RDCSTP implementiert diesen Multilevel-Ansatz als Verbesserungsheuristik, die eine existierende Lösung iterativ verändert. Er wurde allerdings in einer Weise entworfen, die es ihm ebenso erlaubt eine Anfangslösung selbst zu generieren. Eine weitere Besonderheit ist, dass wegen der zusätzlichen Verzögerungs-Einschränkung wei-tere Datenstrukturen benötigt werden, um auf höheren Levels möglichst gültige Lösungen zu erzeugen. Außerdem wird während der Verfeinerung der Lösung auf jedem Level eine weite-re Verbesserungsheuristik angewandt, das Key Path Improvement, welches die Lösungsqualität drastisch verbessert. Umfangreiche experimentelle Tests wurden durchgeführt um die Leistungsfähigkeit des Al-gorithmus bei großen Instanzen zu messen, und ihn mit anderen Algorithmen aus der Literatur zu vergleichen. Die hierbei erhaltenen Ergebnisse sind durchwegs sehr positiv und weisen somit darauf hin, dass der verfolgte Multilevel-Ansatz tatsächlich eine konkurrenzfähige Heuristik für das RDCSTP darstellt. vii</p>
 			</abstract>
 		</profileDesc>
 	</teiHeader>
-	<text xml:lang="de">
+	<text xml:lang="en">
 		<body>
 <div xmlns="http://www.tei-c.org/ns/1.0"><head>Introduction</head></div>
 <div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.1">The Rooted Delay-Constrained Steiner Tree Problem</head><p>One of the most frequent algorithmic problems encountered in network routing is to connect participants with each other as efficiently as possible (for some definition of "efficient") and a large multitude of literature is available for these problems. However, such simplicistic views often fail to take other concerns into account which might still be of great significance for the practical problem.</p><p>For example, consider the repeated multicast of information from a fixed source to a sub- set of the participants in a network. Fixed connections should be established to faciliate such transmissions, which should of course be done with as little cost as possible.</p><p>To represent this problem in an abstract way, we model the network as a connected graph, with nodes representing all network participants and the edges representing the possible con- nections between these participants. Costs are defined on all edges to provide a measure of how efficiently these connections can be used, or of how desirable it is to use them. The problem then consists of creating a tree of minimum cost in this graph which contains all of the destinations of the multicast, and of course the source.</p><p>This problem is already well-known as the Steiner Tree Problem in literature <ref type="bibr" target="#b0">[1,</ref><ref type="bibr" target="#b1">2]</ref>. There, the nodes that have to be included in the tree are called terminals, while all other nodes are called Steiner nodes. The problem was proven to be N P-hard in <ref type="bibr" target="#b2">[3]</ref>.</p><p>However, as a representation of the original problem this comes short of grasping a vital aspect of some multicasts, namely network delays. Especially when streaming audio or video, maybe even in the context of video conferencing, being able to cheaply enable a connection is often only important as long as the delay between the source and the destinations stays within certain acceptable boundaries. The problem model therefore has to be expanded to takes this additional criterion into account.</p><p>In addition to the previous definitions, we now define network delays for all possible con- nections, i.e., all edges of the graph. Also, a certain threshold is given, a maximum delay bound which no delay between the source node and a terminal may exceed in a valid solution. This variant is known as the Rooted Delay-Constrained Steiner Tree Problem (RDCSTP), or Multi- cast Routing Problem With Delays. It, too, is N P-hard <ref type="bibr" target="#b3">[4]</ref>. <ref type="figure">Figure 1</ref>.1 shows an example for an instance of the RDCSTP. The Steiner node 2 is used to decrease the overall costs of the tree while node 5 is excluded since using it to connect node 4 would be more expensive than the direct edge. Using edge {3, 4} to connect node 4 would decrease the tree cost but violate the delay bound.</p><p>Since in practical usage one might often encounter large instances of the problem which can -due to the N P-hardness of the problem -not be solved exactly in a reasonable amount of time, heuristic algorithms for the RDCSTP have for the most part been the focus of research in this area. While improving existing exact algorithms to increase their range of use is also a worthwhile effort, we still decided to research the suitability of an existing metaheuristic for the RDCSTP in this thesis. Furthermore, a variant of the problem arises in circuit design, where large problem instances might also occur frequently.</p></div>
@@ -380,6 +380,7 @@ problem without delays; ∆ 2 marks delay bounds of 0.9 times that value.
 		<imprint>
 			<publisher>Springer</publisher>
 			<date type="published" when="2010" />
+			<biblScope unit="volume">6239</biblScope>
 			<biblScope unit="page" from="391" to="400" />
 		</imprint>
 	</monogr>
@@ -461,6 +462,7 @@ problem without delays; ∆ 2 marks delay bounds of 0.9 times that value.
 			<biblScope unit="page" from="377" to="385" />
 		</imprint>
 	</monogr>
+	<note>Bringing Information to People</note>
 </biblStruct>
 
 <biblStruct xml:id="b11">
@@ -512,6 +514,7 @@ problem without delays; ∆ 2 marks delay bounds of 0.9 times that value.
 		</author>
 		<imprint>
 			<date type="published" when="2000" />
+			<biblScope unit="volume">21</biblScope>
 			<biblScope unit="page" from="1267" to="1269" />
 		</imprint>
 	</monogr>
@@ -567,6 +570,7 @@ problem without delays; ∆ 2 marks delay bounds of 0.9 times that value.
 		<imprint>
 			<publisher>IEEE</publisher>
 			<date type="published" when="2007" />
+			<biblScope unit="volume">1</biblScope>
 			<biblScope unit="page" from="383" to="390" />
 		</imprint>
 	</monogr>
@@ -603,13 +607,13 @@ problem without delays; ∆ 2 marks delay bounds of 0.9 times that value.
 	<analytic>
 		<title level="a" type="main">A GRASP approach for the Delay-constrained Multicast routing problem</title>
 		<author>
-			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Xu</forename></persName>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">X</forename><forename type="middle">U</forename></persName>
 		</author>
 		<author>
 			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Y</forename><surname>And</surname></persName>
 		</author>
 		<author>
-			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Qu</forename></persName>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Q</forename><forename type="middle">U</forename></persName>
 		</author>
 		<author>
 			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename></persName>
@@ -629,7 +633,7 @@ problem without delays; ∆ 2 marks delay bounds of 0.9 times that value.
 	<analytic>
 		<title level="a" type="main">A Variable Neighborhood Descent Search Algorithm for Delay-Constrained Least-Cost Multicast Routing</title>
 		<author>
-			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Qu</forename></persName>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Q</forename><forename type="middle">U</forename></persName>
 		</author>
 		<author>
 			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Xu</surname></persName>
@@ -659,13 +663,13 @@ problem without delays; ∆ 2 marks delay bounds of 0.9 times that value.
 	<analytic>
 		<title level="a" type="main">A hybrid scatter search meta-heuristic for delay-constrained multicast routing problems</title>
 		<author>
-			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Xu</forename></persName>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">X</forename><forename type="middle">U</forename></persName>
 		</author>
 		<author>
 			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Y</forename><surname>And</surname></persName>
 		</author>
 		<author>
-			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Qu</forename></persName>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Q</forename><forename type="middle">U</forename></persName>
 		</author>
 		<author>
 			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename></persName>
@@ -716,7 +720,11 @@ problem without delays; ∆ 2 marks delay bounds of 0.9 times that value.
 			<date type="published" when="2007" />
 			<pubPlace>Lecce, Italy</pubPlace>
 		</imprint>
+		<respStmt>
+			<orgName>Università del Salento</orgName>
+		</respStmt>
 	</monogr>
+<note type="report_type">PhD thesis</note>
 </biblStruct>
 
 <biblStruct xml:id="b21">
@@ -741,7 +749,11 @@ problem without delays; ∆ 2 marks delay bounds of 0.9 times that value.
 			<date type="published" when="2010" />
 			<pubPlace>Lecce, Italy</pubPlace>
 		</imprint>
+		<respStmt>
+			<orgName>Universita del Salento</orgName>
+		</respStmt>
 	</monogr>
+<note type="report_type">Technical report</note>
 </biblStruct>
 
 <biblStruct xml:id="b22">
@@ -793,6 +805,7 @@ problem without delays; ∆ 2 marks delay bounds of 0.9 times that value.
 		<imprint>
 			<publisher>Springer</publisher>
 			<date type="published" when="2011" />
+			<biblScope unit="volume">6655</biblScope>
 			<biblScope unit="page" from="376" to="388" />
 		</imprint>
 	</monogr>
@@ -821,6 +834,7 @@ problem without delays; ∆ 2 marks delay bounds of 0.9 times that value.
 		<imprint>
 			<publisher>Springer</publisher>
 			<date type="published" when="2011-06" />
+			<biblScope unit="volume">6701</biblScope>
 			<biblScope unit="page" from="124" to="138" />
 		</imprint>
 	</monogr>
@@ -854,7 +868,7 @@ problem without delays; ∆ 2 marks delay bounds of 0.9 times that value.
 
 <biblStruct xml:id="b26">
 	<analytic>
-		<title level="a" type="main">Multilevel computations: Review and recent developments</title>
+		<title level="a" type="main">In Multigrid methods: theory, applications, and supercomputing</title>
 		<author>
 			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Brandt</forename></persName>
 		</author>
@@ -867,9 +881,11 @@ problem without delays; ∆ 2 marks delay bounds of 0.9 times that value.
 		<imprint>
 			<publisher>Dekker</publisher>
 			<date type="published" when="1987" />
+			<biblScope unit="volume">110</biblScope>
 			<biblScope unit="page">35</biblScope>
 		</imprint>
 	</monogr>
+	<note>Multilevel computations: Review and recent developments</note>
 </biblStruct>
 
 <biblStruct xml:id="b27">
@@ -936,13 +952,20 @@ problem without delays; ∆ 2 marks delay bounds of 0.9 times that value.
 	<monogr>
 		<title level="m" type="main">Multilevel Heuristiken für das Rooted Delay-Constrained Minimum Spanning Tree Problem</title>
 		<author>
-			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Ruthmair</surname></persName>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Berlakovich</forename></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><forename type="middle">; M</forename><surname>Ruthmair</surname></persName>
 		</author>
 		<imprint>
 			<date type="published" when="2010-07" />
 			<pubPlace>Vienna, Austria</pubPlace>
 		</imprint>
+		<respStmt>
+			<orgName>Vienna University of Technology, Institute of Computer Graphics and Algorithms</orgName>
+		</respStmt>
 	</monogr>
+	<note>Master&apos;s thesis</note>
 </biblStruct>
 
 <biblStruct xml:id="b31">
@@ -991,6 +1014,7 @@ problem without delays; ∆ 2 marks delay bounds of 0.9 times that value.
 		<imprint>
 			<publisher>Springer</publisher>
 			<date type="published" when="2009" />
+			<biblScope unit="volume">5717</biblScope>
 			<biblScope unit="page" from="713" to="720" />
 		</imprint>
 	</monogr>
@@ -1029,7 +1053,11 @@ problem without delays; ∆ 2 marks delay bounds of 0.9 times that value.
 			<date type="published" when="2010" />
 			<pubPlace>Vienna, Austria</pubPlace>
 		</imprint>
+		<respStmt>
+			<orgName>Vienna University of Technology, Institute of Computer Graphics and Algorithms</orgName>
+		</respStmt>
 	</monogr>
+<note type="report_type">PhD thesis</note>
 </biblStruct>
 
 <biblStruct xml:id="b35">

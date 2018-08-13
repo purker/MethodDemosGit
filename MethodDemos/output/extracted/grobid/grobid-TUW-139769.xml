@@ -47,7 +47,7 @@ xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobi
 			</sourceDesc>
 		</fileDesc>
 		<profileDesc>
-			<abstract xml:lang="de">
+			<abstract>
 				<p>This thesis deals with local branching, a local search algorithm applied on top of a Branch and Cut algorithm for mixed integer programming problems. Local branching defines custom sized neighborhoods around given feasible solutions and solves them partially or completely before exploring the rest of the search space. Its goal is to improve the heuristic behavior of a given exact integer programming solver, i.e. to focus on finding good solutions early in the computation. Local branching is implemented as an extension to the open source Branch and Cut solver COIN/BCP. The framework&apos;s main goal is to provide a generic implementation of local branching for integer programming problems. IP problems are optimization problems where some or all variables are integer values and must satisfy one or more (linear) constraints. Several extensions to the standard local branching algorithm were added to the framework. Pseudo-concurrent exploration of multiple local trees, aborting local trees and a variable fixing heuristic allow the user to implement sophisticated search metaheuristics that adjust the local branching parameters adaptively during the computation. A major design goal was to provide a clean encapsulation of the local branching algorithm to facilitate embedding of the framework in other, higher-level search algorithms, for example in evolutionary algorithms. As an example application, a solver for the multidimensional knapsack problem is implemented. A custom local branching metaheuristic imposes node limits on local subtrees and adaptively tightens the search space by fixing variables and reducing the size of the neighborhood. Test results show that local branching can offer significant advantages to standard Branch and Cut algorithms and eventually proves optimality in shorter time. Especially for large, complex test instances exploring the local neighborhood of a good feasible solution often yields better short-term results than the unguided standard Branch and Cut algorithm. Improving the solutions found early in the computation also helps to remove additional parts of the search tree, potentially leading to better solutions in longer runs. Zusammenfassung Diese Diplomarbeit beschäftigt sich mit Local Branching, einem lokalen Suchalgorithmus, der auf einem Branch and Cut Algorithmus für ganzzahlige Optimierungsprobleme aufsetzt. Local Branching definiert beliebig große Nachbarschaften um gegebene gültige Lösungen und löst diese teilweise oder komplett, bevor der Rest des Lösungsraums durchsucht wird. Das Ziel ist eine Verbesserung des heuristischen Verhaltens des gegebenen Solvers für ganzzahlige Optimierungsprobleme, d.h. sich auf das möglichst frühe Finden guter Lösungen zu konzentrieren. Local Branching ist als Erweiterung des Open Source Branch and Cut Solvers COIN/BCP implementiert. Das Hauptziel des Frameworks ist eine generische Implementierung von Local Branching für ganzzahlige Optimierungsprobleme, also Probleme, bei denen alle oder einige Variablen ganzzahlig sein müssen, und zusätzlich eine oder mehrere (lineare) Bedingungen in Form von Ungleichungen erfüllen müssen. Es wurden mehrere Erweiterungen zum Framework hinzugefügt: die pseudo-parallele Abarbeitung mehrerer lokaler Suchbäume, das vorzeitige Terminieren lokaler Suchbäume sowie eine unabhängige Variablen-Fixing-Heuristik. Durch diese Erweiterungen können die Parameter für Local Branching im Laufe der Berechnung beliebig verändert werden. Ein wesentliches Ziel beim Entwurf des Frameworks war eine klare Kapselung des Local Branching Algorithmus, um die Einbettung in andere, höhere Suchalgorithmen zu ermöglichen, etwa in evolutionäre Algorithmen. Als Beispielapplikation wurde ein Solver für das mehrdimensionale Rucksackproblem implementiert. Eine eigene Local Branching Metaheuristik beschränkt die Größe lokaler Bäume durch Knotenlimits und kann den Suchraum durch Anwendung der Variablen-Fixing-Heuristik weiter einschränken. Die Testergebnisse zeigen signifikante Vorteile für Local Branching im Vergleich zum normalen Branch and Cut Algorithmus. Vor allem für große, komplexe Testinstanzen liefert die Suche in lokalen Bäumen oft bessere Resultate am Anfang der Berechnung. Dadurch wird auch die Zeit zum Finden (und Beweisen) der optimalen Lösung potentiell verringert, da dadurch früher zusätzliche Teile des Suchbaums weggeschnitten werden können.</p>
 			</abstract>
 		</profileDesc>
@@ -637,6 +637,7 @@ standard Branch and Cut.
 			<date type="published" when="2000" />
 		</imprint>
 	</monogr>
+<note type="report_type">PhD thesis</note>
 </biblStruct>
 
 <biblStruct xml:id="b11">
@@ -665,19 +666,17 @@ standard Branch and Cut.
 </biblStruct>
 
 <biblStruct xml:id="b12">
-	<analytic>
-		<title/>
-		<author>
+	<monogr>
+				<author>
 			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Fischetti</surname></persName>
 		</author>
 		<author>
 			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Lodi</surname></persName>
 		</author>
-	</analytic>
-	<monogr>
 		<title level="m">Local branching. Mathematical Programming</title>
 		<imprint>
 			<date type="published" when="2002" />
+			<biblScope unit="volume">98</biblScope>
 			<biblScope unit="page" from="23" to="47" />
 		</imprint>
 	</monogr>
@@ -758,7 +757,7 @@ standard Branch and Cut.
 		<meeting>the 1st IEEE International Conference on Evolutionary Computation</meeting>
 		<imprint>
 			<date type="published" when="1994" />
-			<biblScope unit="page">1317</biblScope>
+			<biblScope unit="page" from="13" to="17" />
 		</imprint>
 	</monogr>
 </biblStruct>
@@ -870,6 +869,7 @@ standard Branch and Cut.
 		<imprint>
 			<publisher>Academic Press</publisher>
 			<date type="published" when="1981" />
+			<biblScope unit="volume">4</biblScope>
 			<biblScope unit="page" from="415" to="437" />
 		</imprint>
 	</monogr>
@@ -910,6 +910,7 @@ standard Branch and Cut.
 		<imprint>
 			<publisher>Kluwer Academic Publishers</publisher>
 			<date type="published" when="2001" />
+			<biblScope unit="volume">2</biblScope>
 			<biblScope unit="page" from="509" to="519" />
 		</imprint>
 	</monogr>
@@ -965,6 +966,7 @@ standard Branch and Cut.
 		<imprint>
 			<publisher>Kluwer Academic Publishers</publisher>
 			<date type="published" when="2001" />
+			<biblScope unit="volume">2</biblScope>
 			<biblScope unit="page" from="519" to="525" />
 		</imprint>
 	</monogr>
@@ -982,6 +984,7 @@ standard Branch and Cut.
 		<imprint>
 			<publisher>Kluwer Academic Publishers</publisher>
 			<date type="published" when="2001" />
+			<biblScope unit="volume">2</biblScope>
 			<biblScope unit="page" from="525" to="533" />
 		</imprint>
 	</monogr>
@@ -1015,9 +1018,13 @@ standard Branch and Cut.
 			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Pisinger</surname></persName>
 		</author>
 		<imprint>
-			<date type="published" when="1995" />
+			<date type="published" when="1995-02" />
 		</imprint>
+		<respStmt>
+			<orgName>University of Copenhagen, Dept. of Computer Science</orgName>
+		</respStmt>
 	</monogr>
+<note type="report_type">PhD thesis</note>
 </biblStruct>
 
 <biblStruct xml:id="b32">
@@ -1073,17 +1080,14 @@ standard Branch and Cut.
 </biblStruct>
 
 <biblStruct xml:id="b35">
-	<analytic>
-		<title/>
-		<author>
+	<monogr>
+				<author>
 			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><forename type="middle">K</forename><surname>Ralphs</surname></persName>
 		</author>
 		<author>
 			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><surname>Ladányi</surname></persName>
 		</author>
 		<ptr target="http://www.coin-or.org/Presentations/bcp-man.pdf" />
-	</analytic>
-	<monogr>
 		<title level="m">COIN/BCP User&apos;s Manual</title>
 		<imprint>
 			<date type="published" when="2001" />
@@ -1142,6 +1146,7 @@ standard Branch and Cut.
 		</author>
 		<imprint>
 			<date type="published" when="1994" />
+			<biblScope unit="volume">32</biblScope>
 			<biblScope unit="page" from="226" to="242" />
 		</imprint>
 	</monogr>
