@@ -253,4 +253,9 @@ public class PublicationUtil
 	{
 		return keyString.substring(4, 10);
 	}
+
+	public static Publication getPublicationFromFile(File file)
+	{
+		return XStreamUtil.convertFromXML(file, Publication.class);
+	}
 }
