@@ -28,6 +28,10 @@ import misc.XlsxToCsv;
 
 public class Evaluators
 {
+	private static final boolean printCermineResults = false;
+	private static final boolean printGrobidResults = true;
+	private static final boolean printParscitResults = false;
+	private static final boolean printPdfxResults = false;
 
 	public static void main(String[] args)
 	{
@@ -58,10 +62,10 @@ public class Evaluators
 		SystemEvaluator parscit = new ParscitXStreamFileEvaluator(types, referenceTypes, modes);
 		SystemEvaluator pdfx = new PdfxXStreamFileEvaluator(types, referenceTypes, modes);
 
-		cermine.evaluate();
-		grobid.evaluate();
-		parscit.evaluate();
-		pdfx.evaluate();
+		cermine.evaluate(printCermineResults);
+		grobid.evaluate(printGrobidResults);
+		parscit.evaluate(printParscitResults);
+		pdfx.evaluate(printPdfxResults);
 
 		SystemEvaluator.printOverallStatistics(modes, cermine, grobid, parscit, pdfx);
 		System.out.println("Evaluation finished");
