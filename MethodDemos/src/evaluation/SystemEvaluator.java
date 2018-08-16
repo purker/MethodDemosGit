@@ -96,10 +96,10 @@ public abstract class SystemEvaluator
 
 	protected abstract Method getMethod();
 
-	public void evaluate() throws IOException
+	public void evaluate(boolean printResults) throws IOException
 	{
 		this.iter = new PublicationIterator(getOriginalFiles(), getExtractedFiles());
-		evaluate(iter);
+		evaluate(iter, printResults);
 	}
 
 	protected Collection<EvalInformationType> getTypes()
@@ -116,10 +116,11 @@ public abstract class SystemEvaluator
 	 * @param modes
 	 *            which outputs should be generated, if empty -> no output (for test purposes)
 	 * @param files
+	 * @param printResults
 	 * @return
 	 * @throws IOException
 	 */
-	public AbstractCollectionResult<?> evaluate(PublicationIterator files) throws IOException
+	public AbstractCollectionResult<?> evaluate(PublicationIterator files, boolean printResults) throws IOException
 	{
 		System.out.println("Starting Evaluation: " + getMethod() + " (" + iter.size() + " files)");
 
@@ -190,11 +191,11 @@ public abstract class SystemEvaluator
 
 		System.out.println("Evaluation of PUBLICATIONS");
 		results.evaluate();
-		results.printResults();
+		if(printResults) results.printResults();
 
 		System.out.println("Evaluation of REFERENCES");
 		refResults.evaluate();
-		refResults.printResults();
+		if(printResults) refResults.printResults();
 
 		return results;
 	}

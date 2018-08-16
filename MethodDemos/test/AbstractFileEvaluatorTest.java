@@ -24,6 +24,8 @@ import utils.XStreamUtil;
 @RunWith(JUnitParamsRunner.class)
 public abstract class AbstractFileEvaluatorTest extends AbstractTest
 {
+	private static boolean DEFAULT_PRINT_RESULTS = false;
+
 	protected static List<EvalInformationType> types = EvalInformationType.getTypesForPublications();
 	protected static List<EvalInformationType> referenceTypes = EvalInformationType.getTypesForReferences();
 
@@ -34,7 +36,7 @@ public abstract class AbstractFileEvaluatorTest extends AbstractTest
 		Publication extractedPub = PublicationFactory.createPublication("1");
 
 		PublicationIterator iter = new PublicationIterator(originalPub, extractedPub);
-		AbstractCollectionResult<?> result = getEvalutator().evaluate(iter);
+		AbstractCollectionResult<?> result = getEvalutator().evaluate(iter, DEFAULT_PRINT_RESULTS);
 
 		assertEquals(new Double(100.), result.getDocumentResult().getAveragePrecision(), "average precsision");
 		assertEquals(new Double(100.), result.getDocumentResult().getAverageRecall(), "average recall");
@@ -48,7 +50,7 @@ public abstract class AbstractFileEvaluatorTest extends AbstractTest
 		Publication extractedPub = new Publication();
 
 		PublicationIterator iter = new PublicationIterator(originalPub, extractedPub);
-		AbstractCollectionResult<?> result = getEvalutator().evaluate(iter);
+		AbstractCollectionResult<?> result = getEvalutator().evaluate(iter, DEFAULT_PRINT_RESULTS);
 
 		EvaluationResult evaluationResult = result.getDocumentResult();
 		assertEquals(new Double(Double.NaN), evaluationResult.getAveragePrecision(), "average precsision");
@@ -68,7 +70,7 @@ public abstract class AbstractFileEvaluatorTest extends AbstractTest
 		Publication extractedPub = PublicationFactory.createPublication("1");
 
 		PublicationIterator iter = new PublicationIterator(originalPub, extractedPub);
-		AbstractCollectionResult<?> result = getEvalutator().evaluate(iter);
+		AbstractCollectionResult<?> result = getEvalutator().evaluate(iter, DEFAULT_PRINT_RESULTS);
 
 		// EvalInformationType evalInfoType = EvalInformationType.TITLE;
 		EvaluationResult evaluationResult = result.getPerType().getResultForKey(evalInfoType);
