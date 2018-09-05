@@ -19,8 +19,11 @@ public interface Config
 
 	File loggingDir = new File("output/");
 
-	String pGrobidHome = "D:/Java/git/grobid-0.5.1/grobid-home";
+	String pGrobidOrigin = "D:/Java/git/grobid-0.5.1/";
+	String pGrobidHome = pGrobidOrigin + "grobid-home";
 	String pGrobidProperties = pGrobidHome + "/config/grobid.properties";
+
+	String pGrobidTrainer = pGrobidOrigin + "/grobid-trainer";
 
 	String xStreamFileExtension = "-xstream.xml";
 
