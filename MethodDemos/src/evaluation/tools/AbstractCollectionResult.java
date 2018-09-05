@@ -60,12 +60,12 @@ public abstract class AbstractCollectionResult<T extends AbstractMetaPublication
 		this.evalTypes = types;
 		this.modes = modes;
 
-		perId = new SetResult<>(EvaluationMode.CSV_PER_FILE, Config.CSVperIdFile, method, getCollectionEnum(), modes);
+		perId = new SetResult<>(EvaluationMode.CSV_PER_ID, Config.CSVperIdFile, method, getCollectionEnum(), modes);
 		perPublicationType = new SetResult<>(EvaluationMode.CSV_PER_PUBLICATIONTYPE, Config.CSVperPublicationTypeFile, method, getCollectionEnum(), modes);
 		perType = new SetResult<>(EvaluationMode.CSV_PER_EVALUTATIONTYPE, Config.CSVperEvalTypeFile, method, getCollectionEnum(), modes);
-		if(modes.contains(EvaluationMode.CSV_PER_FILE_AND_EVALUATIONTYPE))
+		if(modes.contains(EvaluationMode.CSV_PER_ID_AND_EVALUATIONTYPE))
 		{
-			String file = Config.CSVperFileAndEvalTypeFile;
+			String file = Config.CSVperIdAndEvalTypeFile;
 
 			String writerFile = FileCollectionUtil.getFileByMethodAndSetResultType(file, getCollectionEnum(), method);
 			try
@@ -309,14 +309,14 @@ public abstract class AbstractCollectionResult<T extends AbstractMetaPublication
 			System.out.println("\t" + EvaluationMode.CSV_PER_PUBLICATIONTYPE);
 			getPerPublicationType().printCSVStatistics();
 		}
-		if(modes.contains(EvaluationMode.CSV_PER_FILE))
+		if(modes.contains(EvaluationMode.CSV_PER_ID))
 		{
-			System.out.println("\t" + EvaluationMode.CSV_PER_FILE);
+			System.out.println("\t" + EvaluationMode.CSV_PER_ID);
 			getPerId().printCSVStatistics();
 		}
-		if(modes.contains(EvaluationMode.CSV_PER_FILE_AND_EVALUATIONTYPE))
+		if(modes.contains(EvaluationMode.CSV_PER_ID_AND_EVALUATIONTYPE))
 		{
-			System.out.println("\t" + EvaluationMode.CSV_PER_FILE_AND_EVALUATIONTYPE);
+			System.out.println("\t" + EvaluationMode.CSV_PER_ID_AND_EVALUATIONTYPE);
 			printCSVPerIdAndEvaluationType();
 		}
 		if(modes.contains(EvaluationMode.SYSOUT_DETAILED) || modes.contains(EvaluationMode.SYSOUT_SUMMARY))
@@ -336,13 +336,13 @@ public abstract class AbstractCollectionResult<T extends AbstractMetaPublication
 			}
 			printTotalSummary();
 		}
-		if(modes.contains(EvaluationMode.CSV_PER_FILE_WITH_EVALUATIONTYPEVALUE))
+		if(modes.contains(EvaluationMode.CSV_PER_ID_WITH_EVALUATIONTYPEVALUE))
 		{
-			System.out.println("\t" + EvaluationMode.CSV_PER_FILE_WITH_EVALUATIONTYPEVALUE);
+			System.out.println("\t" + EvaluationMode.CSV_PER_ID_WITH_EVALUATIONTYPEVALUE);
 
 			for(EvalInformationType type : perType.getKeysSet())
 			{
-				String writerFile = FileCollectionUtil.replaceMethodAndTypeAndSetResultEnum(Config.CSVperFileWithEvalTypeValueFile, method, type, getCollectionEnum());
+				String writerFile = FileCollectionUtil.replaceMethodAndTypeAndSetResultEnum(Config.CSVperIdWithEvalTypeValueFile, method, type, getCollectionEnum());
 				WriterWrapper writer = new WriterWrapper(writerFile);
 
 				List<String> headers = new ArrayList<>();
@@ -383,7 +383,7 @@ public abstract class AbstractCollectionResult<T extends AbstractMetaPublication
 	{
 		switch(mode)
 		{
-			case CSV_PER_FILE:
+			case CSV_PER_ID:
 				return perId;
 			case CSV_PER_PUBLICATIONTYPE:
 				return perPublicationType;

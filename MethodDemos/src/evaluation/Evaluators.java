@@ -43,7 +43,7 @@ public class Evaluators
 			// modes.add(EvaluationMode.CSV_PER_FILE);
 			// modes.add(EvaluationMode.CSV_PER_PUBLICATIONTYPE);
 
-			modes.add(EvaluationMode.CSV_PER_FILE_WITH_EVALUATIONTYPEVALUE);
+			modes.add(EvaluationMode.CSV_PER_ID_WITH_EVALUATIONTYPEVALUE);
 			List<EvaluationMode> allmodes = EvaluationMode.getCSVModes();
 
 			// Demos.executeDemos();

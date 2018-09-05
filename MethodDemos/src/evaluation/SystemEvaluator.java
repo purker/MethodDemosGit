@@ -392,7 +392,7 @@ public abstract class SystemEvaluator
 
 	public static void printOverallStatistics(List<EvaluationMode> modes, SystemEvaluator... evaluators) throws IOException
 	{
-		for(EvaluationMode mode : Arrays.asList(EvaluationMode.CSV_PER_EVALUTATIONTYPE, EvaluationMode.CSV_PER_FILE, EvaluationMode.CSV_PER_PUBLICATIONTYPE))
+		for(EvaluationMode mode : Arrays.asList(EvaluationMode.CSV_PER_EVALUTATIONTYPE, EvaluationMode.CSV_PER_ID, EvaluationMode.CSV_PER_PUBLICATIONTYPE))
 		{
 			if(modes.contains(mode))
 			{
@@ -406,7 +406,7 @@ public abstract class SystemEvaluator
 
 	private static void printOverallStatisticsForElements(SystemEvaluator[] evaluators, EvaluationMode mode, CollectionEnum setResultEnum) throws IOException
 	{
-		if(!Arrays.asList(EvaluationMode.CSV_PER_EVALUTATIONTYPE, EvaluationMode.CSV_PER_FILE, EvaluationMode.CSV_PER_PUBLICATIONTYPE).contains(mode))
+		if(!Arrays.asList(EvaluationMode.CSV_PER_EVALUTATIONTYPE, EvaluationMode.CSV_PER_ID, EvaluationMode.CSV_PER_PUBLICATIONTYPE).contains(mode))
 		{
 			FailureUtil.exit("mode " + mode + " not supported");
 		}
@@ -442,7 +442,7 @@ public abstract class SystemEvaluator
 
 		Collection<?> elements;
 		AbstractCollectionResult<?> firstCollectionResult = evaluators[0].getCollectionResultByCollectionEnum(setResultEnum);
-		if(mode.equals(EvaluationMode.CSV_PER_FILE))
+		if(mode.equals(EvaluationMode.CSV_PER_ID))
 		{
 			elements = firstCollectionResult.getAllElements().keySet();
 		}

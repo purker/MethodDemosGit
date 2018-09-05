@@ -38,11 +38,11 @@ public interface Config
 	// <evaltype> = ABSTRACT | AFFILIATIONS | ...
 	//
 	String statisticsFolder = "output/statistics/";
-	String CSVperIdFile = statisticsFolder + "<method>-per-id-<type>-statistics.<fileext>";
-	String CSVperFileAndEvalTypeFile = statisticsFolder + "<method>-per-id-and-evaltype-<type>-statistics.<fileext>";
-	String CSVperPublicationTypeFile = statisticsFolder + "<method>-per-publicationtype-<type>-statistics.<fileext>";
 	String CSVperEvalTypeFile = statisticsFolder + "<method>-per-evaltype-<type>-statistics.<fileext>";
-	String CSVperFileWithEvalTypeValueFile = statisticsFolder + "singlevalues/<method>-<evaltype>-<type>-statistics.<fileext>";
+	String CSVperPublicationTypeFile = statisticsFolder + "<method>-per-publicationtype-<type>-statistics.<fileext>";
+	String CSVperIdFile = statisticsFolder + "<method>-per-id-<type>-statistics.<fileext>";
+	String CSVperIdAndEvalTypeFile = statisticsFolder + "<method>-per-id-and-evaltype-<type>-statistics.<fileext>";
+	String CSVperIdWithEvalTypeValueFile = statisticsFolder + "singlevalues/<method>-<evaltype>-<type>-statistics.<fileext>";
 
 	DecimalFormat decimalFormatter = new DecimalFormat("#,##0.00");
 	int decimalPlaces = 2;

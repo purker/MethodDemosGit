@@ -7,11 +7,11 @@ import config.Config;
 
 public enum EvaluationMode
 {
-	CSV_PER_FILE(Config.CSVperIdFile, "File"),
-	CSV_PER_PUBLICATIONTYPE(Config.CSVperPublicationTypeFile, "PublicationType"),
 	CSV_PER_EVALUTATIONTYPE(Config.CSVperEvalTypeFile, "EvaluationType"),
-	CSV_PER_FILE_AND_EVALUATIONTYPE(Config.CSVperFileAndEvalTypeFile, null),
-	CSV_PER_FILE_WITH_EVALUATIONTYPEVALUE(Config.CSVperFileWithEvalTypeValueFile, null),
+	CSV_PER_PUBLICATIONTYPE(Config.CSVperPublicationTypeFile, "PublicationType"),
+	CSV_PER_ID(Config.CSVperIdFile, "File"),
+	CSV_PER_ID_AND_EVALUATIONTYPE(Config.CSVperIdAndEvalTypeFile, null),
+	CSV_PER_ID_WITH_EVALUATIONTYPEVALUE(Config.CSVperIdWithEvalTypeValueFile, null),
 
 	SYSOUT_DETAILED(null, null),
 	SYSOUT_SUMMARY(null, null);
@@ -47,6 +47,6 @@ public enum EvaluationMode
 
 	public static List<EvaluationMode> getCSVModes()
 	{
-		return Arrays.asList(CSV_PER_FILE, CSV_PER_PUBLICATIONTYPE, CSV_PER_EVALUTATIONTYPE, CSV_PER_FILE_AND_EVALUATIONTYPE, CSV_PER_FILE_WITH_EVALUATIONTYPEVALUE);
+		return Arrays.asList(CSV_PER_ID, CSV_PER_PUBLICATIONTYPE, CSV_PER_EVALUTATIONTYPE, CSV_PER_ID_AND_EVALUATIONTYPE, CSV_PER_ID_WITH_EVALUATIONTYPEVALUE);
 	}
 }
