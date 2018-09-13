@@ -12,7 +12,7 @@ public class Reference extends AbstractMetaPublication
 {
 	private static final long serialVersionUID = -420773869366946479L;
 
-	private String referenceIdString; // as in original extracted version grobid: "b0", "b1", ...
+	private String grobidReferenceIdString; // as in original extracted version grobid: "b0", "b1", ...
 
 	// id is normalized marker in form "ref1"
 	private String marker; // "[1]", "[Hun97]", if defined for this method
@@ -23,14 +23,14 @@ public class Reference extends AbstractMetaPublication
 
 	private Publication publication; // enclosing publication
 
-	public String getReferenceIdString()
+	public String getGrobidReferenceIdString()
 	{
-		return referenceIdString;
+		return grobidReferenceIdString;
 	}
 
-	public void setReferenceIdString(String referenceIdString)
+	public void setReferenceIdString(String grobidReferenceIdString)
 	{
-		this.referenceIdString = referenceIdString;
+		this.grobidReferenceIdString = grobidReferenceIdString;
 	}
 
 	public String getMarker()
