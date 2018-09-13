@@ -242,4 +242,9 @@ public abstract class AbstractMetaPublication extends BaseEntity implements KeyS
 		this.doi = doi;
 	}
 
+	public String getIdString()
+	{
+		return getId().getId().toString();
+	}
+
 }
