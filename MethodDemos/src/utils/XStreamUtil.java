@@ -29,7 +29,7 @@ import mapping.result.Section;
 
 public class XStreamUtil
 {
-	private static final String[] referenceFieldOrder = new String[]{"serialVersionUID", "id", "referenceIdString", "marker", "title", "publicationType", "source", "publisher", "editors", "authors", "edition", "location", "volume", "issue", "chapter", "note", "pageFrom", "pageTo", "publicationDateString", "publicationYear", "publicationMonth", "publicationDay", "publicationDate", "doi", "url", "type", "referenceText", "publication"};
+	private static final String[] referenceFieldOrder = new String[]{"serialVersionUID", "id", "grobidReferenceIdString", "marker", "title", "publicationType", "source", "publisher", "editors", "authors", "edition", "location", "volume", "issue", "chapter", "note", "pageFrom", "pageTo", "publicationDateString", "publicationYear", "publicationYearSuffix", "publicationMonth", "publicationDay", "publicationDate", "doi", "url", "type", "referenceText", "publication"};
 
 	public static void convertToXmL(Object object, File file, PrintStream out, boolean exitOnError)
 	{
@@ -67,7 +67,6 @@ public class XStreamUtil
 		sorter.registerFieldOrder(Reference.class, referenceFieldOrder);
 
 		checkAllFieldsMapped();
-
 		XStream xStream = new XStream(new SunUnsafeReflectionProvider(new FieldDictionary(sorter)), new DomDriver(StandardCharsets.UTF_8.name()));
 
 		xStream.setMode(XStream.SINGLE_NODE_XPATH_ABSOLUTE_REFERENCES);
