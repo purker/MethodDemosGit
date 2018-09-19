@@ -69,4 +69,16 @@ public class StringUtil
 			return key.toString();
 	}
 
+	/**
+	 * as substring but taking into account the length of the string to avoid IndexOutOfBoundsException
+	 * 
+	 * @param string
+	 * @param length
+	 * @return
+	 */
+	public static String substringMaxLength(String string, int length)
+	{
+		return string.substring(0, Integer.min(length, string.length()));
+	}
+
 }
