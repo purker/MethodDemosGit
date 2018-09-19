@@ -5,7 +5,7 @@ import utils.CollectionUtil;
 import utils.PublicationUtil;
 
 /**
- * 1: [Miksch, 1999]<br>
+ * 1: [Miksch, 1999a]<br>
  * 2: [Lee and Geller, 2006]<br>
  * >2: [Peleg et al., 2003]
  */
@@ -34,14 +34,7 @@ public class SquareBracketNameComaYearMarkerStyle extends AbstractMarkerStyle
 				}
 		}
 		sb.append(", ");
-		if(reference.getNote() != null)
-		{
-			sb.append(reference.getNote());
-		}
-		else
-		{
-			sb.append(reference.getPublicationYear());
-		}
+		sb.append(reference.getPublicationYearWithSuffix());
 		sb.append("]");
 		return sb.toString();
 	}

@@ -2,6 +2,7 @@ package mapping.markers;
 
 import mapping.result.Reference;
 import utils.CollectionUtil;
+import utils.PublicationUtil;
 import utils.ReferenceUtil;
 
 /**
@@ -26,7 +27,7 @@ public class RoundBracketNameYearMarkerStyle extends AbstractMarkerStyle
 			}
 			else
 			{
-				sb.append(ReferenceUtil.getFirstLastNameEtAl(reference));
+				sb.append(PublicationUtil.getLastNameOfFirstAuthorEtAl(reference));
 			}
 			sb.append(", ");
 		}

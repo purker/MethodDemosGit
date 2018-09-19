@@ -4,7 +4,10 @@ import mapping.result.Reference;
 import utils.PublicationUtil;
 
 /**
- * (Bench-Capon, Prakken, and Sartor 2009)
+ * 2: (Brewka and Woltran 2010)<br>
+ * 3: (Bench-Capon, Prakken, and Sartor 2009)<br>
+ * >=4: (Baroni et al. 2011)
+ * 
  */
 public class RoundBracketShortNameYearMarkerWithoutComaStyle2 extends AbstractMarkerStyle
 {
