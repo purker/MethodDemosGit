@@ -53,7 +53,16 @@ import mapping.Worker;
 import mapping.cermine.ReferenceAuthorNameConcatenationWorker;
 import mapping.grobid.AuthorNameConcatenationWorker;
 import mapping.markers.AbstractMarkerStyle;
+import mapping.markers.NameRoundBracketYearMarkerStyle;
+import mapping.markers.NameSquareBracketYearMarkerStyle;
 import mapping.markers.NumberedMarkerStyle;
+import mapping.markers.RoundBracketNameAmpYearMarkerStyle;
+import mapping.markers.RoundBracketNameYearMarkerStyle;
+import mapping.markers.RoundBracketNameYearMarkerWithoutComaStyle;
+import mapping.markers.RoundBracketShortNameYearMarkerWithoutComaStyle2;
+import mapping.markers.SquareBracketNameComaYearMarkerStyle;
+import mapping.markers.SquareBracketNameShortYearShortMarkerStyle;
+import mapping.markers.SquareBracketNameYearMarkerWithoutWhitespaceStyle;
 import mapping.markers.SquareBracketNumberedMarkerStyle;
 import mapping.markers.SuperscriptNumberedMarkerStyle;
 import mapping.result.AbstractAuthor;
@@ -68,14 +77,6 @@ import mapping.result.ReferenceAuthor;
 import mapping.result.ReferenceCitation;
 import mapping.result.Section;
 import misc.ReplaceNewlines;
-import notdone.NameRoundBracketYearMarkerStyle;
-import notdone.NameSquareBracketYearMarkerStyle;
-import notdone.NameYearMarkerStyle;
-import notdone.RoundBracketNameYearMarkerStyle;
-import notdone.RoundBracketNameYearMarkerWithoutComaStyle;
-import notdone.RoundBracketShortNameYearMarkerWithoutComaStyle;
-import notdone.SquareBracketNameYearMarkerStyle;
-import notdone.SquareBracketNameYearShortMarkerStyle;
 import utils.CollectionUtil;
 import utils.FileCollectionUtil;
 import utils.FileNameUtil;
@@ -83,16 +84,11 @@ import utils.PublicationUtil;
 import utils.StringUtil;
 import utils.XStreamUtil;
 
-/**
- * @author Angela
- *
- */
-
 @SuppressWarnings("unused")
 public class StepsHistory
 {
 	static File file1 = new File("D:/Java/git/MethodDemosGit/MethodDemos/output/result/result-TUW-137078-xstream.xml");
-	static File file2 = new File("D:/Java/git/MethodDemosGit/MethodDemos/output/result/result-TUW-137078-xstream2.xml");
+	static File file2 = new File("D:/Java/git/MethodDemosGit/MethodDemos/output/result/result-TUW--xstream2.xml");
 	static File file3 = new File(Demos.grobIdOutputDir, "grobid-TUW-137078-xstream.xml");
 	static File file4 = new File("D:/Java/git/MethodDemosGit/MethodDemos/output/result/result-TUW-139761-xstream.xml");
 	static File file5 = new File(Demos.pdfxOutputDir, "pdfx-TUW-139761.xml");
@@ -149,7 +145,9 @@ public class StepsHistory
 
 	public static void main(String[] args) throws Exception
 	{
-		setMarkersByReferenceStyleForAll();
+		// printEtAlAuthors();
+		setMarkersByReferenceStyleForAllInMap();
+		// printReferencesAuthorCount(PublicationUtil.getPublicationFromId("194085"));
 		// printEmptyMarkerPublications();
 		// printMarkerStylesForReference(PublicationFactory.createReference());
 		// useWorkerFiles(FileCollectionUtil.getResultFiles(), new ReferenceSetPublicationWorker());
@@ -328,20 +326,33 @@ public class StepsHistory
 		}
 	}
 
+	private static void setMarkersByReferenceStyleForAllInMap() throws IOException
+	{
+		for(Entry<String, AbstractMarkerStyle> entry : markerStyleMap.entrySet())
+		{
+			if(entry.getValue() != null)
+			{
+				Publication publication = PublicationUtil.getPublicationFromId(entry.getKey());
+				setMarkerStyleForPublicationAndMarkerStyle(publication, entry.getValue());
+			}
+		}
+	}
+
 	private static void printMarkerStylesForReference(Reference ref) throws IOException
 	{
 		List<AbstractMarkerStyle> list = new ArrayList<>();
-		list.add(new NameRoundBracketYearMarkerStyle());
-		list.add(new NameSquareBracketYearMarkerStyle());
-		list.add(new NameYearMarkerStyle());
-		list.add(new NumberedMarkerStyle());
-		list.add(new RoundBracketNameYearMarkerStyle());
-		list.add(new RoundBracketNameYearMarkerWithoutComaStyle());
-		list.add(new RoundBracketShortNameYearMarkerWithoutComaStyle());
-		list.add(new SquareBracketNameYearMarkerStyle());
-		list.add(new SquareBracketNameYearShortMarkerStyle());
-		list.add(new SquareBracketNumberedMarkerStyle());
-		list.add(new SuperscriptNumberedMarkerStyle());
+		// TODO specific markers
+		// list.add(new NameRoundBracketYearMarkerStyle());
+		// list.add(new NameSquareBracketYearMarkerStyle());
+		// list.add(new NameYearMarkerStyle());
+		// list.add(new NumberedMarkerStyle());
+		// list.add(new RoundBracketNameAmpYearMarkerStyle());
+		// list.add(new RoundBracketNameYearMarkerWithoutComaStyle());
+		// list.add(new RoundBracketShortNameYearMarkerWithoutComaStyle2());
+		// list.add(new SquareBracketNameComaYearMarkerStyle());
+		// list.add(new SquareBracketNameYearShortMarkerStyle());
+		// list.add(new SquareBracketNumberedMarkerStyle());
+		// list.add(new SuperscriptNumberedMarkerStyle());
 		for(AbstractMarkerStyle markerStyle : list)
 		{
 			System.out.println(markerStyle.getMarkerString(ref));
@@ -451,6 +462,58 @@ public class StepsHistory
 			XStreamUtil.convertToXmL(publication, file, System.out, true);
 		}
 
+	}
+
+	private static void printNotes()
+	{
+		List<File> files = FileCollectionUtil.getResultFiles();
+
+		for(File file : files)
+		{
+			Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
+
+			for(Reference reference : publication.getReferences())
+			{
+				if(StringUtil.isNotEmpty(reference.getPublicationYear()))
+				{
+					if(reference.getPublicationYear().length() == 5)
+					{
+						// reference.setPublicationYear(reference.getNote());
+						// reference.getYear(null);
+
+						reference.setPublicationYearSuffix(reference.getPublicationYear().substring(4, 5));
+						reference.setPublicationYear(reference.getPublicationYear().substring(0, 4));
+						System.out.println(reference.getKeyString());
+						System.out.println(reference.getPublicationYear());
+					}
+				}
+			}
+			XStreamUtil.convertToXmL(publication, file, System.out, true);
+			ReplaceNewlines.replaceNewlines(file);
+		}
+	}
+
+	private static void printEtAlAuthors()
+	{
+		List<File> files = FileCollectionUtil.getResultFiles();
+
+		for(File file : files)
+		{
+			Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
+
+			for(Reference reference : publication.getReferences())
+			{
+				if(CollectionUtil.isNotEmpty(reference.getAuthors())) for(ReferenceAuthor author : reference.getAuthors())
+				{
+					if(StringUtil.isNotEmpty(author.getLastName()) && author.getLastName().startsWith("al"))
+					{
+						System.out.println(reference.getKeyString());
+						// System.out.println(author.getFullName());
+					}
+				}
+			}
+
+		}
 	}
 
 	private static void findNotProcessedParscitFiles()
@@ -697,11 +760,20 @@ public class StepsHistory
 	private static void setMarkersByReferenceStyle(File file)
 	{
 		Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
-		AbstractMarkerStyle markerStyle = markerStyleMap.get(publication.getIdString());
+		setMarkerForPublication(publication);
+	}
 
+	private static void setMarkerForPublication(Publication publication)
+	{
+		AbstractMarkerStyle markerStyle = markerStyleMap.get(publication.getIdString());
+		setMarkerStyleForPublicationAndMarkerStyle(publication, markerStyle);
+	}
+
+	private static void setMarkerStyleForPublicationAndMarkerStyle(Publication publication, AbstractMarkerStyle markerStyle)
+	{
 		if(markerStyle == null)
 		{
-			System.err.println("markerStyle not set for " + file);
+			System.err.println("markerStyle not set for " + publication.getIdString());
 			return;
 		}
 
@@ -719,8 +791,9 @@ public class StepsHistory
 			}
 		}
 
+		File file = FileCollectionUtil.getGroundTruthResultFileById(publication.getIdString());
 		XStreamUtil.convertToXmL(publication, file, System.out, true);
-
+		ReplaceNewlines.replaceNewlines(file);
 	}
 
 	private static void setKeywords(File directory)
@@ -1659,6 +1732,17 @@ public class StepsHistory
 
 	}
 
+	private static void printReferencesAuthorCount(Publication publication)
+	{
+		for(Reference reference : publication.getReferences())
+		{
+			if(reference.getAuthors() != null)
+				System.out.println(reference.getKeyString() + ": " + reference.getAuthors().size());
+			else
+				System.out.println(reference.getKeyString() + ": " + null);
+		}
+	}
+
 	private static List<String> getResultPubIdsFromDirectory()
 	{
 		if(!resultFileDirectory.exists())
@@ -2222,114 +2306,107 @@ public class StepsHistory
 	static Map<String, AbstractMarkerStyle> markerStyleMap = new HashMap<>();
 	static
 	{
-		// markerStyleMap.put("137078", new SquareBracketNumberedMarkerStyle());
-		// markerStyleMap.put("138011", new SquareBracketNumberedMarkerStyle());
-		// markerStyleMap.put("138447", new SuperscriptNumberedMarkerStyle());
-		// markerStyleMap.put("138544", new SquareBracketNumberedMarkerStyle());
-		// markerStyleMap.put("138547", new SquareBracketNumberedMarkerStyle());
-		// markerStyleMap.put("139299", new SquareBracketNameYearMarkerStyle());
-		// markerStyleMap.put("139761", new SquareBracketNameYearShortMarkerStyle());// new SquareBracketNameYearShortMarkerStyle());
-		// markerStyleMap.put("139769", new SquareBracketNumberedMarkerStyle());
-		// markerStyleMap.put("139781", new SquareBracketNumberedMarkerStyle());
-		// markerStyleMap.put("139785", new SquareBracketNumberedMarkerStyle());
-		// markerStyleMap.put("140047", new SquareBracketNumberedMarkerStyle());
-		// markerStyleMap.put("140048", new SquareBracketNameYearShortMarkerStyle());
-		// markerStyleMap.put("140229", new SquareBracketNumberedMarkerStyle());
-		// markerStyleMap.put("140253", new RoundBracketNameYearMarkerStyle());
-		// markerStyleMap.put("140308", new SquareBracketNumberedMarkerStyle());
-		// markerStyleMap.put("140533", new NameSquareBracketYearMarkerStyle());
-		// markerStyleMap.put("140867", new SquareBracketNumberedMarkerStyle());
-		// markerStyleMap.put("140895", new SquareBracketNumberedMarkerStyle());
-		// markerStyleMap.put("140983", new SquareBracketNumberedMarkerStyle());
-		// markerStyleMap.put("141024", new SquareBracketNumberedMarkerStyle());
-		// markerStyleMap.put("141065", new SquareBracketNumberedMarkerStyle());
-		// markerStyleMap.put("141121", new SquareBracketNumberedMarkerStyle());
-		// markerStyleMap.put("141140", new RoundBracketNameYearMarkerStyle());
-		// markerStyleMap.put("141336", new RoundBracketNameYearMarkerStyle());
-		// markerStyleMap.put("141618", new SquareBracketNumberedMarkerStyle());
-		// markerStyleMap.put("141758", new SquareBracketNameYearMarkerStyle());
-		// markerStyleMap.put("168222", new SquareBracketNumberedMarkerStyle());
-		// markerStyleMap.put("182899", new RoundBracketNameYearMarkerStyle());
-		//
-		// markerStyleMap.put("192724", new SquareBracketNameYearMarkerStyle());
-		// markerStyleMap.put("194085", new NameSquareBracketYearMarkerStyle());
-		// markerStyleMap.put("204724", new RoundBracketNameYearMarkerStyle());
-		// markerStyleMap.put("228620", new RoundBracketNameYearMarkerWithoutComaStyle());
-		// markerStyleMap.put("245336", new NameSquareBracketYearMarkerStyle());
-		// markerStyleMap.put("255712", new RoundBracketShortNameYearMarkerWithoutComaStyle());
-
-		markerStyleMap.put("137078", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("138011", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("138447", new SuperscriptNumberedMarkerStyle());
-		markerStyleMap.put("138544", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("138547", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("139769", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("139781", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("139785", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("140047", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("140229", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("140308", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("140867", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("140895", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("140983", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("141024", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("141065", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("141121", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("141618", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("168222", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("169511", new NumberedMarkerStyle());
-		markerStyleMap.put("172697", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("175428", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("176087", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("177140", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("179146", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("180162", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("181199", new NumberedMarkerStyle());
-		markerStyleMap.put("185321", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("185441", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("186227", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("189842", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("194085", new NameRoundBracketYearMarkerStyle());
+		markerStyleMap.put("140533", new NameSquareBracketYearMarkerStyle());
+		// not working markerStyleMap.put("203409", new null());
+		// not working markerStyleMap.put("251544", new null // RandomMarkerstyle());
+		// not working markerStyleMap.put("140048", new null //SquareBracketNameShortYearShortMarkerStyle());
+		// not working markerStyleMap.put("174216", new null; // SquareBracketNameComaYearMarkerStyle());
+		// not working markerStyleMap.put("247743", new null; // SquareBracketNameShortYearShortMarkerStyle //wär neuer Markersytle: 1:Fir02, oder 2:FS02 3: WFS wenn eindeutig, sonst mit jahreszahl
+		// und wenn dann gliech mit ab());
+		// not working markerStyleMap.put("245336", new null; //NameSquareBracketYearMarkerStyle());
+		// not working markerStyleMap.put("182414", new null; //SquareBracketLastNameShortYearShortMarkerStyle());
+		// not working markerStyleMap.put("205933", new null; //SquareBracketNameComaYearMarkerStyle());
+		// not working markerStyleMap.put("200950", new null; //SquareBracketNameShortYearShortMarkerStyle());
+		// not working markerStyleMap.put("168482", new null; //SquareBracketNameShortYearShortMarkerStyle());
+		// not working markerStyleMap.put("226016", new null; //SquareBracketNameShortYearShortMarkerStyle());
 		markerStyleMap.put("191715", new NumberedMarkerStyle());
+		markerStyleMap.put("257397", new NumberedMarkerStyle());
+		markerStyleMap.put("236120", new NumberedMarkerStyle());
+		markerStyleMap.put("240858", new NumberedMarkerStyle());
+		markerStyleMap.put("205557", new NumberedMarkerStyle());
+		markerStyleMap.put("169511", new NumberedMarkerStyle());
+		markerStyleMap.put("223973", new NumberedMarkerStyle());
+		markerStyleMap.put("181199", new NumberedMarkerStyle());
 		markerStyleMap.put("191977", new NumberedMarkerStyle());
 		markerStyleMap.put("192724", new NumberedMarkerStyle());
-		markerStyleMap.put("194561", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("194660", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("198400", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("198405", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("200745", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("200748", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("200948", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("200959", new SquareBracketNumberedMarkerStyle());
 		markerStyleMap.put("201066", new NumberedMarkerStyle());
 		markerStyleMap.put("201160", new NumberedMarkerStyle());
 		markerStyleMap.put("201167", new NumberedMarkerStyle());
 		markerStyleMap.put("201821", new NumberedMarkerStyle());
+		markerStyleMap.put("204724", new NumberedMarkerStyle());
+		markerStyleMap.put("213513", new NumberedMarkerStyle());
+		markerStyleMap.put("225252", new NumberedMarkerStyle());
+		markerStyleMap.put("247301", new NumberedMarkerStyle());
+		markerStyleMap.put("257870", new NumberedMarkerStyle());
+		markerStyleMap.put("141336", new RoundBracketNameAmpYearMarkerStyle());
+		markerStyleMap.put("140253", new RoundBracketNameYearMarkerStyle());
+		// not working markerStyleMap.put("198401", new RoundBracketNameYearMarkerStyle());
+		markerStyleMap.put("231707", new RoundBracketNameYearMarkerWithoutComaStyle());
+		markerStyleMap.put("182899", new RoundBracketNameYearMarkerWithoutComaStyle());
+		// not working markerStyleMap.put("228620", new RoundBracketNameYearMarkerWithoutComaStyle());
+		markerStyleMap.put("255712", new RoundBracketShortNameYearMarkerWithoutComaStyle2());
+		markerStyleMap.put("139299", new SquareBracketNameComaYearMarkerStyle());
+		markerStyleMap.put("141758", new SquareBracketNameComaYearMarkerStyle());
+		markerStyleMap.put("197852", new SquareBracketNameShortYearShortMarkerStyle());
+		// not working markerStyleMap.put("256654", new SquareBracketNameShortYearShortMarkerStyle());
+		// not working markerStyleMap.put("139761", new SquareBracketNameShortYearShortMarkerStyle());
+		// not working markerStyleMap.put("197422", new SquareBracketNameShortYearShortMarkerStyle());
+		markerStyleMap.put("198408", new SquareBracketNameYearMarkerWithoutWhitespaceStyle());
+		markerStyleMap.put("137078", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("175428", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("236063", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("233657", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("221215", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("180162", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("140983", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("200748", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("141065", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("141121", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("141140", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("141618", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("177140", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("179146", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("185321", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("198400", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("198405", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("216744", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("217971", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("226000", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("252847", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("139785", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("200959", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("200948", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("245799", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("139769", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("138547", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("247741", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("140229", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("138011", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("138544", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("139781", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("140047", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("140308", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("140867", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("140895", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("141024", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("168222", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("172697", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("176087", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("185441", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("186227", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("189842", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("194561", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("194660", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("200745", new SquareBracketNumberedMarkerStyle());
 		markerStyleMap.put("202034", new SquareBracketNumberedMarkerStyle());
 		markerStyleMap.put("202824", new SquareBracketNumberedMarkerStyle());
 		markerStyleMap.put("203924", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("204724", new NumberedMarkerStyle());
-		markerStyleMap.put("205557", new NumberedMarkerStyle());
-		markerStyleMap.put("213513", new NumberedMarkerStyle());
-		markerStyleMap.put("216744", new SquareBracketNumberedMarkerStyle());
 		markerStyleMap.put("217690", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("217971", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("221215", new SquareBracketNumberedMarkerStyle());
 		markerStyleMap.put("223906", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("223973", new NumberedMarkerStyle());
-		markerStyleMap.put("225252", new NumberedMarkerStyle());
-		markerStyleMap.put("226000", new SquareBracketNumberedMarkerStyle());
 		markerStyleMap.put("233317", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("233657", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("236063", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("236120", new NumberedMarkerStyle());
 		markerStyleMap.put("237297", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("240858", new NumberedMarkerStyle());
-		markerStyleMap.put("245799", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("247301", new NumberedMarkerStyle());
-		markerStyleMap.put("247741", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("252847", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("257397", new NumberedMarkerStyle());
-		markerStyleMap.put("257870", new NumberedMarkerStyle());
+		markerStyleMap.put("138447", new SuperscriptNumberedMarkerStyle());
 
 	}
 }

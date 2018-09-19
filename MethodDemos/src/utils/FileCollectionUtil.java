@@ -1,6 +1,7 @@
 package utils;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FilenameFilter;
 import java.util.Arrays;
 import java.util.Collection;
@@ -15,6 +16,10 @@ import evaluation.tools.EvalInformationType;
 import evaluation.tools.WriterType;
 import method.Method;
 
+/**
+ * getResultFiles(): xstream.xml in output/result/ </br>
+ * getResultFilesByMethod(Method method): xstream.xml in output/extracted/<method>/
+ */
 public class FileCollectionUtil
 {
 
@@ -27,6 +32,10 @@ public class FileCollectionUtil
 		return Arrays.asList(directory.listFiles());
 	}
 
+	/**
+	 * @param method
+	 * @return xstream file for method
+	 */
 	public static List<File> getResultFilesByMethod(Method method)
 	{
 		File directory = method.getResultDirectory();
@@ -44,21 +53,33 @@ public class FileCollectionUtil
 		return files;
 	}
 
+	/**
+	 * @return xstream file for method
+	 */
 	public static List<File> getCermineResultFiles()
 	{
 		return getResultFilesByMethod(Method.CERMINE);
 	}
 
+	/**
+	 * @return xstream file for method
+	 */
 	public static List<File> getGrobidResultFiles()
 	{
 		return getResultFilesByMethod(Method.GROBID);
 	}
 
+	/**
+	 * @return xstream file for method
+	 */
 	public static List<File> getParscitResultFiles()
 	{
 		return getResultFilesByMethod(Method.PARSCIT);
 	}
 
+	/**
+	 * @return xstream file for method
+	 */
 	public static List<File> getPdfxResultFiles()
 	{
 		return getResultFilesByMethod(Method.PDFX);
@@ -99,15 +120,6 @@ public class FileCollectionUtil
 			}
 		}));
 		return files;
-	}
-
-	public static List<File> getResultFilesById(String pubId)
-	{
-		File directory = Config.groundTruthResults;
-
-		checkIfContainsFiles(directory);
-
-		return Arrays.asList(directory.listFiles());
 	}
 
 	public static File getCermineResultFileById(String pubId)
@@ -221,5 +233,23 @@ public class FileCollectionUtil
 		Collection<File> list = FileUtils.listFiles(new File(Config.statisticsFolder), new String[]{"csv"}, true);
 
 		return list;
+	}
+
+	public static List<File> getExtractedFiles(Method method, List<String> idList)
+	{
+		File directory = method.getResultDirectory();
+
+		checkIfContainsFiles(directory);
+
+		List<File> files = Arrays.asList(directory.listFiles(new FileFilter()
+		{
+			@Override
+			public boolean accept(File file)
+			{
+				String id = PublicationUtil.getIdFromFileWithoutPrefix(file);
+				return idList.contains(id) && file.getName().endsWith(Config.extractedFileExtension) && !file.getName().endsWith(Config.xStreamFileExtension);
+			}
+		}));
+		return files;
 	}
 }

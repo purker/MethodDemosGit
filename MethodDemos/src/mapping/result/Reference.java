@@ -145,4 +145,5 @@ public class Reference extends AbstractMetaPublication
 		}
 		return sb.toString();
 	}
+
 }

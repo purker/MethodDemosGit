@@ -70,8 +70,17 @@ public class PublicationFactory
 	public static ReferenceAuthor createReferenceAuthor()
 	{
 		ReferenceAuthor author = new ReferenceAuthor();
-		author.setFirstNames(Arrays.asList("first"));
-		author.setLastName("last");
+		author.setFirstNames(Arrays.asList("AuthorFirstName"));
+		author.setLastName("AuthorLastName");
+
+		return author;
+	}
+
+	public static ReferenceAuthor createReferenceAuthor2()
+	{
+		ReferenceAuthor author = new ReferenceAuthor();
+		author.setFirstNames(Arrays.asList("AuthorFirstName2"));
+		author.setLastName("AuthorLastName2");
 
 		return author;
 	}
@@ -102,11 +111,27 @@ public class PublicationFactory
 	public static Reference createReference()
 	{
 		Reference reference = new Reference();
+		reference.setId(new Id(1));
 		reference.setAuthors(Arrays.asList(createReferenceAuthor()));
 		reference.setTitle("referencetitle");
 		reference.setPageFrom("1");
 		reference.setPageTo("2");
 		reference.setPublicationDate(new Date());
+		reference.setPublicationYear("2001");
+
+		return reference;
+	}
+
+	public static Reference createReferenceTwoAuthors()
+	{
+		Reference reference = new Reference();
+		reference.setId(new Id(1));
+		reference.setAuthors(Arrays.asList(createReferenceAuthor(), createReferenceAuthor2()));
+		reference.setTitle("referencetitle");
+		reference.setPageFrom("1");
+		reference.setPageTo("2");
+		reference.setPublicationDate(new Date());
+		reference.setPublicationYear("2001");
 
 		return reference;
 	}

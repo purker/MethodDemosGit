@@ -4,18 +4,18 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.grobid.core.engines.Engine;
 import org.grobid.core.engines.config.GrobidAnalysisConfig;
 import org.grobid.core.factory.GrobidFactory;
-import org.grobid.core.main.GrobidHomeFinder;
+import org.grobid.core.mock.MockContext;
 import org.grobid.core.utilities.GrobidProperties;
 
 import config.Config;
 import method.Method;
+import utils.FailureUtil;
 
 /**
  * http://grobid.readthedocs.io/en/latest/Grobid-java-library/
@@ -34,13 +34,7 @@ public class GrobidDemo extends AbstractDemo
 
 	public GrobidDemo()
 	{
-		// in old version
-		// MockContext.setInitialContext(Config.pGrobidHome, Config.pGrobidProperties);
-		// GrobidProperties.getInstance();
-		GrobidHomeFinder grobidHomeFinder = new GrobidHomeFinder(Arrays.asList(Config.pGrobidHome));
-		GrobidProperties.getInstance(grobidHomeFinder);
-
-		engine = GrobidFactory.getInstance().createEngine();
+		engine = initEngine();
 		config = GrobidAnalysisConfig.builder().consolidateHeader(consolidateHeader).consolidateCitations(consolidateCitations).build();
 	}
 
@@ -57,19 +51,6 @@ public class GrobidDemo extends AbstractDemo
 		new GrobidDemo().runDemoList(groundTruthFiles, Demos.grobIdOutputDir);
 		// new GROBIDDemo().runDemoInBatch("D:/TU/Masterarbeit/Papers/Methoden/", Demos.grobIdOutputDir.getPath());
 		// new GROBIDDemo().runDemoInBatch("D:/output/GroundTruth-subset", grobIdOutputDir.getPath());
-	}
-
-	public void runDemoInBatch(String inputDir, String outputDir)
-	{
-		try
-		{
-			int tei = engine.batchProcessFulltext(inputDir, outputDir, consolidateHeader, consolidateCitations);
-			System.out.println(tei);
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
 	}
 
 	/*
@@ -90,6 +71,29 @@ public class GrobidDemo extends AbstractDemo
 		catch(Exception e)
 		{
 			return e.getMessage();
+		}
+	}
+
+	public static Engine initEngine()
+	{
+		init();
+
+		return GrobidFactory.getInstance().createEngine();
+	}
+
+	public static void init()
+	{
+		try
+		{
+			// in old version
+			MockContext.setInitialContext(Config.pGrobidHome, Config.pGrobidProperties);
+			GrobidProperties.getInstance();
+			// GrobidHomeFinder grobidHomeFinder = new GrobidHomeFinder(Arrays.asList(Config.pGrobidHome));
+			// GrobidProperties.getInstance(grobidHomeFinder);
+		}
+		catch(Exception e)
+		{
+			FailureUtil.failureExit(e, System.out, "error initializing grobid context", true);
 		}
 	}
 
