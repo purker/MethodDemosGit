@@ -18,7 +18,7 @@ public class ReferenceIdInitializerPdfx extends Worker
 			List<Reference> references = publication.getReferences();
 			for(Reference r : references)
 			{
-				r.setId(new Id(r.getGrobidReferenceIdString()));
+				r.setId(new Id(r.getReferenceIdString()));
 			}
 		}
 		catch(Exception e)

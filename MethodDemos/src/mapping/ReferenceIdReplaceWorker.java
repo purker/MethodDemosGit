@@ -19,7 +19,7 @@ public class ReferenceIdReplaceWorker extends Worker
 			List<Reference> references = publication.getReferences();
 			for(Reference r : references)
 			{
-				r.setId(new Id(new Integer(r.getGrobidReferenceIdString().replaceFirst(Config.referencePrefix, ""))));
+				r.setId(new Id(new Integer(r.getReferenceIdString().replaceFirst(Config.referencePrefix, ""))));
 			}
 		}
 		catch(Exception e)

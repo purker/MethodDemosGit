@@ -45,7 +45,7 @@ public class ReferenceIdReplaceWorkerGrobid extends Worker
 			List<Reference> references = publication.getReferences();
 			for(Reference r : references)
 			{
-				r.setId(new Id(new Integer(r.getGrobidReferenceIdString().replaceFirst("b", "")) + 1));
+				r.setId(new Id(new Integer(r.getReferenceIdString().replaceFirst("b", "")) + 1));
 			}
 		}
 		catch(Exception e)

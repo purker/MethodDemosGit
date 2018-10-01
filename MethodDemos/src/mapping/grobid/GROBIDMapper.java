@@ -16,7 +16,7 @@ public class GROBIDMapper extends Mapper
 {
 	private static final Method METHOD = Method.GROBID;
 	private static final File DIRECTORY_NAME = Demos.grobIdOutputDir;
-	public static final String BINDINGFILE = "bindingfiles/binding_grobid.xml";
+	private static final String BINDINGFILE = "bindingfiles/binding_grobid.xml";
 
 	@Override
 	protected String getBindingFile()

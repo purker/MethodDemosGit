@@ -17,6 +17,7 @@ import com.thoughtworks.xstream.converters.reflection.FieldDictionary;
 import com.thoughtworks.xstream.converters.reflection.SortableFieldKeySorter;
 import com.thoughtworks.xstream.converters.reflection.SunUnsafeReflectionProvider;
 import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.thoughtworks.xstream.security.TypePermission;
 
 import mapping.IdConverter;
 import mapping.result.Affiliation;
@@ -29,7 +30,7 @@ import mapping.result.Section;
 
 public class XStreamUtil
 {
-	private static final String[] referenceFieldOrder = new String[]{"serialVersionUID", "id", "grobidReferenceIdString", "marker", "title", "publicationType", "source", "publisher", "editors", "authors", "edition", "location", "volume", "issue", "chapter", "note", "pageFrom", "pageTo", "publicationDateString", "publicationYear", "publicationYearSuffix", "publicationMonth", "publicationDay", "publicationDate", "doi", "url", "type", "referenceText", "publication"};
+	private static final String[] referenceFieldOrder = new String[]{"serialVersionUID", "id", "referenceIdString", "marker", "title", "publicationType", "source", "publisher", "editors", "authors", "edition", "location", "volume", "issue", "chapter", "note", "pageFrom", "pageTo", "publicationDateString", "publicationYear", "publicationYearSuffix", "publicationMonth", "publicationDay", "publicationDate", "doi", "url", "type", "referenceText", "publication"};
 
 	public static void convertToXmL(Object object, File file, PrintStream out, boolean exitOnError)
 	{
@@ -80,6 +81,17 @@ public class XStreamUtil
 		xStream.alias("ReferenceAuthor", ReferenceAuthor.class);
 
 		xStream.registerConverter(new IdConverter());
+
+		// allowed classes, otherwise com.thoughtworks.xstream.security.ForbiddenClassException
+		XStream.setupDefaultSecurity(xStream);
+		xStream.addPermission(new TypePermission()
+		{
+			@Override
+			public boolean allows(Class type)
+			{
+				return type.getPackage().getName().startsWith("mapping.result");
+			}
+		});
 
 		return xStream;
 	}
