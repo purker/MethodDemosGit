@@ -9,12 +9,10 @@ import org.apache.commons.io.FileUtils;
 import org.grobid.core.GrobidModel;
 import org.grobid.core.GrobidModels;
 import org.grobid.core.engines.Engine;
-import org.grobid.core.factory.GrobidFactory;
-import org.grobid.core.main.GrobidHomeFinder;
-import org.grobid.core.utilities.GrobidProperties;
 import org.grobid.trainer.SegmentationTrainer;
 
 import config.Config;
+import demos.GrobidDemo;
 
 /**
  * data for training: grobid-trainer/resources/dataset/<MODEL>/corpus/ </br>
@@ -34,19 +32,14 @@ public class Training
 
 	private static void createTrainingData() throws Exception
 	{
-		// TODO Initialisierung evt. mit GrobidDemo run teilen
-		GrobidHomeFinder grobidHomeFinder = new GrobidHomeFinder(Arrays.asList(Config.pGrobidHome));
-		GrobidProperties.getInstance(grobidHomeFinder);
-
-		Engine engine = GrobidFactory.getInstance().createEngine();
+		Engine engine = GrobidDemo.initEngine();
 
 		engine.batchCreateTraining(Config.trainingInput, Config.trainingOutput, 2);
 	}
 
 	private static void trainAndEvaluate() throws Exception
 	{
-		GrobidHomeFinder grobidHomeFinder = new GrobidHomeFinder(Arrays.asList(Config.pGrobidHome));
-		GrobidProperties.getInstance(grobidHomeFinder);
+		GrobidDemo.init();
 
 		SegmentationTrainer.main(null);
 	}

@@ -99,7 +99,7 @@ public class XlsxToCsv
 						sb.append(";");
 				}
 			}
-			sb.append("\r\n");
+			sb.append("\n");
 		}
 
 		return sb.toString();

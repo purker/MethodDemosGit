@@ -21,7 +21,7 @@ public class StringUtil
 		return !isEmpty(s);
 	}
 
-	public static String objectListToString(List<Object> objectList, String separator)
+	public static String objectListToString(List<?> objectList, String separator)
 	{
 		List<String> stringList = objectListToStringList(objectList, separator);
 
