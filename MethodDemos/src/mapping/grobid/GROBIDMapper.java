@@ -52,7 +52,7 @@ public class GROBIDMapper extends Mapper
 		/* TODO dort auch wieder einkommentieren new AuthorNameConcatenationWorker(), */
 		workers.add(new ReferenceIdReplaceWorkerGrobid());
 		workers.add(new ReferenceEditionWorker());
-		workers.add(new ReferenceDateWorker());
+		workers.add(new DateWorkerGrobid());
 
 		return workers;
 	}
