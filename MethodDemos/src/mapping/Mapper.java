@@ -129,6 +129,7 @@ public abstract class Mapper
 
 	public void unmarshallFiles(List<File> extractedFiles)
 	{
+		System.out.println(getMethod() + ": starting unmarshalling");
 		for(File inputFile : extractedFiles)
 		{
 			// id="TUW-000000"
@@ -154,7 +155,7 @@ public abstract class Mapper
 				}
 			}
 		}
-
+		System.out.println(getMethod() + ": finished unmarshalling");
 	}
 
 	/**

@@ -31,6 +31,7 @@ public abstract class AbstractDemo
 	 */
 	public void runDemoList(List<File> files, File outputFolder) throws IOException
 	{
+		System.out.println(getMethod() + ": starting extraction");
 		int i = 0;
 		for(File inputFile : files)
 		{
@@ -92,6 +93,7 @@ public abstract class AbstractDemo
 			int percentage = i * 100 / files.size();
 			log(String.format(getMethodName() + ": " + Math.round(elapsed) + "s" + " | %3d%% done (%3d out of %3d)\n", percentage, i, files.size()));
 		}
+		System.out.println(getMethod() + ": finished extraction");
 	}
 
 	protected String getMethodName()

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -16,6 +17,7 @@ import org.grobid.core.utilities.GrobidProperties;
 import config.Config;
 import method.Method;
 import utils.FailureUtil;
+import utils.FileCollectionUtil;
 
 /**
  * http://grobid.readthedocs.io/en/latest/Grobid-java-library/
@@ -41,12 +43,9 @@ public class GrobidDemo extends AbstractDemo
 	public static void main(String[] args) throws IOException
 	{
 		List<File> groundTruthFiles = new ArrayList<>();
-		// groundTruthFiles.add(Demos.getAllGroundTruthFiles().subList(0, 1));
-		groundTruthFiles.add(new File("D:\\output\\methods\\GroundTruthNoSubDir\\TUW-247743.pdf"));
-		// groundTruthFiles.add(Demos.getAllGroundTruthFiles().subList(0, 1));
-		// groundTruthFiles.add(new File("D:\\output\\methods\\GroundTruthNoSubDir\\TUW-200745.pdf"));
-		// groundTruthFiles.add(Demos.getAllGroundTruthFiles().subList(0, 1));
-		// groundTruthFiles.add(new File("D:\\output\\methods\\GroundTruthNoSubDir\\TUW-200948.pdf"));
+
+		List<String> idList = Arrays.asList("139761");
+		groundTruthFiles.addAll(FileCollectionUtil.getAllGroundTruthFilesByIds(idList));
 
 		new GrobidDemo().runDemoList(groundTruthFiles, Demos.grobIdOutputDir);
 		// new GROBIDDemo().runDemoInBatch("D:/TU/Masterarbeit/Papers/Methoden/", Demos.grobIdOutputDir.getPath());

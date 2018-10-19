@@ -41,7 +41,6 @@ public class XlsxToCsv
 			}
 			catch(Exception e)
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -99,7 +98,7 @@ public class XlsxToCsv
 						sb.append(";");
 				}
 			}
-			sb.append("\n");
+			sb.append("\r\n");
 		}
 
 		return sb.toString();

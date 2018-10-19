@@ -11,17 +11,17 @@ import java.util.ListIterator;
 import org.apache.commons.io.FileUtils;
 
 import utils.FailureUtil;
-import utils.FileCollectionUtil;
 
 public class ReplaceNewlines
 {
+	private static final String LINE_ENDING = "\n";
 
 	public static void main(String[] args) throws IOException
 	{
-		// replaceNewlines(FileCollectionUtil.getStatisticsCSVFiles());
-		replaceNewlines(FileCollectionUtil.getGrobidResultFiles());
-		// replaceNewlines(FileCollectionUtil.getExtractedFiles(Method.GROBID));
-
+		// replaceNewlines(FileCollectionUtil.getCermineResultFiles());
+		// replaceNewlines(FileCollectionUtil.getGrobidResultFiles());
+		// replaceNewlines(FileCollectionUtil.getParscitResultFiles());
+		// replaceNewlines(FileCollectionUtil.getPdfxResultFiles());
 	}
 
 	public static void replaceNewlines(Collection<File> files) throws IOException
@@ -30,7 +30,6 @@ public class ReplaceNewlines
 		{
 			replaceNewlines(file);
 		}
-
 	}
 
 	public static void replaceNewlines(File file)
@@ -47,7 +46,7 @@ public class ReplaceNewlines
 			{
 				String string = iterator.next();
 				if(iterator.hasNext())
-					sb.append(string + "\r\n");
+					sb.append(string + LINE_ENDING);
 				else
 					sb.append(string);
 			}
