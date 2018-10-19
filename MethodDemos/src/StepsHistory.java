@@ -1,5 +1,6 @@
 import java.awt.Desktop;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.StringReader;
@@ -37,6 +38,7 @@ import org.eclipse.persistence.jaxb.JAXBContext;
 import org.eclipse.persistence.jaxb.JAXBContextFactory;
 import org.eclipse.persistence.jaxb.JAXBContextProperties;
 import org.eclipse.persistence.jaxb.JAXBUnmarshaller;
+import org.mozilla.universalchardet.UniversalDetector;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -145,6 +147,7 @@ public class StepsHistory
 
 	public static void main(String[] args) throws Exception
 	{
+		printEncoding(FileCollectionUtil.getStatisticsCSVFiles());
 		// GrobidDemo.init();
 		// File file = new File("D:\\Java\\git\\grobid-0.4.4\\grobid-home\\models\\name\\citation\\model.wapiti");
 		// WapitiModel.dump(file);
@@ -320,6 +323,44 @@ public class StepsHistory
 		// setRefCounter(result15_182899, (2), null);
 		// changeSectionReferenceIdsToIdsWithMarker(result15_182899);
 		// removeMarkersFromIds(result15_182899);
+	}
+
+	private static void printEncoding(Collection<File> files) throws IOException
+	{
+		for(File file : files)
+		{
+			byte[] buf = new byte[4096];
+			FileInputStream fis = new FileInputStream(file);
+
+			// (1)
+			UniversalDetector detector = new UniversalDetector(null);
+
+			// (2)
+			int nread;
+			while((nread = fis.read(buf)) > 0 && !detector.isDone())
+			{
+				detector.handleData(buf, 0, nread);
+			}
+			// (3)
+			detector.dataEnd();
+
+			// (4)
+			String encoding = detector.getDetectedCharset();
+			if(encoding != null)
+			{
+				System.out.printf("%-35s", "Detected encoding = " + encoding);
+			}
+			else
+			{
+				System.out.printf("%-35s", "No encoding detected.");
+			}
+
+			System.out.println(file.getName());
+
+			// (5)
+			detector.reset();
+		}
+
 	}
 
 	private static void setMarkersByReferenceStyleForAll() throws IOException
