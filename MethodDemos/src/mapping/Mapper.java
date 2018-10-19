@@ -24,6 +24,7 @@ import org.eclipse.persistence.jaxb.JAXBUnmarshaller;
 
 import mapping.result.Publication;
 import method.Method;
+import misc.Duration;
 import utils.FailureUtil;
 import utils.FileCollectionUtil;
 import utils.PublicationUtil;
@@ -98,7 +99,7 @@ public abstract class Mapper
 		Publication publication;
 		if(getIgnoreDTD())
 		{
-			XMLInputFactory xif = XMLInputFactory.newFactory();
+			XMLInputFactory xif = XMLInputFactory.newInstance();
 			xif.setProperty(XMLInputFactory.SUPPORT_DTD, false);
 			XMLStreamReader xsr = xif.createXMLStreamReader(new StreamSource(inputFileXML));
 			publication = (Publication)unmarshaller.unmarshal(xsr);
@@ -129,7 +130,7 @@ public abstract class Mapper
 
 	public void unmarshallFiles(List<File> extractedFiles)
 	{
-		System.out.println(getMethod() + ": starting unmarshalling");
+		Duration.addStart(getMethod() + "_MAPPING");
 		for(File inputFile : extractedFiles)
 		{
 			// id="TUW-000000"
@@ -155,7 +156,7 @@ public abstract class Mapper
 				}
 			}
 		}
-		System.out.println(getMethod() + ": finished unmarshalling");
+		Duration.addEnd(getMethod() + "_MAPPING");
 	}
 
 	/**

@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import evaluation.tools.EvalInformationType;
+import misc.Duration;
+import misc.DurationEnum;
 import misc.ExcelRefreshFormulas;
 import misc.XlsxToCsv;
 
@@ -35,6 +37,7 @@ public class Evaluators
 
 	public static void main(String[] args)
 	{
+		Duration.addStart(DurationEnum.EVALUATION);
 		try
 		{
 			// List<EvaluationMode> allModes = Arrays.asList(EvaluationMode.values());
@@ -53,6 +56,7 @@ public class Evaluators
 		{
 			e.printStackTrace();
 		}
+		Duration.addEnd(DurationEnum.EVALUATION);
 	}
 
 	private static void evaluateMethods(List<EvaluationMode> modes, List<EvalInformationType> types, List<EvalInformationType> referenceTypes) throws IOException

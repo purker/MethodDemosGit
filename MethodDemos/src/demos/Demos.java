@@ -16,6 +16,8 @@ import mapping.cermine.CermineMapper;
 import mapping.grobid.GROBIDMapper;
 import mapping.parscit.ParsCitMapper;
 import mapping.pdfx.PDFXMapper;
+import misc.Duration;
+import misc.DurationEnum;
 import misc.SetDateAndGrobidVersion;
 import utils.FileCollectionUtil;
 
@@ -47,18 +49,20 @@ public class Demos
 
 	public static void executeDemos() throws IOException, JAXBException
 	{
+		Duration.addStart(DurationEnum.ALL);
+
 		List<String> idList = Config.groundTruthIds;
 		// List<String> idList = Arrays.asList("139761");
 
-		boolean runDemos = true;
+		boolean runDemos = false;
 		boolean runCermineDemo = false;
 		boolean runGrobidDemo = true;
 		boolean runParsCitDemo = false;
 		boolean runPdfxDemo = false;
-		boolean runCermineMapper = false;
+		boolean runCermineMapper = true;
 		boolean runGrobidMapper = true;
-		boolean runParsCitMapper = false;
-		boolean runPdfxMapper = false;
+		boolean runParsCitMapper = true;
+		boolean runPdfxMapper = true;
 
 		boolean startEvaluation = true;
 
@@ -115,6 +119,8 @@ public class Demos
 
 		// Evaluation
 		if(startEvaluation) Evaluators.main(null);
+
+		Duration.addEnd(DurationEnum.ALL);
 	}
 
 	private static void cleanOrCreateDirectory(File outputDir) throws IOException

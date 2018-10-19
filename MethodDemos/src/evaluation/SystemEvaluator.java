@@ -189,11 +189,11 @@ public abstract class SystemEvaluator
 			}
 		}
 
-		System.out.println("Evaluation of PUBLICATIONS");
+		System.out.println("\tEvaluation of PUBLICATIONS");
 		results.evaluate();
 		if(printResults) results.printResults();
 
-		System.out.println("Evaluation of REFERENCES");
+		System.out.println("\tEvaluation of REFERENCES");
 		refResults.evaluate();
 		if(printResults) refResults.printResults();
 

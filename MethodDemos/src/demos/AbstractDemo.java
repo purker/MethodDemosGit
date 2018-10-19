@@ -14,6 +14,7 @@ import org.apache.commons.io.FilenameUtils;
 
 import config.Config;
 import method.Method;
+import misc.Duration;
 import utils.PublicationUtil;
 import utils.SimplestFormatter;
 
@@ -32,7 +33,10 @@ public abstract class AbstractDemo
 	public void runDemoList(List<File> files, File outputFolder) throws IOException
 	{
 		System.out.println(getMethod() + ": starting extraction");
+		Duration.addStart(getMethod() + "_" + "EXTRACTION");
+
 		int i = 0;
+		float duration = 0;
 		for(File inputFile : files)
 		{
 			long start = System.currentTimeMillis();
@@ -93,7 +97,8 @@ public abstract class AbstractDemo
 			int percentage = i * 100 / files.size();
 			log(String.format(getMethodName() + ": " + Math.round(elapsed) + "s" + " | %3d%% done (%3d out of %3d)\n", percentage, i, files.size()));
 		}
-		System.out.println(getMethod() + ": finished extraction");
+
+		System.out.println(getMethod() + ": finished extraction " + Duration.addEndGetDuration(getMethod() + "_" + "EXTRACTION"));
 	}
 
 	protected String getMethodName()
