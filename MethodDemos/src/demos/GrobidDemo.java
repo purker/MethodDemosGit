@@ -16,6 +16,7 @@ import org.grobid.core.utilities.GrobidProperties;
 
 import config.Config;
 import method.Method;
+import misc.SetDateAndGrobidVersion;
 import utils.FailureUtil;
 import utils.FileCollectionUtil;
 
@@ -44,10 +45,11 @@ public class GrobidDemo extends AbstractDemo
 	{
 		List<File> groundTruthFiles = new ArrayList<>();
 
-		List<String> idList = Arrays.asList("139761");
+		List<String> idList = Arrays.asList("194561");
 		groundTruthFiles.addAll(FileCollectionUtil.getAllGroundTruthFilesByIds(idList));
 
 		new GrobidDemo().runDemoList(groundTruthFiles, Demos.grobIdOutputDir);
+		SetDateAndGrobidVersion.replaceDateAndGrobidVersion();
 		// new GROBIDDemo().runDemoInBatch("D:/TU/Masterarbeit/Papers/Methoden/", Demos.grobIdOutputDir.getPath());
 		// new GROBIDDemo().runDemoInBatch("D:/output/GroundTruth-subset", grobIdOutputDir.getPath());
 	}
