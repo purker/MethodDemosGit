@@ -3,6 +3,7 @@ package utils;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FilenameFilter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.io.FileUtils;
 
 import config.Config;
+import demos.Demos;
 import evaluation.tools.CollectionEnum;
 import evaluation.tools.EvalInformationType;
 import evaluation.tools.WriterType;
@@ -251,5 +253,35 @@ public class FileCollectionUtil
 			}
 		}));
 		return files;
+	}
+
+	public static List<File> getAllGroundTruthFilesByIds(List<String> idList)
+	{
+		List<File> list = new ArrayList<>();
+
+		for(String pubId : idList)
+		{
+			String fileName = FileNameUtil.getPdfFileNameFromID(pubId);
+			File file = new File(Demos.inputDir, fileName);
+
+			list.add(file);
+		}
+
+		return list;
+	}
+
+	public static List<File> getAllGroundTruthFilesOmnipageById(List<String> idList)
+	{
+		List<File> list = new ArrayList<>();
+
+		for(String pubId : idList)
+		{
+			String fileName = FileNameUtil.getOmnipageFileNameFromID(pubId);
+			File file = new File(Demos.inputDir, fileName);
+
+			list.add(file);
+		}
+
+		return list;
 	}
 }

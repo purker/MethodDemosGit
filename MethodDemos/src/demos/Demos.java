@@ -2,7 +2,6 @@ package demos;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +17,7 @@ import mapping.grobid.GROBIDMapper;
 import mapping.parscit.ParsCitMapper;
 import mapping.pdfx.PDFXMapper;
 import misc.SetDateAndGrobidVersion;
+import utils.FileCollectionUtil;
 
 /**
  * Runs all Demos with Ground Truth files from inputDir
@@ -63,8 +63,8 @@ public class Demos
 		boolean startEvaluation = true;
 
 		// List<File> groundTruthFiles = FileCollectionUtil.getExtractedFilesByMethod(method)
-		List<File> groundTruthFiles = getAllGroundTruthFilesByIds(idList);
-		List<File> groundTruthFilesOmnipage = getAllGroundTruthFilesAsOmnipage(idList);
+		List<File> groundTruthFiles = FileCollectionUtil.getAllGroundTruthFilesByIds(idList);
+		List<File> groundTruthFilesOmnipage = FileCollectionUtil.getAllGroundTruthFilesOmnipageById(idList);
 
 		// set directories and clean
 		if(!USE_SPECIFIC_OUTPUTDIR)
@@ -115,36 +115,6 @@ public class Demos
 
 		// Evaluation
 		if(startEvaluation) Evaluators.main(null);
-	}
-
-	private static List<File> getAllGroundTruthFilesAsOmnipage(List<String> idList)
-	{
-		List<File> list = new ArrayList<>();
-
-		for(String string : idList)
-		{
-			String fileName = "TUW-" + string + "-omnipage.xml";
-			File file = new File(inputDir, fileName);
-			// System.out.println(file + " " + file.exists());
-			list.add(file);
-		}
-
-		return list;
-	}
-
-	static List<File> getAllGroundTruthFilesByIds(List<String> idList)
-	{
-		List<File> list = new ArrayList<>();
-
-		for(String string : idList)
-		{
-			String fileName = "TUW-" + string + ".pdf";
-			File file = new File(inputDir, fileName);
-			// System.out.println(file + " " + file.exists());
-			list.add(file);
-		}
-
-		return list;
 	}
 
 	private static void cleanOrCreateDirectory(File outputDir) throws IOException
