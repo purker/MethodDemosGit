@@ -70,6 +70,8 @@ public interface Config
 	File allDeltaPublication = new File(Config.statisticsFolder + "all-delta-precision-recall-publication-statistics.xlsx");
 	File allDeltaReference = new File(Config.statisticsFolder + "all-delta-precision-recall-reference-statistics.xlsx");
 
+	File grobidOverview = new File(Config.statisticsFolder + "grobid-overview.xlsx");
+
 	// training
 	String trainingInput = "output/training/input";
 	String trainingOutput = "output/training/output";
