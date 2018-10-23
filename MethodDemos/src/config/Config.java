@@ -75,4 +75,5 @@ public interface Config
 	// training
 	String trainingInput = "output/training/input";
 	String trainingOutput = "output/training/output";
+	String trainingDumpedModels = "output/training/dumpedmodels";
 }
