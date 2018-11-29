@@ -96,7 +96,7 @@
 
 			<figure>Abb. 3: Lösung &lt;321112&gt; im Gosh-Lösungsarchiv eingefügt<lb/></figure>
 
-			</p>Das Gosh-Lösungsarchiv ist ein Trie, bei dem jede Ebene einem Cluster V i entspricht.<lb/> Jeder Trie-Knoten enthält d i Pointer, d.h. für jeden Knoten im Cluster gibt es einen<lb/> Pointer. Die Pointer können folgende Zustände annehmen:<lb/></p>
+			<p>Das Gosh-Lösungsarchiv ist ein Trie, bei dem jede Ebene einem Cluster V i entspricht.<lb/> Jeder Trie-Knoten enthält d i Pointer, d.h. für jeden Knoten im Cluster gibt es einen<lb/> Pointer. Die Pointer können folgende Zustände annehmen:<lb/></p>
 
 			<list>
 				<item>• null: Dieser Pointerwert gibt an, dass hier noch keine Lösung eingefügt wurde.<lb/></item>
@@ -104,7 +104,7 @@
 				<item>• complete (c): Dieser Wert tritt auf, wenn das Ende einer Lösung erreicht wurde<lb/> oder alle Lösungen in den darunter liegenden Subtrie bereits complete sind.<lb/></item>
 
 				<item>•normaler Pointer: Pointer zum nächsten Trie-Knoten.<lb/></item>
-			<list>
+			</list>
 
 			<p><ref type="figure">Abb. 3</ref> zeigt ein Beispiel wie ein Lösungsarchiv nach dem Einfügen einer Lösung<lb/> aussieht. In diesem Beispiel sind zwei Lösungen in dem Archiv bereits enthalten. Die<lb/> Lösung &lt;321112&gt; wurde dem Archiv neu hinzugefügt. Wie in Kapitel 1.3 beschrieben<lb/> werden für ein Lösungsarchiv zwei Funktionen benötigt. Eine Konvertierungs-und eine<lb/> Einfüge-Methode.<lb/></p>
 
@@ -371,7 +371,7 @@
 
 			<p>In den bisherigen Tests ist zu sehen, dass durch die Verwendung der Bounding-Strategie<lb/> die Anzahl der erzeugten Generationen geringer sind. Dadurch ist ein Vergleich des<lb/> Speicherverbrauchs der beiden Varianten nicht möglich, da bei dem Archiv ohne Bound-<lb/>ing mehr Lösungen in das Archiv eingefügt werden als beim Archiv mit Bounding.<lb/> Um jetzt den Speicherverbrauch der unterschiedlichen Varianten miteinander zu ver-<lb/>gleichen, wird als Abbruchbedingung für den EA eine fixe Anzahl von Generationen<lb/> genommen. So werden bei allen Varianten gleich viele Generationen erzeugt.<lb/></p>
 
-			<p>Für diese Tests wurde die Abbruchbedingung des EAs auf 10.000 Generationen gesetzt.<lb/> In den <ref type="table">Tabellen</ref>			<figure type="table">7 und 8 sind die Ergebnisse für diese Tests zu sehen. In der Tabelle<lb/> 7 wurde das Gosh-Archiv untersucht, während in Tabelle 8 die Ergebnisse für das<lb/> Pop-Archiv zu sehen sind. Es wurden jeweils das &quot;normale&quot; Archiv ohne Bounding-<lb/>Strategie, das mit Bounding-Strategie in der Einfüge-Methode und das mit Bounding-<lb/>Strategie in der Konvertierungs-Methode miteinander verglichen. Die Spalte C avg ent-<lb/>spricht dabei wieder dem Durchschnitt der Lösungswerte über alle Runs, unter diesem<lb/> Wert steht in Klammern die Standardabweichung, Zeit entspricht der durchschnittlich<lb/> benötigten Zeit und M em den benötigten Speicher für das Archiv.<lb/></p>
+			<p>Für diese Tests wurde die Abbruchbedingung des EAs auf 10.000 Generationen gesetzt.<lb/> In den <ref type="table">Tabellen 7 und 8</ref> sind die Ergebnisse für diese Tests zu sehen. In der <ref type="table">Tabelle<lb/> 7</ref> wurde das Gosh-Archiv untersucht, während in <ref type="table">Tabelle 8</ref> die Ergebnisse für das<lb/> Pop-Archiv zu sehen sind. Es wurden jeweils das &quot;normale&quot; Archiv ohne Bounding-<lb/>Strategie, das mit Bounding-Strategie in der Einfüge-Methode und das mit Bounding-<lb/>Strategie in der Konvertierungs-Methode miteinander verglichen. Die Spalte C avg ent-<lb/>spricht dabei wieder dem Durchschnitt der Lösungswerte über alle Runs, unter diesem<lb/> Wert steht in Klammern die Standardabweichung, Zeit entspricht der durchschnittlich<lb/> benötigten Zeit und M em den benötigten Speicher für das Archiv.<lb/></p>
 
 			<p>In diesen Ergebnissen ist zu sehen, dass die Varianten mit Bound immer mehr Spei-<lb/>cher benötigen als die ohne Bound. Das kommt zunächst überraschend, da man zuerst<lb/> annehmen würde, dass durch die Bounding-Strategie auch weniger Speicher verbraucht<lb/> würde. Der Grund für den erhöhten Speicherverbrauch bei der Einfüge-Methode ist<lb/> in <ref type="figure">Abb. 8</ref> zu sehen. In diesem Beispiel wird zunächst versucht, im Gosh-Archiv die<lb/> Lösung &lt;321112&gt; (in der Grafik rot dargestellt) einzufügen. In Knoten V 5 wird eine<lb/> Bound festgestellt, die schlechter ist als die beste bisher gefundene Lösung, und somit<lb/> der Pointer 1 als complete markiert. Danach wird die Einfügeoperation abgebrochen<lb/> und f alse zurück geben. Für den EA sieht es daher so aus, als wäre die Lösung im<lb/> Archiv schon enthalten. Im nächsten Schritt wird mit der Konvertierungsmethode eine<lb/> neue Lösung &lt;341112&gt; erzeugt. Diese wird nun erfolgreich in das Archiv eingefügt.<lb/> Würde die Bounding-Strategie nicht verwendet werden, wäre die Lösung &lt;321112&gt;<lb/> beim ersten Mal eingefügt worden. Da die Bounding-Strategie verwendet wurde, ist nun<lb/> die Lösung &lt;321112&gt; bis zum Knoten V 5 und die Lösung &lt;341112&gt; ganz eingefügt<lb/> worden. D.h. beim Erzeugen einer neuen Lösung für die neue Generation wurden die<lb/> drei Knoten V 3, V 4 und V 5 des ersten Einfügeversuchs zusätzlich eingefügt. Deshalb<lb/> kommt es bei der Verwendung der Bounding-Strategie zu einem höheren Speicherver-<lb/>brauch.<lb/></p>
 
