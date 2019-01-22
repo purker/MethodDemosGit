@@ -32,11 +32,11 @@ public class XStreamUtil
 {
 	private static final String[] referenceFieldOrder = new String[]{"serialVersionUID", "id", "referenceIdString", "marker", "title", "publicationType", "source", "publisher", "editors", "authors", "edition", "location", "volume", "issue", "chapter", "note", "pageFrom", "pageTo", "publicationDateString", "publicationYear", "publicationYearSuffix", "publicationMonth", "publicationDay", "publicationDate", "doi", "url", "type", "referenceText", "publication"};
 
-	public static void convertToXmL(Object object, File file, PrintStream out, boolean exitOnError)
+	public static void convertToXml(Object object, File file, PrintStream out, boolean exitOnError)
 	{
 		try
 		{
-			convertToXmL(object, new FileOutputStream(file), out, exitOnError);
+			convertToXml(object, new FileOutputStream(file), out, exitOnError);
 		}
 		catch(FileNotFoundException e)
 		{
@@ -45,7 +45,7 @@ public class XStreamUtil
 
 	}
 
-	public static void convertToXmL(Object object, OutputStream stream, PrintStream out, boolean exitOnError)
+	public static void convertToXml(Object object, OutputStream stream, PrintStream out, boolean exitOnError)
 	{
 		try
 		{

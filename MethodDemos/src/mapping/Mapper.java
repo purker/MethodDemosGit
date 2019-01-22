@@ -88,7 +88,7 @@ public abstract class Mapper
 		}
 		Publication publication = unmarshallFile(inputFileXML);
 
-		XStreamUtil.convertToXmL(publication, outputFileObjectAsXML, System.out, true);
+		XStreamUtil.convertToXml(publication, outputFileObjectAsXML, System.out, true);
 
 		// System.out.println(publication);
 	}

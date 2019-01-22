@@ -34,9 +34,9 @@ public class EvalInformationTypeComparatorMapping
 
 		relationMap.put(EvalInformationType.SECTION_LEVELS, new RelationComparators(map.get(EvalInformationType.SECTIONS), "sections", EvaluationUtils.exactComparator, "level-exact"));
 		relationMap.put(EvalInformationType.SECTION_REFERENCES, new RelationComparators(map.get(EvalInformationType.SECTIONS), "sections", map.get(EvalInformationType.REFERENCES), "references-default"));
-		// relationMap.put(EvalInformationType.SECTION_REFERENCES, new RelationComparators(map.get(EvalInformationType.SECTIONS)));
 		// map.put(EvalInformationType.REFERENCE_AUTHORS, EvaluationUtils.);
 
+		map.put(EvalInformationType.REFERENCE_ID, EvaluationUtils.defaultComparator);
 		map.put(EvalInformationType.REFERENCE_MARKER, EvaluationUtils.defaultComparator);
 		map.put(EvalInformationType.REFERENCE_TITLE, EvaluationUtils.swComparator);
 		// TODOmap.put(EvalInformationType.REFERENCE_PUBLICATIONTYPE, EvaluationUtils.);
@@ -59,25 +59,25 @@ public class EvalInformationTypeComparatorMapping
 
 	}
 
-	public static Comparator<String> getComparatorByType(EvalInformationType evalInformationType)
+	public static Comparator<String> getComparatorByType(EvalInformationType type)
 	{
-		Comparator<String> comp = map.get(evalInformationType);
+		Comparator<String> comp = map.get(type);
 
 		if(comp == null)
 		{
-			FailureUtil.exit("comparator for type " + evalInformationType + " not specified");
+			FailureUtil.exit("comparator for type \"" + type + "\" is not defined (in class " + EvalInformationTypeComparatorMapping.class.getSimpleName() + ")");
 		}
 
 		return comp;
 	}
 
-	public static RelationComparators getComparatorsByType(EvalInformationType evalInformationType)
+	public static RelationComparators getComparatorsByType(EvalInformationType type)
 	{
-		RelationComparators comps = relationMap.get(evalInformationType);
+		RelationComparators comps = relationMap.get(type);
 
 		if(comps == null)
 		{
-			FailureUtil.exit("comparators for relation " + evalInformationType + " not specified");
+			FailureUtil.exit("comparator for type \"" + type + "\" is not defined (in class " + EvalInformationTypeComparatorMapping.class.getSimpleName() + ")");
 		}
 		return comps;
 	}

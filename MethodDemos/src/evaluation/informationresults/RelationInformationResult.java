@@ -39,10 +39,6 @@ public class RelationInformationResult extends AbstractSingleInformationResult<S
 	public RelationInformationResult(EvalInformationType type, Set<StringRelation> expected, Set<StringRelation> extracted)
 	{
 		RelationComparators relationComparators = EvalInformationTypeComparatorMapping.getComparatorsByType(type);
-		if(relationComparators == null)
-		{
-			FailureUtil.exit("comparator for type \"" + type + "\" is not defined (in class " + EvalInformationTypeComparatorMapping.class.getSimpleName() + ")");
-		}
 
 		this.type = type;
 		this.comp = relationComparators.getComparator1();

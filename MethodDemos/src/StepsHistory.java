@@ -460,7 +460,7 @@ public class StepsHistory
 					System.err.println("no type found for " + publication.getId());
 				}
 
-				XStreamUtil.convertToXmL(publication, file, System.out, true);
+				XStreamUtil.convertToXml(publication, file, System.out, true);
 			}
 			catch(Exception e)
 			{
@@ -505,7 +505,7 @@ public class StepsHistory
 			// publication.setKeywords(null);
 			// }
 
-			XStreamUtil.convertToXmL(publication, file, System.out, true);
+			XStreamUtil.convertToXml(publication, file, System.out, true);
 		}
 
 	}
@@ -534,7 +534,7 @@ public class StepsHistory
 					}
 				}
 			}
-			XStreamUtil.convertToXmL(publication, file, System.out, true);
+			XStreamUtil.convertToXml(publication, file, System.out, true);
 			ReplaceNewlines.replaceNewlines(file);
 		}
 	}
@@ -711,7 +711,7 @@ public class StepsHistory
 						}
 					}
 				}
-				XStreamUtil.convertToXmL(publication, file, System.out, true);
+				XStreamUtil.convertToXml(publication, file, System.out, true);
 				// if(affiliations.size() > 2)
 				// {
 				// Desktop.getDesktop().open(file);
@@ -785,7 +785,7 @@ public class StepsHistory
 				// Publication publication = new ResultMapperXStreamStyle().unmarshall(file);
 
 				// new ResultMapper().marshall(publication, file);
-				XStreamUtil.convertToXmL(publication, file, System.out, true);
+				XStreamUtil.convertToXml(publication, file, System.out, true);
 				break;
 			}
 			catch(Exception e)
@@ -820,7 +820,7 @@ public class StepsHistory
 			}
 		}
 
-		XStreamUtil.convertToXmL(publication, file, System.out, true);
+		XStreamUtil.convertToXml(publication, file, System.out, true);
 	}
 
 	private static void setMarkersByReferenceStyle(File file)
@@ -859,7 +859,7 @@ public class StepsHistory
 		}
 
 		File file = FileCollectionUtil.getGroundTruthResultFileById(publication.getIdString());
-		XStreamUtil.convertToXmL(publication, file, System.out, true);
+		XStreamUtil.convertToXml(publication, file, System.out, true);
 		ReplaceNewlines.replaceNewlines(file);
 	}
 
@@ -881,7 +881,7 @@ public class StepsHistory
 
 						publication.setKeywords(Arrays.asList(section.getLevel().split(", ")));
 						iterator.remove();
-						XStreamUtil.convertToXmL(publication, file, System.err, true);
+						XStreamUtil.convertToXml(publication, file, System.err, true);
 						Desktop.getDesktop().open(file);
 						return;
 					}
@@ -923,7 +923,7 @@ public class StepsHistory
 
 				publication.setAffiliations(null);
 
-				XStreamUtil.convertToXmL(publication, file, System.err, true);
+				XStreamUtil.convertToXml(publication, file, System.err, true);
 			}
 			catch(Exception e)
 			{
@@ -1024,7 +1024,7 @@ public class StepsHistory
 			reference.setMarker("[" + markers[x++] + "]");
 		}
 
-		XStreamUtil.convertToXmL(publication, file, System.out, true);
+		XStreamUtil.convertToXml(publication, file, System.out, true);
 	}
 
 	private static String printAllFirstLastNames(File file)
@@ -1057,7 +1057,7 @@ public class StepsHistory
 				reference.setSource(null);
 			}
 		}
-		XStreamUtil.convertToXmL(publication, file, System.out, true);
+		XStreamUtil.convertToXml(publication, file, System.out, true);
 	}
 
 	private static void replaceReferenceMarkersWithIdsInSections(File file)
@@ -1090,7 +1090,7 @@ public class StepsHistory
 				}
 			}
 		}
-		XStreamUtil.convertToXmL(publication, file, System.out, true);
+		XStreamUtil.convertToXml(publication, file, System.out, true);
 	}
 
 	private static void createFirstAndLastNameFromName(File file)
@@ -1139,7 +1139,7 @@ public class StepsHistory
 			}
 		}
 
-		XStreamUtil.convertToXmL(publication, file, System.out, true);
+		XStreamUtil.convertToXml(publication, file, System.out, true);
 
 	}
 
@@ -1158,7 +1158,7 @@ public class StepsHistory
 			}
 		}
 
-		XStreamUtil.convertToXmL(publication, file, System.out, true);
+		XStreamUtil.convertToXml(publication, file, System.out, true);
 
 	}
 
@@ -1172,7 +1172,7 @@ public class StepsHistory
 			reference.setId(new Id(x++));
 		}
 
-		XStreamUtil.convertToXmL(publication, file, System.out, true);
+		XStreamUtil.convertToXml(publication, file, System.out, true);
 
 	}
 
@@ -1205,7 +1205,7 @@ public class StepsHistory
 				}
 			}
 
-			XStreamUtil.convertToXmL(publication, file, System.out, true);
+			XStreamUtil.convertToXml(publication, file, System.out, true);
 		}
 		catch(
 
@@ -1243,7 +1243,7 @@ public class StepsHistory
 			}
 		}
 
-		XStreamUtil.convertToXmL(publication, file, System.err, true);
+		XStreamUtil.convertToXml(publication, file, System.err, true);
 
 	}
 
@@ -1326,7 +1326,7 @@ public class StepsHistory
 			}
 		}
 
-		XStreamUtil.convertToXmL(publication, file, System.err, true);
+		XStreamUtil.convertToXml(publication, file, System.err, true);
 
 	}
 
@@ -1357,7 +1357,7 @@ public class StepsHistory
 
 			}
 		}
-		XStreamUtil.convertToXmL(publication, file, System.err, true);
+		XStreamUtil.convertToXml(publication, file, System.err, true);
 	}
 
 	/**
@@ -1397,7 +1397,7 @@ public class StepsHistory
 
 			}
 		}
-		XStreamUtil.convertToXmL(publication, file, System.err, true);
+		XStreamUtil.convertToXml(publication, file, System.err, true);
 	}
 
 	private static void splitNames(String string)
@@ -1435,7 +1435,7 @@ public class StepsHistory
 
 		authors.add(a);
 
-		XStreamUtil.convertToXmL(authors, System.err, System.err, true);
+		XStreamUtil.convertToXml(authors, System.err, System.err, true);
 	}
 
 	private static void setRefCounter(File file, int i)
@@ -1495,7 +1495,7 @@ public class StepsHistory
 				}
 			}
 		}
-		XStreamUtil.convertToXmL(publication, file, System.out, true);
+		XStreamUtil.convertToXml(publication, file, System.out, true);
 	}
 
 	private static void rotateReferenceNames(File file)
@@ -1573,7 +1573,7 @@ public class StepsHistory
 			}
 		}
 
-		XStreamUtil.convertToXmL(publication, file, System.out, true);
+		XStreamUtil.convertToXml(publication, file, System.out, true);
 
 	}
 
@@ -1657,7 +1657,7 @@ public class StepsHistory
 			}
 		}
 
-		XStreamUtil.convertToXmL(publication, file, System.out, true);
+		XStreamUtil.convertToXml(publication, file, System.out, true);
 
 	}
 
@@ -1674,7 +1674,7 @@ public class StepsHistory
 			}
 		}
 
-		XStreamUtil.convertToXmL(publication, file, System.out, true);
+		XStreamUtil.convertToXml(publication, file, System.out, true);
 
 	}
 
@@ -1718,7 +1718,7 @@ public class StepsHistory
 				}
 			}
 
-			XStreamUtil.convertToXmL(publication, file, System.out, true);
+			XStreamUtil.convertToXml(publication, file, System.out, true);
 		}
 		catch(
 
@@ -1777,7 +1777,7 @@ public class StepsHistory
 				}
 			}
 
-			XStreamUtil.convertToXmL(publication, file, System.out, true);
+			XStreamUtil.convertToXml(publication, file, System.out, true);
 		}
 		catch(
 
@@ -1902,7 +1902,7 @@ public class StepsHistory
 	{
 		Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
 		worker.doWork(publication);
-		XStreamUtil.convertToXmL(publication, file, System.out, true);
+		XStreamUtil.convertToXml(publication, file, System.out, true);
 	}
 
 	private static void affiliationsToAffiliationList(File directory)
@@ -1918,7 +1918,7 @@ public class StepsHistory
 					// author.setAffiliations(new ArrayList(Arrays.asList(author.affiliation)));
 					// author.affiliation = null;
 				}
-				XStreamUtil.convertToXmL(publication, file, System.out, true);
+				XStreamUtil.convertToXml(publication, file, System.out, true);
 			}
 			catch(Exception e)
 			{
@@ -1976,7 +1976,7 @@ public class StepsHistory
 					}
 				}
 
-				XStreamUtil.convertToXmL(publication, file, System.out, true);
+				XStreamUtil.convertToXml(publication, file, System.out, true);
 			}
 			catch(Exception e)
 			{
@@ -2002,7 +2002,7 @@ public class StepsHistory
 			{
 				AbstractMetaPublication publication = XStreamUtil.convertFromXML(file, Publication.class);
 
-				XStreamUtil.convertToXmL(publication, file, System.out, true);
+				XStreamUtil.convertToXml(publication, file, System.out, true);
 			}
 			catch(Exception e)
 			{
@@ -2109,7 +2109,7 @@ public class StepsHistory
 						}
 					}
 				}
-				XStreamUtil.convertToXmL(publication, file, System.out, true);
+				XStreamUtil.convertToXml(publication, file, System.out, true);
 			}
 			catch(Exception e)
 			{
@@ -2240,7 +2240,7 @@ public class StepsHistory
 		new AuthorNameConcatenationWorker().doWork(publication);
 		new ReferenceAuthorNameConcatenationWorker().doWork(publication);
 
-		XStreamUtil.convertToXmL(publication, file, System.out, true);
+		XStreamUtil.convertToXml(publication, file, System.out, true);
 
 	}
 
@@ -2280,7 +2280,7 @@ public class StepsHistory
 			}
 		}
 
-		XStreamUtil.convertToXmL(publication, resultFile, System.out, true);
+		XStreamUtil.convertToXml(publication, resultFile, System.out, true);
 
 	}
 
@@ -2360,7 +2360,7 @@ public class StepsHistory
 	{
 		AbstractMetaPublication p2 = PublicationFactory.createPublication();
 
-		XStreamUtil.convertToXmL(p2, file2, System.out, true);
+		XStreamUtil.convertToXml(p2, file2, System.out, true);
 
 	}
 

@@ -202,8 +202,9 @@ public abstract class SystemEvaluator
 
 	private AbstractSingleInformationResult<?> getResultFromReferenceType(EvalInformationType type, Reference reference, Reference reference2)
 	{
-		switch(type)
-		{
+		switch (type) {
+			case REFERENCE_ID:
+				return new SimpleInformationResult(type, reference, reference2, Reference::getIdString);
 			case REFERENCE_MARKER:
 				return new SimpleInformationResult(type, reference, reference2, Reference::getMarker);
 
@@ -339,7 +340,8 @@ public abstract class SystemEvaluator
 				return new SimpleInformationResult(type, origPub, testPub, Publication::getDoi);
 
 			case SECTIONS:
-				return new ListInformationResult(type, origPub, testPub, Publication::getSections, Section::getTitle);
+				//Sections which are Acknowledgements are ignored
+				return new ListInformationResult(type, origPub, testPub, Publication::getSections, Section::getTitle, s -> s.getTitle().matches(Section.acknowledgementRegex));
 
 			case SECTION_LEVELS:
 				Set<StringRelation> headersOrig = new HashSet<>();
@@ -433,7 +435,7 @@ public abstract class SystemEvaluator
 
 		List<String> valueNames = Arrays.asList("Precision", "Recall", "F1");
 		headers = new ArrayList<>();
-		headers.add("Id");
+		headers.add("");
 		headers.addAll(valueNames);
 		headers.addAll(valueNames);
 		headers.addAll(valueNames);

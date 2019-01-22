@@ -37,7 +37,7 @@ public class ReferenceInformationResult extends ListInformationResult
 
 	public ReferenceInformationResult(EvalInformationType type, List<Reference> expectedReferences, List<Reference> extractedReferences, Publication publication)
 	{
-		super(type, expectedReferences, extractedReferences, Reference::toString);
+		super(type, expectedReferences, extractedReferences, Reference::toString, null);
 
 		this.expectedReferences = expectedReferences;
 		this.extractedReferences = extractedReferences;

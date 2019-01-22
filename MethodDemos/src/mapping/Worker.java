@@ -12,7 +12,6 @@ public abstract class Worker
 		try
 		{
 			doWork(publication);
-
 		}
 		catch(Exception e)
 		{

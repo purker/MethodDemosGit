@@ -34,7 +34,7 @@ public class GROBIDMapper extends Mapper
 
 		// grobidMapper.marshall(PublicationFactory.createPublication(), System.out);
 
-		XStreamUtil.convertToXmL(PublicationFactory.createPublication(), System.out, System.out, true);
+		XStreamUtil.convertToXml(PublicationFactory.createPublication(), System.out, System.out, true);
 	}
 
 	@Override

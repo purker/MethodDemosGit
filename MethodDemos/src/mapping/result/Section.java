@@ -6,6 +6,7 @@ import java.util.List;
 public class Section extends BaseEntity
 {
 	private static final long serialVersionUID = 9061069036137135298L;
+	public static final String acknowledgementRegex = "Acknowledg(e)?ment(s)?";
 
 	private String id;
 	private String level;

@@ -54,7 +54,7 @@ public class Demos
 		List<String> idList = Config.groundTruthIds;
 		// List<String> idList = Arrays.asList("139761");
 
-		boolean runDemos = false;
+		boolean runDemos = true;
 		boolean runCermineDemo = false;
 		boolean runGrobidDemo = true;
 		boolean runParsCitDemo = false;

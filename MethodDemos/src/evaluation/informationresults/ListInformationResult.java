@@ -21,6 +21,7 @@ package evaluation.informationresults;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import evaluation.tools.EvalInformationType;
 import evaluation.tools.EvalInformationTypeComparatorMapping;
@@ -44,15 +45,21 @@ public class ListInformationResult extends AbstractSingleInformationResult<List<
 	 */
 	public <B, T> ListInformationResult(EvalInformationType type, B origPub, B testPub, Function<B, List<T>> toListMethod, Function<T, String> toString)
 	{
-		this(type, toListMethod.apply(origPub), toListMethod.apply(testPub), toString);
+		this(type, toListMethod.apply(origPub), toListMethod.apply(testPub), toString, null);
 	}
 
-	public <B, T> ListInformationResult(EvalInformationType type, List<T> origList, List<T> testList, Function<T, String> toString)
+	public <B, T> ListInformationResult(EvalInformationType type, B origPub, B testPub,
+			Function<B, List<T>> toListMethod, Function<T, String> toString, Predicate<T> filter) {
+		this(type, toListMethod.apply(origPub), toListMethod.apply(testPub), toString, filter);
+	}
+
+	public <B, T> ListInformationResult(EvalInformationType type, List<T> origList, List<T> testList,
+			Function<T, String> toString, Predicate<T> filter)
 	{
 		this(type);
 
 		List<String> orig = new ArrayList<>();
-		for(T obj1 : CollectionUtil.emptyIfNull(origList))
+		for (T obj1 : CollectionUtil.emptyIfNull(origList, filter))
 		{
 			String s = toString.apply(obj1);
 			if(StringUtil.isNotEmpty(s))
@@ -61,7 +68,7 @@ public class ListInformationResult extends AbstractSingleInformationResult<List<
 			}
 		}
 		List<String> test = new ArrayList<>();
-		for(T obj2 : CollectionUtil.emptyIfNull(testList))
+		for (T obj2 : CollectionUtil.emptyIfNull(testList, filter))
 		{
 			String s = toString.apply(obj2);
 			if(StringUtil.isNotEmpty(s))
