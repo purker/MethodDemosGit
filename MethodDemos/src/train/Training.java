@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.IOFileFilter;
+import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.grobid.core.GrobidModels;
 import org.grobid.core.IGrobidModel;
 import org.grobid.core.engines.Duration;
@@ -19,8 +21,6 @@ import org.grobid.core.jni.WapitiModel;
 import org.grobid.core.mock.MockContext;
 import org.grobid.core.utilities.GrobidProperties;
 import org.grobid.trainer.AbstractTrainer;
-import org.grobid.trainer.AffiliationAddressTrainer;
-import org.grobid.trainer.CitationTrainer;
 
 import config.Config;
 import demos.GrobidDemo;
@@ -36,40 +36,54 @@ public class Training {
 	private static List<AbstractTrainer> trainers = new ArrayList<>();
 
 	public static void main(String[] args) throws Exception {
-		File file = new File(Config.trainingOutput);
-		//FileUtils.cleanDirectory(file);
-		//FileUtils.copyDirectory(correctedTrainingData, file);
+		// File file = new File(Config.trainingOutput);
+		// FileUtils.cleanDirectory(file);
+		// FileUtils.copyDirectory(correctedTrainingData, file);
+		// createTrainingData();
 
-		//trainExistingModelAndEvaluate();
-		//createTrainingData();
 		// trainAndEvaluate();
-		//deleteExistingTrainingData();
-		copyCorrectedTrainingData();
-		trainExistingModelAndEvaluate();
+		// deleteExistingTrainingData();
+
+		// copyCorrectedTrainingData();
+		// trainExistingModelAndEvaluate();
+		// trainAndEvaluate();
+
+		renameModels("original-model.wapiti", "model.wapiti", false);
+
 		// dumpModels();
 	}
 
+	/**
+	 * deletes all corpus/[tei|raw] directories
+	 */
 	private static void deleteExistingTrainingData() throws IOException {
-		for (IGrobidModel model : GrobidModels.values()) {
+		for(IGrobidModel model : GrobidModels.values()) {
 			File corpusFile = GrobidProperties.getCorpusPath(resources, model);
 			File teiCorpusPath = new File(corpusFile, "tei");
 			File rawCorpusPath = new File(corpusFile, "raw");
 
-			//			if (teiCorpusPath.exists()) {
-			//				FileUtils.cleanDirectory(teiCorpusPath);
-			//				FileUtils.cleanDirectory(rawCorpusPath);
-			//			} else 
-			if (corpusFile.exists()) {
-				FileUtils.cleanDirectory(corpusFile);
+			if(teiCorpusPath.exists())
+			{
+				FileUtils.cleanDirectory(teiCorpusPath);
+				if(rawCorpusPath.exists())
+				{
+					FileUtils.cleanDirectory(rawCorpusPath);
+				}
 			}
+			else
+				if(corpusFile.exists())
+				{
+					FileUtils.cleanDirectory(corpusFile);
+				}
 		}
+
 	}
 
 	private static void dumpModels() {
 		GrobidDemo.init();
 		addTrainers();
 
-		for (AbstractTrainer trainer : trainers) {
+		for(AbstractTrainer trainer : trainers) {
 			File model = new File(trainer.getModel().getModelPath());
 			File outputFile = new File(Config.trainingDumpedModels, trainer.getModel().getModelName() + ".dumped.txt");
 
@@ -80,21 +94,21 @@ public class Training {
 	}
 
 	private static void addTrainers() {
-		//		trainers.add(new SegmentationTrainer());
+		// DONE trainers.add(new SegmentationTrainer());
 
-		//HEADER
-		// trainers.add(new HeaderTrainer());
+		// DONE HEADER
+		// DONE trainers.add(new HeaderTrainer());
 		// DONE trainers.add(new AffiliationAddressTrainer());
 		// DONE trainers.add(new NameHeaderTrainer());
 		// DONE trainers.add(new DateTrainer());
-		//		//affiliation && reference?
-		//BODY
-		//		trainers.add(new FulltextTrainer());
+		// reference?
+		// DONE BODY
+		// DONE trainers.add(new FulltextTrainer());
 		// DONE trainers.add(new FigureTrainer());
-		//kommt nix raus trainers.add(new TableTrainer());
-		//REFERENCES
+		// DONE trainers.add(new TableTrainer()); // create new model, not with existing one
+		// DONE REFERENCES
 		// DONE trainers.add(new ReferenceSegmenterTrainer());
-		//trainers.add(new CitationTrainer());
+		// DONE trainers.add(new CitationTrainer());
 		// DONE trainers.add(new NameCitationTrainer());
 
 		// models.add(new EbookTrainer());
@@ -116,7 +130,7 @@ public class Training {
 		GrobidDemo.init();
 		addTrainers();
 
-		for (AbstractTrainer trainer : trainers) {
+		for(AbstractTrainer trainer : trainers) {
 			AbstractTrainer.runTraining(trainer);
 		}
 
@@ -127,7 +141,7 @@ public class Training {
 		GrobidDemo.init();
 		addTrainers();
 
-		for (AbstractTrainer trainer : trainers) {
+		for(AbstractTrainer trainer : trainers) {
 			AbstractTrainer.runTrainingExistingModel(trainer);
 			System.out.println(trainer.getModel().getModelName());
 		}
@@ -141,7 +155,7 @@ public class Training {
 	private static void copyCorrectedTrainingData() throws IOException {
 		Collection<File> list = Arrays.asList(correctedTrainingData.listFiles());
 
-		for (File file : list) {
+		for(File file : list) {
 			String fileName = file.getName();
 
 			String[] parts = fileName.split(".training.");
@@ -150,7 +164,7 @@ public class Training {
 			String modelType = parts[1];
 
 			File copyTo;
-			if (modelType.endsWith(".xml"))
+			if(modelType.endsWith(".xml"))
 			{
 				// grobid-trainer/resources/dataset/<MODEL>/corpus/tei/TUW-137078.training.<MODEL>.tei.xml
 				IGrobidModel model = getModelFor(modelType);
@@ -168,19 +182,19 @@ public class Training {
 			}
 			else if (modelType.endsWith(".rawtxt"))
 				{
-				// do nothing
-				// TUW-137078.training.segmentation.rawtxt
+					// do nothing
+					// TUW-137078.training.segmentation.rawtxt
 				}
 			else {
-				// grobid-trainer/resources/dataset/<MODEL>/corpus/raw/TUW-137078.training.segmentation
-				IGrobidModel model = getModelFor(modelType);
+					// grobid-trainer/resources/dataset/<MODEL>/corpus/raw/TUW-137078.training.segmentation
+					IGrobidModel model = getModelFor(modelType);
 
-				File rawCorpusPath = new File(GrobidProperties.getCorpusPath(resources, model), "raw");
+					File rawCorpusPath = new File(GrobidProperties.getCorpusPath(resources, model), "raw");
 
-				copyTo = new File(rawCorpusPath, fileName);
-				FileUtils.copyFile(file, copyTo);
-				System.out.println(copyTo.getAbsolutePath());
-			}
+					copyTo = new File(rawCorpusPath, fileName);
+					FileUtils.copyFile(file, copyTo);
+					System.out.println(copyTo.getAbsolutePath());
+				}
 		}
 	}
 
@@ -191,10 +205,10 @@ public class Training {
 	 * @return
 	 */
 	private static IGrobidModel getModelFor(String modelType) {
-		if (modelType.endsWith(".tei.xml")) {
+		if(modelType.endsWith(".tei.xml")) {
 			modelType = modelType.replace(".tei.xml", "");
 		} else {
-			//date model only ends with ".xml"
+			// date model only ends with ".xml"
 			modelType = modelType.replace(".xml", "");
 		}
 
@@ -208,10 +222,67 @@ public class Training {
 		mapping.put("referenceSegmenter", "reference-segmenter");
 
 		String newModelName = mapping.get(modelType);
-		if (newModelName == null) {
+		if(newModelName == null) {
 			return GrobidModels.modelFor(modelType);
 		} else {
 			return GrobidModels.modelFor(newModelName);
 		}
+	}
+
+	/**
+	 * @param beforeString
+	 * @param renameTo
+	 * @param move
+	 *            true=move, false=copy
+	 * @throws Exception
+	 */
+	public static void renameModels(String beforeString, String renameTo, boolean move) throws Exception
+	{
+		GrobidDemo.init();
+
+		File directory = new File(GrobidProperties.get_GROBID_HOME_PATH(), GrobidProperties.FOLDER_NAME_MODELS);
+		Collection<File> files = FileUtils.listFiles(directory, new IOFileFilter()
+		{
+
+			@Override
+			public boolean accept(File dir, String name)
+			{
+				if(dir.getName().equals("table"))
+				{
+					return true;
+				}
+				else
+					// if(dir.getName().equals("all")) // folder in patent dir
+					// {
+					// return false;
+					// }
+					// else
+					return name.equals(beforeString);
+			}
+
+			@Override
+			public boolean accept(File file)
+			{
+				return accept(file.getParentFile(), file.getName());
+			}
+		}, TrueFileFilter.TRUE);
+		// File[] files = directory.listFiles(new FilenameFilter()
+		// {
+		// @Override
+		// public boolean accept(File dir, String name)
+		// {
+		// return name.equals(beforeString);
+		// }
+		// });
+		for(File file : files)
+		{
+			File newFile = new File(file.getParent(), renameTo);
+			System.out.println(newFile);
+			if(move)
+				file.renameTo(newFile);
+			else
+				FileUtils.copyFile(file, newFile);
+		}
+		MockContext.destroyInitialContext();
 	}
 }

@@ -16,7 +16,7 @@ public enum SectionType
 	CONCLUSIONS(Arrays.asList("conclusions", "deo:Conclusion")),
 	REFERENCES(Arrays.asList("references")),
 
-	ACKNOWLEDGEMENTS(Arrays.asList("deo:Acknowledgements", "acknowledgements")),
+	ACKNOWLEDGEMENTS(Arrays.asList("deo:Acknowledgements", "acknowledgements", "acknowledgments")),
 	MATERIALS(Arrays.asList("deo:Materials")),
 	EVALUATION(Arrays.asList("evaluation", "deo:Evaluation")),
 	DISCUSSION(Arrays.asList("deo:Discussion", "discussions")),
