@@ -1,4 +1,9 @@
+headertokens not synchronized
 
+Idee: Evaluierung Properties eingeteilt nach endmodel von grobid
+Idee: tei files aus groundtruth erstellen -> nur andere richtung
+Warum in referencesegmenterparser einmal labels in extractwithgiven und in createtraining??
+Algorithmus der checkt ob durch figure getrennte sections zusammengefügt werden müssen, durch rechten textrand
 
 Year bei Grobid richten
 
@@ -24,6 +29,17 @@ low bzw. kommt sowieso noch:
 klassendiagram weiter ab demos
 static check klassendiagramm
 micro und macro average berechnen
+-----------------------------------------------------------
+irgendwo aufschreiben:
+"," in affiliation müssen im <affiliation>-tag sein
+Acknowledgement wird ignoriert, bei extraktion und evaluierung 
+- in result files richtig als section aufgenommen
+- in worker aussortiert
+- in grobid.xml wird als eig <div type="acknowledgement"> extrahiert, aber nicht in grobid-xstream.xml übernommen
+-------------------------------------------
+merken:
+tokenizations: alle tokens von doc.blocks gesammelt sind gleich wie doc.tokenizations, nur dass in doc.tokenizations keine doppelte \n\n nicht drin sind
+
 
 Done:
 - references evaluation wenn als passend erkannt
