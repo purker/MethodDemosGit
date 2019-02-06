@@ -1,5 +1,6 @@
 package demos;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -24,7 +25,7 @@ import utils.FileCollectionUtil;
  * http://grobid.readthedocs.io/en/latest/Grobid-java-library/
  *
  */
-public class GrobidDemo extends AbstractDemo
+public class GrobidDemo extends AbstractDemo implements Closeable
 {
 	private static final Method METHOD = Method.GROBID;
 
@@ -102,5 +103,11 @@ public class GrobidDemo extends AbstractDemo
 	protected Method getMethod()
 	{
 		return METHOD;
+	}
+
+	@Override
+	public void close() throws IOException
+	{
+		engine.close();
 	}
 }

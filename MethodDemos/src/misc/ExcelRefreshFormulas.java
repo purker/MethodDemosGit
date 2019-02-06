@@ -51,10 +51,8 @@ public class ExcelRefreshFormulas
 			File file = entry.getKey();
 			List<File> refFiles = entry.getValue();
 
-			try
+			try (Workbook wb = WorkbookFactory.create(file))
 			{
-				Workbook wb = WorkbookFactory.create(file);
-
 				// Create a FormulaEvaluator to use
 				FormulaEvaluator mainWorkbookEvaluator = wb.getCreationHelper().createFormulaEvaluator();
 
@@ -70,8 +68,6 @@ public class ExcelRefreshFormulas
 
 				// Evaluate
 				mainWorkbookEvaluator.evaluateAll();
-
-				wb.close();
 			}
 			catch(Exception e)
 			{

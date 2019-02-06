@@ -104,7 +104,10 @@ public class Demos
 			if(runCermineDemo) new CermineDemo().runDemoList(groundTruthFiles, cermineOutputDir);
 			if(runGrobidDemo)
 			{
-				new GrobidDemo().runDemoList(groundTruthFiles, grobIdOutputDir);
+				try (GrobidDemo grobidDemo = new GrobidDemo())
+				{
+					grobidDemo.runDemoList(groundTruthFiles, grobIdOutputDir);
+				}
 				SetDateAndGrobidVersion.replaceDateAndGrobidVersion();
 			}
 			if(runParsCitDemo) new ParscitDemo().runDemoList(groundTruthFilesOmnipage, parsCitOutputDir);
