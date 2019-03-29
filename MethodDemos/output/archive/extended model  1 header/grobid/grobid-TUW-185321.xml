@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Bridging Semantic Heterogeneities in Open Source Software Development Projects with Semantic Web Technologies Wikan Danar Sunindyo and Stefan Biffl (Faculty Mentor) Institute of Software Technology and Interactive Systems</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<affiliation key="aff0">
+								<orgName type="institution">Vienna University of Technology Vienna</orgName>
+								<address>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Bridging Semantic Heterogeneities in Open Source Software Development Projects with Semantic Web Technologies Wikan Danar Sunindyo and Stefan Biffl (Faculty Mentor) Institute of Software Technology and Interactive Systems</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<abstract/>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Abstract -The semantic heterogeneity of Open</head><p>Source Software (OSS) development projects comes from the using of different tools and models by the various stakeholders. These differences make the process of integration become difficult, since the project managers should recognize the different structure of the tools and models for analyzing the state of the projects. This manual analysis is costly and error prone. In this work we propose a seman- tic web technology approach to bridge these seman- tic heterogeneities, by using engineering knowledge base (EKB). The EKB enables mapping between local and domain ontology layers to allow querying the local tool knowledge using the domain-level knowledge and syntax. We empirically evaluate the feasibility of an EKB-based project monitoring system based on real-world data.</p><p>to model the project/domain knowledge that are used and understood by all stakeholders and tools. Con- cepts in this model are then mapped to local tool data models, which model common domain concepts in different ways. Based on this mapping queries to the domain knowledge can be resolved via the mappings by local tool data queries.</p><p>We will check the feasibility of querying the on- tologies in EKB written in SPARQL 1 format with the case from an open source project. The major result is the easier definition of queries on project data origi- nating from heterogeneous background.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>II. RESEARCH ISSUES</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>I. INTRODUCTION</head><p>Stakeholders in open source software (OSS) usu- ally come from heterogeneous backgrounds and use a range of tools and models for developing and manag- ing their common software. For example, the devel- opers may use SVN for managing source code ver- sions and mailing lists for communication between developers that become the use case for this paper.</p><p>In the OSS development projects, the stakeholders often work globally distributed and in different time zones. Therefore, the project managers need to be able to manage and monitor the status of the project and how the people work, e.g., by monitoring the level of communication between the stakeholders. To address this goal, project managers often use a quan- titative measurement approach for managing and monitoring the status of the projects, i.e., finding related issues in SVN and mailing list for a certain projects. Further analysis to identify related informa- tion across data sources gets conducted manually, which is costly, error-prone, and often takes too much time for the analysis results to be useful for decision making.</p><p>In this paper we propose the use of a semantic web technology approach called engineering knowledge base (EKB). The principle of EKB is using ontology</p><p>The core challenge for OSS development project managers is to get stable domain concepts but vary- ing encoding of a concept in local tools. The current approach is by working on variety of local tool data model. The domain model stays "virtual", i.e., is not explicitly modeled. Our approach is by explicitly model the domain data model and map to tool mod- els (similar to Global-as-View) by using EKB <ref type="bibr" target="#b0">[1]</ref>. EKB is a repository that holds all knowledge on project data models and user information that is rele- vant for OSS development. EKB consists of two ontology layers. The first layer contains the common domain knowledge, while the second layer describes the local tool knowledge. Mappings between local and domain ontologies allow querying the local knowledge by using the domain ontology syntax.</p><p>The research issue is how to evaluate the feasibil- ity of using EKB for bridging semantic heterogenei- ties comparing to the traditional database approach. We will use Apache Tomcat 2 project as a test bed.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>III. EVALUATION</head><p>To give better understanding on the approach pro- posed, we will illustrate a project manager use case to analyze relationships across heterogeneous data sources, for example between mailing list and SVN. The domain concept concepts consist of all concepts used in OSS development projects, the local tool concepts consist of the concepts used in mailing list and SVN tools. The mappings are done between interrelated local tool concepts and domain concepts, to integrate the different concepts across the tools/models. The queries from the project managers will be done to the domain concepts, which will be continue by resolution with the local tool concepts, in SVN and mailing lists ontologies.</p><p>Database approach. The using of database ap- proach demands the use of a common homogeneous database. Hence there should be some efforts done to change the different models and formats of data from heterogeneous sources and stored in homogeneous database. Then the project manager can use the data- base and query the repository. There are several weaknesses with this approach: (a) the different structures from heterogeneous data sources need to be reconciled for using the common repository; (b) updates and synchronization between the data sources and the common repository have to be re- peated each time new data entries update the local data source; and (c) reconfiguration of the data sources, e.g., adding new data sources to the monitor- ing system, breaks the automation of this approach.</p><p>EKB approach. The EKB approach demands the local tool concepts stored in the separate ontologies from the domain concepts ontology. The mapping of related concepts is done from the local tool ontology to the domain concept ontology, makes the transla- tion between different local ontology possible. This approach is more suitable than the implicit transfor- mation with the previous approach, because the pro- ject managers don't have to transform each different concept into homogeneous model and they only have to deal with the domain concept ontology to know further about the local tools ontology.</p><p>The example of query given by the project manag- ers to find the relationships between mailing list and SVN ontologies can be seen in listing 1 that uses a simplified OWL 3 syntax. The data from different stakeholders are stored the SVN and mailing list ontologies, which are mapped to the domain concept ontology. The project managers make query to the domain concept ontology which then continues to the local ontologies. The result from the local ontologies is returned to the project manager via domain con- cept ontology.</p><p>From this evaluation, we can learn that EKB ap- proach benefits on flexible and efficient model for transformation of data between tools. The limitations are the cost to design the EKB and performance of ontology technology which is depend on the size of the ontology. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>IV. CONCLUSION AND FUTURE WORK</head><p>In this paper, we have explained the EKB approach as a semantic web technology approach to address important aspects of the semantic heterogeneity chal- lenge in the OSS development projects domain. By separating the level of ontologies in EKB, the com- plexity of querying can be reduced, while still makes the approach feasible to be done. Future work includes make empirical measure- ment on the efforts needed, especially for adding new data sources to the project monitoring system. This could be useful for better decision making support on the status of the project, since a wider range of de- velopment knowledge sources in the project can be included for analysis.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head></head><label></label><figDesc>SELECT (?a) WHERE {domain:build.xml domain:relatedWith ?a} mailinglist:build.xml owl:equalTo domain:build.xml SELECT (?b) WHERE {mailinglist:build.xml mailing- list:hasAffectedArtifact ?b} Result: b = mailing- list:build.xml_890256 mailinglist:build.xml_890256 owl:equalTo domain:build.xml_890256 SVN:build.xml_890256 owl:equalTo domain:build.xml_890256 SELECT (?c) WHERE {?c SVN:hasAffectedArtifact SVN:build.xml_890256} Result: c = SVN:SVN_890256_build.xml SVN:SVN_890256_build.xml owl:equalTo domain:SVN_890256_build.xml Result: a = domain:SVN_890256.xml Listing 1. EKB query example to find a related SVN entry from the mailing list issue.</figDesc></figure>
+
+			<note place="foot" n="1"> http://www.w3.org/TR/rdf-sparql-query/ 2 http://tomcat.apache.org/</note>
+
+			<note place="foot" n="3"> http://www.w3.org/TR/owl-semantics/</note>
+		</body>
+		<back>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Integrating Production Automation Expert Knowledge Across Engineering Stakeholder Domains</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><surname>Moser</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Biffl</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">W</forename><forename type="middle">D</forename><surname>Sunindyo</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Winkler</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2010 International Conference on Complex, Intelligent and Software Intensive Systems (to be published)</title>
+		<meeting>the 2010 International Conference on Complex, Intelligent and Software Intensive Systems (to be published)<address><addrLine>Krakow, Poland</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2010" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

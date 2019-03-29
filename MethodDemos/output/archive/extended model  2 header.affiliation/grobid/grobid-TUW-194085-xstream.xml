@@ -1,0 +1,1007 @@
+<Publication>
+  <id>TUW-194085</id>
+  <title>Topology in Distributed Computing DIPLOMARBEIT zur Erlangung des akademischen Grades</title>
+  <publicationDateString>2010-03-18</publicationDateString>
+  <publicationYear>2010</publicationYear>
+  <publicationMonth>03</publicationMonth>
+  <publicationDay>18</publicationDay>
+  <note>ausgeführt von ______________________ (Unterschrift)</note>
+  <abstractText>A-1040 Wien Karlsplatz 13 Tel. +43/(0)1/58801-0 http://www.tuwien.ac.at Erklärung Thomas Nowak Rechte Wienzeile 73/23 1050 Wien Hiermit erkläre ich, dass ich diese Arbeit selbstständig verfasst habe, dass ich die verwendeten Quellen und Hilfsmittel vollständig angegeben habe und dass ich die Stellen der Arbeit-einschließlich Tabellen, Karten und Abbildungen-, die anderen Werken oder dem Internet im Wortlaut oder dem Sinn nach entnommen sind, auf jeden Fall unter Angabe der Quelle als Entlehnung kenntlich gemacht habe. Abstract Topology is the general mathematical theory of convergence. Distributed computing is the formal investigation of communicating concurrent processes. We explore applications of topology to distributed computing in two directions: (1) Point-set topology and (2) algebraic topology. We use the former to study the topological structure of infinite execution trees. This enables us to unify a number of impossibility proofs, in particular, the impossibility of distributed consensus-the task of all processes in a system agreeing on a single value-in various (close to) asynchronous systems with crash failures. The latter is used to look into the combinatorial structure of configurations, i.e., the collection of current process states in the system. Configurations are regarded as simplices in a simplicial complex, and topological incompatibility of such complexes is utilized to prove the impossibility of a generalization of distributed consensus in certain systems. The particular problem considered is k-set agreement, which is the task of letting all processes agree to values within a set of at most k elements. Kurzfassung Topologie ist die mathematisch adäquate Art, umüberum¨umüber Konvergenz zu sprechen. Distributed Computing ist das formale Studium von verteilten Systemen. Die Arbeit beschäftigt sich mit zwei Anwendungen der Topologie im Bereich des Distributed Computing: (1) Mengentheoretische Topologie und (2) algebraische Topologie. Erstere wird verwendet, um die topologische Struktur von unendlichen Bäumen, die die InformationüberInformation¨Informationüber mögliche Ausführungen der Algorithmen sub-sumieren, zu untersuchen. Dieses Wissen wird verwendet, um einen einheitlichen Beweis der Unmöglichkeit von Distributed Consensus in mehreren Systemmo-dellen zu geben. Consensus ist das Einigen aller Prozesse des Systems auf einen einzigen Wert. Zweitere wird verwendet, um die kombinatorische Struktur von Konfiguratio-nen, also der Zusammenfassung aller lokaler Zustände der Prozesse, zu untersu-chen. Hierbei wird eine Konfiguration als Simplex in einem Simplizialkomplex aufgefasst. Die topologische Unvereinbarkeit solcher Komplexe ermöglicht einen Beweis der Unmöglichkeit von k-Set Agreement in gewissen Systemen. Das ist eine Verallgemeinerung des Consensus-Problems: Es wird nicht mehr verlangt, dass sich die Prozesse auf nur einen Wert einigen, sondern es wird erlaubt, dass bis zu k unterschiedliche Werte auftreten.</abstractText>
+  <keywords/>
+  <authors>
+    <Author>
+      <firstNames/>
+      <lastName>Diplom-Ingenieur</lastName>
+      <affiliations/>
+    </Author>
+    <Author>
+      <firstNames>
+        <string>Thomas</string>
+      </firstNames>
+      <lastName>Nowak</lastName>
+      <affiliations/>
+    </Author>
+    <Author>
+      <firstNames>
+        <string>Univ</string>
+      </firstNames>
+      <affiliations/>
+    </Author>
+    <Author>
+      <firstNames>
+        <string>Ulrich</string>
+      </firstNames>
+      <lastName>Schmid</lastName>
+      <affiliations/>
+    </Author>
+    <Author>
+      <firstNames/>
+      <affiliations>
+        <Affiliation>
+          <id>aff0</id>
+          <institution>Fakultät für Informatik der Technischen Universität Wien</institution>
+        </Affiliation>
+      </affiliations>
+    </Author>
+    <Author>
+      <firstNames/>
+      <affiliations>
+        <Affiliation>
+          <id>aff1</id>
+          <institution>Technische Universität Wien</institution>
+        </Affiliation>
+      </affiliations>
+    </Author>
+  </authors>
+  <affiliations>
+    <Affiliation reference="/Publication[1]/authors[1]/Author[5]/affiliations[1]/Affiliation[1]"/>
+    <Affiliation reference="/Publication[1]/authors[1]/Author[6]/affiliations[1]/Affiliation[1]"/>
+  </affiliations>
+  <sections>
+    <Section>
+      <level>1.</level>
+      <title>Introduction</title>
+      <referenceIds>
+        <string>ref10</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>1.1.</level>
+      <title>Distributed Computing</title>
+      <referenceIds>
+        <string>ref16</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>1</level>
+      <title>Introduction</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>1.2</level>
+      <title>Topology</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>1.2.</level>
+      <title>Topology</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>1.3.</level>
+      <title>Structure of the Thesis</title>
+      <referenceIds>
+        <string>ref10</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>1.4</level>
+      <title>A Word on Notation</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>2.1.</level>
+      <title>Introduction</title>
+      <referenceIds>
+        <string>ref2</string>
+        <string>ref5</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>2.2</level>
+      <title>Asynchronous Message PassingàPassingà la FLP</title>
+      <referenceIds>
+        <string>ref7</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>2.2.</level>
+      <title>Asynchronous Message PassingàPassingà la FLP</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>2.2.1.</level>
+      <title>A Formal Description</title>
+      <referenceIds>
+        <string>ref7</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>2.3.</level>
+      <title>Omission Failure Model</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>2.3</level>
+      <title>Omission Failure Model</title>
+      <referenceIds>
+        <string>ref16</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>2.3.1.</level>
+      <title>A Formal Description</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>2.4</level>
+      <title>Asynchronous Shared Memory</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>2.4.</level>
+      <title>Asynchronous Shared Memory</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>2.4.1.</level>
+      <title>A Formal Description</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>2.4.2.</level>
+      <title>Atomic Snapshots</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>2.5.</level>
+      <title>Safety and Liveness</title>
+      <referenceIds>
+        <string>ref12</string>
+        <string>ref12</string>
+        <string>ref12</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.</level>
+      <title>Problem Specifications</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.1.</level>
+      <title>Consensus</title>
+      <referenceIds>
+        <string>ref7</string>
+        <string>ref5</string>
+        <string>ref6</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.</level>
+      <title>Point-Set Topology</title>
+      <referenceIds>
+        <string>ref7</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.1.</level>
+      <title>The Topology of Execution Spaces</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4</level>
+      <title>Point-Set Topology</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.1</level>
+      <title>The Topology of Execution Spaces</title>
+      <referenceIds>
+        <string>ref1</string>
+        <string>ref1</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>By Lemma A.4(4), we have</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.1.1.</level>
+      <title>Motivation</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4</level>
+      <title>Point-Set Topology</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.1</level>
+      <title>The Topology of Execution Spaces</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.1</level>
+      <title>The Topology of Execution Spaces</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.1.2.</level>
+      <title>Execution Trees</title>
+      <referenceIds>
+        <string>ref13</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.1.3.</level>
+      <title>Path-Sequence Duality</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.2.</level>
+      <title>Topological Impossibility</title>
+      <referenceIds>
+        <string>ref13</string>
+        <string>ref14</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.2.1.</level>
+      <title>Additional Structure -Configuration Similarity</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.3.</level>
+      <title>Impossibility Results</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.3.1.</level>
+      <title>Asynchronous Message Passing</title>
+      <referenceIds>
+        <string>ref7</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.3</level>
+      <title>Impossibility Results</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.3.2.</level>
+      <title>Asynchronous Shared Memory</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.3.3.</level>
+      <title>Transient Message Loss</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.</level>
+      <title>Algebraic Topology</title>
+      <referenceIds>
+        <string>ref8</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.1.</level>
+      <title>Introduction</title>
+      <referenceIds>
+        <string>ref10</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.2</level>
+      <title>Homology</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.2.</level>
+      <title>Homology</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.2.1.</level>
+      <title>Chain Complexes</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.2.2.</level>
+      <title>The Homology Functor</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.3.</level>
+      <title>Simplicial Complexes</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.3.1.</level>
+      <title>Simplicial Homology</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.3</level>
+      <title>Simplicial Complexes</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.4</level>
+      <title>Algebraic vs. Combinatorial Topology</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.4.</level>
+      <title>Algebraic vs. Combinatorial Topology</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.4.1.</level>
+      <title>Singular Homology</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.4.2.</level>
+      <title>Geometric Realization of Simplicial Complexes</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.5</level>
+      <title>Configuration Complexes</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.4.3.</level>
+      <title>Equivalence</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.5.</level>
+      <title>Configuration Complexes</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.5.1.</level>
+      <title>Input Complexes</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.5.2.</level>
+      <title>Output Complexes</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.5.3.</level>
+      <title>Protocol Complexes</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.6.</level>
+      <title>Impossibility of k-Set Agreement</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.6.1.</level>
+      <title>Full Information Protocols</title>
+      <referenceIds>
+        <string>ref2</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.6.2.</level>
+      <title>Properties of Full Information Protocols</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.6.3.</level>
+      <title>This Implies Impossibility</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>6.</level>
+      <title>Summary</title>
+      <referenceIds>
+        <string>ref10</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>A. Topological Prerequisites</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>A.1. Motivation and Examples</title>
+      <referenceIds>
+        <string>ref3</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>A.1.1. Distances</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>A.1.2. Compactness in R n</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>A.2. Topologies</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>A.2.1. Open Sets and Neighborhoods</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>A.2.2. Closure, Interior, Boundary, Density</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>Equivalent statements are summarized in the next</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>A.2.3. Continuity</title>
+      <referenceIds>
+        <string>ref11</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>A.2.4. Compactness</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>A.2.5. Product Spaces</title>
+      <referenceIds>
+        <string>ref3</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+  </sections>
+  <citationContexts/>
+  <references>
+    <Reference>
+      <id>ref1</id>
+      <referenceIdString>b0</referenceIdString>
+      <source>Defining liveness</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Alpern</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Fred</string>
+            <string>B</string>
+          </firstNames>
+          <lastName>Bowen</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Schneider</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <note>Technical Report</note>
+      <publicationDateString>1985</publicationDateString>
+      <publicationYear>1985</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref2</id>
+      <referenceIdString>b1</referenceIdString>
+      <source>Distributed Computing: Fundamentals, Simulations, and Advanced Topics</source>
+      <publisher>John Wiley &amp; Sons</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Hagit</string>
+          </firstNames>
+          <lastName>Attiya</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Jennifer</string>
+          </firstNames>
+          <lastName>Welch</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <edition>2</edition>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref3</id>
+      <referenceIdString>b2</referenceIdString>
+      <source>General Topology, Chapters 1-4. Elements of Mathematics</source>
+      <publisher>Springer</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Bourbaki</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <note>Nicolas (pseudonym)</note>
+      <publicationDateString>1989</publicationDateString>
+      <publicationYear>1989</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref4</id>
+      <referenceIdString>b3</referenceIdString>
+      <title>Revisiting safety and liveness in the context of failures</title>
+      <source>Proceedings of CONCUR 2000-Concurrency Theory</source>
+      <publisher>Springer</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Bernadette</string>
+          </firstNames>
+          <lastName>Charron-Bost</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Sam</string>
+          </firstNames>
+          <lastName>Toueg</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Anindya</string>
+          </firstNames>
+          <lastName>Basu</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>552</pageFrom>
+      <pageTo>565</pageTo>
+      <publicationDateString>2000</publicationDateString>
+      <publicationYear>2000</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref5</id>
+      <referenceIdString>b4</referenceIdString>
+      <title>On the minimal synchronism needed for distributed consensus</title>
+      <source>Journal of the ACM</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Danny</string>
+          </firstNames>
+          <lastName>Dolev</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Cynthia</string>
+          </firstNames>
+          <lastName>Dwork</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Larry</string>
+          </firstNames>
+          <lastName>Stockmeyer</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>34</volume>
+      <issue>1</issue>
+      <pageFrom>77</pageFrom>
+      <pageTo>97</pageTo>
+      <publicationDateString>1987</publicationDateString>
+      <publicationYear>1987</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref6</id>
+      <referenceIdString>b5</referenceIdString>
+      <title>Hundreds of impossibility results for distributed computing</title>
+      <source>Distributed Computing</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Faith</string>
+          </firstNames>
+          <lastName>Fich</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Eric</string>
+          </firstNames>
+          <lastName>Ruppert</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>16</volume>
+      <issue>2</issue>
+      <pageFrom>121</pageFrom>
+      <pageTo>163</pageTo>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref7</id>
+      <referenceIdString>b6</referenceIdString>
+      <title>Impossibility of distributed consensus with one faulty process</title>
+      <source>Journal of the ACM</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Michael</string>
+            <string>J</string>
+          </firstNames>
+          <lastName>Fischer</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A</string>
+          </firstNames>
+          <lastName>Nancy</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Michael</string>
+            <string>S</string>
+          </firstNames>
+          <lastName>Lynch</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Paterson</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>32</volume>
+      <issue>2</issue>
+      <pageFrom>374</pageFrom>
+      <pageTo>382</pageTo>
+      <publicationDateString>1985</publicationDateString>
+      <publicationYear>1985</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref8</id>
+      <referenceIdString>b7</referenceIdString>
+      <source></source>
+      <publisher>Cambridge University Press</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Allan</string>
+            <string>Algebraic</string>
+          </firstNames>
+          <lastName>Hatcher</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Topology</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2002</publicationDateString>
+      <publicationYear>2002</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref9</id>
+      <referenceIdString>b8</referenceIdString>
+      <title>Algebraic spans</title>
+      <source>Mathematical Structures in Computer Science</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Maurice</string>
+          </firstNames>
+          <lastName>Herlihy</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Sergio</string>
+          </firstNames>
+          <lastName>Rajsbaum</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>10</volume>
+      <issue>4</issue>
+      <pageFrom>549</pageFrom>
+      <pageTo>573</pageTo>
+      <publicationDateString>2000</publicationDateString>
+      <publicationYear>2000</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref10</id>
+      <referenceIdString>b9</referenceIdString>
+      <title>The asynchronous computability theorem for tresilient tasks</title>
+      <source>Proceedings of the 25th Annual ACM Symposium on Theory of Computing</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Maurice</string>
+          </firstNames>
+          <lastName>Herlihy</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Nir</string>
+          </firstNames>
+          <lastName>Shavit</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>111</pageFrom>
+      <pageTo>120</pageTo>
+      <publicationDateString>1993</publicationDateString>
+      <publicationYear>1993</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref11</id>
+      <referenceIdString>b10</referenceIdString>
+      <source>Category Theory: An Introduction</source>
+      <publisher>Allyn and Bacon</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Horst</string>
+          </firstNames>
+          <lastName>Herrlich</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>George</string>
+            <string>E</string>
+          </firstNames>
+          <lastName>Strecker</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1973</publicationDateString>
+      <publicationYear>1973</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref12</id>
+      <referenceIdString>b11</referenceIdString>
+      <title>Proving the correctness of multiprocess programs</title>
+      <source>IEEE Transactions on Software Engineering SE</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Leslie</string>
+          </firstNames>
+          <lastName>Lamport</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>3</volume>
+      <issue>2</issue>
+      <pageFrom>125</pageFrom>
+      <pageTo>143</pageTo>
+      <publicationDateString>1977</publicationDateString>
+      <publicationYear>1977</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref13</id>
+      <referenceIdString>b12</referenceIdString>
+      <title>Closed schedulers: A novel technique for analyzing asynchronous protocols</title>
+      <source>Distributed Computing</source>
+      <publisher>Lynch, Nancy A. Distributed Algorithms. Morgan Kaufmann</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Ronit</string>
+          </firstNames>
+          <lastName>Lubitch</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Shlomo</string>
+          </firstNames>
+          <lastName>Moran</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>8</volume>
+      <issue>4</issue>
+      <pageFrom>203</pageFrom>
+      <pageTo>210</pageTo>
+      <publicationDateString>1995</publicationDateString>
+      <publicationYear>1995</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref14</id>
+      <referenceIdString>b13</referenceIdString>
+      <title>A layered analysis of consensus</title>
+      <source>SIAM Journal on Computing</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Yoram</string>
+          </firstNames>
+          <lastName>Moses</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Sergio</string>
+          </firstNames>
+          <lastName>Rajsbaum</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>31</volume>
+      <issue>4</issue>
+      <pageFrom>989</pageFrom>
+      <pageTo>1021</pageTo>
+      <publicationDateString>2002</publicationDateString>
+      <publicationYear>2002</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref15</id>
+      <referenceIdString>b14</referenceIdString>
+      <title>Wait-free k-set agreement is impossible: The topology of public knowledge</title>
+      <source>SIAM Journal on Computing</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Michael</string>
+          </firstNames>
+          <lastName>Saks</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Fotios</string>
+          </firstNames>
+          <lastName>Zaharoglou</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>29</volume>
+      <issue>5</issue>
+      <pageFrom>1449</pageFrom>
+      <pageTo>1483</pageTo>
+      <publicationDateString>2000</publicationDateString>
+      <publicationYear>2000</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref16</id>
+      <referenceIdString>b15</referenceIdString>
+      <title>Time is not a healer</title>
+      <source>Proceedings of the 6th Annual Symposium on Theoretical Aspects of Computer Science</source>
+      <publisher>Springer</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Nicola</string>
+          </firstNames>
+          <lastName>Santoro</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Peter</string>
+          </firstNames>
+          <lastName>Widmayer</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>304</pageFrom>
+      <pageTo>313</pageTo>
+      <publicationDateString>1989</publicationDateString>
+      <publicationYear>1989</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref17</id>
+      <referenceIdString>b16</referenceIdString>
+      <source></source>
+      <publisher>McGraw-Hill</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Edwin</string>
+            <string>H Algebraic</string>
+          </firstNames>
+          <lastName>Spanier</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Topology</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1966</publicationDateString>
+      <publicationYear>1966</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+  </references>
+</Publication>

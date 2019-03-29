@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">A Multilevel Heuristic for the Rooted Delay-Constrained Minimum Spanning Tree Problem</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Martin</forename><surname>Berlakovich</surname></persName>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Mario</forename><surname>Ruthmair</surname></persName>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Günther</forename><forename type="middle">R</forename><surname>Raidl</surname></persName>
+						</author>
+						<author>
+							<affiliation key="aff0">
+								<orgName type="department">Institute of Computer Graphics and Algorithms</orgName>
+								<orgName type="institution">Vienna University of Technology</orgName>
+								<address>
+									<settlement>Vienna</settlement>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff1">
+								<orgName type="department">Introduction</orgName>
+							</affiliation>
+						</author>
+						<title level="a" type="main">A Multilevel Heuristic for the Rooted Delay-Constrained Minimum Spanning Tree Problem</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<abstract/>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">Ranking Score</head><p>In the above construction heuristics, the inclusion of an edge with low costs is not necessarily cheap regarding the overall solution. If an edge with low costs but high delay is used it can affect the further construction of the solution negatively. The high delay can force a heuristic to use very expensive edges with low delay in order to not violate the delay constraint. Such decisions sometimes create weak solutions corresponding to poor local optima which even good improvement procedures are not able to overcome.</p><p>In an attempt to judge how promising an edge is, the ranking score is intro- duced. It is more likely that an edge with comparatively low costs and low delay is part of an optimal solution than an edge with very low costs but high delay. The ranking score score(e) describes the relative cost in relation to the delay of an edge e ∈ E in comparison to other edges:</p><formula xml:id="formula_0">1 − r c 1 − r d score(e) = e − 1 |E| · e − 1 |E|<label>(1)</label></formula><p>Here, r c e ∈ {1, . . . , |E|} and r d e ∈ {1, . . . , |E|} represent the cost and delay ranks of edge e, which are obtained by sorting the edges according to costs and delays, respectively. The ranking score of a vertex v ∈ V is the sum of the scores of all incident edges.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">Ranking-Based Multilevel Heuristic</head><p>The ranking-based multilevel heuristic (RBMH) follows a multilevel strategy. In each level a number of vertices, including the source vertex, is selected as so-called supervertices. The remaining vertices are connected directly to these supervertices creating multiple subtrees in each level.</p><p>The RBMH uses the ranking scores to determine which vertices and edges are used. Vertices with high ranking scores are supposed to have many or at least high quality incident edges. This makes them more promising to be the root of a subtree in an optimal solution. After choosing a set of these supervertices all remaining vertices are connected to them using the edges with the highest ranking scores satisfying the delay-constraints. The subtrees with supervertices as their roots represent the vertices in the next level. This process is continued until only one supervertex, the source vertex, remains corresponding to a feasible solution for the original problem. The RBMH runs in O(|E| log |E| + |V | 2 ) time.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">Preliminary Results</head><p>The RBMH has been tested on large random instances from <ref type="bibr">[2]</ref> with complete graphs of 500 and 1000 vertices and the results are compared to those of the Kruskal-based heuristic. In all cases the variable neighborhood descent (VND) of <ref type="bibr">[2]</ref> is applied to improve constructed solutions.</p><p>The exemplary results listed in <ref type="table" target="#tab_0">Table 1</ref> document that the RBMH combined with VND produces on average better results than the Kruskal-based heuris- tic using the same improvement with the exception of tight delay-bounds. The RBMH solution usually has higher costs as corresponding solutions of previous construction heuristics but at the same time offers higher potential for later improvement phases. Concerning the runtime the RBMH tests are slower since more time is spent in the improvement phase. </p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>References 1 .</head><label>1</label><figDesc>Gouveia, L., Paias, A., Sharma, D.: Modeling and solving the rooted distance- constrained minimum spanning tree problem. Computers and Operations Research 35(2), 600-613 (2008) 2. Ruthmair, M., Raidl, G.R.: A Kruskal-Based Heuristic for the Rooted Delay- Constrained Minimum Spanning Tree Problem. In: Moreno-Díaz, R., Pichler, F., Quesada-Arencibia, A. (eds.) EUROCAST 2009. LNCS, vol. 5717, pp. 713-720. Springer (2009) 3. Salama, H.F., Reeves, D.S., Viniotis, Y.: The delay-constrained minimum spanning tree problem. In: Blum, C., Roli, A., Sampels, M. (eds.) Proceedings of the 2nd IEEE Symposium on Computers and Communications -ISCC '97. pp. 699-703 (1997) 4. Walshaw, C.: Multilevel refinement for combinatorial optimisation problems. Annals of Operations Research 131(1), 325-372 (2004)</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0" validated="false"><head>Table 1 . Comparison of RBMH and Kruskal-based heuristic, applied on a set of 30 random instances (complete graphs) with 500 and 1000 vertices (B: delay-bound, c: average final objective values, σ: standard deviations, t[s]: runtime in seconds).</head><label>1</label><figDesc></figDesc><table>Tests 
+</table></figure>
+		</body>
+		<back>
+			<div type="references">
+
+				<listBibl/>
+			</div>
+		</back>
+	</text>
+</TEI>

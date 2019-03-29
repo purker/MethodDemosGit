@@ -1,0 +1,157 @@
+<Publication>
+  <id>TUW-257397</id>
+  <title></title>
+  <note>Unanticipated Context Awareness for Software Configuration Access using the getenv API /phone/call/inpocket/vibration = off /phone/call/notinpocket/vibration = on</note>
+  <abstractText>Configuration files, command-line arguments and environment variables are the dominant tools for local configuration management today. When accessing such program execution environments, however, most applications do not take context , e.g. the system they run on, into account. The aim of this paper is to integrate unmodified applications into a coherent and context-aware system by instrumenting the getenv API. We propose a global database stored in configuration files that includes specifications for contextual interpretations and a novel matching algorithm. In a case study we analyze a complete Debian operating system where every getenv API call is intercepted. We evaluate usage patterns of 16 real-world applications and systems and report on limitations of unforeseen context changes. The results show that getenv is used extensively for variability. The tool has acceptable overhead and improves context-awareness of many applications. 1 Introduction The goal of context-oriented programming (COP) is to avoid the tedious, time-consuming and error-prone task of implementing context awareness manually, and instead adapt the application&apos;s behavior using the concept of layers [1, 12]. Each layer represents one dimension of the context relevant to the application. Contextual values [27] act as variables whose values depend on layers. A program execution environment consists of the environment variables and key/value pairs retrieved from configuration files. A program execution environment can be tightly integrated with contextual values [21]. Context awareness [5] is a property of software and refers to its ability to correctly adapt to the current context. Our aim is to make applications context-aware that previously were not. For example, an important context for a browser is the network it uses. In a different network, different proxy settings are required to successfully retrieve a web page. We want the browser to automatically adapt itself to the network actually present, i.e., make it context-aware in respect to the network. Markus Raab Institute of Computer Languages, Vienna University of Technology e-mail: markus.raab@complang.tuwien.ac.at 2 Markus Raab Although COP eases the writing of new software, there remains a huge corpus of legacy software that cannot profit from context awareness. Our paper aims at intercepting the standard API getenv in a way that COP-techniques are applied to unmodified applications. We focus on getenv because we found that it is used extensively. Our interception technique, however, does not make any assumption on the API. We recommend to specify the values and the context of the program execution environments separately. This configuration specification contains place-holders, each representing a dimension of the context: [/phone/call/vibration] type=boolean context=/phone/call/%inpocket%/vibration In this example, vibration is a contextual value of type boolean and %inpocket% a placeholder to be substituted in contextual interpretations. Thus, the value of vibration changes whenever inpocket changes. E.g., when a context sensor measures body temperature only on one side of the gadget, it will change the value of %inpocket%. Thus, when the mobile phone is in the pocket, it will turn on vibration. When the mobile phone is lying on a table, it will turn off vibration to prevent falling down when someone calls. If needed, users can even specify further context. For example , some users dislike the context-dependent feature as described. Our approach inherently allows users to reconfigure every parameter in every context. To turn on vibration if the phone is not in the pocket, we configure our device differently: In this paper we analyze the popular getenv() API. The function getenv() is standardized by SVr4, POSIX.1-2001, 4.3BSD, C89, and C99. Because of this standardization and ease of use it is adopted virtually everywhere, even in core libraries such as libc. It allows developers to query the environment. Using standard getenv implementations developers have to act carefully: settings valid in the current context can differ from those received through getenv. To reduce the danger of assuming wrong context information we propose to use a context-aware implementation. We implement it in the whole system by intercepting every getenv API call.</abstractText>
+  <keywords/>
+  <authors>
+    <Author>
+      <firstNames>
+        <string>Markus</string>
+      </firstNames>
+      <lastName>Raab</lastName>
+      <affiliations/>
+    </Author>
+  </authors>
+  <affiliations/>
+  <sections>
+    <Section>
+      <title>3</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>2</level>
+      <title>Background</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3</level>
+      <title>EnvElektra</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.1</level>
+      <title>Context Sensors</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>5</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.2</level>
+      <title>Context Specification</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>/env/layer/inpocket = notinpocket</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.3</level>
+      <title>Matching algorithm</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.4</level>
+      <title>Example</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>7</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4</level>
+      <title>Evaluation</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.1</level>
+      <title>RQ1: Usage Patterns</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>application</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>9</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>RQ2: Unanticipated Context Awareness</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>11</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>RQ3: Overhead</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>R</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>unit Intel</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>R Core</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>13</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5</level>
+      <title>Threats to Validity</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>6</level>
+      <title>Related Work</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>7</level>
+      <title>Conclusion</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>15</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+  </sections>
+  <citationContexts/>
+  <references/>
+</Publication>

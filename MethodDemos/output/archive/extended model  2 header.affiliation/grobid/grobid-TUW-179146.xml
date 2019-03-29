@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Introducing Aspect-oriented Space Containers for Efficient Publish/Subscribe Scenarios in Intelligent Transportation Systems</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Eva</forename><surname>Kühn</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution">Space-based Computing Group Vienna University of Technology Favoritenstr</orgName>
+								<address>
+									<postCode>1040</postCode>
+									<settlement>Vienna</settlement>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Richard</forename><surname>Mordinyi</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution">Space-based Computing Group Vienna University of Technology Favoritenstr</orgName>
+								<address>
+									<postCode>1040</postCode>
+									<settlement>Vienna</settlement>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Laszlo</forename><surname>Keszthelyi</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution">Space-based Computing Group Vienna University of Technology Favoritenstr</orgName>
+								<address>
+									<postCode>1040</postCode>
+									<settlement>Vienna</settlement>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Christian</forename><surname>Schreiber</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution">Space-based Computing Group Vienna University of Technology Favoritenstr</orgName>
+								<address>
+									<postCode>1040</postCode>
+									<settlement>Vienna</settlement>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Sandford</forename><surname>Bessler</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="institution">Telecommunications Research Centre Vienna</orgName>
+								<address>
+									<postCode>1210</postCode>
+									<settlement>Vienna</settlement>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Slobodanka</forename><surname>Tomic</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="institution">Telecommunications Research Centre Vienna</orgName>
+								<address>
+									<postCode>1210</postCode>
+									<settlement>Vienna</settlement>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Introducing Aspect-oriented Space Containers for Efficient Publish/Subscribe Scenarios in Intelligent Transportation Systems</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<abstract>
+				<p>The publish/subscribe paradigm is a common concept for delivering events from information producers to consumers in a decoupled manner. Some approaches allow durable subscriptions or the transportation of events even to mobile subscribers in a dynamic network infrastructure. However, in the safety-critical telematics durable delivery of events is not sufficient enough. Short network connectiv-ity time and small bandwidth limit the number and size of events to be transmitted hence relevant information needed for safety-critical decision making may not be timely delivered. In this paper we propose the integration of publish/ subscribe systems and Aspect-oriented Space Containers (ASC) distributed via Distributed Hash Tables (DHT) in the network. The approach allows storage, manipulation, pre-processing, and prioritization of messages sent to mobile peers during bursts of connectivity. The benefits of the proposed approach are a) less complex application logic due to the processing capabilities of Space Containers, and b) increased efficiency due to delivery of essential messages only aggregated and processed while mobile peers are not connected. We describe the architecture of the proposed approach and explain its benefits by means of an industry use case.</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">Introduction</head><p>The publish/subscribe paradigm <ref type="bibr" target="#b7">[8]</ref> is a common and largely recognized concept for delivering messages in an anonymous decoupled fashion from publishers to sub- scribers. There are also concepts trying to ensure durability or the correct order of events <ref type="bibr" target="#b12">[13]</ref>, even in case of mobile peers or a completely dynamic network <ref type="bibr" target="#b9">[10]</ref>. However, there are application domains, like safety-critical telemat- ics, in which the durable delivery of subscribed messages, in other words the guaranteed delivery with "exactly once" semantics" may be considered a precondition for operation, due to jurisdictional reasons, but is not adequate at all. Among others, a durable notification service has to store all events a peer has subscribed for while the subscriber is off- line. Once the peer is reachable again, the saved events have to be delivered to the associated subscriber. This means that the peer would receive a large amount of data that it has to process locally in order to extract relevant information. However, in scenarios from Intelligent Transportation Systems (ITS), mobile peers (vehicles) have only a few seconds of connectivity and very limited bandwidth <ref type="bibr" target="#b16">[17]</ref>. This may cause several problems: the reconnecting peer should receive all stored events which may have very different importance for the user or be even stale, but due to the limited bandwidth and connectivity window only a very few messages can be forwarded to the peer creating a kind of back-pressure in the system. Furthermore, due to the small connectivity window, there is a possibility that essential information, such as safety-critical ghost driver warnings, cannot be transmitted to the peer. If such messages are not forwarded to the peer on time humans lives may be jeopardized. Therefore, the safety risk grows with the amount of irrelevant or even incorrect information delivered instead of important life-saving information.</p><p>In this paper 1 we propose the concept of Aspect-oriented Space Containers (ASC) for linking pub/sub systems and mobile peers with short connectivity time. The so called Space Container <ref type="bibr" target="#b11">[12]</ref> is a customizable storage compo- nent for efficient storage and retrieval of structured, spatial- temporal data distributed in a fault-tolerant manner <ref type="bibr" target="#b10">[11]</ref> by means of <ref type="table">Distributed Hash Tables (DHT)</ref>  <ref type="bibr" target="#b14">[15]</ref>. As- pects are components with customizable application logic executed either before or after the operation on the Space Container for events processing. The combination of a pub/sub medium and ASC allow the mobile peer to inset a Space Container in the network which then acts as an intermediate-subscriber for events in the pub/sub medium, and processes the delivered events on behalf of that mobile peer.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">Related Work</head><p>The pub/sub paradigm defines two types of clients: pub- lishers generating events, and subscribers receiving notifi- cations of events they have previously subscribed for. This type of messaging paradigm allows a strong decoupling of publishers and subscribers in time and space. Furthermore, it enables asynchronous and anonymous communication between publishers and subscribers <ref type="bibr" target="#b7">[8]</ref>. There are two types of pub/sub systems: topic-based and content-based <ref type="bibr" target="#b7">[8]</ref>. Hy- brid pub/sub systems like Hermes <ref type="bibr" target="#b13">[14]</ref>, SIENA <ref type="bibr" target="#b4">[5]</ref> or Re- becca <ref type="bibr" target="#b17">[18]</ref> support both types of subscription. Furthermore, the pub/sub system architecture can be further classified into client-server and peer-to-peer. In a client-server ar- chitecture, like Gryphon <ref type="bibr" target="#b2">[3]</ref>, publishers and subscribers are clients which are connected to a network of servers. Gen- erally, the servers temporarily store the events generated by publisher-clients and forwarded them to the subscriber- clients. If a subscribed client is not directly connected to a server, where a publisher has dispatched an event, the server has to forward the event to other servers until the event reaches the server capable of delivering the event di- rectly to the subscribed client. In a P2P architecture each node can act as a publisher, subscriber or event-forwarder to another node.</p><p>Reliable pub/sub systems guarantee that published events are delivered to all its subscribers. Durable (fault- tolerant) pub/sub system are able to cope with unreachable subscribers and servers (due to network failures or crashed clients/servers). Some pub/sub systems like SIENA offer a best-effort delivery strategy, i.e. the system will period- ically retry to deliver the message until the message was delivered successfully, a timeout expired or the maximum retry-count was reached. In mobile environments <ref type="bibr" target="#b9">[10]</ref> client applications reside on a host that is moving and therefore accessing the network (composed of so called event brokers) from various locations <ref type="bibr" target="#b3">[4]</ref>. The event brokers are responsible to guarantee the reliability and durability of the pub/sub system as described before. Furthermore, a protocol must exist which enables the update of a client's subscription as it is moving from one broker to another. During the client's movement undeliverable events have to be stored by the system and delivered as soon as the client reconnects to the system. When the client reconnects at another broker, all stored events have to be forwarded to that broker. One of the first pub/sub system that supports the reconnection of mobile clients is JEDI <ref type="bibr" target="#b6">[7]</ref>. However, our investigations of pub/sub systems have shown that currently most of the available systems are research prototypes which concentrate primarily on scalability and reliability rather on durability in P2P environments. Furthermore, current pub/sub systems for mobile scenarios have the disadvantage that the time needed to update a subscription and to forward all messages to the peer where the re-subscription is made, may take too long. Mobile clients in ITS scenarios are fast moving and have only a few seconds for data transmission (section 3).</p><p>In order to adequately address the scaling needs of dis- tributed applications, over the past years there has been research on pub/sub systems making use of the scalabil- ity characteristics of Distributed Hash Tables (DHTs) <ref type="bibr" target="#b14">[15]</ref>. This has led to several implementations of DHT-based pub- /sub systems, like <ref type="bibr" target="#b5">[6,</ref><ref type="bibr" target="#b8">9,</ref><ref type="bibr" target="#b15">16,</ref><ref type="bibr" target="#b0">1,</ref><ref type="bibr" target="#b1">2]</ref>. However, the papers aim at using DHT like for routing purposes, extended query- ing, efficient subscriptions, or the efficient distribution of events. In contrast to those approaches ASC focuses on the distribution of Space Containers as fault-tolerant inter- mediate subscribers, functioning as a scalable and efficient bridge between mobile peers with very short connectivity time and pub/sub systems. Thus, although ASC has been developed with respect to a mesh network (section 3), it does not prescribe the usage of P2P capable pub/sub sys- tems (section 4.2).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">Scenario</head><p>A motivating use-case to illustrate the benefits of the pro- posed ASC architecture is an Intelligent Transportation Sys- tem (ITS) scenario <ref type="bibr" target="#b10">[11]</ref>. The scenario consists of a highway with fast moving vehicles communicating with a fixed, ge- ographically distributed infrastructure. Along the highway there are so called Road Site Units (RSU) responsible for either passing safety and traffic information to the vehicles or receiving information from the vehicles and pass it to the system. RSUs are installed along the road network in 2-3 km distance of each other and are connected in a meshed wired broadband network in order to assure scalability and increase fault-tolerance. Information exchanged in the sys- tem mainly concerns the road traffic itself and the messages are published by e.g. the Traffic Control Centre (TCC), the police, the road maintenance depot. Events generated may contain information about traffic restrictions and warn- ings, traffic density, traffic congestions, accidents, road and weather conditions. The published data is geo-located and its relevance in space and time is limited to a certain region, moving direction and period of time. A subscriber my be a vehicle driving at high speed or a road worker in a field service. Connectivity between the RSU and the passing by vehicles is characterized by a limited bandwidth, communi- cation range, and connectivity window (ca. 300KB/sec for 2-3 sec at 100km/h in case of a single vehicle) allowing the exchange of small and a few messages only <ref type="bibr" target="#b16">[17]</ref>. The re- ceived information can be used to adapt driving behaviour since drivers are informed about occurrences in upcoming road segments. Therefore, subscribers are interested in in- formation which a) is represented by the very last event delivered by the pub/sub medium, b) is represented by an aggregated set of events, or c) is a prioritized set of the de- livered events. In a special case events can even cancel each other and should not be delivered at all. of the operation which triggered it. This is realized by the returning values an Aspect can throw. The returned value is analysed and the execution of the operation manipulated accordingly. In case of OK: the Aspect does not require any changes of the operation; NotOK: the execution of the op- eration is stopped and the transaction is rolled back; SKIP: the operation is neither performed on the container, nor on any following pre-Aspects, but post-Aspects are executed immediately afterwards; Reschedule: the execution of the operation is stopped and will be rescheduled for a later exe- cution.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">Execution of Aspect-oriented Space</head><p>Containers in Publish/Subscribe Sce- narios</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">Architecture</head><p>This section pictures how Aspects on top of Space Con- tainers <ref type="bibr" target="#b11">[12]</ref> can be deployed for the events processing and illustrates the integration between the Aspect-oriented Space Container and the pub/sub paradigm.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">Aspect-oriented Space Container</head><p>Space Containers realize some parts of Aspect-oriented Programming (AOP) by registering so called Aspects 2 at different points of a Space Container. Aspects are executed on the peer where the Space Container is located and can be triggered by the various operations on the container. The join points of AOP are called interception points (IPoints) and can be located before (pre) or after (post) the execution of an operation on the Space Container. Adding and remov- ing Aspects can be performed at any time during runtime. In addition to the parameters of a Space Container operation a so called Aspect Context can be passed along with ev- ery operation allowing the client to communicate with the installed Aspects. Aspect may contain any computational logic, thus can be used to realize security (authorization and authentication), the implementation of a highly customiz- able notification mechanism, or the additional manipulation of already stored or incoming entries. In case multiple As- pects are installed on the same Space Container, they are executed in the order they were added.</p><p>Before an operation can be executed on a Space Con- tainer it has to pass the installed pre-Aspects. If all Aspects return OK, the container interprets the selectors of the op- erations and executes the operation <ref type="bibr" target="#b11">[12]</ref>. Afterwards, all post-Aspects are executed. Depending on the result of the post-Aspects the result of the operation is either returned to the requesting peer, or the operation is rolled back. As al- ready mentioned, an Aspect can manipulate the execution A reason why we recommend that a Space Container shall be used instead of a database is the fact that the num- ber of different events in an ITS is not known beforehand and as a consequence an appropriate data model is diffi- cult to establish. By means of Coordinators <ref type="bibr" target="#b11">[12]</ref>, a Space Container is capable of using 'dynamic' data models which can be plugged in whenever needed. A Coordinator allows different views, optimally implemented with respect to ac- cessing requirements, on the entire data in the Space Con- tainer at the same time. As depicted in <ref type="figure" target="#fig_0">Figure 1</ref>, such a Space Container and its Aspects are deployed by means of a DHT in the RSU network. The principle is explained in <ref type="bibr" target="#b10">[11]</ref>, where we described how to combine Space-Containers with an overlay network based on DHT concepts in or- der to a) make such Space Containers uniquely addressable in a fault-tolerant and scalable manner, and b) to replicate Space Containers in order to increase fault-tolerance and their availability. The original subscriber (e.g. a vehicle) places its in- tention in receiving events from publishers by deploying a Space Container, installing Aspects and publish it in the DHT network. The Aspect registers itself as a subscriber in the pub/sub medium on behalf and according to the re- quirements of the original subscriber. From now on the As- pect will, independent of the connectivity mode of the orig- inal subscriber, receive events which are then processed by other installed pre-Aspects and the results are then stored in the Space Container. When the original subscriber re- establishes a connection to the network, it uses a read-selector to pick up the results from the Space Container. If the Space Container is replicated, Aspects are replicated as well. This means that the original subscriber is subscribed as often as many replicas of that Space Container exists. This is necessary in order to avoid missing events in case one of the replicas, including the subscribed Aspect, is off- line. The way how the replicated Space Containers handle incoming events in order to stay consistent is up to the im- plementation of the deployed pre-Aspects. Either, the repli- cas are completely independent of each other and perform every operation as many times as replicas exists, or an in- coming event is registered and not used for further process- ing until the result based on that event has been announced from a designated replica. The latter approach may be more efficient with respect to computational resources but require knowledge about group coordination.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">Conclusion and Future Work</head><p>In this paper we described the concept of ASC, Aspect- oriented Space Containers, distributed via Distributed Hash Tables for efficient publish/subscribe scenarios in the In- telligent Transportation System. The benefits of bridging mobile peers with pub/sub systems via ASC are reduction of the complexity of application implementation since the processing logic has been moved to the Aspects. Therefore, this solution allows efficient delivery of events to mobile peers, since the relevant information have been extracted in installed Aspects while the peer was off-line.</p><p>Future work contains an evaluation on how efficient the ASC approach is compared to current pub/sub systems. Further investigations regarding the way how the usage of Space Containers and Aspects change the relation between subscribers and the notification medium is intended. Fur- ther questions that we will consider are: Is a durable notifi- cation medium still necessary if Space Containers are repli- cated and distributed via DHTs, since DHT use the same network as the notification medium? Does this have an ef- fect on the semantics of durability? What is the influence on QoS coming from the number of replica set up by the sub- scriber? Another future work will deal with the question how to move Space Containers along the mesh of RSUs to minimize Space Container access time.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 1 :</head><label>1</label><figDesc>Figure 1: The operation of ASC in pub/sub scenarios</figDesc></figure>
+
+			<note place="foot" n="1"> This work has been supported by the Complex Systems Design &amp; Engineering Lab, and by the Austrian Government and the City of Vienna within the competence center program COMET.</note>
+
+			<note place="foot">Authorized licensed use limited to: Universitatsbibliothek der TU Wien. Downloaded on December 4, 2009 at 09:47 from IEEE Xplore. Restrictions apply.</note>
+		</body>
+		<back>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Pastrystrings: A comprehensive content-based publish/subscribe dht network</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">I</forename><surname>Aekaterinidis</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Triantafillou</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">26th IEEE Int. Conf. on Distributed Computing Systems (ICDCS&apos;06)</title>
+		<imprint>
+			<publisher>IEEE Computer Society</publisher>
+			<date type="published" when="2006" />
+			<biblScope unit="page">23</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Caps: Content-based publish/subscribe services for peer-to-peer systems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><forename type="middle">P</forename><surname>Ahull</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><forename type="middle">G</forename><surname>Lpez</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><forename type="middle">F G</forename><surname>Skarmeta</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">2nd Int. Conf. on Distributed Event-Based Systems (DEBS&apos;08)</title>
+		<imprint>
+			<date type="published" when="2008" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Exactly-once delivery in a content-based publish-subscribe system</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Bhola</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Strom</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Bagchi</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Y</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Auerbach</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">DSN</title>
+		<imprint>
+			<date type="published" when="2002" />
+			<biblScope unit="page" from="7" to="16" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Design and evaluation of a support service for mobile, wireless publish/subscribe applications</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Caporuscio</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><forename type="middle">M</forename><surname>Caporuscio</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Carzaniga</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Carzaniga</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><forename type="middle">L</forename><surname>Wolf</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><forename type="middle">L</forename><surname>Wolf</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. on Softw. Eng</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="page" from="1059" to="1071" />
+			<date type="published" when="2003" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<monogr>
+		<title level="m" type="main">Architectures for an Event Notification Service Scalable toWide-area Networks</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Carzaniga</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1998-12" />
+			<publisher>Politecnico Di Milano</publisher>
+		</imprint>
+	</monogr>
+<note type="report_type">PhD thesis</note>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Scribe: a large-scale and decentralized applicationlevel multicast infrastructure. Selected Areas in Communications</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Castro</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Druschel</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A.-M</forename><surname>Kermarrec</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Rowstron</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Journal on</title>
+		<imprint>
+			<biblScope unit="volume">20</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="1489" to="1499" />
+			<date type="published" when="2002-10" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">The jedi eventbased infrastructure and its application to the development of the opss wfms</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Cugola</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><forename type="middle">Di</forename><surname>Nitto</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Fuggetta</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Trans. Softw. Eng</title>
+		<imprint>
+			<biblScope unit="volume">27</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page" from="827" to="850" />
+			<date type="published" when="2001" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Kermarrec. The many faces of publish/subscribe</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><forename type="middle">T</forename><surname>Eugster</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><forename type="middle">A</forename><surname>Felber</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Guerraoui</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A.-M</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM Comput. Surv</title>
+		<imprint>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="114" to="131" />
+			<date type="published" when="2003" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Meghdoot: content-based publicsh/subscribe over p2p networks</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Gupta</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">O</forename><forename type="middle">D</forename><surname>Sahin</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Agrawal</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><forename type="middle">E</forename><surname>Abbadi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">5th ACM/IFIP/USENIX Int. Conf. on Middleware (Middleware&apos;04)</title>
+		<imprint>
+			<date type="published" when="2004" />
+			<biblScope unit="page" from="254" to="273" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Publish/subscribe in a mobile environment</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Y</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">H</forename><surname>Garcia-Molina</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Wirel. Netw</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="643" to="652" />
+			<date type="published" when="2004" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">A p2p network of space containers for efficient management of spatial-temporal data in intelligent transportation scenarios</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><surname>Kühn</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Mordinyi</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">H.-D</forename><surname>Goiss</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Bessler</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Tomic</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">International Symposium on Parallel and Distributed Computing (ISPDC&apos;09)</title>
+		<imprint>
+			<date type="published" when="2009" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Introducing the concept of customizable structured spaces for agent coordination in the production automation domain</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><surname>Kühn</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Mordinyi</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><surname>Keszthelyi</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Schreiber</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">The 8th International Conference on Autonomous Agents and Multiagent Systems</title>
+		<imprint>
+			<date type="published" when="2009" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Achieving causal and total ordering in publish/subscribe middleware with dsm</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><forename type="middle">M M</forename><surname>Pereira</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><forename type="middle">C</forename><surname>Lobato</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><forename type="middle">A C</forename><surname>Teixeira</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><forename type="middle">G</forename><surname>Pimentel</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. of the 3rd Wsh on Middleware for service oriented computing (MW4SOC&apos;08)</title>
+		<meeting>of the 3rd Wsh on Middleware for service oriented computing (MW4SOC&apos;08)</meeting>
+		<imprint>
+			<date type="published" when="2008" />
+			<biblScope unit="page" from="61" to="66" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<monogr>
+		<title level="m" type="main">Hermes: A Scalable Event-Based Middleware</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><forename type="middle">R</forename><surname>Pietzuch</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2004-02" />
+		</imprint>
+		<respStmt>
+			<orgName>Queens&apos; College University of Cambridge</orgName>
+		</respStmt>
+	</monogr>
+<note type="report_type">PhD thesis</note>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Pastry: Scalable, decentralized object location, and routing for large-scale peer-to-peer systems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Rowstron</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Druschel</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. of the 18th IFIP/ACM Int. Conf. on Distributed Systems Platforms (Middleware&apos;01)</title>
+		<meeting>of the 18th IFIP/ACM Int. Conf. on Distributed Systems Platforms (Middleware&apos;01)</meeting>
+		<imprint>
+			<date type="published" when="2001" />
+			<biblScope unit="page" from="329" to="350" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<monogr>
+		<title level="m" type="main">Willow: Dht, aggregation, and publish/subscribe in one protocol</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Van Renesse</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Bozdog</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2005" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<monogr>
+		<title level="m" type="main">Wave-based communication in vehicle to infrastructure real-time safety-related traffic telematics</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Zaera</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2008-08" />
+		</imprint>
+		<respStmt>
+			<orgName>Telecommunication Engineering, University of Zaragoza</orgName>
+		</respStmt>
+	</monogr>
+<note type="report_type">Master&apos;s thesis</note>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<monogr>
+		<title level="m" type="main">A Distributed Publish/Subscribe Notification Service for Pervasive Environments</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Zeidler</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2004" />
+		</imprint>
+		<respStmt>
+			<orgName>Technischen Universitt Darmstadt</orgName>
+		</respStmt>
+	</monogr>
+<note type="report_type">PhD thesis</note>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

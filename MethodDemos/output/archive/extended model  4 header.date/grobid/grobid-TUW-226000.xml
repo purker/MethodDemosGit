@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">A Comparison of User Description Languages Concerning Adaptability Based on User Preferences</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Christopher</forename><surname>Mayer</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Health &amp; Environment Department</orgName>
+								<orgName type="institution" key="instit1">AIT Austrian Institute of Technology GmbH</orgName>
+								<orgName type="institution" key="instit2">Biomedical Systems</orgName>
+								<address>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Martin</forename><surname>Morandell</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Health &amp; Environment Department</orgName>
+								<orgName type="institution" key="instit1">AIT Austrian Institute of Technology GmbH</orgName>
+								<orgName type="institution" key="instit2">Biomedical Systems</orgName>
+								<address>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Andreas</forename><surname>Kuntner</surname></persName>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Hilda</forename><surname>Tellioglu</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Institute of Design and Assessment of Technology</orgName>
+								<orgName type="institution">Vienna University of Technology</orgName>
+								<address>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">A Comparison of User Description Languages Concerning Adaptability Based on User Preferences</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>Ambient Assisted Living</term>
+					<term>Human-Computer Interaction</term>
+					<term>User Description Languages</term>
+					<term>Comparison</term>
+					<term>Adaptability</term>
+					<term>User Preferences</term>
+				</keywords>
+			</textClass>
+			<abstract>
+				<p>The user interface is the most important feature of interaction between users and (AAL) services. Explicitly defined user interfaces are bound to a specific toolkit and programming language or markup language. Thus a separate user interface definition has to be created manually for different classes of I/O devices to be supported. Compared to manual user interface creation, the automatic or semi-automatic generation of user interfaces based on interaction descriptions considerably reduces the manual effort necessary for integrating a large number of devices and therefore automatically increases the number of supported devices. The main goal of this paper is to provide an overview of selected existing solutions for the definition of generic user interactions and the generation of user interfaces. The comparison shows that the aspect of adaptability is partly covered by the presented User Interaction Description Languages. Nevertheless it is important to analyze them with respect to additional criteria, like accessibility, context-and use-case awareness, to receive a meaningful overview of advantages and drawbacks of the different approaches leading to a good basis for choosing one of the presented approaches.</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.">Introduction</head><p>The user interface (UI) is the most important feature of interaction between users and (AAL) services. It can be critical to the success or failure of an ICT product or service <ref type="bibr" target="#b0">1</ref> . In the course of aging the abilities and special needs of older adults change. Many services older people could benefit from lack of accessibility, adoptability, and usability of the user interface and interaction.</p><p>Explicitly defined user interfaces are bound to a specific toolkit and programming or markup language. Thus a separate UI definition has to be created manually for different classes of I/O devices to be supported. Compared to manual user interface creation, the automatic or semi-automatic generation of user interfaces based on interaction descrip- tions considerably reduces the manual effort necessary for integrating a large number of devices and therefore automatically increases the number of supported devices. The major challenge of using such an approach of automatic or semi-automatic user interface generation is the quality of the rendered UIs. Especially when developing services and UIs for older adults who might not be experienced in the use of electronic devices and are likely limited to certain input and output modalities, it is important to provide products that ensure maximum accessibility and usability.</p><p>The main goal of this paper is to provide an overview of selected existing solutions for the definition of generic user interactions and the generation of user interfaces -sub- sumed as User Interaction Description Languages (UIDL). It is inspired by the theo- retical survey presented in <ref type="bibr" target="#b0">[1]</ref>. The UIDLs are examined and compared to each other, whereas the focus is on adaptability based on the environmental settings. Other impor- tant criteria, such as level of abstraction, openness, organizational background, status, number of implementations, and number of supported target platforms, are of importance as well, but neglected in the presented work. The paper is structured in the following way: The introduction and objectives are followed by a description of the methodology in terms of a comparison approach and an overview of UIDLs. Thereafter the results of the comparison are presented, followed by some final conclusions.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">Methodology: Comparison Approach</head><p>We have established a comparison study to analyze UIDLs based on various criteria, whereas adaptability is of uttermost importance to identify their applicability to Ambi- ent Assisted Living environments. The criterion adaptability concerns the possibility to adapt user interfaces automatically based on different environmental settings. For AAL environments, the following three characteristics concerning adaptability are important:</p><p>• Accessibility: The UI should automatically adapt to user preferences based on the user's abilities and disabilities.</p><p>• Use-case awareness: In different use cases, different I/O devices are used. For example, for activating and deactivating a service, a mobile phone is mostly used because the user can carry it with him or her, while changing the basic setup of a service is carried out using a PC due to the more sophisticated input mecha- nisms. UIDLs should know about the capabilities of UI devices and automatically adapt UIs to provide different functionalities on different I/O devices as well as to present the UI in the way that is supported best by each type of device.</p><p>• Context-awareness: Finally, it is desirable to automatically adapt the presenta- tion of a user interface based on environmental influences, for example physical conditions such as the intensity of light around the I/O device.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">Overview User Interface Description Languages</head><p>This section presents 15 existing User Interaction Description Languages. For each of these, some high-level information are given based on available literature and tools as well as a short analysis of their adaptability.</p><p>The Alternate Abstract Interface Markup Language (AAIML) is part of the first Uni- versal Remote Console (URC) specification <ref type="bibr" target="#b1">[2]</ref>. It is a markup language used for defin- ing UI descriptions in an abstract way, based on XML. In practice, an AAIML document contains an AAIML model that describes the UI of exactly one target service that can be controlled from a remote console device. As part of the abstract user interaction descrip- tion language, classes may be defined that restrict certain interactions to special devices and therefore to certain use-cases.</p><p>Presentation Template (PreT) Markup Language is part of the ISO/IEC 24752 stan- dard <ref type="bibr" target="#b2">[3]</ref>, which is the direct successor of the ANSI/INCITS 389 through 393 standards family. It defines the latest specification of Universal Remote Console (URC). The con- crete UI is rendered individually for the UI device's platform at run-time, based on the capabilities of the available services. Thus it supports in theory an unlimited number of I/O devices. It lets the user choose the device as remote console, which is an important step towards accessibility.</p><p>The Extensible Interface Markup Language (XIML) is a framework for defining ab- stract UIs and transforming them to concrete ones. In addition, it offers several methods for the automatic adaptation of UIs, based on different criteria. Its main focus is the use case of a generic UI, defined once for an application, which can be executed on a vari- ety of devices, using different platforms <ref type="bibr" target="#b3">[4]</ref>. User profiles and preferences can be spec- ified. Personalization is integrated using automatic exchange of UI widgets. The mech- anism of automatically generating rules for mapping intermediate presentation elements to concrete UI widgets provides a flexible way to react to contextual settings, device capabilities, use-cases, user preferences, etc.</p><p>The Extensible Interaction Scenario Language (XISL) was designed with regard to changing Internet usage behavior. It is a language for describing online multi-modal interaction systems, using an XML based syntax. It describes interaction scenarios rather than concrete UIs, thus being applicable to many different interaction modalities. XISL is based on existing open standards such as VoiceXML <ref type="bibr" target="#b4">[5]</ref> and SMIL <ref type="bibr" target="#b5">[6]</ref>, but advances their concepts in a modality-independent approach. It does not provide any framework for automatic adaptation, but extensions can be customized for rendering the UI and adapting it to users' needs or environmental settings.</p><p>The Web Services Description Language (WSDL) specifies an XML-based language to describe web services based on their functionality <ref type="bibr" target="#b6">[7]</ref>. It is used to define the function- ality a web service offers and the interactions to access a certain functionality. Although WSDL is often used in combination with SOAP in practice, the language is protocol- independent. It does neither define nor generate UI.</p><p>The Web Service eXperience Language (WSXL) was developed to reduce develop- ment effort while building web applications for different distribution channels by re-use. Service-based web applications specified using WSXL can easily be adapted to different presentation scenarios. This means that one web application can be accessed in different ways without the need of redevelopment. The adaptability description framework was designed for adaptation to different distribution channels inside the usage context of web services. No built-in support for the automatic adaptation is provided, but it could easily be added by external toolkits.</p><p>The USer Interface eXtensible Markup Language (UsiXML) is an XML-based markup language that can be used to define UIs in an abstract way, modality independent <ref type="bibr" target="#b7">[8]</ref>. Its main goal is to reduce the effort necessary for generating UIs to be used in mul- tiple contexts of use. It addresses mainly designers, in contrast to traditional UI toolkits that are often integrated into programming frameworks aiming at developers. So, full adaptability of UI is supported.</p><p>User Interface Markup Language (UIML) is a meta-language, not specifying con- crete UI elements on its own, but providing a framework for the definition of custom vocabularies that can then be used to create generic UI descriptions. The development of UIML was inspired by the generic concept of HTML, which provided one markup language that could be rendered on several platforms <ref type="bibr" target="#b8">[9]</ref>. Based on this, UIML's main goal is helping UI developers in creating UIs that are sufficiently generic to be used on different platforms, thus significantly reducing the effort in developing multi-platform UIs. UIs defined using UIML are either automatically transformed to different target languages, or interpreted and rendered on target devices in real-time.</p><p>The Dialog and Interface Specification Language (DISL) <ref type="bibr" target="#b9">[10]</ref> is an extended subset of the UIML language specification. It provides a modeling language for specifying di- alog models in an abstract way that can be used to generate UIs for multiple modalities and platforms. The language is designed to support switching between end devices on the fly. Adaptability is a built-in core component.</p><p>Model-based lAnguage foR Interactive Applications XML (MARIA XML) <ref type="bibr" target="#b10">[11]</ref> mainly focuses on the definition of UIs used to access web service functionalities. The language follows a semi-automatic approach for generation of UIs: Basic final UIs are generated automatically from abstract UI descriptions, but developers are given the pos- sibility to refine these concrete interfaces. This concept allows human intervention, but reduces manual effort. The mechanism of migratory UI implements an automatic adap- tation based on contexts of use.</p><p>The eXtensible Application Markup Language (XAML) 2 is a declarative markup lan- guage based on XML developed by Microsoft. While XAML was created as general markup language for the initialization of structured objects, its main use is the specifica- tion of UIs as part of the Windows Presentation Foundation (WPF) and the definition of UIs for web applications that build upon the Microsoft Silverlight framework. It does not provide mechanisms to store users' preferences and to react to environmental factors.</p><p>The XML User interface Language (XUL) is based on XML and not compiled but interpreted at run-time by a special rendering engine. Its main use is the definition of UIs for applications developed by the Mozilla community, although also some additional projects make use of it. Adaptation could be integrated using the flexible CSS styling system. XUL UI automatically adapt to different hardware capabilities such as screen resolution, but limited to simple dynamic resizing and positioning of widgets.</p><p>The Macromedia eXtensible Markup Language (MXML) is a declarative markup language based on XML originally developed by Macromedia, now used by Adobe as part of the Flash product series. The main use of MXML is the specification of UIs of Adobe Flex applications. The compiled applications (SWF) can be run as web applets embedded in any web page, or as standalone applications. Through the use of layout man- agers, MXML UI automatically adapt to different screen resolutions by re-positioning UI elements. The display of different UI on different devices however is not supported.</p><p>VoiceXML is an XML-based markup language used to specify user interaction with speech-based systems. It was designed with a similar goal as HTML: HTML is used to specify visual web pages, while VoiceXML allows the specification of audible web con- tent, featuring both one-way presentations and interactions. No support for adaptability is provided since the language focuses on speech-based interfaces that are presented in the course of one telephone call using exactly one device.</p><p>The HyperText Markup Language (HTML) is the markup language used for the specification of web pages. Version 4 <ref type="bibr" target="#b11">[12]</ref> is the first version that separates semantics and appearance. The analysis also applies to the eXtensible Hypertext Markup Language (XHTML) <ref type="bibr" target="#b12">[13]</ref>. HTML is based on the Standard Generalized Markup Language (SGML), while XHTML is based on XML. XML actually is a subset of SGML that adds addi- tional restrictions to the base language <ref type="bibr" target="#b13">[14]</ref>. No automatic adaptation support is provided, whereas CSS supports multiple media types by enabling styling the control elements differently for different devices or hiding of some elements for certain devices.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Accessibility</head><p>Context </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">Results</head><p>In <ref type="table">Table 1</ref> the results of the comparison regarding adaptability of all analyzed UIDLs are presented. As shown the characteristics are in a wide range and just some UIDLs are covering these important aspects (XIML, UsiXML). DISL lacks on accessibility support, but provided context-and use case-awareness. The solutions studied differ strongly con- cerning their field of application. To form a complete user interface generation system for AAL environments, several of these solutions need to be combined since all operate on a different degree of abstraction.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.">Conclusion</head><p>The comparison and the results presented in Section 4 show that the aspect of adaptability is partly covered by the UIDLs. Nevertheless it is important to analyze them with respect to additional criteria, like accessibility, context-and use-case awareness, to receive a meaningful overview of advantages and drawbacks of the different approaches. These characteristics are chosen due to their importance and relevance in the design of user interfaces and interaction for users with special needs to access (AAL) services. The project AALuis 3 uses for example Maria XML.</p></div>
+			<note place="foot" n="1"> Corresponding Author: Christopher Mayer, AIT Austrian Institute of Technology GmbH, Health &amp; Environment Department, Biomedical Systems, Donau-City-Str. 1, 1220 Vienna, Austria; E-mail: christopher.mayer@ait.ac.at. 1 http://www.etsi.org/website/Technologies/UserInterfaces.aspx [Accessed: 04/2013]</note>
+
+			<note place="foot" n="2"> http://msdn.microsoft.com/en-us/library/ms747122.aspx [Accessed: 04/2013]</note>
+
+			<note place="foot" n="3"> www.aaluis.eu. The project AALuis is co-funded by the AAL Joint Programme (AAL-2010-3-070) and the following National Authorities and R&amp;D programs in Austria, Germany and The Netherlands: bmvit, program benefit, FFG (AT), BMBF (DE) and ZonMw (NL).</note>
+		</body>
+		<back>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">A theoretical survey of user interface description languages: Preliminary results</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Guerrero-Garcia</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><forename type="middle">M</forename><surname>Gonzalez-Calleros</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Vanderdonckt</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Muoz-Arteaga</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Web Congress, 2009. LAWEB&apos;09. Latin American</title>
+		<imprint>
+			<date type="published" when="2009" />
+			<biblScope unit="page" from="36" to="43" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Universal remote console-prototyping for the alternate interface access standard</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Zimmermann</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Vanderheiden</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Gilman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the User interfaces for all 7th international conference on Universal access: theoretical perspectives, practice, and experience, ERCIM&apos;02</title>
+		<meeting>the User interfaces for all 7th international conference on Universal access: theoretical perspectives, practice, and experience, ERCIM&apos;02</meeting>
+		<imprint>
+			<publisher>SpringerVerlag</publisher>
+			<date type="published" when="2003" />
+			<biblScope unit="page" from="524" to="531" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<monogr>
+		<title level="m" type="main">Information technology-user interfaces-universal remote console. International Organization for Standardization, ISO/IEC 24752</title>
+		<imprint>
+			<date type="published" when="2008" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<monogr>
+		<title level="m" type="main">XIML: A universal language for user interfaces</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Puerta</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Eisenstein</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2001" />
+		</imprint>
+	</monogr>
+<note type="report_type">Technical report</note>
+	<note>RedWhale Software</note>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<monogr>
+		<title level="m" type="main">Voice extensible markup language (VoiceXML) version 2</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Oshry</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><forename type="middle">J</forename><surname>Auburn</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Baggia</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Bodell</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Burke</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><forename type="middle">C</forename><surname>Burnett</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><surname>Candell</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Carter</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Mcglashan</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Porter</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">K</forename><surname>Rehor</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2007" />
+			<biblScope unit="page">3</biblScope>
+		</imprint>
+	</monogr>
+	<note>.1. W3C recommendation</note>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<monogr>
+		<title level="m" type="main">Synchronized multimedia integration language (SMIL 3.0). W3C recommendation</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Bulterman</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2008" />
+			<biblScope unit="volume">3</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<monogr>
+		<title level="m" type="main">Web services description language (WSDL) version 2.0 part 1: Core language. W3C recommendation</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Chinnici</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J.-J</forename><surname>Moreau</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Ryman</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><forename type="middle">(</forename><surname>Weerawarana</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2007" />
+			<biblScope unit="page">3</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">USIXML: A language supporting multi-path development of user interfaces</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Q</forename><surname>Limbourg</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Vanderdonckt</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Michotte</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><surname>Bouillon</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">V</forename><surname>López-Jaquero</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 9th IFIP Working Conference on Engineering for Human-Computer Interaction jointly with the 11th Int. Workshop on Design, Specification, and Verification of Interactive Systems</title>
+		<meeting>the 9th IFIP Working Conference on Engineering for Human-Computer Interaction jointly with the 11th Int. Workshop on Design, Specification, and Verification of Interactive Systems</meeting>
+		<imprint>
+			<publisher>Springer Verlag</publisher>
+			<date type="published" when="2004" />
+			<biblScope unit="volume">3425</biblScope>
+			<biblScope unit="page" from="200" to="220" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">The relationship of the UIML 3.0 spec. to other standards/working groups</title>
+	</analytic>
+	<monogr>
+		<title level="m">Organization for the Advancement of Structured Information Standards (OASIS)</title>
+		<imprint>
+			<date type="published" when="2003" />
+		</imprint>
+	</monogr>
+<note type="report_type">Technical report</note>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Dialog modeling for multiple devices and multiple interaction modalities</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Schaefer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Bleul</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">W</forename><surname>Mueller</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 5th international conference on task models and diagrams for users interface design, TAMODIA&apos;06</title>
+		<meeting>the 5th international conference on task models and diagrams for users interface design, TAMODIA&apos;06</meeting>
+		<imprint>
+			<publisher>Springer Verlag</publisher>
+			<date type="published" when="2007" />
+			<biblScope unit="page" from="39" to="53" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">MARIA: A universal, declarative, multiple abstraction-level language for service-oriented applications in ubiquitous environments</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Paternó</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Santoro</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><forename type="middle">D</forename><surname>Spano</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM Transactions on ComputerHuman Interaction</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<date type="published" when="2019" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<monogr>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Raggett</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Le Hors</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Jacobs</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1999" />
+			<biblScope unit="page">3</biblScope>
+		</imprint>
+	</monogr>
+	<note>HTML 4.01 specification. W3C recommendation</note>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Pemberton</surname></persName>
+		</author>
+		<title level="m">XHTML TM 1.0 the extensible hypertext markup language</title>
+		<imprint>
+			<date type="published" when="2002" />
+			<biblScope unit="page">3</biblScope>
+		</imprint>
+	</monogr>
+	<note>W3C recommendation</note>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<monogr>
+		<title level="m" type="main">Comparison of SGML and XML. W3C note</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Clark</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1997" />
+			<biblScope unit="page">3</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

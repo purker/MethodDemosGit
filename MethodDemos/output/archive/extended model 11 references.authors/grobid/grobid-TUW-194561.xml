@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Extending Context-Sensitivity in Term Rewriting</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Bernhard</forename><surname>Gramlich</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Institute of Computer Languages</orgName>
+								<orgName type="laboratory">Theory and Logic Group</orgName>
+								<orgName type="institution">Vienna University of Technology</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Felix</forename><surname>Schernhammer</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Institute of Computer Languages</orgName>
+								<orgName type="laboratory">Theory and Logic Group</orgName>
+								<orgName type="institution">Vienna University of Technology</orgName>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Extending Context-Sensitivity in Term Rewriting</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="DOI">10.4204/EPTCS.15.5</idno>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<abstract>
+				<p>We propose a generalized version of context-sensitivity in term rewriting based on the notion of &quot;forbidden patterns&quot;. The basic idea is that a rewrite step should be forbidden if the redex to be contracted has a certain shape and appears in a certain context. This shape and context is expressed through forbidden patterns. In particular we analyze the relationships among this novel approach and the commonly used notion of context-sensitivity in term rewriting, as well as the feasibility of rewriting with forbidden patterns from a computational point of view. The latter feasibility is characterized by demanding that restricting a rewrite relation yields an improved termination behaviour while still being powerful enough to compute meaningful results. Sufficient criteria for both kinds of properties in certain classes of rewrite systems with forbidden patterns are presented.</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">Introduction and Overview</head><p>Standard term rewriting systems (TRSs) are well-known to enjoy nice logical and closure properties. Yet, from an operational and computational point of view, i.e., when using term rewriting as computational model, it is also well-known that for non-terminating systems restricted versions of rewriting obtained by imposing context-sensitivity and/or strategy requirements may lead to better results (e.g., in terms of computing normal forms, head-normal forms, etc.).</p><p>One major goal when using reduction strategies and context restrictions is to avoid non-terminating reductions. On the other hand the restrictions should not be too strong either, so that the ability to compute useful results in the restricted rewrite systems is not lost. We introduce a novel approach to context restrictions relying on the notion of "forbidden patterns", which generalizes existing approaches and succeeds in handling examples in the mentioned way (i.e., producing a terminating reduction relation which is powerful enough to compute useful results) where others fail.</p><p>The following example motivates the use of reduction strategies and/or context restrictions.</p><p>Example 1. Consider the following rewrite system, cf. e.g. <ref type="bibr" target="#b14">[15]</ref>:</p><formula xml:id="formula_0">inf(x) → x : inf(s(x))</formula><p>2nd(x : (y : zs)) → y</p><p>This TRS is non-terminating and not even weakly normalizing. Still some terms like 2nd(inf(x)) are reducible to a normal form while also admitting infinite reduction sequences. One goal of context re- strictions and reduction strategies is to restrict derivations in a way such that normal forms can be computed whenever they exist, while infinite reductions are avoided.</p><p>One way to address the problem of avoiding non-normalizing reductions in Example 1 is the use of reduction strategies. For instance for the class of (almost) orthogonal rewrite systems (the TRS of Example 1 is orthogonal), always contracting all outermost redexes in parallel yields a normalizing strategy (i.e. whenever a term can be reduced to a normal form it is reduced to a normal form under this strategy) <ref type="bibr" target="#b17">[18]</ref>. Indeed, one can define a sequential reduction strategy having the same property for an even wider class of TRSs <ref type="bibr" target="#b2">[3]</ref>. One major drawback (or asset depending on one's point of view) of using reduction strategies, however, is that their use does not introduce new normal forms. This means that the set of normal forms w.r.t. to some reduction relation is the same as the set of normal forms w.r.t. to the reduction relation under some strategy. Hence, strategies can in general not be used to detect non- normalizing terms or to impose termination on not weakly normalizing TRSs (with some exceptions cf. e,g. [3, <ref type="bibr">Theorem 7.4]</ref>). Moreover, the process of selecting a suitable redex w.r.t. to a reduction strategy is often complex and may thus be inefficient.</p><p>These shortcomings of reduction strategies led to the advent of proper restrictions of rewriting that usually introduce new normal forms and select respectively forbid certain reductions according to the syntactic structure of a redex and/or its surrounding context.</p><p>The most well-known approach to context restrictions is context-sensitive rewriting. There, a re- placement map µ specifies the arguments µ( f ) ⊆ {1, . . . , ar( f )} which can be reduced for each function f . However, regarding Example 1, context-sensitive rewriting does not improve the situation, since allowing the reduction of the second argument of ':' leads to non-termination, while disallowing its reduction leads to incompleteness in the sense that for instance a term like 2nd(inf(x)) cannot be nor- malized via the corresponding context-sensitive reduction relation, despite having a normal form in the unrestricted system.</p><p>Other ideas of context restrictions range from explicitly modeling lazy evaluation (cf. e.g. <ref type="bibr" target="#b8">[9,</ref><ref type="bibr" target="#b16">17,</ref><ref type="bibr" target="#b18">19]</ref>), to imposing constraints on the order of argument evaluation of functions (cf. e.g. <ref type="bibr" target="#b9">[10,</ref><ref type="bibr" target="#b6">7]</ref>), and to combinations of these concepts, also with standard context-sensitive rewriting (cf. e.g. <ref type="bibr" target="#b14">[15,</ref><ref type="bibr" target="#b1">2]</ref>). The latter generalized versions of context-sensitive rewriting are quite expressive and powerful (indeed some of them can be used to restrict the reduction relation of the TRS in Example 1 in a way, so that the restricted relation is terminating and still powerful enough to compute (head-)normal forms), but on the other hand tend to be hard to analyze and understand, due the subtlety of the strategic information specified.</p><p>The approach we present in this paper is simpler in that its definition only relies on matching and simple comparison of positions rather than on laziness or prioritizing the evaluation of certain arguments of functions over others. In order to reach the goal of restricting the reduction relation in such a way that it is terminating while still being powerful enough to compute useful results, we provide a method to verify termination of a reduction relation restricted by our approach (Section 5) as well as a criterion which guarantees that normal forms computed by the restricted system are head-normal forms of the unrestricted system (Section 4).</p><p>Recently it turned out that, apart from using context-sensitivity as computation model for standard term rewriting (cf. e.g. <ref type="bibr" target="#b15">[16,</ref><ref type="bibr" target="#b13">14]</ref>), context-sensitive rewrite systems naturally also appear as intermediate representations in many areas relying on transformations, such as program transformation and termina- tion analysis of rewrite systems with conditions <ref type="bibr" target="#b5">[6,</ref><ref type="bibr" target="#b19">20]</ref> / under strategies <ref type="bibr" target="#b7">[8]</ref>.</p><p>This suggests that apart from using restrictions as guidance and thus as operational model for rewrite derivations, a general, flexible and well-understood framework of restricted term rewriting going beyond context-sensitive rewriting may be useful as a valuable tool in many other areas, too.</p><p>The major problem in building such a framework is that imposing context restrictions on term rewrit- ing in general invalidates the closure properties of term rewriting relations, i.e., stability under contexts and substitutions. Note that in the case of context-sensitive rewritingàrewriting`rewritingà la <ref type="bibr" target="#b13">[14,</ref><ref type="bibr" target="#b15">16]</ref> only stability under contexts is lost.</p><p>In this work we will sketch and discuss a generalized approach to context-sensitivity (in the sense of <ref type="bibr" target="#b13">[14,</ref><ref type="bibr" target="#b15">16]</ref>) relying on forbidden patterns rather than on forbidden arguments of functions. From a systematic point of view we see the following design decisions to be made.</p><p>• What part of the context of a (sub)term is relevant to decide whether the (sub)term may be reduced or not?</p><p>• In order to specify the restricted reduction relation, is it better/advantageous to explicitly define the allowed or the forbidden part of the context-free reduction relation?</p><p>• What are the forbidden/allowed entities, for instance whole subterms, contexts, positions, etc.?</p><p>• Does it depend on the shape of the considered subterm itself (in addition to its outside context) whether it should forbidden or not (if so, stability under substitutions may be lost)?</p><p>• Which restrictions on forbidden patterns seem appropriate (also w.r.t. practical feasibility) in order to guarantee certain desired closure and preservation properties.</p><p>The remainder of the paper is structured as follows. In Section 2 we briefly recall some basic notions and notations. Rewriting with forbidden patterns is defined, discussed and exemplified in Section 3.</p><p>In the main Sections 4 and 5 we develop some theory about the expressive power of rewriting with forbidden patterns (regarding the ability to compute original (head-)normal forms), and about how to prove ground termination for such systems via a constructive transformational approach. Crucial aspects are illustrated with the two running Examples 1 and 3. Finally, in Section 6 we summarize our approach and its application in the examples, discuss its relationship to previous approaches and briefly touch the important perspective and open problem of (at least partially) automating the generation of suitable forbidden patterns in practice. 1</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">Preliminaries</head><p>We assume familiarity with the basic notions and notations in term rewriting, cf. e.g. <ref type="bibr" target="#b3">[4]</ref>, <ref type="bibr" target="#b4">[5]</ref>.</p><p>Since we develop our approach in a many-sorted setting, we recall a few basics on many-sorted equational reasoning (cf. e.g. <ref type="bibr" target="#b4">[5]</ref>). A many-sorted signature F is a pair (S, Ω) where S is a set of sorts and Ω is a family of (mutually disjoint) sets of typed function symbols:</p><formula xml:id="formula_1">Ω = (Ω ω,s | ω ∈ S * , s ∈ S). We also say, f is of type ω → s (or just s if ω = / 0) if f ∈ Ω ω,s . V = (V s | s ∈ S)</formula><p>is a family of (mutually disjoint) countably infinite sets of typed variables (with V ∩ Ω = / 0). The set T (F ,V ) s of (well-formed) terms of sort s is the least set containing V s , and whenever f ∈ Ω (s 1 ,...,s n ),s and t i ∈ T (F ,V ) s i for all 1 ≤ i ≤ n, then f (t 1 , . . . ,t n ) ∈ T (F ,V ) s . The sort of a term t is denoted by sort(t). Rewrite rules are pairs of terms l → r where sort(l) = sort(r). Subsequently, we make the types of terms and rewrite rules explicit only if they are relevant. Throughout the paper x, y, z represent (sorted) variables.</p><p>Positions are possibly empty sequences of natural numbers (the empty sequence is denoted by ε). We use the standard partial order ≤ on positions given by p ≤ q if there is some position p ′ , such that p.p ′ = q (i.e., p is a prefix of q). Pos(s) (Pos F (s)) denotes the set of (non-variable) positions of a term s. By s p → t we mean rewriting at position p. Given a TRS R = (F , R) we partition F into the set D of defined function symbols, which are those that occur as root symbols of left-hand sides of rules in R, and the set C of constructors (given by F \ D). For TRSs R = (F , R) we sometimes confuse R and R, e.g., by omitting the signature.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">Rewriting with Forbidden Patterns</head><p>In this section we define a generalized approach to rewriting with context restrictions relying on term pat- terns to specify forbidden subterms/superterms/positions rather than on a replacement map as in context- sensitive rewriting.</p><p>Definition 1 (forbidden pattern). A forbidden pattern (w.r.t. to a signature F ) is a triple p, λ where t ∈ T (F ,V ) is a term, p a position from Pos(t) and λ ∈ {h, b, a}.</p><p>The intended meaning of the last component λ is to indicate whether the pattern forbids reductions</p><p>• exactly at position p, but not outside (i.e., strictly above or parallel to p) or strictly below -(h for here), or</p><p>• strictly below p, but not at or outside p -(b for below), or</p><p>• strictly above position p, but not at, below or parallel to p -(a for above).</p><p>Abusing notation we sometimes say a forbidden pattern is linear, unifies with some term etc. when we actually mean that the term in the first component of a forbidden pattern has this property.</p><p>We denote a finite set of forbidden patterns for a signature F by Π F or just Π if F is clear from the context or irrelevant. For brevity, patterns of the shape , , h/b/a are also called h/b/a-patterns, or here/below/above-patterns. <ref type="bibr" target="#b1">2</ref> Note that if for a given term t we want to specify more than just one restriction by a forbidden pattern, this can easily be achieved by having several triples of the shape , In contrast to context-sensitive rewriting, where a replacement map defines the allowed part of the re- duction, the patterns are supposed to explicitly define its forbidden parts, thus implicitly yielding allowed reduction steps as those that are not forbidden. Definition 2 (forbidden pattern reduction relation). Let R = (F , R) be a TRS with forbidden patterns Π F . The forbidden pattern reduction relation → R,Π F , or → Π for short, induced by some set of forbidden patterns Π and R, is given by s → R,Π F t if s p → R t for some p ∈ Pos F (s) such that there is no pattern q, λ ∈ Π F , no context C and no position q ′ with</p><formula xml:id="formula_2">• s = C[uσ ] q ′ and p = q ′ .q, if λ = h, • s = C[uσ ] q ′ and p &gt; q ′ .q, if λ = b, and • s = C[uσ ] q ′ and p &lt; q ′ .q, if λ = a.</formula><p>Note that for a finite rewrite system R (with finite signature F ) and a finite set of forbidden pat- terns Π F it is decidable whether s → R,Π F t for terms s and t. We write (R, Π) for rewrite systems with associated forbidden patterns. Such a rewrite system (R, Π) is said to be Π-terminating (or just terminating if no confusion arises) if → R,Π is well-founded. We also speak of Π-normal forms instead of → R,Π -normal forms.</p><p>Special degenerate cases of (R, Π) include e.g. Π = / 0 where → R,Π =→ R , and Π = { ε, h | l → r ∈ R} where → R,Π = / 0. In the sequel we use the notions of allowed and forbidden (by Π) redexes. A redex s| p of a term s is allowed if s p → Π t for some term t, and forbidden otherwise.</p><p>Example 2. Consider the TRS from Example 1. If Π = {(x : (y : inf(z)), 2.2, h)}, then → Π can automat- ically be shown to be terminating. Moreover, → Π is powerful enough to compute original head-normal forms if they exist (cf. Examples 6 and 11 below). Example 3. Consider the non-terminating TRS R given by</p><formula xml:id="formula_3">take(0, y : ys) → y app(nil, ys) → ys take(s(x), y : ys) → take(x, ys) app(x : xs, ys) → x : app(xs, ys) take(x, nil) → 0 inf(x) → inf(s(x))</formula><p>with two sorts S = {Nat, NatList}, where the types of function symbols are as follows: nil : NatList, Several well-known approaches to restricted term rewriting as well as to rewriting guided by re- duction strategies occur as special cases of rewriting with forbidden patterns. In the following we pro- vide some examples. Context-sensitive rewriting, where a replacement map µ specifies the arguments µ( f ) ⊆ {1, . . . , ar( f )} which can be reduced for each function f , arises as special case of rewriting with forbidden patterns by defining Π to contain for each function symbol f and each j ∈ {1, . . .</p><formula xml:id="formula_4">, ar( f )}\ µ( f ) the forbidden patterns ( f (x 1 , . . . , x ar( f ) ), j, h) and ( f (x 1 , . . . , x ar( f ) ), j, b).</formula><p>Moreover, with forbidden patterns it is also possible to simulate position-based reduction strategies such as innermost and outermost rewriting. The innermost reduction relation of a TRS R coincides with the forbidden pattern reduction relation if one uses the forbidden patterns ε, a for the left-hand sides l of each rule of R. Dually, if patterns (l, ε, b) are used, the forbidden pattern reduction relation coincides with the outermost reduction relation w.r.t. R.</p><p>However, note that more complex layered combinations of the aforementioned approaches, such as innermost context-sensitive rewriting cannot be modeled by forbidden patterns as proposed in this paper.</p><p>Still, the definition of forbidden patterns and rewriting with forbidden patterns is rather general and leaves many parameters open. In order to make this approach feasible in practice, it is necessary to identify interesting classes of forbidden patterns that yield a reasonable trade-off between power and simplicity. For these interesting classes of forbidden patterns we need methods which guarantee that the results (e.g. normal forms) computed by rewriting with forbidden patterns are meaningful, in the sense that they have some natural correlation with the actual results obtained by unrestricted rewriting. For instance, it is desirable that normal forms w.r.t. the restricted rewrite system are original head-normal forms. In this case one can use the restricted reduction relation to compute original normal forms (by an iterated process) whenever they exist (provided that the TRS in question is left-linear, confluent and the restricted reduction relation is terminating) (cf. Section 4 below for details). We define a criterion ensuring that normal forms w.r.t. the restricted system are original head-normal forms in the following section.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">Computing Meaningful Results</head><p>We are going to use canonical context-sensitive rewriting as defined in <ref type="bibr" target="#b13">[14,</ref><ref type="bibr" target="#b15">16]</ref> as an inspiration for our approach. There, for a given (left-linear) rewriting system R certain restrictions on the associated replacement map µ guarantee that → µ -normal forms are → R -head-normal-forms. Hence, results com- puted by → µ and → R share the same root symbol.</p><p>The basic idea is that reductions that are essential to create a more outer redex should not be forbid- den. In the case of context-sensitive rewriting this is guaranteed by demanding that whenever an f -rooted term t occurs (as subterm) in the left-hand side of a rewrite rule and has a non-variable direct subterm t| i , then i ∈ µ( f ).</p><p>It turns out that for rewriting with forbidden patterns severe restrictions on the shape of the patterns are necessary in order to obtain results similar to the ones for canonical context-sensitive rewriting in <ref type="bibr" target="#b13">[14]</ref>. First, no forbidden patterns of the shape , ε, h or , , a may be used as they are in general not compatible with the desired root-normalizing behaviour of our forbidden pattern rewrite system.</p><p>Moreover, for each pattern p, we demand that • t is linear,</p><p>• p is a variable or maximal (w.r.t. to the prefix ordering ≤ on positions) non-variable position in t, and</p><p>• for each position q ∈ Pos(t) with q||p we have t| q ∈ V .</p><p>We call the class of patterns obtained by the above restrictions simple patterns. Definition 3 (simple patterns). A set Π of forbidden patterns is called simple if it does not contain patterns of the shape , ε, h or , , a and for every pattern (t, p, ) ∈ Π it holds that t is linear, t| p ∈ V or t| p = f (x 1 , . . . , x ar( f ) ) for some function symbol f , and for each position q ∈ Pos(t) with q||p we have that t| q is a variable.</p><p>Basically these syntactical properties of forbidden patterns are necessary to ensure that reductions which are essential to enable other, more outer reductions are not forbidden. Moreover, these properties, contrasting those defined in Definition 4 below, are independent of any concrete rewrite system.</p><p>The forbidden patterns of the TRS (R, Π) in Example 4 below are not simple, since the patterns contain terms with parallel non-variable positions. This is the reason why it is not possible to head- normalize terms (w.r.t R) with → Π : Example 4. Consider the TRS R given by</p><formula xml:id="formula_5">f (b, b) → g( f (a, a)) a → b</formula><p>and forbidden patterns f (a, a), 1, h and f (a, a), 2, h f (a, a) is linear and 1 and 2 are maximal po- sitions (w.r.t. ≤) within this term. However, positions 1 and 2 are both non-variable and thus e.g. for f (a, a), 1, h there exists a position 2||1 such that f (a, a)| 2 = a ∈ V . Hence, Π is too restrictive to com- pute all R-head-normal forms in this example. Indeed, f (a, a) <ref type="figure">, a)</ref>) where the latter term is a R-head-normal form.</p><formula xml:id="formula_6">→ * R f (b, b) → R g( f (a</formula><p>The term f (a, a) is a Π-normal form, although it is not a head-normal form (w.r.t. R). Note also that the (first components of) forbidden patterns are not unifiable with the left-hand side of the rule that is responsible for the (later) possible root-step when reducing f (a, a), not even if the forbidden subterms in the patterns are replaced by fresh variables. Now we are ready to define canonical rewriting with forbidden patterns within the class of simple forbidden patterns. To this end, we demand that patterns do not overlap with left-hand sides of rewrite rules in a way such that reductions necessary to create a redex might be forbidden. Definition 4 (canonical forbidden patterns). Let R = (F , R) be a TRS with simple forbidden patterns Π F (w.l.o.g. we assume that R and Π F have no variables in common). Then, Π F is R-canonical (or just canonical) if the following holds for all rules l → r ∈ R :</p><p>1. There is no pattern (t, p, λ ) such that</p><p>• t ′ | q and l unify for some q ∈ Pos F (t) where t ′ = t[x] p and q &gt; ε, and • there exists a position q ′ ∈ Pos F (l) with q.q ′ = p for λ = h respectively q.q ′ &gt; p for λ = b.</p><p>2. There is no pattern (t, p, λ ) such that • t ′ and l| q unify for some q ∈ Pos F (l) where t ′ = t[x] p , and</p><p>• there exists a position q ′ with q.q ′ ∈ Pos F (l) and q ′ = p for λ = h respectively q ′ &gt; p for λ = b.</p><p>Here, x denotes a fresh variable.</p><p>Example 5. Consider the TRS R given by the single rule</p><formula xml:id="formula_7">l = f (g(h(x))) → x = r . Then, Π = { p, h with t = g( f (a)), p = 1.1 is not canonical since t[x] p | q = g( f (y))| 1 = f (y)</formula><p>and l unify where q = q ′ = 1 and thus q.q ′ = p (hence root(l| q ′ ) = g). Moreover, also Π = { p, h with t = g(i(x)), p = 1 is not canonical, since l| q = g(h(x)) and t[x] p = f (y) unify for q = 1 and q.p = 1.1 is a non-variable position in l.</p><p>On the other hand, Π = { 1.1, h is canonical. Note that all of the above patterns are simple.</p><p>In order to prove that normal forms obtained by rewriting with simple and canonical forbidden pat- terns are actually head-normal forms w.r.t. unrestricted rewriting, and also to provide more intuition on canonical rewriting with forbidden patterns, we define the notion of a partial redex (w.r.t. to a rewrite system R) as a term that is matched by a non-variable term l ′ which in turn matches the left-hand side of some rule of R. We call l ′ a witness for the partial match.</p><p>Definition 5 (Partial redex). Given a rewrite system R = (F , R), a partial redex is a term s that is matched by a non-variable term l ′ which in turn matches the left-hand side of some rule in R. The (non-unique) term l ′ is called witness for a partial redex s.</p><p>Thus, a partial redex can be viewed as a candidate for a future reduction step, which can only be performed if the redex has actually been created through more inner reduction steps. Hence, the idea of canonical rewriting with forbidden patterns could be reformulated as guaranteeing that the reduction of subterms of partial redexes is allowed whenever these reductions are necessary to create an actual redex. Lemma 1. Let R = (F , R) be a left-linear TRS with canonical (hence, in particular simple) forbidden patterns Π F . Moreover, let s be a partial redex w.r.t. to the left-hand side of some rule l with witness l ′ such that l| p ∈ V but l ′ | p ∈ V . Then in the term C[s] q the position q.p is allowed by Π F for reduction provided that q is allowed for reduction. Theorem 1. Let R = (F , R) be a left-linear TRS with canonical (hence in particular simple) forbidden patterns Π F . Then → R,Π F -normal forms are → R -head-normal forms.</p><p>Given a left-linear and confluent rewrite system R and a set of canonical forbidden patterns Π such that → Π is well-founded, one can thus normalize a term s (provided that s is normalizing) by computing the → Π -normal form t of s which is R-root-stable according to Theorem 1, and then do the same recur- sively for the immediate subterms of t. Confluence of R assures that the unique normal form of s will indeed be computed this way.</p><p>Example 6. As the forbidden pattern defined in Example 2 is (simple and) canonical, Theorem 1 yields that → R,δ -normal forms are → R -head-normal forms. For instance we get 2nd(inf(0)) → * Π s(0).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Example 7.</head><p>Consider the TRS with R and forbidden patterns Π from Example 3. We will prove below that R is Π-terminating (cf. Example 12). Furthermore we are able to show that every well-formed ground term that is reducible to a normal form in R is reducible to the same normal form with → R,Π and that every → R -normal form is root-stable w.r.t. → R .</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">Proving Termination</head><p>We provide another example of a result on a restricted class of forbidden patterns, this time concerning termination. We exploit the fact that, given a finite signature and linear h-patterns, a set of allowed contexts complementing each forbidden one can be constructed. Thus, we can transform a rewrite system with this kind of forbidden patterns into a standard (i.e., context-free) one by explicitly instantiating and embedding all rewrite rules (in a minimal way) in contexts (including a designated top-symbol representing the empty context) such that rewrite steps in these contexts are allowed.</p><p>To this end we propose a transformation that proceeds by iteratively instantiating and embedding rules in a minimal way. This is to say that the used substitutions map variables only to terms of the form f (x 1 , . . . , x ar( f ) ) and the contexts used for the embeddings have the form g(x 1 , . . . , x i−1 , x i+1 , x ar( f ) ) for some function symbols f ∈ F , g ∈ F ⊎ {top} and some argument position i of f (resp. g). It is important to keep track of the position of the initial rule inside the embeddings. Thus we associate to each rule introduced by the transformation a position pointing to the embedded original rule. To all initial rules of R we thus associate ε.</p><p>Note that it is essential to consider a new unary function symbol top s for every sort s ∈ S (of type s → s) representing the empty context. This is illustrated by the following example. with F = {a, f } and the set of forbidden patterns Π = { f (x), 1, h} This system is not Π-terminating as we have</p><formula xml:id="formula_8">a → Π f (a) → Π a → Π . . .</formula><p>Whether a subterm s| p = a is allowed for reduction by Π depends on its context. Thus, according to the idea of our transformation we try to identify all contexts C[a] p such that the reduction of a at position p is allowed by Π. However, there is no such (non-empty) context, although a may be reduced if C is the empty context. Moreover, there cannot be a rule l → r in the transformed system where l = a, since that would allow the reduction of terms that might be forbidden by Π. Our solution to this problem is to introduce a new function symbol top explicitly representing the empty context. Thus, in the example the transformed system will contain a rule top(a) → top( f (a)).</p><p>Abusing notation we subsequently use only one top-symbol, while we actually mean the top s -symbol of the appropriate sort. Moreover, in the following by rewrite rules we always mean rewrite rules with an associated (embedding) position, unless stated otherwise. All forbidden patterns used in this section (particularly in the lemmata) are linear here-patterns. We will make this general assumption explicit only in the more important results. Definition 6 (instantiation and embedding). Let F = (S, Ω) be a signature, let → r, p be a rewrite rule of sort s over F and let Π be a set of forbidden patterns (linear, h). The set of minimal instantiated and embedded rewrite rules</p><formula xml:id="formula_9">T Π ( → r, p (or just T ( → r, p is T i Π ( → r, p ⊎ T e Π ( → r, p where T e ( → r, p = { → C[r], i.p | C = f (x 1 , . . . , x i−1 , x i+1 , . . . , x ar( f ) ), f ∈ Ω (s 1 ,...,s i−1 ,s,s i+1 ,...,s ar( f ) ),s ′ , f ∈ F ⊎ {top s | s ∈ S}, i ∈ {1, . . . , ar( f )}, ∃ o, h ∈ Π.u| q θ = lθ ∧ q = ε ∧ o = q.p} T i Π ( → r, p = { → rσ , p | xσ = f (x 1 , . . . , x ar( f ) ), sort(x) = sort( f (x 1 , . . . x ar( f ) )), f ∈ F , y = x ⇒ yσ = y, x ∈ RV Π (l, p)} and RV Π (l, p) = {x ∈ Var(l) | ∃ o, h ∈ Π.θ = mgu(u, l| q ) ∧ q.o = p ∧ xθ ∈ V }.</formula><p>We also call the elements of T ( → r, p the one-step T -successors of → r, p The reflexive- transitive closure of the one-step T -successor relation is the many-step T -successor relation or just T - successor relation. We denote the set of all many-step T -successors of a rule → r, p by T * ( → r, p</p><p>The set RV Π (l, p) of "relevant variables" is relevant in the sense that their instantiation might con- tribute to a matching by some (part of a) forbidden pattern term.</p><p>Note that in the generated rules ′ → r ′ , p ′ in T Π ( → r, p a fresh top s -symbol can only occur at the root of both l ′ and r ′ or not at all, according to the construction in Definition 6.</p><p>Example 9. Consider the TRS (R, Π) where R = ({a, f , g}, { f (x) → g(x)}) and the forbidden patterns Π are given by { f (a))),</p><formula xml:id="formula_10">1.1, h T ( f (x) → g(x)</formula><p>, ε consists of the following rewrite rules.</p><formula xml:id="formula_11">f ( f (x)) → g( f (x)), ε (1) f (g(x)) → g(g(x)), ε (2) f (a) → g(a), ε (3) f ( f (x)) → f (g(x)), 1 (4) f (x)) → g(g(x)), 1<label>(5)</label></formula><p>Note that RV Π ( f (x), ε) = {x} because g(g( f (a))) 1.1 = f (a) unifies with f (x) and mgu θ where xθ = a ∈ V . On the other hand RV Π ( f ( f (x)), 1) = / 0.</p><p>Lemma 2 (finiteness of instantiation and embedding). Let → r, p be a rewrite rule and let Π be a set of forbidden patterns. The set of (many-step) instantiations and embeddings of → r, p (i.e. T * ( → r, p is finite.</p><p>The transformation we are proposing proceeds by iteratedly instantiating and embedding rewrite rules. The following definitions identify the rules for which no further instantiation and embedding is needed.</p><p>Definition 7 (Π-stable). Let → r, p be a rewrite rule and let Π be a set of forbidden patterns. → r, p is Π-stable (stb Π ( → r, p for short) if there is no context C and no substitution σ such that C[lσ ] q | q ′ = uθ and q.p = q ′ .o for any forbidden pattern o, h ∈ Π and any θ .</p><p>Note that Π-stability is effectively decidable (for finite signatures and finite Π), since only contexts and substitutions involving terms not exceeding a certain depth depending on Π need to be considered. Definition 8 (Π-obsolete). Let → r, p be a rewrite rule and let Π be a set of forbidden patterns. → r, p is Π-obsolete (obs Π ( → r, p for short) if there is a forbidden pattern Π = o, h such that l| q = uθ and p = q.o.</p><p>In Example 9, the rules (1), (2) and (4) are Π-stable, while rules (3) and (5) would be processed further. After two more steps e.g. a rule f (a))) → g <ref type="figure">(g(g(a)</ref>)), 1.1 is produced that is Π-obsolete.</p><p>The following lemmata state some properties of Π-stable rules.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Lemma 3. Let Π be a set of forbidden patterns and let</head><formula xml:id="formula_12">′ = C[lσ ] p → C[rσ ] p = r ′ , p be a Π-stable</formula><p>rewrite rule corresponding to l → r. If s → t with l ′ → r ′ , then s → Π t with l → r. Lemma 4. Let → r, p be a rule and Π be a set of forbidden patterns. If T ( → r, p = / 0, then → r, p is either Π-stable or Π-obsolete. Definition 9. Let R = (F , R) be a TRS with an associated set of forbidden patterns Π where F = (S, Ω). The transformation T maps TRSs with forbidden patterns to standard TRSs T (R, Π). It proceeds in 5 steps.</p><p>1</p><formula xml:id="formula_13">. R tmp = { → r, ε | l → r ∈ R} R acc = / 0 2. R acc = { → r, p ∈ R tmp | stb Π ( → r, p R tmp = { → r, p ∈ R tmp | ¬stb Π ( → r, p ∧ ¬obs Π ( → r, p 3. R tmp = tmp T ( → r, p 4. If R tmp = / 0 go to 2 5. T (R, Π) = (F ⊎ {top s | s ∈ S}, {l → r | → r, p ∈ R acc })</formula><p>In the transformation rewrite rules are iteratively created and collected in R tmp (temporary rules). Those rules that are Π-stable and will thus be present in the final transformed system are collected in R acc (accepted rules). Lemma 5. Let R be a rewrite system and Π be a set of forbidden (linear h-)patterns. If s → R,Π t for ground terms s and t, then top(s) → top(s) in T (R, Π). Theorem 2. Let R be a TRS and Π be a set of linear here-patterns. We have s → Corollary 1. Let R be a TRS and Π be a set of linear h-patterns. R is ground terminating under Π if and only if T (R, Π) is ground terminating.</p><p>Note that the restriction to ground terms is crucial in Corollary 1. Moreover, ground termination and general termination do not coincide in general for rewrite systems with forbidden patterns (observe that the same is true for other important rewrite restrictions and strategies such as the outermost strategy). Example 10. Consider the TRS R = (F , R) given by F = {a, f } (where a is a constant) and R consist- ing of the rule</p><formula xml:id="formula_14">f (x) → f (x).</formula><p>Moreover, consider the set of forbidden patterns</p><formula xml:id="formula_15">Π = { f (a), ε, h f ( f (x)), ε, h Then R is not Π- terminating because we have f (x) → Π f (x)</formula><p>but it is Π-terminating on all ground terms, as can be shown by Theorem 2, since T (R, Π) = / 0. Example 11. Consider the TRS of Example 2. We use two sorts NatList and Nat, with function symbol types 2nd : NatList → Nat, inf : Nat → NatList, top : NatList → NatList (note that another "top" symbol of type Nat → Nat is not needed here), s : Nat → Nat, 0 : Nat, nil : NatList and : of type Nat, NatList → NatList. According to Definition 9, the rules of T (R, Π) are:</p><formula xml:id="formula_16">2nd(inf(x)) → 2nd(x : inf(s(x))) 2nd(x : (y : zs)) → y top(inf(x)) → top(x : inf(s(x))) 2nd(x ′ : inf(x)) → 2nd(x ′ : (x : inf(s(x)))) top(x ′ : inf(x)) → top(x ′ : (x : inf(s(x)))).</formula><p>This system is terminating (and termination can be verified automatically, e.g. by AProVE <ref type="bibr" target="#b11">[12]</ref>). Hence, by Corollary 1 also the TRS with forbidden patterns from Example 2 is ground terminating.</p><p>Example 12. The TRS R and forbidden patterns Π from Example 3 yield the following system T (R, Π). For the sake of saving space we abbreviate app by a, take by t and inf by i.</p><formula xml:id="formula_17">top(i(x)) → top(x : i(s(x))) t(y, i(x)) → t(y, x : i(s(x))) a(y, i(x)) → a(y, x : i(s(x))) top(a(i(x), y)) → top(a(x : i(s(x)), y)) t(a(i(x), y), z) → t(a(x : i(s(x)), y), z) t(z, a(i(x), y)) → t(z, a(x : i(s(x)), y)) a(a(i(x), y), z) → a(a(x : i(s(x)), y), z) a(z, a(i(x), y)) → a(z, a(x : i(s(x)), y)) top(a(x : xs, ys)) → top(x : a(xs, ys)) t(z, a(x : xs, ys)) → t(z, x : a(xs, ys)) a(a(x : xs, ys), z) → a(x : a(xs, ys), z) a(z, a(x : xs, ys)) → a(z, x : a(xs, ys)) a(x : i(zs), ys) → x : a(i(zs), ys) a(x : s(zs), ys) → x : a(s(zs), ys) a(x : (y : zs), ys) → x : a(y : zs, ys) a(nil, x) → x t(s(x), y : ys) → t(x, ys) t(0, y : ys) → y t(x, nil) → 0</formula><p>This system is terminating (and termination can be verified automatically, e.g. by AProVE <ref type="bibr" target="#b11">[12]</ref>). Hence, again by Corollary 1 also the TRS with forbidden patterns from Example 3 is ground terminating.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">Conclusion and Related Work</head><p>We have presented and discussed a novel approach to rewriting with context restrictions using forbidden patterns to specify forbidden/allowed positions in a term rather than arguments of functions as it was done previously in context-sensitivity. Thanks to their flexibility and parametrizability, forbidden patterns are applicable to a wider class of TRSs than traditional methods. In particular, position-based strategies and context-sensitive rewriting occur as special cases of such patterns.</p><p>For the TRSs in Examples 1 and 3 nice operational behaviours can be achieved by using rewriting with forbidden patterns. The restricted reduction relation induced by the forbidden patterns is terminat- ing while still being powerful enough to compute (head-) normal forms. When using simpler approaches such as position-based strategies or context-sensitive rewriting in these examples, such operational prop- erties cannot be achieved. For instance, consider Example 1. There is an infinite reduction sequence starting from inf(x) with the property that every term has exactly one redex. Thus, non-termination is preserved under any reduction strategy (as strategies do not introduce new normal forms by definition). On the other hand, in order to avoid this infinite sequence using context-sensitive rewriting, we must set 2 ∈ µ(:) (regardless of any additional reduction strategy). But in this case → µ does not compute head-normal forms.</p><p>In <ref type="bibr" target="#b14">[15]</ref> on-demand rewriting was introduced, which is able to properly deal with the TRS of Example 1. This means that with the on-demand rewriting the reduction relation induced by the TRS of Example 1 can be restricted in a way such that it becomes terminating while still normal forms w.r.t. the restricted relation are head-normal forms w.r.t. the unrestricted one. Indeed, Example 1 was the main motivating example for the introduction of on-demand rewriting in <ref type="bibr" target="#b14">[15]</ref>.</p><p>However, for Example 3 we get that by restricting rewriting by the proposed forbidden patterns we obtain a terminating relation that is able to compute the normal forms of all well-formed ground terms. As the system is orthogonal, any outermost-fair reduction strategy, e.g. parallel outermost, is normalizing. Yet, by using such a strategy the relation still remains non-terminating. In particular, our forbidden patterns approach yields an effective procedure for deciding whether a ground term is normalizing or not (it is not normalizing if its → Π -normal form is not an →-normal form) for this example.</p><p>On the other hand, by using context-sensitive rewriting, termination can only be obtained if 2 ∈ µ(:) which in turn implies that the term 0 : app(nil, nil) cannot be normalized despite having a normal form 0 : nil.</p><p>For Examples 1 and 3 effective strategies like parallel outermost or S ω of <ref type="bibr" target="#b2">[3]</ref> are normalizing (though under either strategy there are still infinite derivations). We provide another example for which these strategies fail to provide normalization while the use of appropriate forbidden patterns yields normaliza- tion (and termination) Example 13. Consider the TRS R consisting of the following rules</p><formula xml:id="formula_18">a → b b → a c → c g(x, x) → d f (b, x) → d</formula><p>Using a parallel outermost strategy the term g(a, b) is not reduced to its (unique) normal form d. Using S ω , f (a, c) is not reduced to its (unique) normal form d. However, it is easy to see that when using a Π = { ε, h ε, h → Π is terminating and all R-normal forms can be computed.</p><p>Note however, that the forbidden patterns used in Example 13 are not canonical. Thus it is not clear how to come up with such patterns automatically.</p><p>We argued that for our forbidden pattern approach it is crucial to identify reasonable classes of patterns that provide trade-offs between practical feasibility, simplicity and power, favoring either com- ponent to a certain degree. We have sketched and illustrated two approaches to deal with the issues of verifying termination and guaranteeing that it is possible to compute useful results (in our case original head-normal forms) with the restricted rewrite relation. To this end we proposed a transformation from rewrite systems with forbidden patterns to ordinary rewrite systems and showed that ground termina- tion of both induced reduction relations coincide. Moreover, we provided a criterion based on canonical rewriting with forbidden patterns to ensure that normal forms w.r.t. the restricted reduction relation are original head-normal forms.</p><p>In particular "here"-patterns seem interesting as their use avoids context restrictions to be non-local. That is to say that whether a position is allowed for reduction or not depends only on a restricted "area" around the position in question regardless of the actual size of the whole object term. Note that this is not true for ordinary context-sensitive rewriting and has led to various complications in the theoretical analysis (cf. e.g. <ref type="bibr">[11, Definition 23]</ref> [1, <ref type="bibr">Definition 7]</ref> and <ref type="bibr">[13, Definitions 1-3]</ref>).</p><p>Regarding future work, among many interesting questions and problems one particularly important aspect is to identify conditions and methods for the automatic (or at least automatically supported) syn- thesis of appropriate forbidden pattern restrictions.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Example 8 .</head><label>8</label><figDesc>Consider the TRS given by a → f (a) f (x) → x</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>+</head><label></label><figDesc>Π t for ground terms s and t if and only if top(s) → + T (R,Π) top(t). Proof. The result is a direct consequence of Lemmata 3 and 5.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0" validated="false"><head>0 : Nat, s : Nat → Nat, : is of type Nat, NatList → NatList, inf : Nat → NatList, app : NatList, NatList → NatList and take : Nat, NatList → Nat. If one restricts rewriting in R via Π given by :</head><label>0</label><figDesc></figDesc><table>inf(y), 2, h 
+: app(inf(y), zs), 2.1, h 
+: app(y : app(z, zs), us), 2, h 
+
+then → Π is terminating and still every well-formed ground term can be normalized with the restricted 
+relation → Π (provided the term is normalizing). See Examples 7 and 12 below for justifications of these 
+claims. 
+</table></figure>
+
+			<note place="foot" n="1"> Due to lack of space the obtained results are presented without proofs. The latter can be found in the full technical report version of the paper, cf. http://www.logic.at/staff/{gramlich,schernhammer}/.</note>
+
+			<note place="foot" n="2"> Here and subsequently we use a wildcard notation for forbidden patterns. For instance, , , i stands for p, i where t is some term and p some position in t of no further relevance.</note>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+			</div>
+
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Improving context-sensitive dependency pairs</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Alarcón</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Emmes</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Fuhs</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Giesl</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Gutiérrez</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Lucas</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Schneider-Kamp</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Thiemann</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. LPAR&apos;08</title>
+		<editor>I. Cervesato, H. Veith and A. Voronkov</editor>
+		<meeting>LPAR&apos;08<address><addrLine>Doha, Qatar</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2008" />
+			<biblScope unit="volume">5330</biblScope>
+			<biblScope unit="page" from="636" to="651" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">On-demand strategy annotations revisited: An improved on-demand evaluation Strategy</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Alpuente</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Escobar</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Gramlich</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Lucas</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Theoretical Computer Science</title>
+		<imprint>
+			<biblScope unit="volume">411</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="504" to="541" />
+			<date type="published" when="2010" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">A sequential reduction strategy</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Antoy</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Middeldorp</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Theoretical Computer Science</title>
+		<imprint>
+			<biblScope unit="volume">165</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="75" to="95" />
+			<date type="published" when="1996" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Baader</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><surname>Nipkow</surname></persName>
+		</author>
+		<title level="m">Term rewriting and All That</title>
+		<imprint>
+			<publisher>Cambridge University Press</publisher>
+			<date type="published" when="1998" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Bezem</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Klop</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>De Vrijer</surname></persName>
+		</author>
+		<title level="m">Term Rewriting Systems. Cambridge Tracts in Theoretical Computer Science 55</title>
+		<imprint>
+			<publisher>Cambridge University Press</publisher>
+			<date type="published" when="2003-03" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<monogr>
+		<title level="m" type="main">Proving operational termination of membership equational programs. Higher-Order and Symbolic Computation</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Durán</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Lucas</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Marché</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Meseguer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">X</forename><surname>Urbain</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2008" />
+			<biblScope unit="volume">21</biblScope>
+			<biblScope unit="page" from="59" to="88" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Term rewriting with operator evaluation strategies</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Eker</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. WRLA&apos;98</title>
+		<editor>C. Kirchner and H. Kirchner</editor>
+		<meeting>WRLA&apos;98<address><addrLine>France</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="1998-09" />
+			<biblScope unit="volume">15</biblScope>
+			<biblScope unit="page" from="311" to="330" />
+		</imprint>
+	</monogr>
+<note type="report_type">Abbaye des Prémontrés at Pont-` a-Mousson</note>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">From outermost to context-sensitive rewriting</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Endrullis</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Hendriks</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. RTA&apos;09</title>
+		<editor>R. Treinen</editor>
+		<meeting>RTA&apos;09<address><addrLine>Brasilia, Brazil</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2009-06" />
+			<biblScope unit="volume">5595</biblScope>
+			<biblScope unit="page" from="305" to="319" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Lazy rewriting on eager machinery</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">W</forename><surname>Fokkink</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Kamperman</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Walters</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM Transactions on Programming Languages and Systems (TOPLAS)</title>
+		<imprint>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="45" to="86" />
+			<date type="published" when="2000" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Principles of OBJ2</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">K</forename><surname>Futatsugi</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Goguen</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J.-P</forename><surname>Jouannaud</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Meseguer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Conference Record of the 12th Annual ACM Symposium on Principles of Programming Languages (POPL&apos;85)</title>
+		<imprint>
+			<publisher>ACM Press</publisher>
+			<date type="published" when="1985" />
+			<biblScope unit="page" from="52" to="66" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Transformation techniques for context-sensitive rewrite systems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Giesl</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Middeldorp</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Functional Programming</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="379" to="427" />
+			<date type="published" when="2004-07" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">AProVE 1.2: Automatic termination proofs in the dependency pair framework</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Giesl</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Schneider-Kamp</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Thiemann</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. IJCAR&apos;06</title>
+		<editor>U. Furbach and N. Shankar</editor>
+		<meeting>IJCAR&apos;06<address><addrLine>Seattle, Wasington, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2006" />
+			<biblScope unit="volume">4130</biblScope>
+			<biblScope unit="page" from="281" to="286" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Generalizing Newman&apos;s Lemma for left-linear rewrite systems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Gramlich</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Lucas</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. RTA&apos;06</title>
+		<editor>F. Pfenning</editor>
+		<meeting>RTA&apos;06<address><addrLine>Seattle, Washington, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2006" />
+			<biblScope unit="volume">4098</biblScope>
+			<biblScope unit="page" from="66" to="80" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Context-sensitive computations in functional and functional logic programs</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Lucas</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Functional and Logic Programming</title>
+		<imprint>
+			<biblScope unit="issue">1</biblScope>
+			<date type="published" when="1998-01" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Termination of on-demand rewriting and termination of OBJ programs</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Lucas</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. PPDP&apos;01, September</title>
+		<meeting>PPDP&apos;01, September<address><addrLine>Florence, Italy</addrLine></address></meeting>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2001" />
+			<biblScope unit="page" from="82" to="93" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<monogr>
+		<title level="m" type="main">Context-sensitive rewriting strategies. Information and Computation</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Lucas</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2002" />
+			<biblScope unit="volume">178</biblScope>
+			<biblScope unit="page" from="294" to="343" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Lazy rewriting and context-sensitive rewriting</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Lucas</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. WFLP&apos;01</title>
+		<editor>M. Hanus</editor>
+		<meeting>WFLP&apos;01<address><addrLine>Kiel, Germany</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2001" />
+			<biblScope unit="volume">64</biblScope>
+			<biblScope unit="page" from="234" to="254" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Computing in systems described by equations</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><forename type="middle">J</forename><surname>O&amp;apos;donnell</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">LNCS</title>
+		<imprint>
+			<biblScope unit="volume">58</biblScope>
+			<date type="published" when="1977" />
+			<publisher>Springer</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Termination of lazy rewriting revisited</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Schernhammer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Gramlich</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Final Proc. WRS&apos;07, Jürgen Giesl</title>
+		<imprint>
+			<date type="published" when="2008-04" />
+			<biblScope unit="volume">204</biblScope>
+			<biblScope unit="page" from="35" to="51" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Characterizing and proving operational termination of deterministic conditional term rewriting systems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Schernhammer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Gramlich</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Logic and Algebraic Programming</title>
+		<imprint>
+			<date type="published" when="2009" />
+		</imprint>
+	</monogr>
+	<note>Selected revised papers of NWPT&apos;08, to appear</note>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">VMTL-a modular termination laboratory</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Schernhammer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Gramlich</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. RTA&apos;09</title>
+		<editor>R. Treinen</editor>
+		<meeting>RTA&apos;09<address><addrLine>Brasilia, Brazil</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2009-06" />
+			<biblScope unit="volume">5595</biblScope>
+			<biblScope unit="page" from="285" to="294" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">On some implementation aspects of VMTL</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Schernhammer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Gramlich</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. WST&apos;09</title>
+		<editor>A. Geser and J. Waldmann</editor>
+		<meeting>WST&apos;09<address><addrLine>Leipzig, Germany</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2009-06" />
+			<biblScope unit="page" from="72" to="75" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

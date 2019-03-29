@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">A Functionality Perspective on Digital Library</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<title level="a" type="main">A Functionality Perspective on Digital Library</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>Interoperability G Athanasopoulos 1</term>
+					<term>E Fox 2</term>
+					<term>Y Ioannidis 1</term>
+					<term>G Kakaletris 1</term>
+					<term>N Manola 1</term>
+					<term>C Meghini 3</term>
+					<term>A Rauber 4</term>
+					<term>D Soergel 5 1 Dept of Informatics and Telecommunications</term>
+					<term>University of Athens</term>
+					<term>Greece {gathanas</term>
+					<term>yannis</term>
+					<term>gkakas</term>
+					<term>natalia}@diuoagr 2 Dept of Computer Science</term>
+					<term>Virginia Tech</term>
+					<term>Blacksburg</term>
+					<term>VA</term>
+					<term>USA fox@vtedu 3 Istituto della Scienza e delle Tecnologie della Informazione</term>
+					<term>Consiglio Nazionale delle Ricerche</term>
+					<term>Pisa</term>
+					<term>Italy carlomeghini@isticnrit 4 Dept of Software Technology and Interactive Systems</term>
+					<term>Vienna University of Technology</term>
+					<term>Vienna</term>
+					<term>Austria rauber@ifstuwienacat 5 Dept of Library and Information Studies</term>
+					<term>University of Buffalo</term>
+					<term>New York</term>
+					<term>USA dsoergel@buffaloedu</term>
+				</keywords>
+			</textClass>
+			<abstract>
+				<p>Digital Library (DL) interoperability requires addressing a variety of issues associated with functionality. We report on the analysis and solutions identified by the Functionality Working Group of the DL.org project during its deliberations on DL interoperability. Ultimately, we hope that work based on our perspective will lead to improved architectures and software, as well as to greater interoperability, for next-generation DL systems.</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">Introduction</head><p>A huge volume of information and knowledge is acquired and managed by distinct Digital Libraries (DLs). This leads to problems for academic and public libraries that often work with scores of such DLs and seek to support patrons facing a broad range of systems and services. Similar problems are faced by students, faculty, researchers, scholars, knowledge workers, and the general public. Also of concern is e-science, where labs and centers must use different DLs to address global challenges. Interoperability among all the DLs needed in each case is a serious concern. Manifesting a broad range of features and capabilities, DL systems employ diverse proprietary solutions and varying applications of a broad range of standards. The problem is further aggravated by the complexity and scale of modern DL systems and problems such as API mismatch, data format mismatch, and missing components.</p><p>Interoperability has been the main issue of concern for the DL.org project <ref type="bibr" target="#b3">[4]</ref>. Its work is based on the DELOS Digital Library Reference Model <ref type="bibr" target="#b2">[3]</ref>, in particular, the multi-dimensional representation of the DL domain and the identification of six primary concepts that characterize Digital Libraries: content, users, functionality, policy, quality, and architecture. In this paper, we present results from the discussions of the DL.org Functionality Working Group <ref type="bibr" target="#b3">[4]</ref>. This Working Group is focusing on interoperability with respect to one of these concepts, DL functionality, while still remaining within the broader context of the entire DL space.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">Functions, Interoperability, and Compatibility</head><p>There are many definitions of function. The Reference Model defines function as: "an action a DL component or a DL user performs" <ref type="bibr" target="#b2">[3]</ref>. In software engineering, a function is a portion of code or a module that performs a specific task (or action); it is embedded within a larger program but remains relatively independent from the rest of the code. Function interoperability is often concerned with software modules that implement a DL function. The mathematical definition of a function as a mapping from a domain to a range is not important here. Function interoperability is of particular importance in DLs, as indicated in <ref type="table" target="#tab_0">Table  1</ref>. Such interoperability serves three main purposes: i) To provide users of one DL access to the content and functionality of other DLs; ii) To harmonize the user experience provided by different DLs so that the user who has learned to use one DL can use other DLs easily; iii) To save effort in creating new DLs or adding functionality to existing DLs, by reusing existing software components. To achieve interoperability of functions, one may use a registry that allows for the discovery of software modules that implement sought-after functionality in a given software context for a given user group. Such a registry should show the different ways in which functions can be interoperable.</p><p>From a system-based point of view, three important ways to achieve function interoperability are the following:</p><p>1. Based on processing (e.g., function Fa may utilize the functionality offered by another function Fb either by directly incorporating the provided functionality within Fa or by calling it as an external service); 2. Based on data/content (e.g., the outcome of function Fa is da which is used by Fb as input via direct exchange / conversion / replacement); 3. Based on cross-function compatibility (e.g., functions Fa and Fb have the same interface). From a user point of view there are issues related to functionality that concern the compatibility of products. Such compatibility is directional and can be expressed in two levels. More formally, DL B is product-compatible with DL A with respect to functionality if the following hold:</p><p>1. DL B provides all functions that DL A provides (product compatibility with respect to functions provided), 2. DL B uses the same interface with DL A to invoke functions, where interface refers to names of functions, shape and color of buttons, screen layout, command names, and syntax (full product compatibility). From a framework based point of view, function interoperability requires:</p><p>1. an entity-relationship schema, 2. a taxonomy of the ways in which functions can interoperate, and 3. a template for the description of functions and software components.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">Specifications, Solutions, and Ontologies</head><p>A function specification, using a template such as the following, facilitates identi- fication of what a function does and how a system or a human may interact with it.</p><p>• Function Behavior: providing a description of what a function does and of the supported interaction with actors (systems/users) • API/Interface Specification: illustrating the Input and Output data and parameters, data formats/standards, pre-conditions and post-conditions • Dependencies/Relationships/Use: detailing the operating environment in which a function runs; other functions needed; functions that invoke this function; composite functions and workflows • Interoperability Concerns: documenting what is required for interoperability and how does a specific implementation meet these requirements • Performance evaluation, assessment, and advice for use Specifications of many of the above properties can use existing widely used standards such as IDL, WSDL, SAWSDL, OWL-S, WSMO, or BPEL4WS.</p><p>Clearly, there are generic concerns regarding interoperability of functions that cut across all types of software systems and others that are particular to DLs. A function can be implemented as a service; thus the Service Oriented Computing (SOC) domain is of particular interest. In that context, there are already proposed static and dynamic solutions. Static solutions can be found in the e-Framework (www.e-framework.org) or the RosettaNet community (www.rosettanet.org). Both initiatives accommodate a standards-based service-oriented approach with well-defined services that facilitate the whole range of the functionality and provided features. On the other hand, dynamic solutions address several of the specified issues and rely on the use of formally defined theories for the automated provision of adapters. Adapters handling incompatibilities (e.g., with interfaces, behavior, and pre/post conditions) have been developed by the SOC research community <ref type="bibr" target="#b0">[1,</ref><ref type="bibr" target="#b1">2]</ref>. These two distinctive types of solutions can serve as the basis for DL function interoperability as well.</p><p>Another important aspect when dealing with interoperability is that functions can be related in various ways, including the common relationship of sub-function. As <ref type="table" target="#tab_1">Table 2</ref> shows, the standard DL function "search" has many sub-functions, especially when advanced search is concerned. Thus, it is essential that taxonomic or, even better, ontological descriptions of DL functions be provided. A thorough treatment of this matter is given elsewhere <ref type="bibr" target="#b4">[5]</ref>, using the 5S framework; other work involves ontology mappings, alignments, and merging <ref type="bibr" target="#b5">[6]</ref>. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">Conclusions</head><p>The Functionality Working Group of the DL.org project has explored issues, approaches, and solutions related to the interoperation of DL functions. Essential are appropriate description mechanisms and registries that will facilitate the publication and discovery of functions. More work is also needed on function taxonomies and ontologies, function composition, and the relationship to interoperability of the other DL concepts, as addressed by other DL.org Working Groups.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0" validated="true"><head>Table 1 .</head><label>1</label><figDesc>Indicative set of functions where interoperability is especially important.</figDesc><table>Behind the scenes 
+For users 
+
+Feature Extraction 
+Classification/Clustering 
+Single Authorization/Single Sign-on 
+Analysis/Statistics operations 
+User Profile Management 
+Harvesting, Aggregating 
+Preservation and Backup 
+
+Federated search. 
+Integration of additional external content sources 
+on the fly. 
+Visualization of timelines, maps, videos, etc. 
+Browsing based on same look-and-feel. 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1" validated="false"><head>Table 2 .</head><label>2</label><figDesc></figDesc><table>Sub-functions of search 
+
+Quick Search 
+Advanced Search 
+Enter a query and click search 
+Enter keywords or phrases for 
+selected field 
+Limit results 
+Search subscribed titles 
+Clear 
+
+Enter keywords or phrases for selected fields 
+Select keyword from a list 
+Select Boolean operator (explicit) 
+Define phrase match (explicit) 
+Search within results 
+Limit results to (preselection), Sort by (preselection) 
+Select display options, Display X results per page 
+Display search history 
+
+</table></figure>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+			</div>
+
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Developing Adapters for Web Services Integration</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Benatallah</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Casati</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Grigori</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Nezhad</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Toumani</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">17th Conference on Advanced Information Systems Engineering (CAISE)</title>
+		<meeting><address><addrLine>Porto, Portugal</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2005-06" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">When are two Web Services Compatible?</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><surname>Bordeaux</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Salaün</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Berardi</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Mecella</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">5th VLDB Workshop on Technologies for E-Services</title>
+		<meeting><address><addrLine>Toronto, Canada</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2004-08" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><surname>Candela</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Castelli</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">The DELOS Digital Library Reference Model, Foundations for Digital Libraries</title>
+		<imprint>
+			<date type="published" when="2008" />
+		</imprint>
+	</monogr>
+	<note>Ver 0.98.</note>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><forename type="middle">L</forename></persName>
+		</author>
+		<ptr target="http://www.dlorg.eu" />
+		<title level="m">Digital Library Interoperability, Best Practices and Modelling Foundations. EU funded project</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Towards a Digital Library Theory: A Formal Digital Library Ontology</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><forename type="middle">A</forename><surname>Goncalves</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><forename type="middle">A</forename><surname>Fox</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><forename type="middle">T</forename><surname>Watson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Int. J. Digital Libraries</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="91" to="114" />
+			<date type="published" when="2008-04" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Semantic Integration: A Survey of Ontology-based Approaches</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">N</forename><surname>Noy</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM SIGMOD Record</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="65" to="70" />
+			<date type="published" when="2004" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

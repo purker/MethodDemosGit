@@ -1,0 +1,689 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="de">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main"></title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>Interaktive Entscheidungsunterstützung für die Auswahl von Software-Komponenten bei mehrfachen Zielsetzungen Thomas Neubauer Secure Business Austria-Security Research 1040 Wien neubauer@securityresearchat Christian Stummer Institut für Betriebswirtschaftslehre Universität Wien 1210 Wien christianstummer@univieacat</keywords>
+			</textClass>
+			<abstract>
+				<p>In der betrieblichen Praxis kommt der komponentenbasierten Software-Entwicklung hoher Stel-lenwert zu. Angesichts mehrfacher Zielsetzungen und vielfältiger Nebenbedingungen ist dabei insbesondere die Auswahl der &quot;besten&quot; Kombination von Komponenten ein nicht-triviales Ent-scheidungsproblem. Bislang wurden hierfür vor allem die Nutzwertanalyse bzw. der Analytic Hierarchy Process zur Entscheidungsunterstützung vorgeschlagen, wobei aber beide eine Reihe von Unzulänglichkeiten aufweisen. Diese Arbeit will dazu nunmehr eine Alternative anbieten. Darin werden in einem ersten Schritt zunächst (zulässige) Pareto-effiziente Kombinationen von Software-Komponenten berechnet und die Entscheidungsträger dann im zweiten Schritt inter-aktiv bei der Suche nach jener Variante unterstützt, die einen Ziele-Mix in Aussicht stellt, der den jeweiligen individuellen Präferenzen am besten entspricht. Das neue Verfahren zeichnet sich im Vergleich zu herkömmlichen Ansätzen insbesondere durch den Verzicht auf umfang-reiche a priori Präferenzinformationen (wie z.B. Zielgewichtungen) aus. Darüber hinaus kann es ohne großen Anpassungsaufwand in bestehende Vorgehensmodelle zur Auswahl von Software-Komponenten integriert werden.</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="de">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">Einleitung</head><p>Die komponentenbasierte Software-Entwicklung unterscheidet sich vom traditionellen Vorge- hen insbesondere dadurch, dass (bestehende) Komponenten als Grundlage für die Entwicklung komplexer Softwarelösungen genutzt werden. Tatsächlich kommt ihr heutzutage hoher Stellen- wert zu <ref type="bibr">[Ruhe2002]</ref>, da in immer kürzeren Abständen qualitativ hochwertige und zuverlässige Software auf den Markt gebracht werden muss. Zudem steigen die funktionalen Anforderungen an Software, so dass insbesondere kleinere Unternehmen bei der Erfüllung ihrer Aufträge zunehmend davon abhängig sind, auf vorhandene Komponenten zurückgreifen zu können und das Produkt nicht in allen Details von Grund auf neu entwickeln zu müssen <ref type="bibr">[Alves2003]</ref>. Allerdings müssen Software-Produkte in der Regel an spezifische Anforderungen angepasst werden. Dementsprechend spielt bei der komponentenbasierten Software-Entwicklung die Aus- wahl der "richtigen" Komponenten eine wesentliche Rolle mit Auswirkungen auf alle weiteren Phasen des Entwicklungszyklus. Ineffiziente Entscheidungen haben daher nicht nur Einfluss auf Korrektheit und Zuverlässigkeit der komponentenbasierten Anwendung, sondern können auch zu massiven Kostensteigerungen in der Entwicklung und/oder der nachfolgenden Wartung führen <ref type="bibr">[Maiden1998,Ruhe2002,Ruhe2003]</ref>.</p><p>In der Literatur finden sich zahlreiche Vorgehensmodelle für die Evaluierung und Auswahl von Software-Komponenten (z.B. OTSO von <ref type="bibr">[Kontio1995]</ref>). Nahezu alle diese Ansätze berücksich- tigen mehrfache Zielsetzungen (wie Kosten, Kompatibilität, Einfachheit der Installation, usw.), wobei die meisten Autoren entweder eine Nutzwertanalyse (Weighted Scoring Method; WSM) oder den Analytic Hierarchy Process (AHP) zur Entscheidungsfindung empfehlen (vgl. u.a.</p><p>[Alves2003,Maiden1998,Navarrete2005,Ncube2002,Wanyama2005]). Tatsächlich weisen aber beide Verfahren wesentliche Schwachstellen auf, wie insbesondere den Bedarf an umfang- reichen Informationen über die a priori Präferenzen der Entscheidungsträger bei der Nutzwert- analyse, die kombinatorische Explosion der paarweisen Vergleiche bei der Verwendung des AHP oder problematische Annahmen über die Form der Nutzenfunktion (für die regelmäßig lineare Nutzenverläufe unterstellt werden). Des Weiteren bieten solche Ansätze dem Entschei- dungsträger lediglich eine einzelne Lösung, während es ein interaktives Verfahren erlauben würde, unterschiedliche Szenarien zu erkunden und zu analysieren bzw. aktiv am Entschei- dungsprozess teilzunehmen und ihn zu kontrollieren. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">Ein interaktives Entscheidungsunterstützungssystem</head><p>Der nachfolgend vorgestellte neue Ansatz möchte eine geeignete Alternative bieten. Er zeichnet sich insbesondere dadurch aus, dass Entscheidungsträger weder umfangreiche a priori Prä- ferenzinformationen bereitstellen noch zahlreiche paarweise Vergleiche anstellen müssen.</p><p>Stattdessen wird zuerst -ohne aktives Zutun der Entscheidungsträger -die Menge der Pareto- effizienten Kombinationen von Software-Komponenten bestimmt und im Anschluss die Möglichkeit geboten, darin interaktiv nach jener Lösung zu suchen, die den individuellen Präferenzen am besten entspricht. Vor einer detaillierten Diskussion der beiden Phasen des interaktiven Entscheidungsunterstützungssystems soll zunächst noch ein typisches Vorgehens- modell für die komponentenbasierte Software-Entwicklung skizziert werden, um zu zeigen, in welcher Phase unser Ansatz zum Einsatz kommen würde.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Das Vorgehensmodell OTSO</head><p>Das von Kontio vorgeschlagene Modell OTSO (Off-The-Shelf Option; <ref type="bibr">[Kontio1995]</ref>) gliedert sich in die nachfolgend beschriebenen fünf Phasen.   </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.">Analyse: In der Analysephase bestimmen die Entscheidungsträger die für die Umsetzung der</head><p>Anforderungen "beste" Kombination an Komponenten. Dazu wird in OTSO der AHP einge- setzt.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Die Bestimmung effizienter Kombinationen von Software-Komponenten</head><p>Unser Ansatz ist zum Einsatz in der letzten Phase des eben umrissenen Vorgehensmodells   </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3">Zwei Varianten für die interaktive Suche im Lösungsraums</head><p>In der zweiten Phase unterstützt das System den Entscheidungsträger bei der endgültigen beginnt dazu mit der Anzeige von K "fliegenden" Säulen (vgl. Abbildung 1).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Abbildung 1: Status des EUS zu Beginn der interaktiven Auswahl</head><p>Für jedes Ziel (vgl. Abbildung 2) bietet das System Informationen über (i) die Zielwerte, die mit zumindest einer der effizienten Lösungen machbar wären (die kurzen Markierungen auf der linken Seite können dazu optisch zu schmalen Säulen zusammenwachsen, wenn sie knapp bei- einander liegen) sowie (ii) den Zielgrößenbereich, der mit den -unter Bedachtnahme auf die bereits gesetzten Ober-bzw. Untergrenzen -noch verbliebenen Lösungen erreicht werden kann. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">Resümee und Ausblick</head><p>Entscheidungsträger sehen sich bei der komponentenbasierten Software-Entwicklung regel- mäßig mit der Herausforderung konfrontiert, aus einem großen Pool von Komponenten die </p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Empirische</head><label></label><figDesc>Studien [Alves2003, Basili1996] zeigen ferner, dass durch den Rückgriff auf bewährte Komponenten Fehler im Gesamtsystem wesentlich reduziert werden. Und schließlich wird die komponentenbasierte Software-Entwicklung auch durch Technologien wie CORBA, JavaBeans/EJB, DCOM/ActiveX oder .Net sowie die Verfügbarkeit von verschiedenen Tools für die Konfiguration und den Einsatz solcher Lösungen vorangetrieben [Andrews2005].</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head></head><label></label><figDesc>In dieser Arbeit stellen wir einen entsprechenden, zweiphasigen Ansatz vor. Die erste Phase widmet sich der Ermittlung von Lösungen (d.h. Kombinationen von Software-Komponenten), die einerseits gegebene Nebenbedingungen (wie Ressourcenbeschränkungen oder Abhängig- keiten zwischen zwei oder mehreren Komponenten) erfüllen und andererseits Pareto-effizient 1 hinsichtlich der gegebenen Zielsetzungen sind. In der zweiten Phase werden Entscheidungs- träger bei der interaktiven Erkundung des solcherart bestimmten Lösungsraums unterstützt, bis sie die für sie individuell "beste" Zusammenstellung von Komponenten mit dem für sie attrak- tivsten Mix an Zielwerten gefunden haben. Der Ansatz kann im Übrigen problemlos in beste- hende Vorgehensmodelle für die komponentenbasierte Software-Entwicklung integriert werden. Diese Arbeit bietet nun im Anschluss zunächst einen Überblick zum Forschungsstand hinsicht- lich der Auswahl von Software-Komponenten bei mehrfachen Zielsetzungen. Danach be- schreiben wir schrittweise unseren Vorschlag zur interaktiven Entscheidungsunterstützung. Die Arbeit schließt letztlich mit einem Resümee und einem Ausblick auf in diesem Zusammenhang interessante weiterführende Forschungsfragen. 2 Die Auswahl von Software-Komponenten im Überblick Im Folgenden liegt das Augenmerk auf Software-Komponenten, die im Rahmen einer Wieder- verwendung Teil eines neuen Softwareprodukts werden können und dazu in der Regel schon von vornherein nicht spezifisch für ein bestimmtes Projekt erstellt worden sind (für eine Diskussion vgl. [Torchiano2004]). Die komponentenbasierte Software-Entwicklung zielt nun darauf ab, mit Hilfe solcher mehrfach nutzbarer Komponenten komplexe Software-Projekte in kürzerer Zeit bzw. mit geringerem Budget durchführen zu können. In der Praxis werden hierbei allerdings oftmals die Risiken unterschätzt, die mit der Evaluierung, Auswahl und Integration der Komponenten verbunden sind, so dass mitunter beträchtliche Verzögerungen bzw. Budget-überschreibungen für die Entwicklung oder Wartung der Systeme zu beobachten sind [Tran1997]. In der Vergangenheit wurden mehrere Vorgehensmodelle zur Strukturierung der komponenten- basierten Software-Entwicklung vorgeschlagen. Obgleich sie sich über weite Strecken stark ähneln, gibt es bislang noch kein allgemein als Standard akzeptiertes Vorgehen [Ruhe2002]. Andrews unterscheidet dazu zwischen "architektur-" und "anforderungsgetriebenen" Vertretern, wobei die erste Gruppe etwa OTSO [Kontio1995], BAREMO [LozanoTello2002], oder STACE [Kunda2003] umfasst und SCARLET [Maiden2002] (als Nachfolger von PORE [Maiden1998]) sowie CRE [Alves2001] zur zweiten Gruppe zählen [Andrews2005]. Gemeinsam ist den Verfahren, dass an irgendeiner Stelle verschiedene Lösungsalternativen be- wertet werden müssen. Eindimensionale Kennzahlen aus der Finanzwirtschaft wie etwa der Kapitalwert greifen aber für die komplexe Bewertung von IT-Investitionen regelmäßig zu kurz, so dass hierfür bislang die Nutzwertanalyse oder der AHP eingesetzt worden sind. Beide Verfahren erfordern jedoch die Bekanntgabe der Form der Nutzenfunktion (wobei meist der Einfachheit halber Linearität unterstellt wird) sowie von Gewichtungen für jedes zu berück- sichtigende Zielkriterium. Die Nutzwertanalyse setzt dabei voraus, dass (i) sich die Entschei- dungsträger von vornherein vollständig über alle Gewichtungen im Klaren sind, ohne jemals zuvor eine Lösungsalternative gesehen zu haben, und (ii) auch bereit sind, diese Präferenzen vollständig und vorbehaltlos preiszugeben, damit mit einer auf diese Weise definierten Zielfunktion Nutzenwerte für jede Kombination von Software-Komponenten ermittelt werden können. Demgegenüber stützt sich der AHP auf eine Hierarchie von Zielen und errechnet die benötigten Gewichtungen durch paarweise Vergleiche aller Kriterien je Hierarchieebene (mit Hilfe der Eigenwertmethode). Damit können nun bei korrekter Anwendung -trotz vielfacher methodischer Kritik -tendenziell konsistentere Ergebnisse erzielt werden als mit der Nutzwert- analyse; dies muss allerdings mit enormem Aufwand für die in großer Zahl notwendigen paar- weisen Vergleiche erkauft werden. Maiden illustriert das anhand einer Fallstudie zu einem Projekt mit 130 Anforderungen, bei dem die Verwendung des AHP daran scheiterte, dass die Entscheidungsträger mehr als 42.000 Vergleiche durchführen hätten müssen [Maiden1998]. Generell scheint jeder Versuch, die vielfältigen Aspekte der Komponentenauswahl bei der Software-Entwicklung auf einen einzigen "Nutzenwert" zu reduzieren, problematisch, da durch die Aggregation verschiedener Ziele zu einem einzigen Indikator nicht zuletzt individuelle Attribute und somit die Information über besondere Schwächen oder Stärken verloren gehen. Daher kann eine hohe Bewertung in einem Ziel eine schlechte Leistung in einem anderen Kriterium (gleichsam automatisch) ausgleichen und solcherart ein potentielles Risiko unent- deckt bleiben [Ncube2002]. Forscher wie Praktiker vertreten deshalb vielfach die Auffassung, dass traditionelle Methoden bei der Bewertung von Software-Komponenten ungeeignet sind [Martinsons1998,Ryan2004] und Entscheidungsträger bessere Unterstützung bei der Bewertung von Kombinationen von Software-Komponenten und der entsprechenden Verteilung von Res- sourcen hinsichtlich der damit verbundenen Nutzen und Risiken benötigen.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>1 .</head><label>1</label><figDesc>Definition der Kriterien: Im ersten Schritt werden die relevanten Zielkriterien bestimmt mit besonderem Augenmerk auf die Infrastruktur der Organisation, die Applikationsarchitektur, das Applikationsdesign, Anforderungen an die Applikation, Projektziele und -einschränkungen und die grundsätzliche Verfügbarkeit von Software-Komponenten bzw. -bibliotheken. Die Auswahl der Kriterien muss für jedes Vorhaben separat (z.B. unter Verwendung von GQM [Basili1987]) durchgeführt werden, da etwa funktionale Anforderungen regelmäßig für jede Applikation unterschiedlich sind. Typische Kriterien gliedern sich grob in vier Kategorien, nämlich: (i) Funktionale Kriterien, die auf Basis der Geschäftsprozesse definiert werden und deren Erfüllung üblicherweise ein besonders hoher Stellenwert zukommt; (ii) Qualitätskriterien, wie beispielsweise die Fehlerrate, Leistungsmaßzahlen, Benutzerfreundlichkeit oder Sicherheit; (iii) Strategische Kriterien mit einem Fokus auf Kosten, Zeitaspekten oder verfügbarem Personal und dessen Qualifikationen; und (iv) Einsatzspezifische und architekturrelevante Kriterien, die eine Rolle spielen, sofern dadurch Vorgaben oder Einschränkungen für das zu realisierende Softwareprodukt bedingt sind. 2. Identifikation der Komponenten: Dieser Schritt umfasst die Identifikation von potentiellen Komponenten, die beispielsweise untergliedert werden können in (i) Betriebssysteme (etwa AIX, FreeBSD, Linux, Microsoft Windows Server, QNX, Solaris), (ii) Middleware (BEA Weblogic, IBM Websphere, OpenORB, Oracle Application Server, Visibroker und weitere Komponenten wie z.B. CRM, DMS, ERP, SCM, SRM, die von unterschiedlichen Firmen angeboten werden), (iii) Datenbanken (Hypersonic SQL, Microsoft Access, Microsoft SQL Server, MySQL, Oracle DB, PostgreSQL) und (iv) Support Software (Agent++, Apache Tomcat, Hypertext Preprocessor, IBM Java Runtime Environment, Intel COPS Client, Log4J, Telia BER Coder, WebMacro, Xerces, XMLDB) [Morisio2002].</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>3 .</head><label>3</label><figDesc>Screening: In dieser Phase sollen -zunächst einmal isoliert von den anderen -vielver- sprechende Komponenten für eine anschließende, umfassendere Evaluierung gefiltert werden.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>4 .</head><label>4</label><figDesc>Evaluierung: In der Evaluierungsphase erfolgt die Konsolidierung und gründliche Eva- luierung der zuvor identifizierten Komponenten in Bezug auf die im ersten Schritt festgelegten Kriterien sowie die Dokumentation der Ergebnisse.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head></head><label></label><figDesc>konzipiert und würde dort den althergebrachten AHP ersetzen. Der erste Schritt zielt dabei auf die Ermittlung der hinsichtlich der betrachteten Ziele Pareto-effizienten Kombinationen von Software-Komponenten. Dazu ist das zugrunde liegende multikriterielle kombinatorische Opti- mierungsproblem (zur multiobjective combinatorial optimization (MOCO) vgl. [Ehrgott2000]) zu lösen. Binäre Entscheidungsvariablen { } 0,1 i x ∈ geben darin an, ob eine Komponente i in einer Lösung verwendet wird oder nicht ( 1 x = ). Eine Kombination i x = falls ja, ansonsten 0 i</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head></head><label></label><figDesc>Das MOCO-Problem ist NP-schwer, da sich der Suchraum mit jeder hinzukommenden Kom- ponente verdoppelt. Abhängig vom Umfang -bestimmt insbesondere durch die Anzahl der zur Wahl stehenden Software-Komponenten, die Zahl an Zielen sowie Zahl und Typ der Abhängig- keiten zwischen den Komponenten -kann es entweder exakt durch vollständige Enumeration aller Kombinationen von Komponenten (bei 30 Komponenten wären das mehr als eine Milliarde ( 30 9 2 1,07 10 &gt; ⋅ ) zu evaluierende Alternativen) oder mit Hilfe von (Meta-) Heuristiken gelöst werden. Als Daumenregel gilt, dass letztere ab etwa vierzig Komponenten zum Einsatz kommen. Sie können zwar keine Garantie für das Auffinden aller Pareto-effizien- ten MOCO-Lösungen geben, ermitteln aber regelmäßig in einem Bruchteil der für die voll- ständige Enumeration benötigten Zeit bereits einen Großteil der gesuchten Lösungen; einen Überblick zu Metaheuristiken für MOCO-Probleme bietet [Ehrgott2004], Anwendungsbeispiele mit Leistungsvergleichen finden sich etwa bei [Doerner2006,Stummer2005]. Nichtsdestotrotz kann die vollständige Enumeration auch bei einer höheren Anzahl an Komponenten noch in praktikabler Zeit durchlaufen werden, sofern den Suchraum stark einschränkende Abhängig- keiten existieren (z.B. wenn aus jeder Architekturschicht exakt eine Alternative zu wählen ist).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head></head><label></label><figDesc>Auswahl jener Kombination von Software-Komponenten, die am besten seinen Präferenzen entspricht. Angesichts eines Lösungsraums, der unter Umständen mehrere tausend Elemente umfasst, kommt eine simple Auflistung sicherlich nicht in Frage. Stattdessen bietet das System zwei alternative Varianten für die interaktive "Erforschung" des Lösungsraums. Die erste erlaubt es, sich durch Verschieben von unteren bzw. oberen Schranken für beliebige Ziele rasch im Lösungsraum zu bewegen. Das Entscheidungsunterstützende System (EUS)</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><head>Abbildung 2 :</head><label>2</label><figDesc>Abbildung 2: Detaillierte Darstellung Die beweglichen, horizontalen Linien mit den kleinen Pfeilen auf einer Seite symbolisieren die oberen und unteren Schranken und erlauben die schrittweise Einschränkung (z.B. durch Anheben der unteren Schranke in einem Ziel) oder Ausweiterung (z.B. durch Hinaufsetzen einer oberen Schranke) der Menge jener Pareto-effizienten MOCO-Lösungen, die gegen keine der bislang gesetzten Schranken verstoßen. Damit kann der Entscheidungsträger spielerisch Vorgaben machen und erhält vom System unmittelbare Rückmeldung über deren Auswirkungen. So illustriert etwa Abbildung 3 die Rückmeldung, nachdem die Obergrenze für die Entwicklungskosten gesenkt worden ist.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_9"><head>"</head><label></label><figDesc>beste" Kombination zusammen zu stellen. Diese Aufgabe wird nicht nur durch eine oftmals große Zahl an alternativen Komponenten (auf verschiedenen architektonischen Ebenen), son- dern auch durch Abhängigkeiten zwischen einzelnen Komponenten bzw. nicht zuletzt durch mehrere divergierende Zielsetzungen verkompliziert. In diesem Aufsatz haben wir einen zwei- phasigen Ansatz zur Entscheidungsunterstützung bei der Auswahl von Software-Komponenten entwickelt, der als Erweiterung in bestehende Vorgehensmodelle für die komponentenbasierte Softwareentwicklung integriert werden kann und insbesondere Probleme und Unzulänglich- keiten, die bei herkömmlichen Verfahren wie der Nutzwertanalyse oder dem AHP auftreten, überwindet. Wie alle anderen Verfahren hängt auch unseres von der Verfügbarkeit geeigneter Zielfunktio- nen bzw. der Qualität der in der Evaluierungsphase erhobenen Daten ab. So ist es sicherlich nicht trivial, eine geeignete Funktion für die Zuverlässigkeit einer Kombination von Software- Komponenten aufzustellen. Damit wollen wir uns im Zuge weiterer Forschungsaktivitäten be- schäftigen, wobei wir hierfür etwa das Einbeziehen der unmittelbar betroffenen Praktiker im Rahmen von Workshops ins Auge gefasst haben (für ein Beispiel vgl. [Neubauer2006]). Darüber hinaus gibt es eine Reihe weiterer interessanter Fragestellungen. So sollten Aspekte der Ungewissheit berücksichtigt werden, um bei Bedarf bewusst robuste Zusammenstellungen von Software-Komponenten erzwingen zu können, die dann weniger anfällig für sich ändernde Systemanforderungen wären. Im MOCO-Modell ließe sich das in einem ersten Schritt mit stochastischen Zufallsvariablen und dann über Quantilswerte als separate Ziele umsetzen (für ein Beispiel vgl. [Medaglia2006]). Des Weiteren könnten vermehrt Ideen aus der Literatur zu Gruppenentscheidungen bzw. der Verhandlungsanalyse übernommen werden. Und schließlich sollen Feldstudien Aufschluss über die Eignung unterschiedlicher (grafischer) Benutzerschnitt- stellen geben. Literaturverzeichnis [Alves2001] C. Alves, J. Castro (2001) CRE: A systematic method for COTS components selection. Proceedings of the XV Brazilian Symposium on Software Engi- neering.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0" validated="false"><head>= mit Einträgen für alle N zur Wahl stehenden Komponenten abgebildet. Im MOCO-Problem sind nun K Zielfunktionen ( )für die Menge an von Komponente i nachgefragten Ressourcen vom Typ q steht und Parameter q R das Gesamt-</head><label></label><figDesc></figDesc><table>von Komponenten wird durch einen Vektor 
+
+1 
+
+( ,..., ) 
+
+N 
+
+x x 
+x 
+k 
+
+u x 
+
+( 
+1,..., 
+k 
+K 
+= 
+) (z.B. für die Funktionalität, Verwendbarkeit oder die Zuverlässigkeit) zu maxi-
+
+mieren bzw. gegebenenfalls (etwa bei den Kosten) zu minimieren. Die Funktionen 
+( ) 
+
+k 
+
+u x 
+
+können dabei beliebige Formen annehmen, solange sie für alle zulässigen Kombinationen von 
+
+Software-Komponenten definiert sind. Dabei können auch vielfältige Abhängigkeiten zwischen 
+
+zwei oder mehreren Komponenten (bedingt z.B. durch Synergie-oder Kannibalismuseffekte) 
+
+berücksichtigt werden; vgl. [Stummer2003] für eine detaillierte Diskussion am Beispiel der 
+
+Auswahl von F&amp;E-Portfolios. 
+
+Jedweder Berechnungsalgorithmus, der in dieser ersten Phase zum Einsatz kommt, muss alle 
+
+(oder zumindest nahezu alle) effizienten MOCO-Lösungen ermitteln und dabei insbesondere 
+
+Nebenbedingungen aus zwei Gruppen berücksichtigen. Solche aus der ersten Gruppe betreffen 
+
+typischerweise Ressourcenbeschränkungen (etwa bei den Entwicklungs-oder Wartungskosten). 
+
+Sie haben daher in der Regel die Form 
+
+iq i 
+q 
+i 
+
+r x R 
+≤ 
+
+∑ 
+
+( 
+1,..., 
+q 
+Q 
+= 
+), wobei iq 
+r budget für diesen Ressourcentyp angibt. Im Falle von Synergie-oder Kannibalismuseffekten 
+
+müssen wiederum entsprechende Korrekturterme ergänzt werden. Nebenbedingungen aus der 
+
+zweiten Gruppe gewährleistet, dass jedenfalls eine Mindestzahl bzw. nicht mehr als eine 
+
+Maximalanzahl von Komponenten aus einer vorab festgelegten Teilmenge ausgewählt werden. 
+
+Zum Beispiel könnte vorgegeben werden, dass in jeder gültigen Lösung aus jeder Architektur-
+
+schicht mindestens eine Komponente enthalten sein muss, falls der Benutzer etwa eine 
+
+mehrschichtige Architektur abbilden möchte. Wenn das sechs Komponenten mit den Indizes 1 
+
+6 
+
+bis 6 betrifft, lautet die entsprechende Nebenbedingung: 
+
+</table></figure>
+
+			<note place="foot" n="1"> Eine Lösungsalternative gilt als &quot;Pareto-effizient&quot;, wenn keine andere (zulässige) Lösung existiert, die in allen betrachteten Zielsetzungen zumindest gleich gut und in mindestens einer Zielsetzung besser abschneidet.</note>
+		</body>
+		<back>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Investigating conflicts in COTS decisionmaking</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Alves</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Finkelstein</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">International Journal of Software Engineering and Knowledge Engineering</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="473" to="495" />
+			<date type="published" when="2003" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">A COTS component comprehension process</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><forename type="middle">A</forename><surname>Andrews</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Stefik</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">N</forename><surname>Picone</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Ghosh</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 13th International Workshop on Program Comprehension (IWPC&apos;05)</title>
+		<meeting>the 13th International Workshop on Program Comprehension (IWPC&apos;05)</meeting>
+		<imprint>
+			<publisher>IEEE</publisher>
+			<date type="published" when="2005" />
+			<biblScope unit="page" from="135" to="144" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Tailoring the software process to project goals and environments</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">V</forename><forename type="middle">R</forename><surname>Basili</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">H</forename><surname>Rombach</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 9th International Conference on Software Engineering</title>
+		<meeting>the 9th International Conference on Software Engineering</meeting>
+		<imprint>
+			<publisher>IEEE</publisher>
+			<date type="published" when="1987" />
+			<biblScope unit="page" from="345" to="357" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">How reuse influences productivity in object-oriented systems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">V</forename><forename type="middle">R</forename><surname>Basili</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><forename type="middle">C</forename><surname>Briand</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">W</forename><forename type="middle">L</forename><surname>Melo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Communications of the ACM, 39. Jg., H</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="page" from="104" to="116" />
+			<date type="published" when="1996" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<monogr>
+		<title level="m" type="main">Stummer (2006) Natureinspired metaheuristics for multiobjective activity crashing</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">K</forename><forename type="middle">F</forename><surname>Doerner</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">W</forename><forename type="middle">J</forename><surname>Gutjahr</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><forename type="middle">F</forename><surname>Hartl</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Strauss</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename></persName>
+		</author>
+		<imprint>
+			<pubPlace>Omega, im Druck</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<monogr>
+		<title level="m" type="main">A survey and annotated bibliography of multiobjective combinatorial optimization. OR Spectrum, 22. Jg</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Ehrgott</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">X</forename><surname>Gandibleux</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2000" />
+			<biblScope unit="page" from="425" to="460" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<monogr>
+		<title level="m" type="main">Approximative solution methods for multiobjective combinatorial optimization</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Ehrgott</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">X</forename><surname>Gandibleux</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2004" />
+		</imprint>
+	</monogr>
+	<note>Top, 12. Jg., H. 1, S. 1-63</note>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<monogr>
+		<title level="m" type="main">OTSO: A systematic process for reusable software component selection</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Kontio</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1995" />
+			<publisher>Arbeitspapier</publisher>
+		</imprint>
+		<respStmt>
+			<orgName>Institute for Advanced Computer Studies and Department of Computer Science, University of Maryland</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">STACE: Social technical approach to COTS software evaluation</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Kunda</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Component-Based Software Quality: Methods and Techniques, Springer LNCS 2693</title>
+		<imprint>
+			<date type="published" when="2003" />
+			<biblScope unit="page" from="64" to="84" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">BAREMO: How to choose the appropriate software component using the Analytic Hierarchy Process</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Lozano-Tello</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Gomez-Perez</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 14th International Conference on Software Engineering and Knowledge Engineering</title>
+		<meeting>the 14th International Conference on Software Engineering and Knowledge Engineering</meeting>
+		<imprint>
+			<date type="published" when="2002" />
+			<biblScope unit="volume">27</biblScope>
+			<biblScope unit="page" from="781" to="788" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Acquiring COTS software selection requirements</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">N</forename><surname>Maiden</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Ncube</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">IEEE Software, 15. Jg</title>
+		<imprint>
+			<date type="published" when="1998" />
+			<biblScope unit="page" from="46" to="56" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Rethinking process guidance for selecting software components</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">N</forename><surname>Maiden</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">H</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Ncube</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the First International Conference on COTS-Based Software Systems (ICCBSS 2002), Springer LNCS 2255</title>
+		<meeting>the First International Conference on COTS-Based Software Systems (ICCBSS 2002), Springer LNCS 2255</meeting>
+		<imprint>
+			<date type="published" when="2002" />
+			<biblScope unit="page" from="151" to="164" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">The balanced scorecard: A foundation for the strategic management of information systems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Martinsons</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Davidson</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Tse</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Decision Support Systems Journal</title>
+		<imprint>
+			<biblScope unit="volume">25</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="71" to="78" />
+			<date type="published" when="1998" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">A multiobjective evolutionary approach for linearly constrained project selection under uncertainty</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Medaglia</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Graves</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Ringuest</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">European Journal of Operational Research</title>
+		<imprint>
+			<date type="published" when="2006" />
+		</imprint>
+	</monogr>
+	<note>im Druck</note>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Definition and classification of COTS: A proposal</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Morisio</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Torchiano</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the First International Conference on COTS-Based Software Systems (ICCBSS 2002). Springer LNCS 2255</title>
+		<meeting>the First International Conference on COTS-Based Software Systems (ICCBSS 2002). Springer LNCS 2255</meeting>
+		<imprint>
+			<date type="published" when="2002" />
+			<biblScope unit="page" from="165" to="175" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">How agile COTS selection methods are (and can be</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Navarrete</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Botella</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">X</forename><surname>Franch</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 31st EUROMICROConference on Software Engineering and Advanced Applications (EUROMICRO-SEAA&apos;05)</title>
+		<meeting>the 31st EUROMICROConference on Software Engineering and Advanced Applications (EUROMICRO-SEAA&apos;05)</meeting>
+		<imprint>
+			<publisher>IEEE</publisher>
+			<date type="published" when="2005" />
+			<biblScope unit="page" from="160" to="167" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">The limitations of current decision-making techniques in the procurement of COTS software components</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Ncube</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><forename type="middle">C</forename><surname>Dean</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the First International Conference on COTS-Based Software Systems (ICCBSS 2002</title>
+		<meeting>the First International Conference on COTS-Based Software Systems (ICCBSS 2002</meeting>
+		<imprint>
+			<date type="published" when="2002" />
+			<biblScope unit="page" from="176" to="187" />
+		</imprint>
+	</monogr>
+	<note>Springer LNCS 2255</note>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Workshop-based multiobjective security safeguard selection</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><surname>Neubauer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Stummer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><surname>Weippl</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the First International Conference on Availability, Reliability and Security (ARES&apos;06</title>
+		<meeting>the First International Conference on Availability, Reliability and Security (ARES&apos;06</meeting>
+		<imprint>
+			<publisher>IEEE</publisher>
+			<date type="published" when="2006" />
+			<biblScope unit="page" from="366" to="373" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Intelligent support for selection of COTS products. Revised Papers from the Workshop on Web, Web-Services, and Database Systems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Ruhe</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Springer LNCS 2593</title>
+		<imprint>
+			<date type="published" when="2002" />
+			<biblScope unit="page" from="34" to="45" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Software engineering decision support: A new paradigm for learning software organizations</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Ruhe</surname></persName>
+		</author>
+		<idno>LNCS 2640</idno>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 4th International Workshop on Advances in Learning Software Organizations</title>
+		<meeting>the 4th International Workshop on Advances in Learning Software Organizations</meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2002" />
+			<biblScope unit="page" from="104" to="113" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<monogr>
+		<title level="m" type="main">Inclusion of social sub-system issues in ITinvestment decisions: An empiricial assessment. Information Resources Management Journal</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><forename type="middle">D</forename><surname>Ryan</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><forename type="middle">S</forename><surname>Gates</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2004" />
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="page" from="1" to="18" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Overlooked aspects of COTS-based development</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Torchiano</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Morisio</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">IEEE Software, 21. Jg</title>
+		<imprint>
+			<date type="published" when="2004" />
+			<biblScope unit="page" from="88" to="93" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Component-based systems development: challenges and lessons learned. Software Technology and Engineering Practice</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">V</forename><surname>Tran</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D.-B</forename><surname>Liu</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Hummel</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE</title>
+		<imprint>
+			<biblScope unit="page" from="452" to="462" />
+			<date type="published" when="1997" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Interactive R&amp;D portfolio analysis with project interdependencies and time profiles of multiple objectives</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Stummer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">K</forename><surname>Heidenberger</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Transactions on Engineering Management</title>
+		<imprint>
+			<biblScope unit="volume">50</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="175" to="183" />
+			<date type="published" when="2003" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">New multiobjective metaheuristic solution procedures for capital investment planning</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Stummer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Sun</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Heuristics</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="page" from="183" to="199" />
+			<date type="published" when="2005" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Towards providing decision support for COTS selection</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><surname>Wanyama</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Homayoun</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 18th IEEE Canadian Conference on Electrical and Computer Engineering</title>
+		<meeting>the 18th IEEE Canadian Conference on Electrical and Computer Engineering</meeting>
+		<imprint>
+			<publisher>IEEE</publisher>
+			<date type="published" when="2005" />
+			<biblScope unit="page" from="908" to="911" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

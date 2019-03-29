@@ -1,0 +1,745 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="de">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Selective Graph Coloring Problem DIPLOMARBEIT zur Erlangung des akademischen Grades Computational Intelligence eingereicht von Erklärung zur Verfassung der Arbeit</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Diplom-Ingenieur</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department" key="dep1">im Rahmen des Studiums</orgName>
+								<orgName type="department" key="dep2">Fakultät für Informatik</orgName>
+								<orgName type="institution" key="instit1">Technischen Universität Wien</orgName>
+								<orgName type="institution" key="instit2">Technische Universität Wien</orgName>
+								<address>
+									<addrLine>Hungereckstr. 60/2</addrLine>
+									<postCode>A-1040, 1230</postCode>
+									<settlement>Wien ▪ Karlsplatz 13 ▪, Wien</settlement>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Claus-Dieter</forename><surname>Volko</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department" key="dep1">im Rahmen des Studiums</orgName>
+								<orgName type="department" key="dep2">Fakultät für Informatik</orgName>
+								<orgName type="institution" key="instit1">Technischen Universität Wien</orgName>
+								<orgName type="institution" key="instit2">Technische Universität Wien</orgName>
+								<address>
+									<addrLine>Hungereckstr. 60/2</addrLine>
+									<postCode>A-1040, 1230</postCode>
+									<settlement>Wien ▪ Karlsplatz 13 ▪, Wien</settlement>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Claus-Dieter</forename><surname>Volko</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department" key="dep1">im Rahmen des Studiums</orgName>
+								<orgName type="department" key="dep2">Fakultät für Informatik</orgName>
+								<orgName type="institution" key="instit1">Technischen Universität Wien</orgName>
+								<orgName type="institution" key="instit2">Technische Universität Wien</orgName>
+								<address>
+									<addrLine>Hungereckstr. 60/2</addrLine>
+									<postCode>A-1040, 1230</postCode>
+									<settlement>Wien ▪ Karlsplatz 13 ▪, Wien</settlement>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Selective Graph Coloring Problem DIPLOMARBEIT zur Erlangung des akademischen Grades Computational Intelligence eingereicht von Erklärung zur Verfassung der Arbeit</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<note>Betreuung Betreuer/in: Univ.-Prof. Dipl.-Ing. Dr. Günther Raidl Mitwirkung: Univ.-Ass. Dipl.-Ing. Dr. Bin Hu Wien, 31.03.2013 (Unterschrift Verfasser/in) (Unterschrift Betreuer/in)</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<abstract>
+				<p>Hiermit erkläre ich, dass ich diese Arbeit selbständig verfasst habe, dass ich die verwendeten Quellen und Hilfsmittel vollständig angegeben habe und dass ich die Stellen der Arbeit-einschließlich Tabellen, Karten und Abbildungen-, die anderen Werken oder dem Internet im Wortlaut oder dem Sinn nach entnommen sind, auf jeden Fall unter Angabe der Quelle als Entlehnung kenntlich gemacht habe. ______________________ ______________________________________________ (Ort, Datum) (Unterschrift Verfasser) Danksagung Ich möchte mich vor allem bei Günther Raidl für die Möglichkeit bedanken, meine Diplomarbeit an seiner Abteilung zu verfassen, und bei Bin Hu für die ausgezeichnete Betreuung. Weiters möchte ich mich bei meinen Eltern bedanken, die mir das Studium finanziell ermöglicht haben. Zudem habe ich ihnen auch zu verdanken, dass sie mein Interesse an Computern frühzeitig erkannt und gefördert haben. Abstract The Selective Graph Coloring Problem (SGCP) is about finding a subgraph of a particular structure whose chromatic number is as low as possible. The original graph is divided into several clusters, and from each cluster the subgraph has to contain exactly one node. This problem is NP-hard and therefore it is usually solved by means of heuristics. I implemented several variants of an algorithm making use of Variable Neighborhood Search (VNS) to search the space of solution candidates and then evaluating the solution using heuristic or exact methods. Furthermore, each variant can be used with or without a solution archive, i.e. a data structure in which previously found solutions are stored so that duplicates need not be re-evaluated but can be efficiently converted into new solutions instead. For exact computation of the chromatic number integer linear programming was used. To obtain an upper bound a variant of greedy coloring was used. Another variant of the algorithm also counts the number of conflicts that would appear if one color less were used. Finally, two methods were implemented to obtain a lower bound: maximum clique and linear programming using column generation. The program was tested with various instances from the literature. My algorithm often finished computation within a very short time, but in general it led to slightly worse results. Kurzfassung Beim Selective Graph Coloring Problem (SGCP) geht es darum, einen Teilgraphen mit spezieller Struktur zu finden, dessen chromatische Zahl so niedrig wie möglich ist. Der Ursprungsgraph ist in mehrere Cluster unterteilt, und von jedem Cluster muss der Teilgraph genau einen Knoten enthalten. Dieses Problem ist NP-schwer und wird daher meistens mit Heuristiken gelöst. Ich habe mehrere Varianten eines Algorithmus implementiert, der Variable Neighborhood Search (VNS) benutzt, um den Lösungsraum zu durchsuchen, und dann die gefundene Lösung mit heuristischen oder exakten Methoden evaluiert. Jede Variante kann mit oder ohne ein Lösungsarchiv verwendet werden. Ein Lösungsarchiv ist eine Datenstruktur, in der bereits gefundene Lösungen gespeichert werden, so dass Duplikate nicht neu evaluiert werden müssen, sondern effizient zu neuen Lösungen konvertiert werden können. Um eine obere Schranke zu errechnen, wurde eine Variante von Greedy Coloring verwendet. Eine weitere Variante des Algorithmus zählt auch die Anzahl der Konflikte, die entstünden, würde eine Farbe weniger verwendet werden. Schließlich wurden zwei Methoden umgesetzt, um eine untere Schranke zu berechnen: maximale Clique und lineare Programmierung mit Spaltengenerierung. Das Programm wurde mit verschiedenen Instanzen aus der Literatur getestet. Mein Algorithmus beendete die Berechnungen oft schon nach sehr kurzer Laufzeit, führte aber im Allgemeinen zu geringfügig schlechteren Ergebnissen.</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="de">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Abstract</head><p>The Selective Graph Coloring Problem (SGCP) is about finding a subgraph of a particular structure whose chromatic number is as low as possible. The original graph is divided into several clusters, and from each cluster the subgraph has to contain exactly one node. This problem is NP-hard and therefore it is usually solved by means of heuristics.</p><p>I implemented several variants of an algorithm making use of Variable Neighborhood Search (VNS) to search the space of solution candidates and then evaluating the solution using heuristic or exact methods. Furthermore, each variant can be used with or without a solution archive, i.e. a data structure in which previously found solutions are stored so that duplicates need not be re-evaluated but can be efficiently converted into new solutions instead. For exact computation of the chromatic number integer linear programming was used. To obtain an upper bound a variant of greedy coloring was used. Another variant of the algorithm also counts the number of conflicts that would appear if one color less were used. Finally, two methods were implemented to obtain a lower bound: maximum clique and linear programming using column generation.</p><p>The program was tested with various instances from the literature. My algorithm often finished computation within a very short time, but in general it led to slightly worse results.</p><p>The exact method is exact but slow. Regarding heuristics mainly an upper bound is computed, but there are also variants calculating a number of conflicts that would arise with one color less and giving a lower bound. In addition a solution archive has been implemented, which makes it possible to avoid duplicates during the search space exploration and easily find new solutions not evaluated as local optima yet.  </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.1">Graph Theory Basics</head><p>The selective graph coloring problem (SGCP) is a graph theory problem. Graph theory deals with an abstract formalism that can be used to represent various real- world structures, such as networks (e.g. telephone networks) or traffic structures. A graph is a structure that consists of two sets, a set of nodes and a set of edges. A node is an abstract entity which may represent anything, e.g. a telephone. It is worth mentioning that the spatial structure of the graph is irrelevant. The nodes may be located anywhere in space. It is not important where they are located or how distant they are to each other. Edges are connections between nodes. Each edge connects two distinct nodes. In the real world, an edge may correspond to a line connecting two telephones, for example.</p><p>Graphs may be directed or undirected. If a graph is directed, this means that each edge has a node for which it is an outgoing edge, and a node for which it is an incoming edge. In this case, edges are also called arcs. However, the SGCP deals only with undirected graphs. In undirected graphs the two nodes of each Edges may have weights, that is values assigned to them. This plays a role in many graph theoretical problems, but not in the SGCP. As a consequence we do not consider edge weights in the SGCP.</p><p>In the SGCP nodes may be colored. That is, each node is assigned one color.</p><p>What is important is that in a proper coloring, there must not be a pair of two nodes sharing an edge that have the same color. This is the main obstacle for finding a solution to the SGCP.</p><p>In the graph coloring problem, an undirected graph is given, and the objective is to determine the minimal number of colors that is needed to gain a proper coloring of the graph. This number is also called the chromatic number of the graph. The difference to the SGCP is that all nodes must be considered. In the SGCP, by contrast, each node is assigned to a cluster. The objective is to find a subgraph of the given graph which consists of one node per cluster, i.e. from each cluster exactly one node per cluster is taken. This subgraph must have a low chromatic number, in the optimal case the minimal chromatic number possible.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.2">Applications</head><p>According to the literature <ref type="bibr" target="#b29">[39]</ref>, an application of the selective graph coloring problem is the routing and wavelength assignment (RWA) problem in optical networks. In such a network two edges (also called lightpaths) may use the same wavelength if they do not share a common link. Therefore the problem is dual to graph coloring, as edges instead of vertices are assigned colors. The optimal assignment of wavelengths in such a network can thus be obtained by solving a related instance of the selective graph coloring problem.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.3">Formal Definition and Complexity</head><p>Given is an unweighted, undirected graph G =&lt; V, E &gt; with a set of nodes V and a set of edges E. Each node is assigned to one subgraph, a so-called cluster C i . In total there are n disjoint clusters. The goal is to find a subgraph S = G(W ) with W =&lt; v 1 , ..., v n &gt; where v i ∈ C i , 1 ≤ i ≤ n. The subgraph should have a minimal chromatic number. The chromatic number is the minimal number of different colors using which the nodes of a graph can be colored so that there is no single pair of nodes u and v connected by an edge (u, v) that have the same color.</p><p>Thus, the SGCP is an extension of the graph coloring problem, which computer scientists and mathematicians have studied for decades. The Graph Coloring Problem is about computing the chromatic number of a given graph, and already in 1972 it was discovered to be an NP-equivalent problem <ref type="bibr">[3]</ref>. Since the Graph Coloring Problem is a subproblem of the selective graph coloring problem, the se- lective graph coloring problem is NP-hard as well. For this reason it makes sense to use a heuristic approach both to estimate the chromatic number of a possible solution and to find a better solution.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Chapter 2 Literature Survey</head><p>This chapter provides an overview of the literature about the selective graph coloring problem as well as graph coloring.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">Selective Graph Coloring Problem and Routing and Wavelength Assignment Problem</head><p>In the literature, the selective graph coloring problem is sometimes also called the partition graph coloring problem.</p><p>Frota et al.</p><p>[39] present a branch-and-cut algorithm for the partition graph col- oring problem. It is based on an integer linear programming formulation that generalizes the 0-1 formulation for the graph coloring problem presented in <ref type="bibr" target="#b22">[28]</ref> and <ref type="bibr" target="#b23">[29]</ref>. With a branching strategy the Partition Graph Coloring Problem is decomposed in two subproblems, and the linear relaxation bound is improved by means of inequalities.</p><p>In an earlier publication Li et al. <ref type="bibr" target="#b16">[22]</ref> proved that the selective graph coloring problem is as hard as standard vertex coloring. They also proposed extensions of well-known vertex coloring heuristics to the partition coloring problem and ap- plied these heuristics to some instances of the routing and wavelength assignment problem. This paper also cites a lot of papers that deal with theoretical aspects of the routing and wavelength assignment problem.</p><p>Noronha et al. <ref type="bibr" target="#b26">[34]</ref> propose a heuristic for solving the Partition Graph Color- ing Problem based on tabu search.</p><p>The paper by Choi et al. <ref type="bibr" target="#b17">[23]</ref> reviews various algorithms for solving the rout- ing and wavelength assignment problem. We can learn from this paper that there are actually two types of algorithms: the ones assuming static traffic either have the objectivity to "minimize the required number of wavelengths in order to ac-</p><formula xml:id="formula_0">7 8 CHAPTER 2. LITERATURE SURVEY</formula><p>commodate a given set of connections" (this corresponds to the SGCP) or to "maximize the number of connections accommodated if the number of wave- lengths is limited". The other type of algorithms assumes dynamic traffic, which means that "connection requests arrive to and depart from the network one by one in a random manner" and the objective is to "minimize the blocking prob- ability". This shows that routing and wavelength assignment actually comprises more problems than just selective graph coloring. However, the paper focuses on the problem variants that are related to selective graph coloring. It breaks the problem down into two subproblems, each of them being NP-complete. The "routing problem" is nothing but the problem to search for a subgraph that hope- fully yields a small chromatic number. The paper states that diverse variants of shortest path algorithms are most commonly used for this problem. Regarding the problem of selecting a solution, the paper mentions two classes of methods: sequential selection (by means of greedy algorithms) and combinatorial selection.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">Graph Coloring</head><p>A large number of papers have been published on graph coloring. One of the oldest that is still frequently cited is <ref type="bibr">[3]</ref>, in which the author proved (among many other things) that the graph coloring problem is NP-equivalent. Another one of the early papers is <ref type="bibr">[5]</ref>, in which the author proposes a greedy algorithm for graph coloring (recursive largest first algorithm) that yields better results than the algorithms for this problem known before (such as the randomly ordered sequential algorithm, the largest first algorithm, the smallest last algorithm, interchange algorithms and the approximately maximum independent set algorithm). This algorithm is still used nowadays, as the paper <ref type="bibr">[43]</ref> shows, which presents an efficient implementa- tion of it. The basic idea of the RLF algorithm is that in each iteration it selects (if possible) a node that is not adjacent to any colored node and that is connected to the largest number of uncolored nodes that are adjacent to some colored node. If that is not possible, the process is repeated recursively on the subgraph induced by the uncolored nodes.</p><p>A more recent classic paper is <ref type="bibr">[10]</ref>, in which Mehrotra and Trick propose an ap- proach to graph coloring that is based on integer linear programming and makes use of a technique called column generation. With this technique it is possible to obtain an exact solution more efficiently since at first only a part of the problem is added to the integer linear program and then, depending on the results of a dual program, it is decided whether the primal program is expanded. This approach can also be used for computing lower bounds by means of a linear relaxation.</p><p>The paper <ref type="bibr" target="#b31">[42]</ref> is based on Mehrotra's and Trick's approach and presents an implementation of it which is supposed to provide "numerically safe results, inde- pendent of the floating-point accuracy of the linear programming software used".</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2.">GRAPH COLORING</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>9</head><p>The technique of column generation is also used in <ref type="bibr" target="#b32">[44]</ref>.</p><p>Hertz et al. <ref type="bibr" target="#b27">[37]</ref> propose a novel heuristic algorithm for graph coloring which they call variable space search. It is a variant of local search which considers "several search spaces, with various neighborhoods and objective functions". Whenever the search does not manage to overcome a local optimum, the algorithm moves from one search space to another. The algorithm actually does not try to compute the chromatic number, but it tries whether a graph can be colored with a given number of colors k. Thus several runs are needed in order to determine a tight upper bound for the chromatic number.</p><p>Lue et al.</p><p>[41] introduce a memetic algorithm for graph coloring, that is a heuristic algorithm that combines an evolutionary algorithm with more traditional types of heuristics. A genetic algorithm is also used by <ref type="bibr" target="#b18">[24]</ref>, in combination with a column generation technique.</p><p>All the algorithms for graph coloring can be used in programs that try to solve the selective graph coloring problem, for the subproblem of determining the chromatic number of a solution. In order to come up with new solutions, a large number of metaheuristics can be used. For this reason, there is an enormous number of different approaches for the selective graph coloring problem that may lead to success. Therefore we can expect that researchers are yet going to publish a lot of papers dealing with the SGCP.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Chapter 3 Methods</head><p>In this chapter I am going to present all the methods for solving the SGCP I have implemented. This also includes a couple of methods which I decided to abandon after the first test runs because they turned out to be too inefficient.</p><p>Basically, I use the variable neighborhood search (VNS) metaheuristic to search the solution space and various exact as well as heuristic methods to evaluate the solutions. Evaluating a solution basically means to obtain either the exact value or an approximation of its chromatic number. For this purpose I have implemented an exact method using integer linear programming as well as several heuristics determining upper and lower bounds.</p><p>There are various approaches to estimate the chromatic number of a graph. One of them is to compute an upper bound by means of a graph coloring algorithm. In order to determine whether a new solution is better than the currently best known solution, it makes sense to additionally compute a couple of other param- eters apart from the upper bound. One option is to compute a lower bound, so that a solution is considered the better one if it has the same upper bound, but a smaller lower bound. Another possibility is to compute the number of conflicts that would occur if the graph was colored using one color less than estimated by the greedy coloring algorithm. If two solutions have the same upper bound, it makes sense to prefer the one with the lower number of conflicts.</p><p>Since I was interested in an efficient exploration of the search space (I aimed for an execution time not exceeding 10 minutes per instance), I chose a greedy coloring algorithm for the upper bound. It has a polynomial run time with regard to the number of nodes since each node is assigned a color only once, and to determine the color of a node only each neighboring node needs to be considered once. For computing the number of conflicts if one color less were used, each node needs to be visited only once after the graph coloring algorithm has been executed, so the conflict determination algorithm has linear run time with respect to the number</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>12</head><p>CHAPTER 3. METHODS of nodes. What is more costly is the computation of a (reasonable) lower bound. One (straight-forward but very inefficient) method for this is to compute the size of the maximal clique in the graph, which has an exponential run time in terms of the number of nodes. Known more efficient approaches utilize linear program- ming with column generation, but they are not polynomial time algorithms, either.</p><p>It is also possible to compute the exact value of the chromatic number by means of integer linear programming, but due to the NP-hardness of this variant it is only feasible for instances with a rather low number of nodes. For other instances it takes far too long.</p><p>All variants of the algorithm can be enhanced by a solution archive, which is an efficient way to check whether a solution has already been discovered and evaluated once. If a duplicate is found, it does not have to be regarded again and a new solution can be easily computed using a converting function. During tests, however, the solution archive has not led to a significant improvement of the quality of solutions.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Metaheuristics</head><p>What are metaheuristics? In his book <ref type="bibr" target="#b28">[38]</ref>, Sean Luke defines them as a "ma- jor subfield" of stochastic optimization, which is "the general class of algorithms and techniques which employ some degree of randomness to find optimal (or as optimal as possible) solutions to hard problems". They are applied to "I know it when I see it" problems. These are problems in which it is not easy to find the optimal (or even a good) solution, but if you have a solution, you can test it and see how good it is.</p><p>Basically metaheuristics are methods of exploring some defined solution space. They do not guarantee that you will find the optimal solution, but they are sup- posed to make you find solutions that come close to the optimum. Usually the solution space contains various local optima. For a good metaheuristic it is impor- tant to be able to overcome local optima since an algorithm that gets stuck with some local optimum will most likely not find the global optimum. According to the No Free Lunch Theorem <ref type="bibr">[11]</ref>, the outputs of the various kinds of metaheuristics in general are statistically identical. This is because good solutions are usually scat- tered all about the search space due to the high degree of Kolmogorov randomness almost all objective functions have <ref type="bibr" target="#b19">[25]</ref>. Therefore, various metaheuristics can be used for the same problem with similar chances of obtaining good results in a reasonable time. And yet, some metaheuristics may be particularly suitable for some special problems.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.">METAHEURISTICS</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>13</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.1">Solution Representation</head><p>A valid solution of the SGCP is a subgraph S = G(W ), W =&lt; v 1 , ..., v n &gt; that consists of n nodes which are all elements of the set of nodes V of the graph G.</p><p>Each of these n nodes must be part of a different cluster within G. Since there are exactly n clusters, this means that the solution subgraph contains exactly one node per cluster. Moreover, the edges that connect these nodes are part of the solution subgraph.</p><p>For this reason, it makes sense to encode the solution as an array of integer values. Bounds and/or the exact value of the chromatic number are stored in separate variables.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.2">Initialization</head><p>After loading the graph from a file or, alternatively, generating a new, random graph, the program has to find an initial solution to start with. Of course it could simply choose a random node from the set of nodes of each cluster. But this approach would probably not often yield to a good solution. To come up with a better initial solution, I devised and implemented the following greedy construc- tion heuristics:</p><p>For the first cluster, select a random node from its set of nodes. Then select the nodes for the other clusters in ascending order. Always compute the degree of each node within the solution subgraph and select one of the nodes that have the lowest degree.</p><p>This ensures that the maximal degree of the nodes in the initial solution is rather small. My hypothesis is that the smaller the degree of the maximal nodes, the more likely will it be possible to achieve a good value for the chromatic number. As I will explain later, the maximal degree of a graph plus one is an upper bound of its chromatic number, although usually not a very tight one.</p><p>Algorithm 1 provides pseudocode that demonstrates how the initialization pro- cedure works. select node with index bestIdx from the set of nodes of cluster i;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.3">Local Search</head><p>Local search is a very simple metaheuristic which the more sophisticated variable neighborhood descent makes use of. Basically, the heuristic scans through all the solutions that are neighbors to a given initial solution. For example, the set of neighbors may be the set of all solutions in which for one single cluster a different node has been chosen than in the initial solution. The aim of local search is to find a solution that is better than the initial solution. Upon finding such a solution, another iteration of local search may be done, with the new solution acting as the initial solution. The algorithm stops when no further improvement is possible.</p><p>In general there are three different strategies for local search. The one I used is called first improvement. As soon as local search finds a solution that is better than the initial solution, it stops. The initial solution is then overwritten by the new (better) solution and a new iteration may be performed. Another strategy is best improvement. An algorithm that is based on this strategy scans the entire neighbor space and stores a pointer to the best solution, i.e. a local optimum. Then this local optimum is used as the initial solution for the next iteration. A third strategy is simply to choose a random neighbor.</p><p>In my program the neighborhoods differ by the number of nodes that are ex- changed. In neighborhood number k, new nodes for k clusters are chosen.</p><p>Algorithm 2 shows in pseudocode how local search with first improvement works.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.">METAHEURISTICS</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>15</head><p>Algorithm 2: Local Search with First Improvement while stopping criterion is not fulfilled do for S ∈ the set of neighbor solutions of initial solution S 0 do if S is better than S 0 then S 0 = S; exit the for loop;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.4">Variable Neighborhood Descent</head><p>In variable neighborhood descent (VND) <ref type="bibr" target="#b15">[21]</ref>, we use more than one neighbor- hood structure. The reason for this is that we can compare various local optima in this way. VND begins with one neighborhood structure and performs a local search. If the local search has been successful, i.e. a better solution than the ini- tial one has been found, another iteration of local search is performed with some neighborhood structure. Otherwise, the neighborhood structure is switched. If the last neighborhood structure has been used and still no improvement has been found, the algorithm exits, since we are stuck in a local optimum.</p><p>In my solution algorithm for the SGCP neighborhood structure k comprises all the neighbors that differ from a reference solution in k nodes.</p><p>Algorithm 3 shows a general implementation of VND in pseudocode.</p><formula xml:id="formula_1">Algorithm 3: Variable Neighborhood Descent (input: solution L, out- put: solution L) i = 0;</formula><p>while i ≤ last neighborhood structure do perform local search on solution L with current neighborhood structure i; if local search was successful then i = 0;</p><formula xml:id="formula_2">else i = i + 1;</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.5">Variable Neighborhood Search</head><p>A further improvement with the aim to overcome local optima is variable neigh- borhood search (VNS) <ref type="bibr" target="#b11">[16]</ref>. This metaheuristic makes use of either a local search or a VND. With one of these techniques, it tries to find a solution better than the initial one. If this attempt has been successful, the VNS resets a variable CHAPTER 3. METHODS representing a counter to zero, otherwise it increases it by one. In either case, the VNS modifies the discovered solution by means of a procedure called "shaking".</p><p>If the counter has reached its maximal value, the algorithm quits, otherwise an- other iteration of local search or VND is performed, and so on.</p><p>Algorithm 4 demonstrates VNS.</p><formula xml:id="formula_3">Algorithm 4: Variable Neighborhood Search (input: solution L, output: solution L) counter = 0;</formula><p>while counter &lt; maximal counter value + 1 do perform shaking of current solution L; perform local search or VND on L; if local search or VND was successful then counter = 0;</p><formula xml:id="formula_4">else counter = counter + 1;</formula><p>For the SGCP, a reasonable shaking procedure would be to change the selected node for a given number of clusters. In my implementation this number depends on the value of the counter variable used by the VNS, to which I add the maximum value of k used in VND according to the current settings. So if the counter vari- able is low, only a relatively small number of nodes will be changed. This makes sense as a higher value of the counter variable means that the search procedure has failed to discover a better solution several times, so we have to get away from that local optimum.</p><p>Algorithm 5 shows a generic implementation of shaking in pseudocode. x = random number between 0 and count − 1; deselect the node in L that is currently selected from the set of nodes of cluster c; select node in L with index x from the set of nodes of cluster c;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.">SOLUTION EVALUATION</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>17</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Solution Evaluation</head><p>The process of solution evaluation comprises the computation of either the exact chromatic number of a given solution or an upper bound for it, plus a lower bound or the number of conflicts that would occur if one color less were used for coloring the graph.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.1">Upper Bound: Maximal Degree</head><p>A very simple and fast method for computing an upper bound for the chromatic number is to compute the maximal degree of the graph. The maximal degree of a graph increased by one is an upper bound for the chromatic number of the graph. This works for any graph. However, this bound is not very tight in the general case. Therefore this upper bound should only serve as a temporary value which is to be refined by a more sophisticated algorithm, such as the greedy coloring algorithm I am going to describe in the next section.</p><p>The validity of this upper bound can be easily seen by remembering that a valid coloring of a graph is a coloring such that any pair of nodes u and v which are connected by an edge (u, v) have two different colors. The degree of a node is its number of neighbors, and the maximal degree of a graph is the degree of the node that has the largest number of neighbors. If all d neighbors of some node u have different colors, then u must be in yet another color. So if d is the number of neighbors of the node with the largest degree, the number of colors we need in order to obtain a valid coloring of the graph is at most d + 1.</p><p>In his paper <ref type="bibr" target="#b0">[1]</ref> R. L. Brooks proved that for a connected, simple graph G, the chromatic number is always at most equal to the maximal degree of G, unless G is a complete graph or an odd cycle. So only if G is a complete graph or an odd cycle, it may be necessary to add one to the maximal degree in order to obtain the chromatic number. A complete graph is a graph in which every node u is connected by an edge to every other node v. An odd cycle is a cycle (i.e. a struc- ture in which there is a path from any node belonging to this structure to itself) that consists of an odd number of nodes. To determine whether G is a complete graph, it suffices to check whether all elements of the adjacency matrix have been set to true; this can be done in polynomial time with respect to the num- ber of nodes. For checking whether G is an odd cycle, depth first search may be employed, which has a time complexity of O(|V |+|E|), so it is polynomial as well.</p><p>However, since the upper bound obtained by computing the maximal degree of the graph will later be refined by means of greedy coloring, it is enough to take the maximal degree plus one. This computation can be done in polynomial time with respect to the number of nodes.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.2">Upper Bound: Greedy Coloring</head><p>A tighter upper bound for the chromatic number can be obtained by a graph coloring algorithm, such as greedy coloring. There are many variants of greedy coloring. All of them have in common that they determine the color of each node only once and always assign the color with the lowest feasible index. Therefore they have polynomial run-time and thus are very efficient. The result of such an algorithm is always a valid upper bound, but the tightness of this upper bound depends on the order in which the nodes have been chosen. Some variants of greedy coloring have been shown to perform very poorly.</p><p>However, initial tests led to the impression that visiting the nodes in the order of breadth first search leads to pretty good results. As the initial node to start with, my algorithm chooses one of the nodes with the largest degree. Then it stores its neighbors in the queue of nodes that yet have to be colored, and after coloring the second node, it adds the neighbors of the second node to the queue, and so on.</p><p>Algorithm 6 provides pseudocode for my variant of greedy coloring. for u ∈ W do if u has not been assigned a color yet then add u to queue Q; stopCondition = f alse; exit the for loop;</p><p>return maxCol + 1;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.3">Minimal Conflicts Heuristic</head><p>After computing an upper bound for the chromatic number by means of greedy coloring, it makes sense to compute the number of conflicts that would arise if one color less were used for coloring the graph. A conflict is an edge (u, v) where nodes u and v have been assigned the same color. To compute the number of conflicts, the program takes a look at all the nodes that have been assigned the color with the largest index. The least number of neighboring nodes that share their color is the number of conflicts this node generates.</p><p>The number of conflicts may be used as an additional criterion whether a so- lution is better than another one with the same chromatic number.</p><p>Algorithm 7 shows a heuristic for the number of conflicts of a solution. return numConf licts;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.4">Lower Bound: Maximal Clique</head><p>If there were an efficient algorithm to compute a tight lower bound for the chro- matic number of a graph, it could be used as an additional evaluation criterion for the solution subgraphs.</p><p>As explained in <ref type="bibr" target="#b31">[42]</ref>, the size of the maximal clique of a graph is a rather tight lower bound for its chromatic number. A clique is a subgraph that, if isolated, would be a complete graph. In other words, for all pairs of nodes u and v that belong to the clique, there exists an edge (u, v). Since every node in a clique is connected to every other node, all the nodes must be assigned pairwise different colors. Therefore, the chromatic number of a graph in which this clique appears cannot be lower than the size of the clique.</p><p>Unfortunately, computing the size of the maximal clique has exponential run- time in terms of the number of nodes. Therefore it does not make sense to use it in practice. But there is another method for computing a lower bound, employing linear programming. I will explain it shortly. First let me introduce linear programming and explain how it can be used to obtain the exact chromatic number.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.5">Exact Method: Integer Linear Programming</head><p>It is possible to obtain the exact value of the chromatic number of a graph by means of integer linear programming. However, this method is not very efficient.</p><p>Linear programming is one of the main methods of operations research. It can be applied for systems of linear inequalities that come along with an optimality criterion, such as the maximization or minimization of some scalar product of two vectors. Linear programming can be solved by means of various algorithms, in- cluding the simplex method, the ellipsoid method and the interior point method.</p><p>There are also techniques for solving some special cases of problems, such as Dantzig-Wolfe decomposition, benders decomposition and linear relaxation.</p><p>To solve linear programs efficiently, various commercial libraries exist, such as ILOG CPLEX, which I used in my implementation.</p><p>Integer linear programming differs from linear programming in that the variables can only take discrete values. It is generally much harder to solve.</p><p>The standard formulation of integer linear programming for graph coloring, which is also the one I implemented, is as follows:</p><p>x v,c be a variable that determines whether color c is assigned to node v. If so, it is 1, otherwise it is 0.</p><p>Minimize the number of colors for which x v,c = 1</p><formula xml:id="formula_5">subject to k x v,c = 1 ∀ nodes v ∈ V c=1 and x u,c + x v,c ≥ 1 ∀ colours c ∈ K ∀ edges (u, v) ∈ E where x v,c = 1 if node v is assigned color c, otherwise 0</formula><p>The objective is to minimize the number i of colors c for which there exists at least one node v with x v,c = 1.</p><p>A linear relaxation of this program -that is, a variant in which x v,c is not limited to 0 or 1 and can take any value in between -can be used to obtain a lower bound. However, there is also a more efficient method for computing tight lower bounds which makes use of an alternative formulation of the linear program and the column generation technique.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.6">Lower Bound: Linear Programming with Column Generation</head><p>This solution was originally proposed by Mehrotra and Trick in <ref type="bibr">[10]</ref> for computing the exact value of the chromatic number, but it can also be employed for finding a tight lower bound. This approach is based on the notion of independent sets. An independent set is a subset of the node set V which has the property that no nodes of this subset are connected. Clearly, two nodes belonging to the same in- dependent set can be safely assigned the same color. So if we start with an empty set of nodes and consecutively add independent sets to it until all nodes of the original graph are in this set, we can compute an upper bound for the chromatic number, and if we manage to find the least possible number of independent sets that need to be added to the empty set so that it becomes identical to the set of nodes V , this number is the exact value of the chromatic number. This approach can be formulated as a linear program as follows:</p><p>The variable x s equals 1 if independent set s is included in the solution.</p><p>Minimize s x s subject to</p><formula xml:id="formula_6">x s ≥ 1 ∀i ∈ V s:i∈S where x s ∈ {0, 1} ∀s ∈ S</formula><p>If we apply linear relaxation on this program, so that x s may take any value between 0 and 1, this formulation can be used to obtain a tight lower bound. However, it is still not efficient because of the large number of variables it gener- ates. The trick to make it more efficient is to only start with a minimal number of independent sets (thus minimizing the number of constraints), then solve the linear program and decide by means of a dual program whether it makes sense to add another variable.</p><p>To determine whether another independent set should be added to the program, the following dual problem has to be solved:</p><formula xml:id="formula_7">Maximize π i z i i∈V subject to z i + z j ≤ 1 ∀(i, j) ∈ E where z i ∈ {0, 1} ∀i ∈ V</formula><p>Here, π i stands for the dual value of constraint number i in the primal prob- lem.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3.">SOLUTION ARCHIVE</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>23</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3">Solution Archive</head><p>Solution archives <ref type="bibr" target="#b33">[45]</ref> are a rather new technique. The idea is to store valid solu- tions that have already been evaluated so that they need not be evaluated again in case the metaheuristic (e.g. an evolutionary algorithm) stumbles across them again. A compact encoding of the solution is achieved via the data structure "trie", which is a tree in which one element of the solution array is stored in each node, so to obtain a complete solution, we have to walk through the tree from the root until the leaf representing the final element of the array. This data structure has the advantage that the look-up time is independent of the number of solutions stored in the trie.</p><p>Each trie node consists of a value, a pointer to one of its children and a pointer to its "right" neighbor. In case of our problem, it makes sense to have each level of the trie represent one cluster and have the value of the trie node be the number of the selected node from the original graph.</p><p>If a solution already appears in the solution archive, it is possible to derive a new solution. The algorithm has to traverse through the trie until it finds a level that is not complete (i.e., not all nodes of the next level are already children), and then it can build a new solution starting from the subsequent level by random node selection.</p><p>To check whether a solution candidate is already in the archive, a hash map is used, as it speeds up retrieval. To compute the hash value, various hash functions can be used. One possibility is to compute h(x) = (x 0 + x 1 b + x 2 b 2 + ... + x n b n ) mod k, where k is the size of the hash table, b is the basis and x i is the number of the node that has been selected for cluster i.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4">Complete Algorithm</head><p>The complete algorithm is a VNS making use of the aforementioned heuristic and exact methods for computing the chromatic number and thus evaluating solution candidates. First an initial solution is computed by means of the initialization method. Then a counter is set to 0, and while this counter is lower than some maximal value (default: 5) and the time limit of 600 seconds has not expired, the VNS calls a VND procedure to search for better solutions. If a better solution is found, the counter is reset to 0, otherwise the counter is incremented by 1. The solution is then either converted to a new solution by means of the solution archive or by means of a shaking procedure. Then the next iteration of the loop happens.</p><p>Inside the VND procedure, a counter variable k is initialized with 1. In each</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>24</head><p>CHAPTER 3. METHODS iteration neihgborhood number k is searched. If a solution is found that is better than the currently best known solution, this solution is taken as the new best solution, and k is reset to 1. Once a neighborhood has been completely searched, k is increased by 1. When k equals maxK, the VND quits.</p><p>Algorithms 8 and 9 give an outline of the complete algorithm. Chapter 4</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Testing Environment</head><p>The implementation was done in C++. As metaheuristic for choosing a candidate solution, the program uses VNS with VND in the inner loop. The maximal value of k in VND has been set to 2 by default, and an additional stopping criterion is the elapsing of 10 minutes since the beginning of the execution of the VNS. The shaking procedure modifies a number of nodes equal to the current value of the counter variable plus the parameter maxK, which indicates the last neighborhood structure that is used; if this number is greater than the number of clusters, then the number of clusters is taken instead.</p><p>For the exact computation of the chromatic number by means of integer lin- ear programming, ILOG CPLEX 12.5 was used. The program can process input files of the format used in the paper <ref type="bibr" target="#b29">[39]</ref>.</p><p>The following algorithm variants have been implemented:</p><p>1. Exact computation of the chromatic number by means of integer linear programming.</p><p>2. Upper bound by means of greedy coloring combined with an estimation of the number of conflicts that would occur if one color less were used and the computation of a lower bound: If two solutions have the same upper bound, the solution with the lower number of conflicts will be chosen. If both the upper bounds and the numbers of conflicts are the same, the solution with the smaller lower bound will be chosen.</p><p>3. Upper bound by means of greedy coloring combined with an estimation of the number of conflicts that would occur if one color less were used.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">Upper bound by means of greedy coloring.</head><p>For each variant there are two sub-variants, one with and one without a solution archive.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>27</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>28</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>CHAPTER 4. TESTING ENVIRONMENT</head><p>The program can be configured by means of a configuration file, in which the following parameters may be specified:</p><p>1. printout: determines what should be printed (all steps, some steps or only the best solution of each run and statistics).</p><p>2. conflicts: a factor with which the number of conflicts is multiplied to decide whether a solution that has the same upper bound but a lower number of conflicts will be preferred. It sometimes makes sense to set this to values below 100 percent because otherwise the search would take too long.</p><p>3. start, step, stop: specify what variants of the algorithm should be used.</p><p>4. runs: the number of runs that should be performed and statistically evalu- ated.</p><p>5. maxk: the maximum value of k for the VND.</p><p>6. maxlb: the maximum size of a buffer array used to compute the lower bounds.</p><p>7. timelimit: the time limit.</p><p>8. maxfail: the maximum number of consecutive fails of VND runs (i.e. VND runs that did not lead to an improvement).</p><p>Chapter 5</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Computational Results</head><p>The tests were performed on the grid of the Algorithms and Data Structures group at the Vienna UT. The program was compiled using GNU C/C++ 4.6 and ILOG CPLEX 12.5.</p><p>To test the diverse variants of the solution algorithm, the PCP instances pro- vided by the authors of the paper <ref type="bibr" target="#b29">[39]</ref> were used. These instances can be freely downloaded from the Internet <ref type="bibr" target="#b30">[40]</ref>. In particular instances from the subdirectory "Table2 Random Instances" have been evaluated. The name of each instance is composed of the number of nodes, the edge density, the number of nodes per cluster and the number of the instance.</p><p>It turned out that the VNS variants employing integer linear programming to obtain the exact chromatic number only terminated within a reasonable time for the smallest instances (twenty nodes), while a single run already needed more than two hours when applied on the second smallest set of instances (forty nodes). Therefore these variants were abandoned and only the six other variants (upper bound plus conflicts plus lower bound by column generation, upper bound plus conflicts, upper bound without conflicts, each with and without solution archive) were thoroughly tested.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.1">Preliminary Results</head><p>Each of these variants was tested on several instances of graphs with 20, 40, 60, 80, 100 and 120 nodes provided by Frota, and on 45 instances of graphs with 90 nodes with varying densities. Each variant was run thirty times (except the slow variants with LB, which were only run three times) and then the results were statistically evaluated by the program (mean and standard deviation). The pa- rameter maxK of the VNS (determining the number of neighborhood structures to be explored) was set to 2.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>30</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>CHAPTER 5. COMPUTATIONAL RESULTS</head><p>Moreover, a couple of tests were performed using instances from the paper by Noronha and Ribeiro (dsjc500*) <ref type="bibr" target="#b26">[34]</ref>. All of these instances use 500 clusters. The first instance has only one node per cluster, the second two and so on. For these tests maxK = 1 was used since searching a 2-opt neighborhood would take long time and due to the time limit of ten minutes the neighborhood would only be partially explored.</p><p>Tables 5.1 -5.16 contain the preliminary results. Legend: t = time (seconds), Result = average value and standard deviation, UB = upper bound, C = con- flicts, LB = lower bound computed by means of column generation, SA = solution archive, UB same = number of incidents when a new solution has the same upper bound as the currently best solution, UB+C same = same as "UB same" and the number of conflicts is also the same.</p><p>We can see that the variants of the algorithm differ regarding the quality of the result they produce. Adding the minimal conflict heuristic often improves the quality, but not always: in some cases, the algorithm variant that just eval- uates the upper bounds yields better results. The solution archive hardly has an effect on the results. A solution archive serves two purposes: it enables the al- gorithm to find duplicates, and it has a solution conversion function to generate new solutions. Neither of these two functions apparently had a significant effect.</p><p>Regarding the conversion function, it is not better than the shaking procedure that is used in the variants without a solution archive.</p><p>The main conclusion is that UB+C usually brings the best results and is more efficient than UB+C+LB. The latter variant takes much processing time and for this reason the time limit usually expires before the search is over. That is why often the best result UB+C finds is neglected by UB+C+LB. On the other hand, UB+C finds better solutions than UB most of the time as UB discards solutions with the same upper bound but a lower number of conflicts. These solutions are however considered by UB+C and in the end this strategy yields better results.</p><p>For the Frota instances in tables 5.1 -5.15, evaluating the lower bound sometimes leads to a slight, but insignificant improvement. This leads to the conclusion that it is more efficient not to evaluate the lower bound. After all, it makes use of linear programming, which is time-consuming.</p><p>The Noronha instance dsjc500.5-1 in table 5.16 contains only one node per clus- ter. For this reason all the variants yield the same result, since effectively nothing else than a run of the greedy coloring heuristic is performed. Thus this instance serves as a benchmark to evaluate the effectiveness of the coloring algorithm.</p><p>Apparently the solution archive does not make any difference in table 5.16; I counted the number of duplicates and noticed that no duplicate is ever found.</p><p>Perhaps some duplicates would be found if the time limit had been larger and if maxK had been set to a larger value. For these instances, evaluating the lower bound leads to worse results. This is most probably due to the long run time of the lower bound computation, which has the effect that fewer solutions are explored within the time limit.             </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Instance</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2">Discussion and Final Results</head><p>Since the results of Frota's and Noronha's algorithms are better than the results of my algorithm most of the time, I made investigations for what might be the reason. The first guess was that perhaps the greedy coloring is not optimal. Alas, for test instances with 20, 40 and 60 nodes the upper bound the greedy coloring computed matched the exact chromatic number of the solution which the algo- rithm considered the best one (see <ref type="table" target="#tab_0">table 5</ref>.17). For instances with more nodes it was not possible to make this comparison since the exact computation took too long. But if we take a look at dsjc500.5-1, we see that Noronha's algorithm performed better than my variant of greedy coloring. This leads to the conclusion that greedy coloring is probably good for instances with a low number of nodes, but the more nodes are used, the worse it performs. This opens a possibility for further research, trying the same VNS with a different heuristic. It is also possible that even with instances with a rather small number of nodes, greedy coloring leads to a suboptimal result since it may select a solution although another solu- tion having the same upper bound would have a lower exact chromatic number.</p><p>What was also tried was a modification of the parameters: instead of five con- secutive failing VND runs (not leading to an improvement), twenty were allowed (table 5.18). The time limit was accordingly increased to 1800 seconds, but it was only reached in Noronha's instances. However, the results are not all too different. This has brought me to the conclusion that a further increase of the number of consecutive failing VND runs will probably not lead to any (significant) improvement; five consecutive failing VND runs seem to suffice.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Instance</head><p>Exact UB+C n20p5t2s1 3 3 n40p5t2s1 5 5 n60p5t2s1 6 6   </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Chapter 6 Conclusions</head><p>Within this work I developed and implemented diverse variants of an algorithm that solves the selective graph coloring problem. The thesis first defines the prob- lem, introduces a practical application and discusses the complexity of the chosen approach. After a literature survey on both the SGCP and graph coloring in gen- eral, the algorithmic approach is discussed in detail. This discussion starts with an introduction to metaheuristics, especially the ones used in this algorithm (vari- able neighborhood descent and variable neighborhood search). Then the solution representation is described, followed by different ways of evaluating the solution. Both heuristic approaches (upper bound, number of conflicts, lower bound) and an exact method (integer linear programming) are presented. Moreover, the cho- sen approach for a solution archive is discussed. After an outline of the complete algorithm, the testing environment is described, and then the results of the tests performed on the chosen instances are listed.</p><p>The results have in general been not as good as expected: The performance of the algorithm is not quite comparable to the solutions of other researchers. This may be due to the greedy coloring heuristic used, so further research should focus on trying other heuristics. At least the implementation has shown that computing a lower bound of the chromatic number in addition to the upper bound (where the upper bound is the primary evaluation criterion, in case of identical upper bounds the number of conflicts is considered, and if these are still the same the solution with the smaller lower bound is preferred) is time-consuming and does not lead to a significant improvement, if at all. Solution archives have not proven effective either. So the method using upper bound and number of conflicts as evaluation criteria seems to be the best strategy.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 1 .</head><label>1</label><figDesc>Figure 1.1 shows a graph with several clusters and a possible solution subgraph, thus demonstrating what the SGCP is all about.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Figure 1 .</head><label>1</label><figDesc>Figure 1.1: a) A graph with several clusters, b) A possible solution subgraph</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head></head><label></label><figDesc>Initialization select random node of cluster C 0 ; for i = 1, . . . , number of clusters -1 do bestIdx = 0; bestCnt = 0; for x ∈ nodes of cluster i do if degree of node x &lt; bestCnt then bestIdx = x; bestCnt = degree of node x;</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Algorithm 5 :</head><label>5</label><figDesc>Shaking (input: solution L, output: solution L) for i = 1, . . . , number of nodes to be changed do c = random number between 0 and the number of clusters -1; count = 0; for x ∈ nodes of cluster c do count = count + 1;</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Algorithm 6 :</head><label>6</label><figDesc>Greedy Coloring (input: S = G(W ), output: chromatic number upper bound queue Q = empty; u = node in W with maximal degree; assign color 0 to node u; maxCol = 0; for v ∈ all nodes of the graph except u do if there is an edge (u, v) then add v to queue Q; stopCondition = f alse; while stopCondition == f alse do while Q is not empty do u = next node from Q; set all elements of array colorF easible to true; for v ∈ W {u} do if there is an edge (u, v) then if a color c has been assigned to node v then colorF easible c = f alse; else if v is not in queue Q then add v to queue Q; c = lowest number for which colorF easible c == true; assign color c to node u; if c &gt; maxCol then maxCol = c; stopCondition = true;</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Algorithm 7 :</head><label>7</label><figDesc>Number of Conflicts (input: colorization of S, output: number of conflicts numConf licts = 0; for u ∈ W do if u has the least often used color then minOcc = ∞; for c ∈ all possible colors do count = 0; for v ∈ all neighbors of u do count = count + 1; if count &lt; minOcc then minOcc = count; numConf licts = numConf licts + minOcc;</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head></head><label></label><figDesc>while Counter &lt; 5 and Expired time &lt; 600 do T empSol = V N D(ShakedBestSol); if T empSol.IsBetter(ShakedBestSol) then Counter = 0; BestSol = T empSol; else Counter = Counter + 1; if solution archive is used then ShakedBestSol = SolutionArchive.Convert(ShakedBestSol); else ShakedBestSol = Shake(ShakedBestSol); return BestSol; 3.4. COMPLETE ALGORITHM 25 Algorithm 9: Procedure VND k = 0; while k ≤ maxK do T empSol = N extSol(ShakedBestSol, k); if solution archive is used then while Hashmap.F ind(T empSol) do T empSol = N extSol(T empSol, k); if neighborhood completely explored then k = k + 1; if T empSol.IsBetter(ShakedBestSol) and not SolutionArchive.F ind(T empSol) then ShakedBestSol = T empSol; k = 0; if solution archive is used then SolutionArchive.Add(ShakedBestSol); Hashmap.Add(ShakedBestSol); return ShakedBestSol;</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_13"><head>:</head><label></label><figDesc>Preliminary Results: Modified parameters (up to 20 failing VND runs allowed, time limit 1800 seconds) Instance(s) Min. Max. My best result (avg ± sd) t (s) of my result</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0" validated="false"><head>Table 5 .1: Preliminary Results: Instances with 20 nodes</head><label>5</label><figDesc></figDesc><table></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1" validated="false"><head>Table 5 .</head><label>5</label><figDesc></figDesc><table>2: Preliminary Results: Instances with 40 nodes 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2" validated="false"><head>Table 5 .</head><label>5</label><figDesc></figDesc><table>4: Preliminary Results: Instances with 80 nodes 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3" validated="false"><head>Table 5 .</head><label>5</label><figDesc></figDesc><table>12: Preliminary Results: Instances with 90 nodes, density 0.6 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_4" validated="false"><head>Table 5 .</head><label>5</label><figDesc></figDesc><table>13: Preliminary Results: Instances with 90 nodes, density 0.7 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_5" validated="false"><head>Table 5 .</head><label>5</label><figDesc></figDesc><table>14: Preliminary Results: Instances with 90 nodes, density 0.8 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_6" validated="false"><head>Table</head><label></label><figDesc></figDesc><table></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_7" validated="false"><head>Table 5 .</head><label>5</label><figDesc></figDesc><table>16: Preliminary Results: Instances from Noronha's paper 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_8" validated="false"><head>Table 5 .17: Comparison of exact results and upper bounds</head><label>5</label><figDesc></figDesc><table></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_9" validated="false"><head>Table 5 .</head><label>5</label><figDesc></figDesc><table>19: Final Results including data from Frota's and Noronha's papers; 
+for Frota's instances, these are aggregated results 
+
+</table></figure>
+		</body>
+		<back>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">On colouring the nodes of a network</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Brooks</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">W</forename><surname>Tutte</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Proceedings of the Cambridge Philosophical Society</title>
+		<imprint>
+			<date type="published" when="1941" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<monogr>
+				<title level="m">J. Brown: Chromatic scheduling and the chromatic number problem. Management Science, volume 19, issue 4, pages 456-463</title>
+		<imprint>
+			<date type="published" when="1972" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<monogr>
+				<title level="m">R. Karp: Reducibility Among Combinatorial Problems. Complexity of Computer Computations, pages 85-103</title>
+		<imprint>
+			<date type="published" when="1972" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<monogr>
+		<title level="m" type="main">Illinois Journal of Mathematics, volume 21</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">K</forename><surname>Appel</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">W</forename></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1977" />
+			<biblScope unit="page" from="429" to="567" />
+		</imprint>
+	</monogr>
+	<note>Haken: Every Planar Map is Four Colorable</note>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<monogr>
+				<title level="m">F. Leighton: A Graph Coloring Algorithm for Large Scheduling Problems. Journal of Research of the National Bureau of Standards, volume 84, issue 6, pages 489-506</title>
+		<imprint>
+			<date type="published" when="1979" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+			</analytic>
+	<monogr>
+		<title level="m">J. Peemöller: A correction to Brelaz&apos;s modification of Brown&apos;s coloring algorithm</title>
+		<imprint>
+			<date type="published" when="1983" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Jackowski: A generalized implicit enumeration algorithm for graph coloring</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Kubale</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Communications of the ACM</title>
+		<imprint>
+			<date type="published" when="1985" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<monogr>
+		<title level="m" type="main">de Werra: Using Tabu Search Techniques for Graph Coloring. Computing, volume 39</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Hertz</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1987" />
+			<biblScope unit="page" from="345" to="351" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<monogr>
+				<title level="m">C. Morgenstern: Distributed Coloration Neighborhood Search. DIMACS Series in Discrete Mathematics and Theoretical Computer Science, volume 26, pages 335-357</title>
+		<imprint>
+			<date type="published" when="1996" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Sivarajan: Routing and wavelength assignment in alloptical networks</title>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE/ACM Trans. Networking</title>
+		<imprint>
+			<date type="published" when="1995" />
+			<publisher>R. Ramaswami and K</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Ferland: Genetic and hybrid algorithms for graph coloring</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Fleurent</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Annals of Operations Research</title>
+		<imprint>
+			<date type="published" when="1996" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<monogr>
+		<title level="m" type="main">Hansen: Variable neighborhood search</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">N</forename><surname>Mladenovic</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1097" />
+		</imprint>
+	</monogr>
+	<note>Computers and Operations Research</note>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<monogr>
+				<title level="m">E. Harder: Routing and wavelength assignment in all-optical WDM wavelength-routed networks, PhD thesis</title>
+		<imprint>
+			<date type="published" when="1998" />
+		</imprint>
+		<respStmt>
+			<orgName>George Washington University</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<monogr>
+				<title level="m">R. Ramaswami and K. Sivarajan: Optical communication networks, Morgan-Kaufmann</title>
+		<imprint>
+			<date type="published" when="1998" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<monogr>
+		<title level="m" type="main">Hao: Hybrid Evolutionary Algorithms for Graph Coloring. Journal of Combinatoral Optimization</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Galinier</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1999" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<monogr>
+		<title level="m" type="main">Improvements and comparison of heuristics for solving the multisource Weber problem</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Brimberg</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2000" />
+			<biblScope unit="page" from="444" to="460" />
+		</imprint>
+	</monogr>
+	<note>Operational Research, issue 48</note>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Simha: The Partition Coloring Problem and its Application to Wavelength Routing and Assignment</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the First Workshop on Optical Networks</title>
+		<meeting>the First Workshop on Optical Networks</meeting>
+		<imprint>
+			<date type="published" when="2000" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">A functional classification of routing and wavelength assignment schemes in DWDM networks: Static case</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Choi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 7th International Conference on Optical Communication and Networks, pages 1109-1115</title>
+		<meeting>the 7th International Conference on Optical Communication and Networks, pages 1109-1115</meeting>
+		<imprint>
+			<publisher>Paris</publisher>
+			<date type="published" when="2000" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<monogr>
+		<title level="m" type="main">Constructive Genetic Algorithm and Column Generation: an Application to Graph Coloring, paper published on the Internet</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Filho</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2000" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<monogr>
+				<title level="m">T. English: Optimization Is Easy and Learning Is Hard in the Typical Function. Proceedings of the 2000 Congress on Evolutionary Computation: CEC00, pages 924-931</title>
+		<imprint>
+			<date type="published" when="2000" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Hertz: Finding the chromatic number by means of critical graphs</title>
+	</analytic>
+	<monogr>
+		<title level="m">F. Herrmann and A</title>
+		<imprint>
+			<date type="published" when="2002" />
+		</imprint>
+	</monogr>
+	<note>ACM Journal of Experimental Algorithmics</note>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Zufferey: A Variable Neighborhood Search for Graph Coloring</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Avanthay</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Hertz</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">N</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">European Journal of Operational Research, volume 151, pages 379-388</title>
+		<imprint>
+			<date type="published" when="2003" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Frota: Cliques, holes and the vertex coloring polytope</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Correa</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Campelo</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Y</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Information Processing Letters, volume 89, pages 159-164</title>
+		<imprint>
+			<date type="published" when="2004" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Correa: On the asymmetric representatives formulation for the vertex coloring problem</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Campelo</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">V</forename><surname>Campos</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2th Brazilian Symposium on Graphs, Algorithms and Combinatorics, volume 19 of Electronic Notes in Discrete Mathematics, pages 337-343</title>
+		<meeting>the 2th Brazilian Symposium on Graphs, Algorithms and Combinatorics, volume 19 of Electronic Notes in Discrete Mathematics, pages 337-343<address><addrLine>Angra dos Reis</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2005" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Galinier and A. Hertz: Efficient algorithms for finding critical subgraphs</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Desrosiers</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">volume 156, issue 2, pages 244-266</title>
+		<imprint>
+			<date type="published" when="2005" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Zufferey: An Adaptive Memory Algorithm for the Graph Coloring Problem</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Hertz</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Galinier</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">N</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">volume 156, issue 2, pages 267-279</title>
+		<imprint>
+			<date type="published" when="2005" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Ribeiro: Routing and wavelength assignment by partition colouring</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><surname>Noronha</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">European Journal of Operational Research</title>
+		<imprint>
+			<date type="published" when="2006" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Variable space search for graph coloring</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Hertz</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Discrete Applied Mathematics</title>
+		<imprint>
+			<date type="published" when="1560" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<monogr>
+				<ptr target="availableathttp://cs.gmu.edu/∼sean/book/metaheuristics/" />
+		<title level="m">S. Luke: Essentials of Metaheuristics. Lulu</title>
+		<imprint>
+			<date type="published" when="2009" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<monogr>
+		<title level="m" type="main">A branch-and-cut algorithm for partition coloring</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Y</forename><surname>Frota</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2010" />
+			<biblScope unit="page" from="194" to="204" />
+		</imprint>
+	</monogr>
+	<note>Networks, volume 55</note>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<monogr>
+		<title level="m" type="main">Instances for the partition Coloring Problem</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Y</forename><surname>Frota</surname></persName>
+		</author>
+		<ptr target="www.ic.uff.br/∼celso/grupo/pcp.htm" />
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<monogr>
+		<title level="m" type="main">Safe Lower Bounds For Graph Coloring</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Held</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2011" />
+			<biblScope unit="page" from="261" to="273" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Malucelli: Exact Solution of Graph Coloring Problems via Constraint Programming and Column Generation</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Gualandi</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">INFORMS Journal on Computing</title>
+		<imprint>
+			<date type="published" when="2012" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">Raidl: An evolutionary algorithm with solution archive for the generalized minimum spanning tree problem</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 13th International Conference on Computer Aided Systems Theory: Part I, volume 6927 of LNCS, pages 287-294</title>
+		<meeting>the 13th International Conference on Computer Aided Systems Theory: Part I, volume 6927 of LNCS, pages 287-294</meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2012" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<monogr>
+				<title level="m">Variable Neighborhood Descent (input: solution L</title>
+		<imprint/>
+		<respStmt>
+			<orgName>output: solution L). .. .. .. .. .. .. .. .. .. .. .. .. .. .. . .</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<monogr>
+				<title level="m">Variable Neighborhood Search (input: solution L, output: solution L) 16</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<monogr>
+		<title level="m" type="main">19 7 Number of Conflicts (input: colorization of S</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Shaking (input: Solution L ; Input: S = G(w )</surname></persName>
+		</author>
+		<imprint/>
+		<respStmt>
+			<orgName>output: solution L). .. .. . . ; output: chromatic number upper bound. .. .. .. .. .. .. .. .. .. .. .. . . ; output: number of conflicts. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. . 20 8 Complete algorithm. .. .. .. .. .. .. .. .. .. .. .</orgName>
+		</respStmt>
+	</monogr>
+	<note>16 6 Greedy Coloring</note>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">25 List of Tables 5.1 Preliminary Results: Instances with 20 nodes</title>
+	</analytic>
+	<monogr>
+		<title level="m">47 5.18 Preliminary Results: Modified parameters (up to 20 failing VND runs allowed</title>
+		<imprint>
+			<date type="published" when="0365" />
+		</imprint>
+		<respStmt>
+			<orgName>Procedure VND. .. .. .. .. .. .. .. .. .. .. .. . ; Instances with 40 nodes. .. .. .. .. .. . 32 5.3 Preliminary Instances with 60 nodes. .. .. .. .. .. . . ; Instances with 80 nodes. .. .. .. . ; Instances with 120 nodes. .. .. . . ; Instances from Noronha&apos;s paper. .. .. .. 46 5.17 Comparison of exact results and upper bounds. .. .. . . ; time limit 1800 seconds). .. .. .. .. .. .</orgName>
+		</respStmt>
+	</monogr>
+	<note>35 5.6 Preliminary Results. 43 5.14 Preliminary Results: Instances with 90 nodes, density 0.8. .. .. 44 5.15 Preliminary Results: Instances with 90 nodes, density 0.9. .. .. 45 5.16 Preliminary Results</note>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<monogr>
+				<title level="m">Final Results including data from Frota&apos;s and Noronha&apos;s papers</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<monogr>
+				<title level="m">for Frota&apos;s instances</title>
+		<imprint/>
+		<respStmt>
+			<orgName>these are aggregated results. .. .. .. .. . 48</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

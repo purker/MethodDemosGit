@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Variable Neighborhood Search for Capacitated Connected Facility Location</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Markus</forename><surname>Leitner</surname></persName>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Günther</forename><forename type="middle">R</forename><surname>Raidl</surname></persName>
+						</author>
+						<author>
+							<affiliation key="aff0">
+								<orgName type="department">Institute of Computer Graphics and Algorithms</orgName>
+								<orgName type="institution">Vienna University of Technology</orgName>
+								<address>
+									<settlement>Vienna</settlement>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff1">
+								<orgName type="department">Introduction</orgName>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Variable Neighborhood Search for Capacitated Connected Facility Location</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<abstract/>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">Greedy Solution Construction</head><p>Given a partial -possibly empty -solution S, a score δ i = (−fi+</p><formula xml:id="formula_0">k∈C ′ i p k −a i,k ) ˆ ci</formula><p>is computed for each facility i ∈ F \ F S . By C ′ i ⊆ C \ C S we denote the optimal set of customers still assignable to i, i.e. the set of customers maximizing the resulting profit which are not yet assigned to another facility in S. C ′ i is computedconnecting i to the partially constructed Steiner tree by means of an additional least-cost path. In each step, we add the facility with maximal score, connect it to the partially constructed Steiner tree, and assign the customers C ′ i to it, as long as at least one facility i with δ i &gt; 1 exists.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">General Variable Neighborhood Search</head><p>In a variable neighborhood descent (VND) <ref type="bibr">[4]</ref> we apply the following neighbor- hood structures to improve different aspects of a solution: Key-path improve- ment <ref type="bibr">[5,</ref><ref type="bibr">1]</ref> to reduce the costs of the Steiner tree and customer swap <ref type="bibr">[6,</ref><ref type="bibr">1]</ref> as well as single customer cyclic exchange <ref type="bibr">[1]</ref> to optimize realized assignments. For improving the set of opened facilities, we consider a single facility swap neigh- borhood which adds or removes exactly one facility. A new opened facility is connected by an additional least-cost path while redundant edges are removed after closing a facility in case it has been a leaf of the Steiner tree.</p><p>In order to escape from local optima, we embed the VND in a variable neigh- borhood search (VNS) performing shaking by swapping l = 2, . . . , l max randomly chosen potential facility locations.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">Greedy Randomized Adaptive Search Procedure</head><p>For comparison purposes we further embed above described VND into a greedy randomized adaptive search procedure (GRASP) <ref type="bibr">[7]</ref> based on a randomized ver- sion of aforementioned constructive heuristic. Let δ min = argmin δi {i ∈ F \ F S | δ i &gt; 1} and δ max be the minimal and maximal scores among all relevant facil- ities, respectively. Instead of always adding the facility with maximal score, at each step we randomly choose one among the facilities i ∈ F \ F S for which δ max − β(δ max − δ min ) ≤ δ i ≤ δ max holds.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">Preliminary Results</head><p>We performed computational experiments using the the instances from <ref type="bibr">[1,</ref><ref type="bibr">2]</ref>. VNS is terminated after ten consecutive non-improving iterations of the out- ermost largest shaking move of size l max = min{|F |, 10}. For GRASP we set α = 0.2 and generated 100 initial solutions and each experiment has been re- peated 30 times on a single core of an Intel Core 2 Quad with 2.83GHz and 8GB RAM. For the VND, we apply the neighborhood structures in the same order as introduced above, but switch back to the first -i.e. the key-path -neighborhood after changing the set of opened facilities only. The single customer cyclic ex- change neighborhood is searched using a next improvement strategy, while best improvement is applied for all other neighborhood structures. compared to the branch-and-cut-and-price approach (dBCP) from <ref type="bibr">[2]</ref> which per- formed best among the previously presented methods. An absolute CPU-time limit of 7200 seconds has been applied to dBCP. We conclude, that both GRASP and VNS are able to compute solutions which are only slightly worse that those of dBCP, while usually needing much less CPU-time. For some instances with |F | = 200 and |C| = 75, which are particularly hard for dBCP, the obtained solutions are even significantly better than the ones obtained by dBCP within two hours. VNS seems to have small advantages over GRASP with respect to solution quality, while GRASP is usually slightly faster using the current set- tings. We are currently analyzing the usage of additional large neighborhood structures based on the mixed integer programming models from <ref type="bibr">[2]</ref> and plan to include a more detailed computational study with additional results on further, larger instances in the full paper.  </p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>References 1 .</head><label>1</label><figDesc>Leitner, M., Raidl, G.R.: Combining Lagrangian decomposition with very large scale neighborhoood search for capacitated connected facility location. In: Post- Conference Book of the Eight Metaheuristics International Conference -MIC 2009. (to appear) 2. Leitner, M., Raidl, G.R.: Branch-and-cut-and-price for capacitated connected facil- ity location. Technical Report TR 186-1-10-01, Vienna University of Technology, Vienna, Austria (2010) 3. Martello, S., Pisinger, D., Toth, P.: Dynamic programming and strong bounds for the 0-1 knapsack problem. Management Science 45(3) (1999) 414-424 4. Hansen, P., Mladenovi´cMladenovi´c, N.: Variable neighborhood search: Principles and applica- tions. European Journal of Operational Research 130(3) (2001) 449-467 5. Voß, S.: Steiner's problem in graphs: heuristic methods. Discrete Applied Mathe- matics 40 (1992) 45-72 6. Contreras, I.A., Diaz, J.A.: Scatter search for the single source capacitated facility location problem. Annals of Operations Research 157(1) (2008) 73-89 7. Feo, T., Resende, M.: Greedy randomized adaptive search procedures. Journal of Global Optimization 6(2) (1995) 109-133</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0" validated="false"><head>Table 1 summarizes relative average objective values in percent, correspondVariable Neighborhood Search for Capacitated Connected Facility Location 3</head><label>1</label><figDesc></figDesc><table></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1" validated="false"><head>Table 1 .</head><label>1</label><figDesc></figDesc><table>Relative average solution values in %, corresponding standard deviations, 
+and median CPU times. Instances have been grouped according to |F | and |C|. Each 
+experiment has been repeated 30 times for GRASP and VNS. 
+
+average objective values 
+median CPU times 
+|F | |C| # 
+
+GRASP −dBCP 
+dBCP 
+
+in % 
+
+V NS−dBCP 
+dBCP 
+
+in % 
+
+GRASP 
+dBCP 
+
+V NS 
+dBCP 
+
+75 75 12 5.02 
+(2.08) 3.90 
+(1.45) 
+0.09 
+0.17 
+100 100 12 4.09 
+(1.30) 3.45 
+(1.16) 
+0.23 
+0.27 
+200 200 12 4.07 
+(2.03) 3.25 
+(1.14) 
+1.79 
+1.81 
+75 200 12 1.86 
+(0.32) 0.95 
+(0.28) 
+0.58 
+0.59 
+200 75 12 -6.23 
+(23.59) -5.62 
+(23.71) 
+0.01 
+0.01 
+
+</table></figure>
+		</body>
+		<back>
+			<div type="references">
+
+				<listBibl/>
+			</div>
+		</back>
+	</text>
+</TEI>

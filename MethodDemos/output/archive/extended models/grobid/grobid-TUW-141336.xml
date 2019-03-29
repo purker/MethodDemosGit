@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main"></title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<affiliation key="aff0">
+								<address>
+									<addrLine>Cocco, Dubois</addrLine>
+								</address>
+							</affiliation>
+						</author>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>Journal of Artificial Intelligence Research 29 (2007) 1-18 Submitted 07/06; published 05/07 Phase Transition for Random Quantified XOR-Formulas Nadia Creignou creignou@lifuniv-mrsfr LIF</term>
+					<term>UMR CNRS 6166 Université de la Méditerranée 163</term>
+					<term>avenue de Luminy 13 288 Marseille</term>
+					<term>France Hervé Daudé daude@gyptisuniv-mrsfr LATP</term>
+					<term>UMR CNRS 6632 Université de Provence 39</term>
+					<term>rue Joliot-Curie 13 453 Marseille</term>
+					<term>France Uwe Egly uwe@krtuwienacat Institut für Informationssysteme 184/3 Technische Universität Wien Favoritenstraße 9-11 A-1040 Wien</term>
+					<term>Austria</term>
+				</keywords>
+			</textClass>
+			<abstract>
+				<p>The QXOR-SAT problem is the quantified version of the satisfiability problem XOR-SAT in which the connective exclusive-or is used instead of the usual or. We study the phase transition associated with random QXOR-SAT instances. We give a description of this phase transition in the case of one alternation of quantifiers, thus performing an advanced practical and theoretical study on the phase transition of a quantified problem. 1. Introduction The last decade has seen a growth of interest in the phase transition for Boolean satisfiability (SAT). The clausal version of this problem shows a sharp transition in the sense that, as the density of clauses is increased, formulas abruptly change from being satisfiable to being unsatisfiable at a critical threshold point. Numerous experimental studies have been performed in the investigation of phase transition for different variants of SAT problems, thus giving strong evidence that the location of the transition coincides with such instances that are hard to solve. In the meantime, theoretical studies have been conducted in order to better understand such transitions. Determining the nature of the phase transition (sharp or coarse) 1 , locating it, determining a precise scaling window and better understanding the structure of the space of solutions turn out to be very challenging tasks, which have aroused a lot of interest in different communities, namely mathematics, computer science and statistical physics (see e.g., Dubois, Monasson, Selman, &amp; Zecchina, 2001). From a computer science point of view, the success of the SAT problem is due to two features. The problem SAT provides a framework in which problems within the complexity class NP can 1. Definitions of sharp and coarse phase transitions can be found on p. 21 in (Janson, Luczak, &amp; Rucinski, 2000). Creignou, Daudé, &amp; Egly be adequately expressed, and moreover practically efficient and highly optimized solvers are available. In order to obtain even stronger systems, many researchers have turned to a powerful generalization of Boolean satisfiability, QSAT, where both universal and existential quan-tifiers over Boolean variables are permitted. The QSAT problem permits the adequate representation and modeling of problems having higher complexity-within the complexity class PSPACE-and coming from various fields of computer science such as knowledge representation , verification and logic. Recently, random instances of these quantified problems have started to attract some attention (see Gent &amp; Walsh, 1999; Chen &amp; Interian, 2005). Models for generating random instances have been developed, and experimental studies have shown that in these models the QSAT property undergoes a phase transition that is qualitatively similar to the one that appears for the ordinary SAT property. As stated by Chen and Interian (2005), the hope is that research on developing competitive solvers for quantified Boolean formulas could benefit from a better understanding of the typical behavior of random instances. Our study follows the pioneering work from Chen and Interian (2005) who have made precise a promising model for generating random instances of the QSAT problem. We use their model and apply it to the satisfiability problem QXOR-SAT that we present below. The difficulty of identifying transition factors and of performing theoretical explorations of the SAT transition has incited many researchers to turn to a variant of the SAT problem: the e-XOR-SAT problem. This satisfiability problem deals with Boolean formulas in con-junctive normal form with e variables per clause, in which the &quot;usual or&quot; is replaced by the &quot;exclusive or&quot; (we call clauses with &quot;exclusive or&quot; as the only connective XOR-clauses). This problem has contributed to develop or validate techniques, thus revealing typical behaviors of both random instances and their space of solutions for SAT-type problems (see, e.g., in order to understand how phase transitions evolve for satisfiability when introducing quantified variables, it is quite natural to consider this problem.</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">Notation</head><p>An e-XOR-clause, C, is a linear equation over the finite field GF (2) using exactly e distinct variables, C = ((x 1 ⊕ . . . ⊕ x e ) = ε) where ε = 0 or 1.</p><p>An e-XOR-formula, ϕ, is a conjunction of not necessarily distinct e-XOR-clauses. A truth assignment I is a mapping that assigns 0 or 1 to each variable in its domain, it satisfies e an XOR-clause C = ((x 1 ⊕ . . . ⊕ x e ) = ε) if and only if I(C) := I(x i ) mod 2 = ε and it</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>i=1</head><p>satisfies a formula ϕ if and only if it satisfies every clause in ϕ.</p><p>We will denote by e-XOR-SAT the property for an e-XOR-formula of being satisfiable. An (a,e)-QXOR-formula is a closed quantified formula of the following type ∀X∃Y ϕ(X, Y ),</p><p>where X and Y denote distinct set of variables, ϕ(X, Y ) is an (a + e)-XOR-formula such that each clause contains exactly a variables from X and exactly e variables from Y . Such a formula is true if, for every assignment to the variables X, there exists an assignment to the variables Y , such that ϕ is true. Observe that, for closed formulas, the notions of truth and satisfiability coincide. For this reason, we will use the two notions synonymously in the following. We denote by (a,e)-QXOR-SAT the property for an (a,e)-QXOR-formula of being true. Throughout the paper, we reserve m for the number of universal variables (resp. n for the number of existential variables), and {x 1 , . . . , x m } (resp. {y 1 , . . . , y n }) denotes the set of such variables. (a,e)-XOR-clauses. We consider random formulas ∀X∃Y ϕ(X, Y ) obtained by choosing uni- formly independently and with replacement L clauses from all the possible N (a,e)-XOR- clauses. Using the terminology of Chen and Interian above and below by two monotone properties, namely the e-XOR-SAT property and the Maximal rank property. Experiments will suggest that the right parameter in order to study these properties is c, the ratio of the number of clauses over the number of existential vari- ables. Moreover, according to the results obtained for e-XOR-SAT by Creignou, Daudé, and Dubois <ref type="bibr">(2003)</ref>, we know that the transition occurs when c &lt; 1. Therefore, in the sequel we will always suppose without loss of generality that L ≤ n.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">Upper</head><p>and Lower Bounds for the QXOR-SAT Property</p><p>Note that a random (a,e)-QXOR((m,n),L)-formula can also be considered as the quantified linear system ∀X∃Y (AX + EY = C) <ref type="bibr">(2)</ref> with coefficient arithmetic in GF (2), where A (respectively E) is a matrix chosen uniformly from the set of Boolean L × m (resp. L × n) matrices with exactly a (respectively e) units in each row, and C is a Boolean column vector of dimension L chosen uniformly from the set of all such vectors. Moreover, A, E and C are chosen independently. holds. Therefore, if Pr n,L (e-Max-rank) denotes the probability that a random matrix from the set of L × n Boolean matrices with e units per row is of maximal rank, then for every m ≥ a, all n and all L ≤ n, we get the following inequalities:  In this section, we restrict our attention to the case where all problems have two existential variables in each clause (and the number of all variables is allowed to vary).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">The</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Experimental Results</head><p>In order to illustrate the inequalities (3) and to compare empirically the three properties, we discuss experiments that we have performed. In the experiments, all formulas are closed.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">0.9 0.8 0.7 0.6</head><p>2-XOR-SAT for n=10k <ref type="bibr">(1,</ref><ref type="bibr">2)</ref>-QXOR-SAT for m=n  In all cases, the experiments have been conducted according to the same scheme. Let us describe it in detail for Figure 1. One experiment consisted in generating at random For each of the chosen values of ratio, a sample of 1000 formulas were studied using the algorithm described in the work of Creignou et al. <ref type="bibr">(2001, chap. 6.4)</ref>, thus deciding their truth (or satisfiability) as quantified formulas. The proportion of true instances for each considered value of ratio has been plot- ted in Figure 1. The same has been done for the other (a,2)-QXOR-SAT properties. Hence, the different curves are independent from each other. For the 2-XOR-SAT experiment, we used the same selection procedure over 10 000 existential variables. Again, Gaussian elim- ination together with an examination of the quantifier structure were used to determine the logical "status" (true or false) of every formula. Additionally, it has been computed whether the matrix E has full rank or not. The curve 2-Max-rank shows the proportion of systems with full rank and it corresponds to the 2-XOR-SAT curve in the same figure. A close look at Figure 1 reveals that some points from the (a,2)-QXOR-SAT curves are slightly below the (theoretical) lower bound given by the curve for 2-Max-rank. The reason for this phenomenon is the independence of all the satisfiability curves from each other and the "noise" induced by the finite sampling of problems. If we had chosen corresponding problems with exactly the same existential part (and only the universal part varies), then we would have got all satisfiability curves above the curve for 2-Max-rank.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>0</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="0">0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 #clauses/#exvars</head><p>The experimental results shown in Figure 1 suggest first that the two bounding proper- ties, namely 2-Max-rank and 2-XOR-SAT are distinguishable, second that, when m = n, the (a,2)-QXOR-SAT property coincides asymptotically with the 2-Max-rank property indepen- dently of a ≥ 1, the number of universal variables per clause.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">0.9</head><p>0.  At another scale for m, for instance when m is constant, the experimental results re- ported in In the following, we will validate the conjectures suggested by these experiments and prove that the property (a,2)-QXOR-SAT coincides asymptotically with the 2-Max-rank property as soon as m is tending to infinity with n, and that it is in between the 2-Max-rank property and the 2-XOR property when m is a fixed constant. In particular, we will make clear the connection between random (a,2)-QXOR-formulas and random labelled graphs. We are interested in the satisfiability of quantified systems of the form s = (∀X∃Y AX + EY = C),</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>0</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="0">0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 #clauses/#exvars</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Bad</head><p>where E (respectively A) is a matrix chosen uniformly in the set of Boolean L × n (respec- tively L × m) matrices with exactly 2 (respectively a) units in each row, and C is a random column vector of dimension L, in which 0 and 1 occur with the same probability. The satis- fiability of such a system is strongly related to the existence of cycles in graphs. Indeed, we construct a graph G a (s) with n vertices and L weighted edges. For each existential variable y i we have a vertex in G a (s). For each equation y i ⊕ y j = x i 1 ⊕ . . . ⊕ x ia ⊕ ε, we add the edge {y i , y j } to G a (s) with the label x i 1 ⊕ . . . ⊕ x ia ⊕ ε. A cycle is given by a sequence of vertices (y i 1 , . . . , y is ) such that for 1 ≤ j ≤ s − 1, {y i j , y i j+1 } is an edge in the graph, and so is {y is , y i 1 }. The cycle is said to be elementary if all the vertices in the sequence are distinct. The weight of a cycle is the sum modulo 2 of the labels of its edges.</p><p>Example 3.1 Let X = {x 1 , x 2 , x 3 } and let Y = {y 1 , . . . , y 7 }. The formula ∀X∃Y ϕ(X, Y ) with ϕ(X, Y ) being a conjunction of the following equations y 1 ⊕ y 2 = x 1 y 1 ⊕ y 7 = x 2 y 2 ⊕ y 3 = x 3 y 2 ⊕ y 6 = x 2 ⊕ 1 y 3 ⊕ y 4 = x 2 ⊕ 1 y 3 ⊕ y 5 = x 3 y 4 ⊕ y 5 = x 3 ⊕ 1 y 6 ⊕ y 7 = x 1 ⊕ 1</p><p>can be represented by the graph in Figure 3.</p><p>In the following, we call a cycle bad when it has a nonzero weight, and good otherwise.</p><p>Example 3.2 In the graph associated with the formula described in the previous example, there is a good cycle, (y 1 , y 2 , y 6 , y 7 ), whose weight is 0, and a bad one, (y 3 , y 4 , y 5 ), whose weight is x 2 . For the latter cycle, the corresponding equations are y 3 ⊕ y 4 = x 2 ⊕ 1, y 3 ⊕ y 5 = x 3 , and y 4 ⊕ y 5 = x 3 ⊕ 1. Adding these three equations yields the equation 0 = x 2 which cannot be satisfied because x 2 ∈ X is universally quantified.</p><p>For systems containing only existential variables, i.e., a = 0, it has been observed by Creignou and Daudé Proposition 3.3 The system s is satisfiable if and only if G a (s) does not contain any elementary bad cycle, i.e., <ref type="figure">Pr((a,2)</ref>-QXOR-SAT) = Pr(G a (s) has no bad cycle).</p><p>Proof: Suppose we have an elementary cycle with nonzero weight in G a (s). Clearly, to such a cycle corresponds a subsystem in s, for which there exists an assignment to X such that no assignment to Y will satisfy it (see Example 3.2 for an illustration). Hence, s is unsatisfiable. Conversely, suppose there is no (elementary) cycle with nonzero weight in G a (s). Take an arbitrary truth assignment I for the (universal) variables in X and apply it to G a (s). Since I(x) ∈ {0, 1} for all x ∈ X, the weight at each edge can be reduced to a constant from {0, 1} by addition modulo 2. Moreover, since each cycle in G a (s) has zero weight, the corresponding cycle in the "reduced" version, G ′ a (s), of G a (s) has also zero weight. The graph G ′ a (s) corresponds to a system with existential quantifiers only. In order to obtain a satisfying truth assignment for the existential variables, it suffices to apply the following procedure to each connected component of G ′ a (s). Consider an arbitrary root vertex y and assign an arbitrary truth value v to it. We obtain a truth value for each vertex in G ′ a (s) by performing a depth-first search starting from y. During the search, if there is an edge (y ′ , y ′′ ) labelled with ε and y ′′ has no truth value yet, then we set the value for y ′′ to the value of y ′ ⊕ ε. The assignment obtained in this way satisfies all the equations since G ′ a (s) does not contain any cycle with nonzero weight. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>.</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>a</head><p>The corresponding probability is usually denoted by µ p . However, for simplicity we will keep the notation Pr. In the light of The asymptotic behavior of the number of cycles in random graphs has been first investi- gated by Erd˝ os and Rényi (1960), and made precise by Janson (1987) and <ref type="table" target="#tab_7">Takács (1988).</ref> This number converges in distribution to a Poisson law of parameter λ, where λ is the limit of the average number of cycles as n, the number of vertices, tends to infinity. where λ is the limit of the the average number of (bad) cycles. A challenging task is now to get a simple expression of lambda. Let Y be the random variable that counts the number of cycles. Let C be the set of all possible cycles. For any cycle c, we introduce the random variable X c such that X c (G a (s)) = 1 holds, if and only if G a (s) contains the cycle c. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>c∈C c∈C</head><p>Since every cycle c of length l has expectation E(X c ) = p l and since the number of cycles of length l is n(n − 1) . . .  <ref type="figure">,  0</ref> otherwise.</p><p>The experimental results shown in Figure 4 illustrate this asymptotical behavior.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1</head><note type="other">x 0.9 H∞(x) = e 0.8 √ 1 − 2x 2-Max-rank for n=10k 2-Max-rank for n=20k 2-Max-rank for n=40k 0.7 0.6 0.5 0.4 0.3 0.2 0.1 0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 #clauses/#exvars Figure 4: The curves for the 2-Max-rank property. According to (4) lim n→+∞ Pr (n,cn) (2-XOR-SAT) = exp(−λ 0 )</note><p>holds, where λ 0 denotes the limit of the average number of bad cycles. In this particular case, the weight of a clause is either 0 or 1, which means that half of the cycles are bad.  <ref type="figure">,  0</ref> otherwise.</p><p>This is illustrated by Figure 5.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>0.25</head><p>0.</p><note type="other">9 H0(x) = e x/2 (1 − 2x) 0.8 2-XOR-SAT for n=10k 2-XOR-SAT for n=20k 2-XOR-SAT for n=40k 0.7 0.6 0.5 0.4 0.3 0.2 0.1 0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 #clauses/#exvars Figure 5: The curves for the 2-XOR-SAT property. 3.4 The Distribution Function for (a,2)-QXOR-SAT The results obtained in the previous section, (6) and (7), together with the inequalities (3) are sufficient to conclude that the (a,2)-QXOR-SAT property has a coarse phase transition at the scale L = c · n and that its distribution function is in between the functions H 0 and H ∞ described above. More precisely we get the following theorem. Theorem 3.4 For any integer a ≥ 1 and every c ≥ 0, let us consider (a,2)-QXOR((m,n),cn)-</note><p>formulas consisting in the conjunction of c · n XOR-clauses, where each clause contains a variables from a set of m universal variables, and e variables from a set of n existential variables. Then, when n tends to infinity, the (a,2)-QXOR-SAT property has a coarse phase transition whose asymptotical distribution function can be expressed as a function depending on m.</p><note type="other">More precisely, for all c ≥ 0, every a ≥ 1 and m = a Pr (a,n,cn) ((a,2)-QXOR-SAT) −→ n→+∞ H(c) holds, where 1 H(c) = exp(c)(1 − 2c) 1/2 (1 − 4c 2 ) −1/8 for 0 ≤ c ≤ 2 , 0</note><p>otherwise.</p><p>If m is a function of n tending to infinity with n, then, for every a  <ref type="figure">,  0</ref> otherwise.</p><p>Proof: The proof is based on Proposition 3.3 and, as discussed in the previous section, on an estimation of the number of bad cycles in the labelled graphs associated with random formulas. Let λ m,a be the limit of the average number of bad cycles. We will give a closed expression of λ m,a . Observe that each label on the edges of the graph associated with a <ref type="figure">(a,2)-QXOR((m,n),cn)</ref>-formula is formed with a constant, 0 or 1, and a "variable-label" made of a universal variables. There are exactly m a such variable-labels, which are numbered from 1 to m a . One can decide whether a cycle is good or bad according to the number of 1 (even or odd) and the number of occurrences of each variable-label. Therefore it is quite natural to associate to every cycle its length l, the sequence <ref type="bibr">(N 1 , . . . , N ( m a )</ref> ) of the numbers of occurrences of each variable-label, and the parity ε = 0 or 1 of the number of occurrences of the constant 1. The limit of the average number of cycles whose parameter <ref type="figure">(l, (N 1 , . . . , N (   m   a ) ), ε)</ref> is fixed is  <ref type="figure">, . . . , N (   m   a ) ), ε)</ref>, one can decide whether a cycle is bad or not.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>l</head><p>For a better readability, let us focus on the case a = 1. In this particular case, the label of an edge is of the form x i ⊕ ε, where ε = 0 or 1 and 1 ≤ i ≤ m. On the one hand, all cycles of odd length are bad (for in the weight of such a cycle at least one of the coefficients of the x i 's will be nonzero). On the other hand, there are two kinds of cycles of even length that are bad. The ones in which the constant 1 appears an odd number of times, and the ones in which one of the universal variables appears an odd number of times.  <ref type="figure">(2c) 2v  2(2(2v))  +    (2c) 2v  2(2(2v))</ref> · 1 − .</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>u≥1 v≥1</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>v≥1</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>k=0</head><p>m − 1 k · (m − 2k) l 2 m−1 · m l First, observe that λ m,1 is a function of c, thus we deduce the last part of the theorem: <ref type="figure">n→+∞   Pr (m,n,cn) ((1,2)</ref>-QXOR-SAT) = exp(−λ m,1 ) = H m (c).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>lim</head><p>Second, from the above expression of λ m  <ref type="figure">,  0</ref> otherwise.</p><p>This result is illustrated by Figure 6, while Figure 7 shows the comparative behavior of the three distribution functions H 0 , H and H ∞ .  It can be observed from the experimental results shown in Figure 8 that, contrary to what has been observed in the previous section, the three smooth lines connecting the con- secutive points and corresponding to the transition of the three properties 3-Max-rank, <ref type="bibr">(a,3)</ref>-QXOR-SAT and 3-XOR-SAT are difficult to distinguish. Moreover, when n increases (see Figure 9), the curves straighten and come closer one to each other, showing thus strong empirical evidence that the transitions of the three properties coincide asymptotically, with a sharp phase transition at the critical value c 3 ≈ 0.918 (which is the critical ratio for 3-XOR-SAT, see Dubois &amp; Mandler, 2002). We will show that, for e ≥ 3, the introduction of universal variables in XOR-formulas does not influence the sharp transition.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>x</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="0">0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 #clauses/#exvars</head><p>Theorem 4.1 For every e ≥ 3 and any integer a, the (a,e)-QXOR-SAT property has a sharp threshold which coincides with the one of the e-XOR-SAT property.    since E and C are chosen independently. Therefore, if P (r) denotes the probability that a random matrix from the set of L × n Boolean matrices with e units per row is of rank r, then  </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>x</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="0">0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 #clauses/#exvars</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="0">0.8 0.85</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="0.9">0.95</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">#clauses/#exvars</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="0">0.8 0.85</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="0.9">0.95</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">#clauses/#exvars</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.">Conclusion</head><p>We have (experimentally and theoretically) analyzed the phase transition for the quantified problems (a,e)-QXOR-SAT. Our analysis has been conducted at the same level of sophisti- cation as the one made for the e that the nature of the transition is not influenced by the introduction of universal variables. On the other hand, in contrast with QSAT, we have proved that the location of the phase transition-the critical ratio-is the same for the two properties XOR-SAT and QXOR-SAT, and that the difference of behavior between these two properties occurs at the level of the distribution function.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Acknowledgments</head><p>This work has been supported by EGIDE 10632SE and¨OADand¨ and¨OAD Amadée 2/2006.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>References</head><p>Chen, H., &amp; Interian, Y. (2005). A model for generating random quantified boolean formulas.</p><p>In Proceedings of the 19th International Joint Conference on Artificial Intelligence Cocco, S., Dubois, O., Mandler, J., &amp; Monasson, R. (2003). Rigorous decimation-based construction of ground pure states for spin glass models on random lattices. Physical Review Letters, 90, 472051-472054.</p><p>Creignou, N., &amp; Daudé, H. (2003). Coarse and sharp thresholds for random k-XOR-CNF. In- formatique théorique et applications/Theoretical Informatics and Applications, 37 <ref type="figure">(2),  127-147.</ref> Creignou, N., Daudé, H., &amp; Dubois, O. (2003). Approximating the satisfiability threshold for random k-XOR-CNF formulas. Combinatorics, Probability and Computing Erd˝ os, P., &amp; Rényi, A. (1960). On the evolution of random graphs. In Publ. Math. Inst. Hungar. Acad. Sci., Vol. 7, pp. 17-61.</p><p>Franz, S., Leone, M., Ricci-Tersenghi, F., &amp; Zecchina, R. (2001). Exact solutions for diluted spin glasses and optimization problems. Janson, S., Luczak, T., &amp; Rucinski, A. (2000). Random graphs. John Wiley and sons.</p><p>Takács, L. (1988). On the limit distribution of the number of cycles in a random graph. Journal of Applied Probability, 25, 359-376.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head></head><label></label><figDesc>Case e = 2</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head></head><label></label><figDesc>L Pr n,L (e-XOR-SAT) = 2 r−L P (r) ≤ P (L) + 1 2 (P (L−1) + . . . P (0) ). r=0 Now observe that P (0) + . . . + P (L) = 1, thus (P (L−1) + . . . P (0) ) = 1 − P</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0" validated="false"><head>Note that there are</head><label></label><figDesc></figDesc><table>N = 
+m 
+a 
+
+
+· 
+n 
+e 
+
+
+· 2 
+(1) 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_5" validated="false"><head>Figure 1 :</head><label>Figure 1</label><figDesc></figDesc><table>The curves for (a,2)-QXOR-SAT, m = n = 10 000 and a varying. 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_7" validated="false"><head>8</head><label>8</label><figDesc></figDesc><table>(1,2)-QXOR-SAT for m=1, n=10k 
+2-XOR-SAT for n=10k 
+2-Max-rank for n=10k 
+
+0.7 
+
+0.6 
+
+0.5 
+
+0.4 
+
+0.3 
+
+0.2 
+
+0.1 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_9" validated="false"><head>Figure 2 suggest that the (a,2)-QXOR-SAT property is in between the two prop- erties 2-Max-rank and 2-XOR-SAT.</head><label>Figure 2</label><figDesc></figDesc><table></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_10" validated="false"><head>Cycles and the (a,2)-QXOR-SAT Property</head><label></label><figDesc></figDesc><table></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_12" validated="false"><head>Remark: Observe that</head><label>Remark:</label><figDesc></figDesc><table>Pr(2-Max-rank) = Pr(G a (s) has no cycle) 
+(5) 3.3 The Distribution Functions for 2-XOR-SAT and 2-Max-rank 
+
+In this section, we will give the exact asymptotical value of the bounds obtained in (3) in 
+terms of the order parameter c, where c · n is the number of clauses. For this we will use 
+well-known results from random graph theory. 
+Let us recall that we consider the classical probabilistic model where each clause/edge 
+is chosen uniformly and independently among the 
+
+N = 
+m 
+a 
+
+
+· 
+n 
+e 
+
+
+· 2 
+
+possible ones. According to Proposition 1.13 in (Janson et al., 2000), if we choose L = c · n 
+clauses, then this model is asymptotically equivalent to the one where each clause is drawn 
+independently with probability p, where 
+
+
+1 + O(n 
+−1/2 ) 
+
+
+p = 
+c · n 
+m 
+
+
+· 
+n 
+
+a 
+
+2 
+
+
+· 2 
+
+holds. So, in the following, we will work with the random labelled graphs G a (s) associated 
+with quantified systems s, with labelled edge probability: 
+
+p = 
+c 
+n · 
+m 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_18" validated="false"><head>≥ 1 ,</head><label>≥ 1</label><figDesc></figDesc><table>Pr (m,n,cn) ((a,2)-QXOR-SAT) −→ n→+∞ H ∞ (c) 
+
+holds, where 
+
+1 
+
+H ∞ (c) = 
+
+
+exp(c) · (1 − 2c) 1/2 for 0 ≤ c ≤ 
+
+2 , 
+0 
+otherwise. 
+
+Moreover, for every fixed m ≥ a ≥ 1, there exists a distribution function H m such that 
+
+Pr (m,n,cn) ((a,2)-QXOR-SAT) −→ n→+∞ H m (c), 
+
+with H m satisfying 
+H ∞ &lt; H m &lt; H 0 , 
+
+where 
+
+1 
+
+H 0 (c) = 
+
+
+exp(c/2)(1 − 2c) 1/4 for 0 ≤ c ≤ 
+
+2 </table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_23" validated="false"><head>Figure 6 :</head><label>Figure 6</label><figDesc></figDesc><table>The curves for the (1,2)-QXOR-SAT property with m = 1. 
+
+4. The Case e ≥ 3 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_25" validated="false"><head>Figure 7 :</head><label>Figure 7</label><figDesc></figDesc><table>The distribution functions H 0 , H and H ∞ . 
+
+1 
+
+0.9 
+
+0.8 
+
+0.7 
+
+0.6 
+
+0.5 
+
+0.4 
+
+0.3 
+
+0.2 
+
+0.1 
+
+#clauses/#exvars = 0.918 
+3-XOR-SAT for n=1k 
+3-Max-rank for n=1k 
+(1,3)-QXOR-SAT for m=n 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_26" validated="false"><head>Figure 8 :</head><label>Figure 8</label><figDesc></figDesc><table>The curves for 3-XOR-SAT, 3-Max-rank and (a,3)-QXOR-SAT for n=1000. 
+
+Proof: Let us recall that 
+
+Pr n,L (e-XOR-SAT) = Pr(∃Y (EY = C) is consistent) 
+
+= Pr(C ∈ Im(E)) 
+
+= 
+
+
+Pr(C ∈ V and Im(E) = V ), 
+
+V ⊆{0,1} L 1 
+
+0.9 
+
+0.8 
+
+0.7 
+
+0.6 
+
+0.5 
+
+0.4 
+
+0.3 
+
+0.2 
+
+0.1 
+
+#clauses/#exvars = 0.918 
+3-XOR-SAT for n=2k 
+3-Max-rank for n=2k 
+(1,3)-QXOR-SAT for m=n 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_27" validated="false"><head>Figure 9 :</head><label>Figure 9</label><figDesc></figDesc><table>The curves for 3-XOR-SAT, 3-Max-rank and (a,3)-QXOR-SAT for n=2000. 
+
+</table></figure>
+		</body>
+		<back>
+			<div type="references">
+
+				<listBibl/>
+			</div>
+		</back>
+	</text>
+</TEI>

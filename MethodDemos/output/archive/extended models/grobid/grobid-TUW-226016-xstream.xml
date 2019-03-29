@@ -1,0 +1,470 @@
+<Publication>
+  <id>TUW-226016</id>
+  <title></title>
+  <note>Ioana Jucu Martir Herman Sporer, Timisoara, Timis, Romania Hiermit erkläre ich, dass ich diese Arbeit selbständig verfasst habe, dass ich die verwendeten Quellen und Hilfsmittel vollständig angegeben habe und dass ich die Stellen der Arbeit -einschließlich Tabellen, Karten und Abbildungen -, die anderen Werken oder dem Internet im Wortlaut oder dem Sinn nach entnommen sind, auf jeden Fall unter Angabe der Quelle als Entlehnung kenntlich gemacht habe. (Ort, Datum) (Unterschrift Verfasserin)</note>
+  <abstractText>Invariant genereation is a critical problem in proving different properties for programs with loops, properties including correctnes. The problem becomes harder with the incresing numbers of quantifiers in the property to be proven. In this paper we study and combine different methods of invariant generation in order to obtain stronger properties. Kurzfassung Invariant generiert ist ein kritische Problem für Programmen mit Schleife zum Beweisen der Eigenschaften, inclusive die Richtigkeit. Die problem wird schwerer bei hohe Anzhal des Quantoren in die geprüfte Eigenschaft. In diese arbeit wir studiere diese Problem und versuchen combinieren verschieden Methoden für schwarer invariants zu beweisen. 1 Introduction The complexity of software systems is in a continuous grow. Making sure that different pieces of the same system will work together properly is a hard task. The development of software systems imply the work of more people working at different parts of it, using computer, networks, physical devices, and over millions of lines of code in various languages. Integrating, understanding and ensuring the reliability of such a system are necessary task in order to make it useful. In this paper we give attention to the task of ensuring reliability. In the past years a lot of interest was given to this task and there were developed different methods to do it, but one challenge that was not yet overcome is the analysis of loops. In particular programs dealing with arrays use loops to process the elements, and on the strength to the unbounded nature of this data structures analyzing and inferring properties for elements becomes a challenging problem on its own. One way to approach this problem is to bound the loop [BCC + 03], unfolding it just a limited number of times and afterwards analyzing the new obtained program as if no loop would occur in it. Although this approach is successfully used in model checking techniques, the limitations of applying it consist in the loss of completeness of the algorithm. An informal explanation of this fact is that obtaining a proof that a bounded subset of elements do not have a certain property is a result strong enough to consider that the property does not hold for the entire loop, but if the property holds for the first n unrollings of the loop it may be the case that it will be falsified in one of the following iterations that were cut off by the bound. Another approach to reason about program loops is to statically analyze the code and extract loop properties automatically. In this thesis we follow this approach. We are going to analyze and compare three methods that automatically extract properties for loops. These methods are the symbol elimination method of [KV09], the constraint-based invariant generation approach of [LRCR13], and the postcondition-based method of [FM10]. We analyze and compare these approaches on series of challenging academic examples which are considered difficult to reason about. The symbol elimination technique is an automatically mechanism that generates invariants based on the static analysis of programs, that does not require other information from the user about the code analyzed. For this method we use a saturation theorem prover and we choose Vampire not only for it&apos;s capability to reason with different theories but also due to the fact that is one of the fastest provers awarded several times in competitions. The constraint-based method first analyses the code discovering every possible path and checking if properties hold in some key points along them. In the next chapters we are going to explain where and why a point in the path becomes such a key point. Properties that are checked are constructed based on a template following some rules that will also be presented later in the paper. The third method is the only one from the three presented that needs additional input from the user, namely a postcondition in the form of a formula. The program makes certain changes in the formula, that will be described later on, in order to find valid invariants for the program. Using the invariants discovered by the constraint-based and postcondition-based methods, in this thesis we further extend the power of symbol elimination in order to reason about more complex loops and invariants than in [KV09]. For doing so, we strengthen the underlining first-order theory reasoning engine of symbol elimination and add additional mathematical theorems and axioms to the symbol elimination problem. The symbol elimination problem is then further fed into a saturation theorem prover and is successfully used to prove the intended loop invariants and properties of the program. Our results show that theory reasoning in first-order theorem proving is a very challenging problem and requires a good understanding of the necessary theory axiomatizations. 2 Preliminaries In this section we give a brief overview of SAT solving, SMT solving and Saturation theorem prover. Also we give insight of the mechanism of Boogie theorem prover. These are necessary for further understanding the mechanism of the tools we are studying in this paper, and since all of them have at their core first-order logic we also present its syntax and semantics. We present all the above in a step wise manner starting with proposi-tional logic. Based on the syntax and semantic of propositional logic it is easier to understand the ones of first-order logic, since the latter one extends the expressive power of the former by introducing new characters and concepts. In the same step wise manner we present SAT-solving and SMT-solving. The first problem is related to propositional logic, while the second one makes use of the results obtained in SAT-solving as a subroutine in the algorithm for solving problems encoded in first-order logic. Also we present the mechanism of a saturation theorem prover, The understanding of this concept is necessary in order to understand the differences between the methods of invariant generation and the properties that make them efficient in different types of problems. Another point that is touched in this chapter is the higher order logic theorem prover Boogie, that has more expressive power than the other tools introduced in this paper and also uses a language specially created for it that has a syntax harder to understand than the others. We are going to present how these concept interact to each other and with the underlying theory, relating their results with the concept of program verification. 2.1 Propositional logic Is a part of mathematics important for program verification. The least complex component in the syntax of propositional [DW50] logic is an atom. Every atom has a truth value, either true or false, and it represents a statement (such as &quot; Roses are red.&quot;) without taking into account its internal structure. In order to get more complex propositions the atoms can be connected with connectives. The propositional syntax is defined as follows: 1. If p is an atom, then p is a p and q are set to the same truth value then p ⇔ q is true, otherwise is false; To make the propositions easier to read and write, and to save parentheses the connectives have priorities as follows: ¬, ∧, ∨, ⇒, ⇔(meaning that ¬ binds stronger than ∧, ∧ binds stronger than ∨, etc.). The problem of determining if the atoms that form a proposition can be given truth values in such a way that the proposition would evaluate to true is called satisfiability problem (abbreviated as SAT). Example: p, r, q are atoms in propositional logic, and p ∨ q ⇒ r ∨ q is a syntax correct formula. Choosing the values as follows: p → f alse, r → f alse and q → true will cause the formula to evaluate to true (since p ∨ q evaluates to true, r ∨ q evaluates to true). Satisfiability problem is an NP-complete problem[Coo71]. The complexity and nature of this problem makes it useful in modeling different problems such as digital circuits, constraint satisfaction problems, reasoning about specifications. 2.2 SAT solvers These are tools that are constructed to solve SAT problems [ES04]. Despite the high complexity of the problem, very good results were obtained in practice with yearly improvements of the solving algorithms and heuristics for the SAT-solving contest. In figure 1 we present a scheme on how a SAT solver is used to solve a problem. The first step is to abstract the problem into a set of propositions. Usually the problem can not be abstracted straightforward so some simplification is needed. After finding a suitable representation of the problem as a set of formulae use a SAT solver to find a solution. If a solution is not find specific improvements are made in order to get a more efficient search. The SAT solvers take the input formulae in a special form named con-junctive normal form. Every propositional formula can be transformed in</abstractText>
+  <keywords/>
+  <authors/>
+  <affiliations/>
+  <sections>
+    <Section>
+      <title>Acknowledgements</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>1</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>2.3</level>
+      <title>Boogie</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3</level>
+      <title>Overview of Invariant Generation Methods</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.1</level>
+      <title>GinPink</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.2</level>
+      <title>Lingva</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>$true</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>⊥</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.3</level>
+      <title>CppInv</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>i</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>i=1</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>k</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>1.</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>s</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>s</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>i=1</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>s</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>i=1</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>s</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>i=1</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>k</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4</level>
+      <title>Experiments</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.1</level>
+      <title>Experiments with Gin-Pink and Cpp-Inv</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>program Cpp-inv</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.2</level>
+      <title>Experiments with Lingva</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>program</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>Maximum</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>{</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>Palindrome</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.3</level>
+      <title>Discussions of Experimental Results</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5</level>
+      <title>Invariant Specific Theory Extensions to First Order Theorem Prover</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.1</level>
+      <title>Comparison of invariants strength</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>} ++i; }</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>} }</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.2</level>
+      <title>Discussions and Conclusions</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>6</level>
+      <title>Conclusions</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+  </sections>
+  <citationContexts/>
+  <references>
+    <Reference>
+      <id>ref1</id>
+      <referenceIdString>b0</referenceIdString>
+      <title>and Sebastiani R. Efficient Generation of Craig Interpolants in Satisfiability Modulo Theories</title>
+      <source>ACM Transactions on Computational Logic , volume 12, October</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Cimatti</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Griggio</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2009</publicationDateString>
+      <publicationYear>2009</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref2</id>
+      <referenceIdString>b1</referenceIdString>
+      <source>An Introduction to Mathematical Logic and Type Theory: To Truth Through Proof</source>
+      <authors/>
+      <location>Peter B. Andrews</location>
+      <publicationDateString>2002</publicationDateString>
+      <publicationYear>2002</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref3</id>
+      <referenceIdString>b2</referenceIdString>
+      <source>Patrick Cousot and Radhia Cousot. Abstract Interpretation: A Unified Lattice Model for Static Analysis of Programs by Construction or Approximation of Fixpoints. pages 238-252</source>
+      <authors/>
+      <publicationDateString>1977</publicationDateString>
+      <publicationYear>1977</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref4</id>
+      <referenceIdString>b3</referenceIdString>
+      <source>Stephen A. Cook. The complexity of theorem-proving procedures. pages 151-158</source>
+      <authors/>
+      <publicationDateString>1971</publicationDateString>
+      <publicationYear>1971</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref5</id>
+      <referenceIdString>b4</referenceIdString>
+      <source>A machine program for theorem</source>
+      <authors/>
+      <location>Martin Davis, George Logemann , and Donald Loveland</location>
+      <pageFrom>394</pageFrom>
+      <pageTo>397</pageTo>
+      <publicationDateString>1962</publicationDateString>
+      <publicationYear>1962</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref6</id>
+      <referenceIdString>b5</referenceIdString>
+      <source>Leonardo de Moura and Nikolaj Bjørner. Satisfiability modulo theories: introduction and applications</source>
+      <authors/>
+      <pageFrom>69</pageFrom>
+      <pageTo>77</pageTo>
+      <publicationDateString>2011</publicationDateString>
+      <publicationYear>2011</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref7</id>
+      <referenceIdString>b6</referenceIdString>
+      <source>Martin Davis and Hilary Putnam. A Computing Procedure for Quantification Theory. 7:201-215</source>
+      <authors/>
+      <publicationDateString>1960</publicationDateString>
+      <publicationYear>1960</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref8</id>
+      <referenceIdString>b7</referenceIdString>
+      <source>Hilbert D. and Ackermann W. Principles of Mathematical Logic. Chelsea Publishing Company</source>
+      <authors/>
+      <publicationDateString>1950</publicationDateString>
+      <publicationYear>1950</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref9</id>
+      <referenceIdString>b8</referenceIdString>
+      <source>Niklas Eén and Niklas Sörensson. An Extensible SAT-solver. 2919:502-518</source>
+      <authors/>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref10</id>
+      <referenceIdString>b9</referenceIdString>
+      <source>Inferring Loop Invariants using Postconditions. In Fields of Logic and Computation: Essays Dedicated to Yuri Gurevich on the Occasion of His 70th Birthday</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Carlo</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Meyer</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2010</publicationDateString>
+      <publicationYear>2010</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref11</id>
+      <referenceIdString>b10</referenceIdString>
+      <source>On the Complexity of Derivation in Propositional Calculus. pages 466-483</source>
+      <authors/>
+      <publicationDateString>1983</publicationDateString>
+      <publicationYear>1983</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref12</id>
+      <referenceIdString>b11</referenceIdString>
+      <title>Case Studies on Invariant Generation Using a Saturation Theorem Prover</title>
+      <source>10th Mexican International Conference on Artificial Intelligence, MICAI</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Hoder</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Kovacs</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Voronkov</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2011</publicationDateString>
+      <publicationYear>2011</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref13</id>
+      <referenceIdString>b12</referenceIdString>
+      <title>Finding Loop Invariants for Programs over Arrays Using a Theorem Prover</title>
+      <source>International Symposium on Symbolic and Numeric Algorithms for Scientific Computing</source>
+      <publisher>SYNASC</publisher>
+      <authors/>
+      <note>Laura Kovacs and Andrei Voronkov</note>
+      <publicationDateString>2009</publicationDateString>
+      <publicationYear>2009</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref14</id>
+      <referenceIdString>b13</referenceIdString>
+      <title>First-Order Theorem Proving and Vampire</title>
+      <source>Proceedings of the International Conference on Computer Aided Veri cation (CAV), LNCS, 2013 to appear</source>
+      <authors/>
+      <note>Laura Kovacs and Andrei Voronkov</note>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref15</id>
+      <referenceIdString>b14</referenceIdString>
+      <source>Chaff: Engineering an Efficient SAT Solver</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Matthew</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Conor</string>
+          </firstNames>
+          <lastName>Moskewicz</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Madigan</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Zhao</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Zhang</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Malik</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2011</publicationDateString>
+      <publicationYear>2011</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref16</id>
+      <referenceIdString>b15</referenceIdString>
+      <source>Z. Manna and A. Pnueli. The Temporal Logic of Reactive and Concurrent Systems</source>
+      <publisher>Springer</publisher>
+      <authors/>
+      <publicationDateString>1992</publicationDateString>
+      <publicationYear>1992</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref17</id>
+      <referenceIdString>b16</referenceIdString>
+      <source>Strivastava S. and Gulwani S. Program Verification using Template over Predicate Abstraction. In Proc. of PLDI</source>
+      <authors/>
+      <publicationDateString>2009</publicationDateString>
+      <publicationYear>2009</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref18</id>
+      <referenceIdString>b17</referenceIdString>
+      <source>FaCT++ Description Logic Reasoner: System Description</source>
+      <authors/>
+      <note>Dmitry Tsarkov and Ian Horrocks</note>
+      <pageFrom>292</pageFrom>
+      <pageTo>297</pageTo>
+      <publicationDateString>2006</publicationDateString>
+      <publicationYear>2006</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref19</id>
+      <referenceIdString>b18</referenceIdString>
+      <source>Jinchang Wang. A branching heuristic for testing propositional satisfiability</source>
+      <authors/>
+      <publicationDateString>1995</publicationDateString>
+      <publicationYear>1995</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+  </references>
+</Publication>

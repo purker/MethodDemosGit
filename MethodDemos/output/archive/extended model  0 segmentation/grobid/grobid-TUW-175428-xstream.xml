@@ -1,0 +1,900 @@
+<Publication>
+  <id>TUW-175428</id>
+  <title></title>
+  <note>! FAKULTÄT FÜR !NFORMATIK Ein hybrides Verfahren basierend auf Variabler Nachbarschaftssuche und Dynamischer Programmierung zur Tourenfindung in einem Ersatzteillager mit domänenspezifischen Nebenbedingungen DIPLOMARBEIT zur Erlangung des akademischen Grades Diplom-Ingenieur im Rahmen des Studiums Software Engineering &amp; Internet Computing eingereicht von Betreuung: Betreuer: Univ.Prof. Dipl.-Ing. Dr. Günther Raidl Mitwirkung: Univ.Ass. Mag. Dipl.-Ing. Matthias Prandtstetter Wien, 20.04.2009 (Unterschrift Verfasser) (Unterschrift Betreuer)</note>
+  <abstractText>A-1040 Wien Karlsplatz 13 Tel. +43/(0)1/58801-0 http://www.tuwien.ac.at ii Danksagung Die vorliegende Arbeit durfte ich am Institut für Computergraphik und Algorithmen der Technischen Universität Wien erstellen und es freut mich diese nun fertig in Händen halten zu können. Ich möchte mich für die Geduld und Mithilfe von Seiten Günther Raidls bedanken und ebenso Matthias Prandtstetter großen Dank für seine Betreuung aussprechen. In den vergangenen Monaten hat er einen besonders großen Beitrag zur Vervollständi-gung dieser Arbeit geleistet. Natürlich gilt meine Anerkennung auch allen anderen Personen, die von Seiten des Instituts ihren Anteil an der Entstehung dieser Arbeit hatten. Es ist mir weiters ein Anliegen auch all jene zu erwähnen, die mich im Laufe des gesamten Studiums begleitet und unterstützt haben. Dazu zählen vor allem meine Studienkollegen Christian und Gerhard, sowie gleichermaßen auch meine Eltern, die mir zu jedem Zeitpunkt eine große Hilfe waren und Linda, der ich an dieser Stelle für ihre Ausdauer und Motivation danken will. iii iv Erklärung zur Verfassung der Arbeit Hiermit erkläre ich, Thomas Misar, wohnhaft in 1070 Wien, Seidengasse 3/108, dass ich diese Arbeit selbständig verfasst habe, dass ich die verwendeten Quellen und Hilfs-mittel vollständig angegeben habe und dass ich die Stellen der Arbeit (einschließlich Tabellen, Karten und Abbildungen), die anderen Werken oder dem Internet im Wort-laut oder dem Sinn nach entnommen sind, auf jeden Fall unter Angabe der Quelle als Entlehnung kenntlich gemacht habe. Wien, 20.04.2009 (Unterschrift Verfasser) vi Kurzfassung Im Rahmen dieser Arbeit wird eine konkrete Problemstellung aus dem Bereich der Lagerverwaltung behandelt. Dabei soll die benötigte Zeit zum Ausfassen von Artikeln aus dem Lager unter Berücksichtigung von domänenspezifischen Nebenbedingungen minimiert werden. Ausgehend von durch Kunden laufend aufgegebenen Bestellungen sollen feste Lieferzeiten eingehalten werden und Einschränkungen wie etwa Kapa-zitätslimits oder das Vermeiden von Kollisionen zwischen Arbeitern beachtet werden. Die für die gegebene Problemstellung zentrale Bestimmung effizienter Touren steht im Mittelpunkt der Arbeit, welche mit Ergebnissen aus einer konkreten Implemen-tierung des vorgestellten Ansatzes abschließt. Es wird ein Algorithmus vorgestellt, der ein eigens entwickeltes Dynamisches Pro-gramm zur Berechnung optimaler Wege durch das Warenlager mit der Umsetzung einer Variablen Nachbarschaftssuche (engl.: Variable Neighborhood Search) (VNS) verbindet. In mehreren Phasen werden dabei die vorliegenden Bestellungen zerlegt und davon ausgehend Touren gebildet, welche zuletzt auf alle verfügbaren Lagerar-beiter verteilt werden. Innerhalb der VNS kommt eine Variante des Variable Neighborhood Descent (VND) als lokale Verbesserungskomponente zum Einsatz. Während Während¨Währendüber die definierten Nachbarschaftsstrukturen unterschiedliche potentielle Lösungen erzeugt werden, erfolgt deren Bewertung durch die Berechnung von konkreten Touren mittels eines für diesen Zweck entwickelten Dynamischen Programms. Dabei werden spezielle Eigenschaften der zugrundeliegenden Lagerstruktur ausgenutzt, um so in po-lynomieller Zeit die bestmögliche Wegführung durch das Lager berechnen zu können. Für die Zuordnung von Arbeitern zu den auf diese Weise berechneten Touren wird schließlich eine zusätzliche VNS verwendet, deren Aufgabe es ist, die notwendigen Touren derart zu verteilen, dass der letzte Artikel zum frühest möglichen Zeitpunkt ausgefasst werden kann. Die anhand des implementierten Programms durchgeführten Tests zeigen, dass die erfolgte Tourenplanung wertvolle Ergebnisse liefert und die notwendige Rechenzeit niedrig gehalten werden kann. Getestet wurde mit Bezug auf eine Referenzlösung, welche auf Basis eines aus der Literatur entnommenen Ansatzes erzeugt werden konn-te. Eine ausführliche Auswertung der Testergebnisse zeigte, dass die Anwendung des hier vorgestellten Ansatzes im Echtbetrieb als sehr vielversprechend gilt und er-hebliche Einsparungen bezüglich der benötigten Arbeitszeit erreicht werden können. Insgesamt betrachtet wird ein effizientes und zielführendes Verfahren zur Lösung des vorliegenden Problems vorgestellt. vii viii Abstract Within this thesis a real-world problem related to a warehouse for spare parts is considered. Regarding several constraints typically stated by spare parts suppliers the time needed to collect articles should be minimized. Based on continuously arriving orders by customers predefined delivery times and capacity constraints have to be met. To accomplish this task efficient pickup tours need to be determined which is the main issue covered by this work which comes to an end with experimental results of a concrete implementation of the proposed approach. The algorithm presented embeds a specifically developed dynamic program for computing optimal walks through the warehouse into a general variable neighborhood search (VNS) scheme. Several stages are used for first splitting up all orders, then creating tours out of the results and finally assigning them to available workers. The VNS uses a variant of the variable neighborhood descent (VND) as local improvement procedure. While the neighborhood structures defined are intended to produce candidate solutions, a dynamic program specially designed to compute optimal order picking tours is used to evaluate them. For this purpose properties specific to warehouses are exploited such to compute optimal routes within polynomial time. The final assignment of workers to tours is realized by another VNS. The task is then to find an allocation such that the last article to be picked up will be collected as early as possible. Evaluations of experimental results of a concrete implementation indicate that the presented approach provides valuable pickup plans and computation times can be kept low. Moreover the performed test runs have been compared to a reference solution which was computed based on an approach found in relevant literature. A detailed analysis of the obtained results showed that the application of the proposed approach to real-world instances is promising whereas the savings with respect to working time can be kept high. Overall an efficient as well as effective approach is introduced to solve this real-world problem.</abstractText>
+  <keywords/>
+  <authors>
+    <Author>
+      <firstNames>
+        <string>Thomas</string>
+      </firstNames>
+      <lastName>Misar</lastName>
+      <affiliations>
+        <Affiliation>
+          <id>aff0</id>
+          <institution>Technische Universität Wien</institution>
+          <department>Fakultät für Informatik</department>
+        </Affiliation>
+      </affiliations>
+    </Author>
+  </authors>
+  <affiliations>
+    <Affiliation reference="/Publication[1]/authors[1]/Author[1]/affiliations[1]/Affiliation[1]"/>
+  </affiliations>
+  <sections>
+    <Section>
+      <level>2</level>
+      <title>Problembeschreibung</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>2.</level>
+      <title>Für jeden Auftrag fasst ein Lagerarbeiter die erforderliche Anzahl der bestellten</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>Mögliche Erweiterungen</title>
+      <referenceIds>
+        <string>ref9</string>
+        <string>ref10</string>
+        <string>ref12</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.1.1</level>
+      <title>Capacitated Vehicle Routing Problem</title>
+      <referenceIds>
+        <string>ref17</string>
+        <string>ref17</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.1.2</level>
+      <title>Split Delivery Vehicle Routing Problem</title>
+      <referenceIds>
+        <string>ref2</string>
+        <string>ref7</string>
+        <string>ref8</string>
+        <string>ref7</string>
+        <string>ref8</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.1.3</level>
+      <title>Vehicle Routing Problem with Time Windows</title>
+      <referenceIds>
+        <string>ref19</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.2</level>
+      <title>Generalisierte Netzwerkprobleme</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.3</level>
+      <title>Traveling Salesman Problem</title>
+      <referenceIds>
+        <string>ref1</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>Um dieses Problem in ein mathematisches Modell zu bringen, bietet sich dië</title>
+      <referenceIds>
+        <string>ref10</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.4</level>
+      <title>Bekannte Lösungsansätze</title>
+      <referenceIds>
+        <string>ref13</string>
+        <string>ref5</string>
+        <string>ref4</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>Kürzeste Wege in einem Graphen</title>
+      <referenceIds>
+        <string>ref6</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5</level>
+      <title>Variable Nachbarschaftssuche</title>
+      <referenceIds>
+        <string>ref16</string>
+        <string>ref11</string>
+        <string>ref12</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>Algorithmus 1 : VND</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.2</level>
+      <title>Genereller Ansatz für die Variable Nachbarschaftssuche</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>Algorithmus 2 : Genereller VNS-Ansatz</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>6</level>
+      <title>Ein hybrides Verfahren</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>6.1</level>
+      <title>Der grundsätzliche Ablauf</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>7</level>
+      <title>Der Algorithmus im Detail</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>7.1</level>
+      <title>Partitionierung vorhandener Bestellungen</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>7.2</level>
+      <title>Zuordnung von Artikeln zu Touren</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>7.2.1</level>
+      <title>Konstruktionsheuristiken</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>Algorithmus 4 : CollisionAvoidingHeuristic</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>Algorithmus 5 : TimeSavingHeuristic</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>7.2.2</level>
+      <title>Reparatur-und Verbesserungsheuristik</title>
+      <referenceIds>
+        <string>ref12</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>7.2.3</level>
+      <title>Durchsuchen der Nachbarschaften</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>7.2.4</level>
+      <title>Dynamische Reihenfolge der Nachbarschaften</title>
+      <referenceIds>
+        <string>ref14</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>Algorithmus 7 : VND mit dynamischer Nachbarschaftsreihenfolge</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>Algorithmus 8 : Berechnung einzelner Touren</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>7.3</level>
+      <title>Berechnung einzelner Touren</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>7.3.1</level>
+      <title>Repräsentation als Graph</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>7.3.2</level>
+      <title>Ein Dynamisches Programm</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>7.3.3</level>
+      <title>S-Shape-Heuristik</title>
+      <referenceIds>
+        <string>ref4</string>
+        <string>ref5</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>7.4</level>
+      <title>Zuordnung von Arbeitern zu Touren</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>Algorithmus 9 : Initiale Arbeiter-Zuordnung</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>7.4.1</level>
+      <title>Konstruktionsheuristik</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>7.4.2</level>
+      <title>Reparatur-und Verbesserungsheuristik</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>7.5</level>
+      <title>Erweiterter Algorithmus</title>
+      <referenceIds>
+        <string>ref4</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>8</level>
+      <title>Testergebnisse</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>8.1</level>
+      <title>Wahl der Konstruktionsheuristik</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>8.2</level>
+      <title>Wahl von Berechnungsparametern</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>8.3</level>
+      <title>Effizienz einzelner Nachbarschaften</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>8.4</level>
+      <title>Rechenzeit der Nachbarschaften</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>Testlauf 1</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>8.5</level>
+      <title>Laufzeit und Lösungsverbesserung</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>8.6</level>
+      <title>Lösungsqualität bei Verwendung zusätzlicher Nachbarschaften</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>9</level>
+      <title>Fazit</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+  </sections>
+  <citationContexts/>
+  <references>
+    <Reference>
+      <id>ref1</id>
+      <referenceIdString>b0</referenceIdString>
+      <source>The Traveling Salesman Problem: A Computational Study (Princeton Series in Applied Mathematics)</source>
+      <publisher>Princeton University Press</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>D</string>
+            <string>L</string>
+          </firstNames>
+          <lastName>Applegate</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>R</string>
+            <string>E</string>
+          </firstNames>
+          <lastName>Bixby</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>V</string>
+          </firstNames>
+          <lastName>Chvatal</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>W</string>
+            <string>J</string>
+          </firstNames>
+          <lastName>Cook</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2007-01</publicationDateString>
+      <publicationYear>2007</publicationYear>
+      <publicationMonth>01</publicationMonth>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref2</id>
+      <referenceIdString>b1</referenceIdString>
+      <title>A tabu search algorithm for the split delivery vehicle routing problem</title>
+      <source>Transportation Science</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>C</string>
+          </firstNames>
+          <lastName>Archetti</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+            <string>G</string>
+          </firstNames>
+          <lastName>Speranza</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A</string>
+          </firstNames>
+          <lastName>Hertz</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>40</volume>
+      <issue>1</issue>
+      <pageFrom>64</pageFrom>
+      <pageTo>73</pageTo>
+      <publicationDateString>2006</publicationDateString>
+      <publicationYear>2006</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref3</id>
+      <referenceIdString>b2</referenceIdString>
+      <source>Dynamic Programming</source>
+      <publisher>Dover Publications, Incorporated</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>R</string>
+            <string>E</string>
+          </firstNames>
+          <lastName>Bellman</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref4</id>
+      <referenceIdString>b3</referenceIdString>
+      <title>Design and control of warehouse order picking: A literature review</title>
+      <source>European Journal of Operational Research</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>R</string>
+          </firstNames>
+          <lastName>Koster</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>T</string>
+          </firstNames>
+          <lastName>Le-Duc</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>K</string>
+            <string>J</string>
+          </firstNames>
+          <lastName>Roodbergen</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>182</volume>
+      <issue>2</issue>
+      <pageFrom>481</pageFrom>
+      <pageTo>501</pageTo>
+      <publicationDateString>2007</publicationDateString>
+      <publicationYear>2007</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref5</id>
+      <referenceIdString>b4</referenceIdString>
+      <title>Routing orderpickers in a warehouse: a comparison between optimal and heuristic solutions</title>
+      <source>IIE Transactions</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>R</string>
+          </firstNames>
+          <lastName>Koster</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>E</string>
+          </firstNames>
+          <lastName>Van Der</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Poort</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>30</volume>
+      <issue>5</issue>
+      <pageFrom>469</pageFrom>
+      <pageTo>480</pageTo>
+      <publicationDateString>1998</publicationDateString>
+      <publicationYear>1998</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref6</id>
+      <referenceIdString>b5</referenceIdString>
+      <title>A note on two problems in connexion with graphs</title>
+      <source>Numerische Mathematik</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>E</string>
+            <string>W</string>
+          </firstNames>
+          <lastName>Dijkstra</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>1</volume>
+      <issue>1</issue>
+      <pageFrom>269</pageFrom>
+      <pageTo>271</pageTo>
+      <publicationDateString>1959</publicationDateString>
+      <publicationYear>1959</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref7</id>
+      <referenceIdString>b6</referenceIdString>
+      <title>Savings by split delivery routing</title>
+      <source>Transportation Science</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Dror</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>P</string>
+          </firstNames>
+          <lastName>Trudeau</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>23</volume>
+      <pageFrom>141</pageFrom>
+      <pageTo>145</pageTo>
+      <publicationDateString>1989</publicationDateString>
+      <publicationYear>1989</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref8</id>
+      <referenceIdString>b7</referenceIdString>
+      <source>Split delivery routing. Naval Research Logistics</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Dror</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>P</string>
+          </firstNames>
+          <lastName>Trudeau</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>37</volume>
+      <pageFrom>383</pageFrom>
+      <pageTo>402</pageTo>
+      <publicationDateString>1990</publicationDateString>
+      <publicationYear>1990</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref9</id>
+      <referenceIdString>b8</referenceIdString>
+      <title>Generalized network design problems</title>
+      <source>European Journal of Operational Research</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>C</string>
+          </firstNames>
+          <lastName>Feremans</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Labbe</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>G</string>
+          </firstNames>
+          <lastName>Laporte</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>148</volume>
+      <issue>1</issue>
+      <pageFrom>1</pageFrom>
+      <pageTo>13</pageTo>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref10</id>
+      <referenceIdString>b9</referenceIdString>
+      <title>The symmetric generalized traveling salesman polytope</title>
+      <source>Networks</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Fischetti</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>J</string>
+            <string>J</string>
+          </firstNames>
+          <lastName>Salazar Gonzalez</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>P</string>
+          </firstNames>
+          <lastName>Toth</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>26</volume>
+      <issue>2</issue>
+      <pageFrom>113</pageFrom>
+      <pageTo>123</pageTo>
+      <publicationDateString>1995</publicationDateString>
+      <publicationYear>1995</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref11</id>
+      <referenceIdString>b10</referenceIdString>
+      <title>A tutorial on variable neighborhood search</title>
+      <source>HEC Montreal and GERAD</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>P</string>
+          </firstNames>
+          <lastName>Hansen</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>N</string>
+          </firstNames>
+          <lastName>Mladenovi´cmladenovi´c</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>L</string>
+            <string>C D</string>
+          </firstNames>
+          <lastName>Gerad</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <note>Les Cahiers du GERAD</note>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref12</id>
+      <referenceIdString>b11</referenceIdString>
+      <title>Variable neighborhood search</title>
+      <source>Handbook of Metaheuristics</source>
+      <publisher>Kluwer Academic Publisher</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>P</string>
+          </firstNames>
+          <lastName>Hansen</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>N</string>
+          </firstNames>
+          <lastName>Mladenovi´cmladenovi´c</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>145</pageFrom>
+      <pageTo>184</pageTo>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref13</id>
+      <referenceIdString>b12</referenceIdString>
+      <title>A tabu search heuristic for the vehicle routing LITERATURVERZEICHNIS problem with time windows and split deliveries</title>
+      <source>Computers and Operations Research</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>S</string>
+            <string>C</string>
+          </firstNames>
+          <lastName>Ho</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>D</string>
+          </firstNames>
+          <lastName>Haugland</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>31</volume>
+      <pageFrom>1947</pageFrom>
+      <pageTo>1964</pageTo>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref14</id>
+      <referenceIdString>b13</referenceIdString>
+      <title>Variable neighborhood descent with self-adaptive neighborhood-ordering</title>
+      <source>Proceedings of the 7th EU/MEeting on Adaptive, Self-Adaptive, and Multi-Level Metaheuristics</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>B</string>
+          </firstNames>
+          <lastName>Hu</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>G</string>
+            <string>R</string>
+          </firstNames>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2006</publicationDateString>
+      <publicationYear>2006</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref15</id>
+      <referenceIdString>b14</referenceIdString>
+      <title>A new branch-and-cut algorithm for the capacitated vehicle routing problem</title>
+      <source>Mathematical Programming</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>J</string>
+          </firstNames>
+          <lastName>Lysgaard</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A</string>
+            <string>N</string>
+          </firstNames>
+          <lastName>Letchford</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>R</string>
+            <string>W</string>
+          </firstNames>
+          <lastName>Eglese</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>100</volume>
+      <issue>2</issue>
+      <pageFrom>423</pageFrom>
+      <pageTo>445</pageTo>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref16</id>
+      <referenceIdString>b15</referenceIdString>
+      <source>A variable neighborhood algorithm-a new metaheuristic for combinatorial optimization. Abstracts of papers presented at Optimization Days</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>N</string>
+          </firstNames>
+          <lastName>Mladenovi´cmladenovi´c</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1995</publicationDateString>
+      <publicationYear>1995</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref17</id>
+      <referenceIdString>b16</referenceIdString>
+      <title>On the capacitated vehicle routing problem</title>
+      <source>Mathematical Programming Series</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>T</string>
+          </firstNames>
+          <lastName>Ralphs</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>L</string>
+          </firstNames>
+          <lastName>Kopman</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>W</string>
+          </firstNames>
+          <lastName>Pulleyblank</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>L</string>
+            <string>T</string>
+          </firstNames>
+        </ReferenceAuthor>
+      </authors>
+      <volume>94</volume>
+      <issue>B</issue>
+      <pageFrom>1</pageFrom>
+      <pageTo>19</pageTo>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref18</id>
+      <referenceIdString>b17</referenceIdString>
+      <title>The Vehicle Routing Problem</title>
+      <source>Monographs on Discrete Mathematics and Applications</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>P</string>
+          </firstNames>
+          <lastName>Toth</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>D</string>
+          </firstNames>
+          <lastName>Vigo</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2002</publicationDateString>
+      <publicationYear>2002</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref19</id>
+      <referenceIdString>b18</referenceIdString>
+      <title>Heuristics for vehicle routing problem with time</title>
+      <source>Windows, 6th AI and Math</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>K</string>
+            <string>Q</string>
+          </firstNames>
+          <lastName>Zhu</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>K</string>
+            <string>C</string>
+          </firstNames>
+          <lastName>Tan</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>L</string>
+            <string>H</string>
+          </firstNames>
+          <lastName>Lee</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2000</publicationDateString>
+      <publicationYear>2000</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+  </references>
+</Publication>

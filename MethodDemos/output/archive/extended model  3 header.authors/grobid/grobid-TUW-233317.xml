@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">QualityTrails: Data Quality Provenance as a Basis for Sensemaking</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Christian</forename><surname>Bors</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Institute of Software Technology &amp; Interactive Systems (ISIS)</orgName>
+								<orgName type="institution">Vienna University of Technology</orgName>
+								<address>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Theresia</forename><surname>Gschwandtner</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Institute of Software Technology &amp; Interactive Systems (ISIS)</orgName>
+								<orgName type="institution">Vienna University of Technology</orgName>
+								<address>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Silvia</forename><surname>Miksch</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Institute of Software Technology &amp; Interactive Systems (ISIS)</orgName>
+								<orgName type="institution">Vienna University of Technology</orgName>
+								<address>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<author role="corresp">
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Johannes</forename><forename type="middle">G ¨</forename><surname>Artner</surname></persName>
+							<email>gaertner@ximes.com</email>
+							<affiliation key="aff1">
+								<orgName type="department">XIMES GmbH, Vienna</orgName>
+								<address>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">QualityTrails: Data Quality Provenance as a Basis for Sensemaking</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>data provenance</term>
+					<term>analytic provenance</term>
+					<term>sensemaking</term>
+					<term>data quality</term>
+					<term>quality metrics</term>
+					<term>visual data analysis Index Terms: Human-centered Computing [Visualization]: Vi-sualization application domains-Visual Analytics Mathematics of computing [Probability and statistics]: Statistical paradigms-Exploratory data analysis</term>
+				</keywords>
+			</textClass>
+			<abstract>
+				<p>Visual Analytics prototypes increasingly support human sensemak-ing through providing Provenance information. For data analysts the challenge of knowledge generation starts with assessing the quality of a data set, but Provenance is not yet utilized to aid this task. This position paper aims at characterizing the complexity of Visual Analytics methods introducing Provenance in Data Quality by highlighting the challenges of (1) generating Provenance from Data Quality Control and (2) sensemaking based on Data Quality Provenance.</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">INTRODUCTION</head><p>In Data Quality (DQ) assessment one of the central questions is, 'Is the Data Quality good enough for analysis to produce meaning- ful results?' The quality of data analysis is highly dependent on the quality of the underlying data. Thus, a prerequisite of any data analysis, such as creating visualizations and performing analytical reasoning, is assessing and improving DQ. Data cleansing is an it- erative task that requires user expertise and domain knowledge of the data provided <ref type="bibr" target="#b6">[7]</ref>. DQ control can be understood as a combina- tion of data quality assessment, the data cleansing process, as well as applying transformations to change a data set's structure. Kandel et al. <ref type="bibr" target="#b6">[7]</ref> argue that integrating interactive and visual systems could facilitate these tasks as well as data verification.</p><p>Yet, the analyst is left with the decision about when quality is sufficient to start analysis, or if the data is worth further manipulat- ing at all. Sensemaking is an integral part of Visual Analytics (VA). During DQ assessment the analyst needs to take into account not only the actual data, but also implicit information, like how the data was created or its transformation history. A data set already might have been analyzed by someone else, generating a transformation history or other insight. This information could be helpful for fur- ther analysis. Provenance conceives this information and makes it available to the data analyst. Establishing a model for sensemaking to grasp the context of a data set benefits knowledge discovery.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">CHALLENGES</head><p>We reviewed the state-of-the-art of Provenance generation <ref type="bibr" target="#b10">[11]</ref>, Provenance in VA <ref type="bibr" target="#b9">[10]</ref>, as well as sensemaking in VA <ref type="bibr" target="#b0">[1,</ref><ref type="bibr" target="#b12">13]</ref>, and lastly Provenance in DQ assessment <ref type="bibr" target="#b4">[5,</ref><ref type="bibr" target="#b1">2]</ref>. In the following sec- tions we illustrate our results, i.e., the current VA approaches that combine DQ with Provenance to aid analysts in their task of making sense of data. Furthermore we derive open problems and challenges for Provenance in DQ analysis and contemplate possible solutions.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">Provenance from Data Quality Control</head><p>Data Provenance information is primarily utilized for resolving conflicting data sets and estimating data reliability based on lin- eage <ref type="bibr" target="#b2">[3,</ref><ref type="bibr" target="#b13">14]</ref>. Hartig <ref type="bibr" target="#b4">[5]</ref> suggests to use a Provenance model in DQ to assess metrics like accuracy, reliability, or timeliness of data, which partly conforms with the above mentioned use of conflict resolution.</p><p>However, there are just a few approaches that denote how Prove- nance information could be used for DQ improvement and assess- ment. In the following sections we propose approaches to outline which Provenance information is suited to aid these tasks and how it should be gathered.</p><p>Generating Provenance from Data Cleansing Opera- tions. Some data analysis tools incorporate the concept of log- ging the actions of data manipulation <ref type="bibr" target="#b7">[8]</ref>. Generating Provenance from cleansing operations is a promising approach. By now, this information is merely presented in textual form and used for track- ing purposes rather than DQ assessment. Provenance information from data exploration and transformation can be obtained by trac- ing transformation steps, cleansing operations, etc. in a log for later inspection.</p><p>The Open Provenance Model <ref type="bibr" target="#b10">[11]</ref> (OPM) has been developed to depict Provenance information through an Artifact, Process, and Agent model. DQ assessment and cleansing operations can be ap- plied to this model as means of tracking the action history of qual- ity assessment, employing data sources, similar to artifacts, trans- formation functions, comparable to processes, and analysts, inter- pretable as agents. The model's design is generic enough to support this task. It provides a good overview of which actions have been taken by other analysts. However, this approach does not consider implicit information about data generation sources or information based on the analyst's experiences while cleansing operations are omitted. Thus, it is necessary to either investigate the extensibility of this model or to find other solutions that are suited to convey this information.</p><p>Generating Provenance from Annotated Data. As a common way of propagating insightful information to collaborators or analysts annotations are employed to further analyze the data <ref type="bibr" target="#b8">[9]</ref>. They can be seen as a type of Provenance information and allow for manually adding information about the conditions under which the data have been created or manipulated. This information is impor- tant to analysts in order to correctly assess the DQ and to be aware of all kinds of background information.</p><p>Hullman et al. <ref type="bibr" target="#b5">[6]</ref> proposed automatically adding narrative an- notations to line-charts of stock visualizations. They stress the im- portance of using annotations as an additional information source to support sensemaking. In existing data analysis approaches anno- tation is not directly incorporated, but analysts rely on informal in- formation and consider it in their sensemaking process. We propose administrating annotations about data sources and quality cleansing operations as Provenance information.</p><p>Generating Provenance from Quality Metrics. In Data Quality Management one approach to measuring Data Quality is computing Data Quality Metrics <ref type="bibr" target="#b11">[12]</ref> (QM). The aim is to find structural or measurement errors by means of computation. This is a task that requires comprehensive knowledge about the error sources and causes, as well as how they manifest in the data. Met- rics can be used to both give overview on a data set and simulta- neously give detailed information on specific values, by being cal- culated on multiple granularity levels. Errors in the data set are propagated to high level overviews and can still be easily tracked by browsing lower aggregation layers.</p><p>With quality problems being resolved over time, also the qual- ity measures improve and indicate a trend during DQ assessment. We propose utilizing development of the data quality -as indicated by QM computed at different points in time -as Provenance. We contemplate that an analyst can determine if the quality is sufficient for analysis from assessing gradual quality improvement over time, comparing the current status to the data's original condition.</p><p>We contemplate combining visualizations of different Prove- nance information types into interactive views that employ linking and brushing. Within these multiple views annotations could be used to accentuate significant events and draw conclusions. Pro- viding such visualizations in addition to Provenance graphs would provide enriched means for DQ aware data analysis, i.e., different kinds of visualization for different analysis tasks.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">OUTLOOK</head><p>We have described approaches to generate Provenance from data cleansing operations, from annotations, as well as from meta in- formation based on QM. Logging this information allows their in- tegration into computation processes and it can be used to deduce patterns and learn about domain specific traits. Another challenge is to design means that foster the integration of DQ Provenance into sensemaking.</p><p>In our upcoming research we aim at tackling the challenges charac- terized above by developing a DQ control prototype that incorpo- rates data cleansing and transformation operations as well as em- ploying Provenance information to support analysts in their sense- making tasks.</p><p>ACKNOWLEDGMENTS This work is part of the the Laura Bassi Cen-</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">Sensemaking based on Data Quality Provenance</head><p>tre of Expertise CVAST is funded by the Austrian Federal Ministry of Econ- omy, Family and Youth (project number: 822746).</p><p>It is not enough to capture Provenance information about DQ, it also needs to be integrated into sensemaking. Making sense of data is a highly complex task, which requires the analyst to be aware of the circumstances under which the data have been generated and by which contingencies they were influenced. The diversity of Prove- nance information can be significant. It is necessary to determine ways of efficiently presenting various types of Provenance informa- tion to the analyst without obstructing data cleansing operations.</p><p>In general, DQ improvement is used to prepare a data set for sub- sequent analysis. Attfield et al. <ref type="bibr" target="#b0">[1]</ref> suggest that analysts aim at gen- erating a model of sensemaking based on their semantic knowledge in combination with available information. We identify three itera- tive phases in the course of DQ assessment and sensemaking where the analyst combines his/her semantic knowledge with information about the data set and its respective Provenance information: (1) The analyst decides if the data is usable, based on the Prove- nance information that has been provided. (2) The analyst has a certain goal in mind what to do with the data in the subsequent analysis and thus he/she transforms and refines the data to achieve an output that supports sensemaking in this spe- cific context. (3) Based on the Provenance information the analyst determines his/her confidence in the data, and thus, in the analysis results and interprets the outcome accordingly.</p><p>One way of further supporting the sensemkaing process is the use of efficient visualizations, providing the necessary information in a suitable format.</p><p>Visualizing Provenance from Data Quality Assess- ment. Provenance for sensemaking in DQ has the potential to provide substantial additional information to the analyst. It is nec- essary to develop means of visually propagating this information to him/her. Analytic Provenance approaches resort to graph-or tree- like visualization techniques to develop visual representations of Provenance graphs <ref type="bibr" target="#b4">[5,</ref><ref type="bibr" target="#b12">13,</ref><ref type="bibr" target="#b9">10]</ref>. Attfield et al. <ref type="bibr" target="#b0">[1]</ref> suggest to em- ploy visualization prototypes to provide indicators that let analysts hypothesize on the data.</p><p>Carata et al. <ref type="bibr" target="#b3">[4]</ref> claim that little research has been put into al- ternative visualization techniques, aside from node-link represen- tations. We propose novel ideas on how to utilize Provenance information to generate visual aids in a DQ assessment environ- ment. Which types of visual aids are suited for this task depends, of course, on the type of information. QM measure data properties over time, and are usually normalized. This implies that a contin- uous multivariate line-chart could properly visualize such informa- tion and support the decision-making process of the data analyst. Manual annotations could serve as guiding-points in either data ta- ble views or in the suggested line-chart visualizations of QM devel- opment over time, similar to Hullman et al. <ref type="bibr" target="#b5">[6]</ref>.</p></div>		</body>
+		<back>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Sensemaking in visual analytics: Processes and challenges</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><forename type="middle">J</forename><surname>Attfield</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><forename type="middle">K</forename><surname>Hara</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><forename type="middle">L W</forename><surname>Wong</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">EuroVAST 2010: Intern. Symp. on VAST</title>
+		<editor>J. Kohlhammer and D. Keim</editor>
+		<meeting><address><addrLine>Bordeaux, France</addrLine></address></meeting>
+		<imprint>
+			<publisher>Eurographics Association</publisher>
+			<date type="published" when="2010" />
+			<biblScope unit="page" from="1" to="6" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Batini</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Scannapieco</surname></persName>
+		</author>
+		<title level="m">Data Quality: Concepts, Methodologies and Techniques (Data-Centric Systems and Applications)</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Why and where: A characterization of data provenance</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Buneman</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Khanna</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">W</forename><forename type="middle">C</forename><surname>Tan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Intern. Conf. DB Theory</title>
+		<editor>J. V. d. Bussche and V. Vianu</editor>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="1973" />
+			<biblScope unit="page" from="316" to="330" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">A primer on provenance</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><surname>Carata</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Akoush</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">N</forename><surname>Balakrishnan</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><surname>Bytheway</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Sohan</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Seltzer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Hopper</surname></persName>
+		</author>
+		<idno>10:10-10:23</idno>
+	</analytic>
+	<monogr>
+		<title level="j">Queue</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<date type="published" when="2014-03" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Using web data provenance for quality assessment</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">O</forename><surname>Hartig</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Zhao</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">CEUR Workshop Proceedings. CEUR-WS.org</title>
+		<editor>J. Freire, P. Missier, and S. S. Sahoo</editor>
+		<imprint>
+			<date type="published" when="2009-10" />
+			<biblScope unit="volume">526</biblScope>
+		</imprint>
+	</monogr>
+	<note>SWPM</note>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Contextifier: Automatic generation of annotated stock visualizations</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Hullman</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">N</forename><surname>Diakopoulos</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><surname>Adar</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. SIGCHI Conf. Human Factors in Computing Systems, CHI &apos;13</title>
+		<meeting>SIGCHI Conf. Human Factors in Computing Systems, CHI &apos;13<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2013" />
+			<biblScope unit="page" from="2707" to="2716" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Research directions in data wrangling: Visualizations and transformations for usable and credible data</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Kandel</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Heer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Plaisant</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Kennedy</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Van Ham</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">N</forename><forename type="middle">H</forename><surname>Riche</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Weaver</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Brodbeck</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Buono</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Inf. Vis. Journal</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="271" to="288" />
+			<date type="published" when="2011" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Profiler: Integrated statistical analysis and visualization for data quality assessment</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Kandel</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Parikh</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Paepcke</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><forename type="middle">M</forename><surname>Hellerstein</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Heer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. Intern. Working Conf. Advanced Visual Interfaces, AVI &apos;12</title>
+		<meeting>Intern. Working Conf. Advanced Visual Interfaces, AVI &apos;12<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2012" />
+			<biblScope unit="page" from="547" to="554" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">User-centric annotation management for biological data</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Q</forename><surname>Li</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Labrinidis</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Chrysanthis</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Provenance and Annotation of Data and Processes</title>
+		<editor>J. Freire, D. Koop, and L. Moreau</editor>
+		<meeting><address><addrLine>Berlin Heidelberg</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2008" />
+			<biblScope unit="volume">5272</biblScope>
+			<biblScope unit="page" from="54" to="61" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Analytic trails: Supporting provenance, collaboration, and reuse for visual data analysis by business users</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Lu</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Z</forename><surname>Wen</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Pan</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Lai</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. 13th IFIP TC 13 Int. Conf. HCI-Vol. IV, INTERACT&apos;11</title>
+		<meeting>13th IFIP TC 13 Int. Conf. HCI-Vol. IV, INTERACT&apos;11<address><addrLine>Berlin, Heidelberg</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2011" />
+			<biblScope unit="page" from="256" to="273" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">The open provenance model core spec. (v1.1)</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><surname>Moreau</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Clifford</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Freire</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Futrelle</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Y</forename><surname>Gil</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Groth</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">N</forename><surname>Kwasnikowska</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Miles</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Missier</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Myers</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Plale</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Y</forename><surname>Simmhan</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><surname>Stephan</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><forename type="middle">V D</forename><surname>Bussche</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Future Gen. Computer Systems</title>
+		<imprint>
+			<biblScope unit="volume">27</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="743" to="756" />
+			<date type="published" when="2011" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<monogr>
+		<title level="m" type="main">Handbook of Data Quality</title>
+		<editor>S. Sadiq</editor>
+		<imprint>
+			<date type="published" when="2013" />
+			<publisher>Springer Verlag</publisher>
+			<pubPlace>Berlin, Heidelberg</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Supporting the analytical reasoning process in information visualization</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Y</forename><forename type="middle">B</forename><surname>Shrinivasan</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><forename type="middle">J</forename><surname>Van Wijk</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. SIGCHI Conference on Human Factors in Computing Systems, CHI &apos;08</title>
+		<meeting>SIGCHI Conference on Human Factors in Computing Systems, CHI &apos;08<address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2008" />
+			<biblScope unit="page" from="1237" to="1246" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">A survey of data provenance in e-science</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Y</forename><forename type="middle">L</forename><surname>Simmhan</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Plale</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Gannon</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">SIGMOD Rec</title>
+		<imprint>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="31" to="36" />
+			<date type="published" when="2005-09" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

@@ -1,0 +1,1917 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main"></title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+				<date>v Contents Contents 6 Conclusions 55 7 References 57 vi</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published">v Contents Contents 6 Conclusions 55 7 References 57 vi</date>
+						</imprint>
+					</monogr>
+					<note>Erklärung zur Verfassung der Arbeit Ioana Jucu Martir Herman Sporer, Timisoara, Timis, Romania Hiermit erkläre ich, dass ich diese Arbeit selbständig verfasst habe, dass ich die verwendeten Quellen und Hilfsmittel vollständig angegeben habe und dass ich die Stellen der Arbeit -einschließlich Tabellen, Karten und Abbildungen -, die anderen Werken oder dem Internet im Wortlaut oder dem Sinn nach entnommen sind, auf jeden Fall unter Angabe der Quelle als Entlehnung kenntlich gemacht habe. (Ort, Datum) (Unterschrift Verfasserin) ii</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<abstract>
+				<p>Acknowledgements I would like to express my very great appreciation to Dr. Laura Kovács for her valuable and constructive suggestions during the planning and development of this research work. Her willingness to give her time so generously has been very much appreciated. I would also like to thank Mr. Ioan Dr˘ agan for his support with one of the tools needed. iii Abstract Invariant genereation is a critical problem in proving different properties for programs with loops, properties including correctnes. The problem becomes harder with the incresing numbers of quantifiers in the property to be proven. In this paper we study and combine different methods of invariant generation in order to obtain stronger properties. iv Kurzfassung Invariant generiert ist ein kritische Problem für Programmen mit Schleife zum Beweisen der Eigenschaften, inclusive die Richtigkeit. Die problem wird schwerer bei hohe Anzhal des Quantoren in die geprüfte Eigenschaft. In diese arbeit wir studiere diese Problem und versuchen combinieren verschieden Methoden für schwarer invariants zu beweisen.</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">Introduction</head><p>The complexity of software systems is in a continuous grow. Making sure that different pieces of the same system will work together properly is a hard task. The development of software systems imply the work of more people working at different parts of it, using computer, networks, physical devices, and over millions of lines of code in various languages. Integrating, understanding and ensuring the reliability of such a system are necessary task in order to make it useful.</p><p>In this paper we give attention to the task of ensuring reliability. In the past years a lot of interest was given to this task and there were developed different methods to do it, but one challenge that was not yet overcome is the analysis of loops. In particular programs dealing with arrays use loops to process the elements, and on the strength to the unbounded nature of this data structures analyzing and inferring properties for elements becomes a challenging problem on its own.</p><p>One way to approach this problem is to bound the loop <ref type="bibr">[BCC + 03]</ref>, un- folding it just a limited number of times and afterwards analyzing the new obtained program as if no loop would occur in it. Although this approach is successfully used in model checking techniques, the limitations of applying it consist in the loss of completeness of the algorithm. An informal explana- tion of this fact is that obtaining a proof that a bounded subset of elements do not have a certain property is a result strong enough to consider that the property does not hold for the entire loop, but if the property holds for the first n unrollings of the loop it may be the case that it will be falsified in one of the following iterations that were cut off by the bound.</p><p>Another approach to reason about program loops is to statically analyze the code and extract loop properties automatically. In this thesis we follow this approach. We are going to analyze and compare three methods that automatically extract properties for loops. These methods are the symbol elimination method of <ref type="bibr">[KV09]</ref>, the constraint-based invariant generation ap- proach of <ref type="bibr">[LRCR13]</ref>, and the postcondition-based method of <ref type="bibr">[FM10]</ref>. We analyze and compare these approaches on series of challenging academic examples which are considered difficult to reason about.</p><p>The symbol elimination technique is an automatically mechanism that generates invariants based on the static analysis of programs, that does not require other information from the user about the code analyzed. For this method we use a saturation theorem prover and we choose Vampire not only for it's capability to reason with different theories but also due to the fact that is one of the fastest provers awarded several times in competitions.</p><p>The constraint-based method first analyses the code discovering every possible path and checking if properties hold in some key points along them. In the next chapters we are going to explain where and why a point in the path becomes such a key point. Properties that are checked are constructed based on a template following some rules that will also be presented later in the paper.</p><p>The third method is the only one from the three presented that needs additional input from the user, namely a postcondition in the form of a formula. The program makes certain changes in the formula, that will be described later on, in order to find valid invariants for the program.</p><p>Using the invariants discovered by the constraint-based and postcondition- based methods, in this thesis we further extend the power of symbol elim- ination in order to reason about more complex loops and invariants than in <ref type="bibr">[KV09]</ref>. For doing so, we strengthen the underlining first-order theory reasoning engine of symbol elimination and add additional mathematical theorems and axioms to the symbol elimination problem. The symbol elim- ination problem is then further fed into a saturation theorem prover and is successfully used to prove the intended loop invariants and properties of the program. Our results show that theory reasoning in first-order theorem proving is a very challenging problem and requires a good understanding of the necessary theory axiomatizations.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">Preliminaries</head><p>In this section we give a brief overview of SAT solving, SMT solving and Saturation theorem prover. Also we give insight of the mechanism of Boogie theorem prover. These are necessary for further understanding the mecha- nism of the tools we are studying in this paper, and since all of them have at their core first-order logic we also present its syntax and semantics.</p><p>We present all the above in a step wise manner starting with proposi- tional logic. Based on the syntax and semantic of propositional logic it is easier to understand the ones of first-order logic, since the latter one ex- tends the expressive power of the former by introducing new characters and concepts.</p><p>In the same step wise manner we present SAT-solving and SMT-solving. The first problem is related to propositional logic, while the second one makes use of the results obtained in SAT-solving as a subroutine in the algorithm for solving problems encoded in first-order logic.</p><p>Also we present the mechanism of a saturation theorem prover, The understanding of this concept is necessary in order to understand the differ- ences between the methods of invariant generation and the properties that make them efficient in different types of problems.</p><p>Another point that is touched in this chapter is the higher order logic theorem prover Boogie, that has more expressive power than the other tools introduced in this paper and also uses a language specially created for it that has a syntax harder to understand than the others.</p><p>We are going to present how these concept interact to each other and with the underlying theory, relating their results with the concept of program verification.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">Propositional logic</head><p>Is a part of mathematics important for program verification. The least com- plex component in the syntax of propositional <ref type="bibr">[DW50]</ref> logic is an atom. Every atom has a truth value, either true or false, and it represents a state- ment (such as " Roses are red.") without taking into account its internal structure.</p><p>In order to get more complex propositions the atoms can be connected with connectives. The propositional syntax is defined as follows:</p><p>1. If p is an atom, then p is a proposition;</p><p>2. and ⊥ are propositions;</p><p>3. If p is a proposition, ¬p is a proposition;</p><p>4. if p and q are propositions, then p • q is a proposition, where • ∈ {∧, ∨, ⇒, ⇔} Given two propositions, p and q, the following statements hold for the described connectives:</p><p>• ¬ ("negation"), if ¬p is true if p is false, and false otherwise;</p><p>• ∧("and"), if p is true and q is true then p ∧ q is true, otherwise p ∧ q is false;</p><p>• ∨ ("or"), if one of the the two propositions are set to true then p ∨ q is true, otherwise p ∨ q is false;</p><p>• ⇒ ("if...then"), if p is true and q is true, or if q is false p ⇒ q is true, otherwise is false;</p><p>• ⇔ ("if and only if...then"), if p and q are set to the same truth value then p ⇔ q is true, otherwise is false;</p><p>To make the propositions easier to read and write, and to save parenthe- ses the connectives have priorities as follows: ¬, ∧, ∨, ⇒, ⇔(meaning that ¬ binds stronger than ∧, ∧ binds stronger than ∨, etc.).</p><p>The problem of determining if the atoms that form a proposition can be given truth values in such a way that the proposition would evaluate to true is called satisfiability problem (abbreviated as SAT).</p><p>Example: p, r, q are atoms in propositional logic, and p ∨ q ⇒ r ∨ q is a syntax correct formula. Choosing the values as follows: p → f alse, r → f alse and q → true will cause the formula to evaluate to true (since p ∨ q evaluates to true, r ∨ q evaluates to true).</p><p>Satisfiability problem is an NP-complete problem <ref type="bibr">[Coo71]</ref>. The complex- ity and nature of this problem makes it useful in modeling different problems such as digital circuits, constraint satisfaction problems, reasoning about specifications.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">SAT solvers</head><p>These are tools that are constructed to solve SAT problems <ref type="bibr">[ES04]</ref>. Despite the high complexity of the problem, very good results were obtained in practice with yearly improvements of the solving algorithms and heuristics for the SAT-solving contest.</p><p>In <ref type="figure">figure 1</ref> we present a scheme on how a SAT solver is used to solve a problem.</p><p>The first step is to abstract the problem into a set of propositions. Usu- ally the problem can not be abstracted straightforward so some simplifica- tion is needed. After finding a suitable representation of the problem as a set of formulae use a SAT solver to find a solution. If a solution is not find specific improvements are made in order to get a more efficient search.</p><p>The SAT solvers take the input formulae in a special form named con- junctive normal form. Every propositional formula can be transformed in <ref type="figure">Figure 1</ref>: SAT solver structure an equi-satisfiable formula that satisfies the conditions of the CNF <ref type="bibr">[G.S83]</ref>. A formula is said to be in conjunctive normal form if it is a conjunction of clauses, where a clause is a disjunction form from atoms or negation of atoms.</p><p>The next algorithm called boolean constant propagation(BCP) [TH06] is a part of the algorithm that stays at the basis of a lot of modern SAT solvers.This is a very short algorithm with three steps that repeat as long as possible:</p><p>1. find clause that contains a single literal (also named unit clause);</p><p>2. eliminate all clauses that contain the literal;</p><p>3. in all other clauses eliminate the occurrence of the negation of the literal;</p><p>The DPLL[DL62] algorithm was developed in 1962 and still used to this day in the state of the art SAT solvers. One variant of the algorithm is this: DPLL(F) F := BCP(F) i f F = r e t u r n s a t i s f i a b l e i f ⊥ ∈ F r e t u r n u n s a t i s f i a b l e p i c k r e m a i n i n g v a r i a b l e x and l i t e r a l l ∈ {x , ¬ x} i f DPLL(F ∧ { l } ) r e t u r n s s a t i s f i a b l e r e t u r n s a t i s f i a b l e r e t u r n DPLL(F ∧ {¬ l } )</p><p>The idea of the algorithm is simple and efficient. First boolean constant propagation is applied, if there are no more clauses remaining, the algorithm returns satisfiable, if a clause becomes empty after this step the algorithm re- turns unsatisfiable. Otherwise a literal is selected from the remaining clauses and DPLL is called on these clauses plus an extra unit clause containing the selected literal.</p><p>The selection of the literal has a great significance in the efficiency of the SMT solver. A lot of heuristics were developed an studied in order to get better results. These are a few ideas that were used for the heuristics:</p><p>• Dynamic Largest Individual Sum <ref type="bibr">[MSS99]</ref>: the literal that appears most often in the unsatisfied clauses at the current point is chosen;</p><p>• Jeroslov-Wang heuristic <ref type="bibr">[Wan95]</ref>: the choices are made such that a unit clause is soon obtained;</p><p>• VSIDS <ref type="bibr">[MMZ + 11]</ref>: is a complex heuristic that takes into account par- tial assignments that are unsatisfiable, and based on a directed acyclic graph of the solution it chooses a literal that is part of the unsatisfied clause;</p><p>Although SAT cover a significant range of problems, propositional logic is not expressive enough to cover other problems of practical interest, this is why first order logic got attention for this purpose. Since the problem of satisfiability is harder in this logic there were restrictions made with respect to some theory. This new problem is referred to as Satisfiability Modulo Theory (SMT) <ref type="bibr">[dMB11]</ref>.</p><p>The first order logic (FOL) syntax is more complex <ref type="bibr">[And02]</ref>. There are two extra logical symbols to propositional logic: the quantifiers ∀ (universal- for representing judgments that are true for all objects) and ∃ (existential- for representing particular judgments). There are also two other types of symbols: functions and predicates. Function symbols together with the predicates symbols along with their arity form the signature.</p><p>Terms in FOL are defined inductively as follows:</p><p>• every variable is a term;</p><p>• if t 1 , t 2 ...t n are terms and f is a function symbol with arity n then</p><formula xml:id="formula_0">f (t 1 , t 2 , ...t n ) is a term;</formula><p>The signature is a countably set of predicate symbols and function sym- bols together with their arity.</p><p>The set of formulas are defined inductively in the following way:</p><p>• and ⊥ are formulae;</p><p>• if t 1 , t 2 ...t n are terms and p is a function symbol with arity n then p(t 1 , t 2 , ...t n ) is a formula;</p><p>• if φ is a formula then ¬φ is a formula;</p><p>• if φ and ϕ are formulae then also φ • ϕ is a formula where • ∈ {∧, ∨, ⇒ , ⇔};</p><p>• if φ is a formula and x a variable then ∃xφ and ∀xφ are formulae;</p><p>A variable is called free if it is not bounded by a quantifier (∃, ∀). Example: ∀x, p(x) ⇒ p(y), x is bounded by the existential quantifier while y is a free variable.</p><p>The semantics of a first order logic formula is given by an interpretation. The interpretation consist of an non-empty domain U and an interpretation function I().</p><p>The interpretation function maps in the following way given the domain U :</p><p>• every function symbol of arity 0 (constant symbol ) with a element from the domain;</p><p>• every for every function symbol f with arity &gt; 0 I(f ) : U n → U (for every n combination of terms the value of the function for the combination is a value in the domain);</p><p>• for every predicate symbol p with arity n I(p) : U n → {1, 0} (for every n combination of terms the value of the function for the combination is a value in the set {1, 0}, 1 representing true and 0 representing f alse)</p><p>The free variables can be interpreted in two ways: either universally quantify the formula or bound the variable to a constant in the domain.</p><p>A theory in first order logic is considered any set of formulae that do not contain free variables <ref type="bibr">[DP60]</ref>. A formula without any free variables is also called sentence.</p><p>A SMT-solver is a tool that takes as input a set of first order formulae and gives as output the answer satisfiable or unsatisfiable, taking into ac- count information and methods of some first order theories when needed. In <ref type="figure">figure 2</ref> there is the structure of a modern SMT-solver <ref type="bibr">[DdM06]</ref>. The core solver in the figure refers to a solver that can solve the satisfiability problem for equality and uninterpreted functions theory, while the satellite solver handles other theories such as arithmetical, arrays, bit vectors, or data types. Let there be observed that the satellite solver exchanges infor- mation only with the core solver, the core solver communicates both with the satellite solver and the SAT-solver, and the SAT solver communicates only with the core solver.</p><p>A general algorithm for SMT solver <ref type="bibr">[AAR09]</ref>is presented in the following lines:</p><formula xml:id="formula_1">SAT−v a l u e SMT solver (T−f o r m u l a φ ) { φ = convert t o c nf (φ)</formula><p>Figure 2: SMT solver structure</p><formula xml:id="formula_2">φ p =T2P( φ ) w h i l e (DPLL( φ p , µ p )==SAT) { η = T − solver(P 2T (µ p ) ) i f ( ρ == SAT ) r e t u r n s a t φ p = φ p ∧ T 2P (¬η)</formula><p>} r e t u r n u n s a t }</p><p>The algorithm takes as input a a formula in the theory T an outputs satisfiable or unsatisfiable. The first step is to convert the formula in it's CNF form and store this form in a new variable φ . φ is abstracted into its propositional form (by the (T 2P ) function) and stores the new proposi- tional formula in φ p . The DPLL algorithm takes as input the propositional formula and either returns unsatisfiable which makes the initial algorithm to return unsatisfiable, or it returns a satisfying assignment on the literals of the formula. The T −solver then checks the mapping of the formula back to the theory (with the assignment proposed by SAT-solver) and either re- turns satisfiable, which causes the main algorithm to exit with the status satisfiable, or it returns a set η of literals that caused an inconsistency in the theory. η is abstractive to propositional logic and its negation is conjuncted with the rest of the abstractisation of the formula formula, and DPLL is called again on the new obtained formula. Given a hypotheses (in this case this is the formula) if we can reach the empty set (refutation) by using an inference system, this would give us a refutation proof. An inference system is a set of inference rules. An inference rule is can be described as being an n-ary relation on formulas, with n ≥ 0. The elements of such relations are called inferences and usually written as</p><formula xml:id="formula_3">F 1 ...Fn F .</formula><p>Algorithms were developed in order to obtain interpolants and invariants from the proofs of unsatisfiability outputted by an SMT-solver.</p><p>A theorem prover is a tool used to prove theorems in different logics. A specific type of theorem provers are the saturation theorem provers. We say that a set of formulas is saturated with respect to an inference system I if we can find another set of formulas containing the initial one that is closed under inference with respect to I <ref type="bibr">[KV09]</ref>.</p><p>The saturation theorem prover.Vampire, used for this study is using a su- perposition inference system. In order to give a brief description of this sys- tem first we introduce the notion of simplification ordering on terms <ref type="bibr">[KVar]</ref>. If an ordering has the following properties it is considered a simplification ordering:</p><p>• is well-founded, that is there exists no infinite sequence of terms t 0 , t 1 , . . . such that t 0 t 1 . . .;</p><p>• is monotonic: if l r, then s[l] s[r] for all terms s, l, r;</p><p>• is stable under substitutions: if l r, then lθ rθ (where a substitu- tion θ is considered a simultaneously replacement of all occurrences of a set of terms with another corresponding set of terms,respectively, in a formula);</p><p>• has the subterm property: if r is a subterm of l and l = r, then l r.</p><p>A selection function is a function that selects one or more literals from a non-empty clause. In what follows, selected literals will be underlined (if L is a selected literal then it would be written as L). A unifier of two expression is a substitution that would make the expressions equal. The inference rules for a superposition inference system are the following:</p><p>Resolution:</p><formula xml:id="formula_4">A ∨ C 1 ¬A ∨ C 2 (C 1 ∨ C 2 )θ</formula><p>where θ is a mgu of A and A . Factoring:</p><formula xml:id="formula_5">A ∨ A ∨ C (A ∨ C)θ</formula><p>where θ is a mgu of A and A . Superposition:</p><formula xml:id="formula_6">l = r ∨ C 1 L[s] ∨ C 2 l = r ∨ C 1 t[s] = t ∨ C 2 (L[r] ∨ C 1 ∨ C 2 )θ (t[r] = t ∨ C 1 ∨ C 2 )θ l = r ∨ C 1 t[s] = t ∨ C 2 (t[r] = t ∨ C 1 ∨ C 2 )θ</formula><p>where the following hold: θ is an mgu for l and s, s is not a variable, rθ lθ, in the first rule L <ref type="bibr">[s]</ref> is not an quality literal, in the last two rules t θ t[s]θ.</p><p>Equality Resolution:</p><formula xml:id="formula_7">s = t ∨ C Cθ</formula><p>where θ is the mgu of s and t. Equality factoring:</p><formula xml:id="formula_8">s = t ∨ s = t ∨ C (s = t ∨ t = t ∨ C)θ</formula><p>where θ is an mgu of s and s , tθ sθ, t θ tθ. A set S of clauses is saturated with respect to an inference system if for every possible combination of the clauses and for every rule in the system, a clause that is already in the system is inferred. A saturation algorithm is considered fair if all possible combinations of clauses and every rule get a chance to be applied at one point. In order for such an algorithm to be useful in practice it needs to besound and complete. A complete saturation algorithm will eventually derive the empty clause if the set of clauses is unsatisfiable, and a sound saturation algorithm will correctly conclude that the set of clauses is unsatisfiable if the empty clause is derivable from it. A complete and sound saturation algorithm can have the following outputs in practice:</p><p>• unsatisfiable, if the empty clause is generated;</p><p>• satisfiable, if the set of clauses is saturated;</p><p>• unknown, if the algorithm runs forever (until it runs out of resources) and the empty clause is not derived.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3">Boogie</head><p>Is a modular reusable verifier for object-oriented Programs <ref type="bibr">[BCD + 05]</ref>. This tool is made from different components: a source programming language, its usage rules and formal semantics, a logical encoding suitable for automatic reasoning, abstract domains for program analysis and property inference, decision procedures for discharging proof obligations, and a user interface that lets a user understand the results of the verification process <ref type="bibr">[BMSW10]</ref>. A representation of how all the components of Boogie interact is repre- sented in <ref type="figure" target="#fig_0">figure 3</ref>.</p><p>The source programming language, Spec#, is a high-level, strong typed language. It is a superset of the C# programming language, giving also The CIL code is obtained from an abstract syntax tree either directly from the compiler, which enables Boogie to work as part of the compiler and offer information to the user in a design-time manner, or from an already compiled .dll or .exe file.</p><p>The intermediate language is obtained by translating the CIL code in BoogiePL code. This process enables the writing of new statements: as- sert and assume. The assert statements are encode conditions that will be checked by the program verifier, and the assume statements encode prop- erties that can be used by the verifier, these properties being enforced by the source language and the verification process. Also BoogiePL permits the encoding of theories and mathematical symbols. Since BoogiePL has a textual representation small changes can be made in this file without dam- aging the Spec# code. Also the textual representation makes Boogie useful for other verifier, making the verification conditions reusable. At this point the code is replaced with the proof task.</p><p>The BoogiePL code is transformed into first order logic properties. For this process loop invariants are needed, and since providing this by hand is troublesome and sometimes impossible, Boogie offers a framework that automatically infers loop invariants from BoogiePL code, written in the form of "assume" statements.</p><p>The next step is to get verification condition from every basic block of the program. These are written in first order logic with arithmetic, and since there are more ways to write the same condition, the chosen form affects the performance of the theorem prover. Also the encoding of the conditions are made in such a way that if the verification fails a trace of failure can be mapped back in the original input language. A failure in verification can also be only spurious since the theorem prover is incomplete, and also it might be the case the the theorem prover could not do the task due to the fact that there were not enough resources.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">Overview of Invariant Generation Methods</head><p>There is a large variety of invariant generation approaches researched in the past years. In this chapter we present three of this methods which cover a large area of invariants that can be inferred and represent the state of the art in their representative domain. The tools implementing this methods were made available by their respective researchers. Although other methods were considered for this thesis the tools implementing them were not available at the moment from different reasons. The approach suggested has one of the following starting points for obtaining the result: post-conditions, saturation theorem proving, use of predefined templates. In what follows we are going to give an insight of the idea used in each of the three methods.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">GinPink</head><p>This method makes use of the postconditions provided by the user in order to find an invariant for a certain loop in the procedure <ref type="bibr">[FM10]</ref>.</p><p>There are four different heuristics that are used to weaken the postcon- dition: constant relaxation, variable aging, uncoupling, term dropping.</p><p>Constant relaxation replaces a constant in the postcondition with a vari- able. A constant is considered a variable that is not modified by the loop, and a variable -in this context-is a variable modified by the loop. An example were this heuristic is used is:  </p><formula xml:id="formula_9">ensure ( ∀ k 1 ≤ k ∧ k &lt; Result + 1 = A[k] ≤ pivot ) ∧ ( ∀ k Result &lt; k ∧ k ≤ n = A[k] ≥ pivot )</formula><p>The postcondition is assumed to be in conjunction normal form so ap- plying term dropping, means removing some terms from the formula in order to weaken it. An example where this method is applied is if in the function P artition we would like to ensure only ∀kResult &lt; k∧k ≤ n = A[k] ≥ pivot. This is still an invariant for the code.</p><p>In order to find the invariants for the loop, the algorithm considers first the postcondition without any weakening, and afterwards apply the four mentioned heuristics and check if the resulting formulas are invariants for the loop. The first heuristic applied is constant relaxation. There are to sets of candidates resulting from this step. The first set of candidates is obtained by replacing every occurrence of a constant with the same variable. The second set of candidates are obtained by uncoupled replacement of constants with variables.</p><p>This method relies on the Boogie verification tool to generate and prove verification conditions of programs. Proving verification conditions is done by using SMT reasoning.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Lingva</head><p>The idea of this method is to generate invariants of the loop in the form of first order logic formulae, by statically analyzing the code <ref type="bibr">[CC77]</ref>, and afterwards use theorem prover Vampire to eliminate the auxiliary symbols that occurred.</p><p>For this method the guarded assignments were introduce <ref type="bibr">[Dij75, MP92]</ref>. These are expressions of the form G → α 1 ; α 2 ; ...α m , where α i is either a scalar variable assignment or an array variable assignment, and G a formula (called guard).</p><p>The guards must be mutually exclusive but at least one of them true in every state. There must not be two assignments guarded by the same expression that can modify the same array term at one point, and the left- hand side of all assignments should be different.</p><p>After the loop is transformed such that it consist only of guarded assign- ments a static analysis tool is used <ref type="bibr">(Aligator[HHKR10]</ref>) to get invariants over scalar variables. From the invariants obtained loop properties are ex- tracted.</p><p>In order to deal with loop invariants there are introduced two predicates, named update predicate: upd V (i, p) (at iteration i the array V is updated at position p), upd V (i, p, x) (at iteration i the array v is updated at position p with the value x). These two predicates help us express two key properties for the arrays:</p><p>• an element in the array V ,V <ref type="bibr">[p]</ref>, is a constant if V is never updated at position p;</p><p>• if an element V [p] of an array V is last updated at iteration i, then this is the iteration in which V [p] gets its final value.</p><p>Another property that can be extracted from the loop is constant array, meaning that there is an array that is never updated.In this situation, adding in V ampire the property (∀i)(A (i) = A 0 ) helps on getting more useful in- variants.</p><p>Monotonicity properties can also be discovered at scalar variables by using a program analysis tool or a light-weight analysis. Variables can be strictly increasing/decreasing (∀i, (</p><formula xml:id="formula_10">v (i+1) &gt; v (i) )/∀i, (v (i+1) &lt; v (i) ))</formula><p>, increas- ing/decreasing, dense increasing/decreasing (meaning that the value of the variable is changed with at most 1 from the previous iteration).</p><p>Another class of properties that can be found are update properties of monotonic variables. These properties refer to the fact that there is an iteration i in the loop that modifies a monotonic variable when the value of this variables can be bounded in an interval.</p><p>Also the guarded assignments are transformed in properties that can be added to V ampire as theorems in order to get useful invariants.</p><p>After getting as many properties as possible V ampire is run on them so it would derive invariants without using the auxiliary functions and predicate symbols that were introduced in order to get scalar variables properties.</p><p>V ampire was chosen for this method because it can reason with linear integer arithmetic and it has implemented procedures to eliminate symbols. New axioms were introduced in V ampire in order to be able to deal with integer arithmetic:</p><formula xml:id="formula_11">• x ≥ y ⇔ x &gt; y ∨ x = y; • x &gt; y ⇒ x = y; • x ≥ y ∧ y ≥ z ⇒ x ≥ z;</formula><p>• s(x) &gt; x;(where s(x) is the successor function);</p><formula xml:id="formula_12">• x ≥ s(y) ⇒ x &gt; y;(where s(x) is the successor function).</formula><p>These new axioms enable a sound but incomplete reasoning.</p><p>Another trick is used to make V ampire deal with symbol elimination. First there are introduced new axioms for every assignment that has on the left hand-side a variable v: v (0) = v 0 , v (n) = v , where v (0) , v (n) are represent- ing variable v before the first iteration and after n-th iteration respectively. The newly introduced symbols are called target symbols. The goal is to derive only classes that contain only target symbols, interpreted symbols or skolem functions, but at least one target symbol or skolem function. Giving high precedence in the algorithm used by V ampire too the symbols that are not interesting in deriving the new clauses, vampire will eliminate these first.</p><p>Every clause derived that respects the above conditions and do not con- tain a skolem function is an invariant.</p><p>TPTP is the language used by V ampire so in order to encode problems and to understand the proofs outputted we give a short table with the corre- spondence between the first-order logic symbols and mathematical symbols and TPTP: first-order logic TPTP and mathematics $true</p><formula xml:id="formula_13">⊥ $f alse F 1 ∧ . . . ∧ F n F 1 &amp; . . . &amp;F n F 1 ∨ . . . ∨ F n F 1 | . . . |F n F 1 → F 2 F 1 =&gt; F 2 F 1 ↔ F 1 F 1 &lt;=&gt; F 2 ∀x 1 . . . ∀x n F ![X 1 . . . X n ] : F ∃x 1 . . . ∃x n F ?[X 1 . . . X n ] : F −a $uminus(a) a ≤ b $lesseq(a, b) a &lt; b a &lt; b a + b $sum(a, b) a * b $product(a, b)</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3">CppInv</head><p>The basic idea of this method is to use a predefined set of template properties and check which ones are invariants. The programs are seen as transition systems of the form P = L, l 0 , T where u is a set of variables, L is a set of locations, l 0 is the initial location and T is the set of transitions. A transition is a tuple i , l j , pρ t where l i , l j are locations, and ρ t is a boolean formula representing the transformation of the program variables after the transition.</p><p>Take for example the following function that initializes an array with the value 0: i n t main ( ) { c o n s t i n t N; assume (N &gt;= 0 ) ; i n t A[N ] ;</p><p>i n t i =0; </p><formula xml:id="formula_14">w h i l e ( i &lt; N) { A[ i ] = 2 * i +3; i ++; } }</formula><p>The corresponding transition system is represented in <ref type="figure" target="#fig_3">figure 4</ref> . A cyclic path is a path that contains a cycle. A cut-set is a set of locations such that every cyclic path in the graph contains a location that there is also in the cut-set. The locations in the cut-set are called cutpoints.</p><p>For this method there are considered the initiation paths, which are the paths in the control-flow graph that connects a location from outside a strongly connected component the a location inside it, and the consecution paths, that label edges only inside the strongly connected component.</p><formula xml:id="formula_15">Theorem 3.1 Let l C 1 , .</formula><p>.., l C p be a cut-set of a strongly connected components. Let P 1 , ...P p be properties over the program variables u such that:</p><p>• for all initiation paths</p><formula xml:id="formula_16">π I from l to l C i : ∀u, u ρ φ I ⇒ P i • for all consecution paths π C from l C j to l C i : ∀u, u ρ φ C ∧ P j ⇒ P i</formula><p>Then P 1 , ..., P p are invariants at l I , ..., l C p . We say P I , ..., P p are inductive invariants.</p><p>The semantics of the above theorem is given as follows: We have a set of strongly cut-set for a given strongly connected component and a set of properties over some variables. In order for a property to be considered an invariant there are two conditions that must be fulfilled: for all initial paths to one of the cutpoints, for all variables the formula describing the transition relation between the initial value of the variable and the value obtained after the transition must imply the corresponding property. The second condition is that for consecution paths from one point l C i to l C j , for all variables the formula describing the transition relation between the values of the variables from one location to the other in conjunction with the property that holds at the second location (with respect to the value of the variables at the first location), implies the property that holds at the firs location with the values of the variables obtained after the transition.</p><p>Using the previous theorem and formalizing the implications as con- straints containing both program variables and (not yet known) parameters, invariants can be obtained by finding a solution to the constraints.</p><p>For arrays the method generates invariants of the form:</p><formula xml:id="formula_17">∀α : 0 ≤ α ≤ C(v) − 1 : m i=1 k j=1 α ij A i [d ij α + ε ij (v)] + B(v) + b α α ≤ 0 where:</formula><p>• C, ε ij B are polynomials with integer coefficients and variables in v = (v 1 , v 2 , ..., v n )</p><formula xml:id="formula_18">• a ij , d ij , b α ∈ Z, ∀i ∈ {1, ..., m}, j ∈ {1, ..., k}</formula><p>• a = (A 1 , ..., A m ) the tuple of array variables For computational reasons the invariant generation has three steps:</p><p>• expressions C are generated in such a way that the domain {0...C − 1} is empty after initial paths, and C is increased with at most one after consecution paths;</p><p>• find expressions d i α + ε i for every array and every C found such that these are valid access points in the array, after executing a consecu- tion path the already analyzed positions are not changed, and after consecution paths ε i has the same value or the value ε i − d i ;</p><p>• for every array choose k ε ij that either all stay the same or get new values after consecution paths;</p><p>• find α ij , b α , B to fulfill the property depending on the which case is ε ij ;</p><p>While theorem 3.1 can be applied in the case of linear scalar properties, this is not the case for the array properties, that is another theorem was formulated for this case: </p><formula xml:id="formula_19">ρ φ C s ⇒ C = C ∨ C = C + 1 3. For all consecution paths π C s , all i ∈ {1...m}, j ∈ {1...k}, ρ φ C s ∧ C &gt; 0 ⇒ 0 ≤ ε ij ≤ |A i | − 1 ∧ 0 ≤ d ij (C − 1) + ε ij ≤ |A i | − 1</formula><p>4. For all consecution paths π C s either:</p><formula xml:id="formula_20">(a) ρ φ C s ∧ C &gt; 0 ⇒ ε ij = ε ij for all i ∈ {1...m}, j ∈ {1...k} (b) ρ φ C s ⇒ C = C + 1 ∧ ε ij = ε ij − d ij for all i ∈ {1...m}, j ∈ {1...k} 5. For all consecution paths π C s , ρ π C s ⇒ ∀α : 0 ≤ α ≤ C − 1 : A [d ij α + ε ij ] = A i [d ij α + ε ij ] 6. For all consecution paths π C s • ρ π C ∧ C = C + 1 ⇒ m s i=1 k j=1 α ij A i [d ij C + ε ij ] + B + b α C ≤ 0) (case 4a) • ρ π C ⇒ m s i=1 k j=1 α ij A i [ε ij ] + B ≤ 0) (case 4b) 7. For all consecution paths π C s • ρ π C s ∧ 0 ≤ α ≤ C − 1 ∧ x + B + b α ≤ 0 ⇒ x + B b α α ≤ 0 x is universally quantified fresh variable, when 4a applies • ρ π C s ∧ 0 ≤ α ≤ C − 1 ∧ x + B + b α ≤ 0 ⇒ x + B b α (α + 1) ≤ 0 x is universally quantified fresh variable, when 4b applies then ∀α : 0 ≤ α ≤ C − 1 : m i=1 k j=1 a ij A i [d ij α + ε ij ] + B + b α α ≤ 0 is an invariant.</formula><p>The theorem above shows the relation between three linear polynomials C, B, ε i,j , with respect to the paths obtained in the transition systems.</p><p>The formula expressed by a transition relation from an initial path must imply that polynomial C with the value of the variables obtained after the transition equals 0.</p><p>The rest of the conditions talk only about consecution paths. The poly- nomial C can have either the same value or the value increased by one when evaluated with the new values of the variables and the old values.</p><p>There are also integer variables a ij , d ij , b α that are kept under constraints following some rules.</p><p>For all consecution paths if the formula expressing the transition relation is true and the polynomial C with the new value of variables (denoted by C ) is greater than 0 then the value of ε ij (with the new value of variables denoted by ε ) is bounded by 0 to the left and by |A i | − 1 to the right, and the sum d ij (C − 1) + ε ij is bounded by 0 and |A i | − 1.</p><p>The fifth condition in the theorem expresses the fact that if the formula expressing the transition relation is true on such a path than also the element of the array at position d ij α + ε ij has the same value at the start location and at end location.</p><p>There are three more conditions in the theorem (4,6,7) which split the cases of the consecution paths in 2 categories. Each of the three conditions express constraints for the polynomials and the variables in the theorem. The final formula combines all of the above expressing an invariant. For an extended proof of this theorem please refer to <ref type="bibr">[LRCR13]</ref>.</p><p>The conditions of the theorem are encoded into an SMT problem, and a SMT solver gives the formula(s) representing the invariants.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">Experiments</head><p>In this section we present the results obtained by running the three tools from Section 3 on a set of loops that were selected from different papers and benchmarks. The experiments reported in this thesis were obatined using machine with an AMD dual-core processor with 800 Mhz, cache of size 256MB. The limitations of this machine did not allow us to reach the full computational power of the tools we tested for some of the loops in question, giving an inconclusive answer. We treated this cases as negative results, and in the case of Lingva we used them in the next section where we try to improve them. Nevertheless these facilities were in most cases enough in order to get a result showing the capabilities of the tools.</p><p>Lingva is independent on the platform on which is run, but we used Linux, and the same platform was used, as requested, for Cpp − inv. Gin − pink is bounded to Windows platform.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">Experiments with Gin-Pink and Cpp-Inv</head><p>The results for this part are presented in a table in the following form: on the first column of the table there are the loops of interest together with the reference to the paper where it can be found. The programs are written in the C language, and the input for the different differ according to the input language required by each of them. We chose to present them in this manner for the clean look and readability.</p><p>On the second column of the table on every row there is one or more invariants that were found by the Cpp-inv tool, ran on the corresponding loop. The properties are written in the form of first order formula with mathematics and their characteristics and explanations can be found at the end of this subsection.</p><p>The third column of the table corresponds to the invariants found by the tool Gin-Pink on the set of loops. These are also written in the form of first-order formulas and mathematics and occasionally there might be expressions written in the Boogie language. The results are explained later at the end of this subsection. </p><formula xml:id="formula_21">∀a, 0 ≤ a ≤ i − 1 ⇒ aa[a] = 0 ∀k, k = i ⇒ aa[k] = 0 Insertion [LRCR13] x=aa [ i ] ; j = i −1; w h i l e ( j &gt;= 0 and aa [ j ] &gt; x ) do aa [ j +1] = aa [ j ] ; −−j ; end do ∀a, a ≤ 0 ≤ i − j − 2 ⇒ −aa[−a + i] + x + 1 ≤ 0 ∀k, k = i − j − 2 ⇒ aa[i − k] ≥ x + 1 Partition [SS09] a =0; b=0; c =0; w h i l e ( a&lt;m) do i f ( aa [ a]&gt;=0) then bb [ b]= aa [ a ] ; b=b+1; e l s e c c [ c ]= aa [ a ] ; c=c +1; end i f ; a=a +1; end do ∀x, 0 ≤ x ≤ c − 1 ⇒ cc[x] + 1 ≤ 0 ∀x, 0 ≤ x ≤ b − 1 ⇒ −bb[x] ≤ 0 ∀k, bb[k] == aa[k]</formula><p>Maximum [FM10] i n t i =1; i n t max = aa <ref type="bibr">[ 0 ]</ref> ;</p><formula xml:id="formula_22">w h i l e ( i &lt;N) { i f (max&lt;aa [ i ] ) { max = aa [ i ] ; } ++i ; } ∀a, 0 ≤ a ≤ i − 1 ⇒ aa[a] − max ≤ 0 is max(m, A, 1, n)</formula><p>HeapProperty [LRCR13] c o n s t i n t m; // assume (m&gt;=0); i n t aa <ref type="bibr">[ 2 * m ]</ref> ; i n t i =0; </p><formula xml:id="formula_23">w h i l e ( 2 * i +2&lt;2 * m) { i f ( aa [ i ]&gt; aa [ 2 * i +1] o r aa [ i ]&gt; aa [ 2 * i +2]) break ; ++i ; } ∀a, 0 ≤ a ≤ i − 1 ⇒ −aa[2 * a + 1] + aa[a] ≤ 0; ∀a, 0 ≤ a ≤ i − 1 ⇒ −aa[2 * a + 2] + aa[a] ≤ 0; ∀a, 0 ≤ a ≤ i − 1 ⇒ 2a − 2 * aa[2a + 1] + 2 * aa[a] −2m + 3 ≤ 0; −aa[2a + 1] + aa[a] ≤ 0; −aa[2 * a + 2] + aa[a] ≤ 0; ∀a, a = i ⇒ aa[a] ≤ aa[2a + 1] aa[a] ≤ aa[ik + 1] aa[a] ≤ aa[2k + i]</formula><formula xml:id="formula_24">∀a, 0 ≤ a ≤ m − u − 1 ⇒ x − aa[m − a − 1] ≤ 0; 4u + x − aa[m − a − 1]− −2m − 2l ≤ 0; ∀a, 0 ≤ a ≤ l − 1 ⇒ aa[a] − x + 1 ≤ 0; aa[a] − 4l + 2u − x + 3 ≤ 0; ∀a, a = m ⇒ aa[a] = x ∀a, a = l ⇒ aa[a] = x ∀a, a = m ⇒ aa[a] = l ∀a, a = u ⇒ aa[a] = x ∀a, a = m ⇒ aa[a] = u Palindrome [LRCR13] i n t aa [m ] ; i n t i =0; w h i l e ( i &lt;m/ 2 ) { i f ( aa [ i ] != aa [m−i −1]) { break ; } i ++; } ∀a, 0 ≤ a ≤ i − 1 ⇒ aa[m − a] − aa[a] ≤ 0 ∀a, 0 ≤ a ≤ i − 1 ⇒ −aa[m − a] + aa[a] ≤ 0 ∀a, a = i ⇒ aa[a] == aa[m − a − 1] aa[a] == aa[i − a − 1] aa[a] == aa[m − a − i] PartitionInit [SS09] i n t aa [m] , bb [m] , c c [m] ; i n t i =0, c =0; w h i l e ( i &lt;m) { i f ( aa [ i ] == bb [ i ] ) { c c [ c ] = i ; c++; } i ++; } } ∀l, 0 ≤ l ≤ c − 1 ⇒ cc[l] − i + c − l ≤ 0 l − cc[l] ≤ 0 ∀l, l = i ⇒ cc[l] ≤ l + i − c Vararg [SS09] a =0; aa [m ] ; w h i l e ( aa [ a ] &gt;0 &amp;&amp; a&lt;m) { a=a +1; } ∀0 ≤ l ≤ i − 1 ⇒ −aa[l] + 1 ≤ 0 ∀k, k = i ⇒ 0 &lt; aa[k] Shift [HKV11] a =0; w h i l e ( a&lt;m) { aa [ a+1]=aa [ a ] ; a=a +1; }</formula><p>No i n v a r i a n t s found .</p><formula xml:id="formula_25">∀k, k = i ⇒ aa[k] == aa[0]</formula><p>Sum Of Pairs [LRCR13] i n t m; i n t * aa ; i n t x=getX ( ) , l =0, u=m−1;</p><formula xml:id="formula_26">/ / :$SORTED: aa @ASC w h i l e ( l &lt; u ) { i f ( aa [ l ] + aa [ u ] &lt; x ) l = l +1; e l s e i f ( aa [ l ] + aa [ u ] &gt; x ) u = u−1; e l s e break ; } ∀a, 0 ≤ a ≤ l − 1 ⇒ aa[a] + aa[u] − x + 1 ≤ 0 ∀k, k = i − 2 ⇒ aa[k] + aa[u] &lt; x Sequential Initialization [LRCR13] i n t main ( ) { i n t m; i n t * aa ; aa [ 0 ] = 7 ; i n t i =1; w h i l e ( i &lt;m) { aa [ i ]= aa [ i −1]+1; ++i ; } } ∀x, 0 ≤ x ≤ i − 2 ⇒ aa[x + 1] − aa[x] − 1 ≤ 0 ∀x, 0 ≤ x ≤ i − 2 ⇒ −aa[x + 1] + aa[x] + 1 ≤ 0 ∀k, k = i − 2 ⇒ aa[k + 1] == aa[k] + 1</formula><p>For the program Initialisation we see that both Cpp-inv and Gin-pink got the desired invariant. Gin-pink had as postcondition the formula ∀k, 0 ≤ k &lt; m ⇒ aa[k] = 0. The semantics of both invariants obtained is straight- forward, with the observation that in Gin-pinks case k = i has the meaning that for all values of k that were totally/partially processed.</p><p>The loop Insertion represents a program that takes a random element from an array and places it on the right the array of the array in such a way that all elements starting with the original position of the element and ending with one less than the new position. The invariant that we are looking for is the formula expressing that the value of the chosen element is less than than the values of the element between the original position and the new position of it. Both tools manage to infer this invariant. The form which is extracted by Cpp-Inv is as a inequality with one of the terms 0.</p><p>The postcondition we used for Gin-pink (translated in first order logic) is :</p><formula xml:id="formula_27">∀k, k! = i − j − 2, aa[i − k] ≥ x + 1.</formula><p>The loop P artition has as input an array aa which is partitioned in array bb for the non-negative elements and array cc for the negative elements. While Cpp-inv was able to find invariants characterizing the elements in cc as being negative and those in bb as non-negative, Gin-pink could get the invariant that every element in bb is equal to one in aa, whit the input</p><formula xml:id="formula_28">postcondition ∀k, k = b ⇒ 0 ≤ B[k].</formula><p>The loop M aximum processes an array by comparing systematically the value of max with the value of every element in the array and assigning the value of the element in the current step to max if max is smaller. At the end of the loop the value of max is the largest value in the array. The invariant inferred by Cpp-inv expresses actually the property that for all elements that were processed, the difference between them and max is at most 0. This property is equivalent with the invariant of interest expressing that max is greater or equal than all elements that were processed. In the case of Gin-Pink, there was necessary a formula expressing that there is a total order on the type of the array. There is also an extra function that takes as input the limits of an array, the array and a variable m and returns true if m is greater or equal than all elements in the array or f alse otherwise.The invariant written in the table above expresses the fact that variable max is greater or equal to all elements in the array, which is the invariant we are looking for in this case.</p><p>In the case of HeapP roperty the loop checks until which position does the array has the heap property (every element has a value greater than the value of its parent) with the root in aa <ref type="bibr">[0]</ref>, and such that the element at position i (except the leaves) has children at positions 2 * i + 1 and 2 * i + 2 (taking into account that the array has 2 * m elements). Cpp-Inv infer that invariant in the form that the difference between the "parent" and each of the "children" is less than 0. Also it infers a property expressing the fact that the values of the array grow faster than the value of the indexes. Gin- pink also managed to infer the property having the postcondition f orallk :</p><formula xml:id="formula_29">int :: k! = i ==&gt; A[k] &lt; A[2 * k + 1]</formula><p>. It also infers that for the value at position i all values that are past the position 2k are greater.</p><p>The loop named F irstOccurence searches in a divide and conquer manner a value in a sorted array. Cpp-Inv finds finds two important invariants for understanding the loops: that all elements that are placed before the lower bound (l) are smaller than the value searched, and all elements that are laced before the location u is greater or equal with the value searched. From this two properties on can infer that the value searched can be only between the locations l and u. Gin-pink can also infer these properties but the properties outputted by this tool are harder to understand and less explicit. The properties inferred by Gin-pink express only the fact that the value was not found yet through the elements that were already analyzed.</p><p>The P alindrome loop checks if an array is a palindrome (i.e. regardless of the way one reads it, it would be the same word). Cpp-inv is able to infer the formula expressing the property of a palindrome, by inferring two The P artitionInit loop compares the elements of two arrays aa and bb and keeps in array cc the locations at which the element in aa equals the one in bb. Cpp-inv infers the invariant ∀l, 0 ≤ l ≤ c − 1 ⇒ l − cc[l] ≤ 0 which can be interpreted in different ways, either that the size of cc is at most the size of aa, or that there can be at most elements in cc as there are in aa. The other invariants that Cpp-inv inferred is ∀l,</p><formula xml:id="formula_30">0 ≤ l ≤ c − 1 ⇒ cc[l] − i + c − l ≤ 0,</formula><p>which describes the property that i grows faster than c, much faster than l with respect to cc <ref type="bibr">[l]</ref>. The second property is also inferred by Gin-pink.</p><p>The V ararg is a loop that runs as long as the elements in the array aa are greater than 0. In the loop body there is no modification of the array, only the index is increased. Cpp-inv manages to infer that all elements processed are greater than 0. Gin-pink can also infer the invariant having the postcondition ∀k, 0</p><formula xml:id="formula_31">≤ k &lt; i ⇒ 0 &lt; A[k].</formula><p>The loop Shif t gives to every element, starting with the second, to take the value of the previous element. At the end of the loop all elements have the value of the initial value of the first one. For this loop Cpp-Inv does not find any invariant for this piece of code. The possible reason for which this happens is because the invariant does not fall into the template required by this method in order to infer it. Gin-pink uses the postcondition weakening successfully in order to prove the invariant that expresses that at all the processed locations there are values for the elements equal to the value of the first element.</p><p>The loop Sumof P airs has as input an increasingly ordered array and makes sure that the sum between the elements at location l and u is smaller than same random value x, and either increases l or decreases u, accordingly.</p><p>Cpp-inv infers the formula expressing that the sum between all values at positions that are between 0 and l and the value in the array at position u minus the value of x plus 1 is smaller or equal to 0. The same invariant is inferred by Gin-pink (in a different form) by weakening the postcondition</p><formula xml:id="formula_32">∀k = l ⇒ aa[k] + aa[u] &lt; x.</formula><p>SequantialInitialisation has as input an array with the first element initialized and processed by initializing the rest of the array with values with one higher than the value of the previous element. At the end of the loop the elements of the array represent a series of consecutive numbers. Cpp-inv manages to infer the invariant expressing this property in the form of two inequalities. Gin-pink can also infer the invariant with the postcondition ∀k,</p><formula xml:id="formula_33">k = i − 2 ⇒ aa[k + 1] = aa[k] + 1.</formula><p>Although the postcondition is strong the tool still has to check that the invariant holds for the loop.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">Experiments with Lingva</head><p>The table below presents the results obtained by running Lingva on the same set of loops as the other two tools. On the first column are written the loops used for this experiment, on the second column there is written one invariant of interest for the corresponding loop and, on the third column there is either an invariant obtained by Lingva together with the set of axioms and theorems that were used to reach to the result, or a different invariant (than the one on the second column) that could be of interest for the user. In the third column, the name of a variable followed by 0 represents the initial value of the variable.</p><p>At the end of the subsection we give explanations regarding the proof obtained and the theorems used in order to obtain the invariants. </p><formula xml:id="formula_34">. 0 ≤ sK0 ∧ ¬a ≤ sK0 ∧ aa(sK0) = 0∧ aa(sK0) = aa0(sK0) 3 8 1 . ∃X0, ((0 ≤ X0) ∧ ¬(a ≤ X0)∧ aa(X0) = 0 ∧ aa(X0) = aa0(X0)) 3 8 0 . ∃X0, (((0 ≤ X0) ∧ ¬(a ≤ X0))∧ (aa(X0) ≤ 0 ∧ aa(X0) = aa0(X0))) 3 7 9 . ¬∀X0, (((0 ≤ X0) ∧ ¬(a ≤ X0)) ⇒ (aa(X0) = 0 ∨ aa(X0) = aa0(X0))) 1 5 3 . ¬∀X37, (((0 ≤ X37) ∧ ¬(a ≤ X37)) ⇒ (aa(X37) = 0 ∨ aa(X37) = aa0(X37))) 1 5 2 . ¬∀X37, (((0 ≤ X37) ∧ (X37 &lt; a)) ⇒ (aa(X37) = 0 ∨ aa(X37) = aa0(X37))) 1 5 1 . ∀X37, (((0 ≤ X37) ∧ (X37 &lt; a)) ⇒</formula><p>(aa(X37) = 0 ∨ aa(X37) = aa0(X37))) 6 1 6 8 . aa(sK0) = 0 6 1 6 7 . aa(sK0) = aa(sK0) ∨ aa(sK0) = 0 1 5 6 7 . aa(X0) = aa0(X0) ∨ aa(X0) = 0 1 5 6 6 . aa(X0) = 0 ∨ aa(X0) = aa0(X0)∨ aa(X0) = aa0(X0) 3 8 5 . (a0 + sK0(X0)) = X0 ∨ aa(X0) = aa0(X0) 1 6 9 . ∀X0, (aa(X0) = aa0(X0)∨ (a0 + sK0(X0)) = X0) 3 . ∀X2, (aa(X2) = aa0(X2)∨ (a0 + sK0(X2)) = X2) 5 3 8 . aa((a0 + sK0(X0))) = 0∨ aa(X0) = aa0(X0) 5 3 7 . aa(X0) = aa0(X0) ∨ aa(X1) = 0∨ (a0 + sK0(X0)) = X1 3 8 8 . aa(X0) = aa0(X0) ∨ aa(X1) = X2∨ 0 = X2 ∨ (a0 + sK0(X0)) = X1 1 7 2 . ∀X0, X1, X2, ((a0 + sK0(X0)) = X1∨ 0 = X2 ∨ aa(X1) = X2 ∨ aa(X0) = aa0(X0)) 6 . ∀X2, X0, X1, ((a0 + sK0(X2)) = X0∨ 0 = X1 ∨ aa(X0) = X1 ∨ aa(X2) = aa0(X2)) 5 3 6 . aa(sK0) = aa0(sK0) I n s e r t i o n x=aa <ref type="bibr">[ i ]</ref> ;</p><formula xml:id="formula_35">j = i −1; w h i l e ( j &gt;= 0 and aa [ j ] &gt; x ) do aa [ j +1] = aa [ j ] ; −−j ; end do R e f u t a t i o n not found . ∀a, a ≤ 0∧ a ≤ i − j − 2 ⇒ x + 1 ≤ aa[−a + i]</formula><p>Other i n t e r e s t i n g p r o p e r t i e s found : </p><formula xml:id="formula_36">∀X0, : (sK0(X0) ≤ (j − j0)∨ aa(X0) = aa0(X0))). ∀X0, X1 : ((1 + j0) = X0| aa0(j0) = X1|aa(X0) = X1| ((j − j0) ≤ 0)).</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>R e f u t a t i o n found</head><formula xml:id="formula_37">((0 ≤ X1)∧ ¬(c ≤ X1)) ∧ (0 ≤ bb(X0)))</formula><p>[ e n n f t r a n s f o r m a t i o n 6 5 9 ] 6 5 9 . ¬∀X0 : (∀X1 : R e f u t a t i o n not found .</p><formula xml:id="formula_38">((0 ≤ X1)∧ ¬(c ≤ X1)) ⇒ ¬(0 ≤ bb(X0))) 3 0 8 . ¬∀X68 : (∀X68 : ((0 ≤ X68)∧ ¬(c ≤ X68)) ⇒ ¬(0 ≤ bb(X68))) 3 0 7 . ¬∀X68 : (∀X68 : ((0 ≤ X68)∧ (X68 &lt; c)) ⇒ (bb(X68) &lt; 0)) [ n</formula><p>Other i n t e r e s t i n g p r o p e r t i e s t h a t were proven : </p><formula xml:id="formula_39">∀X∃Y, 0 ≤ X, Y &lt; i ⇒ aa[X] ≤ aa[Y ]</formula><formula xml:id="formula_40">(0 ≤ X1)∧ ¬(i ≤ X1) ∧ (0 ≤ X0)∧ ¬(i ≤ X0) ∧ ¬(aa(X1) ≤ aa(X0)))</formula><p>[ f l a t t e n i n g 3 7 1 ]   </p><formula xml:id="formula_41">3 7 1 . ∀X0, ∃X1(((0 ≤ X1)∧ ¬(i ≤ X1) ∧ (0 ≤ X0)∧ ¬(i ≤ X0)) ∧ ¬(aa(X1) ≤ aa(X0))) 3 6 8 . ¬∃X0, ∀X1((0 ≤ X1)∧ ¬(i ≤ X1) ∧ (0 ≤ X0) ∧ ¬(i ≤ X0) ⇒ (aa(X1) ≤ aa(X0))) 1 5 3 . ¬∃X37, ∀X36((0 ≤ X36)∧ ¬(i ≤ X36) ∧ (0 ≤ X37) ∧ ¬(i ≤ X37) ⇒ (aa(X36) ≤ aa(X37))) 1 5 0 . ¬∃X37, ∀X36((0 ≤ X36)∧ (X36 &lt; i) ∧ (0 ≤ X37) ∧ (X37 &lt; i) ⇒ (aa(X36) ≤ aa(X37))) 1 4 9 . ∃X37, ∀X36((0 ≤ X36)∧ (X36 &lt; i) ∧ (0 ≤ X37) ∧ (X37 &lt; i) ⇒ (aa(X36) ≤ aa(X37)))<label>1</label></formula><formula xml:id="formula_42">∀a, 0 ≤ a ≤ m − U − 1 ⇒ x ≤ aa[m − a − 1]; aa[u + x] ≤ aa[m − a − 1]− −2m + 2l; ∀a, 0 ≤ a ≤ l − 1 ⇒ aa[a] ≤ x − 1; aa[a] ≤ 4l − 2u + x − 3;</formula><formula xml:id="formula_43">{ i f ( aa [ i ] == bb [ i ] ) { c c [ c ] = i ; c++; } i ++; } } ∀X, 0 ≤ x ≤ c − 1 ⇒ aa[cc[x]] = bb[cc[X]]</formula><p>R e f u t a t i o n not found . Other i n t e r e s t i n g p r o p e r t i e s t h a t were proved :</p><formula xml:id="formula_44">∀X3, X4, X5 C0 + X3 = X4∧ a0 + X3 = X5∧ 0 ≤ X3 ⇒ C[X4] = X5∨ c − c0 ≤ X3</formula><p>R e f u t a t i o n found . </p><formula xml:id="formula_45">∀x, 0 ≤ x ≤ a − 1 ⇒ aa[x] &gt; 0 Vararg a =0; w h i l e ( aa [ a ] &gt;0){ a=a +1; } ∀x, 0 ≤ x ≤ a − 1 ⇒ aa[x] &gt; 0</formula><formula xml:id="formula_46">(0 ≤ X0) ∧ ¬(0 ≤ aa((a0 + X0))))∧ ¬(a ≤ (X0 + a0)))</formula><p>[ e n n f t r a n s f o r m a t i o n 1 4 1 ] </p><formula xml:id="formula_47">1 4 1 . ¬∀X0, (((0 ≤ X0)∧ ¬(0 ≤ aa((a0 + X0)))) ⇒ (a ≤ (X0 + a0))) [ e v a l u a t i o n 1 4 0 ] 1 4 0 . ¬∀X0, (((0 ≤ X0)∧ (aa((a0 + X0)) &lt; 0)) ⇒ (a ≤ (X0 + a0))) [ n</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>e g a t e d c o n j e c t u r e 1 3 9 ]</head><formula xml:id="formula_48">1 3 9 . ∀X0, (((0 ≤ X0)∧ (aa((a0 + X0)) &lt; 0)) ⇒ (a ≤ (X0 + a0))) [ i</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>n p u t i m p l i c a t i o n ] 1 5 2 9 . (a ≤ (a0 + sK0)) [ f o r w a r d d e m o d u l a t i o n 1 5 2 8 , 1 4 2 ]</head><formula xml:id="formula_49">(X0 + a0))∨ ¬(0 ≤ X0) ∨ ¬(aa((a0 + X0)) ≤ 0)) [ f l a t t e n i n g 5 ] 5 . ∀X0, ((a ≤ (X0 + a0))∨ ¬(0 ≤ X0) ∨ ¬(aa((a0 + X0)) ≤ 0)) [ i n p u t i n v 4 ]</formula><p>R e f u t a t i o n found . Sum Of P a i r s i n t m; i n t * aa ; i n t x=getX ( ) , l =0 , u=m−1;</p><formula xml:id="formula_50">∀X, 0 ≤ X ∧ X &lt; a ⇒ S h i f t a =0; w h i l e ( a&lt;m) { aa [ a+1]=aa [ a ] ; a=a +1; } ∀x, 0 ≤ x &lt; a ⇒ aa[x] = aa[0]</formula><formula xml:id="formula_51">/ / :$SORTED: A @ASC w h i l e ( l &lt; u ) { i f ( aa [ l ] + aa [ u ] &lt; x ) l = l +1; e l s e i f ( aa [ l ] + aa [ u ] &gt; x ) u = u−1; e l s e break ; } ∀x, 0 ≤ x ≤ m − u − 2 ⇒ x + 1 ≤ A[m − x − 1] + A[l]</formula><p>R e f u t a t i o n not found .</p><p>S e q u e n t i a l I n i t i a l i s a t i o n i n t main ( ) { i n t m; i n t * aa ;</p><formula xml:id="formula_52">aa [ 0 ] = 7 ; i n t i =1; w h i l e ( i &lt;m) { aa [ i ]= aa [ i −1]+1; ++i ; } } ∀x, 0 ≤ x ≤ i ⇒ aa[x + 1] = aa[x] + 1</formula><p>t i m e l i m i t r e a c h e d a t 200 Other i n t e r e s t i n g p r o p e r t y t h a t was proven :</p><formula xml:id="formula_53">i − i0 &lt; sk0(X0) ⇒ aa(X0) = aa0(X0) m ≤ i0 + sk0(X1) ⇒ aa(X1) = aa0(X1) sk0(X2) ≤ 0 ⇒ aa(X2) = aa0(X2) m ≤ i + i0 ∧ 0 ≤ i ⇒ 0 ≤ i0</formula><p>For the loop Initialisation first vampire proves that aa(sk0) = 0(6168) and afterwards that aa(sk0)! = 0(535). We explain the proof in three steps:</p><p>1. the formula representing the invariant of interest being negated and after a series of transformations, evaluation, rectify, flattening and skolemisation, the negated formula is put in a standard form</p><formula xml:id="formula_54">$lesseq(0, sK0)&amp; $lesseq(a, sK0)&amp;aa(sK0)! = 0&amp;aa(sK0)! = aa0(sK0)<label>(382)</label></formula><p>. From this formula it is easy to see that formula 6168 can be deduced 2. For the second formula (535) the proof starts with on of the for- mulas that lingva inferred ![X2, X0, X1] : ($sum(a0, sK0(X2))! = X0|0! = X1|aa(X0) = X1|aa(X2) = aa0(X2))(6). After cnf trans- formation and equality resolution the following formula is obtained aa($sum(a0, sK0(X0))) = 0|aa(X0) = aa0(X0)(538).</p><p>3. Using another formula (after processing it) that is automatically de- duced by Lingva, $sum(a0, sK0(X0)) = X0|aa(X0) = aa0(X0), V ampire uses superposition that has as result aa(X0) = aa0(X0)| aa(X0) = 0(1567), after eliminating the duplicate literals. From the formula (382) also used in the first step V ampire infers also aa(sK0)! = aa0(sK0)(536). Using superposition on <ref type="formula">(536)</ref> and <ref type="formula" target="#formula_41">(1567)</ref> and after eliminating trivial inequalities aa(sk0) = 0 results.</p><p>For the loop P artition two invariants were proved by V ampire, one for- mulating that for every non-negative element in aa there is an element in bb, and one formulating that for every negative element in aa there is an element in cc. We are going to explain only the former proof because of the similari- ties between the two. From the input implication after processing it vampire infers the clause $lesseq(0, X1)(982). Vampire use the property obtained by Lingva that expresses the fact that the iterator c grows as most as fast as iterator a, ![X66, X67] : ($lesseq(X66, $sum(c, X67))| $lesseq(X66, c0)| $lesseq(0, $sum(a, $sum($uminus(a0), X67))))(1429). Using resolu- tion on (1429) and (982) the formula $lesseq(X0, $sum(c, X1))| $lesseq(X0, c) (1447) is inferred. Using the following three theory axioms $sum(X0, X1) = $sum(X1, X0), $lesseq($sum(X0, 1), X1)| $lesseq(X1, X0), $lesseq(X0, X0) and the previous inferred formula and the theory of superposition the follow- ing formula is inferred $lesseq($sum(1, $sum(0, X4)), 0) (1714). From the formula tagged with (1714) and the theory axiom $sum(0, X0) = X0 the following formula is inferred $lesseq($sum(1, X4), 0). The contradiction is inferred from the las formula and the axiom that every number summed with its opposite will result to zero. This proof makes use of a large num- ber of theory axioms together with input axioms discovered by Lingva and because of this fact its complexity is higher than that of other discussed proofs. The invariant that expresses the property for array cc has a similar proof with corresponding differences where these apply.</p><p>For the loop Insertion we try to prove the inductive formula represent- ing the invariant. Since V ampire has not yet a mechanism that deals with induction this invariant is harder to prove. On the other hand Lingva au- tomatically infers two properties that are necessary in understanding the program. The first one expresses the fact that from a certain position the elements of the array do not modify their value. The second property au- tomatically inferred shows that the invariant holds for the first value of j. In the next chapter we show that by adding the right axioms to the ones already outputted by Lingva the theorem prover can find a proof for the searched invariant.</p><p>For the loop M aximum, although the invariant we were looking for could not be proven V ampire proved that for every iteration of the loop there exists an element that was already processed and that is greater or equal to all other processed elements. V ampire proves this by simply getting a contradiction with the axiom X ≤ X. In the next chapter we show what properties can be added in order to prove the invariant of interest.</p><p>For the moment Lingva has some limitation that do not permit the analysis of loops that have more than one condition. Also the analysis of statements that use division is impossible. Even if the statements are modi- fied in such a way that multiplication is used instead of division the analysis of the statements is still troublesome.For the three loops HeapP roperty, F irstOccurence, P alindrome, the properties automatically inferred do not offer information about array elements, but rather information about the iterators that could not be used in order to prove any invariants of interest. Because of the current limitations in the analysis system of Lingva we con- sider that these three loops could not be representative for the capabilities of proving invariants.</p><p>For the loop P artitionInit the invariant that we are interested in is also an inductive invariant. As we specified before, this type of invariant is, for V ampire, harder to prove. Lingva managed to automatically infer a different invariant expressing the property that every elements in the array cc is a valid position in the array aa. There are no properties inferred regarding the array bb, so in order to infer the invariant of interest there are other properties that have to be added to the list of formulas outputted by Lingva.</p><p>For the loop vararg the invariant is proved by V ampire only based on the input obtained from Lingva. With a few transformation from the (fourth) input invariant the following formula can be obtained:</p><p>$lesseq(aa($sum(a0, X0)), 0)| $lesseq(0, X0)|$lesseq(a, $sum(X0, a0)) (355). This property can be rewritten into an implication expressing that if X0 is positive and the element at position a0 + X0 is also positive then the position a0 + X0 is smaller than a. After transforming the formula repre- senting the invariant V ampire inferred three new clauses ¬$lesseq(0, aa($sum(a0, sK0))) (490), $lesseq(0, sK0) (350) and $lesseq(a, $sum(sK0, a0)) (491). The formula (490) can be transformed in the formula $lesseq(aa <ref type="figure">($sum(a0, X0)</ref>), 0) (586) using resolution and a theory axiom. Using resolution a few times on this formula V ampire infers the following formula $lesseq(a, $sum(a0, sK0)) (1529). Using forward demodulation on (491) an the theory axiom $sum(X0, X1) = $sum(X1, X0) and get the formula ¬$lesseq(a, $sum(a0, sK0)) which is the opposite of formula (1529).</p><p>For the loop Shif t the proof of refutation for the invariant of interest was found. We give a sketch of the proof for easier understanding of it. From the negated conjuncture the clause ¬(a ≤ sk0) (530) can be inferred. This clause is in contradiction with clause a ≤ X0 (1096) which is inferred as follows. From the negated conjunction together with theory axioms one can infer X11 ≤ X12 + X11 ∨ ¬(0 ≤ X12) (853). From theory axioms and negate input invariant one can also infer 0 = −X0 (897). From the previous clause and the input invariant ∀[X1] : (¬(a0 ≤ (a0 + (−(a) + X1))) ∨ (a ≤ X1) the clause ¬(a0 ≤ (a0+(0+X0)))∨(a ≤ X0)(925) can be inferred. From the latter formula and formula labeled with (853) one can infer the clause labeled (1096) making the refutation proof complete.</p><p>For the loop Sumof P airs the invariant that we are trying to prove is based on a property that is not explicitly expressed in the program. The fact that the input array is ordered has a great impact in the proving power of the theorem prover. In the next chapter we show how the addition of this property makes possible the proof of the invariant of interest.</p><p>For the loop SequentialInitialisation the invariant of interest expresses the property that the elements of the array have consecutive values. Al- though for this specific loop Lingva discovered many invariants that could be used in order to get a proof of the invariant of interest, the limitations of the machine did not make this possible, the computations being too slow. Nevertheless we introduce new theorems to the already formed set in order to get faster results. This situation is also discussed in the next chapter. From the direct output of Lingva we can distinguish a few properties that give understanding with respect to the loop. More precisely it shows that if a position was not visited yet, the value of the element did not change.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.3">Discussions of Experimental Results</head><p>From the experiments above we can draw a few conclusions about the invari- ants that these tools can infer. Cpp − inv has very good results with most of the experiments. The running time necessary to infer the invariants is appreciable even when run on a machine with not too many resources. A lot of invariants studied fell into the template that this tool is using, being able to automatically find them without any guidance from the user. It can also analyze more complex loops that have in the body if . . . then . . . else state- ments and loops with more than one condition which gives better flexibility and expressibility when writing the code to be analyzed. One important class of invariants that this tool is able to infer is the induction type. This type of properties usually indicate a relation between an element of the array and the element or elements prior to it.</p><p>In the benchmark used we found a single loop that could not be analyzed properly by this tool, Shif t. The invariant we were looking for was a relation between an element at a certain position i and the element at position i + 1. Since this property needed reasoning about a position that was not reached yet, this did not meet the requirements for the template used by Cpp−inv. For the invariant P artitionInit the invariant that were discovered did not give insight on the relation between the elements of the three arrays processed in the loop. All other invariants that were concluded for the respective loops were the invariant of interest. The tool was able to extract useful information about the usage of the array in the loop and yield formulas of great usage in order for the user to understand the task done in the snippet of code.</p><p>What seems to be the drawback of this method is the fact that one can not independently use it to check a certain property of interest if it is not already inferred by the tool. One can not add new information that can not be automatically inferred in order to get a result about the property of interest. On the other hand if a user decides to check for properties a piece of code seen for the first time, this tool might give useful information regarding the elements of the processed array.</p><p>In the case of Gin − pink there is a large set of invariants that can be inferred from the postcondition and proved by Boogie. The advantage of using postconditions is that the invariants that will be derived from them are usually useful for understanding the program. Since the program has as starting point for searching an invariant a property that is of interest for the user it is natural that the invariant found by weakening the formula would also be of interesting when the code is analyzed by the user. On the other hand it might the case that the invariant would contain auxiliary variables that are not part of the postcondition. In this case the invariant of interest is not going to be derived by the tool.</p><p>Although Gin − pink is not able to infer (without any interference from the user) an invariant containing auxiliary variables with respect to the postcondition there are walk-arounds this problems. One variant to work this problem out is to augment postconditions with one clause that specifies properties of the auxiliary variable. At this point Gin − pink might have a chance to derive the wanted invariant by weakening the new postcondition. One of this loops is the one tagged with M aximum which was modified in order to see if the tool would successfully infer the invariant we were looking for.</p><p>Another type of invariants that cause problems to this tool is the one that include product operation. In this case the problem comes from the theorem prover that is embedded in the tool, namely Z3. This theorem prover does not have the background theory necessary to handle formulas that have product of numeric in their composition. Unfortunately for this case there is no workaround to make the tool infer the invariant since there is no way to include new theories that could be used for processing such formulas.</p><p>From the experiments seen above we can see that there are a lot of useful invariants derived by this tool, and making use of the method that helps derive invariants with auxiliary variables would give the user better results.</p><p>For the tool Lingva we observe from the experiments that it obtains a lot of properties from analyzing the code. To get an idea of how precise the code is analyzed, the number of invariants that are outputted after eliminating the trivial ones is somewhere around 150, for a piece of code with 10 lines. Also the invariants that are inferred can also express properties between different variables and also between initial values and new values of the variables, feature that was not present for the other two tools.</p><p>The drawback of this method is that some loops that contain more that have more than one condition to be checked can not be analyzed because the tool has not yet implemented the analysis of &amp;&amp; and || operators from C programming language. This problem can be solved if the loop does not contain any if . . . then . . . else statements, because at the moment the loop can be successfully analyzed if it is not nested and does not contain nested if statements.</p><p>An operation from which is hard to infer invariants is the product over integer. This method is able to infer such invariants from the direct analysis of the loop. In order to see the efficiency of this feature of the tool we modi- fied some of the above loops and processed them with Lingva. Although the invariants obtained were expressing properties that need the multiplication operation we could not get any interesting invariants (since also the loops were not have a real purpose in processing an array).</p><p>In the set of loops that we studied there was a significant number that had as invariants of interest invariants that needed induction in order to be proven. Unfortunately the theory of induction is not yet implemented in V ampire so even though the invariants inferred by Lingva were enough to prove them this did not happen. In the next section we show how we can nevertheless infer this invariants if we study the properties deduced by Lingva and add the missing properties in order for the induction to be complete.</p><p>This method has the advantage that if the user knows some information about the analyzed loop, or any theory that might not be implemented in V ampire yet it can easily encode the formulas representing the rules in V ampire and run the theorem prover in order to see if a proof of refutation for the invariant of interest is possible, with the new information. We took advantage of this fact and use it to prove all the invariants that were not automatically proved. In the next chapter we show in detail how the proof of refutation were obtained for each invariant.</p><p>The three methods have different strong points, Cpp − inv can infer induction properties without any supplementary information from the user, while for Lingva this is not a trivial task, although it is achievable. Gin − pink can also deduce such invariants as long as the postcondition mentions the variable used as an index, otherwise the task is impossible because it does not have a method to add information about other variables.</p><p>Lingva is the only one from the three tools that can infer properties about the initial values and the modified values of the variables, by intro- ducing a new variable name for the initial value of the variable. This feature offers the user a more expressive way to reason about the program. It brings more information to the output as it can infer that starting with one po- sition of the array the elements don't further change, information that can not be rendered by the other two tools.</p><p>Lingva is more flexible in the sens that knowing that some information can not be inferred from the loop ( such as if the array is sorted) the use can add this information to the output of lingva in order to obtain a possibly better result from V ampire. Gin − pink also accepts in the input new information from the user, in the form of assume statements, but in this case the type of formula that one can provide is not as expressible as first order logic.</p><p>Gin − pink has a great advantage by being a goal oriented method. The invariants inferred by this tool are certainly of interest for the user, since they have as starting point the postcondition that is interesting for the program. From this point of view Lingva tries to infer as many invariants as possible, to make sure it covers as many properties that might be of interest as possible, while Cpp−inv looks for properties that fall in a certain pattern, between specific point of the program analyzed.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">Invariant Specific Theory Extensions to First</head><p>Order Theorem Prover</p><p>In this chapter we proceed to analyze the programs for which the properties of interest could not be proven by Lingva/Vampire and try to find additional properties of the variables in these programs that we could add such that the computing power of the prover is increased.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.1">Comparison of invariants strength</head><p>The Maximum Example. The first program to be analyzed is the one with the name "Maximum". In plain English what this program does is to put the value of the first element of an array aa into the variable max and iterate through the rest of the array comparing max with the rest of elements and changing the current value of max with the greater value of the elements if it is the case. The followings are the lines in the loop:</p><formula xml:id="formula_55">int i=1; int max = aa[0]; while (i&lt;m) { if (max&lt;aa[i]) { max = aa[i]; } ++i; }</formula><p>Analyzing the output of Lingva we observe that the properties with respect to the iterator i are not strong enough so we add one to assure that the initial value of i is 0:</p><p>Property. 1 tff(prop1,axiom, i0=0). and one to make ensure that i is increasing:</p><p>Property. 2 tff(prop2,axiom, $less(i0,i) ).</p><p>These two axioms are necessary to ensure that the first part of the im- plication will not be invalidated by a false positive.</p><p>We also add two properties regarding the variable max. The first one ensures that the initial value for max is equal with the value of the first element in aa:</p><p>Property. 3 tff(prop3, axiom, max0=aa(0) ).</p><p>While the second one ensures that max takes its values only from the values of elements in aa:</p><formula xml:id="formula_56">Property. 4 tff(prop4, axiom, ?[Z:$int]: $lesseq(0,Z) &amp; $lesseq(Z,n) &amp; max=aa(Z)).</formula><p>Since the properties inferred by Lingva did not show any relation between the variable max and the elements in the array it is hard to infer such a property. The two axioms above have the role to make this connection in order for the reasoning to be possible.</p><p>With the above properties added to the output of Lingva the theorem prover can prove that all elements in the array that were already examined have the value at most the value of max expressed in the following formula:</p><formula xml:id="formula_57">Property. 5 tff(implication, conjecture, ![X: $int]: ($lesseq(0,X) &amp; $less(X,i) =&gt;$lesseq(aa(X),max) )).</formula><p>The proof of refutation outputted by Vampire is given in the following lines: From inv137 inferred by Lingva and the property 1 V ampire deduces that either i is less or equal to 1 or −1 is smaller than 0. At proposition 903 a new splitting component in a disjunction with i smaller than 1. From this formula and the negation of the invariant V ampire infers sP 5. From the negated conjunction also the fact that X0 is greater than 0 is inferred and use this to deduce sP 5. The refutation can now be completed.</p><p>Although Vampire could not automatically find a refutation proof for the formula representing the property of max, the extra-formulae that were added by hand was just information about the variables and not new theo- ries.</p><p>The Partial Initialization Example. The second loop we are going to look at is " Partial Initialization ". This program has as input two arrays, aa and bb, and saves the indexes for which the element in aa equals the one in bb in the array cc.</p><formula xml:id="formula_58">int aa[m], bb[m], cc[m]; int i=0, c=0; while (i&lt;m) { if (aa[i] == bb[i]) { cc[c] = i; c++; } i++; } }</formula><p>We add properties that give information about the initial values of the iterators a and c:</p><p>Property. 6 tff(prop2, axiom, a0=0).</p><p>Property. 7 tff(prop4, axiom, c0=0).</p><p>The properties inferred by Lingva with respect to these iterators are too weak and it can not be inferred that all their values start with the same value, and that the value at which they start is non-negative.</p><p>We also limit the the execution of the programs to the situation when the number of elements in the array aa, m, is greater than 0:</p><formula xml:id="formula_59">Property. 8 tff(prop5, axiom, $lesseq(0, m))</formula><p>This property is necessary because from the static analysis of the program it can not be inferred that the array has a positive number of elements, but we know that any other case would not make sense.</p><p>We also add a property that expresses the upper and lower limit of that an element in cc can get, and also a property that establish a relation between the elements in the array cc and the value of c for the corresponding element: With this new axioms added although Vampire can not prove the initial property:</p><formula xml:id="formula_60">∀X, 0 ≤ X ∧ X &lt; c ⇒ aa[cc[X]] == bb[cc[X]]</formula><p>, it can prove another formula with one quantifier alternation:</p><formula xml:id="formula_61">∀X, ∃Y, 0 ≤ X ∧ X &lt; m ∧ 0 ≤ Y ∧ Y &lt; c ∧ aa(X) = bb(X) ⇒ cc(Y ) = X.</formula><p>Here is the proof of refutation that was outputted by Vampire: Starting from inv54 inferred by Lingva stating that either a is equal to c − c0 or c is not less or equal to a or the initial value of a is greater than 0 and with the two properties enforcing the initial values of the iterators V ampire infers formula (1611) stating that either c is grater than a or a equals c. Due to the fact that a is at least equal to c, property enforced by formula (1580). From the input inv289 expressing the fact that either c is greater than c0 or a is greater than a0 and the property stating the equality between a and c, V ampire infers that either c is equal to 0 or is greater or equal to <ref type="bibr">1(2019)</ref>. From this formula and the negation of the invariant we are trying to prove 0 ≤ c (2048) is inferred. From input invariants inv195 and inv68 V ampire infers that c is less or equal to 0. Applying resolution on the two formulas we obtain a refutation. This loop is particularly difficult to analyze with this method because it is constructed with a nested if . . . then . . . else statement, which makes it dif- ficult for Lingva to extract properties -as specified in the previous chapter, and the invariant we want to infer is inductive, type of property that can not be inferred straight forward by V ampire. For this specific loop we introduce the invariants inferred by Cpp − inv and check if the theorem prover can deduce the invariant: From the input property that represents one of the invariants discovered by Cpp − inv, ∀X3((0 ≤ X3 ∧ X3 ≤ l ⇒ aa(X3) + aa(u) + 1 − x ≤ 0)) using forward demodulation in combination with theory axioms V ampire infers that $lesseq(0, l). But in the negated conjecture we have the negation of this clause resulting into a refutation.</p><p>This result is not surprising, taking into account that Cpp − inv can infer most of the invariants that are inductive so the formulas added to Lingvas result cover the V ampires lack using induction. The great number of theories that are implemented in the theorem prover makes the inference of the invariant possible, the formula introduced as an axiom being processed and modeled by this theorems to take the form we were looking for.</p><p>The Sequential Initialization Example. Also in the case of the loop for the program "Sequential initialization " proving the property of interest is not straight forward. Since in the program there are specified initial values for the iterator i and for the first element in the array aa but Lingva did not infer them automatically we introduce them by hand in the form of two properties:</p><p>Property. 12 tff(prop1, axiom, i0=1 ). and Property. 13 tff(prop3, axiom, aa0(0)=7).</p><p>We observe that Lingva managed to infer some very useful invariants stating that the value of an element in aa that is in a position beyond the boundaries (less than 0, or greater than i, greater than m) the value of the element does not change. We introduce a property expressing the fact that if the element lies between the boundaries of the processed array its value is changed: Since there is no property inferred about the way a value is changed by this loop (although we already have this information from the output of Cpp-inv) we introduce a new formula stating this relation:</p><p>Property. 15 tff(prop10, axiom, ![X:$int]: (aa(X)=aa0(X) | aa(X)=$sum(aa($sum(X,$uminus(1))),1) )).</p><p>With these new formulae added Vampire can prove that: ∀X, (0 ≤ X) ∧ (X &lt; i) ⇒ aa(X) == aa(X − 1) + 1. The proof outputted is give as follows:</p><p>property (5504) $sum(1, sK0(sK0)) = sK0. From this formula and ¬sP 2($sum(1, sK0(sK0))) (701), which is an inequality splitting name in- troduction, formula sP 2(sK0)(5508) is inferred. From this formula and the negated invariant V ampire obtains a refutation.</p><p>The Insertion Example. The loop Insertion requires an invariant that is inductive so V ampire can not prove this invariant without some extra knowledge added to the invariants inferred by Lingva. We observe a few properties that were already discovered by Lingva : there are four properties that express the fact that if the position in the array is out of the bounds (smaller than 0, greater than j) the value of the elements is not modified. There is also a property communicating the fact that if j is greater than 0, than for the element at the initial value of j (at j0) the property that the value is shifted one to the right holds. Based on this formulas we take the decision of introducing the following property stating that all elements that are at a position higher than j are greater than the element at this position.</p><p>Property. 16 tff(prop4, axiom, ![X:$int]:( $lesseq(j,X)| $lesseq(X,j0)| $less(aa(j),aa(X)))).</p><p>The proof found by V ampire for the invariant is reproduced in the fol- lowing lines:</p><p>found just as hard to infer regardless of the form that it has, for the theorem prover a decision must be made on how many times should the basic the- orems (such as commutativity, associativity) be applied on a formula and in which order. An important step in this field is the automatization of the inference process and the combination of techniques.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">Conclusions</head><p>We have provide an extensive evaluation of the state of the art in invariant generation techniques. Although the techniques are not mutually exclusive, in the sens that the same invariant can be generated by more than one technique, we found a pattern of invariants that can or can't be generated by a certain method. In order to infer certain properties about programs, this classification can point to the user the method that is most likely to infer it.</p><p>The set of programs for which we studied the behavior of these tools were chosen from a series of loops on which either one of the tools had difficulties analyzing, the loops were representative for the type of invariants that a certain tool could infer or the invariants of interest for the loop had an interesting structure. Although this set is not large, the invariants that were inferred cover a series of patterns that occur often in program verification.</p><p>We further studied the disadvantages of Lingva and V ampire and im- prove their functionality by either combining the result of Lingva with re- sults of other methods or by adding properties that are easy to observe by the user. We choose the set of properties to add for each loop depending on its structure and also on the known functionality of the tool. To this end we managed to infer invariants of interest for every loop studied only with the cost of writing theorems hard to infer by this tool.</p><p>Invariants of interest for the user are hard to fined since there might be a large number of properties between two or more variables from the program. Nevertheless the three tools managed to infer invariants that would help the user understand the program better. Also the saturation theorem prover and post-condition weakening methods are goal oriented since both require input from the user, having an advantage of inferring the invariant the user is interested in.</p><p>Due to program verification undecidability the task of inferring invari- ants is hard. Selecting a suitable benchmark for an evaluation of techniques developed for this task is not trivial since the programs come in a large vari- ety of languages and combination of statements. We seen in our evaluation that combining such techniques have a positive influence on the result. This observation take as to the conjecture that a promising path for future work is to combine methods that have different advantages and evaluate them on loops that have a more complicated behavior.</p><p>We also observed that there is significant amount of cases in which hu- man interfering with the procedure (such as adding theorems or stating postconditions) provides a better result from the users point of view. This information provides the intuition that combining human intuition can play an important part in solving the invariant generation task. Algorithms used in machine learning, that simulate human rationality can be an asset for this section of program verification. To the best of our knowledge this concept was not used yet so for future work this is an interesting path that could be followed.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 3 :</head><label>3</label><figDesc>Figure 3: Boogie pipeline</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head></head><label></label><figDesc>procedure ArrayInit &lt;tt&gt; ( A: array tt, left: int, right: int, index: int) returns (i:int) requires left &lt;= right; ensures (forall k: int :: k != n ==&gt; A[k] == 0); { var i: int; i:= left; index:= left; A[left]=0; while(i&lt;= right) invariant (index &lt;= i); { i=i+1; A[i]:=0; } } In this program all elements of an array are initialized with the value 0. By relaxing the constant n in the postcondition by the variable i an invariant is obtained. In some cases just substituting a constant with a variable does not yield an invariant, depending on the update time of the variable. Variable aging replaces a constant with an expression involving a variable.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head></head><label></label><figDesc>Although the above example is similar to the one given for constant relaxation heuristic we observe that the same invariant no longer holds, because of the updating manner of the When invariants are conjunctions of formulas there might be the case that substituting a constant with one variable on both sides of the conjunc- tion does not result in an invariant.Uncoupling is the heuristic that replaces one constant with different variables at different occurrences in the postcon- dition resulting in an invariant. partition (A: ARRAY [T]; n: INTEGER; pivot: T): INTEGER require A.length = n ≤ 1 local low index, high index : INTEGER do from low index := 1; high index := n until low index = high index loop from | no loop initialization until low index = high index ∨ A[low index] &gt; pivot loop low index := low index + 1 end from | no loop initialization until low index = high index ∨ pivot &gt; A[high index] loop high index := high index 1 end A.swap (A, low index, high index) end if pivot ≤ A[low index] then low index := low index 1 high index := low index end Result := low index</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Figure 4 :</head><label>4</label><figDesc>Figure 4: Transition System</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head></head><label></label><figDesc>Let C, B, ε ij be linear polynomials with integer variables over the scalar variables, and a ij , d ij , b α ∈ Z for i ∈ {1, ..., m} and j ∈ {1, ...k}. If 1. Every initiation path π I r with transition relation ρ φ I r satisfies ρ φ I r ⇒ C = 0 2. For all consecution paths π C s with transition relation ρ φ C s satisfies</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head></head><label></label><figDesc>invariants in the following manner: restricting the values of a between 0 and i both the difference between aa[m − a − 1] − aa[a] and aa[a] − aa[m − a − 1] are less or equal to 0. Gin-pink inferred the property that all elements in the array that were already analyzed holds aa[a] = aa[m − a], where a is a location already processed.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_14"><head></head><label></label><figDesc>P a r t i t i o n I n i t i n t aa [m] , bb [m] , c c [m] ; i n t i =0, c =0; w h i l e ( i &lt;m)</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_16"><head>.</head><label></label><figDesc>¬(0 ≤ aa((a0 + sK0))) [ c n f t r a n s f o r m a t i o n 3 5 0 ] 1 4 9 . (X0 ≤ X1) ∨ (X1 ≤ X0) [ t h e o r y axiom ] 3 5 5 . ¬(aa((a0 + X0)) ≤ 0) ∨ ¬(0 ≤ X0) ∨(a ≤ (X0 + a0)) [ c n f t r a n s f o r m a t i o n 1 5 8 ] 1 5 8 . ∀X0, ((a ≤</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_17"><head>.</head><label></label><figDesc>∀[X0] : (¬(a0 ≤ (a0 + (−(a) + X0))) ∨ (a ≤ X0)) [ f l a t t e n i n g 3 3 6 ] 3 3 6 . ∀[X0] : (¬(a0 ≤ (a0 + (−(a) + X0))) ∨ (a ≤ X0)) [ r e c t i f y 1 1 2 ] 1 1 2 . ∀[X1] : (¬(a0 ≤ (a0 + (−(a) + X1))) ∨ (a ≤ X1))</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_19"><head>Property. 9</head><label>9</label><figDesc>tff(prop1, axiom, ![Y:$int]: $lesseq(0,cc(Y))&amp; $less(cc(Y),m)). Property. 10 tff(prop6, axiom, ![Y0:$int]:($lesseq(0,Y0)&amp; $less(Y0,c)=&gt; $lesseq(Y0,cc(Y0)))).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_20"><head>)</head><label></label><figDesc>[cnf transformation 501] 501. ! [X0] : $sum(X0,a0) = $sum(a,$sum(c0,$sum($uminus(c),X0))) [rectify 135] 135. ! [X28] : $sum(X28,a0) = $sum(a,$sum(c0,$sum($uminus(c),X28))) [input inv134] 1256. $lesseq(c,0) | ~$lesseq(0,$sum(0,$uminus(c))) (0:9) [definition unfolding 942,1053,1053] 942. $lesseq(c,0) | ~$lesseq(c0,$sum(c0,$uminus(c))) (0:9) [cnf transformation 604] 604. ~$lesseq(c0,$sum(c0,$uminus(c))) | $lesseq(c,0) [flattening 196] 196. ~$lesseq(c0,$sum(c0,$uminus(c))) | $lesseq(c,0) [input inv195]</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_21"><head></head><label></label><figDesc>The Sum of Pairs Example. The next loop we analyze is "Sum of pairs".</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_22"><head></head><label></label><figDesc>Property. 11 aa[l] + aa[u] − x + 1 ≤ 0 The proof obtained by V ampire is shown as follows: $lesseq($sum(aa(X0),$sum(aa(u),$sum($uminus(x),1))),0)) [ennf transformation 56] 56. ! [X0] : (($lesseq(0,X0) &amp; $lesseq(X0,l)) =&gt; $lesseq($sum(aa(X0),$sum(aa(u),$sum($uminus(x),1))),0)) [rectify 20] 20. ! [X3] : (($lesseq(0,X3) &amp; $lesseq(X3,l)) =&gt; $lesseq($sum(aa(X3),$sum(aa(u),$sum($uminus(x),1))),0)) [input pro3]</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_24"><head></head><label></label><figDesc>Property. 14 tff(propx, axiom, ![X:$int]: ( ($lesseq($sum(i,$uminus(i0)),sK0(X)) &amp; $sum(i0,sK0(X)) = X &amp; $lesseq(0,sK0(X)) &amp; $lesseq(m,$sum(i0,sK0(X))))=&gt; ¬aa(X)=aa0(X) )).</figDesc></figure>
+
+			<note place="foot">V ampire infers from the input negated implication, from the invariant inv0 deduced by Lingva, stating the connection between the relation between the values of i and m and not modifying the values in array aa,</note>
+		</body>
+		<back>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2">Discussions and Conclusions</head><p>We seen that every one of the studied tools has its own advantage regarding the strength or type of inferred invariant. We observe that we get signifi- cantly better results when we use the invariant inferred by one tool as input for the others in order to get even stronger invariants. One remark is in order at this step and that is that the form of the formula that we try to infer with V ampire is important with respect to the set of formulas that are provided as input. Although using human intuition the invariant may be</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<monogr>
+				<title level="m">Thanks to Tanya! 981. $false (0:0)</title>
+		<imprint/>
+	</monogr>
+	<note>subsumption resolution 980,906] 906. sP5 (1:1) [resolution 903,530</note>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<title level="m">aa(sK2(X0)),aa(X0)))</title>
+		<imprint/>
+	</monogr>
+	<note>skolemisation 371] 150. ? [X37] : ! [X36] : (($lesseq(0,i) &amp; $lesseq(0,X36) &amp; $lesseq(X36,i) &amp; $lesseq(0,X37) &amp; $lesseq(X37,i)) =&gt; $lesseq(aa(X36),aa(X37)</note>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<title level="m">,i) | sP5 (0:4)</title>
+		<imprint/>
+	</monogr>
+	<note>splitting component introduction] 980. ~sP5 (0:1) [subsumption resolution 953,529</note>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<monogr>
+		<title level="m" type="main">$uminus(i)) | ~sP5 (0:5)</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>backward demodulation 923,904</note>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<monogr>
+		<title level="m" type="main">$sum(0,$uminus(i))) |</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<idno>~sP5 (0:7</idno>
+		<imprint/>
+	</monogr>
+	<note>splitting 669,903</note>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<monogr>
+		<title level="m" type="main">,i) | ~$lesseq(0,$sum(0,$uminus(i))) (0:9</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>definition unfolding 512,517,517</note>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<monogr>
+		<title level="m" type="main">,i) | ~$lesseq(i0,$sum(i0,$uminus(i))) (0:9</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>cnf transformation 357</note>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<monogr>
+		<title level="m" type="main">$sum(i0,$uminus(i))) | ~$lesseq(1,i)</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>flattening 138</note>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<monogr>
+		<title level="m" type="main">$sum(i0,$uminus(i))) | ~$lesseq(1,i)</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>input inv137</note>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<monogr>
+				<title level="m">$sum(0,X0) = X0 (1:5)</title>
+		<imprint/>
+	</monogr>
+	<note>superposition 153,155] Refutation found. Thanks to Tanya! 2064. $false (1:0) [subsumption resolution 2061,2048</note>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<monogr>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>c,0) (1:3) [resolution 2019,1058</note>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<monogr>
+		<title level="m" type="main">X1) &amp; $lesseq(X1,c) &amp; bb(sK0) = aa(sK0)&amp; cc(X1) != sK0 &amp; cc(X1) != cc0(X1))</title>
+		<idno>X1] : ($lesseq(0</idno>
+		<imprint/>
+	</monogr>
+	<note>skolemisation 745</note>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<monogr>
+				<idno>X48] : ? [X49] : (($lesseq(0</idno>
+		<title level="m">,X49) &amp; $lesseq(X49,c) &amp; bb(X48) = aa(X48)) =&gt; (cc(X49) = X48 | cc(X49) = cc0(X49)))</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<monogr>
+		<title level="m" type="main">,c) | ~$lesseq(c,0) (0:6)</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>forward demodulation 2018,316</note>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<monogr>
+		<title level="m" type="main">0) | ~$lesseq(1,$sum(c,0)) (0:8)</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>forward demodulation 1374,1613</note>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<monogr>
+				<title level="m">a = $sum(c,0) (0:5)</title>
+		<imprint/>
+	</monogr>
+	<note>subsumption resolution 1611,1580] 1580. $lesseq(c,a) (0:3) [evaluation 1065</note>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<monogr>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>0,0) | $lesseq(c,a) (0:6</note>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<title level="m">c0,a0) | $lesseq(c,a) (0:6)</title>
+		<imprint/>
+	</monogr>
+	<note>cnf transformation 330] 330. $lesseq(c,a) | ~$lesseq(c0,a0) [flattening 5</note>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<monogr>
+		<title level="m" type="main">$lesseq(c,a) | ~$lesseq(c0,a0)</title>
+		<imprint/>
+	</monogr>
+	<note>input inv4</note>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<title level="m">a = $sum(c,0) (0:8)</title>
+		<imprint/>
+	</monogr>
+	<note>forward demodulation 1545,316</note>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<monogr>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>$sum(c,0),a) | a = $sum(c,0) (0:10) [evaluation 1115</note>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<monogr>
+		<title level="m" type="main">0) | ~$lesseq($sum(c,$uminus(0)),a) | a = $sum(c,$uminus(0))(0:15)</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>definition unfolding 801,1054,1053,1053</note>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<monogr>
+		<title level="m" type="main">0) | ~$lesseq($sum(c,$uminus(c0)),a) | a = $sum(c,$uminus(c0)) (0:15)</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint>
+			<biblScope unit="volume">0</biblScope>
+		</imprint>
+	</monogr>
+	<note>cnf transformation 381</note>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<monogr>
+		<title level="m" type="main">a = $sum(c,$uminus(c0)) | ~$lesseq($sum(c,$uminus(c0)),a) |</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<monogr>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>a0,0) [flattening 55</note>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<monogr>
+		<title level="m" type="main">a = $sum(c,$uminus(c0)) | ~$lesseq($sum(c,$uminus(c0)),a) |</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<monogr>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>a0,0). input inv54</note>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<title level="m">~$lesseq(1,$sum(c,0)) (0:8)</title>
+		<imprint/>
+	</monogr>
+	<note>evaluation 1350</note>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<monogr>
+		<title level="m" type="main">~$lesseq(1,$sum(c,$uminus(0))) (0:9</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>definition unfolding 1036,1054,1053</note>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<title level="m">~$lesseq(1,$sum(c,$uminus(c0))) (0:9</title>
+		<imprint/>
+	</monogr>
+	<note>cnf transformation 720</note>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<monogr>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>$sum(c,$uminus(c0)</note>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<monogr>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">| ~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>flattening 290</note>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<monogr>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>$sum(c,$uminus(c0)</note>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<monogr>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">| ~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>input inv289</note>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<monogr>
+		<title level="m" type="main">$uminus(c)) | $lesseq(c,0) (0:7)</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>forward demodulation 1256,1732</note>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<monogr>
+				<title level="m">$sum(0,X0) = X0 (0:5)</title>
+		<imprint/>
+	</monogr>
+	<note>backward demodulation 1731,1648</note>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">X0))) (0:12)</title>
+	</analytic>
+	<monogr>
+		<title level="m">$sum(0,X0) = $sum(c,$sum(0,$sum($uminus</title>
+		<imprint/>
+	</monogr>
+	<note>forward demodulation 1129,1613</note>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">X0))) (0:12)</title>
+	</analytic>
+	<monogr>
+		<title level="m">$sum(0,X0) = $sum(a,$sum(0,$sum($uminus</title>
+		<imprint/>
+	</monogr>
+	<note>definition unfolding 815,1054,1053</note>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">X0))) (0:12)</title>
+	</analytic>
+	<monogr>
+		<title level="m">$sum(a0,X0) = $sum(a,$sum(c0,$sum($uminus</title>
+		<imprint/>
+	</monogr>
+	<note>cnf transformation 396</note>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<monogr>
+				<title level="m">$sum(a0,X0) = $sum(a,$sum(c0,$sum($uminus</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<monogr>
+				<title level="m">$sum(a0,X1) = $sum(a,$sum(c0,$sum($uminus</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">X0))) = X0 (0:10)</title>
+	</analytic>
+	<monogr>
+		<title level="m">$sum(c,$sum(0,$sum($uminus</title>
+		<imprint/>
+	</monogr>
+	<note>forward demodulation 1730,316</note>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<analytic>
+		<title level="a" type="main">X0))) (0:12)</title>
+	</analytic>
+	<monogr>
+		<title level="m">$sum(X0,0) = $sum(c,$sum(0,$sum($uminus</title>
+		<imprint/>
+	</monogr>
+	<note>forward demodulation 1195,1613</note>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">X0))) (0:12)</title>
+	</analytic>
+	<monogr>
+		<title level="m">$sum(X0,0) = $sum(a,$sum(0,$sum($uminus</title>
+		<imprint/>
+	</monogr>
+	<note>definition unfolding 881,1054,1053</note>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">X0))) (0:12 Refutation found. Thanks to Tanya! 1898. $false (2:0)</title>
+	</analytic>
+	<monogr>
+		<title level="m">$sum(X0,a0) = $sum(a,$sum(c0,$sum($uminus</title>
+		<imprint/>
+	</monogr>
+	<note>subsumption resolution 1897,355</note>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<monogr>
+				<title level="m">:3)</title>
+		<imprint/>
+	</monogr>
+	<note>$lesseq(0,l. resolution 208,103</note>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">1))),0)</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">$sum(aa(u),$sum($uminus</title>
+		<imprint/>
+	</monogr>
+	<note>$sum(aa(l. skolemisation 79] 79. ? [X0] : ($lesseq(0,X0) &amp; $lesseq(X0,l) &amp;</note>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<title level="m">$sum(aa(l),$sum(aa(u),$sum($uminus</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<monogr>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint>
+			<biblScope unit="page">1</biblScope>
+		</imprint>
+	</monogr>
+	<note>$sum(aa(l),$sum(aa(u),$sum($uminus(x</note>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<monogr>
+				<idno>X3] : (($lesseq(0</idno>
+		<title level="m">,X3) &amp; $lesseq(X3,l)) =&gt; $lesseq($sum(aa(l),$sum(aa(u),$sum($uminus</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<title level="m">X16,sK0) | $lesseq(X16,l) (1:6)</title>
+		<imprint/>
+	</monogr>
+	<note>resolution 31,104] 104. $lesseq(sK0,l) (0:3). cnf transformation 80</note>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<title level="m">X1,X2) | ~$lesseq(X0,X1) | $lesseq(X0,X2) (0:9</title>
+		<imprint/>
+	</monogr>
+	<note>theory axiom</note>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<monogr>
+		<title level="m" type="main">:3) [subsumption resolution 1889</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint>
+			<biblScope unit="volume">30</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<monogr>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>l,l) | ~$lesseq(0,l. resolution 390,309</note>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<analytic>
+		<title level="a" type="main">$sum(aa(u),aa(l)))),0) (0:12)</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">$sum(1,$sum($uminus(x)</title>
+		<imprint/>
+	</monogr>
+	<note>forward demodulation 308,25] 25. $sum(X0,X1) = $sum(X1,X0) (0:7) [theory axiom</note>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<monogr>
+		<title level="m" type="main">$sum(1,$sum($uminus(x),$sum(aa(l),aa(u)))),0) (0:12)</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>forward demodulation 307,25</note>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<analytic>
+		<title level="a" type="main">aa(u)),$uminus(x))),0) (0:12)</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">$sum(1,$sum($sum(aa(l)</title>
+		<imprint/>
+	</monogr>
+	<note>forward demodulation 306,279] 279. $sum(X7,$sum(X8,X9)) = $sum(X9,$sum(X7,X8)) (1:11) [superposition 26,25</note>
+</biblStruct>
+
+<biblStruct xml:id="b57">
+	<monogr>
+				<title level="m">$sum(X0,$sum(X1,X2)) = $sum($sum(X0,X1),X2) (0:11)</title>
+		<imprint/>
+	</monogr>
+	<note>theory axiom</note>
+</biblStruct>
+
+<biblStruct xml:id="b58">
+	<analytic>
+		<title level="a" type="main">$sum(1,$sum(aa(l),aa(u)))),0) (0:12)</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">$sum($uminus(x)</title>
+		<imprint/>
+	</monogr>
+	<note>forward demodulation 305,279</note>
+</biblStruct>
+
+<biblStruct xml:id="b59">
+	<analytic>
+		<title level="a" type="main">1))),0) (0:12)</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">$sum($uminus(x),$sum(aa(l),$sum</title>
+		<imprint/>
+	</monogr>
+	<note>forward demodulation 304,25</note>
+</biblStruct>
+
+<biblStruct xml:id="b60">
+	<analytic>
+		<title level="a" type="main">$sum($sum(aa(u),1),aa(l))),0) (0:12)</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">$sum($uminus(x)</title>
+		<imprint/>
+	</monogr>
+	<note>forward demodulation 296,279</note>
+</biblStruct>
+
+<biblStruct xml:id="b61">
+	<analytic>
+		<title level="a" type="main">1))),0) (0:12)</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">$sum(aa(l),$sum($uminus(x),$sum</title>
+		<imprint/>
+	</monogr>
+	<note>backward demodulation 279,143</note>
+</biblStruct>
+
+<biblStruct xml:id="b62">
+	<analytic>
+		<title level="a" type="main">$sum(aa(u),$sum(1,$uminus(x)))),0) (0:12)</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">$sum(aa(l)</title>
+		<imprint/>
+	</monogr>
+	<note>forward demodulation 105,25</note>
+</biblStruct>
+
+<biblStruct xml:id="b63">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<idno>0) (0:12</idno>
+		<title level="m">$sum(aa(l),$sum(aa(u),$sum($uminus</title>
+		<imprint/>
+	</monogr>
+	<note>cnf transformation 80</note>
+</biblStruct>
+
+<biblStruct xml:id="b64">
+	<monogr>
+				<title level="m">$lesseq($sum(1,$sum($uminus(x),$sum(aa(u),aa(X0)))),0) |</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b65">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<title level="m">X0,l) | ~$lesseq(0,X0) (1:18)</title>
+		<imprint/>
+	</monogr>
+	<note>superposition 314,25</note>
+</biblStruct>
+
+<biblStruct xml:id="b66">
+	<monogr>
+				<title level="m">$lesseq($sum(1,$sum($uminus(x),$sum(aa(X0),aa(u)))),0) |</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b67">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<title level="m">X0,l) | ~$lesseq(0,X0) (0:18)</title>
+		<imprint/>
+	</monogr>
+	<note>forward demodulation 313,25</note>
+</biblStruct>
+
+<biblStruct xml:id="b68">
+	<monogr>
+				<title level="m">$lesseq($sum(1,$sum($sum(aa(X0),aa(u)),$uminus(x))),0) |</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b69">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<title level="m">X0,l) | ~$lesseq(0,X0) (0:18)</title>
+		<imprint/>
+	</monogr>
+	<note>forward demodulation 312,279</note>
+</biblStruct>
+
+<biblStruct xml:id="b70">
+	<analytic>
+		<title level="a" type="main">$sum(1,$sum(aa(X0),aa(u)))),0) |</title>
+	</analytic>
+	<monogr>
+		<title level="m">$lesseq($sum($uminus(x)</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b71">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<title level="m">X0,l) | ~$lesseq(0,X0) (0:18)</title>
+		<imprint/>
+	</monogr>
+	<note>forward demodulation 311,279</note>
+</biblStruct>
+
+<biblStruct xml:id="b72">
+	<monogr>
+				<title level="m">$lesseq($sum($uminus(x),$sum(aa(u),$sum(1,aa(X0)))),0) |</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b73">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<title level="m">X0,l) | ~$lesseq(0,X0) (0:18)</title>
+		<imprint/>
+	</monogr>
+	<note>forward demodulation 310,26</note>
+</biblStruct>
+
+<biblStruct xml:id="b74">
+	<monogr>
+				<title level="m">$lesseq($sum($uminus(x),$sum($sum(aa(u),1),aa(X0))),0) |</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b75">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<title level="m">X0,l) | ~$lesseq(0,X0) (0:18)</title>
+		<imprint/>
+	</monogr>
+	<note>forward demodulation 297,279</note>
+</biblStruct>
+
+<biblStruct xml:id="b76">
+	<monogr>
+				<title level="m">$lesseq($sum(aa(X0),$sum($uminus(x),$sum(aa(u),1))),0) |</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b77">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<title level="m">X0,l) | ~$lesseq(0,X0) (0:18)</title>
+		<imprint/>
+	</monogr>
+	<note>backward demodulation 279,140</note>
+</biblStruct>
+
+<biblStruct xml:id="b78">
+	<analytic>
+		<title level="a" type="main">$sum(aa(u),$sum(1,$uminus(x)))),0) |</title>
+	</analytic>
+	<monogr>
+		<title level="m">$lesseq($sum(aa(X0)</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b79">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<title level="m">X0,l) | ~$lesseq(0,X0) (0:18)</title>
+		<imprint/>
+	</monogr>
+	<note>forward demodulation 100,25</note>
+</biblStruct>
+
+<biblStruct xml:id="b80">
+	<monogr>
+				<idno>0) |</idno>
+		<title level="m">$lesseq($sum(aa(X0),$sum(aa(u),$sum($uminus</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b81">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<title level="m">X0,l) | ~$lesseq(0,X0) (0:18)</title>
+		<imprint/>
+	</monogr>
+	<note>cnf transformation 73</note>
+</biblStruct>
+
+<biblStruct xml:id="b82">
+	<monogr>
+		<title level="m" type="main">X0) | ~$lesseq(X0,l)) | Refutation found. Thanks to Tanya! 5511. $false (0:0)</title>
+		<editor>! [X0] : ((~$lesseq</editor>
+		<imprint/>
+	</monogr>
+	<note>subsumption resolution 5508,702] 702. sP2(sK0) (0:2). inequality splitting 697,701] 701. ~sP2($sum(1,sK0(sK0)</note>
+</biblStruct>
+
+<biblStruct xml:id="b83">
+	<monogr>
+				<title level="m">$sum</title>
+		<imprint>
+			<biblScope unit="page">0</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b84">
+	<monogr>
+				<title level="m">$sum(i0,sK0(sK0)) != sK0 (0:6)</title>
+		<imprint/>
+	</monogr>
+	<note>cnf transformation 388</note>
+</biblStruct>
+
+<biblStruct xml:id="b85">
+	<monogr>
+		<title level="m" type="main">$sum(i,$uminus(i0)),sK0(sK0))</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b86">
+	<monogr>
+		<title level="m" type="main">sK0(sK0))!= sK0 &amp; ~$lesseq(0,sK0(sK0)) &amp; $lesseq(m,$sum(i0,sK0(sK0))) &amp; aa(sK0) != $sum(aa($sum(sK0,$uminus(1))),1)</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">&amp;amp; $</forename><surname>Sum</surname></persName>
+		</author>
+		<imprint>
+			<biblScope unit="volume">0</biblScope>
+		</imprint>
+	</monogr>
+	<note>skolemisation 387</note>
+</biblStruct>
+
+<biblStruct xml:id="b87">
+	<monogr>
+				<title level="m">~$sum(i0,sK0(X37)) = X37 &amp; ~$lesseq(0,sK0(X37)) &amp; $lesseq(m,$sum(i0,sK0(X37)))) =&gt; aa(X37) = $sum(aa($sum(X37,$uminus</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b88">
+	<monogr>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<idno>0:4)</idno>
+		<imprint>
+			<biblScope unit="page">0</biblScope>
+		</imprint>
+	</monogr>
+	<note>cnf transformation 388</note>
+</biblStruct>
+
+<biblStruct xml:id="b89">
+	<monogr>
+				<title level="m">$lesseq(0,sK0(sK0)) | $sum(1,sK0(sK0)) = sK0</title>
+		<imprint/>
+	</monogr>
+	<note>subsumption resolution 5497,696</note>
+</biblStruct>
+
+<biblStruct xml:id="b90">
+	<monogr>
+		<title level="m" type="main">$lesseq(m,$sum(i0,sK0(sK0))) (0:6)</title>
+		<imprint/>
+	</monogr>
+	<note>cnf transformation 388</note>
+</biblStruct>
+
+<biblStruct xml:id="b91">
+	<monogr>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>m,$sum(1,sK0(sK0)</note>
+</biblStruct>
+
+<biblStruct xml:id="b92">
+	<monogr>
+		<title level="m" type="main">sK0(sK0)) | $sum(1,sK0(sK0)) = sK0 (1:16)</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">| $</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>resolution 909,912</note>
+</biblStruct>
+
+<biblStruct xml:id="b93">
+	<monogr>
+		<title level="m" type="main">,i),sK0(sK0)) (0:6)</title>
+		<editor>$lesseq($sum</editor>
+		<imprint/>
+	</monogr>
+	<note>forward demodulation 703,157</note>
+</biblStruct>
+
+<biblStruct xml:id="b94">
+	<monogr>
+				<title level="m">$sum(X0,X1) = $sum(X1,X0) (0:7)</title>
+		<imprint/>
+	</monogr>
+	<note>theory axiom</note>
+</biblStruct>
+
+<biblStruct xml:id="b95">
+	<monogr>
+		<title level="m" type="main">$sum(i,-1),sK0(sK0)) (0:6)</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>evaluation 698</note>
+</biblStruct>
+
+<biblStruct xml:id="b96">
+	<monogr>
+				<title level="m">$lesseq($sum(i,$uminus(i0)),sK0(sK0)) (0:7)</title>
+		<imprint/>
+	</monogr>
+	<note>cnf transformation 388</note>
+</biblStruct>
+
+<biblStruct xml:id="b97">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<title level="m">$sum(-1,i),sK0(X0)) | ~$lesseq(m,$sum</title>
+		<imprint>
+			<biblScope unit="page">0</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b98">
+	<monogr>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">| $</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint>
+			<biblScope unit="page">0</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b99">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">| $</forename><surname>Sum</surname></persName>
+		</author>
+		<title level="m">sK0(X0)) = X0 (0:22)</title>
+		<imprint/>
+	</monogr>
+	<note>forward demodulation 908,157</note>
+</biblStruct>
+
+<biblStruct xml:id="b100">
+	<monogr>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>m,$sum(1,sK0(X0)</note>
+</biblStruct>
+
+<biblStruct xml:id="b101">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">| $</forename><surname>Lesseq</surname></persName>
+		</author>
+		<idno>sK0(X0)) (0:22</idno>
+		<title level="m">sK0(X0)) | $sum(1,sK0(X0)) = X0 | ~$lesseq($sum(i,-1)</title>
+		<imprint/>
+	</monogr>
+	<note>subsumption resolution 705,548</note>
+</biblStruct>
+
+<biblStruct xml:id="b102">
+	<monogr>
+		<title level="m" type="main">X0))) | aa(X0) = aa0(X0) (0:11)</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~</forename><surname>$lesseq(m</surname></persName>
+		</author>
+		<imprint>
+			<biblScope unit="page">0</biblScope>
+		</imprint>
+	</monogr>
+	<note>definition unfolding 389,539</note>
+</biblStruct>
+
+<biblStruct xml:id="b103">
+	<monogr>
+				<title level="m">~$lesseq(m,$sum(i0,sK0(X0))) | aa(X0) = aa0(X0) (0:11)</title>
+		<imprint/>
+	</monogr>
+	<note>cnf transformation 170</note>
+</biblStruct>
+
+<biblStruct xml:id="b104">
+	<monogr>
+				<title level="m">aa(X0) != aa0(X0) | ~$lesseq(m,$sum(1,sK0(X0))) | $lesseq</title>
+		<imprint>
+			<biblScope unit="page">0</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b105">
+	<monogr>
+				<idno>sK0(X0)) (0:27)</idno>
+		<title level="m">| $sum(1,sK0(X0)) = X0 | ~$lesseq($sum(i,-1)</title>
+		<imprint/>
+	</monogr>
+	<note>evaluation 695</note>
+</biblStruct>
+
+<biblStruct xml:id="b106">
+	<monogr>
+				<title level="m">~$sum(i0,sK0(X37)) = X37 &amp; ~$lesseq(0,sK0(X37)) &amp; $lesseq(m,$sum(i0,sK0(X37)))) =&gt; ~aa(X37) = aa0(X37)</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b107">
+	<monogr>
+				<author>
+			<orgName type="collaboration">Refutation</orgName>
+		</author>
+		<title level="m">Thanks to Tanya! 1299. $false (1:0)</title>
+		<imprint/>
+	</monogr>
+	<note>subsumption resolution 1298,160</note>
+</biblStruct>
+
+<biblStruct xml:id="b108">
+	<monogr>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<pubPlace>j,j</pubPlace>
+		</imprint>
+	</monogr>
+	<note>subsumption resolution 1295,856</note>
+</biblStruct>
+
+<biblStruct xml:id="b109">
+	<monogr>
+		<title level="m" type="main">X0,j) | $lesseq(X0,j0) (3:6)</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>resolution 839,161</note>
+</biblStruct>
+
+<biblStruct xml:id="b110">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<title level="m">X1,X2) | ~$lesseq(X0,X1) | $lesseq(X0,X2) (0:9</title>
+		<imprint/>
+	</monogr>
+	<note>theory axiom</note>
+</biblStruct>
+
+<biblStruct xml:id="b111">
+	<monogr>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>sK0,j) (0:3) [cnf transformation 379</note>
+</biblStruct>
+
+<biblStruct xml:id="b112">
+	<monogr>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>sK0,j) &amp; $lesseq(sK0,j0) &amp; $lesseq(aa(sK0),x</note>
+</biblStruct>
+
+<biblStruct xml:id="b113">
+	<monogr>
+				<idno>378. ? [X0] : (</idno>
+		<title level="m">~$lesseq(X0,j) &amp; $lesseq(X0,j0) &amp; $lesseq(aa(X0),x))</title>
+		<imprint/>
+	</monogr>
+	<note>ennf transformation 377</note>
+</biblStruct>
+
+<biblStruct xml:id="b114">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<title level="m">aa(X0),x))</title>
+		<imprint/>
+	</monogr>
+	<note>flattening 376</note>
+</biblStruct>
+
+<biblStruct xml:id="b115">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<title level="m">aa(X0),x))</title>
+		<imprint/>
+	</monogr>
+	<note>rectify 154</note>
+</biblStruct>
+
+<biblStruct xml:id="b116">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<title level="m">aa(X36),x))</title>
+		<imprint/>
+	</monogr>
+	<note>evaluation 152</note>
+</biblStruct>
+
+<biblStruct xml:id="b117">
+	<monogr>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>negated conjecture 151</note>
+</biblStruct>
+
+<biblStruct xml:id="b118">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<title level="m">aa(X36),x))</title>
+		<imprint/>
+	</monogr>
+	<note>input implication</note>
+</biblStruct>
+
+<biblStruct xml:id="b119">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<title level="m">X24,sK0) | $lesseq(X24,j0) (1:6)</title>
+		<imprint/>
+	</monogr>
+	<note>resolution 161,531] 531. $lesseq(sK0,j0) (0:3). cnf transformation 379</note>
+</biblStruct>
+
+<biblStruct xml:id="b120">
+	<monogr>
+		<title level="m" type="main">j,j0) | ~$lesseq(j,j) (1:6)</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>resolution 529,160</note>
+</biblStruct>
+
+<biblStruct xml:id="b121">
+	<monogr>
+		<title level="m" type="main">aa(X0),aa(j)) | ~$lesseq(X0,j0) | ~$lesseq(j,X0) (0:11)</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>cnf transformation 375</note>
+</biblStruct>
+
+<biblStruct xml:id="b122">
+	<monogr>
+		<title level="m" type="main">aa(X0),aa(j)))</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>flattening 374</note>
+</biblStruct>
+
+<biblStruct xml:id="b123">
+	<monogr>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>aa(X0),aa(j)</note>
+</biblStruct>
+
+<biblStruct xml:id="b124">
+	<monogr>
+		<title level="m" type="main">aa(X36),aa(j)))</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">~$</forename><surname>Lesseq</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>evaluation 150</note>
+</biblStruct>
+
+<biblStruct xml:id="b125">
+	<monogr>
+		<title level="m" type="main">X36) | ~$lesseq(X36,j0) | $less(aa(j),aa(X36)))</title>
+		<editor>! [X36] : (~$lesseq(j</editor>
+		<imprint/>
+	</monogr>
+	<note>input prop4</note>
+</biblStruct>
+
+<biblStruct xml:id="b126">
+	<analytic>
+		<title level="a" type="main">Efficient Generation of Craig Interpolants in Satisfiability Modulo Theories</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Cimatti</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Griggio</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Sebastiani</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">In ACM Transactions on Computational Logic</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<date type="published" when="2009" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b127">
+	<monogr>
+		<title level="m" type="main">An Introduction to Mathematical Logic and Type Theory: To Truth Through Proof</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Peter</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Andrews</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2002" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b128">
+	<analytic>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Armin</forename><surname>Biere</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Alessandro</forename><surname>Cimatti</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Edmund</forename><forename type="middle">M</forename><surname>Clarke</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Ofer</forename><surname>Strichman</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Yunshan</forename><surname>Zhu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Bounded Model Checking</title>
+		<imprint>
+			<biblScope unit="volume">58</biblScope>
+			<date type="published" when="2003" />
+		</imprint>
+	</monogr>
+	<note>BCC + 03</note>
+</biblStruct>
+
+<biblStruct xml:id="b129">
+	<analytic>
+		<title level="a" type="main">Boogie: A Modular Reusable Verifier for Object-Oriented Programs</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">] Michael</forename><surname>Barnett</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Bor-Yuh Evan</forename><surname>Chang</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Robert</forename><surname>Deline</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Bart</forename><surname>Jacobs</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">K</forename><surname>Rustan</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Leino</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">BCD + 05</title>
+		<imprint>
+			<date type="published" when="2005" />
+			<biblScope unit="volume">4111</biblScope>
+			<biblScope unit="page" from="364" to="387" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b130">
+	<monogr>
+		<title level="m" type="main">HOL-Boogie-An Interactive Prover-Backend for the Verifying C Compiler</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Sascha</forename><surname>Böhme</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Wolfram</forename><surname>Michaa L Moskal</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Burkhart</forename><surname>Schulte</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Wolff</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2010-02" />
+			<biblScope unit="volume">44</biblScope>
+			<biblScope unit="page" from="111" to="144" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b131">
+	<monogr>
+		<title level="m" type="main">Abstract Interpretation: A Unified Lattice Model for Static Analysis of Programs by Construction or Approximation of Fixpoints</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Patrick</forename><surname>Cousot</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Radhia</forename><surname>Cousot</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1977" />
+			<biblScope unit="page" from="238" to="252" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b132">
+	<monogr>
+		<title level="m" type="main">The complexity of theorem-proving procedures</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Stephen</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Cook</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1971" />
+			<biblScope unit="page" from="151" to="158" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b133">
+	<monogr>
+		<title level="m" type="main">A Fast LinearArithmetic Solver for DPLL(T)</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Bruno</forename><surname>Dutertre</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Leonardo</forename><surname>De Moura</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2006" />
+			<biblScope unit="page" from="81" to="94" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b134">
+	<monogr>
+		<title level="m" type="main">Guarded Commands, Nondeterminacy and Formal Derivation of Programs</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><forename type="middle">W</forename><surname>Dijkstra</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1975" />
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="page" from="453" to="457" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b135">
+	<monogr>
+		<title level="m" type="main">A machine program for theorem-proving</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Martin</forename><surname>Davis</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">George</forename><surname>Logemann</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Donald</forename><surname>Loveland</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1962-07" />
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="page" from="394" to="397" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b136">
+	<monogr>
+		<title level="m" type="main">Satisfiability modulo theories: introduction and applications</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Leonardo</forename><surname>De Moura</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Nikolaj</forename><surname>Bjørner</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2011" />
+			<biblScope unit="volume">54</biblScope>
+			<biblScope unit="page" from="69" to="77" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b137">
+	<monogr>
+		<title level="m" type="main">A Computing Procedure for Quantification Theory</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Martin</forename><surname>Davis</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Hilary</forename><surname>Putnam</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1960-07" />
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="page" from="201" to="215" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b138">
+	<monogr>
+		<title level="m" type="main">Principles of Mathematical Logic</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Hilbert</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">W</forename><surname>Ackermann</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1950" />
+			<publisher>Chelsea Publishing Company</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b139">
+	<monogr>
+		<title level="m" type="main">An Extensible SAT-solver</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Niklas</forename><surname>Eén</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Niklas</forename><surname>Sörensson</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2004" />
+			<biblScope unit="volume">2919</biblScope>
+			<biblScope unit="page" from="502" to="518" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b140">
+	<analytic>
+		<title level="a" type="main">Inferring Loop Invariants using Postconditions</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Carlo</forename><forename type="middle">A</forename><surname>Furia</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Bertrand</forename><surname>Meyer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Fields of Logic and Computation: Essays Dedicated to Yuri Gurevich on the Occasion of His 70th Birthday</title>
+		<imprint>
+			<date type="published" when="2010" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b141">
+	<monogr>
+		<title level="m" type="main">On the Complexity of Derivation in Propositional Calculus</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><forename type="middle">S</forename><surname>Tseitin</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1983" />
+			<biblScope unit="page" from="466" to="483" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b142">
+	<monogr>
+		<title level="m" type="main">Aligators for Arrays (Tool Paper)</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Thomas</forename><forename type="middle">A</forename><surname>Henzinger</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Thibaud</forename><surname>Hottelier</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Laura</forename><surname>Kovács</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Andrey</forename><surname>Rybalchenko</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2010" />
+			<biblScope unit="volume">6397</biblScope>
+			<biblScope unit="page" from="348" to="356" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b143">
+	<analytic>
+		<title level="a" type="main">Case Studies on Invariant Generation Using a Saturation Theorem Prover</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Krystof</forename><surname>Hoder</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Laura</forename><surname>Kovacs</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Andrei</forename><surname>Voronkov</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">10th Mexican International Conference on Artificial Intelligence, MICAI</title>
+		<imprint>
+			<date type="published" when="2011" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b144">
+	<analytic>
+		<title level="a" type="main">Finding Loop Invariants for Programs over Arrays Using a Theorem Prover</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Laura</forename><surname>Kovacs</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Andrei</forename><surname>Voronkov</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">International Symposium on Symbolic and Numeric Algorithms for Scientific Computing, SYNASC</title>
+		<imprint>
+			<date type="published" when="2009" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b145">
+	<analytic>
+		<title level="a" type="main">First-Order Theorem Proving and Vampire</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Laura</forename><surname>Kovacs</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Andrei</forename><surname>Voronkov</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the International Conference on Computer Aided Veri cation (CAV)</title>
+		<meeting>the International Conference on Computer Aided Veri cation (CAV)</meeting>
+		<imprint>
+			<date type="published" when="2013" />
+		</imprint>
+	</monogr>
+	<note>to appear</note>
+</biblStruct>
+
+<biblStruct xml:id="b146">
+	<analytic>
+		<title level="a" type="main">SMT-Based Array Invariant Generation</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Daniel</forename><surname>Larraz</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Enric</forename><surname>Rodriguez-Carbonell</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Albert</forename><surname>Rubio</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">14th International Conference Verification, Model Checking, and Abstract Interpretation</title>
+		<imprint>
+			<publisher>VMCAI</publisher>
+			<date type="published" when="2013" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b147">
+	<monogr>
+		<title level="m" type="main">Chaff: Engineering an Efficient SAT Solver</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">W</forename><surname>Mmz + 11] Matthew</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Conor</forename><forename type="middle">F</forename><surname>Moskewicz</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Ying</forename><surname>Madigan</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Lintao</forename><surname>Zhao</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Sharad</forename><surname>Zhang</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Malik</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2011" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b148">
+	<monogr>
+		<title level="m" type="main">The Temporal Logic of Reactive and Concurrent Systems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Z</forename><surname>Manna</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Pnueli</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1992" />
+			<publisher>Springer</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b149">
+	<monogr>
+		<title level="m" type="main">GRASP: a search algorithm for propositional satisfiability</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Marques-Silva</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">K</forename><surname>Sakallah</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1999-05" />
+			<biblScope unit="page" from="506" to="521" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b150">
+	<analytic>
+		<title level="a" type="main">Program Verification using Template over Predicate Abstraction</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Strivastava</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Gulwani</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. of PLDI</title>
+		<meeting>of PLDI</meeting>
+		<imprint>
+			<date type="published" when="2009" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b151">
+	<monogr>
+		<title level="m" type="main">FaCT++ Description Logic Reasoner: System Description</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Dmitry</forename><surname>Tsarkov</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Ian</forename><surname>Horrocks</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2006" />
+			<biblScope unit="volume">4130</biblScope>
+			<biblScope unit="page" from="292" to="297" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b152">
+	<monogr>
+		<title level="m" type="main">A branching heuristic for testing propositional satisfiability</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Jinchang</forename><surname>Wang</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1995-10" />
+			<biblScope unit="volume">5</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>
