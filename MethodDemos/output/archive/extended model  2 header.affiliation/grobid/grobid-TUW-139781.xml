@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Cooperating Memetic and Branch-and-Cut Algorithms for Solving the Multidimensional Knapsack Problem</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Jakob</forename><surname>Puchinger</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution" key="instit1">Institute of Computer Graphics and Algorithms</orgName>
+								<orgName type="institution" key="instit2">Vienna University of Technology Favoritenstrae</orgName>
+								<address>
+									<postCode>1040</postCode>
+									<settlement>Vienna</settlement>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Günther</forename><forename type="middle">R</forename><surname>Raidl</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution" key="instit1">Institute of Computer Graphics and Algorithms</orgName>
+								<orgName type="institution" key="instit2">Vienna University of Technology Favoritenstrae</orgName>
+								<address>
+									<postCode>1040</postCode>
+									<settlement>Vienna</settlement>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Martin</forename><surname>Gruber</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution" key="instit1">Institute of Computer Graphics and Algorithms</orgName>
+								<orgName type="institution" key="instit2">Vienna University of Technology Favoritenstrae</orgName>
+								<address>
+									<postCode>1040</postCode>
+									<settlement>Vienna</settlement>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Cooperating Memetic and Branch-and-Cut Algorithms for Solving the Multidimensional Knapsack Problem</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<note>MIC2005. The 6th Metaheuristics International Conference 775</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<abstract/>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">Introduction</head><p>Recent work in combinatorial optimization indicates the high potential of combining meta- heuristics with integer linear programming (ILP) techniques. We study here a hybrid system in which a memetic algorithm (MA) and a general purpose ILP solver based on branch-and-cut (B&amp;C) are executed in parallel and continuously exchange information in a bidirectional, asyn- chronous way. As target problem, we consider the multidimensional knapsack problem (MKP). The memetic algorithm uses a direct binary encoding of candidate solutions and repair and local improvement strategies that are steered by pseudo-utility ratios. As B&amp;C framework we use the general purpose commercial ILP-solver CPLEX. The information exchanged between the two heterogenous algorithms are so-far best primal solutions and promising dual variable values of solutions to certain linear programming (LP) relaxations. These dual variable values are used in the MA to update the pseudo-utility ratios of local improvement and repair.</p><p>We will see that this combination of a metaheuristic and an exact optimization method is able to benefit from synergy: Experimental results document that within the same limited total time, the cooperative system yields better heuristic solutions than each algorithm alone. In particular, the cooperative system also competes well with today's best algorithms for the MKP, needing substantially shorter total running times.</p><p>The next section introduces the MKP formally and gives some references to state-of-the- art algorithms for solving it. Section 3 explains the MA-part. The used ILP formulation and B&amp;C solver are described in Sect. 4. Details about the parallel execution and asynchronous communication are given in Sect. 5. Finally, Sect. 6 presents exemplary results, and conclusions are drawn in Sect. 7.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">The Multidimensional Knapsack Problem</head><p>The MKP is a well-studied, strongly NP-hard combinatorial optimization problem occurring in many different applications. It can be defined by the following ILP:</p><formula xml:id="formula_0">n (MKP) maximize z = p j x j<label>(1)</label></formula><p>j=1 n subject to</p><formula xml:id="formula_1">w ij x j ≤ c i , i = 1, . . . , m (2) j=1 x j ∈ {0, 1}, j = 1, . . . , n.<label>(3)</label></formula><p>Given are n items with profits p j &gt; 0 and m resources with capacities c i &gt; 0. Each item j consumes an amount w ij ≥ 0 from each resource i. The goal is to select a subset of the items with maximum total profit, see (1); chosen items must, however, not exceed resource capacities, see (2). The 0-1 decision variables x j indicate which items are selected.</p><p>A general overview on practical and theoretical results for the MKP can be found in the monograph by Kellerer et al. <ref type="bibr" target="#b3">[4]</ref>. Besides exact techniques for solving small to moderately sized instances, many kinds of metaheuristics have already been applied to the MKP.</p><p>To our knowledge, the method currently yielding the best results, at least for commonly used benchmark instances, has been described by <ref type="bibr">Vasquez and Hao [7]</ref> and was recently re- fined by Vasquez and Vimont <ref type="bibr" target="#b7">[8]</ref>. The search space is reduced and partitioned via additional constraints, fixing the total number of items to be packed. Bounds for these constraints are calculated by solving a modified LP-relaxation. For each remaining part of the search space, tabu-search is independently applied, starting with a solution derived from the LP-relaxation of the partial problem. The improvement described in <ref type="bibr" target="#b7">[8]</ref> lies mainly in an additional variable fixing heuristic.</p><p>Besides this tabu search approach, various other metaheuristics have been described for the MKP, including several variants of hybrid evolutionary algorithms (EAs); see <ref type="bibr" target="#b5">[6]</ref> for a recent survey and comparison of EAs for the MKP. The basics of today's most effective EAs go back to Chu and Beasley <ref type="bibr" target="#b0">[1]</ref>: Candidate solutions are directly represented by their 0-1 vectors x; standard crossover and mutation operators and -most importantly -clever repair and local improvement strategies are applied. Such combinations of EAs with problem-specific local improvement strategies are in general also called memetic algorithms, and we adopt this nomenclature in the following.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">The Memetic Algorithm Part</head><p>The MA, which we consider here for parallel execution with B&amp;C, is based on the principles from Chu and Beasley and includes some improvements suggested in <ref type="bibr" target="#b4">[5,</ref><ref type="bibr" target="#b2">3,</ref><ref type="bibr" target="#b5">6]</ref>. The MA framework is steady-state. The creation of initial solutions is guided by the LP-relaxation of the MKP, as described in <ref type="bibr" target="#b2">[3]</ref>. Each new candidate solution is derived by selecting two parents via binary tournaments, performing uniform crossover on their characteristic vectors Vienna, Austria, August <ref type="bibr">[22]</ref><ref type="bibr">[23]</ref><ref type="bibr">[24]</ref><ref type="bibr">[25]</ref><ref type="bibr">[26]</ref><ref type="bibr">2005</ref> x, flipping each bit with probability 1/n, performing repair if a capacity constraint is violated, and always performing local improvement. If such a new candidate solution is different to all solutions in the current population, it replaces the worst of them.</p><p>Both, repair and local improvement, are based on greedy first-fit strategies and guarantee that any resulting candidate solution lies at the boundary of the feasible region, where optimal solutions are always located. The repair procedure considers all items in a specific order Π and removes selected items (x j = 1 → x j = 0) as long as any capacity constraint is violated. Local improvement works vice-versa: It considers all items in the reverse order Π and selects items not yet appearing in the solution as long as no capacity limit is exceeded.</p><p>Crucial for these strategies to work well is the choice of the ordering Π. Items that are likely to be selected in an optimal solution must appear near the end of Π. Various heuristic measures can be found in the literature for calculating utility values for estimating the likelihood with which each item appears in an optimal solution. For the unidimensional knapsack problem (m = 1), for example, ordering items according to increasing ratios p j /w 1j is straight-forward and works generally well. In case of the MKP, an appropriate choice is much more difficult.</p><p>As in <ref type="bibr" target="#b0">[1]</ref>, we determine Π by ordering the items according to pseudo-utility ratios</p><formula xml:id="formula_2">u j = p j m i=1 a i w ij ,<label>(4)</label></formula><p>where we set the surrogate multipliers a i to the dual variable values (i.e. shadow prices of the i-th constraints) of the solution to the LP-relaxation of the MKP.</p><p>While this ordering Π remains fixed throughout the whole optimization if the MA runs in- dependently, we will continuously adapt the surrogate multipliers according to more promising dual variable values when B&amp;C is performed in parallel, see Sect. 5.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">The Branch-and-Cut Part</head><p>The heuristics in <ref type="bibr" target="#b6">[7,</ref><ref type="bibr" target="#b7">8]</ref> exploit the property that good solutions to the MKP often lie in the neighborhood of the solution x LP to the corresponding LP relaxation. We performed an empirical in-depth examination on smaller instances of Chu and Beasley's benchmark library <ref type="bibr" target="#b0">[1]</ref> for which we were able to compute optimal solutions x * and observed that the Hamming distance between x * and the (possibly infeasible) rounded LP solution x RLP with</p><formula xml:id="formula_3">x RLP j = LP j − 0.5 j = 1, . . . , n,<label>(5)</label></formula><p>is almost always smaller than 10% of the total number of variables. Focusing the optimization to such a neighborhood seems therefore to be highly promising. This can be done by adding a single constraint to the MKP similar to the local branching constraints presented by Fischetti and Lodi <ref type="bibr" target="#b1">[2]</ref>. The following inequality restricts the search space to a neighborhood of Hamming distance k around the rounded LP solution x RLP :</p><formula xml:id="formula_4">∆(x, x RLP ) = (1 − x j ) + x j ≤ k,<label>(6)</label></formula><formula xml:id="formula_5">j∈S LP j / ∈S LP</formula><p>where S LP = {j = 1, . . . , n | x RLP j = 1} is the binary support of x RLP .</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Vienna, Austria, August 22-26, 2005</head><p>In our implementation we use CPLEX as B&amp;C system and initially partition the search space by constraint (6) into the more promising part and by the inverse constraint ∆(x, x RLP ) ≥ k+1 into a second, remaining part. CPLEX is forced to first completely solve the neighborhood of x RLP before considering the remaining search space.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">Parallel Execution and Communication</head><p>The intention is to run the MA and the B&amp;C approach in parallel on two individual machines. In our tests, however, we executed the algorithms in a pseudo-parallel way as individual processes on a single machine. If a new so-far best solution is encountered by one of the algorithms, it is immediately sent to the partner. If the MA receives such a solution, it is included into the population by replacing the worst solution, as in the case of any other newly created solution candidate. In B&amp;C, a received solution is set as new incumbent solution, providing a new global lower bound.</p><p>When B&amp;C finds a new incumbent solution, it also sends the current dual variable values associated to the MKP-constraints, which are devised from the LP relaxation of the currently processed node in the B&amp;C tree. When the MA receives these dual variable values, it recal- culates the pseudo-utility ratios and the item ordering Π for repair and local improvement as described in Sec. 3.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">Computational Experiments</head><p>We considered four variants of the described algorithms: the independent MA, independent B&amp;C, the cooperative approach exchanging best solutions only (CO-b), and the cooperative approach exchanging best solutions and dual variable values (CO-bd). The MA runs for 1 000 000 iterations and then restarts, keeping only the so-far best solution. The neighborhood size k is set to 10% of the number of variables n.</p><p>The approaches were tested on the three largest standard benchmark sets of Beasley's OR-Library (http://people.brunel.ac.uk/∼mastjjb/jeb/info.html) consisting of a total of 90 instances with n = 500 items and m ∈ {5, 10, 30} constraints. Each of these three in- stance sets is divided into three subsets of 10 instances with tightness ratios α = c i / n j=1 w ij , α ∈ {0.25, 0.5, 0.75}. The tested algorithms were implemented using GNU C++ 3.3.1 and CPLEX 9.0. All experiments were performed on a 2.8GHz Pentium 4 machine.</p><p>We consider here two different computational experiments, one with shorter total CPU- times of 850s, see <ref type="table" target="#tab_0">Table 1</ref>, and one with longer total CPU-times of 1 800s, see <ref type="table" target="#tab_1">Table 2</ref>. Pre- liminary tests with the cooperative approaches indicated that due to its relatively quick con- vergence, the MA mainly contributes to the finding of improved solutions during the early stages of the optimization process. We therefore started the MA and B&amp;C at the same time but terminated the MA earlier. The MA was given 250s (400s in the long runs), while B&amp;C was performed with a time limit of 600s (1 400s).  The results of the short runs <ref type="table" target="#tab_0">(Table 1)</ref> show an advantage for the hybrid strategies. They always yield solutions with better or equal average objective values than the independent algorithms. Obviously, exchanging dual variable information is fruitful for the optimization process since the CO-bd approach yields the best average objective values for 7 out of the 9 instance sets of the OR-Library, whereas CO-b achieves best average objective values in only 5 out of the 9 instance sets. Especially for the instances with m = 30, the benefits of CO-bd become apparent.</p><p>The cooperative approach also outperforms the individual algorithms in the case of the longer runs <ref type="table" target="#tab_1">(Table 2</ref>). CO-bd yields better or equal average objective values than the the independent MA and independent B&amp;C for 8 out of the 9 instance sets. Additionally the results of the longer runs are compared to the results presented in <ref type="bibr" target="#b6">[7]</ref> and <ref type="bibr" target="#b7">[8]</ref> obtained on different computers (a 2GHz Pentium 4 machine was used in <ref type="bibr" target="#b7">[8]</ref>). CO-bd yields almost equally good or better results than the algorithms presented in <ref type="bibr" target="#b6">[7]</ref> and <ref type="bibr" target="#b7">[8]</ref> for the instances with m = 5. For m = 10 and m = 30, better or equally good results than in <ref type="bibr" target="#b6">[7]</ref> are achieved, whereas the solution quality of <ref type="bibr" target="#b7">[8]</ref> could in general not be reached.</p><p>The approaches from <ref type="bibr" target="#b6">[7]</ref> and <ref type="bibr" target="#b7">[8]</ref> still achieve most of the best known solutions for the tested instances. However, the main drawbacks of these approaches are their huge running times of up to 33 hours for the largest OR-Library instances. Running CO-bd for up to 20 hours on one instance of each type indicated that the results of <ref type="bibr" target="#b7">[8]</ref> can be reached by our approach in 6 of 9 cases.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7">Conclusions</head><p>We presented a cooperative combination of a memetic algorithm and a branch-and-cut ap- proach for solving the MKP. The two heterogeneous algorithms run in parallel and asynchro- nously exchange information about the ongoing optimization process. Besides primal solutions, also dual variable values are communicated from B&amp;C to the MA for updating its repair and local improvement strategies. The computational experiments we performed showed the ben- efits of the cooperative approach, which yields better results than the individually executed algorithms. The obtained results further indicate that this research direction is promising, since many of the best known results from the literature were achieved in substantially shorter times. Future research will be directed towards the exchange of more information about the on- going search, such as statistical or negative information, and also towards other combinatorial optimization problems.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0" validated="true"><head>Table 1 : Average performance over the 90 largest OR-Library instances; CPU-times: 850s.</head><label>1</label><figDesc></figDesc><table>MA 
+B&amp;C 
+CO-b 
+CO-bd 
+m 
+α 
+z 
+z 
+z 
+z 
+5 0.25 120 624 120 626 
+120 626 120 627 
+0.5 219 511 219 511 219 512 219 510 
+0.75 302 360 302 361 302 362 302 362 
+
+10 0.25 118 586 118 591 118 600 118 595 
+0.5 217 295 217 306 217 308 217 308 
+0.75 302 573 302 582 302 582 302 582 
+
+30 0.25 115 500 115 493 
+115 521 115 523 
+0.5 216 192 216 171 
+216 192 216 204 
+0.75 302 378 302 390 302 388 302 390 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1" validated="true"><head>Table 2 : Average performance over the 90 largest OR-Library instances; long runs.</head><label>2</label><figDesc></figDesc><table>[7] 
+[8] 
+MA 
+B&amp;C 
+CO-bd 
+m 
+α 
+z 
+t[h] 
+z 
+t[h] 
+z 
+t[h] 
+z 
+t[h] 
+z 
+t[h] 
+5 0.25 120 623 
+5 
+120 628 
+8.5 120 629 0.5 120 629 0.5 120 629 0.5 
+0.5 219 507 
+5 
+219 512 8.5 
+219 509 
+0.5 219 512 0.5 
+219 511 
+0.5 
+0.75 302 360 
+5 
+302 363 8.5 
+302 362 
+0.5 
+302 362 
+0.5 302 363 0.5 
+
+10 0.25 118 600 
+9 
+118 629 7.6 
+118 589 
+0.5 
+118 603 
+0.5 
+118 605 
+0.5 
+0.5 217 298 
+9 
+217 326 7.6 
+217 296 
+0.5 
+217 310 
+0.5 
+217 317 
+0.5 
+0.75 302 575 
+9 
+302 603 7.6 
+302 575 
+0.5 
+302 583 
+0.5 
+302 584 
+0.5 
+
+30 0.25 115 547 12 115 624 33 
+115 509 
+0.5 
+115 520 
+0.5 
+115 550 
+0.5 
+0.5 216 211 12 216 275 33 
+216 196 
+0.5 
+216 213 
+0.5 
+216 222 
+0.5 
+0.75 302 404 12 302 447 33 
+302 379 
+0.5 
+302 400 
+0.5 
+302 408 
+0.5 
+
+</table></figure>
+
+			<note place="foot">This work is supported by the RTN ADONET under grant 504438 and the Austrian Science Fund (FWF) under grant P16263-N04.</note>
+
+			<note place="foot">Vienna, Austria, August 22-26, 2005</note>
+		</body>
+		<back>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">A genetic algorithm for the multiconstrained knapsack problem</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><forename type="middle">C</forename><surname>Chu</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Beasley</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Heuristics</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="page" from="63" to="86" />
+			<date type="published" when="1998" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Fischetti</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Lodi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Local Branching. Mathematical Programming Series B</title>
+		<imprint>
+			<biblScope unit="volume">98</biblScope>
+			<biblScope unit="page" from="23" to="47" />
+			<date type="published" when="2003" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">On the effectivity of evolutionary algorithms for multidimensional knapsack problems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Gottlieb</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of Artificial Evolution: Fourth European Conference</title>
+		<editor>C. Fonlupt et al.</editor>
+		<meeting>Artificial Evolution: Fourth European Conference</meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="1999" />
+			<biblScope unit="volume">1829</biblScope>
+			<biblScope unit="page" from="22" to="37" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<monogr>
+		<title level="m" type="main">Knapsack Problems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">H</forename><surname>Kellerer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">U</forename><surname>Pferschy</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Pisinger</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2004" />
+			<publisher>Springer</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">An improved genetic algorithm for the multiconstrained 0-1 knapsack problem</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><forename type="middle">R</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 5th IEEE International Conference on Evolutionary Computation</title>
+		<editor>D. Fogel et al.</editor>
+		<meeting>the 5th IEEE International Conference on Evolutionary Computation</meeting>
+		<imprint>
+			<publisher>IEEE Press</publisher>
+			<date type="published" when="1998" />
+			<biblScope unit="page" from="207" to="211" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Empirical analysis of locality, heritability and heuristic bias in evolutionary algorithms: A case study for the multidimensional knapsack problem</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><forename type="middle">R</forename><surname>Raidl</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Gottlieb</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Evolutionary Computation Journal</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<date type="published" when="2005" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">A hybrid approach for the 0-1 multidimensional knapsack problem</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Vasquez</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J.-K</forename><surname>Hao</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the International Joint Conference on Artificial Intelligence</title>
+		<meeting>the International Joint Conference on Artificial Intelligence</meeting>
+		<imprint>
+			<date type="published" when="2001" />
+			<biblScope unit="page" from="328" to="333" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Improved results on the 0-1 multidimensional knapsack problem</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Vasquez</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Y</forename><surname>Vimont</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">European Journal of Operational Research</title>
+		<imprint>
+			<biblScope unit="volume">165</biblScope>
+			<biblScope unit="page" from="70" to="81" />
+			<date type="published" when="2005" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

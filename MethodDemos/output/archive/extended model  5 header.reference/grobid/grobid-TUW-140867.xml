@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Automated Tools for Teaching Formal Software Verification</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Ingo</forename><surname>Feinerer</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Institut f ¨ ur Computersprachen Technische</orgName>
+								<orgName type="institution">UniversitätUniversit¨Universität Wien</orgName>
+								<address>
+									<addrLine>Karlsplatz 13</addrLine>
+									<postCode>A-1040</postCode>
+									<settlement>Vienna</settlement>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Gernot</forename><surname>Salzer</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Institut f ¨ ur Computersprachen Technische</orgName>
+								<orgName type="institution">UniversitätUniversit¨Universität Wien</orgName>
+								<address>
+									<addrLine>Karlsplatz 13</addrLine>
+									<postCode>A-1040</postCode>
+									<settlement>Vienna</settlement>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Automated Tools for Teaching Formal Software Verification</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>formal verification of software, Perfect Developer</keywords>
+			</textClass>
+			<abstract>
+				<p>We present the status of formal methods at our university, and describe our course on formal software verification in more detail. We report our experiences in using Perfect Developer for the course assignments.</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.">INTRODUCTION</head><p>As the automation of formal methods makes progress, they become more and more relevant for industry. Unfortunately, other areas are growing faster and are more popular with students, university teachers, and professionals -at least in Austria.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Computer Science @ TU Wien</head><p>The computer science department at Technische UniversitätUniversit¨Universität Wien (TUW, Vienna University of Technology) is by far the biggest in Austria. About 120 full, associate, and assistant professors (5 % of TUW's teaching personnel) teach approximately 6000 students (30 % of TUW's students). Until 2001, there were only two monolithic studies: Informatik (informatics) taking 5 years and Wirtschaftsinformatik (business informatics) taking 4.5 years. In 2001, triggered by the Bologna declaration of the European Union, the two studies were replaced by 6 bachelor 1 and 9 master 2 degrees taking three and two years, respectively.  Formal Methods @ TU Wien The change of the curricula had a significant impact on the kind and amount of formal methods taught. First, specialisation and diversification now start as early as the second year; the required room was partially gained by reducing mathematics, theory and logic by one third <ref type="table" target="#tab_1">(Table 1)</ref>. Second, traditional theory and logic was compressed into a single course; a second course is now focussed on applied logics along the lines of the book Logic in Computer Science by Huth and Ryan <ref type="bibr" target="#b6">[7]</ref> (augmented by recent topics like description logics and the semantic web). Apart from these compulsory courses there are only a few elective ones dealing with formal methods, most notably Computer Aided Verification focusing on model checking <ref type="bibr">[2]</ref>, and Formal Verification of Software concentrating on Hoare calculus and dynamic logic; each has 6.0 Ects and consists of a lecture and a lab. In summary, the change led to a modernisation concerning theory and logic, but at the same time reduced mathematics to a minimum, leaving hardly any room to train the ability to understand and construct rigorous proofs.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Duration</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">FORMAL VERIFICATION OF SOFTWARE</head><p>The course Formal Verification of Software has been taught for two decades, but until recently only theoretically in the style of Dijkstra <ref type="bibr" target="#b3">[4]</ref> and Gries <ref type="bibr" target="#b5">[6]</ref>. The slow but steady progress in the automation of program verification led us in 2003 to evaluate several tools in order to select one for use in the course.</p><p>[5] All of them can be used free of charge for academic and teaching purposes.</p><p>Frege Program Prover (FPP) <ref type="bibr" target="#b8">[9]</ref> FPP supports a small subset of Ada consisting of typical imperative program structures like loop-, case-and if-statements. The only data types available are integer and boolean. The language for specifying pre-and post-conditions is rather restricted. E.g., function definitions, recursive specifications and structured data types like arrays are not supported. FPP is able to verify simple programs and to compute their weakest pre-conditions. The prover, Analytica, acts as a black box signalling either the validity of a formula or returning unprovable sub-formulas; formal proofs are not supplied.</p><p>Due to its simplicity and its web interface, FPP is easy to learn and use. It seems to be a valuable tool for illustrating the ideas of formal program verification in basic courses. It is not suitable, however, for advanced courses on the subject or for real world applications. Neither is it able to deal with standard examples from Dijkstra and Gries involving arrays, nor does it support object- oriented features. Moreover, the terse output in pure ASCII makes it difficult to trace errors.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>The KeY system [1]</head><p>The KeY system supports a subset of Java known as JavaCard, which is increasingly used for mobile and embedded devices. Verification is based on dynamic logic, a generalization of the Hoare calculus. The system cooperates with CASE tools like Together Control Center, Solo or Architect. Objects and constraints can be specified using UML and OCL. Java, UML, OCL, and CASE tools are familiar to software engineers and students alike, which helps in getting started. Nevertheless, KeY cannot be recommended for such target groups at present: the interactive prover and its interaction with the user are in their infancy and are inadequate for serious use. Moreover, OCL is not expressive enough to specify complex program behaviour. Considering that KeY is still in alpha stage, it seems to be worthwhile to reevaluate the system in a few years in order to see whether it lives up to expectations.</p><p>Perfect Developer (PD) <ref type="bibr" target="#b2">[3]</ref> PD consists of a full-fledged object-oriented programming language called Perfect, of a powerful automated theorem prover, and of a code generator translating programs from Perfect to Java, Ada, and C++. A rich collection of built-in data types, classes, functions and theories allows the user to write concise specifications on a fairly abstract level. UML class diagrams can be imported to generate the skeleton of classes automatically.</p><p>PD is a technically mature product that is ready for use in a regular development process. However, software engineers will need some time to become sufficiently aquainted with the many features of Perfect. Moreover, at least a basic knowledge of formal logic is required to be able to interpret the prover output and to use it for detecting errors in the specification or in the program. Perfect Developer is also well suited for teaching advanced courses on formal program verification. Usually there will not be enough time to cover all features of Perfect. Therefore a tutorial is required that concentrates on just those elements of the language that are necessary to implement and verify instructive examples like those in <ref type="bibr" target="#b5">[6]</ref>.</p><p>PD is that tool of the four that comes closest to the ideal of automated program verification. But there are still some shortcomings. One is that the prover currently does not support induction. Consequently certain recursive functions and loops cannot be verified by the system. E.g., if one specifies multiplication recursively by iterating over the first argument but decides to implement it as a loop over the second argument, the loop invariant cannot be proved automatically since the proof involves induction; in such a case the user has to provide a lemma whose correctness  has to be verified outside the system. In practice this limitation is not as severe as it seems: The principle of proof-by-contract generates dozens of proof obligations even for toy programs, most of which are rather trivial and therefore are verified by PD's prover automatically; the user can focus his attention on a few unproven assertions resulting from the core algorithms. Another weakness, at least from an academic point of view, is the lack of information concerning the internals of the prover. Ideally the logical rules used in correctness proofs should be open for inspection such that independent proof checkers can establish additional trust in the system. Finally, the prover does not support all specification methods equally well: It may happen that a natural and obvious specification of an algorithm leads to unprovable assertions, whereas a less obvious one using different builtins succeeds. Ideally, the user should be able to formalise the informal specification of a problem as directly as possible without paying attention to the prover.</p><p>Prototype Verification System (PVS) <ref type="bibr" target="#b7">[8]</ref> PVS is a powerful interactive theorem prover, which has been used for various real world applications. In contrast to the other systems it does not generate verified program code, but it proves properties of algorithms. The prover is versatile and offers many possibilities. It is automatic to a certain degree, but usually requires frequent user interactions.</p><p>Due to its many basic inference rules and tactics it takes a long learning phase to become familiar with the system. Morover, users of PVS need a firm background in mathematics and formal logic to guide the prover. In our opinion typical software engineers and average students of computer science will have a hard time using PVS. Graduate or Ph.D. students might have a chance, provided they are given enough time. For courses with just a few hours per week in the lab PVS seems to be too complex. <ref type="table" target="#tab_3">Table 2</ref> compares the four selected tools FPP, KeY, PD, and PVS regarding formal background in logic and application area. Based on this evaluation we decided to use Perfect Developer for our course in formal software verification.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">OBSERVATIONS</head><p>The first assignment in the lab on formal program verification was to install Perfect Developer under Windows or Linux, and to get aquainted with the system by working through the online tutorial offered on the web site of Escher Technologies, the company behind PD. As a check we asked the students to write a report listing the errors in the tutorial; there are a few, which can be easily corrected provided the assignment is taken seriously. This assignment posed no difficulties for the students; the errors found varied between zero and several dozens.</p><p>The second, third and fourth assignment consisted of selecting two problems from a list of six easy and one problem from a list of four harder problems (see the appendix for a short description of the problems). The students had to write a formal specification in Perfect, refine it to an executable function and verify the correctness. The algorithms were required to run in time O(n) or O(n log n), respectively. The students had to write a report including their errors, solutions, and the time they had spent on the problem. In case they were not able to get PD to verify their solution completely   they had to provide formal arguments explaining why their specification and implementation was correct nevertheless.</p><p>Not quite surprisingly, the gathered data indicate that students with a knowledge of mathematics and some experience in software engineering performed significantly better than students with less background in these areas. This observation is confirmed statistically by separating the students into two groups: those doing a bachelor or master program in informatics, and those doing a bachelor or master in business informatics. In the curriculum valid until 2006, the latter had a few hours less on math, algorithmics and programming than their colleagues in one of the studies in informatics. <ref type="table" target="#tab_5">Table 3</ref> and <ref type="table" target="#tab_6">Table 4</ref> show that on average students in informatics needed less time and got better grades than their colleagues in business informatics.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">CONCLUSION</head><p>Using automated tools for teaching formal methods helps to convince students that formal methods work. Nevertheless, formal methods still require the ability to think in an abstract and declarative manner and to analyse formal proofs. According to our experience a thorough education in mathematics and logic as well as a training in different programming paradigms forms a sound basis.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>APPENDIX: PROBLEMS TO BE VERIFIED WITH PERFECT DEVELOPER</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Easy Problems</head><p>Cardinality of intersection: Given two sorted lists of integers, compute the cardinality of their intersection in linear time.</p><p>Merging of lists: Given two sorted lists of integers, compute a sorted list containing the elements of the original lists in linear time.</p><p>Minimal distance: Given two sorted lists of integers, A and B, compute the minimum of abs(A[i], B <ref type="bibr">[i]</ref>) for all i, j in linear time.</p><p>Longest plateau: Given a sorted list of integers, determine the length of the longest sublist of identical elements in linear time.</p><p>Index of maximum: Given a list of integers, determine the index of a maximal element in linear time.</p><p>Sortedness: Check in linear time whether a list of integers is sorted.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Slightly harder problems</head><p>Count inversions: Given a list, A, of n integers, count the pairs (i, j) of indices satisfying i &lt; j and A[i] &gt; A <ref type="bibr">[j]</ref> in time O(n log n).</p><p>Count Boolean inversions: Given a list, A, of Booleans, count the pairs (i, j) of indices satisfying i &lt; j, A[i] and ¬A <ref type="bibr">[j]</ref>, in linear time.</p><p>Length of longest monotone sublist: Given a list of integers, compute the length of the longest non-increasing or non-decreasing sublist in linear time.</p><p>Length of longest left-minimal sublist: Given a list of integers, compute in linear time the length of the longest sublist, where the first element of the sublist is minimal among the elements of the sublist.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1" validated="false"><head>TABLE 1 : Comparison of old and new CS curricula</head><label>1</label><figDesc></figDesc><table></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3" validated="false"><head>TABLE 2 :</head><label>2</label><figDesc></figDesc><table>Comparison of FPP, KeY, PD and PVS 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_5" validated="false"><head>TABLE 3 : Time needed for assignments (hours)</head><label>3</label><figDesc></figDesc><table>Informatics: 
+1 
+2 
+3 4 5 
+
+Business Informatics: 
+1 
+2 
+3 
+4 
+5 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_6" validated="false"><head>TABLE 4 :</head><label>4</label><figDesc></figDesc><table>Final grades (1=excellent, 5=failed) 
+
+</table></figure>
+		</body>
+		<back>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<monogr>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Wolfgang</forename><surname>Ahrendt</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Thomas</forename><surname>Baar</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Bernhard</forename><surname>Beckert</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Richard</forename><surname>Bubel</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Martin</forename><surname>Giese</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">H</forename><surname>Reiner</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Wolfram</forename><surname>Menzel</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Wojciech</forename><surname>Mostowski</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Andreas</forename><surname>Roth</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Steffen</forename><surname>Schlager</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Peter</forename><forename type="middle">H</forename></persName>
+		</author>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">The KeY tool. Software and System Modeling</title>
+	</analytic>
+	<monogr>
+		<title level="m">Schmitt</title>
+		<imprint>
+			<date type="published" when="2005" />
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="page" from="32" to="54" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<monogr>
+				<title level="m">David Crocker. Perfect Developer: A tool for Object-Oriented Formal Specification and Refinement. Tools Exhibition Notes at Formal Methods Europe</title>
+		<imprint>
+			<date type="published" when="2003" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<monogr>
+				<title level="m">Edsger Dijkstra. A Discipline of Programming. Prentice Hall</title>
+		<imprint>
+			<date type="published" when="1976" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<monogr>
+				<title level="m">Ingo Feinerer. Formal program verification: A comparison of selected tools and their theoretical foundations. Master&apos;s thesis</title>
+		<meeting><address><addrLine>Vienna, Austria</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2005-01" />
+		</imprint>
+		<respStmt>
+			<orgName>Technische UniversitätUniversit¨Universität Wien</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<monogr>
+		<title level="m" type="main">The Science of Programming</title>
+		<imprint>
+			<date type="published" when="1987" />
+			<publisher>Springer</publisher>
+		</imprint>
+	</monogr>
+	<note>David Gries</note>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<monogr>
+		<title level="m" type="main">Huth and Mark D. Ryan. Logic in Computer Science-modelling and reasoning about systems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><forename type="middle">A</forename><surname>Michael</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2003" />
+		</imprint>
+		<respStmt>
+			<orgName>Cambridge University Press</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">PVS: A prototype verification system</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Sam</forename><surname>Owre</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">John</forename><surname>Rushby</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Natarajan</forename><surname>Shankar</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Deepak Kapur, editor, 11th International Conference on Automated Deduction (CADE), volume 607 of Lecture Notes in Artificial Intelligence, pages 748-752</title>
+		<meeting><address><addrLine>Saratoga, NY</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer-Verlag</publisher>
+			<date type="published" when="1992-06" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<monogr>
+		<title level="m" type="main">Internationales Wissenschaftliches Kolloquium</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J ¨ Urgen</forename><surname>Winkler</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1997" />
+			<biblScope unit="page" from="116" to="121" />
+		</imprint>
+		<respStmt>
+			<orgName>Technische UniversitätUniversit¨Universität Ilmenau</orgName>
+		</respStmt>
+	</monogr>
+	<note>The Frege Program Prover. 42</note>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

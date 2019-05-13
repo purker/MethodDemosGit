@@ -1,0 +1,807 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">CURRENT TRENDS IN COMPUTER GRAPHICS</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Werner</forename><surname>Purgathofer</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">BULETINUL INSTITUTULUI POLITEHNIC DIN</orgName>
+								<orgName type="institution">IAŞI Publicat de Universitatea Tehnică &quot;Gheorghe Asachi&quot; din Iaşi Tomul LVI (LX)</orgName>
+								<address>
+									<addrLine>Fasc. 2</addrLine>
+									<postCode>2010</postCode>
+									<settlement>Secţia</settlement>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Robert</forename><forename type="middle">F</forename><surname>Tobler</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">BULETINUL INSTITUTULUI POLITEHNIC DIN</orgName>
+								<orgName type="institution">IAŞI Publicat de Universitatea Tehnică &quot;Gheorghe Asachi&quot; din Iaşi Tomul LVI (LX)</orgName>
+								<address>
+									<addrLine>Fasc. 2</addrLine>
+									<postCode>2010</postCode>
+									<settlement>Secţia</settlement>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">CURRENT TRENDS IN COMPUTER GRAPHICS</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>computer graphics</term>
+					<term>rendering</term>
+					<term>visualization</term>
+					<term>challenges</term>
+					<term>computer vision 2000 Mathematics Subject Classification: 68-02</term>
+					<term>68U05</term>
+				</keywords>
+			</textClass>
+			<abstract>
+				<p>In this paper we give an overview of the current research trends and explore the challenges in several subfields of the scientific discipline of computer graphics: interactive and photorealistic rendering, scientific and information visualization, and visual analytics. Five challenges are extracted that play a role in each of these areas: scalability, semantics, fusion, interaction, acquisition. Of course, not all of these issues are disjunct to each other, however the chosen structure allows for a easy to follow overview of the concrete future challenges.</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.">Introduction</head><p>Computer graphics studies methods for producing digital images of data with the goal to communicate computer output to a human user in the form of pictures. The visual input channel has by far the broadest bandwidth of all our senses and therefore enables the most effective transport of information from computers to humans. Production includes synthesizing, manipulating and displaying the underlying data. The data may be almost any content one can think of: geometric or other spatial data just as well as statistical data, simulation results or abstract data, all real or virtual. Roughly speaking, the ultimate goal of rendering research is to create perfectly realistic looking real- time images of real-world objects, whereas visualization tries to create images of data and structures that are otherwise invisible to the human eye or completely abstract.</p><p>Computer graphics has been among the most successful computer science fields during the last three decades and the methods and results available today have exceeded the expectations by far. Therefore some people consider most computer graphics problems as solved, providing a ready to use set of tools for applications. But while this is true for some areas with simple use of computer images, the embedding of computer graphics technology in increasingly complex surroundings generates many new challenges.</p><p>Usage of computer graphics is embedded in more and more complicated environments, making its combined use with other technologies more and more natural, so that many people talk about disciplines growing together. Such fields are computer vision, image processing, pattern recognition, tracking, scanning, video augmentation, information theory, user interface design, large data bases and several more. Multiple articles in the past decades have extracted future research problems in various subfields of computer graphics, e.g. <ref type="bibr" target="#b0">[1]</ref>,…, <ref type="bibr" target="#b2">[3]</ref>. In this article we will describe the research trends of the coming years based on five major challenges that are common to all computer graphics sub-fields. These are: 1. Scalability = how to cope with huge amounts of data, highly parallel computers and distributed devices. 2. Semantics = how can meaning be extracted from data and context and be used for better insight. 3. Fusion = how can multiple techniques, data streams, and models be combined to solve complex problems. 4. Interaction = how to combine multiple and ubiquitous input devices to create ergonomic user interfaces. 5. Acquisition = how can data from various input sources be processed to deal with missing data, contradictions, and uncertainty.</p><p>These challenges are often interdependent to some degree. For example, semantics can assist scalability by determining features that can be left away at a given level of detail, and acquisition by allowing a meaningful extrapolation of missing data and resolution of contradictions; petascale data will require new interaction metaphors and acquisition and data processing methods. Consequently, any research in these areas will typically cross boundaries and cannot be strictly attributed to a single challenge. Still, this discrimination facilitates the following description of the specific aspects of each challenge.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">Scalability</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1.">Challenges in Scalability</head><p>The challenges posed by the enormous amount of data generated by current and especially future acquisition techniques will require fundamental research on scalable algorithms, techniques, and systems. For example, the 3D reconstruction of entire cities from thousands of high-resolution aerial photographs and laser range scans, or the 3D volumes of brain tissue obtained via electron microscopy in current research in neurobiology both result in data sizes in the terabyte (1000 GB) to petabyte (1000 TB) range per data set. This magnitude is commonly referred to as petascale data. However, many existing methods are designed for a relatively narrow range of data sizes and characteristics, and are not directly applicable to the enormous requirements of petascale computer graphics. Another example are desktop computers which currently have four to eight CPU cores, and they will likely have tens or hundreds of CPUs in the near future. How do we adapt our methods in computer graphics to use this processing power?</p><p>In addition to handling and visualizing petascale data, computations such as 3D reconstruction, segmentation, object identification, and the generation of derived data must also be able to operate on this new order of magnitude. Possible solutions lie in the parallelization and distribution of computation and visualization, exploiting all levels of non-uniform architectures. The possibilities offered by the architectural levels of multi-core CPUs, GPUs, shared and distributed memory architectures, clusters for computation and visualization, and remote visualization and computation must be exploited in a coherent and scalable manner. This also necessitates aggressive multi-resolution approaches that work on a huge range of scales, while preserving important features and considering application and user semantics.</p><p>The overall challenge of future scalable systems ties in with the requirements of semantic interfaces and navigation through the enormous spread of scales in petascale data. The underlying algorithms must be scalable to different kinds and different levels of expertise of users, such as their specific knowledge about a given problem domain, e.g., geophysics, medicine, or neurobiology. This requires techniques to be able to supply quick but accurate overviews and deliver additional detail on demand, while preserving features of interest over a huge range of scales. With petascale data, millions of data elements can map to the same screen pixel of the output device. Handling this scalability challenge in a meaningful way that preserves application or user semantics, and enables users to actually work with data on this order of magnitude is one of the most crucial and fundamental scalability issues.</p><p>Future computer graphics methods must be scalable with respect to widely varying output devices such as high-end workstations, thin clients and the web, depending on user and application requirements, location and preferences. They must support single users as well as remote collaboration, and the corresponding heterogeneous display and input techniques.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2.">Scalability Challenges in Visualization and Visual Analytics</head><p>Microscopic scans of the human body comprise tera-and petabytes of data. Using multiple GPUs and processors will allow real-time visualization of this huge volume data. This is a requirement for analyzing and understanding the functionality of the human body. Other examples in large data visualization can be found in rendering <ref type="bibr" target="#b3">[4]</ref>, storing and processing <ref type="bibr" target="#b4">[5]</ref>, transmitting <ref type="bibr" target="#b6">[6]</ref>, and exploiting multiple CPUs <ref type="bibr" target="#b7">[7]</ref> or GPUs <ref type="bibr" target="#b8">[8]</ref>. However, increasing data sizes and new hardware architectures demand much more research in scalable visualization <ref type="bibr" target="#b9">[9]</ref>.</p><p>The development of scalable visualization algorithms and systems is one of the most fundamental future challenges in visualization. The main reasons for this are the enormous increase in data sizes that are routinely generated by high-resolution acquisition technologies such as Electron Microscopy; the variety of different data sources that need to be visualized and analyzed concurrently; and the amount of additional derived data that often need to be computed from the raw input data. Therefore, the main topics of research on scalability in this field are: − Distributed and out-of-core visualization; − Approaches that exploit massively parallel CPU and GPU architectures; − Progressive, feature-preserving multi-resolution techniques; − Achieving scalability for users by integrating semantics (see also challenge semantics).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3.">Scalability Challenges in Rendering and Virtual Reality</head><p>New road construction projects produce terabytes of data that may be used for urban planning including municipal decisions. By using levels-of-detail and out-of-core rendering, computer graphics has to provide interactive rendering tools to enable the affected parties to compare different road variants and decide on the plan with the least impact on the environment.</p><p>Due to the extremely large amounts of geometry that are provided for rendering in many projects, scalability with respect to the amount of data is one of the most urgent needs in rendering. In view of the ongoing trend towards mobile devices, it will also become increasingly important to support a wide variety of output devices, ranging from hand-held devices with small screen sizes, all the way to video-walls consisting of multiple monitors or projectors.</p><p>The most obvious but also often difficult way to achieve this scalability is to make use of parallel or distributed computing resources. One of the most promising developments for being able to exploit future highly parallel and distributed hardware is the recent or expected inclusion of functional programming paradigms into mainstream languages <ref type="bibr" target="#b10">[10]</ref>. One of the tenets of functional programming is its ultimate parallelizability. Employing these new programming paradigms will therefore make it possible to rearrange large portions of the rendering pipeline to work in a purely functional manner and thus considerably reduce the complexity of creating highly parallelized or distributed rendering applications.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">Semantics</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.">Challenges in Semantics</head><p>In addition to the algorithmic challenge of handling the huge amounts of data that will have to be processed in future applications, the interpretation and analysis of this data will require additional semantic information. For example, large laser range scans of urban environments will only be useful for analysis if buildings and surface types are recognized and correspondingly marked. Another example, laser range scanners provide huge amounts of unstructured point clouds. How can semantic information be added to the data that characterizes the structures and objects that were scanned? All types of medical imaging techniques like MRI and CT will enormously benefit if adequate segmentation based on semantics is applied. Also huge amounts of abstract information such as financial data-sets will require that semantic information is included and visualized to support a quick and reliable analysis.</p><p>If all of these data sets are enriched with semantic information, it will be possible to formulate intelligent queries that retrieve subsets of the data that meet certain semantic criteria. Further processing of the data will be able to choose appropriate techniques based on semantic information, e.g. in laser range data sets vegetation, buildings, and terrain may be processed differently, and in medical imaging the processing of volume data sets can vary based on the organ or physiological process that has been imaged. Semantic information can be based on the underlying data, but also on the analysis goal, the application scenario, use history or the user profile.</p><p>Visualization and rendering of such semantically enriched data sets can use this information to provide different visualization methods and views of the data based on the context: analysis of the data requires different strategies compared to presentation for larger audiences. Semantic information can also be used to compress huge data sets and reduce transmission costs in distributed setups. Given these benefits that can be realized if semantic information is available, the challenge for the field of computer graphics is three-fold: to research and develop the appropriate methods to extract semantic information from huge, heterogeneous unstructured data sets. Based on the area of application a number of different techniques such as atlases, refined matching methods and codification and sharing of insight will have to be used; to find appropriate data structures for semantic information that make it possible to refine and enhance the knowledge base as additional data becomes available; and finally to extend existing methods to make optimal use of semantic information in rendering and visualization. This requires novel, tightly integrated display techniques combining scientific and information visualization methods.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.">Semantics Challenges in Visualization and Visual Analytics</head><p>Today users of visualization systems are required to have detailed knowledge at a technical level about visualization and the data to explore and analyze. In the future, semantic visualization will put users in the center of visualization systems. This will be facilitated by using application domain specific conventions and offering semantic user interfaces as well as interaction techniques in the application domain instead of the data domain, see e.g. <ref type="bibr" target="#b11">[11]</ref>, <ref type="bibr" target="#b12">[12]</ref>.</p><p>For example, by providing appropriate segmentation methods in medical visualization, semantic models of the organs will assist surgeons when planning operations. A possible scenario is that of a medical doctor who directly specifies that the brain as well as superficial vessels should be displayed in a combined MR (Magnetic Resonance) and DSA (Digital Subtraction Angiography) data set, instead of manually specifying volume combination and transfer functions. Semantic visualization is the most important step towards making visualization tools a part of the daily routine of domain experts. This requires the development of appropriate abstractions to provide an immediate overview as well as additional details and more time consuming interaction techniques on demand. The possibility to manipulate visualization parameters on a more technical level will be hidden, but will remain available to expert users. Therefore, main topics of research on semantics in visualization will be: − Knowledge-assisted visualization; − Knowledge-based navigation; − Integration of semantics with segmentation and feature-detection.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3.">Semantics Challenges in Rendering and Virtual Reality</head><p>In rendering, semantics apply in two different ways. Semantics are important to the user to make correct contextual decisions, a challenge that is closely coupled to visual analytics. An example could be a railway company performing laser range scans of railroad tracks. By analyzing these scans and identifying actual tracks, buildings, vegetation, and other structures, it can query the enhanced data: e.g. what is the minimal distance between tracks and buildings along a certain track?</p><p>At VRVis <ref type="bibr" target="#b13">[13]</ref>, researchers have concentrated on flexible framework designs for procedural multi-resolution representations <ref type="bibr" target="#b14">[14]</ref>, <ref type="bibr" target="#b15">[15]</ref>. However, semantics can also be used as an internal representation within the rendering system, independent of the rendering methods or usage scenario. As such, semantics are a highly compressed abstraction of the represented objects, and capture only the distinguishing features of a specific instance. In an ultimate semantically based rendering system, it would therefore be possible to specify each type of object with just those parameters that are necessary to create a highly realistic, detailed rendering of the object. If an object is an instance of a group of similar objects only a few parameters may be sufficient to completely specify the object. As an example for specifying a traffic sign the position, orientation and type and maybe a few more parameters are sufficient to create a completely realistic image. This goes further than purely procedural rendering, since in this case the actual methods (the procedures) are specified separate from the semantic models. A large part of the know-how of such a semantic rendering system is encoded in the rules that describe classes of objects.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">Fusion</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1.">Challenges in Fusion</head><p>As an example, consider visualization which currently is often only used to present the results of a technical design process. How can we integrate visualization into the workflow, so that it can be used to shorten design cycles? Fusion is a challenge with several interrelated aspects: the fusion of multiple fields of computer graphics, the fusion of computer graphics with other fields of computing, and the fusion of multiple data sources.</p><p>Fusing multiple fields of computer graphics is essential for a holistic analysis of data. In many cases, no single display method is adequate for all aspects of a complex dataset. For example, simulation results from combustion processes typically involve geometric data, 3D flow data, and additional attributes like temperature or vorticity. In another scenario, geographical data could require realistic real-time rendering of terrains enriched by a visualization of locally referenced meta-information. To effectively cope with the challenge of fusing multiple display methods is one of the future research topics.</p><p>In many applications, computer graphics is only used as static post- processing or for presenting the results of long and non-interactive computations (e.g., simulation, data mining, etc.). This may cause significant delays, as adjustments due to potential errors or improvements require expensive iterations. It is thus important to strive for human-centric, integrated approaches, which tightly combine interactive rendering and visualization with computational methods.</p><p>The third kind of fusion concerns the integration of multiple data sources in the visual analysis of data. Different methods for measuring data have typically different advantages and disadvantages. It is therefore a challenge to improve the ultimate result and maximize the gained insight by simultaneously processing and displaying related data from multiple sources.</p><p>This applies to many application domains, among them medical data (e.g., computer tomography, magnetic resonance imaging), data from scanning geometry (e.g., photogrammetry, laser scans), and from scanning motion (e.g., optical tracking, inertial tracking). Another important issue is a unified analysis of both measured and simulated data, as required for meteorology, for example <ref type="bibr" target="#b16">[16]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2.">Fusion Challenges in Visualization and Visual Analytics</head><p>The overall challenge posed to visualization is increased significantly by a variety of data sources with widely varying characteristics. Important examples are different imaging modalities, sensor types, or data computed in simulations; different representations such as structured or unstructured grids, point clouds, or geometry; or data of different dimensionality such as scalar-, vector-, or tensor fields. Moreover, data on different conceptual levels such as raw, processed or annotated data need to be integrated effectively. The goal of fusion research in visualization and visual analytics is to aid in understanding and reasoning about such data through visual condensation and fusion of the available information. Coronary artery disease is one example where the fusion of data with vastly different characteristics can be very helpful. Improvements in magnetic resonance imaging provide more detailed information on the viability, functioning, perfusion, and anatomy of a human heart <ref type="bibr" target="#b17">[17]</ref>. As another example, if flow simulation is directly integrated into a tool for visualizing and performing combustion-engine design, immediate computation of pressures and stresses can avoid costly design cycles.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.3.">Fusion Challenges in Rendering and Virtual Reality</head><p>Due to the growing heterogeneity of the data involving both spatial and non-spatial information, it has also become necessary to enrich 3D real-time rendering with overlays <ref type="bibr" target="#b18">[18]</ref>, <ref type="bibr" target="#b19">[19]</ref>, and to consider spatial semantics in multivariate visualizations. Besides fusing display methods, a core topic of visual analytics is to integrate automatic approaches in the process of analyzing data <ref type="bibr" target="#b20">[20]</ref>, <ref type="bibr" target="#b21">[21]</ref>. In this context, the ultimate goal is typically more concrete than just "gaining insight", and often involves specifying/evaluating/optimizing a model as knowledge representation <ref type="bibr">[22]</ref>,…, <ref type="bibr" target="#b25">[25]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.">Interaction</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.1.">Challenges in Interaction</head><p>An interactive environment, where the user can explore and manipulate data in real-time in an effective and intuitive way is a powerful tool for many areas of application. Providing such an environment is a challenge in many respects, e.g. visualization currently is often only used to present the results of a technical design process. How can we integrate visualization into the workflow, so that it can be used to shorten design cycles? Emerging interface technologies like face, gesture, speech recognition, multi-touch displays, optical tracking, eye-tracking, even EEG based input, and the proliferation of ubiquitous systems, bringing computing into the user's environment, call for innovative ways of supporting Human Computer Interaction (HCI). Non-classical interface techniques are already being adopted by the gaming industry: Sony's EyeToy® implements gesture-based interaction via a camera, Nintendo's Wii™ controllers use inertial tracking. Furthermore, systems like the Surface™ <ref type="bibr" target="#b26">[26]</ref>, implement non-classical interaction methods like a tangible user interface for table top settings.</p><p>The challenge will be to develop, adapt and evaluate such non-classical interface techniques as virtual environments, tangible user interfaces or vision based interaction so that they become effective and meaningful interaction tools for the respective user, task and device at hand. Depending on the intended target audience the level of interaction with the environment often needs to be adapted according to the needs of the user. Balancing user assisted, user guided/context aware and automatic approaches to achieve the appropriate level of interaction will be a challenge concerning both the evaluation of the users' needs and, for many tasks, developing an automatic or guided, context aware approach on its own. Along with the increasing pervasiveness of distributed data/systems the focus is shifting from individual users to small and large-scale interactions for groups of possibly highly mobile users.</p><p>In such multi-user environments, the challenge will be the fusion of interaction with the environment and the other users to effectively support local and remote collaboration. As another example consider mobile cell phones that have GPS, acceleration sensors and cameras. How can we use such devices as intuitive user interfaces in industrial 3D applications?</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2.">Interaction Challenges in Visualization and Visual Analytics</head><p>Simulations generate terabytes of data. Using appropriate reduction and filtering methods and the GPU, standard PC hardware can be used to interactively visualize this huge amount of data and analyze weather phenomena for improved forecasts.</p><p>A successful visualization is not a collection of static images we can simply browse. A good visualization needs interaction to support the reasoning process. Interaction plays a major role in most visualization approaches and the design of efficient interaction is often crucial for the success of a visualization method. A comprehensive overview of coordinated multiple views, a technique where interaction plays a crucial role, is described by Roberts in <ref type="bibr" target="#b27">[27]</ref>.</p><p>A possible list of interaction research goals is: − Design of innovative interaction for navigation in complex systems; − Clever combination of various visualization techniques; − Intuitive switching between levels while keeping a system overview; − Setup of interactive collaborative visualization systems; − Interaction scenarios for on-line collaborative interaction; − Research interaction scenarios for off-line collaborative analysis; − Explore interaction for mixed groups of experts and non-expert users.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.3.">Interaction Challenges in Rendering and Virtual Reality</head><p>In rendering and virtual reality, the interaction challenge appears mainly in the context of human-computer interaction, i.e. the challenge of finding suitable input and display devices for a given application, and in collaborative interaction of multiple simultaneous users. In all rendering applications that are targeted at real-time or interactive usage scenarios, proper choice of interaction and display devices naturally plays an important role. The ideal interaction metaphor may vary widely with the actual application, and may range from traditional keyboard and mouse to more complex devices such as the SpaceMouse (a desktop device that allows navigation and manipulation with 6 degrees of freedom, although with limited range) and VR interfaces. In addition to the input devices to be used, this challenge also includes the design and placement of user interface elements within a given application, a non-trivial issue.</p><p>For example, a virtual simulation of a fire on a projector can be combined with a mock fire extinguisher for emergency training. By using the fire extinguisher as a user-interface to the simulation, a highly realistic training scenario can be provided <ref type="bibr" target="#b28">[28]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.">Acquisition</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.1.">Challenges in Acquisition</head><p>Today Visual Computing focuses on the display and analysis of real world data gathered by an array of diverse measurement techniques. While former rendering methods concentrated on simulating complexity by using textures, approximated illumination, and simplified modeling of complex structures, nowadays we face the challenge of visualizing data gathered by data acquisition systems. Currently, effective and successful information extraction methods are mostly multi-stage solutions, applying several highly specialized methods integrating domain expert knowledge into a complex segmentation chain <ref type="bibr" target="#b29">[29]</ref>.</p><p>While manually modelled data normally lacks detail and internal consistency -for example, due to non-manifolds and widely varying levels of detail -acquired data typically suffer from measurement errors, noise, dropouts, repetition, and lack of semantic information. Typical acquisition areas include: architectural data such as digitized elevation plans, laser scans, photogrammetric data (images &amp; models); medical &amp; industrial data such as computer tomography, magnetic resonance images, X-ray, ultrasound; real-time acquisition of position and geometry from depth images (from photogrammetric data or phase cameras), GPS, GSM triangulation, computer vision methods (optical flow, pattern recognition) and finally meteorological data such as satellite images, radar, lidar, temperature, humidity, and pressure measurements. All of these examples describe the same physical phenomena by measuring them with different methods and instruments. The downside of acquired data is that we cannot trust it to be consistent, precise, or even complete, the upside is that by using multiple instruments we gather in most cases redundant information about the same phenomenon. This results in the following challenges: generate consistent and unambiguous models from hybrid measurement data. This includes the statistically or empirically valid interpolation of gaps in the measurement, and correcting known artifacts of the applied measurement technologies; reduce data volume and create representations for the next processing step in the workflow (e.g. semantic analysis and/or rendering).</p><p>Examples for this challenge are the recreation of surface or volume data from point samples, and the reduction of geometric detail to a more compact representation like templates or texture/displacement maps; and the application of real-time techniques to reduce error and lag in hybrid acquisition techniques, e.g. use inertial sensors for prediction of movement or phase-cameras to fill holes and resolve ambiguity in photogrammetric techniques. Similar techniques can be used to combine fast, low-resolution sensors with slow, high resolving ones to approximate continuous high-resolution data streams. The books <ref type="bibr" target="#b30">[30]</ref> and <ref type="bibr" target="#b31">[31]</ref> give excellent overviews on established techniques for image processing and analysis.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.2.">Acquisition Challenges in Visualization and Visual Analytics</head><p>Acquisition in the context of visualization refers mainly to techniques that derive information from raw data to generate high quality, high performance, meaningful, and user-friendly visualizations. This includes data enhancement methods like denoising and filtering, compression, hierarchical or topological re-organization of the data, feature extraction and classification methods, segmentation of structures of interest, and automatic derivation of high level information on the basis of previously generated segmentations. There is a direct relationship of acquisition in this context to the challenges semantics and fusion. Both require additional derived information from raw data -semantics is often related to features and objects present in the data. Such objects have to be detected and classified to provide the basis for a semantically defined visualization. Fusion needs a description of correspondence between individual datasets to be able to relate different representations of the same object across multi-source and multi-level data. Acquisition is a necessary pre- processing step for both challenges.</p><p>In medical visualization, different 3D scanning techniques (e.g. MRI, CT) excel at measuring different medical properties. The goal is to combine the differently acquired data to improve accuracy and reduce noise <ref type="bibr" target="#b32">[32]</ref>. And industrial CT scans of heterogeneous materials suffer from artifacts due to varying physical properties of the components. By better addressing these problems, highly accurate measurements on the data will be possible.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.3.">Acquisition Challenges in Rendering and Virtual Reality</head><p>All measured data contains errors and artifacts. To generate consistent representations of real-world objects for visualization, documentation, or simulation purposes, methods have to be invented and improved to reduce these errors to an acceptable minimum. What kind of error counts as 'acceptable' of course depends on the requirements of the following algorithms and steps in the workflow. While visualization techniques may not require a topologically consistent representation of an object, some simulation algorithms will not work with ambiguous or non-manifold geometry. While this has been true even for manually modeled objects, it is especially problematic to reconstruct consistent representations from huge data sets acquired with laser scanners and other acquisition systems.</p><p>Systematic errors introduced by these instruments have to be handled on a consistent basis: one has to identify critical data at the earliest possible stage in the workflow, before erroneous data is merged into other, possibly correct data sets. There are multiple possible error sources that have to be handled. Random sampling noise can be reduced by over-sampling in time or space, thereby gathering more samples which can be smoothed using statistical tools. Systematic error can be reduced using redundant information, possibly from other modalities, or by previous gathered calibration data. An example for such an approach is reconstructive filtering to reduce artifacts at significant features. Aliasing, i.e. under-sampling in the time-or spatial domain without low-pass filters, can produce artifacts which -according to the sampling theorem -cannot be removed using the measured data alone. Here additional data acquisition is necessary.</p><p>A special challenge is the acquisition of highly structured surfaces, such as old buildings like churches, for archival or heritage purposes. Automatically scanned images of such structures are normally plagued by gaps and contradictions. Systematic handling of such data helps to reconstruct and correctly document the true geometry of such surfaces, e.g. <ref type="bibr" target="#b33">[33]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7.">Conclusions</head><p>Computer Graphics as a computer science discipline was able to solve many issues formulated in the past faster than expected and further than expected. For many practical applications, however, the need for more and better visual user interfaces is ever growing and new challenges have to be tackled in order to make computer graphics techniques useful. These challenges are the coping with large data sets and complex hardware, the inclusion of semantics into all modeling data, the fusion of multiple techniques to solve complex problems, new and better interaction paradigms, and methods to acquire all the data needed in complex environments. This paper has described in detail many of these challenges and brought many examples where these challenges play a significant role. Computer Graphics is not solved, but it is entering a new epoch of a little less purely graphical problems. Together with neighboring disciplines it now forms the area of Visual Computing, and it is the hope that most of these challenges can be solved within the coming decades.</p><p>A c k n o w l e d g e m e n t s. The authors would like to thank Prof. Vasile Manta for motivating us to compile this overview. Several people from VRVis have significantly contributed to a previous version of this text. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Received: April 12, 2010 *Vienna University of Technology, Institute of Computer Graphics and</head></div>		</body>
+		<back>
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>24</head><p>Werner Purgathofer and Robert F. Tobler pentru urmărorii ani, acordând o atenţie deosebită unor provocări cu un rol semnificativ în toate subdomeniile graficii pe calculator: scalabilitate, semantică, fuziune, interacţiune şi achiziţie. Deşi nu toate aceste probleme sunt reciproc disjuncte, această prezentare ne permite să avem o privire de ansamblu asupra provocărilor concrete viitoare. Cercetarea în direcţia procesării grafice intră într-o nouă epocă, formând împreună cu alte direcţii complementare domeniul Visual Computing.</p></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Ten Unsolved Problems in</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">I</forename><forename type="middle">E</forename><surname>Sutherland</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Computer Graphics. Datamation</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="page">27</biblScope>
+			<date type="published" when="1966" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Ten Unsolved Problems in Rendering</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Heckbert</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Workshop on Rendering Algorithms and Systems, Graphics Interface &apos;87</title>
+		<imprint>
+			<date type="published" when="1987" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Top Scientific Visualization Research Problems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Johnson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Computer Graphics and Applications</title>
+		<imprint>
+			<biblScope unit="volume">24</biblScope>
+			<biblScope unit="page" from="13" to="17" />
+			<date type="published" when="2004" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Interactive Rendering of Large Volume Data Sets</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Guthe</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Wand</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Gonser</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">W</forename><surname>Strasser</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. IEEE Visualization</title>
+		<meeting>IEEE Visualization</meeting>
+		<imprint>
+			<date type="published" when="2002" />
+			<biblScope unit="page" from="53" to="60" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Interactive Out-Of-Core Isosurface Extraction</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Y.-J</forename><surname>Chiang</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Silva</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">W</forename><surname>Schroeder</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. IEEE Visualization &apos;98</title>
+		<meeting>IEEE Visualization &apos;98</meeting>
+		<imprint>
+			<date type="published" when="1998" />
+			<biblScope unit="page" from="167" to="174" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<monogr>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Werner</forename><surname>Purgathofer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Robert</forename><forename type="middle">F</forename><surname>Tobler</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<monogr>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Hansen</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Johnson</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Visualization</forename><surname>Handbook</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2004" />
+			<publisher>Academic Press</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<monogr>
+		<title level="m" type="main">Interactive Iso-Surface Ray Tracing of Massive Volumetric Data Sets. EG Symposium on Parallel Graphics and Visualization</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">H</forename><surname>Friedrich</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">I</forename><surname>Wald</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Slusallek</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2007" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Large Volume Visualization of Compressed Time Dependent Data-Sets on GPU Clusters</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Strengert</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Magallon</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Weiskopf</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Guthe</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><surname>Ertl</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Parallel Computing</title>
+		<imprint>
+			<biblScope unit="volume">31</biblScope>
+			<biblScope unit="page" from="205" to="219" />
+			<date type="published" when="2005" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Issues and Architectures in Large-Scale Data Visualization</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Pavlakos</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Heermann</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Visualization Handbook</title>
+		<editor>C. Hansen</editor>
+		<imprint>
+			<publisher>Academic Press</publisher>
+			<date type="published" when="2004" />
+			<biblScope unit="page" from="551" to="567" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">LINQ: Reconciling Object, Relations and XML in the NET Framework</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><surname>Meijer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Beckman</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Bierman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the Twenty-Fifth ACM SIGACTSIGMOD-SIGART Symposium on Principles of Database Systems</title>
+		<meeting>the Twenty-Fifth ACM SIGACTSIGMOD-SIGART Symposium on Principles of Database Systems</meeting>
+		<imprint>
+			<publisher>ACM Press</publisher>
+			<date type="published" when="2006" />
+			<biblScope unit="volume">706</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">High-Level User Interfaces for Transfer Function Design with Semantics</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Rezk-Salama</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Keller</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Kohlmann</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. IEEE Visualization</title>
+		<meeting>IEEE Visualization</meeting>
+		<imprint>
+			<date type="published" when="2006" />
+			<biblScope unit="page" from="1021" to="1028" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Semantic Layers for Illustrative Volume Rendering</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Rautek</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Bruckner</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><surname>Gröller</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Transactions on Visualization and Computer Graphics</title>
+		<imprint>
+			<biblScope unit="volume">13</biblScope>
+			<biblScope unit="page" from="1336" to="1343" />
+			<date type="published" when="2007" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<monogr>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">* * *</forename><surname>Vrvis</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+	<note>Research Center homepage, www.vrvis.at</note>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">A Multiresolution Mesh Generation Approach for Procedural Definition of Complex Geometry</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><forename type="middle">F</forename><surname>Tobler</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Maierhofer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Wilkie</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. of the Shape Modeling International</title>
+		<meeting>of the Shape Modeling International<address><addrLine>Banff, Canada</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2002-05" />
+			<biblScope unit="page" from="35" to="42" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Multiresolution Geometric Details on Subdivision Surfaces</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Musialski</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><forename type="middle">F</forename><surname>Tobler</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. of Graphite</title>
+		<meeting>of Graphite</meeting>
+		<imprint>
+			<date type="published" when="2007" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Severe Weather Explorer-Interactive Visual Analysis of Large and Heterogeneous Meteorological Data</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">H</forename><surname>Doleisch</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Muigg</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Spatzierer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of Lakeside Conference</title>
+		<meeting>Lakeside Conference<address><addrLine>Velden, Austria</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2008" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<monogr>
+		<title level="m" type="main">Comprehensive Visualization of Cardiac MRI Data</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Termeer</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2009" />
+		</imprint>
+		<respStmt>
+			<orgName>Vienna University of Technology</orgName>
+		</respStmt>
+	</monogr>
+<note type="report_type">Ph. D. Diss</note>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">GeoTime Information Visualization</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><surname>Kapler</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">W</forename><surname>Wright</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2004 IEEE Symposium on Information Visualization (InfoVis &apos;04</title>
+		<meeting>the 2004 IEEE Symposium on Information Visualization (InfoVis &apos;04</meeting>
+		<imprint>
+			<date type="published" when="2004" />
+			<biblScope unit="page" from="25" to="32" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Stories in GeoTime</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Eccles</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><surname>Kapler</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Harper</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">W</forename><surname>Wright</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">proceedings of the second IEEE Symposium on Visual Analytics Science and Technology (VAST &apos;07)</title>
+		<meeting>the second IEEE Symposium on Visual Analytics Science and Technology (VAST &apos;07)</meeting>
+		<imprint>
+			<date type="published" when="2007" />
+			<biblScope unit="page" from="19" to="26" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<monogr>
+		<title level="m" type="main">Illuminating the Path: The Research and Development Agenda for Visual Analytics</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><forename type="middle">J</forename><surname>Thomas</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">K</forename><forename type="middle">A</forename><surname>Cook</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2005" />
+			<publisher>IEEE Computer Society</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">A Rank-by-Feature Framework for Unsupervised Multidimensional Data Exploration Using Low-Dimensional Projections</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Seo</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Shneiderman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">proceedings of the IEEE Symposium on Information Visualization</title>
+		<meeting>the IEEE Symposium on Information Visualization</meeting>
+		<imprint>
+			<date type="published" when="2004" />
+			<biblScope unit="page" from="65" to="72" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Enhancing Visual Analysis of Network Traffic Using a Knowledge Representation</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">X</forename><surname>Ling</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Gerth</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Hanrahan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. IEEE Symposium on Visual Analytics Science and Technology (VAST &apos;06</title>
+		<meeting>IEEE Symposium on Visual Analytics Science and Technology (VAST &apos;06</meeting>
+		<imprint>
+			<date type="published" when="2006" />
+			<biblScope unit="page" from="107" to="114" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Intelligent Visual Analytics Queries</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><forename type="middle">C</forename><surname>Hao</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">U</forename><surname>Dayal</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><forename type="middle">A</forename><surname>Keim</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Morent</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Schneidewind</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">proceedings of the second IEEE Symposium on Visual Analytics Science and Technology (VAST &apos;07)</title>
+		<meeting>the second IEEE Symposium on Visual Analytics Science and Technology (VAST &apos;07)</meeting>
+		<imprint>
+			<date type="published" when="2007" />
+			<biblScope unit="page" from="91" to="98" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Analysis Guided Visual Exploration of Multivariate Data</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Yang</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><forename type="middle">A</forename><surname>Rundensteiner</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><forename type="middle">O</forename><surname>Ward</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">proceedings of the second IEEE Symposium on Visual Analytics Science and Technology (VAST &apos;07</title>
+		<meeting>the second IEEE Symposium on Visual Analytics Science and Technology (VAST &apos;07</meeting>
+		<imprint>
+			<date type="published" when="2007" />
+			<biblScope unit="page" from="83" to="90" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Model-Driven Visual Analytics</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Garg</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><forename type="middle">E</forename><surname>Nam</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">I</forename><forename type="middle">V</forename><surname>Ramakrishnan</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">K</forename><surname>Mueller</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">proceedings of the third IEEE Symposium on Visual Analytics Science and Technology (VAST &apos;08)</title>
+		<meeting>the third IEEE Symposium on Visual Analytics Science and Technology (VAST &apos;08)</meeting>
+		<imprint>
+			<date type="published" when="2008" />
+			<biblScope unit="page" from="19" to="26" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<monogr>
+		<title level="m" type="main">Surface project homepage</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">* * * Microsoft</forename><surname>Inc</surname></persName>
+		</author>
+		<ptr target="www.microsoft.com/surface/" />
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">State of the Art: Coordinated &amp; Multiple Views in Exploratory Visualization</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><forename type="middle">C</forename><surname>Roberts</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">CMV &apos;07: Proceedings of the Fifth International Conference on Coordinated and Multiple Views in Exploratory Visualization</title>
+		<imprint>
+			<date type="published" when="2007" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<monogr>
+		<title level="m" type="main">Virtual Training in Hand Fire Extinguisher Use. www.vrvis.at/ projects/running-projects/ViFeLoe</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><forename type="middle">L</forename><surname>Fuhrmann</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2010-06" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">A Knowledge-Based Approach to Soft Tissue Reconstruction of the Cervical Spine</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Seifert</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">I</forename><surname>Wachter</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Schmelzle</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Dillmann</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Transactions on Medical Imaging</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="page">507</biblScope>
+			<date type="published" when="2009" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Jahne</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">H</forename><surname>Haussecker</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Geissler</surname></persName>
+		</author>
+		<title level="m">Handbook of Computer Vision and Applications. Three-Volume Set</title>
+		<imprint>
+			<publisher>Academic Press</publisher>
+			<date type="published" when="1999" />
+			<biblScope unit="volume">1</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Front-End Vision and Multi-Scale Image Analysis</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><forename type="middle">H</forename><surname>Romeny</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Computational Imaging and Vision</title>
+		<imprint>
+			<biblScope unit="volume">27</biblScope>
+			<date type="published" when="2004" />
+			<publisher>Springer</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Shape and Appearance Models for Automatic Coronary Artery Tracking</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Zambal</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Hladůvka</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Kanitsar</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">K</forename><surname>Bühler</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of MICCAI Workshop 3D Segmentation in the Clinic: A Grand Challenge II</title>
+		<meeting>MICCAI Workshop 3D Segmentation in the Clinic: A Grand Challenge II</meeting>
+		<imprint>
+			<date type="published" when="2008" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">SymmetryBased Facade Repair</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Musialski</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Wonka</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Recheis</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Maierhofer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">W</forename><surname>Purgathofer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Vision, Modeling and Visualization Workshop</title>
+		<meeting><address><addrLine>Braunschweig; Germany</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2009" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

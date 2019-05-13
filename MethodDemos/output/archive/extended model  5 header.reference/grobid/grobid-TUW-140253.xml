@@ -1,0 +1,821 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">FROM STATIC TO DYNAMIC PROCESS TYPES</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author role="corresp">
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Franz</forename><surname>Puntigam</surname></persName>
+							<email>Email: franz@complang.tuwien.ac.at</email>
+							<affiliation key="aff0">
+								<orgName type="institution">Technische Universität Wien</orgName>
+								<address>
+									<addrLine>Argentinierstr. 8</addrLine>
+									<postCode>1040</postCode>
+									<settlement>Vienna</settlement>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">FROM STATIC TO DYNAMIC PROCESS TYPES</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>Process types</term>
+					<term>synchronization</term>
+					<term>type systems</term>
+					<term>race-free programs</term>
+				</keywords>
+			</textClass>
+			<abstract>
+				<p>Process types-a kind of behavioral types-specify constraints on message acceptance for the purpose of synchronization and to determine object usage and component behavior in object-oriented languages. So far process types have been regarded as a purely static concept for Actor languages incompatible with inherently dynamic programming techniques. We propose solutions of related problems causing the approach to become useable in more conventional dynamic and concurrent languagues. The proposed approach can ensure message acceptability and support local and static checking of race-free programs.</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">INTRODUCTION</head><p>Process types <ref type="bibr" target="#b20">(Puntigam, 1997</ref>) represent a behav- ioral counterpart to conventional object types: They support subtyping, genericity, and separate compila- tion as conventional types. Additionally they spec- ify abstractions of object behavior. Abstract behav- ior specifications are especially desirable for software components, and they can be used for synchroniza- tion. Both concurrent and component-based program- ming are quickly becoming mainstream programming practices, and we expect concepts like process types to be important in the near future. However, so far process types are not usable in mainstream languages:</p><p>and show how dynamic type checking can deal with the first issue.</p><p>We introduce the basic static concept of process types for a conventional (Java-like) object model in Section 2. Then, we add support of dynamic synchro- nization in Section 3 and of shared variables with late type checking in Section 4. Local and static checking of race-free programs is rather easy in our setting as discussed in Section 5.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">STATIC PROCESS TYPES</head><p>1. Their basis are active objects communicating by message passing <ref type="bibr" target="#b0">(Agha et al., 1992)</ref>. Variables are accessible only within single threads. In main- stream languages like Java, threads communicate through shared (instance) variables; one thread reads values written by another. To support such languages we must extend process types with sup- port of shared variables.</p><p>2. Process types are static. Object state changes must be anticipated at compilation time. We must adapt process types to support dynamic languages like Smalltalk (using dynamic process type checking). <ref type="figure" target="#fig_0">Figure 1</ref> shows the grammar of TL1 (Token Lan- guage 1) -a simple Java-like language we use as showcase. We differentiate between classes and types without implementations. To create a new object we invoke a creator new in a class. Type annotations fol- low after ":". Token declarations (names following the keyword token), tokens occurring within square brackets in types, and with-clauses together deter- mine the statically specified object behavior.</p><p>The first example shows how tokens allow us to specify constraints on the acceptability of messages:</p><p>Support of dynamic languages turns out to be a good basis for supporting communication through shared variables. Hence, we address mainly the second issue type Buffer is token empty filled put(e:E with empty-&gt;filled) get(with filled-&gt;empty): E</p><p>According to the with-clause in put we can invoke put only if we have an empty; this token is removed P ::= unit* unit ::= class c <ref type="bibr">[&lt; c + ]</ref>opt is [token</p><formula xml:id="formula_0">x + ]opt def + | type c [&lt; c + ]opt is [token x + ]opt decl + decl ::= m( par* [with ctok]opt ) [: t]opt def ::= v : c | decl do s + | new( par* ): t do s + par ::= v : c [[ ctok ]]opt ctok ::= tok + -&gt; tok* | -&gt; tok + tok ::= x [.n]opt t ::= c [[ tok + ]]opt s ::= v : t = e | v = e | e | return [e]opt | fork e e ::= this | v | c | n | e.m( e* ) | null</formula><p>c ∈ class and type names x ∈ token names m ∈ message selectors v ∈ variable names n ∈ natural number literals on invocation, and filled is added on return. For x of type Buffer[empty] -a buffer with a single token empty -we invoke x.put(..). This invo- cation changes the type of x to Buffer <ref type="bibr">[filled]</ref>. Next we invoke x.get(), then x.put(..), and so on. Static type checking enforces put and get to be invoked in instances of Buffer <ref type="bibr">[empty]</ref> in al- ternation. Type checking is simple because we need only compare available tokens with tokens required by with-clauses and change tokens as specified by with-clauses <ref type="bibr" target="#b20">(Puntigam, 1997)</ref>.</p><p>The type Buffer[empty.8 filled.7] de- notes a buffer with at least 8 filled and 7 empty slots. An instance accepts put and get in all sequences such that the buffer never contains more that 15 or less than zero elements as far as the client knows.</p><p>In the next example we show how to handle tokens in parameter types similarly as in with-clauses:</p><formula xml:id="formula_1">class Test is play(b:Buffer[filled-&gt;filled]) do e:E = b.get() --b:Buffer[empty] e = e.subst() --another e b.put(e) --b:Buffer[filled] copy(b:Buffer[empty filled-&gt;filled.2]) do e:E = b.get() --b:Buffer[empty.2] b.put(e) --b:Buffer[empty filled] b.put(e) --b:Buffer[filled.2]</formula><p>Let y be of type Buffer[empty.2 filled.2] and x of type Test. We can invoke x.play(y) since y has the required token filled. This rou- tine gets an element from the buffer, assigns it to the local variable e (declared in the first statement), as- signs a different element to e, and puts this element into the buffer. Within play the buffer is known to have a single filled slot on invocation and on re- turn. For the type of b specified in the formal pa- rameter list it does not matter that the buffer has been empty meanwhile and the buffer contents changed. Parameter passing does not produce or consume to- kens. Tokens just move from the argument type to the parameter type on invocation and vice versa on return. Only with-clauses can actually add tokens to and re- move them from an object system. This is a basic principle behind the idea of tokens: Each object can produce and consume only its own tokens.</p><p>A statement 'fork x.copy(y)' spawns a new thread executing x.copy(y). Since the execution continues without waiting for the new threads, in- voked routines cannot return tokens. Local variables are visible in just a single thread of control. This property is important because it allows us to perform efficient type checking by a single walk through the code although variable types can change with each invocation. Because of explicit formal pa- rameter types we can check each class separately. If variables with tokens in their types were accessible in several threads, then we must consider myriads of possible interleavings causing static type checking to become practically impossible. Instance variables can be shared by several threads. To support instance vari- ables and still keep the efficiency of type checking we require their types to carry no token information. We address this restriction in Section 4.</p><p>Explicit result types of creators play a quite impor- tant role for introducing tokens into the system: Class Buffer1 inherits empty and filled from Buffer. An invocation of Buffer1.new() re- turns a new instance with a single token empty. No other token is initially available. Since invocations of put and get consume a token before they issue an- other one, there is always at most one token for this object. No empty buffer slot can be read and no filled one overwritten, and we need no further synchroniza- tion even if several threads access the buffer. The use of tokens greatly simplifies the implementation. However, this solution is inherently static and does not work in more dynamic environments.</p><formula xml:id="formula_2">def ::= v : c | decl [when ctok]opt do s + | new( par* ): t [-&gt; tok + ]opt do s + decl ::= m( v* [with ctok]opt ) def ::= v: | decl [when ctok]opt do s + | new( v* ): t [-&gt; tok + ]opt</formula><p>we could use only dynamic tokens which is more common and provides easier handling of buffers. Static and dynamic tokens live in mostly indepen- dent worlds. Nonetheless we have possibilities to move tokens from the static to the dynamic world and vice versa as shown in the following example:</p><p>class StaticAndDynamic is token t beDynamic(with t-&gt;) when -&gt;t do null beStatic(with -&gt;t) when t-&gt; do null new(): StaticAndDynamic[t] do null</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">DYNAMIC TOKENS</head><p>The language TL2 (see <ref type="figure">Figure 2</ref>) slightly extends TL1 with dynamic tokens for synchronization. This concept resembles more conventional synchroniza- tion like that in Java. There is no need to anticipate such synchronization at compilation time.</p><p>We associate each object with a multi-set of tokens (token set for short) to be manipulated dynamically. TL2 differs from TL1 by optional when-clauses in routines and optional initial dynamic tokens (follow- ing -&gt;) in creators. Tokens to the left of -&gt; in when- clauses must be available and are removed before ex- ecuting the body, and tokens to the right are added on return. Different from with-clauses, when-clauses require dynamic tokens to be in the object's token set and change this token set. If required dynamic tokens are not available, then the execution is blocked until they become available. Checks for token availabil- ity occur only at run time. The following variant of the buffer example uses static tokens to avoid buffer overflow and underflow, and dynamic tokens to en- sure mutual exclusion:</p><p>There always exists only a single token t for each instance, no matter how often and from how many threads we invoke beDynamic and beStatic.</p><p>The major advantage of our approach compared to concepts like semaphores and monitors is the higher level of abstraction. It is not so easy to "forget" to release a lock as often occurs with semaphores, and it is not necessary to handle wait queues using wait and notify commands as with monitors. For static tokens we need not execute any specific synchroniza- tion code at all. This synchronization is implicit in the control flow. In TL1 and TL2 we constrained the flexibility of the language to get efficient static type checking: Types of instance variables cannot carry tokens. In this sec- tion we take the position that static type checking is no precondition for the token concept to be useful. We want to increase the language's flexibility (by sup- porting tokens on instance variables) and nonetheless ensure that synchronization conditions expressed in with-clauses are always satisfied. An error shall be reported before invocations if required tokens are not available. <ref type="figure">Figure 3</ref> shows the grammar of TL3 that differs form TL2 just by missing type annotations on for- mal parameters and declarations. However, without type annotations there is no explicit information about available tokens. We handle this information dynam- ically. One kind of type annotation is left in TL3: Types of new instances returned by creators must be specified explicitly because tokens in this type to- gether with with-clauses determine which routines can be invoked. Such types are part of behavior spec- ifications. Except of type annotations the following example in TL3 equals Buffer50: Some state changes (directly from an icon to closed, etc.) are not supported. Class WManager specifies actions to be performed when users press buttons. Under the assumption that a displayed window has only Button 1 and 2 and an icon only Button 3 the constraints on state changes are obviously satisfied. Since the assumption corresponds to the existence of at most one token for each window we need nothing else to ensure a race-free program. We express the assumption by with-clauses and dynamically ensure them to be satisfied. The variable win must be asso- ciated with a (static) token specifying the window's state. In TL1 and TL2 we cannot express such type information that is implicit in TL3. TL3 deals with dynamic tokens in the same way as TL2. To dynamically handle information about available static tokens we consider two approaches -TL3flex as a simple and flexible approach, and TL3strict as a more restrictive and safer approach.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">DYNAMIC TYPING</head><p>TL3flex. In TL3flex we tread static tokens in a sim- ilar way as dynamic tokens: Each objects contains a pool of static tokens. On invocations tokens to the left of -&gt; in with-clauses are taken from the pool, TL3strict. To improve error messages and the prob- ability of detecting problems we dynamically sim- ulate static type checking: Instead of storing static tokens centralized in the object we distribute them among all references to the object. On invocation we check and update only tokens associated with the cor- responding reference. We must find an appropriate distribution of tokens among references. In TL1 and TL2 the programmer had to determine the distribution by giving type annotations. In TL3strict we distribute tokens lazily as needed in the computation.</p><p>Instead of splitting a token set on parameter passing or assignment we associate the two references with pointers to the (unsplit) token set as well as with a new empty token set for each of the two references. Whenever required tokens are not available in the (af- ter assignment or parameter passing empty) token set of a reference we follow the pointers and take the to- kens where we find them. New tokens are stored in the references' own token sets. This way all refer- ences get the tokens they need (if available) and we need not foresee how to split token sets. Repeated application leads to a tree of token sets with pointers from the leaves (= active references) toward the root (= token set returned by creator). We report an error only if tokens required at a leaf cannot be collected from all token sets on the path to the root. On return of invocations we let actual parameters point to token sets of corresponding formal parameters. <ref type="figure">Figure 4</ref> shows an example: Immediately after cre- ating a window there is only one reference n to it (a). The box contains the single token in the correspond- ing token set. When invoking new in WManager us- ing n as actual parameter we construct new token sets for n and for the formal parameter w (b). When the creator assigns w to win we add new token sets for w and win (c). An invocation of setup on win re- moves the token closed and adds displ. On re- turn from the creator we let the token set of n point to that of w (d). Now only win carries the single to- ken. We cannot change the window's state through n. Therefore, TL3strict is safer and less flexible than TL3flex.</p><p>We can build large parts of the structures shown in <ref type="figure">Figure 4</ref> already at compilation time by means of ab- <ref type="figure">Figure 4</ref>: Token Sets per Reference stract interpretation. Most checks for the availability of tokens can be performed statically. In fact we need dynamic checks of token availability only for tokens associated with instance variables.</p><formula xml:id="formula_3">n := WindowImpl.new() WManager.new(n) closed n d d s n w closed (a) (b) closed d d s n d d s n d d s w win d d  d d s w win displ (c) (d)</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">RACE-FREE PROGRAMS</head><p>It is possible to ensure race-free programs just by ana- lyzing the tokens in classes. We use only a single suf- ficient (but not always necessary) criterion: No two preconditions in with-clauses and when-clauses of routines accessing the same variable (where an access is a write) can be satisfied at the same time. To check this criterion we compute upper bounds on the token sets that can be constructed from the tokens of new instances. We analyze each class separately.</p><p>In the following description of the algorithm to de- termine upper bounds of token sets we first consider only static tokens as in TL1. We start with the set of token sets declared in the result types of the ana- lyzed class' creators (one token set per creator). For each with-clause in the class we repeatedly construct new token sets by removing tokens to the left of -&gt; and adding those to the right from/to each token set constructed so far containing all required tokens. If a token set contains all tokens occurring in another to- ken set, then we remove the smaller token set. And if a token set differs from the token set from which it was constructed just by containing more tokens, then we increment the token numbers that differ to the spe- cial value ∞ indicating infinite grow. Because of this treatment the algorithm always reaches a fixed point. The algorithm is accurate in the sense that • the token set produced for an instance of the class is always a subset of a token set returned by the algorithm,</p><p>• if a token set returned by the algorithm does not contain ∞, then there exists a sequence of invoca- tions producing exactly this token set, • and if a token set returned by the algorithm contains ∞, then there exist invocation sequences producing corresponding tokens without upper bounds. In TL2 and TL3 we must consider static and dy- namic tokens together to get most accurate results. Since the static and the dynamic world are clearly separated, static and dynamic tokens must not be in- termixed. We have to clearly mark each token as ei- ther static or dynamic (for example, by an index) and regard differently marked tokens as different. The al- gorithm starts with one token set for each creator con- taining both static and dynamic tokens. A new token set is constructed by simultaneously removing and adding tokens as specified in the with-and when- clause of a routine. The result shows which dynamic tokens can exist together with static tokens. For ex- ample, applied to StaticAndDynamic (see Sec- tion 3) the algorithm returns two token sets, one con- taining only a static token t and the other only a dy- namic token t; in this case no dynamic token can exist at the same time as a static one.</p><p>Once we know the upper bounds it is easy to per- form our check of race-free programs as shown in the following pseudo-code: let U be the upper-bound set of token sets of class c; for each instance variable v of c for each routine r write-accessing v for each routine s (read or write) accessing v let p be the union of the token sets to the left of -&gt; in r and s; if there is a u ∈ U containing all tokens in p then issue a warning about a potential race; otherwise c is race-free</p><p>As an example we apply this check to Buffer1 (see Section 2). As upper-bound set of token sets S we have {{empty}, {filled}}; there is always at most one token empty or filled. The only in- stance variable s is written in put and read in get. Hence, r ranges just over put, s over put and get, and p over {empty.2} and {empty, filled}. The class is race-free because no token set in S contains two empty or an empty and a filled.</p><p>The set S can become quite large because of com- binatorial explosion. For example, S constructed for Buffer50Dyn contains 51 different token sets -all possibilities of summing up tokens of two names to 50 tokens. Fortunately, a simple change in the algo- rithm to compute upper bounds can reduce the size of S considerably: When computing the fixed point we replace all token numbers larger than 2 · n 2 · i by ∞, where n is the largest total number of tokens to the left of -&gt; in the with-and when-clause of the same routine, and i is the number of different token names in the class. For Buffer50Dyn we have n = 2, i = 3, 2 · n 2 · i = 24, and S contains just a sin- gle token set {sync, empty.∞, filled.∞}. This optimization does not change the output of the race- freeness check: Soundness is not affected because the multi-set of supposedly reachable tokens in a system can just get larger. No token set p (as in the algorithm) can contain more than 2 · n tokens, and a single token of some name can be generated from no more than n·i tokens of another name. Therefore, more than 2 · n 2 · i tokens of one name can be ignored for our purpose. Probably there are more accurate estimations, but we expect this simple one to be sufficient because token numbers to the left of -&gt; are usually small.</p><p>All information needed to check race-free classes is explicit in TL1, TL2, and TL3. We need no infor- mation about formal parameter types and no aliasing information. No global program analysis is necessary.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">DISCUSSION, RELATED WORK</head><p>The idea of integrating process types into dynamic languages is new and at a first glance unexpected be- cause such types were developed to move dynamic aspects like synchronization to the static language level whenever possible <ref type="bibr" target="#b18">(Puntigam, 1995;</ref><ref type="bibr" target="#b20">Puntigam, 1997;</ref><ref type="bibr" target="#b22">Puntigam, 2000</ref>). In some sense the integration of more advanced static concepts into dynamic lan- guages is a consistent further development allowing us to use the appropriate (static or dynamic) concept for each task. Such integration helps us to deepen our understanding of related concepts.</p><p>We usually regard synchronization of concurrent threads as a purely dynamic concept: If there is a dependence between two control flows, then one of the corresponding threads must wait until the other thread has caught up to meet the synchronization point. Since threads usually run asynchronously and at statically unpredictable speed, it is only possible to decide at run time whether a thread must wait at a syn- chronization point. However, these considerations are valid only at a very low level (close to the hardware) point of view. From the programmers' higher level point of view it is quite often not clear whether there exist dependences between threads or not. Using ex- plicit synchronization as with monitors, semaphores, rendezvous communication, etc. programmers must add much more synchronization points than are ac- tually necessary. There are optimization techniques that can statically eliminate up to about 90% (about 60% in average) of all locks from Java programs and thereby considerably improve program performance <ref type="bibr" target="#b31">(von Praun and Gross, 2003)</ref>. Probably even more synchronization points are actually not necessary.</p><p>Current programming languages allow program- mers to write programs with races although there are many proposals to ensure race-free programs <ref type="bibr" target="#b2">(Bacon et al., 2000;</ref><ref type="bibr" target="#b3">Boyapati and Rinard, 2001;</ref><ref type="bibr">BrinchHansen, 1975;</ref><ref type="bibr" target="#b15">Flanagan and Abadi, 1999</ref>). Applica- tions of such techniques may lead to further increase of unnecessary synchronization because no approach can accurately decide between necessary and unnec- essary locks. Nonetheless, these techniques are very useful because races are an important practical prob- lem in concurrent programming. Process types were developed as abstractions over expressions in process calculi <ref type="bibr" target="#b18">(Puntigam, 1995)</ref>. These abstractions specify acceptable messages of active objects and allow the acceptability to change over time (thereby specifying synchronization con- straints). Static type checking ensures that only ac- ceptable messages can be sent and enforces all syn- chronization constraints to be satisfied. In this sense type checking in process types has a similar purpose as ensuring race-free programs. However, process types allow us to specify arbitrary constraints on mes- sage acceptability, not just synchronization necessary to avoid races. In fact, the underlying calculi do not support shared data that could suffer from races.</p><p>There is a clear tendency toward more and more complex interface specifications going far beyond simple signatures of available routines <ref type="bibr" target="#b1">(Arbab, 2005;</ref><ref type="bibr" target="#b13">de Alfaro and Henzinger, 2001;</ref><ref type="bibr" target="#b17">Heuzeroth and Reussner, 1999;</ref><ref type="bibr" target="#b19">Jacobsen and Krämer, 1998;</ref><ref type="bibr" target="#b25">Lee and Xiong, 2004;</ref><ref type="bibr" target="#b6">Mezini and Ostermann, 2002;</ref><ref type="bibr" target="#b14">Nierstrasz, 1993;</ref><ref type="bibr" target="#b16">Plasil and Visnovsky, 2002;</ref><ref type="bibr" target="#b33">Yellin and Strom, 1997</ref>). We consider such interfaces to be partial specifications of object behavior <ref type="bibr" target="#b27">(Liskov and Wing, 1993)</ref>. They are especially valuable to specify the behavior of software components as far as needed for component composition. Process types are use- ful as partial behavior specifications <ref type="bibr" target="#b24">(Puntigam, 2003;</ref><ref type="bibr" target="#b28">Südholt, 2005)</ref>. We regard behavior specifications as the major reason for using process types.</p><p>Pre-and postconditions in with-clauses allow us to specify a kind of contracts between components <ref type="bibr" target="#b34">(Meyer, 1997;</ref><ref type="bibr" target="#b4">Meyer, 2003)</ref>. Such contracts clearly specify responsibilities of software and help us to move responsibilities from one component to another. For example, we move the responsibility of proper synchronization from the server to the client if we use with-clauses instead of when-clauses.</p><p>Behavioral types and synchronization of concur- rent threads are related topics: Specifications of ob- ject behavior cannot ignore necessary synchroniza- tion if we expect components composed according to their behavioral types to work together in concurrent environments, and constraints on message acceptabil- ity specify a kind of synchronization. The present work allows programmers to decide between synchro- nization globally visible through the interface (with- clauses) and local synchronization regarded as an im- plementation detail (when-clauses). While with- clauses just ensure that clients coordinate themselves (for example, through the control flow allowing m2() to be invoked only after m1()) when-clauses ensure proper synchronization using more conventional tech- niques. Locking does not get visible in interfaces, just synchronization requirements are visible.</p><p>There are good reasons for using locking only for local synchronization: Uncoordinated locking easily leads to deadlocks and other undesirable behavior, and it is much easier to coordinate locking within a single unit. The monitor concept supports just lo- cal locking for similar reasons. Furthermore, it is very difficult to deal with globally visible locking at the presence of subtyping and inheritance <ref type="bibr" target="#b29">(Matsuoka and Yonezawa, 1993)</ref>. Process types express just synchronization conditions in interfaces, they do not provide for locking. Another approach directly expresses locking conditions in interfaces <ref type="bibr" target="#b7">(Caromel, 1993;</ref><ref type="bibr" target="#b32">Meyer, 1993)</ref>. As experience shows, that ap- proach easily leads to undesirable locking where it would be more appropriate to raise exceptions.</p><p>There are several approaches similar to process types. Nierstrasz <ref type="bibr" target="#b14">(Nierstrasz, 1993)</ref> and <ref type="bibr" target="#b12">Nielson and Nielson (Nielson and Nielson, 1993</ref>) define behav- ioral types where subtypes show the same deadlock behavior as supertypes, but message acceptability is not ensured. Many further approaches consider dy- namic changes of message acceptability, but do not guarantee message acceptability in all cases <ref type="bibr" target="#b7">(Caromel, 1993;</ref><ref type="bibr" target="#b11">Colaco et al., 1997;</ref><ref type="bibr" target="#b23">Kobayashi and Yonezawa, 1994;</ref><ref type="bibr" target="#b32">Meyer, 1993;</ref><ref type="bibr" target="#b26">Ravara and Vasconcelos, 1997</ref>). Well known in the area of typed π-calculi <ref type="bibr" target="#b8">(Milner et al., 1992</ref>) is the work of Kobayashi, Pierce and Turner on linearity ( <ref type="bibr" target="#b21">Kobayashi et al., 1999</ref>) which ensures all sent messages to be acceptable. Work of Najm and Nimour <ref type="bibr" target="#b10">(Najm and Nimour, 1997</ref>) is very similar to process types except that in their approach at each time only one user can interact with an ob- ject through an interface (no type splitting). These approaches specify constraints on the acceptability of messages in a rather direct way and do not make use of a token concept. The use of tokens in be- havior specifications gives us high expressiveness and flexibility, allows us to express synchronization in a way similar to well-known concepts like monitors and semaphores, and is easily understandable. sible for proper synchronization. Process types use simple token sets as abstractions over object states.</p><p>In this paper we explored how to add process types to rather conventional object-oriented programming languages. As a showcase we developed the lan- guages TL1 to TL3. Static type checking in TL1 en- sures that all conditions in with-clauses are satisfied, this is, all required tokens are available. We can syn- chronize concurrent threads just by waiting for mes- sages. To overcome the restriction, TL2 adds a new dynamic concept of synchronization based on token sets. Neither TL1 nor TL2 can deal with static token sets associated with instance variables because of pos- sible simultaneous accesses by concurrent threads. In TL3 we dispense with static types and apply one of two methods to dynamically ensure the availability of required tokens -a flexible method and one with bet- ter error messages and partial support of static type checking. All variables in TL3 have only dynamic types that can implicitly carry tokens. In the three lan- guages we can ensure race-free programs by check- ing each class separately, without any need of global aliasing information.</p><p>Our approach uses token sets for several related purposes -synchronization of concurrent threads and statically and dynamically checked abstract behavior specifications. It is a major achievement to integrate these concepts because of complicated interrelations. The integration is valuable because it gives software developers much freedom and at the same time clear contracts and type safety.</p><p>Much work on this topic remains to be done. For example, currently our algorithm can issue warnings about potential races even in purely sequential pro- gram parts. Many other approaches to ensure race- free programs put much effort into detecting sequen- tial program parts. By integrating such approaches into our algorithm we expect to considerably improve the accuracy. Most approaches to remove unneces- sary locking from concurrent programs also work on sequential program parts ( <ref type="bibr" target="#b9">Choi et al., 1999;</ref><ref type="bibr" target="#b31">von Praun and Gross, 2003;</ref><ref type="bibr" target="#b30">Vivien and Rinard, 2001</ref>). We ex- pect a combination of the techniques to improve run time efficiency.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 1 :</head><label>1</label><figDesc>Figure 1: Syntax of TL1</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head></head><label></label><figDesc>-single buffer slot put(e:E with empty-&gt;filled) do s=e get(with filled-&gt;empty):E do return s new(): Buffer1[empty] do null</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Figure 2 :Figure 3 :</head><label>23</label><figDesc>Figure 2: Syntax of TL2 (Differences to TL1)</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1" validated="false"><head></head><label></label><figDesc>The type of y changes from Buffer[empty.2 filled.2] to Buffer[empty filled]. The type of y is split into two types -the new type of y and the type of b. Both threads invoke routines in the same buffer with- out affecting each other concerning type information. Assignment resembles parameter passing in the case of spawning threads: We split the type of an assigned value into two types such that one of the split types equals the current static type of the vari- able, and the remaining type becomes the new type of the assigned value.</figDesc><table>Thereby, tokens move from the 
+value's to the variable's type. If the statically evalu-
+ated type of v is Buffer[empty.2] and y is of 
+type Buffer[empty.2 filled.2], then v=y 
+causes y's type to become Buffer[filled.2]. 
+</table></figure>
+		</body>
+		<back>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Towards a theory of actor computation</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Agha</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">I</forename><forename type="middle">A</forename><surname>Mason</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Smith</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Talcott</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings CONCUR&apos;92, number 630 in Lecture Notes in Computer Science</title>
+		<meeting>CONCUR&apos;92, number 630 in Lecture Notes in Computer Science</meeting>
+		<imprint>
+			<date type="published" when="1992" />
+			<biblScope unit="page" from="Springer" to="Verlag" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Abstract behavior types: A foundation model for components and their composition</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Arbab</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Science of Computer Programming</title>
+		<imprint>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="3" to="52" />
+			<date type="published" when="2005" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<monogr>
+		<title level="m" type="main">Guava: A dialect of Java without data races</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><forename type="middle">F</forename><surname>Bacon</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><forename type="middle">E</forename><surname>Strom</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Tarafdar</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2000" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<monogr>
+		<title level="m" type="main">A parameterized type system for race-free Java programs</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Boyapati</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Rinard</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2001" />
+			<publisher>ACM</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">The grand challenge of trusted components</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Meyer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">ICSE-25 (International Conference on Software Engineering)</title>
+		<meeting><address><addrLine>Portland, Oregon</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2003" />
+		</imprint>
+	</monogr>
+	<note>IEEE Computer Press</note>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">The programming language Concurrent Pascal</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Brinch-Hansen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Transactions on Software Engineering</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="199" to="207" />
+			<date type="published" when="1975" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Integrating independent components with on-demand remodularization</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Mezini</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">K</forename><surname>Ostermann</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">OOPSLA 2002 Conference Proceedings, pages 5267</title>
+		<meeting><address><addrLine>Seattle, Washington</addrLine></address></meeting>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2002" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Toward a method of object-oriented concurrent programming</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Caromel</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Communications of the ACM</title>
+		<imprint>
+			<biblScope unit="volume">36</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page" from="90" to="101" />
+			<date type="published" when="1993" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<monogr>
+		<title level="m" type="main">A calculus of mobile processes (parts I and II</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Milner</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Parrow</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Walker</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1992" />
+			<biblScope unit="page" from="1" to="77" />
+		</imprint>
+	</monogr>
+	<note>Information and Computation</note>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Escape analysis for Java</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J.-D</forename><surname>Choi</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Gupta</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Serrano</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">V</forename><forename type="middle">C</forename><surname>Sreedhar</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Midkiff</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">OOPSLA&apos;99</title>
+		<meeting><address><addrLine>Denver, Colorado</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="1999" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">A calculus of object bindings</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><surname>Najm</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Nimour</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings FMOODS&apos;97</title>
+		<meeting>FMOODS&apos;97<address><addrLine>Canterbury, United Kingdom. Chapman &amp; Hall</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="1997" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">A setconstraint-based analysis of actors</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J.-L</forename><surname>Colaco</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Pantel</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Salle</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings FMOODS&apos;97</title>
+		<meeting>FMOODS&apos;97<address><addrLine>Canterbury, United Kingdom</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="1997" />
+		</imprint>
+	</monogr>
+	<note>Chapman &amp; Hall</note>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">From CML to process algebras</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Nielson</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">H</forename><forename type="middle">R</forename><surname>Nielson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings CONCUR&apos;93, number 715 in Lecture Notes in Computer Science, pages 493-508</title>
+		<meeting>CONCUR&apos;93, number 715 in Lecture Notes in Computer Science, pages 493-508</meeting>
+		<imprint>
+			<publisher>Springer-Verlag</publisher>
+			<date type="published" when="1993" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Interface automata</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><surname>De Alfaro</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><forename type="middle">A</forename><surname>Henzinger</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the Ninth Annual Symposium on Foundations of Software Engineering (FSE), pages 109-120</title>
+		<meeting>the Ninth Annual Symposium on Foundations of Software Engineering (FSE), pages 109-120</meeting>
+		<imprint>
+			<publisher>ACM Press</publisher>
+			<date type="published" when="2001" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Regular types for active objects</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">O</forename><surname>Nierstrasz</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">1-15. Proceedings OOPSLA&apos;93</title>
+		<imprint>
+			<publisher>ACM SIGPLAN Notices</publisher>
+			<date type="published" when="1993" />
+			<biblScope unit="volume">28</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Types for safe locking</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Flanagan</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Abadi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings ESOP&apos;99, Amsterdam, The Netherlands</title>
+		<meeting>ESOP&apos;99, Amsterdam, The Netherlands</meeting>
+		<imprint>
+			<date type="published" when="1999" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Behavioral protocols for software components</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Plasil</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Visnovsky</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Transactions on Software Engineering</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="1056" to="1076" />
+			<date type="published" when="2002" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Meta-protocol and type system for the dynamic coupling of binary components</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Heuzeroth</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Reussner</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">OORASE&apos;99: OOSPLA&apos;99 Workshop on Reflection and Software Engineering</title>
+		<meeting><address><addrLine>Bicocca, Italy</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="1999" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Flexible types for a concurrent model</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Puntigam</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the Workshop on Object-Oriented Programming and Models of Concurrency</title>
+		<meeting>the Workshop on Object-Oriented Programming and Models of Concurrency</meeting>
+		<imprint>
+			<date type="published" when="1995" />
+		</imprint>
+	</monogr>
+<note type="report_type">Torino</note>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<monogr>
+		<title level="m" type="main">A design pattern based approach to generating synchronization adaptors from annotated IDL</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">H.-A</forename><surname>Jacobsen</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><forename type="middle">J</forename><surname>Krämer</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1998" />
+			<pubPlace>Honolulu, Hawaii, USA</pubPlace>
+		</imprint>
+	</monogr>
+	<note>In IEEE International Conference on Automated Software Engineering (ASE&apos;98), pages 63-72</note>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Coordination requirements expressed in types for active objects</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Puntigam</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Aksit, M. and Matsuoka, S., editors, Proceedings ECOOP&apos;97, number 1241 in Lecture Notes in Computer Science, pages 367-388</title>
+		<imprint>
+			<date type="published" when="1997" />
+			<biblScope unit="page" from="Springer" to="Verlag" />
+		</imprint>
+	</monogr>
+<note type="report_type">Jyväskylä</note>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Linearity and the pi-calculus</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">N</forename><surname>Kobayashi</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Pierce</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Turner</forename></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">ACM Transactions on Programming Languages and Systems</title>
+		<imprint>
+			<date type="published" when="1999" />
+			<biblScope unit="volume">21</biblScope>
+			<biblScope unit="page" from="914" to="947" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<monogr>
+		<title level="m" type="main">Concurrent Object-Oriented Programming with Process Types</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Puntigam</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2000" />
+			<pubPlace>Osnabrück, Germany</pubPlace>
+		</imprint>
+	</monogr>
+	<note>Der Andere Verlag</note>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Type-theoretic foundations for concurrent object-oriented programming</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">N</forename><surname>Kobayashi</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Yonezawa</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">31-45. Proceedings OOPSLA&apos;94</title>
+		<imprint>
+			<publisher>ACM SIGPLAN Notices</publisher>
+			<date type="published" when="1994" />
+			<biblScope unit="volume">29</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<monogr>
+		<title level="m" type="main">In Eighth International Workshop on Component-Oriented Programming</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Puntigam</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2003" />
+			<pubPlace>Germany</pubPlace>
+		</imprint>
+	</monogr>
+<note type="report_type">Darmstadt</note>
+	<note>State information in statically checked interfaces</note>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<monogr>
+		<title level="m" type="main">A behavioral type system and its application in Ptolemy II</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><forename type="middle">A</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Y</forename><surname>Xiong</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2004" />
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="page" from="210" to="237" />
+		</imprint>
+	</monogr>
+	<note>Formal Aspects of Computing</note>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">Behavioural types for a calculus of concurrent objects</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Ravara</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">V</forename><forename type="middle">T</forename><surname>Vasconcelos</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings Euro-Par&apos;97, number 1300 in Lecture Notes in Computer Science, pages 554-561</title>
+		<meeting>Euro-Par&apos;97, number 1300 in Lecture Notes in Computer Science, pages 554-561</meeting>
+		<imprint>
+			<publisher>Springer-Verlag</publisher>
+			<date type="published" when="1997" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Specifications and their use in defining subtypes</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Liskov</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><forename type="middle">M</forename><surname>Wing</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">16-28. Proceedings OOPSLA&apos;93</title>
+		<imprint>
+			<publisher>ACM SIGPLAN Notices</publisher>
+			<date type="published" when="1993" />
+			<biblScope unit="volume">28</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">A model of components with nonregular protocols</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Südholt</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Software Composition (SC 2005)</title>
+		<meeting><address><addrLine>Edinburgh, Scotland</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2005" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Analysis of inheritance anomaly in object-oriented concurrent programming languages</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Matsuoka</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Yonezawa</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Agha, G., editor, Research Directions in Concurrent Object-Oriented Programming</title>
+		<imprint>
+			<date type="published" when="1993" />
+		</imprint>
+	</monogr>
+	<note>The MIT Press</note>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Incrementalized pointer and escape analysis</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Vivien</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Rinard</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">PLDI &apos;01</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2001" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Static conflict analysis for multi-threaded object-oriented programs</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Von Praun</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><forename type="middle">R</forename><surname>Gross</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">PLDI &apos;03, pages 115-128</title>
+		<imprint>
+			<publisher>ACM Press</publisher>
+			<date type="published" when="2003" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<analytic>
+		<title level="a" type="main">Systematic concurrent objectoriented programming</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Meyer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Communications of the ACM</title>
+		<imprint>
+			<biblScope unit="volume">36</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page" from="56" to="80" />
+			<date type="published" when="1993" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<monogr>
+		<title level="m" type="main">ACM Transactions on Programming Languages and Systems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><forename type="middle">M</forename><surname>Yellin</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><forename type="middle">E</forename><surname>Strom</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1997" />
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="page" from="292" to="333" />
+		</imprint>
+	</monogr>
+	<note>Protocol specifications and component adaptors</note>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<monogr>
+		<title level="m" type="main">Object-Oriented Software Construction. Prentice Hall, second edition edition</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Meyer</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1997" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<monogr>
+				<title level="m">Bacon 2000 [4] Boyapati</title>
+		<imprint>
+			<date type="published" when="2001" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<monogr>
+				<title level="m">Brinch-Hansen</title>
+		<imprint>
+			<date type="published" when="1975" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<monogr>
+				<title level="m">Choi 1999 [11] Najm</title>
+		<imprint>
+			<date type="published" when="1997" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<monogr>
+				<title level="m">Colaco 1997 [13] Nielson</title>
+		<imprint>
+			<date type="published" when="1993" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<monogr>
+				<title level="m">De Alfaro 2001 [15] Nierstrasz 1993 [16] Flanagan</title>
+		<imprint>
+			<date type="published" when="1999" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<monogr>
+				<title level="m">Liskov 1993 [29] Südholt 2005 [30] Matsuoka</title>
+		<imprint>
+			<date type="published" when="1993" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<monogr>
+				<title level="m">Von Praun</title>
+		<imprint>
+			<date type="published" when="2003" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<monogr>
+				<title level="m">Von Praun 2003 [32] Yellin</title>
+		<imprint>
+			<date type="published" when="1997" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

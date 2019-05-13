@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">A Probabilistic Approach to Problems Parameterized Above or Below Tight Bounds</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Gregory</forename><surname>Gutin</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Department of Computer Science Royal Holloway</orgName>
+								<orgName type="institution">University of London Egham</orgName>
+								<address>
+									<postCode>TW20 0EX</postCode>
+									<settlement>Surrey</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Eun</forename><forename type="middle">Jung</forename><surname>Kim</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Department of Computer Science Royal Holloway</orgName>
+								<orgName type="institution">University of London Egham</orgName>
+								<address>
+									<postCode>TW20 0EX</postCode>
+									<settlement>Surrey</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author role="corresp">
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Stefan</forename><surname>Szeider</surname></persName>
+							<email>stefan@szeider.net</email>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Computer Science</orgName>
+								<orgName type="institution">Durham University</orgName>
+								<address>
+									<postCode>DH1 3LE</postCode>
+									<settlement>Durham</settlement>
+									<country>England, UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Anders</forename><surname>Yeo</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Department of Computer Science Royal Holloway</orgName>
+								<orgName type="institution">University of London Egham</orgName>
+								<address>
+									<postCode>TW20 0EX</postCode>
+									<settlement>Surrey</settlement>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">A Probabilistic Approach to Problems Parameterized Above or Below Tight Bounds</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<abstract>
+				<p>We introduce a new approach for establishing fixed-parameter tractability of problems parameterized above tight lower bounds or below tight upper bounds. To illustrate the approach we consider two problems of this type of unknown complexity that were introduced by Mahajan, Raman and Sikdar (J. Comput. Syst. Sci. 75, 2009). We show that a generalization of one of the problems and three nontrivial special cases of the other problem admit kernels of quadratic size.</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">Introduction</head><p>A parameterized problem Π can be considered as a set of pairs (I, k) where I is the main part and k (usually an integer) is the parameter. Π is called fixed- parameter tractable (FPT) if membership of (I, k) in Π can be decided in time O(f (k)|I| c ), where |I| denotes the size of I, f (k) is a computable function, and c is a constant independent of k and I (for further background and terminology on parameterized complexity we refer the reader to the monographs <ref type="bibr" target="#b6">[7,</ref><ref type="bibr" target="#b7">8,</ref><ref type="bibr" target="#b15">16]</ref>). If the nonparameterized version of Π (where k is just a part of the input) is NP-hard, then the function f (k) must be superpolynomial provided P = NP. Often f (k) is "moderately exponential," which makes the problem practically feasible for small values of k. Thus, it is important to parameterize a problem in such a way that the instances with small values of k are of real interest.</p><p>Consider the following well-known problem: given a digraph D = (V, A), find an acyclic subdigraph of D with the maximum number of arcs. We can parameterize this problem "naturally" by asking whether D contains an acyclic subdigraph with at least k arcs. It is easy to prove that this parameterized problem is fixed-parameter tractable by observing that D always has an acyclic subdigraph with at least |A|/2 arcs. (Indeed, consider a bijection α : V → {1, . . . , |V |} and the following subdigraphs of D: (V, { xy ∈ A : α(x) &lt; α(y) }) and (V, { xy ∈ A : α(x) &gt; α(y) }). Both subdigraphs are acyclic and at least one of them has at least |A|/2 arcs.) However, k ≤ |A|/2 for every small value of k and almost every practical value of |A| and, thus, our "natural" parameterization is of almost no practical or theoretical interest.</p><p>Instead, one should consider the following parameterized problem: decide whether D = (V, A) contains an acyclic subdigraph with at least |A|/2 + k arcs. We choose |A|/2 + k because |A|/2 is a tight lower bound on the size of a largest acyclic subdigraph. Indeed, the size of a largest acyclic subdigraph of a symmetric digraph D = (V, A) is precisely |A|/2. (A digraph D = (V, A) is symmetric if xy ∈ A implies yx ∈ A.)</p><p>In a recent paper <ref type="bibr" target="#b14">[15]</ref> Mahajan, Raman and Sikdar provided several exam- ples of problems of this type and argued that a natural parameterization is one above a tight lower bound for maximization problems, and below a tight upper bound for minimization problems. Furthermore, they observed that only a few non-trivial results are known for problems parameterized above a tight lower bound <ref type="bibr" target="#b9">[10,</ref><ref type="bibr" target="#b10">11,</ref><ref type="bibr" target="#b12">13,</ref><ref type="bibr" target="#b13">14]</ref>, and they listed several problems parameterized above a tight lower bound whose complexity is unknown. The difficulty in showing whether such a problem is fixed-parameter tractable can be illustrated by the fact that often we even do not know whether the problem is in XP, i.e., can be solved in time O <ref type="bibr">(|I| g(k)</ref> ) for a computable function g(k). For example, it is non-trivial to see that the above-mentioned digraph problem is in XP when parameterized above the |A|/2 bound.</p><p>In this paper we introduce the Strictly Above/Below Expectation Method (SABEM), a novel approach for establishing the fixed-parameter tractability of maximization problems parameterized above tight lower bounds and mini- mization problems parameterized below tight upper bounds. The new method is based on probabilistic arguments and utilizes certain probabilistic inequalities. We will state the equalities in the next section, and in the subsequent sections we will apply SABEM to two open problems posed in <ref type="bibr" target="#b14">[15]</ref>. Now we give a very brief description of the new method with respect to a given problem Π parameterized above a tight lower bound or below a tight upper bound. We first apply some reductions rules to reduce Π to its special case Π</p><p>. Then we introduce a random variable X such that the answer to Π is yes if and only if X takes, with positive probability, a value greater or equal to the parameter k. Now using some probabilistic inequalities on X, we derive upper bounds on the size of no-instances of Π in terms of a function of the parameter k. If the size of a given instance exceeds this bound, then we know the answer is yes; otherwise, we produce a problem kernel <ref type="bibr" target="#b6">[7]</ref>. In many cases, we obtain problem kernels of polynomial size.</p><p>In Section 3, we consider the Linear Ordering problem, a generalization of the problem discussed above: Given a digraph D = (V, A) in which each arc ij has a positive integral weight w ij , find an acyclic subdigraph of D of maximum weight. Observe that W/2, where W is the sum of all arc weights, is a tight lower bound for Linear Ordering. We prove that the problem parameterized above W/2 is fixed-parameter tractable and admits a quadratic kernel. Note that this parameterized problem generalizes the parameterized maximum acyclic subdigraph problem considered in <ref type="bibr" target="#b14">[15]</ref>; thus, our result answers the corresponding open question of <ref type="bibr" target="#b14">[15]</ref>.</p><p>In Section 4, we consider the problem Max Lin-2: Given a system of m linear equations e 1 , . . . , e m in n variables over GF(2), and for each equation e j a positive integral weight w j ; find an assignment of values to the n variables that maximizes the total weight of the satisfied equations. We will see that W/2, where W = w 1 + · · · + w m , is a tight lower bound for Max Lin-2. The complexity of the problem parameterized above W/2 is open <ref type="bibr" target="#b14">[15]</ref>. We prove that the following three special cases of the parameterized problem are fixed- parameter tractable: (1) there is a set U of variables such that each equation has an odd number of variables from U , (2) there is a constant r such that each equation involves at most r variables, (3) there is a constant ρ such that any variable appears in at most ρ equations. For all three cases we obtain kernels with O(k 2 ) variables and equations. We also show that if we allow the weights w j to be positive reals, the problem is NP-hard already if k = 1 and each equation involves two variables.</p><p>In Section 5, we briefly mention minimization problems parameterized below tight upper bounds, provide further discussions of problems considered in this paper and point out to a very recent result obtained using our new method.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">Probabilistic Inequalities</head><p>In our approach we introduce a random variable X such that the answer to the problem parameterized above a tight lower bound or below a tight upper bound is yes if and only if X takes with positive probability a value greater or equal to the parameter k.</p><p>In this paper all random variables are real. A random variable is discrete if its distribution function has a finite or countable number of positive increases. A random variable X is a symmetric if −X has the same distribution function as X. If X is discrete, then X is symmetric if and only if Prob(X = a) = Prob(X = −a) for each real a. Let X be a symmetric variable for which the first moment E(X) exists. Then E(X) = E(−X) = −E(X) and, thus, E(X) = 0. The following is easy to prove <ref type="bibr" target="#b16">[17]</ref>. Lemma 1. If X is a symmetric random variable and E(X 2 ) &lt; ∞, then</p><formula xml:id="formula_0">Prob( X ≥ E(X 2 ) ) &gt; 0.</formula><p>See Sections 3 and 4 for applications of Lemma 1. Unfortunately, often X is not symmetric, but Lemma 2 provides an inequality that can be used in many such cases. This lemma was proved by Alon et al. <ref type="bibr" target="#b1">[2]</ref>; a weaker version was obtained by Håstad and Venkatesh <ref type="bibr" target="#b11">[12]</ref>.</p><p>Lemma 2. Let X be a random variable and suppose that its first, second and forth moments satisfy</p><formula xml:id="formula_1">E(X) = 0, E(X 2 ) = σ 2 &gt; 0 and E(X 4 ) ≤ bσ 4 , respec- tively. Then Prob( X &gt; σ 4 √ b ) ≥ 1 4 4/3 b .</formula><p>Since it is often rather nontrivial to evaluate E(X 4 ) in order to check whether E(X 4 ) ≤ bσ 4 holds, one can sometimes use the following result by Bourgain <ref type="bibr" target="#b4">[5]</ref>.</p><p>Lemma 3. Let f = f (x 1 , . . . , x n ) be a polynomial of degree r in n variables x 1 , . . . , x n with domain {−1, 1}. Define a random variable X by choosing a vec- tor ( 1 , . . . , n ) ∈ {−1, 1} n uniformly at random and setting X = f ( 1 , . . . , n ).</p><formula xml:id="formula_2">Then E(X 4 ) ≤ 2 6r (E(X 2 )) 2 .</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">Linear Ordering</head><p>Let D = (V, A) be a digraph with no loops or parallel arcs in which every arc ij has a positive weight w ij . The problem of finding an acyclic subdigraph of D of maximum weight, known as Linear Ordering, has applications in economics <ref type="bibr" target="#b2">[3]</ref>. Let n = |V | and consider a bijection α : V → {1, . . . , n}. Observe that the subdigraphs (V, { ij ∈ A : Mahajan, Raman, and Sikdar <ref type="bibr" target="#b14">[15]</ref> asked whether LOALB is fixed-parameter tractable for the special case when all arcs are of weight 1 (i.e., D is unweighted). In this section we will prove that LOALB admits a kernel with O(k 2 ) arcs; consequently the problem is fixed-parameter tractable. Note that if we allow weights to be positive reals, then we can show, similarly to the NP-completeness proof given in the next section, that LOALB is NP-complete already for k = 1.</p><formula xml:id="formula_3">α(i) &lt; α(j) }) and (V, { ij ∈ A : α(i) &gt; α(j) })</formula><p>Consider the following reduction rule:</p><p>Reduction Rule 1 Assume D has a directed 2-cycle iji; if w ij = w ji delete the cycle, if w ij &gt; w ji delete the arc ji and replace w ij by w ij − w ji , and if w ji &gt; w ij delete the arc ij and replace w ji by w ji − w ij .</p><p>It is easy to check that the answer to LOALB for a digraph D is yes if and only if the answer to LOALB is yes for a digraph obtained from D using the reduction rule as long as possible.</p><p>Let D = (V, A) be an oriented graph, let n = |V | and W = ij∈A w ij . Consider a random bijection: α : V → {1, . . . , n} and a random variable X(α) = 1 2 ij∈A ij (α), where ij (α) = w ij if α(i) &lt; α(j) and ij (α) = −w ij , otherwise.</p><p>It is easy to see that X(α) = { w ij : ij ∈ A, α(i) &lt; α(j) } − W/2. Thus, the answer to LOALB is yes if and only if there is a bijection α : V → {1, . . . , n} such that X(α) ≥ k. Since E( ij ) = 0, we have E(X) = 0.</p><p>Let</p><formula xml:id="formula_4">W (2) = ij∈A w 2</formula><p>ij . We will prove the following:</p><formula xml:id="formula_5">Lemma 4. E(X 2 ) ≥ W (2) /12.</formula><p>Proof. Let N + (i) and N − (i) denote the sets of out-neighbors and in-neighbors of a vertex i in D. By the definition of X,</p><formula xml:id="formula_6">4 · E(X 2 ) = E( 2 ij ) + E( ij pq ),<label>(1)</label></formula><formula xml:id="formula_7">ij∈A ij,pq∈A</formula><p>where the second sum is taken over ordered pairs of distinct arcs. Clearly, ij∈A E(</p><formula xml:id="formula_8">2 ij ) = W (2)</formula><p>. To compute ij,pq∈A E( ij pq ) we consider the following cases:</p><p>Case 1: {i, j} ∩ {p, q} = ∅. Then ij and pq are independent and E( ij pq ) = E( ij )E( pq ) = 0.</p><p>Case 2a: |{i, j} ∩ {p, q}| = 1 and i = p. Since the probability that i &lt; min{j, q} or i &gt; max{j, q} is 2/3, ij iq = w ij w iq with probability 2 3 and ij iq = −w ij w iq with probability</p><formula xml:id="formula_9">1 3 . Thus, for every i ∈ V we have ij,iq∈A E( ij iq ) = 1 3 { w ij w iq : j = q ∈ N + (i) } = 1 2 3 ( j∈N + (i) w ij ) 2 − 1 3 j∈N + (i) w ij .</formula><p>Case 2b: |{i, j} ∩ {p, q}| = 1 and j = q. Similarly to Case 2a, we obtain ij,pj∈A E( ij pj ) =</p><formula xml:id="formula_10">1 2 3 ( i∈N − (j) w ij ) 2 − 1 3 i∈N − (j) w ij .</formula><p>Case 3a: |{i, j} ∩ {p, q}| = 1 and i = q. Since ij pi = w ij w pi with probabil- ity 1 2 3 and ij pi = −w ij w pi with probability</p><formula xml:id="formula_11">3 , we obtain ij,pi∈A E( ij pi ) = − 1 3 { w ij w pi : j ∈ N + (i), p ∈ N − (i) } = − 1 3 j∈N + (i) w ij p∈N − (i) w pi .</formula><p>Case 3b: |{i, j} ∩ {p, q}| = 1 and j = p. Similarly to Case 3a, we obtain ij,jq∈A E( ij jq ) = −</p><formula xml:id="formula_12">1 3 i∈N − (j) w ij q∈N + (j) w jq . Equation (1) and the subsequent computations imply that 4 · E(X 2 ) = W (2) + 1 3 (Q − R), where Q = 2 i∈V j∈N + (i) w ij 2 − j∈N + (i) w ij + j∈N − (i) w ji 2 − j∈N − (i) w 2 ji ,</formula><p>and</p><formula xml:id="formula_13">R = 2 · i∈V j∈N + (i) w ij j∈N − (i) w ji</formula><p>. By the inequality of arithmetic and geometric means, for each i ∈ V , we have</p><formula xml:id="formula_14">w ij 2 + w ji 2 − 2 w ij w ji ≥ 0. j∈N + (i) j∈N − (i) j∈N + (i) j∈N − (i)</formula><p>Therefore,</p><formula xml:id="formula_15">Q − R ≥ − w 2 2 ij − w ji = −2W (2) , i∈V j∈N + (i) i∈V j∈N − (i) and 4 · E(X 2 ) ≥ W (2) − 2W (2) /3 = W (2) /3, implying E(X 2 ) ≥ W (2) /12</formula><p>. Now we can prove the main result of this section. Theorem 1. The problem LOALB admits a kernel with O(k 2 ) arcs.</p><p>Proof. Let H be a digraph. We know that the answer to LOALB for H is yes if and only if the answer to LOALB is yes for a digraph D obtained from H using Reduction Rule 1 as long as possible. Observe that D is an oriented graph. Let B be the set of bijections from V to {1, . . . , n}. Observe that f : B → B such that f (α(v)) = |V | + 1 − α(v) for each α ∈ B is a bijection. Note that X(f (α)) = −X(α) for each α ∈ B. Therefore, Prob(X = a) = Prob(X = −a) for each real a and, thus, X is symmetric. Thus, by Lemmas 1 and 4, we have </p><formula xml:id="formula_16">Prob( X ≥ W (2) /12 ) &gt; 0. Hence, if W (2) /12 ≥ k,</formula><note type="other">there is a bijection α : V → {1, . . . , n} such that X(α) ≥ k and, thus, the answer to LOALB (for both D and H) is yes. Otherwise, |A| ≤ W (2) &lt; 12 · k 2 . We close this section by outlining how Theorem 1 can be used to actually find a solution to LOALB if one exists. Let (D, k) be an instance of LOALB where D = (V, A) is a directed graph with integral positive arc-weights and k ≥ 1 is an integer. Let W be the total weight of D. As discussed above, we may assume that D is an</note><formula xml:id="formula_17">= (V 0 , A 0 ). We pick a vertex i ∈ V 0 . If i has a neighbor j with d D0 (j) = 1, then |A 0 | ≤ 12k 2 , since |A 0 | − d D0 (j) &lt; 12k 2 .</formula><p>On the other hand, if d D0 (j) ≥ 2 for all neighbors j of i, then i has less than 2·12k</p><p>2 neighbors, since D 0 − i has less than 12k 2 arcs; thus |A 0 | &lt; 3 · 12k 2 . Therefore, as above, time 2</p><formula xml:id="formula_18">O(k 2 )</formula><p>is sufficient to try all subsets A 0 ⊆ A 0 to find a solution to the instance (D 0 , k). Let n denote the input size of instance (D, k). Rule 2 can certainly be applied in polynomial time n O(1) , and we apply it less than n times. Hence, we can find a solution to <ref type="bibr">(D, k)</ref>, if one exists, in time n</p><formula xml:id="formula_19">O(1) + 2 O(k 2 ) .</formula><p>Recall that a kernelization reduces in polynomial time an instance (I, k) of a parameterized problem to a decision-equivalent instance (I , k ), its problem kernel, where k ≤ k and the size of I is bounded by a function of k. Solutions for (I, k) and solutions for (I , k ) are possibly unrelated to each other. We call (I , k ) a faithful problem kernel if from a solution for (I , k ) we can construct a solution for (I, k) in time polynomial in |I| and k. Clearly the above (D 0 , k) is a faithful kernel.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">Max Lin-2</head><p>Consider a system of m linear equations e 1 , . . . , e m in n variables z 1 , . . . , z n over GF(2), and suppose that each equation e j has a positive integral weight w j , j = 1, . . . , m. The problem Max Lin-2 asks for an assignment of values to the variables that maximizes the total weight of the satisfied equations. Let</p><formula xml:id="formula_20">W = w 1 + · · · + w m .</formula><p>To see that the total weight of the equations that can be satisfied is at least W/2, we describe a simple procedure suggested in <ref type="bibr" target="#b11">[12]</ref>. We assign values to the variables z 1 , . . . , z n one by one and simplify the system after each assignment. When we wish to assign 0 or 1 to z i , we consider all equations reduced to the form z i = b, for a constant b. Let W be the total weight of all such equations. We set z i := 0, if the total weight of such equations is at least W /2, and set z i := 1, otherwise. If there are no equations of the form z i = b, we set z i := 0. To see that the lower bound W/2 is tight, consider a system consisting of pairs of equations of the form i∈I z i = 1 and i∈I z i = 0 where both equations have the same weight.</p><p>The parameterized complexity of Max Lin-2 parameterized above the tight lower bound W/2 was stated by Mahajan, Raman and Sikdar <ref type="bibr" target="#b14">[15]</ref> as an open question:</p><p>Max Lin-2 Parameterized Above Tight Lower Bound (LinALB) Instance: A system S of m linear equations e 1 , . . . , e m in n variables z 1 , . . . , z n over GF(2), each equation e i with a positive integral weight w i , i = 1, 2, . . . , m, and a positive integer k. Each equation e j can be written as i∈Ij z i = b j , where ∅ = I j ⊆ {1, . . . , n}. Parameter: The integer k. Question: Is there an assignment of values to the variables z 1 , . . . , z n such that the total weight of the satisfied equations is at least W/2 + k, where W = m i=1 w i ? Let r j be the number of variables in equation e j , and let r(S) = max m i=1 r j . We are not able to determine whether LinALB is fixed-parameter tractable or not, but we can prove that the following three special cases are fixed-parameter tractable: (1) there is a set U of variables such that each equation contains an odd number of variables from U , (2) there is a constant r such that r(S) ≤ r, (3) there is a constant ρ such that any variable appears in at most ρ equations.</p><p>Notice that in our formulation of LinALB it is required that each equation has a positive integral weight. In a relaxed setting in which an equation may have any positive real number as its weight, the problem is NP-complete even for k = 1 and each r j = 2. Indeed, let each linear equation be of the form z u + z v = 1. Then the problem is equivalent to MaxCut, the problem of finding a cut of total weight at least L in an undirected graph G, where V (G) is the set of variables, E(G) contains (z u , z v ) if and only if there is a linear equation z u + z v = 1, and the weight of an edge (z u , z v ) equals the weight of the corresponding linear equation. The problem MaxCut is a well-known NP- complete problem. Let us transform an instance I of MaxCut into an instance I of the "relaxed" LinALB by replacing the weight w i by w</p><formula xml:id="formula_21">i := w i /(L − W/2).</formula><p>We may assume that L − W/2 &gt; 0 since otherwise the instance is immediately seen as a yes-instance. Observe that the new instance I has an assignment of values with total weight at least W /2 + 1 if and only if I has a cut with total weight at least L. We are done.</p><p>Let A be the matrix of the coefficients of the variables in S. It is well-known that the maximum number of linearly independent columns of A equals rankA, and such a collection of columns can be found in time polynomial in n and m, using, e.g., the Gaussian elimination on columns <ref type="bibr" target="#b3">[4]</ref>. We have the following reduction rule and supporting lemma.</p><p>Reduction Rule 3 Let A be the matrix of the coefficients of the variables in S, let t = rankA and let columns a i1 , . . . , a it of A be linearly independent. Then delete all variables not in {z i1 , . . . , z it } from the equations of S.</p><p>Lemma 5. Let T be obtained from S by Rule 3. Then T is a yes-instance if and only if S is a yes-instance. Moreover, T can be obtained from S in time polynomial in n and m.</p><p>Proof. If t = n, set T := S, so assume that t &lt; n. The remark before the lemma immediately implies that T can be obtained from S in time polynomial in n and m. Let S be a system of equations from S and let T be the corresponding system of equations from T . It is sufficient to prove the following claim:</p><p>There is an assignment of values to z 1 , . . . , z n satisfying all equations in S and falsifying the rest of equations in S if and only if there is an assignment of values to z i1 , . . . , z it satisfying all equations in T and falsifying the rest of equations in T .</p><p>Let an assignment z 0 of values to z = (z 1 , . . . , z n ) satisfy all equations of S and falsify the equations of S , where S = S \ S . This assignment satisfies all equations of R, the system obtained from S by replacing the right hand side b j of each equation in S by 1 − b j . Note that R has the same matrix A of coefficients with columns a 1 , . . . , a n . Let a column a i ∈ {a i1 , . . . , a it }. Then, by definition of a i1 , . . . , a it , a i = λ 1 a i1 + · · · + λ t a it for some numbers λ j ∈ {0, 1}. Knowing the numbers λ j , we may eliminate a variable z i from R by replacing a i with the sum of all columns from {a i1 , . . . , a it } for which λ j = 1 and carrying out the obvious simplification of the system. Thus, we may eliminate from R all variables z i ∈ {z i1 , . . . , z it } and get y i1 a i1 + · · · + y it a it = b , where b is the right hand side of R and each y j ∈ {0, 1}. Now replace, in the modified R, the right hand side b j of each equation corresponding to an equation in S by 1 − b j obtaining T . Clearly, (y i1 , . . . , y it ) satisfies all equations of T and falsifies all equations in T = T \ T . Suppose now that (y i1 , . . . , y it ) satisfies all equations of T and falsifies all equations in T . Then (y 1 , . . . , y n ), where y j = 0 if j ∈ {i 1 , . . . , i t }, satisfies all equations of S and falsifies all equations in S . Thus, the claim has been proved.</p><p>Consider the following reduction rule for LinALB used in <ref type="bibr" target="#b11">[12]</ref>.</p><p>Reduction Rule 4 If we have, for a subset I of {1, 2, . . . , n}, the equation i∈I z i = b with weight w , and the equation i∈I z i = b with weight w , then we replace this pair by one of these equations with weight w + w if b = b and, otherwise, by the equation whose weight is bigger, modifying its new weight to be the difference of the two old ones. If the resulting weight is 0, we omit the equation from the system.</p><p>If Rule 4 is not applicable to a system we call the system reduced under Rule 4. Note that the problem LinALB for S and the system obtained from S by applying Rule 4 as long as possible have the same answer.</p><p>Let I j ⊆ {1, . . . , n} be the set of indices of the variables participating in equation e j , and let b j ∈ {0, 1} be the right hand side of e j . Define a random variable X = m j=1 X j , where X j = (−1) bj w j i∈Ij i and all the i are inde- pendent uniform random variables on {−1, 1} (X was first introduced in <ref type="bibr" target="#b11">[12]</ref>). We set z i = 0 if i = 1 and z i = 1, otherwise, for each i. Observe that X j = w j if e j is satisfied and X j = −w j , otherwise. Proof. Observe that X is the difference between the weights of satisfied and falsified equations. Therefore, the weight of the satisfied equations equals (X + W )/2, and it is at least W/2 + k if and only if X ≥ 2k. Since i are independent, E( i∈Ij i ) = i∈Ij E( i ) = 0. Thus, E(X j ) = 0 and E(X) = 0 by linearity of expectation. Moreover,</p><formula xml:id="formula_22">m m E(X 2 ) = E(X 2 2 j ) + E(X j X q ) = w j &gt; 0 j=1 1≤j =q≤m j=1</formula><p>as E( i∈Ij i · i∈Iq i ) = E( i∈Ij ∆Iq i ) = 0 implies E(X j X q ) = 0, where I j ∆I q is the symmetric difference between I j and I q (I j ∆I q = ∅ due to Rule 4).</p><p>Lemma 7. Let S be reduced under Rule 4 and suppose that no variable appears in more than ρ ≥ 2 equations of S.</p><formula xml:id="formula_23">Then E(X 4 ) ≤ 2ρ 2 (E(X 2 )) 2 .</formula><p>Proof. Observe that</p><formula xml:id="formula_24">E(X 4 ) = E(X p X q X s X t ), (2) (p,q,s,t)∈[m] 4</formula><p>where [m] = {1, . . . , m}. Note that if the product X p X q X s X t contains a variable i in only one or three of the factors, then E(X p X q X s X t ) = A · E( i ) = 0, where A is a polynomial in random variables l , l ∈ {1, . . . , n} \ {i}. Thus, the only nonzero terms in (2) are those for which either (1) p = q = s = t, or (2) there are two distinct integers j, l such that each of them coincides with two elements in the sequence p, q, s, t, or (3) |{p, q, s, t}| = 4, but each variable i appears in an even number of the factors in X p X q X s X t . In Cases 1 and 2, we have t appear in our upper bound on E(X p X q X s X t ) (with coefficient 1/2). Therefore, there are only four possible ways for w 2 2 j w l to appear in our upper bound, namely the following: (i) j = p, l = q, (ii) l = p, j = q, (iii) j = s, l = t, and (iv) l = s, j = t. Now assume, without loss of generality, that j = p and l = q. Since S is reduced under Rule 4, the product X j X l must have a variable i of degree one. Thus, i must be in X s or X t , but not in both (two choices).</p><formula xml:id="formula_25">E(X p X q X s X t ) = w 4 p and E(X p X q X s X t ) = w 2 2 j w l , respectively. In Case 3, E(X p X q X s X t ) ≤ w p w q w s w t ≤ (w 2 2 2 2 p w q + w s w t )/2. Let 1 ≤ j &lt; l ≤ m. Observe that E(X p X q X s X t ) = w</formula><p>Assume that i is in X s . Observe that there are at most ρ − 1 choices for s. Note that X j X l X s must contain contain a variable i of odd degree. Thus, i must be in X t and, hence, there are at most ρ − 1 choices for t. Therefore, we have</p><formula xml:id="formula_26">m  m  2 E(X 4 ) ≤ w 4 2 2 2 j + (6 + 4(ρ − 1) 2 ) w j w l &lt; 2ρ  w 2 j  . j=1 1≤j&lt;l≤m j=1</formula><p>Thus, by Lemma 6, E(X 4 ) ≤ 2ρ 2 (E(X 2 )) 2 . Case 1 of Theorem 2 is of interest since its condition can be checked in polynomial time due to the following: Proposition 1. We can check, in polynomial time, whether there exists a set U of variables such that each equation of S contains an odd number of variables from U .</p><p>Proof. Observe that such a set U exists if and only if the unweighted system S of linear equations over GF(2) obtained from S by replacing each b j with 1 has a solution. Indeed, if U exists, set z j = 1 for each z j ∈ U and z j = 0 for each z j ∈ U . This assignment is a solution to S . If a solution to S exists, form U by including in it all variables z j which equal 1 in the solution. We can check whether S has a solution using the Gaussian elimination or other polynomial- time algorithms, see, e.g., <ref type="bibr" target="#b5">[6]</ref>. Now we can prove the following:</p><p>Theorem 2. Let S be reduced under Rule 4. The following three special cases of LinALB are fixed-parameter tractable: (1) there is a set U of variables such that each equation contains an odd number of variables from U , (2) there is a constant r such that r(S) ≤ r, (3) there is a constant ρ, such that any variable appears in at most ρ equations. In each case, there exists a kernel with O(k 2 ) equations and variables.  Case 3. If ρ = 1, it is easy to find an assignment to the variables that satisfies all equations of S. Thus, we may assume that ρ ≥ 2. To prove that there exists a kernel with O(k 2 ) equations, we can proceed as in Case 2, but use Lemma 7 rather than Lemma 3. Remark 1. Note that even if S does not satisfy Case 2 of the theorem, T , the system obtained from S using Rule 3, may still satisfy Case 2. However, we have not formulated the theorem for S reduced under Rule 3 as the reduced system depends on the choice of a maximum linear independent collection of columns of A.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">Discussions</head><p>We have showed that the new method allows us to prove that some maximization problems parameterized above tight lower bounds are fixed-parameter tractable. Our method can also be used for minimization problems parameterized below tight upper bounds. As a simple example, consider the feedback arc problem: given a digraph D = (V, A) find a minimum set F of arcs such that D − F is acyclic. Certainly, |A|/2 is a tight upper bound on a minimum feedback set and we can consider the parameterized problem which asks whether D has a feedback arc set with at most |A|/2−k arcs. Fixed-parameter tractability of this parameterized problem follows immediately from fixed-parameter tractability of LOALB, but we could prove this result directly using essentially the same approach as for LOALB.</p><p>Theorem 2.1 in <ref type="bibr" target="#b0">[1]</ref> allows one to obtain a smaller kernel for LOALB on dense digraphs than given in our paper. The proof of Theorem 2.1 in <ref type="bibr" target="#b0">[1]</ref> also uses a probabilistic approach, but it is more specialized than SABEM.</p><p>It would be interesting to obtain applications of our method to other problems parameterized above tight lower bounds or below tight upper bounds. One such very recent application is given in <ref type="bibr" target="#b8">[9]</ref>, where an open problem due to Benny Chor and described in <ref type="bibr" target="#b15">[16]</ref> was solved.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head></head><label></label><figDesc>are acyclic. Since the two subdigraphs contain all arcs of D, at least one of them has weight at least W/2, where W = ij∈A w ij , the weight of D. Thus, W/2 is a lower bound on the maximum weight of an acyclic subdigraph of D. Consider a digraph D where for every arc ij of D there is also an arc ji of the same weight. Each maximum weight subdigraph of D has weight exactly W/2. Hence the lower bound W/2 is tight. Linear Ordering Above Tight Lower Bound (LOALB) Instance: A digraph D = (V, A), each arc ij has an integral positive weight w ij , and a positive integer k. Parameter: The integer k. Question: Is there an acyclic subdigraph of D of weight at least W/2+k, where W = ij∈A w ij ?</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Lemma 6 .</head><label>6</label><figDesc>Let S be reduced under Rule 4. The weight of the satisfied equations is at least W/2 + k if and only if X ≥ 2k. We have E(X) = 0 and E(X 2 ) = m j=1 w 2 j .</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head></head><label></label><figDesc>2 2 j w l in Case 2 for 4 2 = 6 4-tuples (p, q, s, t) ∈ [m] 4 . In Case 3, we claim that j, l ∈ {p, q, s, t} for at most 4 · (ρ − 1) 2 4-tuples (p, q, s, t) ∈ [m] 4 . To see this, first note that w 2 p w 2 q and w 2 s w 2</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Proof</head><label></label><figDesc>. Case 1. Let z 0 = (z 0 1 , . . . , z 0 n ) ∈ {0, 1} n be an assignment of values to the variables z 1 , . . . , z n , and let −z 0 = (z 1 , . . . , z n ), where z 0 i = 1 − z i if z i ∈ U and z 0 0 i = z i , otherwise, i = 1, . . . , n. Observe that f : z 0 → −z is a bijection on the set of assignments and X(−z 0 ) = −X(z 0</figDesc></figure>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+			</div>
+
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Voting paradoxes and digraphs realizations</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">N</forename><surname>Alon</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Advances in Applied Math</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="page" from="126" to="135" />
+			<date type="published" when="2002" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Algorithms with large domination ratio</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">N</forename><surname>Alon</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Gutin</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Krivelevich</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Algorithms</title>
+		<imprint>
+			<biblScope unit="volume">50</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="118" to="131" />
+			<date type="published" when="2004" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<monogr>
+		<title level="m" type="main">Digraphs: Theory, Algorithms and Applications</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Bang-Jensen</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Gutin</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2009" />
+			<publisher>Springer-Verlag</publisher>
+			<pubPlace>London</pubPlace>
+		</imprint>
+	</monogr>
+	<note>2nd edition</note>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<monogr>
+		<title level="m" type="main">Basic Linear Algebra</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><forename type="middle">S</forename><surname>Blyth</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><forename type="middle">F</forename><surname>Robertson</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2000" />
+			<publisher>Springer</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Walsh subspaces of L p-product spaces</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Bourgain</surname></persName>
+			<affiliation>
+				<orgName type="collaboration">French</orgName>
+			</affiliation>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Seminar on Functional Analysis</title>
+		<meeting><address><addrLine>Palaiseau</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="1980" />
+			<biblScope unit="page">9</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Solving linear systems over GF(2): block Lanczos algorithm</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Coppersmith</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Lin. Algebra Applic</title>
+		<imprint>
+			<biblScope unit="volume">192</biblScope>
+			<biblScope unit="page" from="33" to="60" />
+			<date type="published" when="1993" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><forename type="middle">G</forename><surname>Downey</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><forename type="middle">R</forename><surname>Fellows</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Parameterized Complexity</title>
+		<imprint>
+			<date type="published" when="1999" />
+			<publisher>Springer</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Parameterized Complexity Theory, volume XIV of Texts in Theoretical Computer Science</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Flum</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Grohe</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">An EATCS Series</title>
+		<imprint>
+			<date type="published" when="2006" />
+			<publisher>Springer Verlag</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<monogr>
+		<title level="m" type="main">Ordinal Embedding Relaxations Parameterized Above Tight Lower Bound</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Gutin</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><forename type="middle">J</forename><surname>Kim</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Mnich</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Yeo</surname></persName>
+		</author>
+		<idno type="arXiv">arXiv:0907.5427</idno>
+		<imprint/>
+	</monogr>
+<note type="report_type">Tech. Report</note>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">The linear arrangement problem parameterized above guaranteed value</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Gutin</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Rafiey</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Szeider</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Yeo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Theory Comput. Syst</title>
+		<imprint>
+			<biblScope unit="volume">41</biblScope>
+			<biblScope unit="page" from="521" to="538" />
+			<date type="published" when="2007" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Fixed-parameter complexity of minimum profile problems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Gutin</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Szeider</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Yeo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Algorithmica</title>
+		<imprint>
+			<biblScope unit="volume">52</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="133" to="152" />
+			<date type="published" when="2008" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">On the advantage over a random assignment</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Håstad</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Venkatesh</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the Thirty-Fourth Annual ACM Symposium on Theory of Computing</title>
+		<meeting>the Thirty-Fourth Annual ACM Symposium on Theory of Computing<address><addrLine>New York</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2002" />
+			<biblScope unit="volume">25</biblScope>
+			<biblScope unit="page" from="117" to="149" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Interval completion with few edges</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Heggernes</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Paul</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><forename type="middle">A</forename><surname>Telle</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Y</forename><surname>Villanger</surname></persName>
+		</author>
+		<idno>2008/09</idno>
+	</analytic>
+	<monogr>
+		<title level="m">STOC&apos;07-Proceedings of the 39th Annual ACM Symposium on Theory of Computing</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2007" />
+			<biblScope unit="volume">38</biblScope>
+			<biblScope unit="page" from="374" to="381" />
+		</imprint>
+	</monogr>
+	<note>Full version appeared in SIAM</note>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Parameterizing above guaranteed values: MaxSat and MaxCut</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Mahajan</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">V</forename><surname>Raman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Algorithms</title>
+		<imprint>
+			<biblScope unit="volume">31</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="335" to="354" />
+			<date type="published" when="1999" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Parameterizing above or below guaranteed values</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Mahajan</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">V</forename><surname>Raman</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Sikdar</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. of Computer and System Sciences</title>
+		<imprint>
+			<biblScope unit="volume">75</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="137" to="153" />
+			<date type="published" when="2009" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Invitation to Fixed-Parameter Algorithms</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Niedermeier</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Oxford Lecture Series in Mathematics and its Applications</title>
+		<imprint>
+			<publisher>Oxford University Press</publisher>
+			<date type="published" when="2006" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<monogr>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">V</forename><surname>Vovk</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2009-08" />
+		</imprint>
+	</monogr>
+	<note>Private communication</note>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">An Approach for Detecting Learning Styles in Learning Management Systems*</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author role="corresp">
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Sabine</forename><surname>Graf</surname></persName>
+							<email>graf@wit.tuwien.ac.at</email>
+							<affiliation key="aff0">
+								<orgName type="institution">Vienna University of Technology Women&apos;s Postgraduate College for Internet Technologies</orgName>
+								<address>
+									<settlement>Vienna</settlement>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Information Systems Palmerston North</orgName>
+								<orgName type="institution">Kinshuk Massey University</orgName>
+								<address>
+									<country key="NZ">New Zealand</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">An Approach for Detecting Learning Styles in Learning Management Systems*</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<abstract>
+				<p>Detecting the needs of learners is a challenging but essential task to be able to provide adaptivity. In this paper we present a tool that enables learning management systems (LMS) to detect learning styles based on the behavior of learners during an online course. By calculating the learning styles and filling the student model of LMS with such personal data, a basis for adaptivity is provided. MASPLANG [2] and CS383 [3]. But these systems use a questionnaire for detecting learning styles. Garcia et al. [4] investigated the use of Bayesian networks to detect learning styles based on the behavior of learners in a web-based educational system. While their work is focused on the use of Bayesian networks, our approach sums up indications of preferences based on patterns, equally to the approach of learning style questionnaires. Moreover, we propose a tool for LMS in general rather than for one specific system.</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.">Introduction</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>*</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">Patterns of behavior</head><p>Learning management systems (LMS) are very successful in e-education but provide only little adaptivity <ref type="bibr" target="#b0">[1]</ref>. Adapting courses to the needs of individual learners, e.g. to their learning styles, improves the learning progress of learners. However, a requirement for providing adaptivity is to know the needs of learners.</p><p>Regarding learning styles, there exist comprehensive questionnaires to detect learning styles. Moreover, tracking features are available in most LMS which track and store the behavior of learners during all courses. This data shows what learners really do and prefer in a course. Instead of asking learners about their preferences by using a questionnaire, we propose an approach to infer the learning style from the behavior of the learners (Section 2). The developed tool (Section 3) incorporates that different LMS use different database schemata and track different information. Based on the available information, the tool calculates the learning styles. This information can act as a basis to provide adaptivity in LMS.</p><p>Related work deals with the identification of learning styles in adaptive systems such as * This research has been funded partly by the Austrian Federal Ministry for Education, Science, and Culture, and the European Social Fund (ESF) under grant 31.963/46-VII/9/2002. Our work is based on the Felder-Silverman learning style model (FSLSM) <ref type="bibr" target="#b4">[5]</ref>. While there are several learning style theories, FSLSM seems to be most appropriate for the use in educational systems. Most other learning style models classify learners in few groups, whereas Felder and Silverman describe the learning style of a learner in more detail, distinguishing between preferences on four dimensions (active/reflective, sensing/intuitive, visual/verbal, and sequential/global). Therefore, each learner has a preference for each of these four dimensions. Another main issue is that FSLSM is based on tendencies, saying that also learners with a high preference for a certain behavior can sometimes act differently.</p><p>Detecting learning styles is done by detecting patterns that indicate a preference for a specific dimension. Because FSLSM is based on learning in general, for detecting learning styles in LMS the general behavior is mapped to behavior in LMS. Furthermore, it needs to be considered that different LMS have different features available. Therefore, we concentrated on commonly used features like content objects, examples, tests, exercises, forums, and chats.</p><p>Active learners are characterized as learners who prefer to process information actively by doing something with the learned material, e.g. discussing it, explaining it, or testing it. Regarding discussing and explaining, communication facilities like forums or chats are commonly used elements and a high number of visits in a forum or a chat as well as a high number of postings in both indicate an active learning style. Regarding the preference for testing and experimenting, we consider the use of exercises, incorporating the number of visits and the time a learner deals with exercises. Reflective learners, on the other hand, prefer to think about the learned material. Therefore, they tend to spend more time on reading material like content objects and examples. These patterns indicate reflective behavior.</p><p>Sensing learners favor concrete material like facts and data whereas intuitive learners prefer to learn abstract material such as theories and their underlying meaning. Analyzing the performance on questions about theories/concepts and facts gives us therefore an indication of the preferred learning style. Another characteristic of sensing learners is that they are more patient with details and work carefully but slowly. Because they tend to check their answers carefully before delivering a test, another pattern is the number of revisions performed before handing in a test. Also the time taken for a test is considered as a pattern. Because intuitive learners welcome challenges, the number and time spent on exercises serves as a pattern. On the other hand, sensing learners favor to check their already acquired knowledge by self-assessment tests. Therefore, the amount of performed tests is a further pattern. To make concepts and theories more concrete, sensing learners prefer examples. Thus, the visits and time spent on examples serve as other patterns.</p><p>Verbal learners like communication and discussions. Therefore, they tend to commonly use the forum and chat. Thus, a high number of visits and postings in forum and chat indicate a verbal learning style. Visual learners learn best from what they can see. Therefore, the time spent on content objects with graphics can be used as pattern for visual learners. Furthermore, learners who perform well in questions about graphics can also be considered as visual learners.</p><p>Sequential learners are more comfortable with details, whereas global learners tend to be good in seeing the "big picture" and connections to other fields. Therefore, the performance on answered questions dealing with overviews of concepts or connections between concepts and questions about details serves as one pattern for this dimension. Another pattern deals with the performance on tests in general. According to Felder and Silverman, sequential learners perform better in tests than global learners.</p><p>Because global learners are interested in getting the "big picture" and an overview, outlines of the course and chapters are especially important for them. A high number of visits and more time spent on such outlines indicate a global learning style. The navigation of learners in a course acts also as a pattern denoting a sequential or global learning style. While sequential learners tend to go through the course step by step in a linear way, global learners learn in large leaps, sometimes skipping learning objects and jumping to more complex material. As a pattern we analyzed the behavior of skipping learning objects in the course. Furthermore, the number of visits of the course overview page as well as the time spent on this page is considered. This page shows all learning objects of the course and can be used by global learners to get an overview of the course material.</p><p>Because each of these patterns gives an indication of a specific learning style, the learning style can be also calculated if some patterns can not be tracked by the LMS or some elements are not used in the course. However, the more patterns included in the calculation, the more stable the result.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">Tool architecture</head><p>In this section we present a tool for detecting learning styles based on the behavior of learners in LMS. The architecture of the tool and its components can be seen in <ref type="figure" target="#fig_0">Figure 1</ref> and are described in the following. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Data extraction</head><p>Because the tool is developed to detect learning styles in LMS in general rather than in one specific system, we have to incorporate that different LMS use different database schemata. Therefore, we need to build a global schema. This can be done by a bottom- up approach, using one LMS database schema as a basis, or by a top-down approach, where the required information acts as a basis. Because LMS databases can include much more information than we need for detecting learning styles, and database schemata from different LMS have quite different structures, the top- down approach is applied. Therefore, each table of the global schema includes data representing one pattern.</p><p>To keep the extraction process as simple as possible, the representation of the data in each table is based on the event-based way data are stored in LMS databases. For example, a table includes data about each visit of a learner in a forum. How often a learner actually visited the forum is then calculated automatically by the tool.</p><p>For supporting the teacher in specifying the location of the required information for the global schema, an editor is provided. For each pattern, names for required tables and attributes, possible constraints, as well as necessary information for connecting tables are specified. Additionally, it is possible to write an SQL statement instead of using the question-based editor. management systems. Based on the Felder-Silverman learning style model, suitable patterns of behavior indicating specific learning styles in LMS were derived. Because the tool is designed for different LMS, data extraction issues are incorporated and teachers are supported in providing the location of required information.</p><p>While the approach of detecting learning styles is based on literature, future work deals with an evaluation of the tool where results of the ILS questionnaire will be compared with the results of the proposed tool.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.">References</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Calculation of learning styles</head><p>In the calculation component ordered data are calculated from the raw data delivered by the data extraction component. Subsequently, learning styles are calculated for each dimension based on the ordered data.</p><p>Ordered data for each pattern can take the values +1, 0, and -1, indicating e.g. an active, balanced, or reflective preference. For building these data out of the raw data, thresholds for all patterns need to be determined. As is argued e.g. in <ref type="bibr" target="#b5">[6]</ref> and <ref type="bibr" target="#b6">[7]</ref>, these thresholds can vary from course to course depending e.g. on the structure of the course and the subject. Therefore, the proposed tool recommends thresholds which can be changed by teachers if necessary. These thresholds are based on other research work dealing with the usage of the respective features <ref type="bibr" target="#b3">[4]</ref>[8] <ref type="bibr" target="#b8">[9]</ref>.</p><p>The calculation of learning styles itself is based on the approach used in the Index of Learning Styles (ILS) <ref type="bibr" target="#b9">[10]</ref>, a questionnaire for identifying the learning style according to FSLSM. According to this approach, for each dimension the ordered data (+1, 0, or -1) which are relevant for the respective dimension are summed up. The result of each dimension is converted to a 3-item scale, indicating e.g. an active, balanced, or reflective learning style.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">Conclusion and future work</head><p>This paper presented a tool for detecting learning styles based on the behavior of learners in learning</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 1 .</head><label>1</label><figDesc>Figure 1. Tool architecture</figDesc></figure>
+		</body>
+		<back>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">An Evaluation of Open Source ELearning Platforms Stressing Adaptation Issues</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Graf</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>List</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the International Conference on Advanced Learning Technologies</title>
+		<meeting>the International Conference on Advanced Learning Technologies</meeting>
+		<imprint>
+			<date type="published" when="2005" />
+			<biblScope unit="page" from="163" to="165" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Intelligent Agents in a Teaching and Learning Environment on the Web</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Peña</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Narzo</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>De La Rosa</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the International Conference on Advanced Learning Technologies</title>
+		<meeting>the International Conference on Advanced Learning Technologies</meeting>
+		<imprint>
+			<date type="published" when="2002" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Addressing different learning styles through course hypermedia</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><forename type="middle">A</forename><surname>Carver</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><forename type="middle">A</forename><surname>Howard</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">W</forename><forename type="middle">D</forename><surname>Lane</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Transactions on Education</title>
+		<imprint>
+			<biblScope unit="volume">42</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="33" to="38" />
+			<date type="published" when="1999" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Evaluating Bayesian Networks&apos; Precision for Detecting Students&apos; Learning Styles</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>García</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Amandi</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Schiaffino</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Campo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Computers &amp; Education</title>
+		<imprint>
+			<publisher>Elsevier</publisher>
+		</imprint>
+	</monogr>
+	<note>in press</note>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Learning and Teaching Styles in Engineering Education</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><forename type="middle">M</forename><surname>Felder</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><forename type="middle">K</forename><surname>Silverman</surname></persName>
+		</author>
+		<ptr target="http://www.ncsu.edu/felderpublic/Papers/LS-1988.pdf" />
+	</analytic>
+	<monogr>
+		<title level="j">Engineering Education</title>
+		<imprint>
+			<biblScope unit="volume">78</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="674" to="681" />
+			<date type="published" when="2002" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<monogr>
+		<title level="m" type="main">The Learn@WU Learning Environment</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Alberer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Alberer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><surname>Enzi</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Ernst</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">K</forename><surname>Mayrhofer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Neumann</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Rieder</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Simon</surname></persName>
+		</author>
+		<editor>W. Uhr, W. Esswein and E. Schoop</editor>
+		<imprint>
+			<date type="published" when="2003" />
+			<publisher>Physica-Verlag</publisher>
+			<biblScope unit="page" from="593" to="612" />
+			<pubPlace>Wirtschaftsinformatik, Dresden, Germany</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Design and Use of a Rubric to Assess and Encourage Interactive Qualities in Distance Courses</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><forename type="middle">D</forename><surname>Roblyer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">W</forename><surname>Wiencke</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">The American Journal of Distance Education</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="77" to="98" />
+			<date type="published" when="2003" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">On-line course effectiveness: an analysis of student interactions and perceptions of learning</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><forename type="middle">P</forename><surname>Rovai</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">K</forename><forename type="middle">T</forename><surname>Barnum</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Distance Education</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="57" to="73" />
+			<date type="published" when="2003" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Correlational analysis of student visibility and learning outcomes online</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><forename type="middle">J</forename><surname>Wang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Asynchronous Learning Network</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="71" to="82" />
+			<date type="published" when="2004" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<monogr>
+		<title level="m" type="main">Index of Learning Styles Questionnaire</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><forename type="middle">M</forename><surname>Felder</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><forename type="middle">A</forename><surname>Soloman</surname></persName>
+		</author>
+		<ptr target="http://www.engr.ncsu.edu/learningstyles/ilsweb.html" />
+		<imprint>
+			<date type="published" when="2006-06" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

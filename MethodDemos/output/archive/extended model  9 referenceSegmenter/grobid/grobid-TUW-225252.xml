@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Reconstructing Cross Cut Shredded Documents with a Genetic Algorithm with Solution Archive</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Benjamin</forename><surname>Biesinger</surname></persName>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Christian</forename><surname>Schauer</surname></persName>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Bin</forename><surname>Hu</surname></persName>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Günther</forename><forename type="middle">R</forename><surname>Raidl</surname></persName>
+						</author>
+						<author>
+							<affiliation key="aff0">
+								<orgName type="department">Institute of Computer Graphics and Algorithms</orgName>
+								<orgName type="institution">Vienna University of Technology</orgName>
+								<address>
+									<addrLine>Favoritenstrae 911/1861</addrLine>
+									<postCode>1040</postCode>
+									<settlement>Vienna</settlement>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff1">
+								<orgName type="department">Introduction</orgName>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Reconstructing Cross Cut Shredded Documents with a Genetic Algorithm with Solution Archive</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<abstract/>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">Introduction</head><p>The reconstruction of shredded documents is of high interest not only in forensic science but also when documents are destroyed unintentionally.</p><p>Reconstructing cross-cut shredded documents (RCCSTD) is particularly dif- ficult since the documents are cut into rectangular pieces of equal size. Since shape information along the edges-in contrast to hand torn pieces-cannot be exploited, the reconstruction solely depends on the information written on the shreds. Therefore, we use a metric for calculating the number of gray value mismatches along the edges of two shreds put next to each other either horizon- tally or vertically. Consequentially, we model the document reconstruction as a combinatorial optimization problem minimizing the overall mismatch of the re- constructed document. Since we focus in this work on the combinatorial aspect of the problem we use this simple metric which can be replaced in future work by more advanced pattern recognition techniques, see <ref type="bibr" target="#b1">[2]</ref> for a sample method.</p><p>In previous work, Prandtstetter and Raidl <ref type="bibr" target="#b2">[3]</ref> developed an Ant Colony Op- timization and a Variable Neighborhood Search (VNS) for the RCCSTD, while Schauer et al. <ref type="bibr">[5]</ref> proposed a Memetic Algorithm (MA). Sleit et al. <ref type="bibr">[6]</ref> proposed a different approach by iteratively merging two clusters that fit together well and repairing possibly occurring conflicts.</p><p>In this work the MA from <ref type="bibr">[5]</ref> is adapted and extended by a complete solution archive in order to avoid duplicate solutions by efficiently storing all visited solu- tions in a special data structure. If a duplicate solution is detected it is converted into a similar yet unconsidered one. This is done to preserve the diversity of the population and to avoid unnecessary re-evaluations of already visited solutions. This approach is a rather new method for duplicate detection and conversion which was successfully applied on several binary problems (e.g., MAX-SAT) in <ref type="bibr">[4]</ref> as well as on the generalized minimum spanning tree problem <ref type="bibr" target="#b0">[1]</ref>.</p><p>represents the absolute position of each shred. In the current work we propose a more compact solution representation using an 1-dimensional array that does not store blank shreds at the end of a row. Therefore, a special character for a line break is introduced. Theoretically this solution representation is not necessarily more compact than the original one, but in practice we are able to reduce the average length of a solution significantly.</p><p>The underlying data structure of the solution archive is a trie, a tree data structure commonly used for dictionaries. Each node of the trie has n chil- dren representing the possible alleles. The height of the trie is the length of the genome. In the commonly used indexed trie the children of each trie node are stored in an array. Preliminary tests showed that using an indexed trie needs a huge amount of memory. Therefore, several modifications are made to save memory. The most memory saving change was to use a linked trie, in which the children of the nodes are stored as linear lists.</p><p>The solution conversion that is performed after detecting a duplicate is en- tirely carried out in the trie. A conversion level l, which corresponds to the l-th gene in the solution array, is chosen randomly. On this level another valid child that has not been visited yet, which is represented as a null pointer, is chosen and the solution array is altered accordingly. If there is no null pointer in the current node, we follow the old solution one level down and the procedure is re- peated. Since subtries where all children are complete are pruned, we know that there must be a node with at least one null child. Hence, this method guarantees that the generated solution has not been visited yet.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">Results and Conclusions</head><p>We tested the proposed algorithm on several benchmark instances using different cutting patterns and compared the GA with and without the solution archive. By using the indexed trie as data structure, the memory consumption increased clearly too strongly after a relatively small number of iterations. Therefore the GA had to stop when it ran out of memory instead of when it converged, which produced worse results than the GA without archive. The linked trie variant, without causing additional run-time, consumed only one fourth of the memory. Unfortunately, even with this improvement the preliminary results were only on par with those generated by the GA without archive when using the same amount of time as stopping criterion. The reason is that the solution archive in this case is not able to fully compensate its overhead by saving the effort for re-evaluating duplicate solutions. However, when using a fixed number of iterations, the results of the GA with archive were better by far.</p></div>
+			<note place="foot" n="2"> A Genetic Algorithm with Solution Archive For a detailed description of the GA and its operators, which is extended by our solution archive, see [5]. To encode solutions the authors used an n×n array that This work is supported by the Austrian Science Fund (FWF) under grant P24660.</note>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+			</div>
+
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">An evolutionary algorithm with solution archives and bounding extension for the generalized minimum spanning tree problem</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><forename type="middle">R</forename><surname>Raidl</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 14th Annual Conference on Genetic and Evolutionary Computation (GECCO)</title>
+		<meeting>the 14th Annual Conference on Genetic and Evolutionary Computation (GECCO)<address><addrLine>Philadelphia, PA, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>ACM Press</publisher>
+			<date type="published" when="2012" />
+			<biblScope unit="page" from="393" to="400" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Strip shredded document reconstruction using optical character recognition</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Perl</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Diem</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Kleber</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Sablatnig</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">4th International Conference on Imaging for Crime Detection and Prevention</title>
+		<imprint>
+			<date type="published" when="2011" />
+			<biblScope unit="page" from="1" to="6" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">A memetic algorithm for reconstructing cross-cut shredded text documents</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Prandtstetter</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><forename type="middle">R</forename><surname>Raidl</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><forename type="middle">R</forename><surname>Raidl</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Hu</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Schauer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Prandtstetter</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><forename type="middle">R</forename><surname>Raidl</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Sleit</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Y</forename><surname>Massad</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Musaddaq</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 11th Annual Conference on Genetic and Evolutionary Computation (GECCO)</title>
+		<editor>Cowling, P., Merz, P.</editor>
+		<meeting>the 11th Annual Conference on Genetic and Evolutionary Computation (GECCO)<address><addrLine>Berlin Heidelberg</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer-Verlag</publisher>
+			<date type="published" when="2009" />
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="page" from="1" to="11" />
+		</imprint>
+	</monogr>
+	<note>An alternative clustering approach for recon. structing cross cut shredded text documents. Telecommunication Systems</note>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

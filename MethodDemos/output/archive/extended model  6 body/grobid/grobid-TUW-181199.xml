@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">spock: A Debugging Support Tool for Logic Programs under the Answer-Set Semantics ⋆</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Martin</forename><surname>Gebser</surname></persName>
+							<email>{gebser,torsten}@cs.uni-potsdam.de</email>
+							<affiliation key="aff0">
+								<orgName type="department">Institut für Informatik</orgName>
+								<orgName type="institution">Universität Potsdam</orgName>
+								<address>
+									<addrLine>August-Bebel-Straße 89</addrLine>
+									<postCode>D-14482</postCode>
+									<settlement>Potsdam</settlement>
+									<country key="DE">Germany</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Jörg</forename><surname>Pührer</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Institut für Informationssysteme</orgName>
+								<orgName type="institution">Technische Universität Wien</orgName>
+								<address>
+									<addrLine>Favoritenstraße 9-11</addrLine>
+									<postCode>A-1040</postCode>
+									<settlement>Vienna</settlement>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Torsten</forename><surname>Schaub</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Institut für Informatik</orgName>
+								<orgName type="institution">Universität Potsdam</orgName>
+								<address>
+									<addrLine>August-Bebel-Straße 89</addrLine>
+									<postCode>D-14482</postCode>
+									<settlement>Potsdam</settlement>
+									<country key="DE">Germany</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Hans</forename><surname>Tompits</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="department">Institut für Informationssysteme</orgName>
+								<orgName type="institution">Technische Universität Wien</orgName>
+								<address>
+									<addrLine>Favoritenstraße 9-11</addrLine>
+									<postCode>A-1040</postCode>
+									<settlement>Vienna</settlement>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Stefan</forename><surname>Woltran</surname></persName>
+							<email>woltran@dbai.tuwien.ac.at</email>
+							<affiliation key="aff1">
+								<orgName type="department">Institut für Informationssysteme</orgName>
+								<orgName type="institution">Technische Universität Wien</orgName>
+								<address>
+									<addrLine>Favoritenstraße 9-11</addrLine>
+									<postCode>A-1040</postCode>
+									<settlement>Vienna</settlement>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">spock: A Debugging Support Tool for Logic Programs under the Answer-Set Semantics ⋆</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<abstract>
+				<p>Answer-set programming (ASP) is an emerging logic-programming paradigm that strictly separates the description of a problem from its solving methods. Despite its semantic elegance, ASP suffers from a lack of support for program developers. In particular, tools are needed that help engineers in detecting erroneous parts of their programs. Unlike in other areas of logic programming , applying tracing techniques for debugging logic programs under the answer-set semantics seems rather unnatural, since employing imperative solving algorithms would undermine the declarative flavour of ASP. In this paper, we present the system spock, a debugging support tool for answer-set programs making use of ASP itself. The implemented techniques maintain the declarative nature of ASP within the debugging process and are independent of the actual computation of answer sets.</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">General Information</head><p>Answer-set programming (ASP) <ref type="bibr" target="#b0">[1]</ref> has become an important logic-programming paradigm for declarative problem solving, incorporating fundamental concepts of non- monotonic reasoning. A major reason why ASP has not yet found a more widespread popularity as a problem-solving technique, however, is its lack of suitable engineering tools for developing programs. In particular, realising tools for debugging answer-set programs is a clearly recognised issue in the ASP community, and several approaches in this direction have been proposed in recent years <ref type="bibr" target="#b1">[2]</ref><ref type="bibr" target="#b2">[3]</ref><ref type="bibr" target="#b3">[4]</ref><ref type="bibr" target="#b4">[5]</ref>.</p><p>From a theoretical point of view, the nonmonotonicity of answer-set programs is an aggravating factor for detecting sources of errors, since every rule of a program might significantly influence the resulting answer sets. On the other hand, applying tracing techniques for debugging logic programs under the answer-set semantics seems rather unnatural, since employing imperative solving algorithms would undermine the declarative flavour of ASP.</p><p>In this paper, we discuss the main features of the system spock <ref type="bibr" target="#b5">[6]</ref>, which supports developers of answer-set programs in locating errors in their programs by exploiting the declarative nature of ASP itself, but being independent of specific ASP solvers. The name "spock" makes reference to the fact that detecting errors is done by means of logic, just like the popular Vulcan of Star Trek fame.</p><p>The theoretical background of the implemented methods was introduced in previ- ous work <ref type="bibr" target="#b4">[5]</ref>, exploiting and extending a tagging technique as used by Delgrande et al. <ref type="bibr" target="#b6">[7]</ref> for compiling ordered logic programs into standard ones. In our approach, a pro- gram to debug, Π, is augmented with dedicated meta-atoms, called tags, serving two purposes: Firstly, they allow for controlling and manipulating the applicability of rules, and secondly, tags occurring in the answer sets of the extended program reflect various properties of Π. Our tool implements the tagging process and further related transla- tions for a program Π to debug, allowing for an extrapolation of non-existing answer sets in combination with explanations why an interpretation is not an answer set of Π.</p><p>For illustration of the debugging questions addressed, consider the problem of invit- ing guests to a party when it is known that some of them would appear only if certain others do or do not attend the festivity. An instance of such a setting is encoded in program Π inv , where each atom represents the appearing of a potential party visitor: r 1 = jim ← uhura, r 4 = chekov ← not bones, r 2 = jim ← not chekov , r 5 = bones ← jim, r 3 = uhura ← chekov , not scotty, r 6 = scotty ← not uhura.</p><p>This program has two answer sets, viz., {chekov , scotty} and {bones, jim, scotty}. Assume that Sulu, the programmer, is quite perplexed by this result, wondering why there is a scenario where only Chekov and Scotty, who merely have a neutral relation to each other rather than a friendship, attend. On the other hand, he is astonished as there is no possibility such that Uhura and Jim can jointly be invited. With the help of the tool spock, reasons for such mismatches between the expected and the actual semantics of a program can be found.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">Background</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">Answer-Set Programs</head><p>A (normal) logic program (over an alphabet A) is a finite set of rules of the form a ← b 1 , . . . , b m , not c 1 , . . . , not c n , <ref type="bibr" target="#b0">(1)</ref> where a and b i , c j ∈ A are atoms, for 0 ≤ i ≤ m, 0 ≤ j ≤ n. A literal is an atom a or its negation not a. For a rule r as in (1), let head (r) = a be the head of r and body(r) = {b 1 , . . . , b m , not c 1 , . . . , not c n } the body of r. Furthermore, we define body + (r) = {b 1 , . . . , b m } and body − (r) = {c 1 , . . . , c n }. For a logic program Π, a set X of atoms is an answer set of Π iff X is a minimal model of {head (r) ← body + (r) | r ∈ Π, body − (r)∩X = ∅}. For uniformity, we assume that any integrity constraint ← body (r) is expressed as a rule w ← body(r), not w, where w is a globally new atom. Moreover,</p><p>we allow nested expressions of form not not a, where a is some atom, in the body of rules. Such rules are identified with normal rules in which not not a is replaced by not a ⋆ , where a ⋆ is a globally new atom, together with an additional rule a ⋆ ← not a.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">Tagging-Based Debugging</head><p>In what follows, we sketch the theoretical principles underlying our system spock. For a more detailed discussion, we refer to Brain et al. <ref type="bibr" target="#b4">[5]</ref>. The main idea of tagging is to split the head from the body, for each rule in a program, and thereby to intervene into the applicability of rules. After this division, tags are installed for triggering rules. This way, the formation of answer sets can be controlled, and tags in the answer sets of the transformed (or tagged) program reflect inherent properties of the original program. Technically, a program Π (over alphabet A) to debug is rewritten into a program T K <ref type="bibr">[Π]</ref> over an extended alphabet A + . Let Π be a logic program over A and consider a bijection n, assigning to each rule r over A a unique name n r . Then, the program T K <ref type="bibr">[Π]</ref> over A + consists of the following rules, for r ∈ Π, b ∈ body + (r), and c ∈ body − (r):</p><p>head (r) ← ap(n r ), not ko(n r ), (2) ap(n r ) ← ok(n r <ref type="figure">), body(r),  (3</ref>) bl(n r ) ← ok(n r ), not b, (4) bl(n r ) ← ok(n r ), not not c, (5) ok(n r ) ← not ok(n r ). <ref type="bibr" target="#b5">(6)</ref> The tags ap(n r ) and bl(n r ) express whether a rule r is applicable or blocked, respec- tively, while the control tags ko(n r ), ok(n r ), and ok(n r ) are used for manipulating the application of r. Intuitively, the rules of Π are split into rules of forms (2) and (3), separating the applicability of a rule from the actual occurrence of the respective rule head in an interpretation. Analogously, rules of forms (4) and (5) elicit which rules are blocked. Tags stating whether rule r is applicable or blocked are only derived if ok(n r ) holds, which is by default the case, as expressed by rules of form (6). We call T K <ref type="bibr">[Π]</ref> the kernel tagging of Π, since it serves as a basic submodule for more enhanced programs facilitating certain debugging requests. One such extension scenario is the extrapolation of non-existing answer sets of a program Π over A. Using further translations, T P , T C , and T L <ref type="bibr" target="#b4">[5]</ref>, the occurrence of abnormality tags, ab p (n r ), ab c (a), and ab l (a), respectively, in an answer set X + of the transformed program provides information why an interpretation X = X + ∩ A is not an answer set of Π. Here, we make use of the Lin-Zhao theorem <ref type="bibr" target="#b7">[8]</ref>, which qualifies answer sets as models of the completion <ref type="bibr" target="#b8">[9]</ref> and the loop formulas of a program. In particular, the program-oriented abnormality tag ab p (n r ) indicates that rule r is applicable but not satisfied with respect to an interpretation. The completion-oriented abnormality tag ab c (a) signals that a is in the considered interpretation but all rules having a as head are blocked. Finally, the presence of a loop-oriented abnormality tag ab l (a) indicates that the derivation of atom a might recursively depend on a itself and, therefore, violate the minimality criterion for answer sets. Note that all transformations used are polynomial in the size of the input program and can be constructed for all programs under consideration, even for programs without answer sets.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Command-Line</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Arguments Input Program</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>&lt;file_1&gt; spock</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Internal</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Program</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Translation</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>&lt;file_2&gt;</head><p>...</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Parser</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Program &lt;file_n&gt;</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Representation</head><p>Standard Input <ref type="figure">Fig. 1</ref>. Data flow of program translations</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">System</head><p>spock is a command-line oriented tool, written in Java 5.0 and published under the GNU general public license <ref type="bibr" target="#b9">[10]</ref>. It is publicly available at http://www.kr.tuwien.ac.at/research/debug as a jar-package including binaries and sources. The data flow for all transformations is depicted by Fig. 1. First, the input program is parsed and represented in an internal data structure. Then, the actual program trans- formation is performed, as specified by command-line arguments.</p><p>The tagging technique uses labels to refer to individual rules. Therefore, we al- low the programmer to add labels to the rules of the program to debug. As this re- quires an extension of the program syntax, spock offers an interface to dlv <ref type="bibr" target="#b10">[11]</ref> and lparse/smodels <ref type="bibr" target="#b11">[12]</ref> for computing answer sets of labelled programs.</p><p>For illustration of the debugging process, reconsider program Π inv , having the an- swer sets X 1 = {chekov , scotty} and X 2 = {bones, jim, scotty}, and assume that it is stored in file FILE. The kernel tagging T K [Π inv ] is then obtained by the call java -jar spock.jar -k FILE .</p><p>By piping the result of the command to an answer-set solver, we obtain the answer sets</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>X</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>+</head><p>1 = X 1 ∪ {ap(n r4 ), ap(n r6 ), bl(n r1 ), bl(n r2 ), bl(n r3 ), bl(n r5 )} ∪ OK and X</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>+</head><p>2 = X 2 ∪ {ap(n r2 <ref type="figure">), ap(n r5 ), ap(n r6 ), bl(n r1 ), bl(n r3 ), bl(n r4 )} ∪ OK,</ref> where OK = {ok(n <ref type="figure">r1 ), ok(n r2 ), ok(n r3 ), ok(n r4 ), ok(n r5 ), ok(n r6 )}, extending X 1</ref> and X 2 by information about the applicability of rules. E.g., the presence of ap(n r4 ) in X</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>+ 1</head><p>indicates that rule r 4 is applicable with respect to X 1 , and hence chekov ∈ X 1 but bones / ∈ X 1 , while bl(n r3 ) ∈ X</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>+ 1</head><p>indicates that r 3 is blocked with respect to X 1 . This is because scotty ∈ X 1 .</p><p>The flags '-expo', '-exco', and '-exlo' activate the extrapolation translations T P , T C , and T L , respectively. Instead of using all three flags simultaneously, setting '-ex' produces the union of the resulting programs. Furthermore, in order to restrict the scope of transformation T P to a subprogram Π ′ (respectively, translations T C , T L to sets A C , A L of atoms), the names of the considered rules (respectively, atoms) can be explicitly stated in a comma-separated list following the '-exrules=' <ref type="bibr">(resp., '-exatomsC=' and '-exatomsL=')</ref> flag. Finally, spock allows for computing only abnormality-minimum answer sets by means of dlv-specific weak constraints. <ref type="bibr">The flags '-minab', '-minabp', '-minabc', or '-minabl</ref>' make spock output weak constraints for minimising all abnormality tags, program-oriented abnormality tags, completion-oriented abnormality tags, or loop-oriented abnormality tags, respectively.</p><p>As for our example, recall that Sulu wanted to know why there is no chance for Uhura and Jim to attend the same party. Therefore, we add the constraints ← not uhura and ← not jim to Π inv . Let file FILE2 contain the overall program, which does not have answer sets. The (optimal) answer sets of the tagged program obtained by the call java -jar spock. <ref type="bibr">jar -k -ex -exrules=r1,r2,r3,r4,r5,r6</ref> -minab FILE2 , projected to the atoms occurring in Π inv and the abnormality tags, are given by {ab c (chekov ), bones, chekov , jim, uhura}, {ab c (uhura), bones, jim, uhura}, and {ab p (n r5 ), chekov , jim, uhura}, indicating that {bones, chekov , jim, uhura} is not an answer set of Π inv because atom chekov is not supported. Likewise, uhura is not sup- ported with respect to {bones, jim, uhura}. Finally, {chekov , jim, uhura} is not an answer set as it does not satisfy rule r 5 .</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">Discussion and Related Work</head><p>In this paper, we presented spock, a prototype implementation of a debugging sup- port tool for answer-set programs. The implemented methodology relies on theoretical results of previous work <ref type="bibr" target="#b4">[5]</ref> and is based on the idea that programs to be debugged are translated into other programs having answer sets that offer debugging-relevant in- formation about the original programs. After an initial kernel transformation, we get insight into the applicability of rules with respect to individual answer sets. In a further step, the system allows for identifying causes why interpretations are not answer sets. Here, spock distinguishes between abnormalities due to missing or spare atoms, or atoms whose presence in an interpretation is self-caused. In order to restrict the amount of information returned to the programmer, standard ASP optimisation techniques can be used to focus on interpretations with a minimal number of abnormalities. In addition to the tagging technique described here, spock also supports another approach towards debugging answer-set programs based on meta-programming <ref type="bibr" target="#b12">[13,</ref><ref type="bibr" target="#b13">14]</ref>. Future work in- cludes the integration of further aspects of the translation approach and the design of a graphical user interface to ease the use of the features spock provides. Implementations of related techniques include smdebug <ref type="bibr" target="#b2">[3]</ref>, a prototype debugger focusing on odd-cycle-free inconsistent programs. The system is designed to find mini- mal sets of constraints, restoring consistency when removed from a program. Brain and De Vos <ref type="bibr" target="#b1">[2]</ref> present the system IDEAS, implementing two query algorithms addressing the questions why a set of literals is true with respect to some or false with respect to all answer sets of a program. Both algorithms are procedural and similar to the ones used in ASP solvers, suggesting that an approach using program-level transformations would be more practical. Pontelli and Son <ref type="bibr" target="#b3">[4]</ref> developed a preliminary implementa- tion for their adoption of so-called justifications <ref type="bibr" target="#b14">[15,</ref><ref type="bibr" target="#b15">16]</ref> to the problem of debugging answer-set programs. Their system returns visual output in form of graphs explaining why atoms are (not) present in an answer set.</p></div>		</body>
+		<back>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<monogr>
+		<title level="m" type="main">Knowledge Representation, Reasoning and Declarative Problem Solving</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Baral</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2003" />
+			<publisher>Cambridge University Press</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Debugging Logic Programs under the Answer Set Semantics</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Brain</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>De Vos</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">CEUR Workshop Proceedings</title>
+		<imprint>
+			<date type="published" when="2005" />
+			<biblScope unit="volume">142</biblScope>
+			<biblScope unit="page" from="141" to="152" />
+		</imprint>
+	</monogr>
+	<note>Proc. ASP&apos;05</note>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Debugging Inconsistent Answer Set Programs</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><surname>Syrjänen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. NMR&apos;06</title>
+		<meeting>NMR&apos;06</meeting>
+		<imprint>
+			<date type="published" when="2006" />
+			<biblScope unit="page" from="77" to="83" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Justifications for Logic Programs under Answer Set Semantics</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><surname>Pontelli</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><surname>Son</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. ICLP&apos;06</title>
+		<meeting>ICLP&apos;06</meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2006" />
+			<biblScope unit="page" from="196" to="210" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Debugging ASP Programs by means of ASP</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Brain</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Gebser</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Pührer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><surname>Schaub</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">H</forename><surname>Tompits</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Woltran</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. LPNMR&apos;07</title>
+		<meeting>LPNMR&apos;07</meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2007" />
+			<biblScope unit="page" from="31" to="43" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">That is Illogical Captain!&quot;-The Debugging Support Tool spock for Answer-Set Programs: System Description</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Brain</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Gebser</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Pührer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><surname>Schaub</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">H</forename><surname>Tompits</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Woltran</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. SEA&apos;07</title>
+		<meeting>SEA&apos;07</meeting>
+		<imprint>
+			<date type="published" when="2007" />
+			<biblScope unit="page" from="71" to="85" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">A Framework for Compiling Preferences in Logic Programs</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Delgrande</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><surname>Schaub</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">H</forename><surname>Tompits</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Theory and Practice of Logic Programming</title>
+		<imprint>
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page" from="129" to="187" />
+			<date type="published" when="2003" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">ASSAT: Computing Answer Sets of a Logic Program by SAT Solvers</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Lin</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Y</forename><surname>Zhao</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Artificial Intelligence</title>
+		<imprint>
+			<biblScope unit="volume">157</biblScope>
+			<biblScope unit="page" from="115" to="137" />
+			<date type="published" when="2004" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Negation as Failure</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">K</forename><surname>Clark</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Logic and Data Bases</title>
+		<imprint>
+			<publisher>Plenum Press</publisher>
+			<date type="published" when="1978" />
+			<biblScope unit="page" from="293" to="322" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title/>
+		<ptr target="http://www.gnu.org/copyleft/gpl.html" />
+	</analytic>
+	<monogr>
+		<title level="j">GNU General Public License-Version</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<date type="published" when="1991-06" />
+			<publisher>Free Software Foundation Inc</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">The DLV System for Knowledge Representation and Reasoning</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">N</forename><surname>Leone</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Pfeifer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">W</forename><surname>Faber</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><surname>Eiter</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Gottlob</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Perri</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Scarcello</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM Transactions on Computational Logic</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="page" from="499" to="562" />
+			<date type="published" when="2006" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Extending and Implementing the Stable Model Semantics</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Simons</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">I</forename><surname>Niemelä</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><surname>Soininen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Artificial Intelligence</title>
+		<imprint>
+			<biblScope unit="volume">138</biblScope>
+			<biblScope unit="page" from="181" to="234" />
+			<date type="published" when="2002" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<monogr>
+		<title level="m" type="main">On Debugging of Propositional Answer-Set Programs</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Pührer</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2007" />
+			<pubPlace>Austria</pubPlace>
+		</imprint>
+		<respStmt>
+			<orgName>Vienna University of Technology</orgName>
+		</respStmt>
+	</monogr>
+	<note>Master&apos;s thesis</note>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">A Meta-Programming Technique for Debugging Answer-Set Programs</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Gebser</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Pührer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><surname>Schaub</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">H</forename><surname>Tompits</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. AAAI&apos;08</title>
+		<meeting>AAAI&apos;08</meeting>
+		<imprint>
+			<date type="published" when="2008" />
+		</imprint>
+	</monogr>
+	<note>To appear</note>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Justifying Proofs using Memo Tables</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Roychoudhury</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Ramakrishnan</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">I</forename><surname>Ramakrishnan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. PPDP&apos;00</title>
+		<meeting>PPDP&apos;00</meeting>
+		<imprint>
+			<date type="published" when="2000" />
+			<biblScope unit="page" from="178" to="189" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Generating Explanation Trees even for Negations in Deductive Database Systems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Specht</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. LPE&apos;93</title>
+		<meeting>LPE&apos;93</meeting>
+		<imprint>
+			<date type="published" when="1993" />
+			<biblScope unit="page" from="8" to="13" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

@@ -1,0 +1,3530 @@
+<Publication>
+  <id>TUW-226016</id>
+  <title>An Evaluation of Symbol Elimination for Generating First-Order Loop Invariants Diplom-Ingenieurin in Computational Intelligence Erklärung zur Verfassung der Arbeit</title>
+  <note>MASTER&apos;S THESIS submitted in partial fulfillment of the requirements for the degree of (Signature of Author) (Signature of Advisor) i</note>
+  <abstractText>Hiermit erkläre ich, dass ich diese Arbeit selbständig verfasst habe, dass ich die verwendeten Quellen und Hilfsmittel vollständig angegeben habe und dass ich die Stellen der Arbeit-einschließlich Tabellen, Karten und Abbildungen-, die anderen Werken oder dem Internet im Wortlaut oder dem Sinn nach entnommen sind, auf jeden Fall unter Angabe der Quelle als Entlehnung kenntlich gemacht habe. (Ort, Datum) (Unterschrift Verfasserin) ii Acknowledgements I would like to express my very great appreciation to Dr. Laura Kovács for her valuable and constructive suggestions during the planning and development of this research work. Her willingness to give her time so generously has been very much appreciated. I would also like to thank Mr. Ioan Dr˘ agan for his support with one of the tools needed. iii Abstract Invariant genereation is a critical problem in proving different properties for programs with loops, properties including correctnes. The problem becomes harder with the incresing numbers of quantifiers in the property to be proven. In this paper we study and combine different methods of invariant generation in order to obtain stronger properties. iv Kurzfassung Invariant generiert ist ein kritische Problem für Programmen mit Schleife zum Beweisen der Eigenschaften, inclusive die Richtigkeit. Die problem wird schwerer bei hohe Anzhal des Quantoren in die geprüfte Eigenschaft. In diese arbeit wir studiere diese Problem und versuchen combinieren verschieden Methoden für schwarer invariants zu beweisen. v</abstractText>
+  <keywords/>
+  <authors>
+    <Author>
+      <firstNames>
+        <string>Ioana</string>
+      </firstNames>
+      <lastName>Jucu</lastName>
+      <affiliations>
+        <Affiliation>
+          <id>aff0</id>
+          <institution>Vienna University of Technology</institution>
+          <department>Faculty of Informatics</department>
+        </Affiliation>
+      </affiliations>
+    </Author>
+    <Author>
+      <firstNames>
+        <string>Priv.-Doz</string>
+      </firstNames>
+      <affiliations>
+        <Affiliation reference="/Publication[1]/authors[1]/Author[1]/affiliations[1]/Affiliation[1]"/>
+      </affiliations>
+    </Author>
+    <Author>
+      <firstNames>
+        <string>Laura</string>
+      </firstNames>
+      <lastName>Kovács</lastName>
+      <affiliations>
+        <Affiliation reference="/Publication[1]/authors[1]/Author[1]/affiliations[1]/Affiliation[1]"/>
+      </affiliations>
+    </Author>
+    <Author>
+      <firstNames>
+        <string>Ioana</string>
+        <string>Jucu</string>
+      </firstNames>
+      <lastName>Martir</lastName>
+      <affiliations>
+        <Affiliation reference="/Publication[1]/authors[1]/Author[1]/affiliations[1]/Affiliation[1]"/>
+      </affiliations>
+    </Author>
+    <Author>
+      <firstNames>
+        <string>Herman</string>
+      </firstNames>
+      <lastName>Sporer</lastName>
+      <affiliations>
+        <Affiliation reference="/Publication[1]/authors[1]/Author[1]/affiliations[1]/Affiliation[1]"/>
+      </affiliations>
+    </Author>
+    <Author>
+      <firstNames/>
+      <lastName>Timisoara</lastName>
+      <affiliations>
+        <Affiliation reference="/Publication[1]/authors[1]/Author[1]/affiliations[1]/Affiliation[1]"/>
+      </affiliations>
+    </Author>
+    <Author>
+      <firstNames>
+        <string>Romania</string>
+      </firstNames>
+      <lastName>Timis</lastName>
+      <affiliations>
+        <Affiliation reference="/Publication[1]/authors[1]/Author[1]/affiliations[1]/Affiliation[1]"/>
+      </affiliations>
+    </Author>
+  </authors>
+  <affiliations>
+    <Affiliation reference="/Publication[1]/authors[1]/Author[1]/affiliations[1]/Affiliation[1]"/>
+  </affiliations>
+  <sections>
+    <Section>
+      <level>1</level>
+      <title>Introduction</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>2</level>
+      <title>Preliminaries</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>2.1</level>
+      <title>Propositional logic</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>2.2</level>
+      <title>SAT solvers</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>2.3</level>
+      <title>Boogie</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3</level>
+      <title>Overview of Invariant Generation Methods</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.1</level>
+      <title>GinPink</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.2</level>
+      <title>Lingva</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.3</level>
+      <title>CppInv</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4</level>
+      <title>Experiments</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.1</level>
+      <title>Experiments with Gin-Pink and Cpp-Inv</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.2</level>
+      <title>Experiments with Lingva</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>R e f u t a t i o n found</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>e g a t e d c o n j e c t u r e 1 3 9 ]</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>n p u t i m p l i c a t i o n ] 1 5 2 9 . (a ≤ (a0 + sK0)) [ f o r w a r d d e m o d u l a t i o n 1 5 2 8 , 1 4 2 ]</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.3</level>
+      <title>Discussions of Experimental Results</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5</level>
+      <title>Invariant Specific Theory Extensions to First</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.1</level>
+      <title>Comparison of invariants strength</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>6</level>
+      <title>Conclusions</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+  </sections>
+  <citationContexts/>
+  <references>
+    <Reference>
+      <id>ref1</id>
+      <referenceIdString>b0</referenceIdString>
+      <source>found. Thanks to Tanya! 981. $false</source>
+      <authors/>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref2</id>
+      <referenceIdString>b1</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X0,I) (0:3) [cnf Transformation 374</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref3</id>
+      <referenceIdString>b2</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>!</string>
+          </firstNames>
+          <lastName>[x0] : ($lesseq(0,I) &amp;amp; $lesseq(0,Sk2(x0)) &amp;amp; $lesseq(sk2(x0),I)&amp;amp; $lesseq(0,X0) &amp;amp; $lesseq</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X0</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref4</id>
+      <referenceIdString>b3</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(x0))</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X0))) [skolemisation 371] 150. ? [x37] : ! [x36] : (($lesseq(0,I) &amp;amp; $lesseq(0,X36) &amp;amp; $lesseq(x36,I) &amp;amp; $lesseq(0,X37) &amp;amp; $lesseq(x37,I)) =&amp;gt; $</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X37)))</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref5</id>
+      <referenceIdString>b4</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(1,I) | Sp5 (0:4) [splitting Component Introduction] 980. ~sp5 (0:1) [subsumption Resolution</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref6</id>
+      <referenceIdString>b5</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Lesseq(0,X0) (0:3) [cnf Transformation 374</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref7</id>
+      <referenceIdString>b6</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(0,$uminus(i)) | ~sp5 (0:5) [backward Demodulation 923</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref8</id>
+      <referenceIdString>b7</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(0,$sum(0,$uminus(i))) | ~sp5 (0:7) [splitting</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref9</id>
+      <referenceIdString>b8</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(1,I) | ~$lesseq(0,$sum(0,$uminus(i))) (0:9) [definition Unfolding</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref10</id>
+      <referenceIdString>b9</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(1,I) | ~$lesseq(i0</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Uminus(i))) (0:9) [cnf Transformation 357</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref11</id>
+      <referenceIdString>b10</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(i0</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Uminus(i))) | ~$lesseq(1,I) [flattening 138</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref12</id>
+      <referenceIdString>b11</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(i0</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Uminus(i))) | ~$lesseq(1,I) [input Inv137</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref13</id>
+      <referenceIdString>b12</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Sum(0,X0) = X0 (1:5) [superposition 153</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <note>155] Refutation found. Thanks to Tanya! 2064. $false (1:0) [subsumption resolution 2061</note>
+      <publicationDateString>2048</publicationDateString>
+      <publicationYear>2048</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref14</id>
+      <referenceIdString>b13</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(c,0) (1:3) [resolution 2019</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1058</publicationDateString>
+      <publicationYear>1058</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref15</id>
+      <referenceIdString>b14</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X1,C) (0:3) [cnf Transformation 746</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref16</id>
+      <referenceIdString>b15</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>!</string>
+          </firstNames>
+          <lastName>[x1] : ($lesseq(0,X1) &amp;amp; $lesseq(x1,C) &amp;amp; Bb(sk0) = Aa(sk0)&amp;amp; Cc(x1) != Sk0 &amp;amp; Cc(x1) != Cc0(x1)) [skolemisation 745</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref17</id>
+      <referenceIdString>b16</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>!</string>
+          </firstNames>
+          <lastName>[x48] : ? [x49] : (($lesseq(0,X49) &amp;amp; $lesseq(x49,C) &amp;amp; Bb(x48) = Aa(x48)) =&amp;gt; (cc(x49) = X48 | Cc(x49) = Cc0(x49)))</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref18</id>
+      <referenceIdString>b17</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(1,C) | ~$lesseq(c,0) (0:6) [forward Demodulation 2018</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref19</id>
+      <referenceIdString>b18</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X0,0) = X0 (0:5) [</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref20</id>
+      <referenceIdString>b19</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(c,0) | ~$lesseq(1,$sum(c,0)) (0:8) [forward Demodulation 1374</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1613</publicationDateString>
+      <publicationYear>1613</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref21</id>
+      <referenceIdString>b20</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>=</string>
+          </firstNames>
+          <lastName>$sum(c,0) (0:5) [subsumption Resolution</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref22</id>
+      <referenceIdString>b21</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(0,0) | $lesseq(c</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref23</id>
+      <referenceIdString>b22</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+          <lastName>| $lesseq(c,A) (0:6) [cnf Transformation 330] 330. $lesseq(c,A) | ~$lesseq(c0</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref24</id>
+      <referenceIdString>b23</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref25</id>
+      <referenceIdString>b24</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(c,A) | A = $sum(c,0) (0:8) [forward Demodulation 1545</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref26</id>
+      <referenceIdString>b25</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq($sum(c,0</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+          <lastName>| A = $sum(c,0) (0:10</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref27</id>
+      <referenceIdString>b26</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(0,0) | ~$lesseq($sum(c,$uminus(0)),A) | A = $sum(c,$uminus(0))(0:15) [definition Unfolding 801</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1053</publicationDateString>
+      <publicationYear>1053</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref28</id>
+      <referenceIdString>b27</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+          <lastName>| ~$lesseq($sum(c,$uminus(c0)),A) | A = $sum(c,$uminus(c0)) (0:15) [cnf Transformation 381</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref29</id>
+      <referenceIdString>b28</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>=</string>
+          </firstNames>
+          <lastName>$sum(c,$uminus(c0)) | ~$lesseq($sum(c,$uminus(c0))</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref30</id>
+      <referenceIdString>b29</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>=</string>
+          </firstNames>
+          <lastName>$sum(c,$uminus(c0)) | ~$lesseq($sum(c,$uminus(c0))</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref31</id>
+      <referenceIdString>b30</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(a,0) | ~$lesseq(1,$sum(c,0)) (0:8) [evaluation 1350</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref32</id>
+      <referenceIdString>b31</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(a,0) | ~$lesseq(1,$sum(c,$uminus(0))) (0:9) [definition Unfolding 1036</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1053</publicationDateString>
+      <publicationYear>1053</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref33</id>
+      <referenceIdString>b32</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+          <lastName>| ~$lesseq(1,$sum(c,$uminus(c0))) (0:9) [cnf Transformation 720</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref34</id>
+      <referenceIdString>b33</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(1,$sum(c</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref35</id>
+      <referenceIdString>b34</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>|</string>
+          </firstNames>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref36</id>
+      <referenceIdString>b35</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(1,$sum(c</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref37</id>
+      <referenceIdString>b36</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>|</string>
+          </firstNames>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref38</id>
+      <referenceIdString>b37</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Lesseq(c,0) (1:3) [resolution 1852</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1057</publicationDateString>
+      <publicationYear>1057</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref39</id>
+      <referenceIdString>b38</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Lesseq(0,X1) (0:3) [cnf Transformation 746</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref40</id>
+      <referenceIdString>b39</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(0,$uminus(c)) | $lesseq(c,0) (0:7) [forward Demodulation 1256</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1732</publicationDateString>
+      <publicationYear>1732</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref41</id>
+      <referenceIdString>b40</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Sum(0,X0) = X0 (0:5) [backward Demodulation 1731</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1648</publicationDateString>
+      <publicationYear>1648</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref42</id>
+      <referenceIdString>b41</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Sum(0,X0) = $sum(c,$sum(0,$sum($uminus(c</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+          <lastName>X0))) (0:12) [forward Demodulation 1129</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1613</publicationDateString>
+      <publicationYear>1613</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref43</id>
+      <referenceIdString>b42</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Sum(0,X0) = $sum(a,$sum(0,$sum($uminus(c</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+          <lastName>X0))) (0:12) [definition Unfolding 815</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1053</publicationDateString>
+      <publicationYear>1053</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref44</id>
+      <referenceIdString>b43</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Sum($uminus(c</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+          <lastName>X0))) (0:12) [cnf Transformation 396</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref45</id>
+      <referenceIdString>b44</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>! [x0] : $</string>
+          </firstNames>
+          <lastName>Sum($uminus(c</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+          <lastName>X0)))</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref46</id>
+      <referenceIdString>b45</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>! [x1] : $</string>
+          </firstNames>
+          <lastName>Sum($uminus(c</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+          <lastName>X1)))</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref47</id>
+      <referenceIdString>b46</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Sum(c,$sum(0,$sum($uminus(c</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+          <lastName>X0))) = X0 (0:10) [forward Demodulation 1730</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref48</id>
+      <referenceIdString>b47</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X0,0) = $sum(c,$sum(0,$sum($uminus(c</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+          <lastName>X0))) (0:12) [forward Demodulation 1195</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1613</publicationDateString>
+      <publicationYear>1613</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref49</id>
+      <referenceIdString>b48</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X0,0) = $sum(a,$sum(0,$sum($uminus(c</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+          <lastName>X0))) (0:12) [definition Unfolding 881</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1053</publicationDateString>
+      <publicationYear>1053</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref50</id>
+      <referenceIdString>b49</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X0</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+          <lastName>Sum($uminus(c</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <note>0:12 Refutation found. Thanks to Tanya! 1898. $false (2:0) [subsumption resolution 1897,355</note>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref51</id>
+      <referenceIdString>b50</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Lesseq(0,L) (2:3) [resolution 208</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref52</id>
+      <referenceIdString>b51</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Lesseq(0,Sk0) (0:3) [cnf Transformation 80</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref53</id>
+      <referenceIdString>b52</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref54</id>
+      <referenceIdString>b53</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Sum($uminus(x),1))),0) [skolemisation 79] 79. ? [x0] : ($lesseq(0,X0) &amp;amp; $lesseq</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X0</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref55</id>
+      <referenceIdString>b54</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Sum($uminus(x),1))),0</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref56</id>
+      <referenceIdString>b55</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>78. ? [x0] : (($lesseq(0,X0) &amp;amp; $lesseq</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>X0</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref57</id>
+      <referenceIdString>b56</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref58</id>
+      <referenceIdString>b57</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~! [</string>
+          </firstNames>
+          <lastName>X0] : (($lesseq(0,X0) &amp;amp; $lesseq</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X0</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+          <lastName>=&amp;gt; $lesseq($</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref59</id>
+      <referenceIdString>b58</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~! [</string>
+          </firstNames>
+          <lastName>X3] : (($lesseq(0,X3) &amp;amp; $lesseq</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X3</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+          <lastName>=&amp;gt; $lesseq($</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref60</id>
+      <referenceIdString>b59</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>!</string>
+          </firstNames>
+          <lastName>[x3] : (($lesseq(0,X3) &amp;amp; $lesseq</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X3</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+          <lastName>=&amp;gt; $lesseq($</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Sum($uminus(x</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref61</id>
+      <referenceIdString>b60</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(x16,Sk0) | $lesseq(x16,L) (1:6) [resolution</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+          <lastName>(0:3) [cnf Transformation 80</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref62</id>
+      <referenceIdString>b61</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~$lesseq(x1</string>
+          </firstNames>
+          <lastName>X2) | ~$lesseq</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X0</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X1) | $lesseq</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>X0</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>X2) (0:9</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref63</id>
+      <referenceIdString>b62</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(0,L) (2:3) [subsumption Resolution</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref64</id>
+      <referenceIdString>b63</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X0</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>X0) (0:3) [</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref65</id>
+      <referenceIdString>b64</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(l,L) | ~$lesseq(0,L) (2:6) [resolution</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref66</id>
+      <referenceIdString>b65</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq($sum(1,$sum($uminus(x</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+          <lastName>))),0) (0:12) [forward Demodulation 308,25] 25. $sum(x0</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X1) = $sum</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>X1</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>X0) (0:7</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref67</id>
+      <referenceIdString>b66</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq($sum(1,$sum($uminus(x</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+          <lastName>U)))),0) (0:12) [forward Demodulation 307</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref68</id>
+      <referenceIdString>b67</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq($sum(1</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+          <lastName>U)),$uminus(x))),0) (0:12) [forward Demodulation 306,279] 279. $sum(x7</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>X8</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X9)) = $sum</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>X9</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>X7</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>X8)) (1:11</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref69</id>
+      <referenceIdString>b68</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X0</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>X1</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X2)) = $sum($sum</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>X1</string>
+            <string>)</string>
+          </firstNames>
+          <lastName>X0</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>X2) (0:11</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref70</id>
+      <referenceIdString>b69</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq($sum($uminus(x</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+          <lastName>U)))),0) (0:12) [forward Demodulation 305</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref71</id>
+      <referenceIdString>b70</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq($sum($uminus(x</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+          <lastName>U),1))),0) (0:12) [forward Demodulation 304</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref72</id>
+      <referenceIdString>b71</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq($sum($uminus(x</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+          <lastName>))),0) (0:12) [forward Demodulation 296</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref73</id>
+      <referenceIdString>b72</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Sum($uminus(x),$sum(aa(u),1))),0) (0:12) [backward Demodulation 279</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref74</id>
+      <referenceIdString>b73</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Sum(1,$uminus(x)))),0) (0:12) [forward Demodulation 105</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref75</id>
+      <referenceIdString>b74</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Sum($uminus(x),1))),0) (0:12) [cnf Transformation 80</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref76</id>
+      <referenceIdString>b75</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Lesseq($sum(1,$sum($uminus(x</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X0)))),0) |</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref77</id>
+      <referenceIdString>b76</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(x0,L) | ~$lesseq(0,X0) (1:18) [superposition 314</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref78</id>
+      <referenceIdString>b77</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Lesseq($sum(1,$sum($uminus(x</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+          <lastName>X0),Aa(u)))),0) |</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref79</id>
+      <referenceIdString>b78</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(x0,L) | ~$lesseq(0,X0) (0:18) [forward Demodulation 313</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref80</id>
+      <referenceIdString>b79</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Lesseq($sum(1</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>U)),$uminus(x))),0) |</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref81</id>
+      <referenceIdString>b80</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(x0,L) | ~$lesseq(0,X0) (0:18) [forward Demodulation 312</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref82</id>
+      <referenceIdString>b81</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Lesseq($sum($uminus(x</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+          <lastName>X0),Aa(u)))),0) |</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref83</id>
+      <referenceIdString>b82</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(x0,L) | ~$lesseq(0,X0) (0:18) [forward Demodulation 311</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref84</id>
+      <referenceIdString>b83</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Lesseq($sum($uminus(x</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X0)))),0) |</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref85</id>
+      <referenceIdString>b84</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(x0,L) | ~$lesseq(0,X0) (0:18) [forward Demodulation 310</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref86</id>
+      <referenceIdString>b85</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Lesseq($sum($uminus(x</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X0))),0) |</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref87</id>
+      <referenceIdString>b86</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(x0,L) | ~$lesseq(0,X0) (0:18) [forward Demodulation 297</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref88</id>
+      <referenceIdString>b87</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X0),$sum($uminus(x),$sum(aa(u),1))),0) |</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref89</id>
+      <referenceIdString>b88</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(x0,L) | ~$lesseq(0,X0) (0:18) [backward Demodulation 279</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref90</id>
+      <referenceIdString>b89</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(x0)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Sum(1,$uminus(x)))),0) |</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref91</id>
+      <referenceIdString>b90</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(x0,L) | ~$lesseq(0,X0) (0:18) [forward Demodulation 100</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref92</id>
+      <referenceIdString>b91</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(x0)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Sum($uminus(x),1))),0) |</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref93</id>
+      <referenceIdString>b92</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(x0,L) | ~$lesseq(0,X0) (0:18) [cnf Transformation 73</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref94</id>
+      <referenceIdString>b93</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>!</string>
+          </firstNames>
+          <lastName>[x0] : (~$lesseq(0,X0) | ~$lesseq(x0,L) | $lesseq($sum(aa(x0)</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Sum($uminus(x),1))),0)) [flattening 72</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref95</id>
+      <referenceIdString>b94</referenceIdString>
+      <source>Thanks to Tanya! 5511. $false</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>!</string>
+          </firstNames>
+          <lastName>[x0] : ((~$lesseq(0,X0) | ~$lesseq(x0,L)) | Refutation Found</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref96</id>
+      <referenceIdString>b95</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref97</id>
+      <referenceIdString>b96</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>!</string>
+          </firstNames>
+          <lastName>= Sk0 (0:6) [definition Unfolding 544</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref98</id>
+      <referenceIdString>b97</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Sk0)) != Sk0 (0:6) [cnf Transformation 388</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref99</id>
+      <referenceIdString>b98</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Lesseq($sum(i</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref100</id>
+      <referenceIdString>b99</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>&amp;amp;</string>
+          </firstNames>
+          <lastName>$sum(i0,Sk0(sk0))!= Sk0 &amp;amp; ~$lesseq(0,Sk0(sk0)) &amp;amp; $lesseq(m,$sum(i0,Sk0(sk0))) &amp;amp; Aa(sk0) != $sum(aa($sum(sk0,$uminus(1))),1) [skolemisation 387</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref101</id>
+      <referenceIdString>b100</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>!</string>
+          </firstNames>
+          <lastName>[x37] : (($lesseq($sum(i,$uminus(i0)),Sk0</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X37)) &amp;amp;</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref102</id>
+      <referenceIdString>b101</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X37)) = X37 &amp;amp; ~$lesseq(0,Sk0(x37)) &amp;amp; $lesseq(m</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X37)))) =&amp;gt; Aa(x37) = $sum(aa($sum</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X37</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>1</volume>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref103</id>
+      <referenceIdString>b102</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(0,Sk0(sk0)) (0:4) [cnf Transformation 388</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref104</id>
+      <referenceIdString>b103</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Lesseq(0,Sk0(sk0)) | $sum(1,Sk0(sk0)) = Sk0 (1:10) [subsumption Resolution</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref105</id>
+      <referenceIdString>b104</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Lesseq(m</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref106</id>
+      <referenceIdString>b105</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Lesseq(m,$sum(i0,Sk0(sk0))) (0:6) [cnf Transformation 388</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref107</id>
+      <referenceIdString>b106</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(m</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref108</id>
+      <referenceIdString>b107</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>|</string>
+          </firstNames>
+          <lastName>$lesseq(0,Sk0(sk0)) | $sum(1,Sk0(sk0)) = Sk0 (1:16) [resolution</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref109</id>
+      <referenceIdString>b108</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Lesseq($sum(-1,I),Sk0(sk0)) (0:6) [forward Demodulation 703</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref110</id>
+      <referenceIdString>b109</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X0</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X1) = $sum</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>X1</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>X0) (0:7</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref111</id>
+      <referenceIdString>b110</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Lesseq($sum(i,-1),Sk0(sk0)) (0:6) [evaluation 698</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref112</id>
+      <referenceIdString>b111</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Lesseq($sum(i,$uminus(1)),Sk0(sk0)) (0:7) [definition Unfolding</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref113</id>
+      <referenceIdString>b112</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Lesseq($sum(i,$uminus(i0)),Sk0(sk0)) (0:7) [cnf Transformation 388</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref114</id>
+      <referenceIdString>b113</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq($sum(-1,I</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X0)) | ~$lesseq(m</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X0)))</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref115</id>
+      <referenceIdString>b114</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>|</string>
+          </firstNames>
+          <lastName>$sum(1,Sk0(x0)) = X0 (0:22) [forward Demodulation 908</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref116</id>
+      <referenceIdString>b115</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(m</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X0)))</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref117</id>
+      <referenceIdString>b116</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>|</string>
+          </firstNames>
+          <lastName>$lesseq(0,Sk0(x0)) | $sum(1,Sk0(x0)) = X0 | ~$lesseq($sum(i,-1),Sk0(x0)) (0:22) [subsumption Resolution</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref118</id>
+      <referenceIdString>b117</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(m</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X0))) | Aa(x0) = Aa0(x0) (0:11) [definition Unfolding</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref119</id>
+      <referenceIdString>b118</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(m</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X0))) | Aa(x0) = Aa0(x0) (0:11) [cnf Transformation 170</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref120</id>
+      <referenceIdString>b119</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>!</string>
+          </firstNames>
+          <lastName>[x0] : (aa(x0) = Aa0(x0) | ~$lesseq(m</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref121</id>
+      <referenceIdString>b120</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>!</string>
+          </firstNames>
+          <lastName>[x0] : (aa(x0) = Aa0(x0) | ~$lesseq(m</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X0)))</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref122</id>
+      <referenceIdString>b121</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>Aa(x0) != Aa0(x0) | ~$lesseq(m</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>X0))) | $lesseq(0</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref123</id>
+      <referenceIdString>b122</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>|</string>
+          </firstNames>
+          <lastName>$sum(1,Sk0(x0)) = X0 | ~$lesseq($sum(i,-1),Sk0(x0)) (0:27</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref124</id>
+      <referenceIdString>b123</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>!</string>
+          </firstNames>
+          <lastName>[x37] : (($lesseq($sum(i,$uminus(i0)),Sk0</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X37)) &amp;amp;</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref125</id>
+      <referenceIdString>b124</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X37)) = X37 &amp;amp; ~$lesseq(0,Sk0(x37)) &amp;amp; $lesseq(m</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X37)))) =&amp;gt; ~aa</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref126</id>
+      <referenceIdString>b125</referenceIdString>
+      <source>Refutation found. Thanks to Tanya! 1299. $false (1:0) [subsumption resolution 1298</source>
+      <authors/>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref127</id>
+      <referenceIdString>b126</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X0</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>X0) (0:3) [</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref128</id>
+      <referenceIdString>b127</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(j,J) (1:3) [subsumption Resolution</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref129</id>
+      <referenceIdString>b128</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(x0,J) | $lesseq(x0,J0) (3:6) [resolution</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref130</id>
+      <referenceIdString>b129</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~$lesseq(x1</string>
+          </firstNames>
+          <lastName>X2) | ~$lesseq</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X0</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X1) | $lesseq</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>X0</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>X2) (0:9</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref131</id>
+      <referenceIdString>b130</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Lesseq(j,J0) (2:3) [resolution 809</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref132</id>
+      <referenceIdString>b131</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+          <lastName>Lesseq(j,Sk0) (1:3) [resolution 162</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref133</id>
+      <referenceIdString>b132</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(sk0,J) (0:3) [cnf Transformation 379</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref134</id>
+      <referenceIdString>b133</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(sk0,J) &amp;amp; $lesseq(sk0</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref135</id>
+      <referenceIdString>b134</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>378. ? [x0] : (~$lesseq(x0,J) &amp;amp; $lesseq</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>X0</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>X0),X)) [ennf Transformation 377</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref136</id>
+      <referenceIdString>b135</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~! [</string>
+          </firstNames>
+          <lastName>X0] : ($lesseq(x0,J) | ~$lesseq</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X0</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref137</id>
+      <referenceIdString>b136</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>X0),X)) [flattening 376</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref138</id>
+      <referenceIdString>b137</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~! [x0] : (</string>
+          </firstNames>
+          <lastName>~~$lesseq(x0,J) | ~$lesseq</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X0</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref139</id>
+      <referenceIdString>b138</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>X0),X))[rectify 154</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref140</id>
+      <referenceIdString>b139</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~! [x36] : (</string>
+          </firstNames>
+          <lastName>~~$lesseq(x36,J) | ~$lesseq</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X36</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref141</id>
+      <referenceIdString>b140</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>X36),X)) [evaluation 152</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref142</id>
+      <referenceIdString>b141</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~! [</string>
+          </firstNames>
+          <lastName>X36] : (~$less(j,X36) | ~$lesseq</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X36</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref143</id>
+      <referenceIdString>b142</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>X36),X))[negated Conjecture 151</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref144</id>
+      <referenceIdString>b143</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>!</string>
+          </firstNames>
+          <lastName>[x36] : (~$less(j,X36) | ~$lesseq</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X36</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref145</id>
+      <referenceIdString>b144</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>X36),X))[input Implication</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref146</id>
+      <referenceIdString>b145</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>$</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X0</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X1) | $lesseq</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>X1</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>X0) (0:6</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref147</id>
+      <referenceIdString>b146</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(x24,Sk0) | $lesseq</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref148</id>
+      <referenceIdString>b147</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>$lesseq(j,J0) | ~$lesseq(j,J) (1:6) [resolution</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref149</id>
+      <referenceIdString>b148</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>X0),Aa(j)) | ~$lesseq(x0,J0) | ~$lesseq(j,X0) (0:11)[cnf Transformation 375</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref150</id>
+      <referenceIdString>b149</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>!</string>
+          </firstNames>
+          <lastName>[x0] : (~$lesseq(j,X0) | ~$lesseq</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X0</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref151</id>
+      <referenceIdString>b150</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>X0),Aa(j)))[flattening 374</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref152</id>
+      <referenceIdString>b151</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>!</string>
+          </firstNames>
+          <lastName>[x0] : (~$lesseq(j,X0) | ~$lesseq</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X0</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref153</id>
+      <referenceIdString>b152</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref154</id>
+      <referenceIdString>b153</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>!</string>
+          </firstNames>
+          <lastName>[x36] : (~$lesseq(j,X36) | ~$lesseq</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X36</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref155</id>
+      <referenceIdString>b154</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>~</string>
+          </firstNames>
+          <lastName>X36),Aa(j)))[evaluation 150</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref156</id>
+      <referenceIdString>b155</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>!</string>
+          </firstNames>
+          <lastName>[x36] : (~$lesseq(j,X36) | ~$lesseq</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X36</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>)</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>X36)))[input Prop4</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref157</id>
+      <referenceIdString>b156</referenceIdString>
+      <title>and Sebastiani R. Efficient Generation of Craig Interpolants in Satisfiability Modulo Theories</title>
+      <source>ACM Transactions on Computational Logic , volume 12, October</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A</string>
+          </firstNames>
+          <lastName>Cimatti</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A</string>
+          </firstNames>
+          <lastName>Griggio</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2009</publicationDateString>
+      <publicationYear>2009</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref158</id>
+      <referenceIdString>b157</referenceIdString>
+      <source>An Introduction to Mathematical Logic and Type Theory: To Truth Through Proof</source>
+      <authors/>
+      <location>Peter B. Andrews</location>
+      <publicationDateString>2002</publicationDateString>
+      <publicationYear>2002</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref159</id>
+      <referenceIdString>b158</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Bcd + 05] Michael</string>
+          </firstNames>
+          <lastName>Barnett</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Bor-Yuh Evan</string>
+          </firstNames>
+          <lastName>Chang</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <location>Robert DeLine, Bart Jacobs</location>
+      <note>and K. Rustan M. Leino. Boogie: A Modular Reusable Verifier for Object-Oriented Programs. FMCO, 4111:364-387</note>
+      <publicationDateString>2005</publicationDateString>
+      <publicationYear>2005</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref160</id>
+      <referenceIdString>b159</referenceIdString>
+      <source>Patrick Cousot and Radhia Cousot. Abstract Interpretation: A Unified Lattice Model for Static Analysis of Programs by Construction or Approximation of Fixpoints. pages 238-252</source>
+      <authors/>
+      <publicationDateString>1977</publicationDateString>
+      <publicationYear>1977</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref161</id>
+      <referenceIdString>b160</referenceIdString>
+      <source>Stephen A. Cook. The complexity of theorem-proving procedures. pages 151-158</source>
+      <authors/>
+      <publicationDateString>1971</publicationDateString>
+      <publicationYear>1971</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref162</id>
+      <referenceIdString>b161</referenceIdString>
+      <source>A machine program for theorem</source>
+      <authors/>
+      <location>Martin Davis, George Logemann , and Donald Loveland</location>
+      <pageFrom>394</pageFrom>
+      <pageTo>397</pageTo>
+      <publicationDateString>1962-07</publicationDateString>
+      <publicationYear>1962</publicationYear>
+      <publicationMonth>07</publicationMonth>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref163</id>
+      <referenceIdString>b162</referenceIdString>
+      <source>Leonardo de Moura and Nikolaj Bjørner. Satisfiability modulo theories: introduction and applications</source>
+      <authors/>
+      <pageFrom>69</pageFrom>
+      <pageTo>77</pageTo>
+      <publicationDateString>2011</publicationDateString>
+      <publicationYear>2011</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref164</id>
+      <referenceIdString>b163</referenceIdString>
+      <source>Martin Davis and Hilary Putnam. A Computing Procedure for Quantification Theory. 7:201-215</source>
+      <authors/>
+      <publicationDateString>1960-07</publicationDateString>
+      <publicationYear>1960</publicationYear>
+      <publicationMonth>07</publicationMonth>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref165</id>
+      <referenceIdString>b164</referenceIdString>
+      <source>Hilbert D. and Ackermann W. Principles of Mathematical Logic. Chelsea Publishing Company</source>
+      <authors/>
+      <publicationDateString>1950</publicationDateString>
+      <publicationYear>1950</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref166</id>
+      <referenceIdString>b165</referenceIdString>
+      <source>Niklas Eén and Niklas Sörensson. An Extensible SAT-solver. 2919:502-518</source>
+      <authors/>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref167</id>
+      <referenceIdString>b166</referenceIdString>
+      <source>Inferring Loop Invariants using Postconditions. In Fields of Logic and Computation: Essays Dedicated to Yuri Gurevich on the Occasion of His 70th Birthday</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Carlo</string>
+            <string>A</string>
+          </firstNames>
+          <lastName>Furia</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Bertrand</string>
+          </firstNames>
+          <lastName>Meyer</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2010</publicationDateString>
+      <publicationYear>2010</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref168</id>
+      <referenceIdString>b167</referenceIdString>
+      <source>On the Complexity of Derivation in Propositional Calculus. pages 466-483</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>G</string>
+            <string>S</string>
+          </firstNames>
+          <lastName>Tseitin</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1983</publicationDateString>
+      <publicationYear>1983</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref169</id>
+      <referenceIdString>b168</referenceIdString>
+      <title>Case Studies on Invariant Generation Using a Saturation Theorem Prover</title>
+      <source>10th Mexican International Conference on Artificial Intelligence, MICAI</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Krystof</string>
+          </firstNames>
+          <lastName>Hoder</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Laura</string>
+          </firstNames>
+          <lastName>Kovacs</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Andrei</string>
+          </firstNames>
+          <lastName>Voronkov</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2011</publicationDateString>
+      <publicationYear>2011</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref170</id>
+      <referenceIdString>b169</referenceIdString>
+      <title>Finding Loop Invariants for Programs over Arrays Using a Theorem Prover</title>
+      <source>International Symposium on Symbolic and Numeric Algorithms for Scientific Computing</source>
+      <publisher>SYNASC</publisher>
+      <authors/>
+      <note>Laura Kovacs and Andrei Voronkov</note>
+      <publicationDateString>2009</publicationDateString>
+      <publicationYear>2009</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref171</id>
+      <referenceIdString>b170</referenceIdString>
+      <title>First-Order Theorem Proving and Vampire</title>
+      <source>Proceedings of the International Conference on Computer Aided Veri cation (CAV), LNCS, 2013 to appear</source>
+      <authors/>
+      <note>Laura Kovacs and Andrei Voronkov</note>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref172</id>
+      <referenceIdString>b171</referenceIdString>
+      <source>Chaff: Engineering an Efficient SAT Solver</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>W</string>
+          </firstNames>
+          <lastName>Mmz + 11] Matthew</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Conor</string>
+            <string>F</string>
+          </firstNames>
+          <lastName>Moskewicz</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Ying</string>
+          </firstNames>
+          <lastName>Madigan</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Lintao</string>
+          </firstNames>
+          <lastName>Zhao</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Sharad</string>
+          </firstNames>
+          <lastName>Zhang</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Malik</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2011</publicationDateString>
+      <publicationYear>2011</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref173</id>
+      <referenceIdString>b172</referenceIdString>
+      <source>Z. Manna and A. Pnueli. The Temporal Logic of Reactive and Concurrent Systems</source>
+      <publisher>Springer</publisher>
+      <authors/>
+      <publicationDateString>1992</publicationDateString>
+      <publicationYear>1992</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref174</id>
+      <referenceIdString>b173</referenceIdString>
+      <source>Strivastava S. and Gulwani S. Program Verification using Template over Predicate Abstraction. In Proc. of PLDI</source>
+      <authors/>
+      <publicationDateString>2009</publicationDateString>
+      <publicationYear>2009</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref175</id>
+      <referenceIdString>b174</referenceIdString>
+      <source>Dmitry Tsarkov and Ian Horrocks. FaCT++ Description Logic Reasoner: System Description. 4130:292-297</source>
+      <authors/>
+      <publicationDateString>2006</publicationDateString>
+      <publicationYear>2006</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref176</id>
+      <referenceIdString>b175</referenceIdString>
+      <source>A branching heuristic for testing propositional satisfiability</source>
+      <authors/>
+      <location>Jinchang Wang</location>
+      <publicationDateString>1995-10</publicationDateString>
+      <publicationYear>1995</publicationYear>
+      <publicationMonth>10</publicationMonth>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+  </references>
+</Publication>

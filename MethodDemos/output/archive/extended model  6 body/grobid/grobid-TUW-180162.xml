@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main"></title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Manuel</forename><surname>Egele</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Institute Eurecom</orgName>
+								<orgName type="institution" key="instit1">Technical University Vienna</orgName>
+								<orgName type="institution" key="instit2">University of California</orgName>
+								<address>
+									<settlement>Santa Barbara</settlement>
+									<country key="FR">France</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Christopher</forename><surname>Kruegel</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Institute Eurecom</orgName>
+								<orgName type="institution" key="instit1">Technical University Vienna</orgName>
+								<orgName type="institution" key="instit2">University of California</orgName>
+								<address>
+									<settlement>Santa Barbara</settlement>
+									<country key="FR">France</country>
+								</address>
+							</affiliation>
+						</author>
+						<author role="corresp">
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Engin</forename><surname>Kirda</surname></persName>
+							<email>kirda@eurecom.fr</email>
+							<affiliation key="aff0">
+								<orgName type="department">Institute Eurecom</orgName>
+								<orgName type="institution" key="instit1">Technical University Vienna</orgName>
+								<orgName type="institution" key="instit2">University of California</orgName>
+								<address>
+									<settlement>Santa Barbara</settlement>
+									<country key="FR">France</country>
+								</address>
+							</affiliation>
+						</author>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<note>Removing Web Spam Links from Search Engine Results</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<abstract>
+				<p>Web spam denotes the manipulation of web pages with the sole intent to raise their position in search engine rankings. Since a better position in the rankings directly and positively affects the number of visits to a site, attackers use different techniques to boost their pages to higher ranks. In the best case, web spam pages are a nuisance that provide undeserved advertisement revenues to the page owners. In the worst case, these pages pose a threat to Internet users by hosting malicious content and launching drive-by attacks against unsuspecting victims. When successful, these drive-by attacks then install malware on the victims&apos; machines. In this paper, we introduce an approach to detect web spam pages in the list of results that are returned by a search engine. In a first step, we determine the importance of different page features to the ranking in search engine results. Based on this information, we develop a classification technique that uses important features to successfully distinguish spam sites from legitimate entries. By removing spam sites from the results, more slots are available to links that point to pages with useful content. Additionally, and more importantly, the threat posed by malicious web sites can be mitigated, reducing the risk for users to get infected by malicious code that spreads via drive-by attacks. Elevated use of keywords in BODY 5 1,$2,3,7,9 Keyword spamming of BODY 6 +1,2,3,7,9 Elevated use of keywords in the TITLE 7 $1,2,3,7,9 Keyword spamming of TITLE 8 1,2,3,$4,7,9,10 Keyword spamming of the URL</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">Introduction</head><p>Search engines are designed to help users find relevant information on the Internet. Typically, a user submits a query (i.e., a set of keywords) to a search engine, which then returns a list of links to pages that are most relevant to this query. To determine the most-relevant pages, a search engine selects a set of candidate pages that contain some or all of the query terms and calculates a page score for each page. Finally, a list of pages, sorted by their score, is returned to the user.</p><p>This score is calculated from properties of the candidate pages, so-called features. Unfortunately, details on the exact algorithms that calculate these ranking values are kept secret by search engine companies, since this information directly influences the quality of the search results. Only general information is made available. For example, in 2007, Google claimed to take more than 200 features into account for the ranking value <ref type="bibr" target="#b7">[8]</ref>.</p><p>The way in which pages are ranked directly influences the set of pages that are visited frequently by the search engine users. The higher a page is ranked, the more likely it is to be visited <ref type="bibr" target="#b2">[3]</ref>. This makes search engines an attractive target for everybody who aims to attract a large number of visitors to her site. There are three categories of web sites that benefit directly from high rankings in search engine results. First, sites that sell products or services. In their context, more visitors imply more po- tential customers. The second category contains sites that are financed through advertisement. These sites aim to rank high for any query. The reason is that they can display their advertisements to each visitor, and, in turn, charge the advertiser. The third, and most dangerous, category of sites that aim to attract many visitors by ranking high in search results are sites that distribute malicious software. Such sites typically contain code that exploits web browser vulnerabilities to silently install malicious software on the visitor's computer. Once infected, the attacker can steal sensitive information (such as passwords, financial information, or web-banking credentials), misuse the user's bandwidth to join a denial of service attack, or send spam. The threat of drive-by downloads (i.e., automatically down- loading and installing software without the user's consent as the result of a mere visit to a web page) and distribution of malicious software via web sites has become a significant security problem. Web sites that host drive-by downloads are either created solely for the purpose of distributing malicious software or existing pages that are hacked and modified (for example, by inserting an iframe tag into the page that loads malicious content). Provos et al. <ref type="bibr" target="#b12">[13,</ref><ref type="bibr" target="#b13">14]</ref> observe that such attacks can quickly reach a large number of potential victims, as at least 1.3% of all search queries directed to the Google search engine contain results that link to malicious pages. Moreover, the pull-based infection scheme circumvents barriers (such as web proxies or NAT devices) that protect from push-based malware infection schemes (such as traditional, exploit-based worms). As a result, the manipulation of search engine results is an attractive technique for attackers that aim to attract victims to their malicious sites and spread malware via drive-by attacks <ref type="bibr" target="#b15">[16]</ref>.</p><p>Search engine optimization (SEO) companies offer their expertise to help clients improve the rank for a given site through a mixture of techniques, which can be classified as being acceptable or malicious. Acceptable techniques refer to approaches that improve the content or the presentation of a page to the benefit of users. Malicious techniques, on the other hand, do not benefit the user but aim to mislead the search engine's ranking algorithm. The fact that bad sites can be pushed into undeserved, higher ranks via malicious SEO techniques leads to the problem of web spam.</p><p>Gyöngyi and Garcia-Molina <ref type="bibr" target="#b8">[9]</ref> define web spam as every deliberate human action that is meant to improve a site's ranking without changing the site's true value. Search engines need to adapt their ranking algorithms continuously to mitigate the effect of spamming techniques on their results. For example, when the Google search engine was launched, it strongly relied on the PageRank <ref type="bibr" target="#b1">[2]</ref> algorithm to determine the ranking of a page where the rank is proportional to the number of incoming links. Unfortunately, this led to the problem of link farms and "Google Bombs," where enormous numbers of automatically created forum posts and blog comments were used to promote an attacker's target page by linking to it.</p><p>Clearly, web spam is undesirable, because it degrades the quality of search results and draws users to malicious sites. Although search engines invest a significant amount of money and effort into fighting this problem, checking the results of search engines for popular search terms demonstrates that the problem still exists. In this work, we aim to post-process results returned by a search engine to identify entries that link to spam pages. To this end, we first study the importance of different features for the ranking of a page. In some sense, we attempt to reverse-engineer the "secret" ranking algorithm of a search engine to understand better what features are important. Based on this analysis, we attempt to build a classifier that inspects these features to identify indications that a page is web spam. When such a page is identified, we can remove it from the search results. The two main contributions of this paper are the following:</p><p>• We conducted comprehensive experiments to understand the effects of different features on search engine rankings.</p><p>• We developed a system that allows us to reduce spam entries from search engine results by post-processing them. This protects users from visiting either spam pages or, more importantly, malicious sites that attempt to distribute malware.</p><p>The remainder of this paper is organized as follows. Section 2 provides a brief overview of our overall approach. In Section 3, we discuss our experiment that helped us understand how the ranking is calculated by major search engines. Section 4 describes our system for detecting web spam in search engine results and examines its effectiveness. Section 5 presents related work, and Section 6 briefly concludes.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">Overview</head><p>In this section, we first provide an overview of our approach to determine the features that are impor- tant for the ranking algorithm. Then, we describe how we use this information to develop a technique that allows us to identify web spam pages in search engine results.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1">Inferring Important Features</head><p>Unfortunately, search engine companies keep their ranking algorithms and the features that are used to determine the relevance of a page secret. However, to be able to understand which features might be abused by spammers and malware authors to push their pages, a more detailed understanding of the page ranking techniques is necessary. Thus, the goal of the first step of our work is to determine the features of a web page that have the most-pronounced influence on the ranking of this page. A feature is a property of a web page, such as the number of links pointing to other pages, the number of words in the text, or the presence of keywords in the title tag. To infer the importance of the individual features, we perform "black-box testing" of search engines. More precisely, we create a set of different test pages with different combinations of features and observe their rankings. This allows us to deduce which features have a positive effect on the ranking and which contribute only a little.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">Removing Spam from Search Engine Results</head><p>Based on the results of the previous step, we developed a system that aims to remove spam entries from search engine results. To this end, we examine the results that are returned by a search engine and attempt to detect links that point to web spam pages. This is a classification problem; every page in the result set needs to be classified as either spam or nospam. To perform this classification, we have to determine those features that are indicators of spam. For this, we leverage the findings from the first step.</p><p>Based on the features that are indicative of spam and a labeled training set, we construct a C4.5 decision tree. A decision tree is useful because of its intuitive insight into which features are important to the classification. Using this classifier, we can then check the results from the search engine and remove those links that point to spam pages. The result is an improvement of search quality and fewer visits to malicious pages.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">Feature Inference</head><p>In this section, we introduce in detail our techniques to infer important features. First, we discuss which features we selected. Then, we describe how these features are used to prepare a set of (related, but different) pages. Finally, we report on the rankings that major search engines produced for these pages and the conclusions that we could draw about the importance of each feature.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Feature Selection</head><p>As mentioned previously, we first aim to "reverse engineer" the ranking algorithm of a search en- gine to determine those features that are relevant for ranking. Based on reports from different SEO</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1</head><p>Keyword(s) in title tag</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2</head><p>Keyword(s) in body section</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3</head><p>Keyword(s) in H1 tag</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4</head><p>External links to high quality sites</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>5</head><p>External links to low quality sites</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>6</head><p>Number of inbound links</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7</head><p>Anchor text of inbound links contains keyword(s)</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8</head><p>Amount of indexable text</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>9</head><p>Keyword(s) in URL file path 10 Keyword(s) in URL domain name <ref type="table">Table 1</ref>: Feature set used for inferring important features.</p><p>vendors <ref type="bibr" target="#b16">[17]</ref> and study of related work <ref type="bibr" target="#b0">[1,</ref><ref type="bibr" target="#b4">5]</ref>, we chose ten presumably important page features (see <ref type="table">Table 1</ref>). We focused on features that can be directly influenced by us. The rationale is that only from the exact knowledge of the values of each feature, one can determine their importance. Additionally, the feature value should remain unchanged during the whole experiment. This can only be ensured for features under direct control.</p><p>When considering features, we first examined different locations on the page where a search term can be stored. Content-based features, such as body-, title-, or headings-tags are considered since these typically provide a good indicator for the information that can be found on that page. Additionally, we also take link-based features into account (since search engines are known to rely on linking information). Usually, the number of incoming links pointing to a page (i.e., the in-link feature) cannot be influenced directly. However, by recruiting 19 volunteers willing to host pages linking to our experiments, we were able to fully control this feature as well.</p><p>Together with features that are not directly related to the page's content (e.g., keyword in domain name), we believe to have covered a wide selection of features from which search engines can draw information to calculate the rankings.</p><p>We are aware of the fact that search engines also take temporal aspects into account when com- puting their rankings (e.g., how does a page or its link count evolve over time). However, we decided against adding time-dependent features to our feature set because this would have made the experi- ment significantly more complex. Also, since all pages are modified and made available at the same time, this should not influence our results.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Preparation of Pages</head><p>Once the features were selected, the next step was to create a large set of test pages, each with a different combination and different values of these features. For these test pages, we had to select a combination of search terms (a query) for which no search engine would produce any search re- sults prior to our experiment (i.e., only pages that are part of our experiment are part of the results). We arbitrarily chose "gerridae plasmatron" as the key phrase to optimize the pages for. 1 Remember, the goal is to estimate the influence of page features to the ranking algorithms and not to determine whether our experiment pages outperform (in terms of search engine response position) existing le- gitimate sites.</p><p>Using this search phrase, we prepared the test pages for our experiment. To this end, we first created a reference page consisting of information about gerridae and plasmatrons compiled from different sources. In a second step, this reference page was copied 90 times. To evade duplicate detection by search engines (where duplicate pages are removed from the results), each of these 90 pages was obfuscated by substituting many words in a manner similar to <ref type="bibr" target="#b9">[10]</ref>. Subsequent dupli- cate detection by the search engines (presumably based on title and headline tag) required a more aggressive obfuscation scheme where title texts and headlines where randomized as well.</p><p>For features whose possible values exceed the boolean values (i.e., present or absent), such as keyword frequencies, we selected representative values that correspond to one of the following four classes.</p><p>• The feature is not present at all.</p><p>• The feature is present in normal quantities.</p><p>• The feature is present in elevated quantities.</p><p>• The feature is present in spam quantities.</p><p>That is, a feature with a large domain (i.e., set of possible values) can assume four different values in our experiment. Of course, there is no general rule to define a precise frequency for which a feature can be considered to be normal, elevated, or spam. Thus, We manually examined legitimate and spam pages and extracted average, empirical frequencies for the different values. For example, for the frequencies of the keyword in the body text, a 1% keyword frequency is used as a baseline, 4% is regarded elevated, and 10% is considered to be spam.</p><p>Since only 90 domains were available, we had to select a representative subset of the 16,392 possible feature combinations. Moreover, to mitigate any measurement inaccuracies, we decided to do all experiments triple-redundant. That is, we chose a subset of 30 feature combinations, where each combination forms an experiment group that consists of three identical instances that share the same feature values. For these 30 experiment groups, we decided to select the feature values in a way to represent different, common cases. The regular case is a legitimate site, which is represented by the reference page. For this page, all feature values belong to the normal class. Other cases include keyword stuffing in different page locations (e.g., body, title, headlines), or differing amounts of incoming and outgoing links. The full list of the created experiments can be found in Appendix B.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3">Execution of Experiments and Results</head><p>Once the 30 experiment groups (i.e., 90 pages) were created, they were deployed to 90 freshly regis- tered domains, served by four different hosting providers. Additionally, some domains were hosted on our department web server. This was done to prevent any previous reputation of a long-lived domain to influence the rankings, and hence, our results.</p><p>Once the sites were deployed, we began to take hourly snapshots of the search engine results for the query "gerridae plasmatron." To keep the results compareable we queried the search engines for results of the english web (i.e., turning off any language detection support). In addition, we also took snapshots of results to queries consisting of the individual terms of the key phrase. Since all major search engines had results for the single query terms (gerridae/plasmatron) before our experiment started, we gained valuable insights into how our sites perform in comparison to already existing, mostly legitimate sites.</p><p>Our experiment was carried out between December 2007 and March 2008. During 86 days, we submitted 2,312 queries to Google and 1,700 queries to the Yahoo! search engine. Interestingly, we observed that rankings usually do not remain stable over a longer period of time. In fact, the longest period of a stable ranking for all test pages was only 68 hours for Google and 143 hours for Yahoo!. Also, we observed that Google refuses to index pages whose path (in the URL) contained more than five directories. This excluded some of our test pages from being indexed for the first couple of weeks.</p><p>One would expect that instances within the same experiment group occupy very close positions in the search engine results. Unfortunately, this is not always the case. While there were identical instances that ranked at successive or close positions, there were also some experiment groups whose instances were significantly apart. We suspect that most of these cases are due to duplicate detection (where search engines still recognized too many similarities among these instances).</p><p>At the time of writing, querying Google for "gerridae plasmatron" resulted in 92 hits. Including omitted results, 330 hits are returned. Yahoo! returns 82 hits without and 297 hits including the omitted results. Microsoft Live search returns only 28 pages. Since Microsoft Live search seemed slower in indexing our test pages, we report our results only for Google and Yahoo!.</p><p>Note that the Google and Yahoo! results consist of more than 90 elements. The reason for this is that the result sets also contain some sites of the volunteers, which frequently contain the query terms in anchor texts pointing to the test sites.</p><p>For Google, searching for "gerridae" yields approximately 55,000 results. Our test pages con- stantly managed to occupy five of the top ten slots with the highest ranking page at position three. Six was the highest position observed for the "plasmatron" query.</p><p>For Yahoo!, we observed that for both keywords pages of our experiments managed to rank at position one and stay there for about two weeks.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4">Extraction of Important Features</head><p>Because of the varying rankings, we determined a page's position by averaging its positions over the last six weeks of the experiment. We decided for the last six weeks, since the initial phase of our experiment contains the inaccuracies that were introduced due to duplicate detection. Also, it took some time before most pages were included in the index. We observed that when we issued the same query to Google and Yahoo!, they produced different rankings. This indicates that the employed algorithms weight features apparently differently. Thus, we extracted different feature weights for Google and Yahoo! as described below.</p><p>Knowing the combinations of all feature values for a page k and observing its position pos(k) in the rankings, our goal is now to assign an (optimal) weight to each feature that best captures this feature's importance to the ranking algorithm. As a first step, we define a function score. This calculation is repeated for all test pages (of course, using the same weights). Once all scores are calculated, the set of test pages is sorted by their score. This allows us to assign a predicted ranking rank(k) to each page. Subsequently, distances between the predicted ranking and the real position are calculated for all test pages. When the sum of these distances reaches the minimum, the weights are optimal. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>k=1</head><p>Note that we added the factor α(k) = m − pos(k) to the LP, which allows higher-ranking test pages to exert a larger influence on the feature weights (m is the number of test pages). This is to reflect that the exact position of a lower-ranking page fluctuates often significantly, and we aim to reduce the influence of these "random" fluctuations on the calculation of the weights. Solving this LP with the Simplex algorithm results in weights for all features that, over all pages, minimize the distance between the predicted rank and the actual position.</p><p>For Google, we found that the number of search terms in the title and the text body of the doc- ument had the strongest, positive influence on the ranking. Also, the number of outgoing links was important. On the other hand, the fact that the keywords are part of the file path had only a small influence. This is also true for the anchor text of inbound links.</p><p>For Yahoo!, the features were quite different. For example, the fact that a keyword appears in the title has less influence and even decreases with an increase of the frequency. Yahoo! also (and somewhat surprisingly) puts significantly more weight on both the number of incoming and outgoing links than Google. On the other hand, the number of times keywords appear in the text have no noticeable, positive effect.</p><p>As a last step, we examine the quality of our predicted rankings. To this end, we calculate the distance between the predicted position and the actual position for each experiment group. More precisely, Figure 1 shows, for each experiment group, the distance between the actual and predicted positions, taking the closest match for all three pages in each group.</p><p>Considering the Google results, 78 experiment pages of 26 experiment groups were listed in the rankings. The missing experiment groups are those whose pages have a directory hierarchy level of five, and thus, were not indexed by the search engine spiders. Looking at the distance, we observe that we can predict the position for six groups (23%) within a distance of two, and for eleven groups (42%) with a distance of five or less (over a range of 78 positions). For Yahoo!, when comparing the</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>60</head><p>Google Yahoo!</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>50</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="40">30</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Distance</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>20</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>10</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>0</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>0</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">10</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>15</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="20">25 30</head><p>Experiment Group experiment groups with the rankings, 21 groups appear in the results. Three (14%) of these groups are predicted within a distance of two, while eight (38%) are within a distance of five or less positions to the observed rank (over a range of 63 positions). At a first glance, our predictions do not appear very precise. However, especially for Yahoo!, almost all predictions are reasonably close to the actual results. Also, even though our predictions are not perfectly accurate, they typically reflect the general trend. Thus, we can conclude that our general assessment of the importance of a feature is correct, although the precise weight value might be different. Also, we only consider a linear ranking function, while the actual ranking algorithms are likely more sophisticated.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">Reducing Spam from Search Engine Results</head><p>In this section, we present the details of our prototype system to detect web spam entries in search engine results. The general idea behind this system is to use machine learning techniques to gener- ate a classification model (a classifier) that is able to distinguish between legitimate and spam sites by examining a page's features. The following section first presents the details on how the system operates. Then, the evaluation section describes our spam detection effectiveness.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">Detecting Web Spam in Search Engine Results</head><p>During the previous feature inference step, we determined the features that are most important to search engine ranking algorithms. Assuming an attacker can also learn this information, this suggests that the attacker will focus on those features that have the most pronounced influence on the rankings. This motivates our approach in developing a classifier that distinguishes spam and non-spam pages according to these features.</p><p>The classifier presented in this section is developed for the Google search engine. Thus, we include those features that are most relevant for Google, as discussed in the previous section. These are the number of keywords in the title, body, and domain name. In addition, we consider linking information. While counting the outgoing links of a page is trivial, the number of incoming links is not easily determinable. The information of how many in-links point to a page is not made available by search engines. This is the reason why we have to estimate the corresponding features with the help of link: queries. Google and Yahoo! support queries in the form of link:www.example.com resulting in a list of pages that link to www.example.com. The drawback is that neither the Google nor the Yahoo! results contain all pages that link to the queried page. Thus, these numbers are only an approximation of the real number of links pointing to a site.</p><p>On the other hand, we can introduce additional information sources that were not available to us before. For example, the PageRank value (as reported by the Google toolbar) was added to the feature set. This value could not be used for the experiment because of the infrequent updates (roughly every three months) and its violation of the requirement that we can control each feature directly.</p><p>Classifier. To build a classifier for web pages, we first require a labeled training set. Another set of data is required to verify the resulting model and evaluate its performance. To create these sets, 12 queries were submitted to the Google search engine (asking for popular search terms, extracted from Google's list of popular queries, called Zeitgeist <ref type="bibr" target="#b6">[7]</ref>). For every query, the first 50 results were manually classified as legitimate or spam/malicious. Discarding links to non-HTML content (e.g. All result pages were downloaded and fed into feature extractors that parse the HTML source code and return the value (i.e., the frequency) of the feature under consideration. If the query consists of multiple terms, query dependent feature extractors report higher values if the full query matches the analyzed feature. The rationale behind this is that a single heading tag that contains the whole query indicates a better match than multiple, individual heading tags, each containing one of the query terms. Feature extractors that follow this approach are marked with an (X) in the following list, which enumerates all the features that we consider:</p><p>• Title: the number of query terms from HTML title tag <ref type="bibr">(X)</ref> • Body: the number of query terms in the HTML body section <ref type="bibr">(X)</ref> • Domain name: the number of query terms in the domain name part of the URL • PageRank site: the Google PageRank value for the URL as reported by the Google toolbar</p><p>• PageRank domain: the Google PageRank value for the domain as reported by the Google toolbar</p><p>• Tfreq: the frequency of query terms appearing on the page (number of query terms / number of words on page)</p><p>Using the labeled training data as a basis, we run the J48 algorithm to generate a decision tree. J48 is an implementation of the C4.5 decision tree <ref type="bibr" target="#b14">[15]</ref> algorithm in the Weka toolkit <ref type="bibr" target="#b19">[20]</ref>. We chose a decision tree as the classifier as it intuitively presents the importance of the involved features (i.e., the closer to the root a feature appears in the tree, the more important it is). The J48 decision tree generated for our training data set is shown in Appendix A. This tree consists of 21 nodes, 11 of which are leafs. Five features were selected by the algorithm to be useful as distinction criteria between spam and legitimate sites. Additionally, Weka calculates for every leaf a confidence factor, indicating how accurate this classification is.</p><p>The most important feature is related to the presence of the search terms on the page (i.e., the query term frequency &gt; 0). Other important features are the domain name, the file path, the number of in-links as reported by Yahoo!, and the PageRank value of the given site as reported by the Google toolbar.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">Evaluation</head><p>This section evaluates the ability of our decision tree to detect unwanted (spam, malicious) pages in search engine results. The fact that we want to improve the results by removing spam sites demands a low false positive rate. False positives are legitimate sites that are removed from the results because they are misclassified as spam. It is clearly desirable to have a low number of these misclassifications, since false positives influence the quality of the search results in a negative way. False negatives on the other hand, do not have an immediate negative effect on the search results. If a spam site is misclassified as legitimate, it ends up as part of the search results. Since we are only post-processing search engine results, the site was there in the first place. Thus, false negatives indicate inaccuracies in our classification model, but do not influence the quality of the original search results negatively.</p><p>Evaluating the J48 decision tree with our test data set results in the confusion matrix as shown in <ref type="table">Table 2</ref>. The classifier has a false positive rate of 10.8% and a false negative rate of 64.4%. The detection rate (true positives) is 35.6%.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Classified as Spam Classified as Legitimate</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Spam</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="21">38</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Legitimate 20 173</head><p>Table 2: Confusion matrix of the J48 decision tree Detecting 35% of the unwanted sites is good, but the false positive rate of 11% might be too high. To lower the false positive rate, we decided to take the confidence factor into account that is provided for each leaf in the decision tree. By using this confidence factor as a threshold (i.e., a site is only classified as spam when the confidence factor is above the chosen threshold), we can tune the system in a way that it produces less false positives, at the cost of more false negatives. For example, by using a confidence value of 0.88, the classifier has a false negative rate of 81.4%. However, it produces no false positives for our test set. The true positive rate with this threshold value is 18.6%, indicating that the system still detects about every fifth spam/malicious page in the search results.</p><p>While a detection rate of 18% is not perfect and allows for improvement, it clearly lowers the amount of unwanted pages in the results. Taking into consideration that most users only pay attention to the top 10 or top 20 results of a search query, these 18% create up to two empty slots in the top 10 rankings that can accommodate potentially interesting pages instead.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">Related Work</head><p>In recent years, considerable effort was dedicated to the detection and mitigation of web spam. In <ref type="bibr" target="#b8">[9]</ref>, the authors present different techniques to fool search engine ranking algorithms. Boosting tech- niques, such as link farms, are used to push pages to undeserved higher ranks in search engine results. Hiding or cloaking techniques are used to trick search engines by serving different content to the search engine spiders and human users.</p><p>One of the most prominent boosting techniques are link farms, and multiple researchers have pre- sented techniques for detecting them. For example, Wu and Davison <ref type="bibr" target="#b21">[22]</ref> propose an algorithm that generates a graph of a link farm from an initial seed and propagates badness values through this graph. This information can then be used with common, link-based ranking algorithms, such as PageRank or HITS. The same authors also present their findings on cloaking and redirection techniques <ref type="bibr" target="#b20">[21]</ref>.</p><p>Ntoulas et al. <ref type="bibr" target="#b11">[12]</ref> present a technique of detecting spam pages by content analysis. This work only takes query independent features into account, while Svore et al. <ref type="bibr" target="#b17">[18]</ref> also use query dependent in- formation. A system to detect cloaking pages is proposed by Chellapilla and Chickering in <ref type="bibr" target="#b3">[4]</ref>. For this, a given URL is downloaded twice, providing different user agent strings for each download. If the pages are (significantly) different, the page uses cloaking techniques.</p><p>Wang et al. <ref type="bibr" target="#b18">[19]</ref> follow the money in advertising schemes and propose a five-layer, double-funnel model to explain the relations that exist between advertisers and sites that employ web spam tech- niques. Fetterly et al. <ref type="bibr" target="#b5">[6]</ref> present a series of measurements to evaluate the effectiveness in web spam detection. A quantitative study of forum spamming was presented by Niu et al. <ref type="bibr" target="#b10">[11]</ref> The work that is closest to our attempt in inferring the importance of different web page features is <ref type="bibr" target="#b0">[1]</ref>. In that paper, Bifet et al. attempt to infer the importance of page features for the ranking algorithm by analyzing the results for different queries. They extract feature vectors for each page and try to model the ranking function by using support vector machines. Since their work is based on already existing pages, they do not have control over certain features (e.g., in-link properties). In <ref type="bibr" target="#b4">[5]</ref>, Evans performs a statistical analysis of the effect that certain factors have on the ranking of pages. While he includes factors, such as the listing of pages in web directories and a site's PageRank value, Evans only focuses on query independent values while neglecting all other factors.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">Conclusions</head><p>Search engines are a target for attackers that aim to distribute malicious content on their websites or earn undeserved (advertising) revenue. This observation motivated our work to create a classifier that is able to identify and remove unwanted entries from search results. As a first step, we required to understand which features are important for the rank of a page. The reason is that these features are most likely the ones that an attacker will tamper with. To infer important features, we conducted an experiment in which we monitored, for almost three months, the ranking of pages with 30 different combinations of feature values. Then, we computed the weights for the features that would best predict the actual, observed rankings. Those features with the highest weights are considered to be the most important for the search engine ranking algorithm. Based on the features determined in the first step and a labeled training set, we generated a classifier (a J48 decision tree). This decision tree was then evaluated on a test data set. The initial evaluation resulted in 35% detection rate and 11% false positives. By taking into account the confidence values of the decision tree and introducing a cutoff value, the false positives could be lowered to zero. At this rate, almost one out of five spam pages can be detected, improving the results of search engines without removing any valid results.  <ref type="table">Table 3</ref>: List of experiment groups. Column 2 references the features in <ref type="table">Table 1</ref> and captures the list of applied features for this experiment group. The lack of a feature in the description denotes that the feature is not used for this experiment, the prefix (+) indicates that a feature is applied in elevated quantities, where ($) means the feature is present in spam quantities. The third column is a description of the case that this experiment group reflects.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0" validated="false"><head></head><label></label><figDesc>This function takes as input a set of weights and feature values and computes a score score(k) for a page k.</figDesc><table>n 
+
+score(k) = 
+
+f 
+
+k 
+
+i · w i 
+
+i=1 
+
+n . . . number of features 
+w i ∈ [−1, 1] . . . weight of feature i 
+f k 
+i ∈ 0, 1 . . . presence of feature i in test page k 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1" validated="false"><head></head><label></label><figDesc>This translates to the following objective function of a linear programming problem (LP):</figDesc><table>m 
+
+min : 
+
+α k |pos(k) − rank(k)| 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2" validated="false"><head></head><label></label><figDesc>Figure 1: Differences when comparing predicted values with actual ranking positions.</figDesc><table></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3" validated="false"><head></head><label></label><figDesc>, PDF or PPT files) resulted in a training data set consisting of 295 sites (194 legitimate, 101 spam). The test data set had 252 pages (193 legitimate, 59 spam).</figDesc><table></table></figure>
+
+			<note place="foot" n="1"> Gerridae is the Latin expression for water strider, plasmatron is a special form of an ion source.</note>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Acknowledgments</head><p>This work has been supported by the Austrian Science Foundation (FWF) under grant P18764, SEC-overer FIT-IT Trust in IT-Systems 2. Call, Austria, Secure Business Austria (SBA), and the WOM-BAT and FORWARD projects funded by the European Commission in the 7th Framework.</p></div>
+			</div>
+
+			<div type="annex">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Appendix A: J48 Decision Tree</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>tfreq</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Appendix B: List of Experiments</head><p>Since instances within an experiment group share the same feature values, only the experiment groups are listed here. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>No. Feature Combination</head></div>			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">An Analysis of Factors Used in Search Engine Ranking</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Bifet</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Castillo</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P.-A</forename><surname>Chirita</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">I</forename><surname>Weber</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Adversarial Information Retrieval on the Web</title>
+		<imprint>
+			<date type="published" when="2005" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">The Anatomy of a Large-Scale Hypertextual Web Search Engine</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Brin</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><surname>Page</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">7th International World Wide Web Conference</title>
+		<imprint>
+			<publisher>WWW</publisher>
+			<date type="published" when="1998" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Experiencies retrieving information in the world wide web</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Viña</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the Sixth IEEE Symposium on Computers and Communications</title>
+		<meeting>the Sixth IEEE Symposium on Computers and Communications</meeting>
+		<imprint>
+			<date type="published" when="2001" />
+			<biblScope unit="page" from="72" to="79" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Improving Cloaking Detection Using Search Query Popularity and Monetizability</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">K</forename><surname>Chellapilla</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Chickering</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Adversarial Information Retrieval on the Web</title>
+		<imprint>
+			<date type="published" when="2006" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Analysing Google rankings through search engine optimization data</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><forename type="middle">P</forename><surname>Evans</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Internet Research</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<date type="published" when="2007" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Spam, damn spam, and statistics: Using statistical analysis to locate spam web pages</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Fetterly</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Manasse</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Najork</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">WebDB</title>
+		<imprint>
+			<date type="published" when="2004" />
+			<biblScope unit="page" from="1" to="6" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Google</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Zeitgeist</surname></persName>
+		</author>
+		<ptr target="http://www.google.com/press/zeitgeist.html" />
+		<title level="m">Search patterns, trends, and surprises</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<monogr>
+				<ptr target="http://www.nytimes.com/2007/06/03/business/yourmoney/03google.html?pagewanted=4&amp;_r=1" />
+		<title level="m">Google Keeps Tweaking Its Search Engine</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Web Spam Taxonomy</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Z</forename><surname>Gyöngyi</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">H</forename><surname>Garcia-Molina</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Adversarial Information Retrieval on the Web</title>
+		<imprint>
+			<date type="published" when="2005" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Exploiting Redundancy in Natural Language to Penetrate Bayesian Spam Filters</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Karlberger</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Bayler</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Kruegel</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><surname>Kirda</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">First USENIX Workshop on Offensive Technologies (WOOT07)</title>
+		<imprint>
+			<date type="published" when="2007" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">A quantitative study of forum spamming using context-based analysis</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Y</forename><surname>Niu</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Y.-M</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">H</forename><surname>Chen</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Hsu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">NDSS</title>
+		<imprint>
+			<date type="published" when="2007" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Detecting Spam Web Pages through Content Analysis</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Ntoulas</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Najork</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Manasse</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Fetterly</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">15th International World Wide Web Conference</title>
+		<imprint>
+			<publisher>WWW</publisher>
+			<date type="published" when="2006" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">All your iframes point to us</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">N</forename><surname>Provos</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Mavrommatis</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><forename type="middle">A</forename><surname>Rajab</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Monrose</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">17th USENIX Security Symposium</title>
+		<imprint>
+			<date type="published" when="2008" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">The Ghost In The Browser Analysis of Web-based Malware</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">N</forename><surname>Provos</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Mcnamee</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Mavrommatis</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">K</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">N</forename><surname>Modadugu</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">First Workshop on Hot Topics in Understanding Botnets (HotBots &apos;07)</title>
+		<imprint>
+			<date type="published" when="2007" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<monogr>
+		<title level="m" type="main">C4.5: Programs for Machine Learning</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Quinlan</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1993" />
+			<publisher>Morgan Kaufmann</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<monogr>
+		<title level="m" type="main">Analysis of Adversarial Code: The role of Mal</title>
+		<ptr target="http://clubhack.com/2007/files/Rahul-Analysis_of_Adversarial_Code.pdf" />
+		<imprint>
+			<date type="published" when="2007-12" />
+		</imprint>
+		<respStmt>
+			<orgName>Rahul Mohandas (McAfee Avert Labs</orgName>
+		</respStmt>
+	</monogr>
+	<note>Last accessed</note>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<monogr>
+				<ptr target="http://www.seomoz.org/article/search-ranking-factors" />
+		<title level="m">Google Search Engine Ranking Factors</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Improving Web Spam Classification using Rank-time Features</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">K</forename><surname>Svore</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Q</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Burges</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Raman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Adversarial Information Retrieval on the Web</title>
+		<imprint>
+			<date type="published" when="2007" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Spam Double-Funnel: Connecting Web Spammers with Advertisers</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Y.-M</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Ma</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Y</forename><surname>Niu</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">H</forename><surname>Chen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">16th International Conference on World Wide Web</title>
+		<imprint>
+			<date type="published" when="2007" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<monogr>
+		<title level="m" type="main">Data Mining: Practical machine learning tools and techniques</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">I</forename><surname>Witten</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><surname>Frank</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2005" />
+			<publisher>Morgan Kaufmann</publisher>
+		</imprint>
+	</monogr>
+	<note>2nd edition edition</note>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Cloaking and Redirection: A Preliminary Study</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Davison</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Adversarial Information Retrieval on the Web</title>
+		<imprint>
+			<date type="published" when="2005" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Identifying Link Farm Spam Pages</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Wu</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><forename type="middle">D</forename><surname>Davison</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">14th International World Wide Web Conference</title>
+		<imprint>
+			<publisher>WWW</publisher>
+			<date type="published" when="2005" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

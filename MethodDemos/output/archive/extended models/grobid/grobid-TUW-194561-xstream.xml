@@ -1,0 +1,492 @@
+<Publication>
+  <id>TUW-194561</id>
+  <title>Extending Context-Sensitivity in Term Rewriting Bernhard Gramlich and Felix Schernhammer * Institute of Computer Languages, Theory and Logic Group Vienna University of Technology</title>
+  <note>{gramlich,felixs}@logic.at</note>
+  <doi>10.4204/EPTCS.15.5</doi>
+  <abstractText>We propose a generalized version of context-sensitivity in term rewriting based on the notion of &quot;forbidden patterns&quot;. The basic idea is that a rewrite step should be forbidden if the redex to be contracted has a certain shape and appears in a certain context. This shape and context is expressed through forbidden patterns. In particular we analyze the relationships among this novel approach and the commonly used notion of context-sensitivity in term rewriting, as well as the feasibility of rewriting with forbidden patterns from a computational point of view. The latter feasibility is characterized by demanding that restricting a rewrite relation yields an improved termination behaviour while still being powerful enough to compute meaningful results. Sufficient criteria for both kinds of properties in certain classes of rewrite systems with forbidden patterns are presented. 1 Introduction and Overview Standard term rewriting systems (TRSs) are well-known to enjoy nice logical and closure properties. Yet, from an operational and computational point of view, i.e., when using term rewriting as computational model, it is also well-known that for non-terminating systems restricted versions of rewriting obtained by imposing context-sensitivity and/or strategy requirements may lead to better results (e.g., in terms of computing normal forms, head-normal forms, etc.). One major goal when using reduction strategies and context restrictions is to avoid non-terminating reductions. On the other hand the restrictions should not be too strong either, so that the ability to compute useful results in the restricted rewrite systems is not lost. We introduce a novel approach to context restrictions relying on the notion of &quot;forbidden patterns&quot;, which generalizes existing approaches and succeeds in handling examples in the mentioned way (i.e., producing a terminating reduction relation which is powerful enough to compute useful results) where others fail. The following example motivates the use of reduction strategies and/or context restrictions. Example 1. Consider the following rewrite system, cf. This TRS is non-terminating and not even weakly normalizing. Still some terms like 2nd(inf(x)) are reducible to a normal form while also admitting infinite reduction sequences. One goal of context restrictions and reduction strategies is to restrict derivations in a way such that normal forms can be computed whenever they exist, while infinite reductions are avoided. One way to address the problem of avoiding non-normalizing reductions in Example 1 is the use of reduction strategies. For instance for the class of (almost) orthogonal rewrite systems (the TRS of * This author has been supported by the Austrian Academy of Sciences under grant 22. 57 Example 1 is orthogonal), always contracting all outermost redexes in parallel yields a normalizing strategy (i.e. whenever a term can be reduced to a normal form it is reduced to a normal form under this strategy) [18]. Indeed, one can define a sequential reduction strategy having the same property for an even wider class of TRSs [3]. One major drawback (or asset depending on one&apos;s point of view) of using reduction strategies, however, is that their use does not introduce new normal forms. This means that the set of normal forms w.r.t. to some reduction relation is the same as the set of normal forms w.r.t. to the reduction relation under some strategy. Hence, strategies can in general not be used to detect non-normalizing terms or to impose termination on not weakly normalizing TRSs (with some exceptions cf. e,g. [3, Theorem 7.4]). Moreover, the process of selecting a suitable redex w.r.t. to a reduction strategy is often complex and may thus be inefficient. These shortcomings of reduction strategies led to the advent of proper restrictions of rewriting that usually introduce new normal forms and select respectively forbid certain reductions according to the syntactic structure of a redex and/or its surrounding context. The most well-known approach to context restrictions is context-sensitive rewriting. There, a replacement map µ specifies the arguments µ(f) ⊆ {1,. .. , ar(f)} which can be reduced for each function f. However, regarding Example 1, context-sensitive rewriting does not improve the situation, since allowing the reduction of the second argument of &apos;:&apos; leads to non-termination, while disallowing its reduction leads to incompleteness in the sense that for instance a term like 2nd(inf(x)) cannot be normalized via the corresponding context-sensitive reduction relation, despite having a normal form in the unrestricted system. Other ideas of context restrictions range from explicitly modeling lazy evaluation (cf. latter generalized versions of context-sensitive rewriting are quite expressive and powerful (indeed some of them can be used to restrict the reduction relation of the TRS in Example 1 in a way, so that the restricted relation is terminating and still powerful enough to compute (head-)normal forms), but on the other hand tend to be hard to analyze and understand, due the subtlety of the strategic information specified. The approach we present in this paper is simpler in that its definition only relies on matching and simple comparison of positions rather than on laziness or prioritizing the evaluation of certain arguments of functions over others. In order to reach the goal of restricting the reduction relation in such a way that it is terminating while still being powerful enough to compute useful results, we provide a method to verify termination of a reduction relation restricted by our approach (Section 5) as well as a criterion which guarantees that normal forms computed by the restricted system are head-normal forms of the unrestricted system (Section 4). Recently it turned out that, apart from using context-sensitivity as computation model for standard term rewriting (cf. e.g. [16, 14]), context-sensitive rewrite systems naturally also appear as intermediate representations in many areas relying on transformations, such as program transformation and termination analysis of rewrite systems with conditions [6, 20] / under strategies [8]. This suggests that apart from using restrictions as guidance and thus as operational model for rewrite derivations, a general, flexible and well-understood framework of restricted term rewriting going beyond context-sensitive rewriting may be useful as a valuable tool in many other areas, too. The major problem in building such a framework is that imposing context restrictions on term rewriting in general invalidates the closure properties of term rewriting relations, i.e., stability under contexts and substitutions. Note that in the case of context-sensitive rewritingàrewriting`rewritingà la [14, 16] only stability under contexts is lost.</abstractText>
+  <keywords/>
+  <authors>
+    <Author>
+      <firstNames/>
+      <affiliations>
+        <Affiliation>
+          <id>aff0</id>
+          <institution>Workshop on Reduction Strategies in Rewriting and Programming</institution>
+        </Affiliation>
+      </affiliations>
+    </Author>
+  </authors>
+  <affiliations>
+    <Affiliation reference="/Publication[1]/authors[1]/Author[1]/affiliations[1]/Affiliation[1]"/>
+  </affiliations>
+  <sections>
+    <Section>
+      <level>2</level>
+      <title>Preliminaries</title>
+      <referenceIds>
+        <string>ref3</string>
+        <string>ref4</string>
+        <string>ref4</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>59</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3</level>
+      <title>Rewriting with Forbidden Patterns</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4</level>
+      <title>Computing Meaningful Results</title>
+      <referenceIds>
+        <string>ref11</string>
+        <string>ref13</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>61</title>
+      <referenceIds>
+        <string>ref11</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5</level>
+      <title>Proving Termination</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>65</title>
+      <referenceIds>
+        <string>ref9</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>6</level>
+      <title>Conclusion and Related Work</title>
+      <referenceIds>
+        <string>ref12</string>
+        <string>ref12</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>67</title>
+      <referenceIds>
+        <string>ref2</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>References</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+  </sections>
+  <citationContexts/>
+  <references>
+    <Reference>
+      <id>ref1</id>
+      <referenceIdString>b0</referenceIdString>
+      <title>On-demand strategy annotations revisited: An improved on-demand evaluation Strategy</title>
+      <source>Theoretical Computer Science</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>S</string>
+          </firstNames>
+          <lastName>Alpuente</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>B</string>
+          </firstNames>
+          <lastName>Escobar</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Lucas</string>
+          </firstNames>
+          <lastName>And</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>411</volume>
+      <issue>2</issue>
+      <pageFrom>504</pageFrom>
+      <pageTo>541</pageTo>
+      <publicationDateString>2010</publicationDateString>
+      <publicationYear>2010</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref2</id>
+      <referenceIdString>b1</referenceIdString>
+      <source>S. Antoy and A. Middeldorp. A sequential reduction strategy. Theoretical Computer Science</source>
+      <authors/>
+      <volume>165</volume>
+      <pageFrom>75</pageFrom>
+      <pageTo>95</pageTo>
+      <publicationDateString>1996</publicationDateString>
+      <publicationYear>1996</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref3</id>
+      <referenceIdString>b2</referenceIdString>
+      <source>Term rewriting and All That</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Nipkow</string>
+          </firstNames>
+          <lastName>And</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1998</publicationDateString>
+      <publicationYear>1998</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref4</id>
+      <referenceIdString>b3</referenceIdString>
+      <source>Term Rewriting Systems. Cambridge Tracts in Theoretical Computer Science 55</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>J</string>
+          </firstNames>
+          <lastName>Bezem</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>And</string>
+          </firstNames>
+          <lastName>Klop</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>R</string>
+          </firstNames>
+          <lastName>Vrijer</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref5</id>
+      <referenceIdString>b4</referenceIdString>
+      <source>Proving operational termination of membership equational programs</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>S</string>
+          </firstNames>
+          <lastName>Durán</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>C</string>
+          </firstNames>
+          <lastName>Lucas</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>J</string>
+          </firstNames>
+          <lastName>Marché</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Urbain</string>
+          </firstNames>
+          <lastName>And</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <note>Higher-Order and Symbolic Computation</note>
+      <pageFrom>59</pageFrom>
+      <pageTo>88</pageTo>
+      <publicationDateString>2008</publicationDateString>
+      <publicationYear>2008</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref6</id>
+      <referenceIdString>b5</referenceIdString>
+      <source>From outermost to context-sensitive rewriting</source>
+      <publisher>Springer</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Hendriks</string>
+          </firstNames>
+          <lastName>And</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2009</publicationDateString>
+      <publicationYear>2009</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref7</id>
+      <referenceIdString>b6</referenceIdString>
+      <title>Lazy rewriting on eager machinery</title>
+      <source>ACM Transactions on Programming Languages and Systems (TOPLAS)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>J</string>
+          </firstNames>
+          <lastName>Fokkink</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Walters</string>
+          </firstNames>
+          <lastName>And</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>22</volume>
+      <issue>1</issue>
+      <pageFrom>45</pageFrom>
+      <pageTo>86</pageTo>
+      <publicationDateString>2000</publicationDateString>
+      <publicationYear>2000</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref8</id>
+      <referenceIdString>b7</referenceIdString>
+      <source>Transformation techniques for context-sensitive rewrite systems</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Middeldorp</string>
+          </firstNames>
+          <lastName>And</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>14</volume>
+      <note>Journal of Functional Programming</note>
+      <pageFrom>379</pageFrom>
+      <pageTo>427</pageTo>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref9</id>
+      <referenceIdString>b8</referenceIdString>
+      <title>Thiemann AProVE 1.2: Automatic termination proofs in the dependency pair framework</title>
+      <source>LNCS 4130</source>
+      <publisher>Springer</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>P</string>
+            <string>Schneider</string>
+          </firstNames>
+          <lastName>Giesl</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>R</string>
+          </firstNames>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>281</pageFrom>
+      <pageTo>286</pageTo>
+      <publicationDateString>2006</publicationDateString>
+      <publicationYear>2006</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref10</id>
+      <referenceIdString>b9</referenceIdString>
+      <source>Generalizing Newman&apos;s Lemma for left-linear rewrite systems</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Lucas</string>
+          </firstNames>
+          <lastName>And</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2006</publicationDateString>
+      <publicationYear>2006</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref11</id>
+      <referenceIdString>b10</referenceIdString>
+      <source>Context-sensitive computations in functional and functional logic programs</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Lucas</string>
+          </firstNames>
+        </ReferenceAuthor>
+      </authors>
+      <note>Journal of Functional and Logic Programming</note>
+      <publicationDateString>1998</publicationDateString>
+      <publicationYear>1998</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref12</id>
+      <referenceIdString>b11</referenceIdString>
+      <source>Termination of on-demand rewriting and termination of OBJ programs</source>
+      <publisher>ACM</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Lucas</string>
+          </firstNames>
+        </ReferenceAuthor>
+      </authors>
+      <location>Florence, Italy</location>
+      <pageFrom>82</pageFrom>
+      <pageTo>93</pageTo>
+      <publicationDateString>2001</publicationDateString>
+      <publicationYear>2001</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref13</id>
+      <referenceIdString>b12</referenceIdString>
+      <source>S. Lucas. Context-sensitive rewriting strategies. Information and Computation</source>
+      <authors/>
+      <volume>178</volume>
+      <pageFrom>294</pageFrom>
+      <pageTo>343</pageTo>
+      <publicationDateString>2002</publicationDateString>
+      <publicationYear>2002</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref14</id>
+      <referenceIdString>b13</referenceIdString>
+      <source>S. Lucas. Lazy rewriting and context-sensitive</source>
+      <authors/>
+      <publicationDateString>2002</publicationDateString>
+      <publicationYear>2002</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref15</id>
+      <referenceIdString>b14</referenceIdString>
+      <title>Computing in systems described by equations</title>
+      <source>LNCS</source>
+      <publisher>Springer</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Donnell</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>58</volume>
+      <publicationDateString>1977</publicationDateString>
+      <publicationYear>1977</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref16</id>
+      <referenceIdString>b15</referenceIdString>
+      <source>Electronic Notes in Theoretical Computer Science</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Gramlich</string>
+          </firstNames>
+          <lastName>And</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <note>Termination of lazy rewriting revisited</note>
+      <publicationDateString>2008</publicationDateString>
+      <publicationYear>2008</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref17</id>
+      <referenceIdString>b16</referenceIdString>
+      <title>Characterizing and proving operational termination of deterministic conditional term rewriting systems</title>
+      <source>Selected revised papers of NWPT&apos;08, to appear</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Gramlich</string>
+          </firstNames>
+          <lastName>And</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <note>Journal of Logic and Algebraic Programming</note>
+      <publicationDateString>2009</publicationDateString>
+      <publicationYear>2009</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref18</id>
+      <referenceIdString>b17</referenceIdString>
+      <source>VMTL-a modular termination laboratory</source>
+      <publisher>Springer</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>B</string>
+          </firstNames>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2009</publicationDateString>
+      <publicationYear>2009</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref19</id>
+      <referenceIdString>b18</referenceIdString>
+      <title>On some implementation aspects of VMTL</title>
+      <source>Proc. WST&apos;09</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Gramlich</string>
+          </firstNames>
+          <lastName>And</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>72</pageFrom>
+      <pageTo>75</pageTo>
+      <publicationDateString>2009</publicationDateString>
+      <publicationYear>2009</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+  </references>
+</Publication>

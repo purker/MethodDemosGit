@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">ANALELE UNIVERSITĂŢII &quot;EFTIMIE MURGU&quot; REŞIŢA ANUL XXII, NR. 2, 2015, ISSN 1453-7397 Elisabeta Spunei, Ion Piroi, Florina Piroi Basic Concepts in the Diagnosis of Traffic Safety In-stallations Using Fuzzy Logic Based Models</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<title level="a" type="main">ANALELE UNIVERSITĂŢII &quot;EFTIMIE MURGU&quot; REŞIŢA ANUL XXII, NR. 2, 2015, ISSN 1453-7397 Elisabeta Spunei, Ion Piroi, Florina Piroi Basic Concepts in the Diagnosis of Traffic Safety In-stallations Using Fuzzy Logic Based Models</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<abstract>
+				<p>The diagnosis of failures in train traffic installations can be done in several ways: direct observations and measurements, software assisted diagnosis using specific software packages, process variable monitoring for electronically centralized installations. This work presents basic concepts for Model Based Diagnosis (MBD) that uses fuzzy logic to analyse the integrity of Centralized Traffic Control Installations (CTC) in train traffic. We define the diagnosis relations to be used and show how to apply them to train traffic security installations. Implementing these concepts into an expert system assists maintenance operators in quick failure diagnosis of the train traffic security installations. Keywords: (CTC), Model Based Diagnosis, logic relations, fuzzy logic 1. Introduction Railroad Centralized Traffic Control installations are very complex systems that command and control train traffic, being essential in train traffic security. Train stations where the CTC installation is electro-dynamically realised (ED-CTC) have more complex subsystems, each of them, again, having subcomponents that interact with each other. Each subsystem interacts with other subsystems, therefore the safety of the traffic passing an ED-CTC station is ensured when all subsystems function within normal parameter values. Fig. 1 shows the interconnection block schema for a railway station with CTC and ABS (Automatic Block Signalling) installations. All subsystems are controlled through the command console, any failure of the one or more subsystem causing an irregular behaviour of the whole system, behaviour which is usually signalled. Diagnosing the system or the subsystem is necessary in order to detect the failing component(s) that are the cause of the faulty behaviour. Currently, for these types of installations, the failure diagnosis is done by direct observations of the various signals and measurements of equipment states.</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">Principles of the Model Based Diagnosis</head><p>To better understand the basic principles in the model based diagnosis we will use the word system to refer to both systems and subsystems.</p><p>To use the model based diagnosis it is necessary to completely describe each system component. This step is called system description, SD <ref type="bibr" target="#b0">[1,</ref><ref type="bibr" target="#b1">2]</ref>. Logical rela- tions that describe how the components work, the links between components, and the workings of the whole system are established. These relations are, in fact, propositional logic sentences that form the system's propositional logic, SPL.</p><p>A logical consequence of the detailed and correct system description is the correct operation of the system. Any discrepancy between the system's punctual behaviour (pointwise) and its description is caused by a faulty component. Thus the system description is based on the logical propositions that describe the com- ponents, their operation and the links between them.</p><p>To diagnose a system we must identify all the discrepancies between the sys- tem description and its running behaviour. Each discrepancy (or symptom) is de- termined by a set of concurrent components, CC, which are candidate components for the respective symptom. We can write: CC CD ⊃ <ref type="bibr" target="#b0">(1)</ref> An example of a defect, in our case, is the fact that an entry signal cannot be commanded on the 'free' position. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>CD CC</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Feed</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>instalation</head><p>Command apparatus </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Switch point</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Signal ABS</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>CD</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>CD CD CD</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>CD Track circuits</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Safeties Ropes Rails Relays</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Transformers</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>CD Transformers Safeties Rail track relay IMVS</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>=</head><p>The faults in the track circuit operations are caused by the breakdown of one or more candidate components in the CD set. We continue with some further basic definitions and relations in the model based diagnosis systems.</p><p>The CD's operation state is described by a predicate, AB, which indicates the abnormal operation (faulty state). The normal operation state is given by ¬AB <ref type="bibr" target="#b1">[2]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Definition 1: System description</head><p>A functional system, FS, is described by the pair (SD, CD):</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>FS SD CD</head><p>⊃ ∪ <ref type="figure">(3)  where:</ref> -CD is a finite candidate system components set; -SD is a finite subset of system's propositional logic, SPL. The system diagnosis, ∆, is applied when the following holds:</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>SD CD FS</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>∪ ≠</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>(4)</head><p>Using the AB predicate we can describe the components' functional proper- ties. Suppose we want to express the following sentence: "Normally, the NF1-800 operating voltage is between 8 V and 12 V" <ref type="bibr" target="#b2">[3]</ref>. Then, the corresponding relation is: <ref type="figure" target="#fig_0">( )  (  )  ( )  (  )  (  )   1</ref> 800 , </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>NF</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="8">14</head><p>AB u rate u rate u</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¬</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>⊃ ≥ ∧ ≤</head><p>With the same predicate we can describe the possible effects of the compo- nents with the relation: <ref type="bibr">( )</ref> ( <ref type="figure" target="#fig_0">)  ( )  ( )  ( )   1  2</ref> ...</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>n type CD AB CD fault CD fault CD fault CD</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>∧</head><p>⊃ ∨ ∨ ∨ <ref type="bibr" target="#b4">(6)</ref> where type can be: relays, safeties, transformers, etc. <ref type="table">Definition 2: Observing the system</ref> Observing the system, OBS, is a finite set of first order logic sentences that are used to diagnose the system. Therefore, the functional system can be de- scribed by the relation:</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>FS SD CD OBS</head><p>⊃ ∪ ∪ <ref type="bibr" target="#b5">(7)</ref> These observations belong to the system's propositional logic and their role is to signal the system's faulty behaviour.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Definition 3: System diagnosis</head><p>The system diagnosis is a minimal set</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>CD</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>∆ ⊆</head><p>, such that: <ref type="bibr">( )</ref> { } <ref type="bibr">( )</ref> { }</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>SD OBS AB c c AB c c CD</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>∪</head><p>∪ ∈ ∆ ∪ ¬ ∈ − ∆ ∃ <ref type="bibr">(8)</ref> The diagnosis aims to discover the faulty component that causes the whole system to misbehave. The conditions to apply the diagnosis are: a) We use the diagnosis for the system (SD, CD, OBS) if: <ref type="bibr">( )</ref> SD OBS ∃ ∪ <ref type="bibr">(9)</ref> b) { } is a diagnosis for the (SD, CD, OBS) system if: <ref type="bibr">( )</ref> { }  such that CD − ∆ is not a conflict set for (SD, CD, OBS). Let C be a collection of sets. A goal set for C is a set  </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>SD OBS AB c c CD</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>∪</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>S C</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>H S</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>∈ ⊆</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">The Expert System to Diagnose the CTC Installations using the Model Based Diagnosis Method</head><p>The block schema for the connection with the expert system is shown in Fig. 3 <ref type="bibr" target="#b3">[4,</ref><ref type="bibr">5]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>CTC Installation</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Measure convertor</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Inference Engine</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Knowledge Base</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Database of</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>system elements Expert System</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>User Interface</head><p>Figure 3. The SE interconnection block schema This diagram contain: -The CTC installation that is to be monitored at various points and diag- nosed; -The Expert System that loads into the knowledge base the set of rules for the normal operation state of the installation. The knowledge base is loaded from the database of system elements. These rules are processed by the inference engine that uses fuzzy logic operators <ref type="bibr" target="#b4">[6]</ref>. -The user interface where the conflict sets are displayed.</p><p>In this work we show an expert system designed to diagnose a CTC type CR4 installation, on a track section with ABS installations.</p><p>Fig. 4 shows the diagram of a railway station with 2 traffic lines. <ref type="figure">Figure 4</ref>. Railway station diagram for which an expert system is proposed In this figure we identify the following installations: -Switch points (no. 1 and no. 2), which allow the train passage from one line to the other;</p><note type="other">-Track circuits (023 C, 024 C, 1C, II C) and isolated sections (1 S i , 2 S i ) which control the 'open' or 'occupied' track states and integrity;</note><p>-Light signals (X, X 1, X II, Y, Y 1, Y II) which signal whether the train en- try/exit into/out of the railway station is allowed; -The central post, PC, where the command and control panel is located, as well as the relay room. The command and control apparatus and com- mands the train traffic and monitors the installation's conflictual state; -The ABS installation at the X and Y station ends. This installation com- mands the traffic reversion <ref type="bibr" target="#b5">[7]</ref>. This installation contains light signals and track circuits with specific characteristics.</p><p>According to this scheme we created the block diagram for the installations that deliver state information to the expert system (Fig. 5).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Centralized Traffic Control Installations</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Power feed</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>AA AR</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Y ABS</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>S 2 AM</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>X ABS</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>S 1</head><p>Y OL Y KL  The DS system description contains: -The system's topology; -Locations of the measurement sensors for each mentioned installation; -Nominal operation parameters for the main installation components; -Limit parameter values for the operation of the main components in all the mentioned installations; -The fuzzy rules used to determine the fuzzy indicators.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>X OL X KL</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Y 1AD</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Y 2AD</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Y D Switch Point Signals</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Track circuits</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>X 1AD</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>X 2AD</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>X D Point 1 Point 2 Signal X Signal Y Signal</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>X 1 Signal</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>X II</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Signal</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Y 1 Signal</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Y II</head><p>The CD set, described by <ref type="bibr">( )</ref> AB c ¬ contains sentences of the form:</p><p>-The correct operation of the switch point (Mac)i is controlled by the point control relays (KM) states, by the point position plus and minus control relays (KMP, KMM) states, where i = 1, …, M and M is the number of point control relays in the station; -The correct operation of the signal (Sign)j is controlled by the fire relay FRA (fire red, white) states, by the fire relay FV1G (fire green, yellow 1) state, by the fire relay FRA2G (fire red, white, yellow 2); where j = 1, …, S and S is the number of fire relays in the station; -The correct operation of the (CDC)k track circuits is controlled by the C track relays and S i isolated section relays, where k = 1, …, CC where CC is the number of circuit control and section control relays in the station; - The diagnosis solution using the MBD system is the goal set ∆ that contains subsets of the CD set defined like:</p><p>-The KMP voltage value is not optimal; -The FRAG2 relay state is inadmissible, etc.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">Conclusion</head><p>In this work we presented the basic concepts needed to apply the model based diagnosis with an example of concept instantiation for CTC installations. We proposed an expert system applicable to a train station with two traffic lines.</p><p>The authors' contributions are: -Designing the basic block schema for the proposed expert system;</p><p>-Identifying the elements that need to be monitored and establishing how they should be controlled; -Shortly describing the components that are part of the CD set; -Shortly describing the DS system and the corresponding operations; -Establishing a minimal set of observations.</p><p>As future work we plan to further develop and implement this model for the respective installations.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 1 .</head><label>1</label><figDesc>Figure 1. Subsystems interconnection block scheme</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Definition 5 :</head><label>5</label><figDesc>The goal set:</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>SR A 1 A 2</head><label>12</label><figDesc></figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>023 C 024 C 1 C</head><label>0241</label><figDesc>Figure 5. Installation block schema monitored by the proposed Expert System</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1" validated="false"><head>Figure 2 . Concurrent and candidate components</head><label>Figure 2</label><figDesc></figDesc><table>In our example, then, we have: 
+
+{ 
+} 
+{ 
+} 
+
+int, 
+, 
+,... 
+
+CC Switch po 
+Signal ABS Track circuit 
+
+= 
+
+(2) 
+
+, 
+, 
+,..., 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_4" validated="false"><head>Definition 4 : System's conflicts</head><label>Definition 4</label><figDesc></figDesc><table>A set of conflicts of the (SD, CD, OBS) system is a set 
+
+{ 
+} 
+
+1 2 
+
+, ,..., n 
+F c c 
+c 
+= 
+
+, 
+
+with F CD 
+⊆ 
+
+, such that: 
+
+( ) 
+( ) 
+( ) 
+
+{ 
+} 
+
+1 
+1 
+1 
+
+, 
+,..., 
+SD OBS 
+AB c 
+AB c 
+AB c 
+∪ 
+∪ ¬ 
+¬ 
+¬ 
+
+does not exist 
+(13) 
+
+Relation (12) can be redefined using the conflict set terms: 
+
+CD 
+∆ ⊆ 
+
+is a diagnosis for the (SD, CD, OBS) system if ∆ is a minimal set 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_5" validated="false"><head>∪</head><label></label><figDesc></figDesc><table>, such that 
+
+{ } 
+
+H S 
+∩ ≠ ∅ for any S C 
+∈ . O goal set for C is minimal if none of its subsets is 
+
+a goal set for C. 
+
+To compute the diagnosis set we give the following: 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_6" validated="false"><head>Theorem 1 :</head><label>Theorem 1</label><figDesc></figDesc><table>CD 
+∆ ⊆ 
+
+is a diagnosis for system (SD, CD, OBS) if ∆ is a minimal goal set for 
+the conflict set collection of the (SD, CD, OBS) system. 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_7" validated="false"><head>, …, AL where AL is the number of voltage monitoring relays in the station. The union operator, SD CD ∪</head><label></label><figDesc></figDesc><table>The correct operation of the (ABS)l is controlled by the OL (occupied line) 
+
+relay, KL (control line) relay, D (direction control) relay, where l = 1, …, L and L is 
+
+the number of ABS installations neighbouring the CTC station; 
+-The correct operation of the power feed installation (ALIM) is controlled 
+by voltage monitoring relays: AM (switch point failure), AA (d.c. power feed), SR 
+
+(rectifier monitor), etc., where k = 1, gives the following sentences: 
+-The operation of all switch points is correct; 
+-The operation of all track circuits and section circuits is correct 
+-The operation of all signals is correct; 
+-The operation of all ABS installations is correct; 
+-The electric power feed installation is correct; 
+
+The OBS observations set contains sentences of the following form: 
+-The switch point is positioned A; 
+-The point states is A; 
+-The track circuits state is A; 
+-The signals state is A; 
+-The ABS installation state is A; 
+-The electric power feed installation state is A, 
+where 
+
+{ 
+} 
+
+, 
+, 
+, 
+A optim favorable admissible inadmissible 
+∈ 
+
+(14) 
+
+</table></figure>
+		</body>
+		<back>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Application of model based diagnosis for steady state power systems operation</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Borlea</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the Fifth International Power Conference</title>
+		<meeting>the Fifth International Power Conference</meeting>
+		<imprint>
+			<date type="published" when="2003" />
+		</imprint>
+	</monogr>
+<note type="report_type">Timişoara</note>
+	<note>Theory and basic concepts</note>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<monogr>
+		<title level="m" type="main">A theory of diagnosis from first principles</title>
+		<imprint>
+			<date type="published" when="1987" />
+			<publisher>Reiter R</publisher>
+			<biblScope unit="page" from="57" to="95" />
+			<pubPlace>Issue 1</pubPlace>
+		</imprint>
+	</monogr>
+	<note>Journal Artificial Inteligence, Volume 32</note>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<monogr>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Stan</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>David</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Vol</forename><surname>Block</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>București</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1983" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<monogr>
+		<title level="m" type="main">Development of an Expert System to fault diagnosis of three phase induction motor drive system</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Elasaadawi</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2008" />
+		</imprint>
+	</monogr>
+	<note>MEPCON 2008. 12th International Middle-East</note>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<monogr>
+		<title level="m" type="main">Publishing house Polytechnica</title>
+		<imprint>
+			<date type="published" when="2007" />
+			<publisher>Voloşencu C</publisher>
+		</imprint>
+	</monogr>
+	<note>Fuzzy systems and neural</note>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title/>
+	</analytic>
+	<monogr>
+		<title level="j">Institute of Software Technology and Interactive Systems</title>
+		<imprint/>
+		<respStmt>
+			<orgName>Vienna University of Technology, Austria, piroi@ifs.tuwien.ac.at</orgName>
+		</respStmt>
+	</monogr>
+	<note>Spunei E., a.o., Diagnosis Charts for Regular Inversion Failures of an Automatic Block Signal Installation, International Conference on Applied and Theoretical Electricity ICATE, 23-25 October 2014, Craiova. Addresses: • Lect. Dr. Eng. Elisabeta Spunei, &quot;Eftimie Murgu&quot; University of Reşiţa, Piaţa Traian Vuia, no. 1-4, 320085, Reşiţa, e.spunei@uem.ro • Prof. Dr. Eng. Ec. Ion Piroi, &quot;Eftimie Murgu&quot; University of Reşiţa, Piaţa Traian Vuia, no. 1-4, 320085, Reşiţa, i.piroi@uem.ro • Dr. Techn. Florina Piroi</note>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

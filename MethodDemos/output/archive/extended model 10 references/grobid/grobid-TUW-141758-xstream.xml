@@ -1,0 +1,1600 @@
+<Publication>
+  <id>TUW-141758</id>
+  <title>Negation Detection in Medical Documents Using Syntactical Methods</title>
+  <publicationDateString>2008-03-04</publicationDateString>
+  <publicationYear>2008</publicationYear>
+  <publicationMonth>03</publicationMonth>
+  <publicationDay>04</publicationDay>
+  <note>M A S T E R &apos; S T H E S I S accomplished at the Dedicated to my mother. Without you this would have never been possible. i</note>
+  <abstractText>Medical information is often stored in a narrative way, which makes the automated processing a difficult and time-consuming task. Persons responsible for the authoring of medical documents do not take care of a further processing with automated systems. So, information stored in medical writings is not directly usable for the processing with computers. Due to this, efforts have been made to transfer these narrative documents in a format easier processable with computers. This matter of fact also applies to clinical practice guidelines (CPGs). As many medical documents , CPGs are written in a narrative speech as well, without regards to a computer-assisted processing. For the implementation of CPGs in medical facilities an automated processing is therefore desirable. An important fact is that a lot of information in CPGs is provided in a negated form, expressing that certain circumstances in patients or treatments are not available, existing or applicable. Although negated, this information is nevertheless very useful, since it can express the absence of certain conditions or diseases in patients. Moreover, negations can describe which treatment options should not be taken into account for a given patient, helping a practising physician or nurse in his/her decision process for the assortment of a proper treatment. Thus, a proper Negation Detection in CPGs is an important task for the automated processing of this type of medical documents. It helps to accelerate the decision making process and can support medical staff in their care for patients. We developed algorithms capable of Negation Detection in CPGs. We use syntactical methods provided by the English language to achieve a precise detection of occuring negations. According to our results we are convinced that the involvement of syntactical methods can improve Negation Detection, not only in medical writings but also in arbitrary narrative texts. ii</abstractText>
+  <keywords/>
+  <authors>
+    <Author>
+      <firstNames>
+        <string>Stefan</string>
+      </firstNames>
+      <lastName>Gindl</lastName>
+      <affiliations>
+        <Affiliation>
+          <id>aff0</id>
+          <institution>Vienna University of Technology</institution>
+          <department>Institute of Software Technology &amp; Interactive Systems</department>
+        </Affiliation>
+      </affiliations>
+    </Author>
+  </authors>
+  <affiliations>
+    <Affiliation reference="/Publication[1]/authors[1]/Author[1]/affiliations[1]/Affiliation[1]"/>
+  </affiliations>
+  <sections>
+    <Section>
+      <title>Introduction</title>
+      <referenceIds>
+        <string>ref30</string>
+        <string>ref43</string>
+        <string>ref23</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>1.1</level>
+      <title>Motivation</title>
+      <referenceIds>
+        <string>ref29</string>
+        <string>ref29</string>
+        <string>ref44</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>1.2</level>
+      <title>Research Question</title>
+      <referenceIds>
+        <string>ref36</string>
+        <string>ref26</string>
+        <string>ref54</string>
+        <string>ref25</string>
+        <string>ref20</string>
+        <string>ref19</string>
+        <string>ref18</string>
+        <string>ref34</string>
+        <string>ref25</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>Related Work</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.1</level>
+      <title>Background</title>
+      <referenceIds>
+        <string>ref34</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.1.1</level>
+      <title>SNOMED -Systematized Nomenclature of Medicine -Cinical Terms</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.1.2</level>
+      <title>International Classification of Diseases and Related Health Problems (ICD)</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.1.3</level>
+      <title>Unified Medical Language System (UMLS)</title>
+      <referenceIds>
+        <string>ref32</string>
+        <string>ref40</string>
+        <string>ref38</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.2</level>
+      <title>Evaluation</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.2.1</level>
+      <title>Sensitivity/Recall</title>
+      <referenceIds>
+        <string>ref39</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.2.3</level>
+      <title>Positive Predictive Value (PPV)/Precision</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>PPV = TruePositives TruePositives + FalsePositives</title>
+      <referenceIds>
+        <string>ref39</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.2.4</level>
+      <title>Negative Predictive Value (NPV)</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>NPV = TrueNegatives TrueNegatives + FalseNegatives</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.2.5</level>
+      <title>Correlation between Statistical Parameters</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.3</level>
+      <title>A Simple Algorithm for Identifying Negated Findings and Diseases in Discharge Summaries -NegEx</title>
+      <referenceIds>
+        <string>ref23</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.3.1</level>
+      <title>Preprocessing of Selected Documents</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.3.2</level>
+      <title>Description of the Algorithms</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.3.3</level>
+      <title>Performance Analysis</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.3.4</level>
+      <title>Applications of NegEx</title>
+      <referenceIds>
+        <string>ref41</string>
+        <string>ref17</string>
+        <string>ref23</string>
+        <string>ref43</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.4</level>
+      <title>Use of Methods for the Parsing Process of Formal Computer</title>
+      <referenceIds>
+        <string>ref44</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.4.1</level>
+      <title>The Components Pipeline</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.</level>
+      <title>Verification:</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.4.2</level>
+      <title>Concept Finding</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.4.3</level>
+      <title>Input Transformation</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.4.4</level>
+      <title>The Lexical Scanner</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.4.5</level>
+      <title>The Parser</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.4.6</level>
+      <title>Evaluation</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.4.7</level>
+      <title>Applications of NegFinder</title>
+      <referenceIds>
+        <string>ref28</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.5</level>
+      <title>A Controlled Trial of Automated Classification of Negation from Clinical Notes</title>
+      <referenceIds>
+        <string>ref24</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.5.1</level>
+      <title>Method</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.5.2</level>
+      <title>Statistical Analysis</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.6.1</level>
+      <title>System Architecture</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.</level>
+      <title>Extractor:</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.6.2</level>
+      <title>Details of Negation Identification</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.6.3</level>
+      <title>Evaluation</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.6.4</level>
+      <title>Conclusio</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.7</level>
+      <title>Automatic Mapping Clinical Notes to Medical Terminolo- gies</title>
+      <referenceIds>
+        <string>ref47</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.7.1</level>
+      <title>Method</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.</level>
+      <title>Qualification and term composition:</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.7.2</level>
+      <title>Preprocessing</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.7.3</level>
+      <title>Negation Detection</title>
+      <referenceIds>
+        <string>ref23</string>
+        <string>ref23</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.7.4</level>
+      <title>Evaluation</title>
+      <referenceIds>
+        <string>ref23</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.8</level>
+      <title>Concept Negation in Free Text Components of Vaccine Safety Reports</title>
+      <referenceIds>
+        <string>ref59</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.9</level>
+      <title>Ad-Hoc Classification of Electronic Clinical Documents - NegExpander</title>
+      <referenceIds>
+        <string>ref16</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>is expanded to</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.10</level>
+      <title>A Hybrid Approach to Automated Negation Detection in Clinical Radiology Reports</title>
+      <referenceIds>
+        <string>ref31</string>
+        <string>ref35</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.11</level>
+      <title>Discussion</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>Chapter 4 NegHunter</title>
+      <referenceIds>
+        <string>ref23</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.1</level>
+      <title>MetaMap Transfer (MMTx)</title>
+      <referenceIds>
+        <string>ref17</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.</level>
+      <title>Token:</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.2</level>
+      <title>The Negation Detection Algorithms</title>
+      <referenceIds>
+        <string>ref23</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.2.1</level>
+      <title>The Adverbial Negation</title>
+      <referenceIds>
+        <string>ref2</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.2.2</level>
+      <title>The Intra-Phrase Triggered Negation</title>
+      <referenceIds>
+        <string>ref3</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.2.3</level>
+      <title>The Prepositional Negation</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>The sentence</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>AVAILABILITY OF COMPANION DOCUMENTS. None available</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.2.4</level>
+      <title>The Adjective Negation</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.2.5</level>
+      <title>The Verb Negation</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.2.6</level>
+      <title>Assigning Prepositional Information</title>
+      <referenceIds>
+        <string>ref5</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.3</level>
+      <title>Summary</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>Chapter 5 Evaluation</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.1</level>
+      <title>Distribution of Identified Negated Phrases</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.2</level>
+      <title>Analysing the Performance of NegHunter</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>Recall = Identified Relevant Targets All Exisiting Relevant Targets</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.2.1</level>
+      <title>Errors Related to MMTx</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.2.2</level>
+      <title>Discussion</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>Chapter 6 Conclusion</title>
+      <referenceIds>
+        <string>ref23</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+  </sections>
+  <citationContexts/>
+  <references>
+    <Reference>
+      <id>ref1</id>
+      <referenceIdString>b0</referenceIdString>
+      <source>2: The test set of the used CPGs</source>
+      <authors/>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref2</id>
+      <referenceIdString>b1</referenceIdString>
+      <source>Colorectal cancer. [Singapore Ministry of Health</source>
+      <authors/>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref3</id>
+      <referenceIdString>b2</referenceIdString>
+      <source>Cutaneous melanoma. A national clinical guideline. [Scottish Intercollegiate Guidelines Network (SIGN)</source>
+      <authors/>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref4</id>
+      <referenceIdString>b3</referenceIdString>
+      <source>Epithelial ovarian cancer. A national clinical guideline. [Scottish Intercollegiate Guidelines Network (SIGN)</source>
+      <authors/>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref5</id>
+      <referenceIdString>b4</referenceIdString>
+      <source>Guideline for the management of cancer pain in adults and children. [Miaskkowski et al</source>
+      <authors/>
+      <publicationDateString>2005</publicationDateString>
+      <publicationYear>2005</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref6</id>
+      <referenceIdString>b5</referenceIdString>
+      <title>Long term follow up of survivors of childhood cancer. A national clinical guideline</title>
+      <source>Scottish Intercollegiate Guidelines Network (SIGN)</source>
+      <authors/>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref7</id>
+      <referenceIdString>b6</referenceIdString>
+      <title>Palliative care. [Kvale et al</title>
+      <source>Lung cancer</source>
+      <authors/>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref8</id>
+      <referenceIdString>b7</referenceIdString>
+      <source>Management of hepatocellular carcinoma. [Bruix et al</source>
+      <authors/>
+      <publicationDateString>2005</publicationDateString>
+      <publicationYear>2005</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref9</id>
+      <referenceIdString>b8</referenceIdString>
+      <title>Management of transitional cell carcinoma of the bladder</title>
+      <source>Scottish Intercollegiate Guidelines Network (SIGN)</source>
+      <authors/>
+      <note>Management of patients with lung cancer</note>
+      <publicationDateString>2005</publicationDateString>
+      <publicationYear>2005</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref10</id>
+      <referenceIdString>b9</referenceIdString>
+      <title>Practice parameters for colon cancer</title>
+      <source>Scottish Intercollegiate Guidelines Network (SIGN)</source>
+      <authors/>
+      <issue>10</issue>
+      <note>Otchy et al</note>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref11</id>
+      <referenceIdString>b10</referenceIdString>
+      <source>Small cell lung cancer. [Simon and Wagner, 2003] 12. Staging evaluation-Hodgkin&apos;s disease [Wolkov et al</source>
+      <authors/>
+      <publicationDateString>2005</publicationDateString>
+      <publicationYear>2005</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref12</id>
+      <referenceIdString>b11</referenceIdString>
+      <source>The diagnosis and treatment of lung cancer. [National Collaborating Centre for Acute Care</source>
+      <authors/>
+      <publicationDateString>2005</publicationDateString>
+      <publicationYear>2005</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref13</id>
+      <referenceIdString>b12</referenceIdString>
+      <source>The role of cytotoxic therapy with hematopoietic stem cell transplantation in the therapy of multiple myeloma: an evidence-based review</source>
+      <authors/>
+      <note>Hahn et al</note>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref14</id>
+      <referenceIdString>b13</referenceIdString>
+      <source>The role of postoperative chemoradiotherapy for advanced squamous cell carcinoma of the head and neck</source>
+      <authors/>
+      <note>Winquist et al</note>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref15</id>
+      <referenceIdString>b14</referenceIdString>
+      <source>Use of epoetin in patients with cancer: evidence-based clinical practice guidelines of the American Society of Clinical Oncology and the American Society of Hematology</source>
+      <authors/>
+      <note>Rizzo et al</note>
+      <publicationDateString>2002</publicationDateString>
+      <publicationYear>2002</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref16</id>
+      <referenceIdString>b15</referenceIdString>
+      <source>Ad-hoc classification of electronic clinical documents</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Feng</string>
+          </firstNames>
+          <lastName>Aronow</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>D</string>
+            <string>B</string>
+          </firstNames>
+          <lastName>Aronow</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>F</string>
+          </firstNames>
+          <lastName>Feng</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <note>D-Lib Magazine</note>
+      <publicationDateString>1997</publicationDateString>
+      <publicationYear>1997</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref17</id>
+      <referenceIdString>b16</referenceIdString>
+      <title>Effective mapping of biomedical text to the UMLS Metathesaurus: the MetaMap program</title>
+      <source>Proc. of the AMIA Symposium</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Aronson</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A</string>
+            <string>R</string>
+          </firstNames>
+          <lastName>Aronson</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>17</pageFrom>
+      <pageTo>21</pageTo>
+      <publicationDateString>2001</publicationDateString>
+      <publicationYear>2001</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref18</id>
+      <referenceIdString>b17</referenceIdString>
+      <title>Grading quality of evidence and strength of recommendations</title>
+      <source>and The GRADE Working Group</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Atkins</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>328</volume>
+      <issue>7454</issue>
+      <pageFrom>1490</pageFrom>
+      <pageTo>1498</pageTo>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref19</id>
+      <referenceIdString>b18</referenceIdString>
+      <title>Systems for grading the quality of evidence and the strength of recommendations II: Pilot study of a new system</title>
+      <source>BMC Health Services Research</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Atkins</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <note>and The GRADE Working Group</note>
+      <publicationDateString>2005</publicationDateString>
+      <publicationYear>2005</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref20</id>
+      <referenceIdString>b19</referenceIdString>
+      <title>Systems for grading the quality of evidence and the strength of recommendations i: Critical appraisal of existing approaches</title>
+      <source>BMC Health Services Research</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Atkins</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <note>and The GRADE Working Group</note>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref21</id>
+      <referenceIdString>b20</referenceIdString>
+      <title>Some aspects of negation processing in electronic health records</title>
+      <source>Proc. of International Workshop Language and Speech Infrastructure for Information Access in the Balkan Countries</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Boytcheva</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>1</pageFrom>
+      <pageTo>8</pageTo>
+      <publicationDateString>2005</publicationDateString>
+      <publicationYear>2005</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref22</id>
+      <referenceIdString>b21</referenceIdString>
+      <title>and Practice Guidelines Committee, American Association for the Study of Liver Diseases</title>
+      <source>Hepatology</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Bruix</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>42</volume>
+      <issue>5</issue>
+      <note>Management of hepatocellular carcinoma</note>
+      <pageFrom>1208</pageFrom>
+      <pageTo>1236</pageTo>
+      <publicationDateString>2005</publicationDateString>
+      <publicationYear>2005</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref23</id>
+      <referenceIdString>b22</referenceIdString>
+      <title>A simple algorithm for identifying negated findings and diseases in discharge summaries</title>
+      <source>Journal of Biomedical Informatics</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Chapman</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>34</volume>
+      <issue>5</issue>
+      <pageFrom>301</pageFrom>
+      <pageTo>310</pageTo>
+      <publicationDateString>2001</publicationDateString>
+      <publicationYear>2001</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref24</id>
+      <referenceIdString>b23</referenceIdString>
+      <title>A controlled trial of automated classification of negation from clinical notes</title>
+      <source>BMC Medical Informatics and Decision Making</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Elkin</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>5</volume>
+      <issue>13</issue>
+      <pageFrom>1</pageFrom>
+      <pageTo>7</pageTo>
+      <publicationDateString>2005</publicationDateString>
+      <publicationYear>2005</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref25</id>
+      <referenceIdString>b24</referenceIdString>
+      <title>Clinical guidelines: Using clinical guidelines</title>
+      <source>BMJ</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Feder</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>728</pageFrom>
+      <pageTo>730</pageTo>
+      <publicationDateString>1999</publicationDateString>
+      <publicationYear>1999</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref26</id>
+      <referenceIdString>b25</referenceIdString>
+      <source>Clinical Practice Guidelines: Directions for a New Program</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Field</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Lohr</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+            <string>J</string>
+          </firstNames>
+          <lastName>Field</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>K</string>
+            <string>N</string>
+          </firstNames>
+          <lastName>Lohr</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <location>Washington DC</location>
+      <note>National Academies Press</note>
+      <publicationDateString>1990</publicationDateString>
+      <publicationYear>1990</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref27</id>
+      <referenceIdString>b26</referenceIdString>
+      <title>The role of cytotoxic therapy with hematopoietic stem cell transplantation in the therapy of multiple myeloma: an evidence-based review</title>
+      <source>Biol Blood Marrow Transplant</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Hahn</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>9</volume>
+      <issue>1</issue>
+      <pageFrom>4</pageFrom>
+      <pageTo>37</pageTo>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref28</id>
+      <referenceIdString>b27</referenceIdString>
+      <title>Mediclass: A system for detecting and classifying encounter-based clinical events in any electronic medical record</title>
+      <source>Journal of the American Medical Informatics Association (JAMIA)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Hazlehurst</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>12</volume>
+      <issue>5</issue>
+      <pageFrom>517</pageFrom>
+      <pageTo>529</pageTo>
+      <publicationDateString>2005</publicationDateString>
+      <publicationYear>2005</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref29</id>
+      <referenceIdString>b28</referenceIdString>
+      <source>A Natural History of Negation</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>L</string>
+            <string>R</string>
+          </firstNames>
+          <lastName>Horn</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <location>University of Chicago Press, Chicago, Illinois</location>
+      <publicationDateString>1989</publicationDateString>
+      <publicationYear>1989</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref30</id>
+      <referenceIdString>b29</referenceIdString>
+      <title>Unlocking clinical data from narrative reports: A study of natural language processing</title>
+      <source>Annals of Internal Medicine</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Hripcsak</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>122</volume>
+      <issue>9</issue>
+      <pageFrom>681</pageFrom>
+      <pageTo>688</pageTo>
+      <publicationDateString>1995</publicationDateString>
+      <publicationYear>1995</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref31</id>
+      <referenceIdString>b30</referenceIdString>
+      <title>A novel hybrid approach to automated negation detection in clinical radiology reports</title>
+      <source>Journal of the American Medical Informatics Association (JAMIA</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Lowe</string>
+          </firstNames>
+          <lastName>Huang</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Y</string>
+          </firstNames>
+          <lastName>Huang</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>H</string>
+            <string>J</string>
+          </firstNames>
+          <lastName>Lowe</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>304</pageFrom>
+      <pageTo>311</pageTo>
+      <publicationDateString>2007</publicationDateString>
+      <publicationYear>2007</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref32</id>
+      <referenceIdString>b31</referenceIdString>
+      <source>The Unified Medical Language System: Moving beyond the vocabulary of bibliographic retrieval. pages 31-44</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Schuyler</string>
+          </firstNames>
+          <lastName>Humphreys</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>B</string>
+            <string>L</string>
+          </firstNames>
+          <lastName>Humphreys</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>P</string>
+          </firstNames>
+          <lastName>Schuyler</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <location>Meckler, Westport, CT</location>
+      <publicationDateString>1993</publicationDateString>
+      <publicationYear>1993</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref33</id>
+      <referenceIdString>b32</referenceIdString>
+      <title>Medical terminology systems</title>
+      <source>Technical Report Asgaard-TR2007-1, Vienna University of Technology, Institute of Software Technology and Interactive Systems</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Kaiser</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>K</string>
+          </firstNames>
+          <lastName>Kaiser</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2007</publicationDateString>
+      <publicationYear>2007</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref34</id>
+      <referenceIdString>b33</referenceIdString>
+      <title>A meta schema for evidence information in clinical practice guidelines as a basis for decision-making</title>
+      <source>volume 129 of Studies in Health Technology and Informatics, pages 925-929</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Kaiser</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2007</publicationDateString>
+      <publicationYear>2007</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref35</id>
+      <referenceIdString>b34</referenceIdString>
+      <source>Accurate Unlexicalized Parsing. In Proc of the 41st Meeting of the Association for Computational Linguistics</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Klein</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Manning</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>D</string>
+          </firstNames>
+          <lastName>Klein</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>C</string>
+          </firstNames>
+          <lastName>Manning</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref36</id>
+      <referenceIdString>b35</referenceIdString>
+      <source>Chronic cough due to lung tumors: ACCP evidence-based clinical practice guidelines</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>P</string>
+          </firstNames>
+          <lastName>Kvale</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>129</volume>
+      <note>Chest</note>
+      <pageFrom>147</pageFrom>
+      <pageTo>153</pageTo>
+      <publicationDateString>2006</publicationDateString>
+      <publicationYear>2006</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref37</id>
+      <referenceIdString>b36</referenceIdString>
+      <source>Lung cancer. palliative care</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Kvale</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>123</volume>
+      <note>Chest</note>
+      <pageFrom>284</pageFrom>
+      <pageTo>311</pageTo>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref38</id>
+      <referenceIdString>b37</referenceIdString>
+      <title>Semantic enrichment for medical ontologies</title>
+      <source>J. of Biomedical Informatics</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Geller</string>
+          </firstNames>
+          <lastName>Lee</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Y</string>
+          </firstNames>
+          <lastName>Lee</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>J</string>
+          </firstNames>
+          <lastName>Geller</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>39</volume>
+      <issue>2</issue>
+      <pageFrom>209</pageFrom>
+      <pageTo>226</pageTo>
+      <publicationDateString>2006</publicationDateString>
+      <publicationYear>2006</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref39</id>
+      <referenceIdString>b38</referenceIdString>
+      <title>Evaluating an information extraction system</title>
+      <source>Journal of Integrated ComputerAided Engineering</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Lehnert</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>1</volume>
+      <issue>6</issue>
+      <pageFrom>1</pageFrom>
+      <pageTo>29</pageTo>
+      <publicationDateString>1994</publicationDateString>
+      <publicationYear>1994</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref40</id>
+      <referenceIdString>b39</referenceIdString>
+      <source>UMLS Semantic Network. The 13th annual SCAMC</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Mccray</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A</string>
+            <string>T</string>
+          </firstNames>
+          <lastName>Mccray</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>503</pageFrom>
+      <pageTo>507</pageTo>
+      <publicationDateString>1989</publicationDateString>
+      <publicationYear>1989</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref41</id>
+      <referenceIdString>b40</referenceIdString>
+      <title>Automation of a problem list using natural language processing</title>
+      <source>BMC Medical Informatics and Decision Making</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Haug</string>
+          </firstNames>
+          <lastName>Meystre</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>S</string>
+          </firstNames>
+          <lastName>Meystre</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>P</string>
+            <string>J</string>
+          </firstNames>
+          <lastName>Haug</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2005</publicationDateString>
+      <publicationYear>2005</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref42</id>
+      <referenceIdString>b41</referenceIdString>
+      <source>Guideline for the management of cancer pain in adults and children</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Miaskkowski</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <note>Clinical practice guideline 3</note>
+      <publicationDateString>2005</publicationDateString>
+      <publicationYear>2005</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref43</id>
+      <referenceIdString>b42</referenceIdString>
+      <source>Implementation and evaluation of a negation tagger in a pipeline-based system for information extraction from pathology reports</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Mitchell</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>663</pageFrom>
+      <pageTo>667</pageTo>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref44</id>
+      <referenceIdString>b43</referenceIdString>
+      <title>Use of general-purpose negation detection to augment concept indexing of medical documents: A quantitative study using the UMLS</title>
+      <source>Journal of the American Medical Informatics Association (JAMIA)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Mutalik</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>8</volume>
+      <issue>6</issue>
+      <pageFrom>598</pageFrom>
+      <pageTo>609</pageTo>
+      <publicationDateString>2001</publicationDateString>
+      <publicationYear>2001</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref45</id>
+      <referenceIdString>b44</referenceIdString>
+      <title>Clinical practice guideline, National Institute for Clinical Excellence</title>
+      <source>National Collaborating Centre for Acute Care</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Nice)</string>
+          </firstNames>
+          <lastName>London</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>(</string>
+          </firstNames>
+          <lastName>Uk)</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <note>National Collaborating Centre for Acute Care</note>
+      <publicationDateString>2005</publicationDateString>
+      <publicationYear>2005</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref46</id>
+      <referenceIdString>b45</referenceIdString>
+      <title>Practice parameters for colon cancer</title>
+      <source>Dis Colon Rectum</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Otchy</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>47</volume>
+      <issue>8</issue>
+      <pageFrom>1269</pageFrom>
+      <pageTo>1284</pageTo>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref47</id>
+      <referenceIdString>b46</referenceIdString>
+      <title>Automatic mapping clinical notes to medical terminologies</title>
+      <source>Proceedings of the 2006 Australasian Language Technology Workshop (ALTW2006)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Patrick</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2006</publicationDateString>
+      <publicationYear>2006</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref48</id>
+      <referenceIdString>b47</referenceIdString>
+      <title>Use of epoetin in patients with cancer: evidence-based clinical practice guidelines of</title>
+      <source>american society of clinical oncology and the american society of hematology. Blood</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Rizzo</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>100</volume>
+      <issue>7</issue>
+      <publicationDateString>2002</publicationDateString>
+      <publicationYear>2002</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref49</id>
+      <referenceIdString>b48</referenceIdString>
+      <title>Cutaneous melanoma. A national clinical guideline</title>
+      <source>SIGN publication 72, Scottish Intercollegiate Guidelines Network (SIGN), Edinburgh (Scotland)</source>
+      <authors/>
+      <note>Scottish Intercollegiate Guidelines Network (SIGN)</note>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref50</id>
+      <referenceIdString>b49</referenceIdString>
+      <title>Epithelial ovarian cancer. A national clinical guideline</title>
+      <source>Scottish Intercollegiate Guidelines Network (SIGN), Edinburgh (Scotland)</source>
+      <authors/>
+      <note>Scottish Intercollegiate Guidelines Network (SIGN)</note>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref51</id>
+      <referenceIdString>b50</referenceIdString>
+      <title>Long term follow up of survivors of childhood cancer. A national clinical guideline</title>
+      <source>Scottish Intercollegiate Guidelines Network (SIGN), Edinburgh (Scotland)</source>
+      <authors/>
+      <note>Scottish Intercollegiate Guidelines Network (SIGN)</note>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref52</id>
+      <referenceIdString>b51</referenceIdString>
+      <title>Management of patients with lung cancer. A national clinical guideline. SIGN publication 80</title>
+      <source>Scottish Intercollegiate Guidelines Network (SIGN), Edinburgh (Scotland)</source>
+      <authors/>
+      <note>Scottish Intercollegiate Guidelines Network (SIGN)</note>
+      <publicationDateString>2005</publicationDateString>
+      <publicationYear>2005</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref53</id>
+      <referenceIdString>b52</referenceIdString>
+      <title>Management of transitional cell carcinoma of the bladder. A national clinical guideline</title>
+      <source>Scottish Intercollegiate Guidelines Network (SIGN), Edinburgh (Scotland)</source>
+      <authors/>
+      <note>Scottish Intercollegiate Guidelines Network (SIGN)</note>
+      <publicationDateString>2005</publicationDateString>
+      <publicationYear>2005</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref54</id>
+      <referenceIdString>b53</referenceIdString>
+      <title>Clinical guidelines: Developing guidelines</title>
+      <source>BMJ</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Shekelle</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>593</pageFrom>
+      <pageTo>596</pageTo>
+      <publicationDateString>1999</publicationDateString>
+      <publicationYear>1999</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref55</id>
+      <referenceIdString>b54</referenceIdString>
+      <source>Small cell lung cancer</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Wagner</string>
+          </firstNames>
+          <lastName>Simon</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>G</string>
+          </firstNames>
+          <lastName>Simon</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>H</string>
+          </firstNames>
+          <lastName>Wagner</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>123</volume>
+      <note>Chest</note>
+      <pageFrom>259</pageFrom>
+      <pageTo>271</pageTo>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref56</id>
+      <referenceIdString>b55</referenceIdString>
+      <title>Singapore Ministry of Health, National Committee on Cancer Care</title>
+      <source>Singapore Ministry of Health, National Committee on Cancer Care</source>
+      <authors/>
+      <note>Clinical practice guideline</note>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref57</id>
+      <referenceIdString>b56</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>://</string>
+          </firstNames>
+          <lastName>Www</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2006-09</publicationDateString>
+      <publicationYear>2006</publicationYear>
+      <publicationMonth>09</publicationMonth>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref58</id>
+      <referenceIdString>b57</referenceIdString>
+      <source>Chemotherapeutic management of stage IV non-small cell lung cancer</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Socinsky</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>123</volume>
+      <note>Chest</note>
+      <pageFrom>226</pageFrom>
+      <pageTo>243</pageTo>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref59</id>
+      <referenceIdString>b58</referenceIdString>
+      <title>Concept negation in free text components of vaccine safety reports</title>
+      <source>Proc. of the AMIA 2006 Symposium, page 1122</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Tolentino</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2006</publicationDateString>
+      <publicationYear>2006</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref60</id>
+      <referenceIdString>b59</referenceIdString>
+      <title>The role of postoperative chemoradiotherapy for advanced squamous cell carcinoma of the head and neck</title>
+      <source>Toronto (ON)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Winquist</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <note>Clinical practice guideline 5-10</note>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref61</id>
+      <referenceIdString>b60</referenceIdString>
+      <source>Staging evaluation-hodgkin&apos;s disease. Clinical practice guideline</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Wolkov</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2005</publicationDateString>
+      <publicationYear>2005</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+  </references>
+</Publication>

@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Chase Termination for Guarded Existential Rules</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Marco</forename><surname>Calautti</surname></persName>
+							<email>calautti@dimes.unical.it</email>
+							<affiliation key="aff0">
+								<orgName type="department">DIMES</orgName>
+								<orgName type="institution">University of Calabria</orgName>
+								<address>
+									<country key="IT">Italy</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Georg</forename><surname>Gottlob</surname></persName>
+							<email>georg.gottlob@cs.ox.ac.uk</email>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Computer Science</orgName>
+								<orgName type="institution">University of Oxford</orgName>
+								<address>
+									<country key="GB">UK</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Andreas</forename><surname>Pieris</surname></persName>
+							<email>pieris@dbai.tuwien.ac.at</email>
+							<affiliation key="aff2">
+								<orgName type="department">Institute of Information Systems</orgName>
+								<orgName type="institution">Vienna University of Technology</orgName>
+								<address>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Chase Termination for Guarded Existential Rules</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<abstract>
+				<p>The chase procedure is considered as one of the most fundamental al-gorithmic tools in database theory. It has been successfully applied to different database problems such as data exchange, and query answering and containment under constraints, to name a few. One of the central problems regarding the chase procedure is all-instance termination, that is, given a set of tuple-generating dependencies (TGDs) (a.k.a. existential rules), decide whether the chase under that set terminates, for every input database. It is well-known that this problem is un-decidable, no matter which version of the chase we consider. The crucial question that comes up is whether existing restricted classes of TGDs, proposed in different contexts such as ontological reasoning, make the above problem decidable. In this work, we focus our attention on the oblivious and the semi-oblivious versions of the chase procedure, and we give a positive answer for classes of TGDs that are based on the notion of guardedness.</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">Introduction</head><p>The chase procedure (or simply chase) is considered as one of the most fundamental algorithmic tools in databases -it accepts as input a database D and a set Σ of con- straints and, if it terminates (which is not guaranteed), its result is a finite instance D Σ that enjoys two crucial properties:</p><p>1. D Σ is a model of D and Σ, i.e., it contains D and satisfies the constraints of Σ; and 2. D Σ is universal, i.e., it can be homomorphically embedded into every other model of D and Σ.</p><p>In other words, the chase is an algorithmic tool for computing universal models of D and Σ, which can be conceived as representatives of all the other models of D and Σ. This is precisely the reason for the ubiquity of the chase in database theory. Indeed, many key database problems can be solved by simply exhibiting a universal model. A central class of constraints, which can be treated by the chase procedure and is of special interest for this work, are the well-known tuple-generating dependencies (TGDs) (a.k.a. existential rules) of the form ∀X∀Y(φ(X, Y) → ∃Z(ψ(Y, Z))), where φ and ψ are conjunctions of atoms. Given a database D and a set Σ of TGDs, the chase adds new atoms to D (possibly involving nulls) until the final result satisfies Σ. </p><formula xml:id="formula_0">∀X(person(X) → ∃Y hasFather (X, Y ) ∧ person(Y )),</formula><p>which asserts that each person has a father who is also a person. The database atom triggers the TGD, and the chase will add in D the atoms hasFather (Bob, z 1 ) and person(z 1 ) in order to satisfy it, where z 1 is a (labeled) null representing some un- known value. However, the new atom person(z 1 ) triggers again the TGD, and the chase is forced to add the atoms hasFather (z 1 , z 2 ), person(z 2 ), where z 2 is a new null. The result of the chase is the instance</p><formula xml:id="formula_1">{person(Bob), hasFather (Bob, z 1 )} ∪ ∪ {person(z i ), hasFather (z i , z i+1 )}, i&gt;0</formula><p>where z 1 , z 2 , . . . are nulls.</p><p>As shown by the above example, the chase procedure may run forever, even for ex- tremely simple databases and constraints. In the light of this fact, there has been a long line of research on identifying syntactic properties on TGDs such that, for every input database, the termination of the chase is guaranteed; see, e.g., <ref type="bibr" target="#b3">[4,</ref><ref type="bibr" target="#b7">8,</ref><ref type="bibr" target="#b9">10,</ref><ref type="bibr" target="#b11">12,</ref><ref type="bibr" target="#b12">13]</ref> -this list is by no means exhaustive, and we refer to <ref type="bibr" target="#b8">[9]</ref> for a comprehensive survey. With so much effort spent on identifying sufficient conditions for the termination of the chase procedure, the question that comes up is whether a sufficient condition that is also nec- essary exists. In other words, given a set Σ of TGDs, is it possible to determine whether, for every database D, the chase on D and Σ terminates? This interesting question has been recently addressed in <ref type="bibr" target="#b5">[6]</ref>, and unfortunately the answer is negative for all the ver- sions of the chase that are usually used in database applications, namely the oblivious, semi-oblivious and restricted chase. In fact, the problem remains undecidable even if the database is known. This has been established in <ref type="bibr" target="#b3">[4]</ref> for the restricted chase, and it was observed in <ref type="bibr" target="#b11">[12]</ref> that the same proof shows undecidability also for the oblivious and the semi-oblivious chase.</p><p>Although the chase termination problem is undecidable in general, the proof given in <ref type="bibr" target="#b5">[6]</ref> does not show the undecidability of the problem for TGDs that enjoy some struc- tural conditions, which in turn guarantee favorable model-theoretic properties. Such a key condition is guardedness, a well-accepted paradigm that gives rise to robust rule- based languages that capture important databases constraints and lightweight descrip- tion logics. A TGD is guarded if it has an atom in the left-hand side that contains (or guards) all the universally quantified variables <ref type="bibr" target="#b1">[2]</ref>. Guardedness guarantees the tree- likeness of the underlying models, and thus the decidability of central database prob- lems. The question that comes up is whether guardedness has the same positive impact on chase termination.</p><p>We focus on the (semi-)oblivious versions of the chase, and we show that the prob- lem of deciding the termination of the chase for guarded TGDs is decidable, and we establish precise complexity results. Surprisingly, the present work is to our knowledge the first one that establishes positive results for the (semi-)oblivious chase termination problem. For more details, we refer the reader to <ref type="bibr" target="#b0">[1]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">The Chase Termination Problem</head><p>The TGD chase procedure (or simply chase) takes as input an instance I and a set Σ of TGDs, and constructs a universal model of I and Σ. The chase works on I by applying the so-called trigger for a set of TGDs on I. The trigger for a set Σ of TGDs on an instance I is a pair (σ, h), where σ = φ → ψ ∈ Σ and h is a homomorphism that maps φ to I. An application of (σ, h) to I returns J = I ∪ h ′ (ψ), where h ′ ⊇ h maps each existentially quantified variable in ψ to a new null value. Such a trigger application is written I⟨σ, h⟩J. The choice of the type of the next trigger to be applied is crucial since it gives rise to different versions of the chase procedure. In this work, we focus our attention on the oblivious <ref type="bibr" target="#b1">[2]</ref> and semi-oblivious <ref type="bibr" target="#b6">[7,</ref><ref type="bibr" target="#b11">12]</ref> chase.</p><p>A finite sequence I 0 , I 1 , . . . , I n , where n 0, is said to be a terminating oblivious chase sequence of I 0 w.r.t. a set Σ of TGDs if: (i) for each 0 i &lt; n, there exists a trigger (σ, h) for Σ on I i such that I i ⟨σ, h⟩I i+1 ; (ii) for each 0 i &lt; j &lt; n,</p><formula xml:id="formula_2">assuming that I i ⟨σ i , h i ⟩I i+1 and I j ⟨σ j , h j ⟩I j+1 , σ i = σ j = σ implies h i ̸ = h j , i.e.</formula><p>, h i and h j are different homomorphisms; and (iii) there is no trigger (σ, h) for Σ on I n such that (σ, h) ̸ ∈ {(σ i , h i )} 0 . In this case, the result of the chase is the (finite) instance I n . An infinite sequence I 0 , I 1 , . . . of instances is said to be a non-terminating oblivious chase sequence of I 0 w.r.t. Σ if: (i) for each i 0, there exists a trigger (σ, h) for Σ on I i such that I i ⟨σ, h⟩I i+1 ; (ii) for each i, j &gt; 0 such that i ̸ = j, assuming that I i ⟨σ i , h i ⟩I i+1 and I j ⟨σ j , h j ⟩I j+1 , σ i = σ j = σ implies h i ̸ = h j ; and (iii) for each i 0, and for every trigger (σ, h) for Σ on I i , there exists j i such that I j ⟨σ, h⟩I j+1 ; this is known as the fairness condition, and guarantees that all the triggers eventually will be applied. The result of the chase is defined as the infinite instance ∪ i I i .</p><p>The semi-oblivious chase is a refined version of the oblivious chase, which avoids the application of some superfluous triggers. Roughly speaking, given a TGD σ of the form φ → ψ, for the semi-oblivious chase, two homomorphisms h and g that agree on the universally quantified variables of σ occurring in ψ are indistinguishable.</p><p>Henceforth, we write o-chase and so-chase for oblivious and semi-oblivious chase, respectively. A ⋆-chase sequence, where ⋆ ∈ {o, so}, may be infinite.</p><formula xml:id="formula_3">Example 2. Let D = {p(a, b)}, and Σ = {∀X∀Y (p(X, Y ) → ∃Z(p(Y, Z)))}.</formula><p>There exists only one ⋆-chase sequence of D w.r.t. Σ, where ⋆ ∈ {o, so}, which is non-terminating, i.e., I 0 , I 1 , . . . with</p><formula xml:id="formula_4">I 0 = {p(a, b)} I 1 = {p(a, b), p(b, z 1 )} I i = I i−1 ∪ {p(z i−1 , z i )}, for i 2,</formula><p>where z 1 , z 2 , . . . are nulls of N.</p><p>For a set of TGDs, a key question is whether all or some ⋆-chase sequences are terminating on all databases. Before formalizing the above decision problems, let us recall the following key classes of TGDs: </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">The Complexity of Chase Termination</head><p>We focus on the class of guarded TGDs <ref type="bibr" target="#b1">[2]</ref>, and two key subclasses of it, namely simple linear and linear TGDs <ref type="bibr" target="#b2">[3]</ref>, and we investigate the complexity of the (semi-)oblivious chase termination problem. Recall that linear TGDs are TGDs with just one atom in the body, while simple linear TGDs forbid the repetition of variables in the body. Notice that, despite their simplicity, simple linear TGDs are powerful enough for capturing prominent database dependencies, and in particular inclusion dependencies, as well as key description logics such as DL-Lite. In the sequel, we denote by G the class of guarded TGDs, which is defined as the family of all possible sets of guarded TGDs. Analogously, we denote by SL and L the classes of simple linear and linear TGDs, respectively; clearly, SL ⊂ L ⊂ G. Let us first consider the less expressive classes.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Linearity</head><p>By exploiting syntactic conditions that ensure the termination of each (semi-)oblivious chase sequence on all databases, we syntactically characterize the classes (CT ⋆ ∩ SL) and (CT ⋆ ∩L), where ⋆ ∈ {o, so}. We rely on weak-acyclicity <ref type="bibr" target="#b4">[5]</ref> and rich-acyclicity <ref type="bibr" target="#b10">[11]</ref>. Both weak-and rich-acyclicity are defined by posing an acyclicity condition on a graph, which encodes how terms are propagated among the positions of the underlying schema during the chase. In fact, weak-acyclicity forbids the existence of dangerous cycles (which involve the generation of new null values) in the dependency graph <ref type="bibr" target="#b4">[5]</ref>, while rich-acyclicity pose the same condition on the so-called extended dependency graph <ref type="bibr" target="#b10">[11]</ref>. Let WA and RA be the classes of weakly-and richly-acyclic TGDs, respec- tively; notice that RA ⊂ WA. For simple linear TGDs we show that:</p><formula xml:id="formula_5">Theorem 1. (CT o ∩ SL) = (RA ∩ SL) and (CT so ∩ SL) = (WA ∩ SL).</formula><p>In simple words, the above theorem states that, given a set Σ ∈ SL: Σ ∈ CT o iff Σ is richly-acyclic, and Σ ∈ CT so iff Σ is weakly-acyclic. This result is established by showing that a dangerous cycle in the extended dependency graph (resp., dependency graph) necessarily gives rise to a non-terminating o-chase (resp., so-chase) sequence.</p><p>Let us now focus on (non-simple) linear TGDs. It is possible to show, by exhibit- ing a counterexample, that a dangerous cycle does not necessarily correspond to an infinite chase derivation. Thus, rich-and weak-acyclicity are not powerful enough for syntactically characterize the fragment of linear TGDs that guarantees the termination of the oblivious and semi-oblivious chase, respectively. Interestingly, it is possible to extend rich-and weak-acyclicity, focussing on linear TGDs, in such a way that the above key property holds. The obtained formalisms are dubbed critical-rich-acyclicity and critical-weak-acyclicity, and the corresponding classes are denoted as LCriticalRA and LCriticalWA, respectively. We show that:</p><formula xml:id="formula_6">Theorem 2. (CT o ∩ L) = LCriticalRA and (CT so ∩ L) = LCriticalWA.</formula><p>The above syntactic characterizations, apart from being interesting in their own right, allow us to obtain optimal upper bounds for the ⋆-chase termination problem for (S)L -we simply need to analyze the complexity of deciding whether a set of (simple) linear TGDs enjoys the above acyclicity-based conditions, which can be formulated as a reachability problem on a graph. In particular, we obtain the following results:</p><p>Theorem 3. Consider a set Σ of TGDs. The problem of deciding whether Σ ∈ CT ⋆ , where ⋆ ∈ {o, so}, is 1. NL-complete, even for unary and binary predicates, if Σ ∈ SL; and 2. PSPACE-complete, and NL-complete for predicates of bounded arity, if Σ ∈ L.</p><p>For the hardness results, a generic technique, called the looping operator, is pro- posed, which allows us to obtain lower bounds for the chase termination problem in a uniform way. In fact, the goal of the looping operator is to provide a generic reduction from propositional atom entailment to the complement of chase termination.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Guardedness</head><p>We proceed to investigate the (semi-)oblivious chase termination problem for guarded TGDs. Although there is no way (at least no obvious one) to syntactically characterize the classes (CT ⋆ ∩ G), where ⋆ ∈ {o, so}, via rich-and weak-acyclicity, as we did for (simple) linear TGDs, it is possible to show that the problem of recognizing the above classes is decidable. For technical reasons, we focus on standard databases, that is, databases that have two constants, let say 0 and 1, that are available via the unary predicates 0(·) and 1(·), respectively. In particular, we show the following: Theorem 4. Consider a set Σ ∈ G. The problem of deciding whether Σ ∈ CT ⋆ , where ⋆ ∈ {o, so}, focussing on standard databases, is 2EXPTIME-complete, and EXPTIME- complete for predicates of bounded arity.</p><p>The upper bounds are obtained by exhibiting an alternating algorithm that runs in exponential space, in general, and in polynomial space in case of predicates of bounded arity. The lower bounds are obtained by reductions from the acceptance problem of al- ternating exponential (resp., polynomial) space clocked Turing machines, i.e., Turing machines equipped with a counter. These reductions are obtained by modifying sig- nificantly existing reductions for the problem of propositional atom entailment under guarded TGDs, and then exploiting the looping operator mentioned above. The fact that the database is standard, is crucial for establishing the above lower bounds; the upper bounds hold even for non-standard databases.</p><p>Our next step is to perform similar analysis focussing on the restricted version of the chase. We already have some preliminary positive results. In particular, if we focus on single-head linear TGDs, where each predicate appears in the head of at most one TGD, then we can syntactically characterize, via a careful extension of weak-acyclicity, the fragment that guarantees the termination of the restricted chase, and obtain a polynomial time upper bound. We are currently working towards the full settlement of the problem.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Example 1 .</head><label>1</label><figDesc>Consider the database D = {person(Bob)}, and the TGD</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>∀</head><label></label><figDesc>= {Σ | ∀D, all ⋆ -chase sequences of D w.r.t. Σ are terminating} CT ⋆ ∃ = {Σ | ∀D, there exists a terminating ⋆ -chase sequence of D w.r.t. Σ}. The decision problems tackled in this work are as follows: for q ∈ {∀, ∃}: q-SEQUENCE ⋆-CHASE TERMINATION: Instance: A set Σ of TGDs. Question: Does Σ ∈ CT ⋆ q ? We recall that CT o o so so ∀ = CT ∃ ⊂ CT ∀ = CT ∃ [7]. This implies that the preceding decision problems coincide for the (semi-)oblivious chase. Henceforth, we refer to the ⋆-chase termination problem, and we write CT ⋆ for CT ⋆ ⋆ ∀ and CT ∃ , where ⋆ ∈ {o, so}.</figDesc></figure>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+			</div>
+
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Chase termination for guarded existential rules</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Calautti</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Gottlob</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Pieris</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">PODS (2015)</title>
+		<imprint/>
+	</monogr>
+	<note>to appear</note>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Taming the infinite chase: Query answering under expressive relational constraints</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Caì I</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Gottlob</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Kifer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Artif. Intell. Res</title>
+		<imprint>
+			<biblScope unit="volume">48</biblScope>
+			<biblScope unit="page" from="115" to="174" />
+			<date type="published" when="2013" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">A general Datalog-based framework for tractable query answering over ontologies</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Caì I</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Gottlob</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><surname>Lukasiewicz</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. Web Sem</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="page" from="57" to="83" />
+			<date type="published" when="2012" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">The chase revisisted</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Deutsch</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Nash</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><forename type="middle">B</forename><surname>Remmel</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">PODS. pp</title>
+		<imprint>
+			<date type="published" when="2008" />
+			<biblScope unit="page" from="149" to="158" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Data exchange: Semantics and query answering</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Fagin</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><forename type="middle">G</forename><surname>Kolaitis</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><forename type="middle">J</forename><surname>Miller</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><surname>Popa</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Theor. Comput. Sci</title>
+		<imprint>
+			<biblScope unit="volume">336</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="89" to="124" />
+			<date type="published" when="2005" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">All-instances termination of chase is undecidable</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><surname>Gogacz</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Marcinkowski</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ICALP. pp</title>
+		<imprint>
+			<biblScope unit="page" from="293" to="304" />
+			<date type="published" when="2014" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<monogr>
+		<title level="m" type="main">Anatomy of the chase</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Grahne</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Onet</surname></persName>
+		</author>
+		<idno>CoRR abs/1303.6682</idno>
+		<ptr target="http://arxiv.org/abs/1303.6682" />
+		<imprint>
+			<date type="published" when="2013" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<monogr>
+		<title level="m" type="main">Acyclicity conditions and their application to query answering in description logics</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><forename type="middle">C</forename><surname>Grau</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">I</forename><surname>Horrocks</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Krötzsch</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Kupke</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Magka</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Motik</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Z</forename><surname>Wang</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2012" />
+			<publisher>KR</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<monogr>
+		<title level="m" type="main">Incomplete Data and Data Dependencies in Relational Databases</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Greco</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Molinaro</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Spezzano</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2012" />
+			<publisher>Morgan &amp; Claypool Publishers</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Stratification criteria and rewriting techniques for checking chase termination</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Greco</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Spezzano</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">I</forename><surname>Trubitsyna</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PVLDB</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">11</biblScope>
+			<biblScope unit="page" from="1158" to="1168" />
+			<date type="published" when="2011" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">CWA-solutions for data exchange settings with target dependencies</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Hernich</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">N</forename><surname>Schweikardt</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">PODS. pp</title>
+		<imprint>
+			<date type="published" when="2007" />
+			<biblScope unit="page" from="113" to="122" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Generalized schema-mappings: From termination to tractability</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Marnette</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">PODS. pp</title>
+		<imprint>
+			<date type="published" when="2009" />
+			<biblScope unit="page" from="13" to="22" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">On chase termination beyond stratification</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Meier</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Schmidt</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Lausen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">PVLDB</title>
+		<imprint>
+			<biblScope unit="volume">2</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="970" to="981" />
+			<date type="published" when="2009" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

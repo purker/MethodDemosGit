@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Advancing Multi-Context Systems by Inconsistency Management</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+				<date type="published" when="2011-07-11">11 Jul 2011</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author role="corresp">
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Antonius</forename><surname>Weinzierl</surname></persName>
+							<email>weinzierl@kr.tuwien.ac.at</email>
+							<affiliation key="aff0">
+								<orgName type="department">Institute of Information Systems</orgName>
+								<orgName type="institution">Vienna University of Technology</orgName>
+								<address>
+									<addrLine>Favoritenstraße 9-11</addrLine>
+									<postCode>A-1040</postCode>
+									<settlement>Vienna</settlement>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Advancing Multi-Context Systems by Inconsistency Management</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2011-07-11">11 Jul 2011</date>
+						</imprint>
+					</monogr>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<abstract>
+				<p>Multi-Context Systems are an expressive formalism to model (possibly) non-monotonic information exchange between heterogeneous knowledge bases. Such information exchange, however, often comes with unforseen side-effects leading to violation of constraints, making the system inconsistent, and thus unusable. Although there are many approaches to assess and repair a single inconsistent knowledge base, the heterogeneous nature of Multi-Context Systems poses problems which have not yet been addressed in a satisfying way: How to identify and explain a inconsistency that spreads over multiple knowledge bases with different logical formalisms (e.g., logic programs and ontologies)? What are the causes of inconsistency if inference/information exchange is non-monotonic (e.g., absent information as cause)? How to deal with inconsistency if access to knowledge bases is restricted (e.g., companies exchange information, but do not allow arbitrary modifications to their knowledge bases)? Many traditional approaches solely aim for a consistent system, but automatic removal of inconsistency is not always desireable. Therefore a human operator has to be supported in finding the erroneous parts contributing to the inconsistency. In my thesis those issues will be adressed mainly from a foundational perspective, while our research project also provides algorithms and prototype implementations.</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">Introduction</head><p>Multi-Context Systems (MCSs) are an expressive formalism for (possibly) non- monotonic knowledge exchange between heterogeneous knowledge sources. These sources are called contexts and formalized as abstract 'logics'. Information flow between contexts is specified using bridge rules which look and behave similar to rules in non-monotonic logic programming (cf. <ref type="bibr" target="#b14">[15]</ref>):</p><p>(k : s) ← (c 1 : p 1 ), . . . , (c j : p j ), not(c j+1 : p j+1 ), . . . , not(c m : p m ).</p><p>(1)</p><p>Such a rule states that information s is added to context k if for 1 ≤ i ≤ j knowledge p i is present in context c i and for j + 1 ≤ i ≤ m knowledge p i is absent in c i . Following common terminology p 1 , . . . , p m are called beliefs (each of their respective context) and s is the head formula of the bridge rule.</p><p>Consider a hospital where a database with patient records, a medical on- tology, and an expert system shall be working together giving decision support on patient medications. The MCS framework is a good choice to realize this. Assume for patient Sue, the database knows that a) her X-Ray result indicates pneumonia, b) a certain blood marker is present, and c) she has no known aller- gies. The ontology imports information on X-Ray and blood tests using bridge rules (C onto : xray(Sue)) ← (C patients : labresult (Sue, xray)). (C onto : marker (Sue)) ← (C patients : labresult (Sue, marker )).</p><p>As the ontology contains the axiom xray ⊓marker ⊑ atyp pneu it concludes that Sue has a atypical pneumonaia, severe kind of pneumonia. Finally, the expert system, a logic program containing rules give weak ∨ give strong : −pneumonia. and give strong : −atyp pneumonia. suggests one out of two kinds of antibiotics if a patient has pneumonia. But it also respects potential allergies by the con- straint : −give strong, not allowed strong. As Sue has atypical pneumonia, only the strong antibiotic will help, so the logic program suggests this. Now assume that Sue is allergic to strong antibiotics, a case that actually happens in the real world. Then the expert system can give no valid suggestion as strong antibiotics have to be given, but at the same time they are forbidden to be applied. This results in the whole system having no 'model' satisfying deductions of all knowledge bases and bridge rules. We call such an MCS inconsistent.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1</head><p>By this example, we identify the following open problems:</p><p>-the inconsistency above is present due to tuples in the database, termino- logical assertions in the ontology, logic programming rules in the expert system and, a set of bridge rules establishing the information exchange. In what terms should the inconsistency be described and is there a uniform description irrespective of the specific formalisms used in contexts? Non- monotonicity of bridge rules and contexts is an additional challenge to such a description. -Given such a description it is very likely that multiple ways exist to restore consistency. Removing some bridge rules would make the above example con- sistent, but also removal of tuples describing lab results. Similarly, addition of new bridge rules could resolve the inconsistency. If multiple options exist, which is the most preferred to restore consistency? Is it possible to do this in a heterogeneous way, i.e., can the designer of an MCS use a formalism of his own choice to specify his preference? Can such preference be given only for specific parts of an MCS and preference for other parts differently expressed? -In the above example, the inconsistency can be dealt with locally, e.g., the expert system could switch to use paracoherent semantics and the MCS becomes consistent. For MCSs with cyclic information flow, however, this might be impossible as cyclic information flow can be such that each context returns valid belief sets ("models"), but still for the overall system it does not fit together. How far does local inconsistency management help to resolve inconsistency, e.g., for MCSs with acyclic information flow? -Besides inconsistency, is the MCS framework so versatile as to use other kinds of rules to connect contexts, e.g., SPARQL queries for information exchange?</p><p>As research on these topics has been started two years ago, the rest of this paper will briefly present results adressing above questions. Regarding research methodologies, we built analogies from existing techniques, e.g., Reiter's diagno- sis. For algorithms we resorted to reductions to computational logic and meta- reasoning transformations, e.g., preference is handled in this way. Whenever pos- sible, our invented methods are open so that legacy systems may be integrated to achieve certain tasks, e.g., local inconsistency management.</p><p>Contributions summary:</p><p>-we developed a uniform representation of inconsistency in terms of bridge rules. This representation leads a) to the notion of inconsistency explanation which separates different sources of inconsistency and points out those bridge rules creating inconsistency and b) to the notion of diagnosis which induce all possible repairs of an inconsistent MCS. Notably, both notions coincide on the overall set of bridge rules which are marked 'faulty. -on top of those notions, we developed a transformation-based technique to allow meta-reasoning on diagnoses of an inconsistent MCS. This allows sys- tem designers to express preferences over diagnoses in a formalism of their own choice. The same techinque also allows to filter out undesired diagnoses. -for local inconsistency management, a generalization of the MCS formalism was developed allowing to use existing methods of inconsistency management locally for a context. The introduced notion of a context manager allows to employ arbitrary knowledge management techniques locally at a context. It is important that the employed manager can change a knowledge base in a broad range and therefore it can also do other operations like view updates, belief revision, logic program updates, etc. -for above notions the computational complexity also was analysed. -to show the versatility of the ideas behind MCS, we also introduced a mod- ified notion of MCS where knowledge exchange is specified using SPARQL queries.</p><p>Finally, we also implemented prototypes for evaluating MCSs and computing diagnoses and explanations of inconsistent MCSs. The remainder of this paper is organized as follows: In Section 2 related work is discussed while Section 3 recapitulates the formal semantics of MCS and our basic notion for inconsistency diagnosis/explanation, it is followed by a short presentation of major achievements in the last two years in Section 4. Finally, Section 5 is an outlook on future work.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">Related Work</head><p>With the seminal work of <ref type="bibr" target="#b18">[19]</ref> and <ref type="bibr" target="#b15">[16]</ref> the notion of context has been intro- duced to artificial intelligence and logic. In these works, a context is a regarded as a certain point of view in which formal reasoning takes place. The Trento school (cf. <ref type="bibr" target="#b16">[17,</ref><ref type="bibr" target="#b21">22]</ref>) formalized and improved this understanding of context. It is notable, however, that those first frameworks consider homogeneous, monotonic logics for representing a context. With <ref type="bibr" target="#b8">[9,</ref><ref type="bibr" target="#b20">21]</ref> non-monotonicity was introduced to Multi-Context Systems. Although default negation is added to bridge rules, contexts still are homogeneous or monotonic. Only with <ref type="bibr" target="#b6">[7]</ref> the framework has been generalized for non-monotonic bridge rules and heterogeneous contexts. This finally allows to use arbitrary knowledge sources that are connected by (possibly) non-monotonic bridge rules. Our research is based on this notion of MCSs.</p><p>To deal with inconsistency, in <ref type="bibr" target="#b4">[5]</ref> defeasible rules are introduced as a way of establishing information exchange in MCS. Defeasible rules are similar to bridge rules, but their semantics differs as a defeasible rule does not fire if it would cause an inconsistency by doing so. Several algorithms based on preference orders (or argumentation frameworks <ref type="bibr" target="#b3">[4]</ref>) have been proposed. Inconsistency is resolved inherently, but no deeper inconsistency analysis is possible. For our hospital example this would mean that some information simply would not be passed along, e.g., forgetting the illness of Sue. Most of the proposed algorithms are based on provenance, which means that context internals have to be exhibited to other contexts. A company making profit by allowing third parties to use its knowledge base, however, will not risk its business by providing such information.</p><p>Aside from MCS, other areas deal with knowledge integration and its issues. Peer-to-Peer (p2p) systems <ref type="bibr" target="#b23">[24,</ref><ref type="bibr" target="#b9">10]</ref> are similar as knowledge sources interchange pieces of information. Although the notion of a peer is very similar to a context in MCS, the essential feature of p2p systems is that peers may leave and join the system arbitrarily. Therefore research seeks to cope with inconsistency by isolating faulty contexts and simply ignore their information instead of analysing the inconsistency and aiming for a consistent system.</p><p>Information integration on the other hand deals extensively with issues like constraint violations that stem from the integration of several databases into a single one (cf. <ref type="bibr" target="#b5">[6]</ref> for a survey on data fusion). Its main differences to MCS are that the result of data fusion is one single database which usually uses relational algebra for knowledge representation. MCSs, however, require incon- sistency management for multiple, heterogeneous knowledge bases which are not restricted to a relational setting.</p><p>For many formalisms, methods of inconsistency handling have been invented, e.g., belief revision or possibilistic reasoning (e.g. <ref type="bibr" target="#b2">[3]</ref>) for classical logic, para- coherent semantics for logic programs, etc. These methods can resolve inconsis- tency locally at a context (cf. Section 4), but they can not guarantee a consistent system. Also, most of those methods are only applicable to a specific formalism instead of a heterogeneous non-monotonic system.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">MCS Preliminaries</head><p>Each context of an MCS is seen as a knowledge base built on an underlying logic. To capture different kinds of logics, this notion is general and not defined in the bottom-up style of inductive definitions for syntax and semantics. Instead, its approach is top-down, directly working with sets of well-formed formulas (wffs) and models (called belief sets). The semantics of a logic then only maps each set of wffs to a set of belief sets, i.e., the models of the wffs.</p><p>Formally, a logic L = (KB L , BS L , ACC L ) consists, of the following compo- nents: 1) KB L is the set of well-formed knowledge bases of L where each element of KB L is a set (of formulas). 2) BS L is the set of possible belief sets where we assume that each element of BS L is a set (i.e.,a model containing all formulas that are considered true). 3)</p><formula xml:id="formula_0">ACC L : KB L → 2</formula><p>BS L is a function describing the semantics of L by assigning each knowledge base a set of acceptable belief sets. This concept of a logic captures many monotonic and non-monotonic logics, e.g., classical logic, description logics, modal, default, and autoepistemic logics, circumscription, and logic programs under the answer set semantics.</p><formula xml:id="formula_1">A Multi-Context System M = (C 1 , . . . , C n ) is a collection of contexts C i = (L i , kb i , br i ), 1 ≤ i ≤ n, where L i = (KB i , BS i , ACC i</formula><p>) is a logic, kb i ∈ KB i a knowledge base, and br i is a set of bridge rules of form (1) over log- ics (L 1 , . . . , L n ). Furthermore, for each bridge rule r ∈ br i its head formula s is compatible with C i , i.e., for each H ⊆ {s | r ∈ br and (i : s) is the head of r} holds kb ∪ H ∈ KB Li .</p><p>A belief state S = (S 1 , . . . , S n ) of an MCS M = (C 1 , . . . , C n ) is a belief set for every context, i.e., S i ∈ BS i for all 1 ≤ i ≤ n. The semantics of MCS is defined in terms of equilibria, i.e., belief states that reproduce themselves under the application of bridge rules. Formally, let M be an MCS, C i a context of M and S = (S 1 , . . . , S n ) a belief state of M , then an bridge rule r of form <ref type="formula">(1)</ref> is applicable wrt. S, denoted by S |= body(r), iff p ℓ ∈ S c ℓ for 1 ≤ ℓ ≤ j and p ℓ / ∈ S c ℓ for j &lt; ℓ ≤ m. Let app i (S) = {hd (r) | r ∈ br i ∧ S |= body(r)} denote the heads of all applicable bridge rules of context C i under S, then S = (S 1 , . . . , S n ) is an equilibrium of M if and only if S i ∈ ACC i (app i (S)) for 1 ≤ i ≤ n.</p><p>Basic Notions for Inconsistency Analysis (cf. <ref type="bibr" target="#b11">[12]</ref>): We call an MCS M inconsistent iff no belief state of M is an equilibrium. To analyse and explain the inconsistency in an MCS, two notions have been developed: consistency- based diagnosis and entailment-based inconsistency explanation. Both notions use bridge rules to characterize 'faulty' information exchange. Intuitively, a diag- nosis states how an inconsistent MCS can be changed to get a consistent system and an explanation shows what parts of the system create the inconsistency.</p><p>For an MCS M , br M denotes the set of all bridge rules occuring in M , M [R] denotes a modified MCS where all bridge rules of M are replaced by those of R, and M |= ⊥ denotes that M is inconsistent. Given an MCS M , a diagnosis of M is a pair (</p><formula xml:id="formula_2">D 1 , D 2 ),D 1 , D 2 ⊆ br M , s.t. M [br M \ D 1 ∪ heads(D 2 )] |= ⊥. An explanation of M is a pair (E 1 , E 2 ) of sets E 1 , E 2 ⊆ br M of bridge rules s.t. for all (R 1 , R 2 ) where E 1 ⊆ R 1 ⊆ br M and R 2 ⊆ br M \ E 2 , it holds that M [R 1 ∪ heads(R 2 )] |= ⊥.</formula><p>For a concise characterization, one usually focuses on subset-minimal diag- noses and explanations. The basic ideas behind both notions appear also in Reiter's seminal work on diagnosis <ref type="bibr" target="#b19">[20]</ref>. Our diagnosis is similar to his notion and our explanation is similar to (minimal) inconsistent sets. For differences, we assume the source of inconsistency to be some faulty information exchange, so we only consider bridge rules, and because of the non-monotonic nature of MCSs, a bridge rule can be faulty by firing when it should not and also by not firing when it should. In classical diagnosis, only the former is relevant as monotonic logics only become inconsistent by that. The set of minimal diagnoses can also be seen as describing all minimal repairs, while the set of minimal explanations show hows inconsistency is caused in the system. The set E 2 in an explanation also shares some ideas with consistency restoring rules (cf. <ref type="bibr" target="#b1">[2]</ref>) of logic programs.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">Contributions: Methods of Inconsistency Management</head><p>This section presents contributions and answers the motivational questions raised in the introduction. These are the major published results of my graduate re- search. Note that authors are listed alphabetically for the respective publications.</p><p>Inconsistency Assessment: Having jointly developed and investigated, the basic notions for inconsistency analysis, the next step was developing methods to assess inconsistency qualitatively, i.e., filter diagnoses with undesired prop- erties and select most preferred ones. In the spirit of MCS, we do not apply a specific formalism for preference or filters on diagnoses, but rather show how a transformation of the MCS and slight adaption of the notion of diagnosis is sufficient to achieve the desired effects in <ref type="bibr" target="#b12">[13]</ref>.</p><p>As one of the strengths of MCS is the ability to allow arbitrary formalisms for knowledge representation inside contexts, we do not want to restrict the users to a specific kind of representation of filters (or preferences). We therefore devised a meta-reasoning transformation which allows certain contexts to observe which diagnosis is applied to the MCS. The desired filter then is realized inside such an observer context (in a formalisms which is best suited for this task). So an MCS M is transformed into an MCS M f where an additional observer context ob is added together with some additional bridge rules (details cf. <ref type="bibr" target="#b12">[13]</ref>). As M f contains all contexts and bridge rules of M , every diagnosis of M can also be applied to M f . If ob detects an undesired diagnosis D ′ , then ob simply becomes inconsistent, i.e., having no acceptable belief set. Therefore D ′ is no diagnosis of M f , but all other diagnoses of M are diagnoses of M f . This allows to compute all filtered diagnoses with the same algorithm as for computing subset-minimal diagnoses and it also allows to specify the filter in any desired formalism.</p><p>The meta-reasoning transformation also can be applied for multiple observa- tion contexts where each observer only sees some bridge rules instead of all, thus preserving information hiding. As a similar meta-reasoning transformation can be used for comparison of diagnoses, it is possible to realize any given preference order on diagnoses and select the most preferred one. In general, however, this requires exponentially many more bridge rules in the transformed system, but for restricted classes of preference orders it is feasible.</p><p>Inconsistency management at the level of contexts: For many specific logics and knowledge formalisms, solutions to deal with inconsistency have been developed in the past, e.g., belief revision and paraconsistency for logics, para- coherent logic programming for logic programs, etc. For contexts using the un- derlying formalism it is desireable that MCSs also offer the same methods of inconsistency handling. Those methods, however, require to modify a knowledge base in more ways, than just the addition of formulas as bridge rules can do.</p><p>We therefore propose managed Multi-Context Systems (mMCS) in <ref type="bibr" target="#b7">[8]</ref> where each context is equiped with a manager that can apply arbitrary changes to the context's knowledge base. Bridge rules in an mMCS are like those of MCS, but their head contains a unary command op, e.g., revise(s), delete(s), add (s), to apply the resp. operation on the formula s and the knowledge base of the context.</p><p>Managed MCS are a significant generalization of MCS as management func- tions can be used to realize a multitude of tasks: belief revision, view updates, updates of logic programs. To us, the most interesting is to ensure that con- texts have a 'model' for any input. Such contexts are called totally coherent. Most notably even mMCS with totally coherent contexts cannot guarantee that the overall system has an equilibrium, but they ensure that inconsistency is only caused by odd-cyclic information flow. It directly follows that any acyclic mMCS with totally coherent contexts is consistent, thus proving local inconsis- tency management sufficient for acyclic MCS.</p><p>Beyond bridge rules: In <ref type="bibr" target="#b22">[23]</ref> we introduce MCS where knowledge exchange is realised using SPARQL construct-queries. This is surprisingly simple and again shows the versatility of MCS. The resulting SPARQL-MCS framework is related to the MWeb approach <ref type="bibr" target="#b0">[1]</ref>, but our treatment of variables is different.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">Future Work</head><p>As shown above, we were able to answer several foundational questions, give a uniform representation of inconsistency in heterogeneous MCSs, an open inte- gration of preference-based inconsistency assessment, investigating the impact of local inconsistency handling, and making the MCS formalism capable of dealing with arbitrary changes to the knowledge bases of an MCS.</p><p>To evaluate the feasibility of the developed methods, we also aim for a refer- ence application which is currently in the making: querying of a DNA database posing questions in (almost) natural language using an ontology and answer- set programs. Intital steps towards exchanging large amounts of information (cf. <ref type="bibr" target="#b13">[14]</ref>) also showed that more specialised algorithms are needed.</p><p>Investigations whether approximation operators of <ref type="bibr" target="#b10">[11]</ref> for logic programs can be translated to MCSs and transferring optimisations for abductive diagnosis (e.g., <ref type="bibr" target="#b17">[18]</ref>) to MCSs are also open tasks.</p></div>
+			<note place="foot" n="1"> A complete formalisation of this example is available in [12].</note>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">Acknowledgements</head><p>I am very grateful to my advisor Thomas Eiter, the principal investigator of our research project Michael Fink, and my colleague Peter Schüller who provided guidance, and helped with many fruitful discussions. Thank you.</p></div>
+			</div>
+
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">MWeb: A principled framework for modular web rule bases and its semantics</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Analyti</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Antoniou</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><forename type="middle">V</forename><surname>Damasio</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM Trans. Comput. Logic</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<date type="published" when="2011" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Logic programs with consistency-restoring rules</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Balduccini</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Gelfond</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">International Symposium on Logical Formalization of Commonsense Reasoning, AAAI 2003 Spring Symposium Series</title>
+		<imprint>
+			<date type="published" when="2003" />
+			<biblScope unit="page" from="9" to="18" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Bridging possibilistic conditional knowledge bases and partially ordered bases</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Benferhat</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Lagrue</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Yahi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">JELIA. pp</title>
+		<imprint>
+			<date type="published" when="2010" />
+			<biblScope unit="page" from="38" to="50" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Contextual argumentation in ambient intelligence</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Bikakis</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Antoniou</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">LPNMR. pp</title>
+		<imprint>
+			<date type="published" when="2009" />
+			<biblScope unit="page" from="30" to="43" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Alternative strategies for conflict resolution in multi-context systems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Bikakis</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Antoniou</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Hassapis</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">AIAI. pp</title>
+		<imprint>
+			<date type="published" when="2009" />
+			<biblScope unit="page" from="31" to="40" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Data fusion</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Bleiholder</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Naumann</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM Comput. Surv</title>
+		<imprint>
+			<biblScope unit="volume">41</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="1" to="41" />
+			<date type="published" when="2008" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Equilibria in heterogeneous nonmonotonic multi-context systems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Brewka</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><surname>Eiter</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">AAAI. pp</title>
+		<imprint>
+			<date type="published" when="2007" />
+			<biblScope unit="page" from="385" to="390" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Managed multi-context systems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Brewka</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><surname>Eiter</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Fink</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Weinzierl</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">In: IJCAI</title>
+		<imprint>
+			<date type="published" when="2011" />
+		</imprint>
+	</monogr>
+	<note>to appear</note>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Brewka</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Roelofsen</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><surname>Serafini</surname></persName>
+		</author>
+		<title level="m">Contextual default reasoning. In: IJCAI. pp</title>
+		<imprint>
+			<date type="published" when="2007" />
+			<biblScope unit="page" from="268" to="273" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Inconsistency tolerance in p2p data integration: An epistemic logic approach</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Calvanese</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><forename type="middle">D</forename><surname>Giacomo</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Lembo</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Lenzerini</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Rosati</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Inf. Syst</title>
+		<imprint>
+			<biblScope unit="volume">33</biblScope>
+			<biblScope unit="issue">4-5</biblScope>
+			<biblScope unit="page" from="360" to="384" />
+			<date type="published" when="2008" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Ultimate approximation and its application in nonmonotonic knowledge representation systems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Denecker</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">V</forename><forename type="middle">W</forename><surname>Marek</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Truszczynski</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Inf. Comput</title>
+		<imprint>
+			<biblScope unit="volume">192</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="84" to="121" />
+			<date type="published" when="2004" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<monogr>
+		<title level="m" type="main">Finding explanations of inconsistency in multi-context systems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><surname>Eiter</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Fink</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Schüller</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Weinzierl</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2010" />
+			<publisher>KR</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Preference-based inconsistency assessment in multi-context systems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><surname>Eiter</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Fink</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Weinzierl</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">JELIA. pp</title>
+		<imprint>
+			<biblScope unit="page" from="143" to="155" />
+			<date type="published" when="2010" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Relational information exchange and aggregation in multi-context systems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Fink</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><surname>Ghionna</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Weinzierl</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">LPNMR. pp</title>
+		<imprint>
+			<date type="published" when="2011" />
+			<biblScope unit="page" from="120" to="133" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Classical negation in logic programs and disjunctive databases</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Gelfond</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">V</forename><surname>Lifschitz</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">New Generation Comput</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="page" from="365" to="386" />
+			<date type="published" when="1991" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Giunchiglia</surname></persName>
+		</author>
+		<title level="m">Abstract contextual reasoning</title>
+		<imprint>
+			<date type="published" when="1993" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Multilanguage hierarchical logics or: How we can do without modal logics</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Giunchiglia</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><surname>Serafini</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Artif. Intell</title>
+		<imprint>
+			<biblScope unit="volume">65</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="29" to="70" />
+			<date type="published" when="1994" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Focusing on probable diagnoses</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>De Kleer</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">AAAI. pp</title>
+		<imprint>
+			<date type="published" when="1991" />
+			<biblScope unit="page" from="842" to="848" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Notes on formalizing context</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Mccarthy</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IJCAI. pp</title>
+		<imprint>
+			<biblScope unit="page" from="555" to="562" />
+			<date type="published" when="1993" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">A theory of diagnosis from first principles</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Reiter</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Artif. Intell</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="57" to="95" />
+			<date type="published" when="1987" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Minimal and absent information in contexts</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Roelofsen</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><surname>Serafini</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IJCAI. pp</title>
+		<imprint>
+			<biblScope unit="page" from="558" to="563" />
+			<date type="published" when="2005" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">Minimality and non-determinism in multi-context systems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Roelofsen</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><surname>Serafini</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">CONTEXT. pp</title>
+		<imprint>
+			<date type="published" when="2005" />
+			<biblScope unit="page" from="424" to="435" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Semantic reasoning with sparql in heterogeneous multicontext systems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Schüller</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Weinzierl</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Semantic Search over the Web</title>
+		<imprint>
+			<date type="published" when="2011" />
+		</imprint>
+	</monogr>
+	<note>to appear</note>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Local relational model: A logical formalization of database coordination</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><surname>Serafini</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Giunchiglia</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Mylopoulos</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Bernstein</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">CONTEXT. pp</title>
+		<imprint>
+			<date type="published" when="2003" />
+			<biblScope unit="page" from="286" to="299" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

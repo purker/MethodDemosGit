@@ -1,0 +1,1322 @@
+<Publication>
+  <id>TUW-139761</id>
+  <title></title>
+  <note>Option Pricing by means of Genetic Programming ausgeführt am Institut für Computer Graphik und Algorithmen der Technischen Universität Wien unter Anleitung von a.o. Univ.-Prof. Dipl.-Ing. Dr.techn. Günther Raidl und Univ.-Prof. Dr. Michael Hanke durch Diese Diplomarbeit beschreibt, wie Optionen mit Hilfe Genetischer Programmierung bewertet werden können. Das zugrunde liegende Modell nennt sich GARCH (Gen-eralized Autoregressive Conditional Heteroskedastic) Renditeprozess. Das Ziel dieser</note>
+  <abstractText>Diplomarbeit ist eine geschlossene Formel, die als Ergebnis den Preis einer europäischen Kaufoption liefert, dessen dahinter liegende Wertpapier einem GARCH Prozess folgt. Die Daten werden innerhalb eines breiten Wertebereiches simuliert, um die meisten existierenden Optionen mit einer Formel bewerten zu können. Die Formel wird mittels Genetischer Programmierung aus den Daten generiert. Genetische Programmierung ist eine Methode, bei der nur durch Definition einer zum Problem passenden Bewertungsfunktion vollständige Programme produziert werden können. Die Ergebnisgleichung wird schließlich mittels eines der EvolutionähnlichenEvolutionähnlichen Algorithmus gefunden. Drei verschiedene Methoden zum Bloat Control wurden ver-wendet. Zusätzlich wurden auch Automatisch Definierte Funktionen sowie ein hybrider Ansatz untersucht. Um sicherzustellen, dass eine gute Konfiguration gewählt wird, gibt es Vortests vieler verschiedener Konfigurationen. Es zeigt sich, dass in diesem Umfeld einfachere Konfigurationen erfolgreicher sind. Die Ergebnisgleichung kann schließlich zur Errechnung der Optionspreise mit min-imalem Fehler verwendet werden. Diese Gleichung verhält sich gut und kann auch in Standardtabellenkalkulationen verwendet werden. Im Vergleich mit anderen existieren-den Ansätzen, bietet diese Gleichung eine weitere Verwendbarkeit beziehungsweise eine höhere Genauigkeit.</abstractText>
+  <keywords/>
+  <authors>
+    <Author>
+      <firstNames>
+        <string>Andreas</string>
+      </firstNames>
+      <lastName>Heigl</lastName>
+      <affiliations>
+        <Affiliation>
+          <id>aff0</id>
+          <institution>D I P L O M A R B E I T</institution>
+        </Affiliation>
+      </affiliations>
+    </Author>
+    <Author>
+      <firstNames>
+        <string>Markt</string>
+      </firstNames>
+      <lastName>115</lastName>
+      <affiliations>
+        <Affiliation reference="/Publication[1]/authors[1]/Author[1]/affiliations[1]/Affiliation[1]"/>
+      </affiliations>
+    </Author>
+    <Author>
+      <firstNames>
+        <string>Grossarl</string>
+      </firstNames>
+      <lastName>Datum</lastName>
+      <affiliations>
+        <Affiliation reference="/Publication[1]/authors[1]/Author[1]/affiliations[1]/Affiliation[1]"/>
+      </affiliations>
+    </Author>
+    <Author>
+      <firstNames>
+        <string>Unterschrift</string>
+      </firstNames>
+      <lastName>Zusammenfassung</lastName>
+      <affiliations>
+        <Affiliation reference="/Publication[1]/authors[1]/Author[1]/affiliations[1]/Affiliation[1]"/>
+      </affiliations>
+    </Author>
+  </authors>
+  <affiliations>
+    <Affiliation reference="/Publication[1]/authors[1]/Author[1]/affiliations[1]/Affiliation[1]"/>
+  </affiliations>
+  <sections>
+    <Section>
+      <title>Abstract</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>Acknowledgements</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>Contents</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>Introduction</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>Chapter 2 Option pricing</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>2.1</level>
+      <title>Basic approaches in option pricing</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>2.1.1</level>
+      <title>Some definitions and basic models</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>2.1.2</level>
+      <title>The Black-Scholes formula</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>2.2.1</level>
+      <title>Discrete-time stochastic processes</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>2.2.2</level>
+      <title>The GARCH model</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>2.2.3</level>
+      <title>Monte Carlo simulation of a GARCH process</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>Overview of Genetic Programming</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.1</level>
+      <title>Genetic algorithms</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.1.1</level>
+      <title>Basic terminology</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.1.2</level>
+      <title>Flowchart of a simple genetic algorithm</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.1.3</level>
+      <title>Additional settings</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.2</level>
+      <title>Genetic Programming</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.2.1</level>
+      <title>Terminal set and function set</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.2.2</level>
+      <title>Creation of the initial population</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.2.3</level>
+      <title>Genetic operations</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.2.4</level>
+      <title>Automatic defined functions</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.2.5</level>
+      <title>Bloat control</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.2.6</level>
+      <title>Control parameters</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>Parameter</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.1</level>
+      <title>Neural networks</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.2</level>
+      <title>Markov chain approximation</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.3</level>
+      <title>Genetic Programming</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>Chapter 5 Strategic decisions of the new approach</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.1</level>
+      <title>GARCH process</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.2</level>
+      <title>Genetic Programming</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.2.1</level>
+      <title>Functions and terminals</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.2.2</level>
+      <title>Fitness function and bloat control</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.2.3</level>
+      <title>Population size, number of generations and mutation</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5.2.4</level>
+      <title>Automatic defined functions and hybrid approaches</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>Chapter 6 Implementation details</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>6.1</level>
+      <title>Libraries</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>6.1.1</level>
+      <title>The Genetic Programming kernel</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>6.1.2</level>
+      <title>A random number generator library</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>Newran02B</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>6.1.3</level>
+      <title>GNU Scientific Library</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>6.2</level>
+      <title>New classes and functions</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>6.2.2</level>
+      <title>GPOPdata</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>6.2.3</level>
+      <title>MyGPVariables</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>6.2.4</level>
+      <title>MyGene</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>6.2.5</level>
+      <title>MyGP</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>6.2.6</level>
+      <title>MyPopulation</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>6.2.7</level>
+      <title>Executables</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>6.3</level>
+      <title>Overview UML diagram</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>7.1.2</level>
+      <title>Test results</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>7.1.3</level>
+      <title>Utilization of the ADFs and the hybrid approaches</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>7.2.3</level>
+      <title>The original process</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>7.3</level>
+      <title>Comparison of the results with other approaches</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>7.3.2</level>
+      <title>Comparison of the result with [DS01]</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>7.3.3</level>
+      <title>Comparison of the result with [Keb99]</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>Chapter 8 Conclusion</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>8.1</level>
+      <title>New approaches</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>8.2</level>
+      <title>Summary of the result</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>8.3</level>
+      <title>Future issues</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>List of Figures</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+  </sections>
+  <citationContexts/>
+  <references>
+    <Reference>
+      <id>ref1</id>
+      <referenceIdString>b0</referenceIdString>
+      <title>Flowchart of a simple genetic algorithm</title>
+      <source>Source</source>
+      <authors/>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref2</id>
+      <referenceIdString>b1</referenceIdString>
+      <source>An example of a genetic program</source>
+      <authors/>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref3</id>
+      <referenceIdString>b2</referenceIdString>
+      <source>An example of a crossover operation</source>
+      <authors/>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref4</id>
+      <referenceIdString>b3</referenceIdString>
+      <source>UML diagram of the Genetic Programming kernel</source>
+      <authors/>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref5</id>
+      <referenceIdString>b4</referenceIdString>
+      <source>UML diagram of Newran02B. Source: [Dav02]</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>. . . . . .</string>
+          </firstNames>
+        </ReferenceAuthor>
+      </authors>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref6</id>
+      <referenceIdString>b5</referenceIdString>
+      <source>UML diagram of the whole program</source>
+      <authors/>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref7</id>
+      <referenceIdString>b6</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Rmse-Black-Scholes</string>
+            <string>. .</string>
+          </firstNames>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref8</id>
+      <referenceIdString>b7</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Mape-Black-Scholes</string>
+            <string>. .</string>
+          </firstNames>
+        </ReferenceAuthor>
+      </authors>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref9</id>
+      <referenceIdString>b8</referenceIdString>
+      <title>38 6.2 Some functions of the GNU Scientific Library</title>
+      <source>Source</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>.. .. .. .. .. .. .. .. .. .. .. .. ..</string>
+          </firstNames>
+          <lastName>Control Parameters</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>]</string>
+            <string>.. .. .. .. .. .. .. .. .. .. . . ; Ds01]. .. .. .. .. .. .. .. .. .. .. ..</string>
+          </firstNames>
+          <lastName>Han98</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>]</string>
+            <string>.. .. .. .. .. .. .. .. .. .. .</string>
+          </firstNames>
+          <lastName>Keb99</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>]</string>
+            <string>. . . . . . .</string>
+          </firstNames>
+          <lastName>Wei97</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <note>29 5.1 Input data and ranges. 48 7.3 Results of the t-statistic in percent. .. .. 53 7.8 Average results of the process. .. .</note>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref10</id>
+      <referenceIdString>b9</referenceIdString>
+      <title>Monte carlo methods for security pricing</title>
+      <source>Journal of Economic Dynamics and Control</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Phelim</string>
+          </firstNames>
+          <lastName>Boyle</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Mark</string>
+          </firstNames>
+          <lastName>Broadie</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Paul</string>
+          </firstNames>
+          <lastName>Glasserman</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>1267</pageFrom>
+      <pageTo>1321</pageTo>
+      <publicationDateString>1997</publicationDateString>
+      <publicationYear>1997</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref11</id>
+      <referenceIdString>b10</referenceIdString>
+      <title>ARCH modeling in finance: a review of the theory and empirical evidence</title>
+      <source>Journal of Econometrics</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Tim</string>
+          </firstNames>
+          <lastName>Bollerslev</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Ray</string>
+            <string>Y</string>
+          </firstNames>
+          <lastName>Chou</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Kenneth</string>
+            <string>F</string>
+          </firstNames>
+          <lastName>Kroner</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>52</volume>
+      <pageFrom>5</pageFrom>
+      <pageTo>95</pageTo>
+      <publicationDateString>1992</publicationDateString>
+      <publicationYear>1992</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref12</id>
+      <referenceIdString>b11</referenceIdString>
+      <source>Handbook of Evolutionary Computation</source>
+      <publisher>Oxford University Press</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Thomas</string>
+          </firstNames>
+          <lastName>Bäck</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>David</string>
+            <string>B</string>
+          </firstNames>
+          <lastName>Fogel</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Zbigniew</string>
+          </firstNames>
+          <lastName>Michalewicz</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <location>New York</location>
+      <publicationDateString>1997</publicationDateString>
+      <publicationYear>1997</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref13</id>
+      <referenceIdString>b12</referenceIdString>
+      <source>Genetic Programming-An Introduction</source>
+      <publisher>Morgan Kaufmann</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Wolfgang</string>
+          </firstNames>
+          <lastName>Banzhaf</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Peter</string>
+          </firstNames>
+          <lastName>Nordin</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Robert</string>
+            <string>E</string>
+          </firstNames>
+          <lastName>Keller</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Frank</string>
+            <string>D</string>
+          </firstNames>
+          <lastName>Francone</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <location>San Francisco, California, USA</location>
+      <publicationDateString>1998</publicationDateString>
+      <publicationYear>1998</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref14</id>
+      <referenceIdString>b13</referenceIdString>
+      <title>Generalized autoregressive conditional heteroskedasticity</title>
+      <source>Journal of Econometrics</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Tim</string>
+          </firstNames>
+          <lastName>Bollerslev</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>31</volume>
+      <pageFrom>307</pageFrom>
+      <pageTo>327</pageTo>
+      <publicationDateString>1986</publicationDateString>
+      <publicationYear>1986</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref15</id>
+      <referenceIdString>b14</referenceIdString>
+      <title>The pricing of options and corporate liabilities</title>
+      <source>Journal of Political Economy</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Fischer</string>
+          </firstNames>
+          <lastName>Black</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Myron</string>
+          </firstNames>
+          <lastName>Scholes</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>81</volume>
+      <pageFrom>637</pageFrom>
+      <pageTo>659</pageTo>
+      <publicationDateString>1973</publicationDateString>
+      <publicationYear>1973</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref16</id>
+      <referenceIdString>b15</referenceIdString>
+      <title>Newran02b-a random number generator library</title>
+      <source>Statistics Research Associates Limited</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Robert</string>
+            <string>B</string>
+          </firstNames>
+          <lastName>Davis</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <note>Technical report</note>
+      <publicationDateString>2002</publicationDateString>
+      <publicationYear>2002</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref17</id>
+      <referenceIdString>b16</referenceIdString>
+      <title>Empirical Martingale Simulation for Asset Prices</title>
+      <source>CIRANO Working Papers</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Jin-Chuan</string>
+          </firstNames>
+          <lastName>Duan</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Jean-Guy</string>
+          </firstNames>
+          <lastName>Simonato</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>95</pageFrom>
+      <pageTo>138</pageTo>
+      <publicationDateString>1995</publicationDateString>
+      <publicationYear>1995</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref18</id>
+      <referenceIdString>b17</referenceIdString>
+      <title>American option pricing under GARCH by a markov chain approximation</title>
+      <source>Journal of Economic Dynamics &amp; Control</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Jin-Chuan</string>
+          </firstNames>
+          <lastName>Duan</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Jean-Guy</string>
+          </firstNames>
+          <lastName>Simonato</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>25</volume>
+      <pageFrom>1689</pageFrom>
+      <pageTo>1718</pageTo>
+      <publicationDateString>2001</publicationDateString>
+      <publicationYear>2001</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref19</id>
+      <referenceIdString>b18</referenceIdString>
+      <title>The GARCH option pricing model</title>
+      <source>Mathematical Finance</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Jin-Chuan</string>
+          </firstNames>
+          <lastName>Duan</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>5</volume>
+      <issue>1</issue>
+      <pageFrom>13</pageFrom>
+      <pageTo>32</pageTo>
+      <publicationDateString>1995</publicationDateString>
+      <publicationYear>1995</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref20</id>
+      <referenceIdString>b19</referenceIdString>
+      <title>Autoregressive conditional heteroskedasticity with estimates of the variance of u.k. inflation</title>
+      <source>Econometrica</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Robert</string>
+            <string>F</string>
+          </firstNames>
+          <lastName>Engle</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>50</volume>
+      <pageFrom>987</pageFrom>
+      <pageTo>1008</pageTo>
+      <publicationDateString>1982</publicationDateString>
+      <publicationYear>1982</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref21</id>
+      <referenceIdString>b20</referenceIdString>
+      <source>Genetic Programming in C++</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Adam</string>
+            <string>P</string>
+          </firstNames>
+          <lastName>Fraser</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <note>Technical Report</note>
+      <publicationDateString>1994</publicationDateString>
+      <publicationYear>1994</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref22</id>
+      <referenceIdString>b21</referenceIdString>
+      <source>GNU Scientific Library Reference Manual. Network Theorie Ltd</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M</string>
+          </firstNames>
+          <lastName>Galassi</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <location>Bristol, United Kingdom</location>
+      <note>2 edition</note>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref23</id>
+      <referenceIdString>b22</referenceIdString>
+      <title>GARCH Effekte in der Optionsbewertung</title>
+      <source>Zeitschrift für Betriebswirtschaft</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>L</string>
+            <string>J</string>
+          </firstNames>
+          <lastName>Alois</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Walter</string>
+            <string>S A</string>
+          </firstNames>
+          <lastName>Geyer</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Schwaiger</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>65</volume>
+      <issue>5</issue>
+      <pageFrom>534</pageFrom>
+      <pageTo>540</pageTo>
+      <publicationDateString>1996</publicationDateString>
+      <publicationYear>1996</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref24</id>
+      <referenceIdString>b23</referenceIdString>
+      <title>Neural Network Approximation of Option Pricing Formulas for Analytically Intractable Option Pricing Models</title>
+      <source>Journal of Computational Intelligence in Finance</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Michael</string>
+          </firstNames>
+          <lastName>Hanke</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>5</volume>
+      <issue>5</issue>
+      <pageFrom>20</pageFrom>
+      <pageTo>27</pageTo>
+      <publicationDateString>1997-09</publicationDateString>
+      <publicationYear>1997</publicationYear>
+      <publicationMonth>09</publicationMonth>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref25</id>
+      <referenceIdString>b24</referenceIdString>
+      <source>Optionsbewertung mit neuronalen Netzen. Dissertation, Wirtschaftsuniversität Wien</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Michael</string>
+          </firstNames>
+          <lastName>Hanke</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1998</publicationDateString>
+      <publicationYear>1998</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref26</id>
+      <referenceIdString>b25</referenceIdString>
+      <source>Adaption in Natural and Artificial Systems</source>
+      <publisher>University of Michigan Press</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>John</string>
+            <string>H</string>
+          </firstNames>
+          <lastName>Holland</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1975</publicationDateString>
+      <publicationYear>1975</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref27</id>
+      <referenceIdString>b26</referenceIdString>
+      <source>Options, futures, and other derivatives</source>
+      <publisher>Prentice Hall International, Inc</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>John</string>
+            <string>C</string>
+          </firstNames>
+          <lastName>Hull</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <edition>5</edition>
+      <location>Upper Saddle River, New Jersey, USA</location>
+      <publicationDateString>2002</publicationDateString>
+      <publicationYear>2002</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref28</id>
+      <referenceIdString>b27</referenceIdString>
+      <source>Genetic Programming IV: Routine Human-Competitive Machine Intelligence</source>
+      <publisher>Kluwer Acadamic Publishers</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>John</string>
+            <string>R</string>
+          </firstNames>
+          <lastName>Koza</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2003</publicationDateString>
+      <publicationYear>2003</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref29</id>
+      <referenceIdString>b28</referenceIdString>
+      <source>Genetic Programming III, Darwinian Invention and Problem Solving</source>
+      <publisher>Morgan Kaufmann Publishers</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>John</string>
+            <string>R</string>
+          </firstNames>
+          <lastName>Koza</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Forrest</string>
+            <string>H</string>
+          </firstNames>
+          <lastName>Bennett</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Iii</string>
+          </firstNames>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>David</string>
+          </firstNames>
+          <lastName>Andre</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Martin</string>
+            <string>A</string>
+          </firstNames>
+          <lastName>Keane</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <location>San Francisco, California, USA</location>
+      <publicationDateString>1999</publicationDateString>
+      <publicationYear>1999</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref30</id>
+      <referenceIdString>b29</referenceIdString>
+      <title>Option Pricing with the Genetic Programming Approach</title>
+      <source>Journal of Computational Intelligence in Finance</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Christian</string>
+          </firstNames>
+          <lastName>Keber</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>7</volume>
+      <issue>6</issue>
+      <pageFrom>26</pageFrom>
+      <pageTo>36</pageTo>
+      <publicationDateString>1999</publicationDateString>
+      <publicationYear>1999</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref31</id>
+      <referenceIdString>b30</referenceIdString>
+      <source>Genetic Programming</source>
+      <publisher>The MIT Press</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>John</string>
+            <string>R</string>
+          </firstNames>
+          <lastName>Koza</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <location>Cambridge, Massachusetts, USA</location>
+      <publicationDateString>1992</publicationDateString>
+      <publicationYear>1992</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref32</id>
+      <referenceIdString>b31</referenceIdString>
+      <source>Automatic Discovery of Reuseable Programs</source>
+      <publisher>The MIT Press</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>John</string>
+            <string>R</string>
+          </firstNames>
+          <lastName>Koza</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <location>Cambridge, Massachusetts, USA</location>
+      <note>Genetic Programming II</note>
+      <publicationDateString>1994</publicationDateString>
+      <publicationYear>1994</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref33</id>
+      <referenceIdString>b32</referenceIdString>
+      <source>Genetic Algorithms + Data Structures = Evolution Programs</source>
+      <publisher>Springer</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Zbigniew</string>
+          </firstNames>
+          <lastName>Michalewicz</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <location>Berlin, Germany</location>
+      <publicationDateString>1992</publicationDateString>
+      <publicationYear>1992</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref34</id>
+      <referenceIdString>b33</referenceIdString>
+      <source>An Introduction to the Mathematics of Financial Derivatives</source>
+      <publisher>Acadamic Press</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>N</string>
+          </firstNames>
+          <lastName>Salih</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Neftci</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <edition>2</edition>
+      <location>San Diego, California, USA</location>
+      <publicationDateString>2000</publicationDateString>
+      <publicationYear>2000</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref35</id>
+      <referenceIdString>b34</referenceIdString>
+      <title>Numerical calculation of stable densities and distribution functions</title>
+      <source>Commun. Statist.-Stochastic Models</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>John</string>
+            <string>P</string>
+          </firstNames>
+          <lastName>Nolan</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>13</volume>
+      <issue>4</issue>
+      <pageFrom>759</pageFrom>
+      <pageTo>774</pageTo>
+      <publicationDateString>1997</publicationDateString>
+      <publicationYear>1997</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref36</id>
+      <referenceIdString>b35</referenceIdString>
+      <source>Object Management Group, Inc. OMG Unified Modeling Language Specification, Ver. 1.5</source>
+      <authors/>
+      <publicationDateString>2003-03</publicationDateString>
+      <publicationYear>2003</publicationYear>
+      <publicationMonth>03</publicationMonth>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref37</id>
+      <referenceIdString>b36</referenceIdString>
+      <title></title>
+      <source>Alternative Bloat Control Methods. In Lecture Nodes in Computer Science</source>
+      <publisher>Springer-Verlag</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Liviu</string>
+          </firstNames>
+          <lastName>Panait</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Sean</string>
+          </firstNames>
+          <lastName>Luke</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>3103</volume>
+      <pageFrom>630</pageFrom>
+      <pageTo>641</pageTo>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref38</id>
+      <referenceIdString>b37</referenceIdString>
+      <title>An evolved, vision-based behavioral model of coordinated group motion</title>
+      <source>From Animals to Animats (Proceedings of Simulation of Adaptive Behaviour</source>
+      <publisher>MIT Press</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Craig</string>
+            <string>W</string>
+          </firstNames>
+          <lastName>Reynolds</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1992</publicationDateString>
+      <publicationYear>1992</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref39</id>
+      <referenceIdString>b38</referenceIdString>
+      <source>Genetic Programming with C++. BYTE Magazin, February</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Andy</string>
+          </firstNames>
+          <lastName>Singleton</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>1994</publicationDateString>
+      <publicationYear>1994</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref40</id>
+      <referenceIdString>b39</referenceIdString>
+      <source>The C++ Programming Language</source>
+      <publisher>Addison Wesley Longman</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Bjarne</string>
+          </firstNames>
+          <lastName>Stroustrup</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <edition>3</edition>
+      <location>Reading Mass, USA</location>
+      <publicationDateString>1998</publicationDateString>
+      <publicationYear>1998</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref41</id>
+      <referenceIdString>b40</referenceIdString>
+      <source>Einführung in die Stochastick</source>
+      <publisher>Springer-Verlag</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Reinhard</string>
+            <string>K</string>
+          </firstNames>
+          <lastName>Viertl</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <edition>2</edition>
+      <location>Wien</location>
+      <publicationDateString>1997</publicationDateString>
+      <publicationYear>1997</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref42</id>
+      <referenceIdString>b41</referenceIdString>
+      <source>The Genetic Programming Kernel</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Thomas</string>
+          </firstNames>
+          <lastName>Weinbrenner</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <note>Technical report</note>
+      <publicationDateString>1997</publicationDateString>
+      <publicationYear>1997</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref43</id>
+      <referenceIdString>b42</referenceIdString>
+      <title>One-dimensional Stable Distributions</title>
+      <source>Amer. Math. Soc. Transl. of Math. Monographs</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>V</string>
+            <string>M</string>
+          </firstNames>
+          <lastName>Zolotarev</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>65</volume>
+      <publicationDateString>1986</publicationDateString>
+      <publicationYear>1986</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+  </references>
+</Publication>

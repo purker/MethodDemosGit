@@ -1,0 +1,1032 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Security and privacy in business networking</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Sven</forename><surname>Wohlgemuth</surname></persName>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Stefan</forename><surname>Sackmann</surname></persName>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Noboru</forename><surname>Sonehara</surname></persName>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Min</forename><surname>Tjoa</surname></persName>
+						</author>
+						<author>
+							<affiliation key="aff0">
+								<orgName type="department" key="dep1">Institute of Information Management</orgName>
+								<orgName type="department" key="dep2">System Security Lab</orgName>
+								<orgName type="institution">University of St</orgName>
+								<address>
+									<addrLine>Mornewegstr. 32</addrLine>
+									<postCode>2014, 64293</postCode>
+									<settlement>Gallen, Darmstadt</settlement>
+									<country key="DE">Germany</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff1">
+								<orgName type="department">National Institute of Informatics, Information and Society Research Division</orgName>
+								<orgName type="institution">University Halle Wittenberg</orgName>
+								<address>
+									<addrLine>Universitätsring 3, 2-1-2 Hitotsubashi, Chiyoda-ku</addrLine>
+									<postCode>06108, 101-8430</postCode>
+									<settlement>Halle/Saale, Tokyo</settlement>
+									<country>Germany, Japan</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff2">
+								<orgName type="department">Institute for Software Technology</orgName>
+								<orgName type="institution">Vienna University of Technology</orgName>
+								<address>
+									<addrLine>Favoritenstr. 9-11/188</addrLine>
+									<postCode>1040</postCode>
+									<settlement>Wien</settlement>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Security and privacy in business networking</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<idno type="DOI">10.1007/s12525-014-0158-6</idno>
+					<note>Electron Markets PREFACE</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>Business networking Resilience Information exchange Security Privacy Enforcement</keywords>
+			</textClass>
+			<abstract>
+				<p>Business networking relies on application-specific quantity and quality of information in order to support social infrastructures in, e.g., energy allocation coordinated by smart grids, healthcare services with electronic health records, traffic management with personal sensors, RFID in retail and logistics , or integration of individuals&apos; social network information into good, services, and rescue operations. Due to the increasing reliance of networking applications on sharing ICT services , dependencies threaten privacy, security, and reliability of information and, thus, innovative business applications in smart societies. Resilience is becoming a new security approach , since it takes dependencies into account and aims at achieving equilibriums in case of opposite requirements. This special issue on &apos;Security and Privacy in Business Networking&apos; contributes to the journal &apos;Electronic Markets&apos; by introducing a different view on achieving acceptable secure business networking applications in spite of threats due to covert channels. This view is on adapting resilience to enforcement of IT security in business networking applications. Our analysis shows that privacy is an evidence to measure and improve trustworthy relationships and reliable interactions between participants of business processes and their IT systems. The articles of this special issue, which have been accepted after a double-blind peer review, contribute to this view on interdis-ciplinary security engineering in regard to the stages of security and privacy requirements analysis, enforcement of resulting security requirements for an information exchange, testing with a privacy-preserving detection of policy violations , and knowledge management for the purpose of keeping business processes resilient.</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Information exchange and intermediaries</head><p>In computer science trustworthy information exchange means a reduction of vulnerabilities in the participating ICT systems and their communication in order to reduce the effect of any incident ( <ref type="bibr" target="#b3">Avizienis et al. 2004</ref>). It also means that participants can formalize a security policy describing their individual security interests and negotiate on an agreed-upon security policy reflecting a compromise or equilibrium respectively ( <ref type="bibr" target="#b33">Rannenberg et al. 1999</ref>). In such multilateral IT security models protection goals, like accountability and unobservability, become an important part of a 'balanced' security. Enforcing accountability and unobservability can be technically achieved by encryption and authentication schemes supporting pseudonymity, e.g. by identity manage- ment <ref type="bibr" target="#b9">(Chaum 1985)</ref> or cryptographic key systems ( <ref type="bibr" target="#b29">Pfitzmann and Hansen 2010)</ref>. These approaches depend on confidenti- ality and integrity of the private key, its accountability to the given identity, and on integrity and consistency of a public key exchange. Even though trusted runtime environments exist ( <ref type="bibr" target="#b2">Asokan et al. 2013</ref>), security of a cryptographic key ex- change without a trusted third party <ref type="bibr">(TTP)</ref> has not yet been demonstrated ( <ref type="bibr" target="#b17">Freire et al. 2013</ref>).</p><p>Introducing a third party extends the direct communication model of an information exchange. In practice, the role of a third party acting as an intermediary for an information ex- change is manifold. Intermediaries take care of the security and reliability of the communication and of current payments. Successful examples are SWIFT and international clearing systems ( <ref type="bibr" target="#b5">Bons et al. 2012</ref>). Intermediaries also establish rela- tionships between data providers and data consumers by de- riving information based on data collected with their consent. Successful examples here are loyalty card programs in the field of customer relationship management (CRM) or social networks sites. Furthermore, intermediaries can contribute to the usability of an information exchange to enforce the par- ticipants' individual security interests. Usability studies of security tools, e.g. PGP <ref type="bibr" target="#b42">(Whitten and Tygar 1999)</ref>, show that their user interfaces and security concepts are too technical and not intuitive with the result that, as observed in Germany, over 70 % are willing to delegate responsibility for their security to a TTP (DIVSI 2012).</p><p>Altogether, intermediaries in the role of TTP can be ex- pected to play an important role with respect to extensive information exchange. However, they also represent a new vulnerability. Since an intermediary is usually involved in several information exchanges with different participants, dependencies between the intermediary's ICT system and those of the other participants arise during run-time. Hence, a TTP also can be the origin of a possible man-in-the-middle attack with serious consequences for the information ex- change. According to Article 13a incident reports in 2013, third party failure has a high impact. Most of the observed incidents have their direct cause in system overload, power cuts, and software bugs <ref type="bibr" target="#b10">(Dekker et al. 2013</ref>). The IT security report for Germany in 2011 (BSI 2011) shows a trend from direct attacks to indirect ones via dependencies to the affected ICT system. The report forecasts an increase in attacks by botnets, identity theft, security vulnerabilities, and malware. SCADA, mobile communications, interfaces and storage me- dia, or Cloud Computing systems -all of which are consid- ered to be part of future CPS -show an increased risk potential. A current study of Internet usage in Germany indi- cates that these threats represent a real hurdle for information exchange. A fear of misuse of personal data is the main reason why the majority of the population in Germany refrains from participating in Internet services <ref type="bibr" target="#b11">(DIVSI 2012</ref>).</p><p>Intermediaries can be expected to play a central role in future business networks in the context of providing privacy and security. However, they have to be trusted and, in other words, the less trust required, the better. Therefore, security and privacy mechanisms with a focus on intermediaries and their dependencies as origins of incidents are of interest for exploiting an effective information exchange in business net- works. In respect of the realization of an incident report flow, there is no incentive to provide vulnerability information or to report incidents without adequate protection of the disclosed information. For example, a participant reporting a breach of confidentiality would be harmed twice: firstly by the incident itself and secondly by a loss of reputation due to the leakage of the confidential report.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Security models and their enforcement</head><p>The security approach to protect information once it has been disclosed to a third party is isolation on the part of the third party. Isolation means that exchanged information should not come into contact with other information exchanges and that the intermediary should not know what information is used in the service or the purpose for which the service is being used by its consumers ( <ref type="bibr" target="#b38">Sonehara et al. 2011</ref>). Thus, enforcement of isolation means to implement a multilateral trust model to enforce an equilibrium concerning the individual security interests of the participants.</p><p>Individual security interests can be enforced by different security models as described in the following. At first, access control models formalize isolation by information flow con- trol for a closed group of participants. Mandatory access control (MAC) security models, e.g. Biba, Bell-LaPadula, or the Chinese Wall Security Policy, are in widespread use (Samarati and de Capitani di Vimercati 2001). They model information flow control to protect data by the use of labels and a pre-defined order. The pre-defined order classifies data and identity of authorized participants as subjects into access classes and formalizes the properties on data access as provi- sions according to the protection goals of confidentiality or integrity, respectively. However, the protection goal availabil- ity of information might not be achieved easily if a MAC policy is deployed for a spontaneous information exchange: the pre-defined order of the security policy would have to be implemented for service providers, leading to confidentiality of the data but also to a restriction of the availability of the services. Hence, a security configuration based on MAC may lead to an incident on availability of information.</p><p>Discretionary access control (DAC) where authorizations are granted to the identity of authorized service providers (data consumers) and not according to a security class, is more flexible. However, to date, DAC approaches are not precise enough for a trustworthy spontaneous information exchange. Granting access to data for given exchanges needs to define a group or role for the participants. This, in turn, could grant access to parties of an information exchange who are not participating in it representing a vulnerability regarding con- fidentiality and integrity of the information exchange.</p><p>In contrast, the concept of distributed usage control specifies the confidentiality and integrity of an information exchange and, thus, information flows as data processing by obligations without restricting availability of information ( <ref type="bibr" target="#b31">Pretschner et al. 2006</ref>). The classification of <ref type="bibr" target="#b22">Hilty et al. (2005)</ref> for obligations according to time and distribution shows that obligations are in general not enforceable but can become so at runtime.</p><p>Concluding, an instance of a security model for a given isolation formalizes access on data and information, which is mapped to the identities of authorized subjects. According to the security model, security and privacy would be achieved if only authorized identities get access to the information as specified by provisions and obligations of the corresponding security policy and if these identities did in fact represent the corresponding data consumers. Their enforcement is to pre- vent incidents and to close vulnerabilities.</p><p>A further relevant issue for realizing a trustworthy infor- mation exchange is the authenticity of the exchanged infor- mation. Authenticity of derived information is always subject to a given error probability. Firstly, this is conceptually due to application-dependent statistical model of machine learning schemes (Domingos 2012). Secondly, information relates to a given model, i.e. to a given context, e.g., described by service level agreements and security policies specifying the context of a data processing.</p><p>At present, two opposing security concepts for enforcing isolation are under discussion: transparency and control. Transparency of data processing as stated by Information Accountability ( <ref type="bibr" target="#b41">Weitzner et al. 2008</ref>) follows the concept that data processing should be observed and evaluated with Transparency-Enhancing Technology (TET). TET aims at identifying an incident and its cause in order to decide on the accountability and trustworthiness of the affected partici- pant. In contrast, control on data processing as with Privacy by Design (European Commission 2010) considers the possibil- ity of a violation of an isolation and aims at enforcing unobservability. Privacy-Enhancing Technology (PET) achieves at least unobservability by pseudonymity. For self- protection further PETs follow the approach of additionally impeding secondary use of information and re-identification of participants for purposes of data processing, which occur after data collection. This may raise additional incidents and, thus, requires transparency in their cause and origin to decide on trustworthiness of the participants.</p><p>TET and dependencies TET aims at enforcing obligations for isolation by observing the current data processing and its compliance to a given security policy. If a policy violation occurs, an anomaly and its cause are analyzed to decide on accountability. It can establish whether the received information has been processed according to the corresponding security policy. A monitor observes data processing of an ICT system and logs it for a data protection audit ( <ref type="bibr" target="#b27">Karjoth et al. 2002)</ref>. If enforcement of isolation of previous information exchanges and vulnerabil- ities of the ICT system of the data consumer are known, a data provider then can derive information about expected enforce- ment of isolation.</p><p>Data leakage prevention aims at confidentiality of data processing. However, a monitor cannot consider more than one trace and is vulnerable to covert channels as seen by virtualization in Cloud Computing ( <ref type="bibr" target="#b35">Ristenpart et al. 2009)</ref>. This is an example of the vulnerability of data confidentiality via a dependency even though the service provider grants access to his services to authorized identities only. If confi- dentiality is not the highest priority for an information ex- change but rather integrity, consensus protocols are an ap- proach to tolerate incidents while resulting in a consensus of authentic information. Preferably different implementations of the same information exchange run in parallel. Consensus protocols assume an information exchange also between these implementations, e.g. by an unknown, inevitable dependency. However, it is impossible for consensus protocols to result in a consensus in the asynchronous timing model, if only one of the participating systems fails during the protocol run ( <ref type="bibr" target="#b16">Fischer et al. 1985</ref>). Adding extensions such as randomization, failure detectors, or strong primitives for shared-memory lead to consensus protocols coping with failed systems due to delayed or failed data transfer but not for malicious incidents. This is the case with timing restricting consensus protocols <ref type="bibr">(Gärtner 1999</ref>). Consensus protocols for a synchronous model cope with failed systems up to a certain number of compromised ICT systems, even if they send different messages to other systems ( <ref type="bibr" target="#b30">Pfitzmann and Waidner 1992)</ref>. However, they re- strict availability of the participating ICT systems. This is a vulnerability for any other information exchange with a de- pendency on this ICT system and out of the scope of the threat model of consensus protocols.</p><p>Latest research approaches aim at retaining detected anom- alies by evidence on the current model of data processing. That means they reconstruct the current model but without restricting availability. Secure logging and evidence ( <ref type="bibr" target="#b36">Sackmann et al. 2006</ref>) consider transparent data processing of separated ICT systems and restrict access to logged data to authorized identi- ties only. Process mining (Van der Aalst 2012) extends moni- toring of the activities of an information exchange between ICT systems. The assumptions are completeness and authenticity of logged events, whereas confidentiality of the logged data in accordance to granting access on these observations to autho- rized identities is assured (Accorsi 2011). A variation of process mining is data provenance, which also documents the history of data and additionally their value by 'sticking' it to the data and derived information <ref type="bibr" target="#b7">(Buneman et al. 2001</ref>). Schemes are inver- sion of data processing and annotation of data. Inversion de- pends on knowledge of the granted access decisions and the output data. This relates to the same completeness assumption as for secure logging and process mining. Annotation labels data so that the model of data processing can be re-constructed if a mapping to the data exists. However, current means for data provenance by annotation either assume centralized monitoring of the complete information exchange or are suitable for some kind of data without the derived information. Furthermore, data provenance can detect an information leakage and its cause only if the leaked information has been found together with evidence on its history ( <ref type="bibr" target="#b44">Wohlgemuth et al. 2010)</ref>.</p><p>Data provenance and secure logging as a components for each ICT system under investigation can in principle be used to check the integrity and origin of information by the reconstructed model and its comparison to the security policy. This recon- structed model in turn should extend the model of the applied machine learning scheme. In order to detect an identity theft, it may not be sufficient to reconstruct the model of this data processing, since it ends at the identity. It may also be necessary to check whether an anomaly in the usage of this identity exists regarding the information exchange under investigation.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>PET and dependencies</head><p>After converting obligations into provisions, PET enforces them while considering violations of confidentiality of isola- tion. The assumption is an idealized threat model assuming ICT systems as being correct whereas trustworthiness of par- ticipants is uncertain. PET impedes re-identification, secondary use, and non-authorized profiling according to the master identity of a participating party. It can be achieved by restricting availability of information or the information itself ( <ref type="bibr" target="#b20">Gilliot et al. 2009</ref>). This, in turn, threatens Big Data analytics with an increase of its error probability by introducing faulty information or the non-availability of sufficient quantity, whereas this does not depend on the type of machine learning scheme ( <ref type="bibr" target="#b4">Biggio et al. 2012;</ref><ref type="bibr" target="#b24">Huang et al. 2011</ref>).</p><p>Encryption protects information before access has taken place. However, after decryption, protection is no longer provided and information can be leaked via an unknown dependency. Identity management with anonymized creden- tials achieves accountability and unobservability as long as further disclosure to third parties is not considered <ref type="bibr" target="#b8">(Camenisch and Lysanskaya 2001)</ref>. A non-linkable delegation of rights achieves unobservability and accountability in an information exchange with an intermediary under the assump- tion that the modeled recipient of the information as the last data consumer in its exchange is trustworthy and its ICT system has no vulnerability <ref type="bibr" target="#b43">(Wohlgemuth and Müller 2006</ref>). However, this is not realistic for a spontaneous information exchange with an intermediary.</p><p>Our analysis of dependencies in a spontaneous information exchange and today's mechanisms to enforce its security model in accordance with the security and privacy interests of the participants shows that an incident and its propagation to a secure ICT system is always possible. On one hand, it is possible that an attacker can control the identity of this participant. On the other hand, strengthening transparency by consensus protocols or confidentiality by PET with reducing the information raises an incident on dependent information exchanges.</p><p>Homomorphic encryption schemes (Dolev and Yao 1983) enforce confidentiality and integrity of information and, at the same time, preserve its availability. Their general suitability is uncertain due to their required computing performance of the cryptographic scheme and a mismatch in abstraction of the information ( <ref type="bibr" target="#b28">Naehrig et al. 2011</ref>).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Resilience as an approach for IT security and privacy</head><p>At present security and privacy in business networking is based on a system and threat model, which includes a limited set of possible information exchanges and incidents. It considers expected states and dependencies including those, which have already passed. A partial model can be achieved for any sub- system, which does not change for an adequate time. However, this is not reality for many actual business networking applica- tions which are highly dynamic and agile. Since vulnerabilities from dependencies arise during run-time and cannot be completely known and predicted, the 'pure' model-based ap- proach is not adequate for preventing and reacting in this context. It is not (at least not efficiently) possible to model all possible changes and incidents and, thus, security with 'pure' model-based approaches will have to follow changes in busi- ness networks and their underlying technology.</p><p>Extending 'pure' model-based security and privacy ap- proaches to the dynamic and unforeseeable context of actual business networking means having to address these vulnerabil- ities and dependencies. The general view then changes from achieving 'pure' security to preserving an acceptable level of service of a system that corresponds to a compromise of the individual security and privacy interests of the participants in an information exchange. Preserving an acceptable level of service of a system requires constantly adapting its dependencies to incidents <ref type="bibr" target="#b23">(Holling 2001)</ref>, a concept that is also known as resilience. However, a general statement on the resilience of a system cannot be made. It corresponds to a certain incident and the ability of a system to recover within a certain time for response and composite costs and risks <ref type="bibr" target="#b21">(Haimes 2009</ref>). Since neither individual security and privacy interests (and compro- mises) nor vulnerabilities remain identical over time, an adap- tion of security and privacy enforcement is required.</p><p>Thus, it is worth thinking about improving security and privacy in business networking by using methods and tools that support resilience of social infrastructures, i.e. in particu- lar Big Data analytics and information exchange on incidents. For data providers and data consumers approaches are re- quired that allow both to balance the benefit and the level of service, respectively, the security or privacy risk associated with information exchange. This means that, e.g., a data provider should be able to check before an information ex- change takes place whether a data consumer might violate obligations for the information exchange. Vice versa, a data consumer should be able to check a priori of an information exchange whether the received information is the expected one and the data provider has followed the agreed-upon security policy for this information exchange. From an eco- nomic theory point of view, this leads to an asymmetric information situation that can usually be solved (or at least improved) by signalling or screening mechanisms (Furubotn and Richter 2005). Thus, new technical approaches that ad- dress the reduction of information asymmetry are being discussed as suitable methods and tools for improving security and privacy in business networking.</p><p>ICT Resilience -a signaling and screening architecture To empower data providers and data consumers to assess and balance the benefit and risk of entering an information ex- change, classical security methods and tools should be complemented by methods and tools that support their decision making. To reduce information asymmetry, signalling compo- nents should give a participant a tool to generate evidence on his actual data usage to prove trustworthiness according to the corresponding obligations, as well as establish a reputation over several information exchanges. In turn, a screening component should give a participant a tool to prove that exchanged infor- mation has been used as intended (or not). These tools are to be combined with accountability and an (economic) incentive system that allows each participant to evaluate the value of an information exchange according to the security configuration, the achievable level of, e.g. unobservability or accountability, and individual risk preferences.</p><p>In accordance with our analysis and adapting current ap- proaches for resilience to security and privacy in business networking, we use the following five components to catego- rize methods and tools, as well as open research issues for ICT Resilience.</p><p>&amp; System Evolution aims at automatic improvement of the security configuration for an isolation and replacement of compromised ICT systems or participants, respectively. A removal of systems implies revocation of rights, which can be, e.g. realized by revocation mechanisms for credentials.</p><p>In the case of accessed data, information has to be removed along the subsequent data trace or at least made useless. Data provenance and data mining technologies can support auditing whether this information has indeed been removed.</p><p>&amp; A Usage Control Policy Tool Box aims at formalizing isolation patterns for expected information exchanges and anti-isolation patterns for classes of anomalies of an isolation. On one hand, this is required for expressing the interest of the parties involved in an information ex- change. On the other hand, this is a basis for detecting anomalies, incidents, and policy violations, as well as for generating correct incident reports and their exchange.</p><p>The set of patterns should be extensible to cater for newly detected patterns during runtime and for previously un- known interferences and results. &amp; Privacy Control aims at self-protecting against informa- tion leakage. The real identities of data providers should remain unobservable when information is going to be disclosed to third parties. This requires, e.g., identity man- agement supporting pseudonymity and non-linkable del- egation of rights. Pseudonymity should be revocable in case of provable fraud. &amp; Privacy Forensics aims at deriving evidence on isolation by the most probable data processing including its depen- dencies and its classification to an anomaly pattern. A data provenance scheme could derive such evidence. However, since internal dependencies of an external ICT system are usually not known, supervised machine learning in com- bination with labeled evidence could be useful for deriv- ing the probabilities of possible information exchange.</p><p>Since not all kind of data can be annotated, mechanisms of unsupervised machine learning should also be researched according to their suitability. &amp; IT Risk Analysis aims at evaluating and combining both types of evidence to result in a qualitative (or quantitative) statement on isolation, on information exchanges and, thus, on security and privacy in the corresponding business net- working application. This component should consider re- sults from, e.g., the Big Data analytics and information exchange on incidents. Based on the results of the risk analysis, an information exchange can be balanced, i.e. the corresponding security policies and compromises can be decided according to all the participants' risk preferences.</p><p>We do not wish to claim that these five components are the silver bullet to achieving ICT Resilience, however, we expect that they can provide an initial categorization for topics that address security and privacy in future business networking. Summarizing, an ICT system providing a signaling-and- screening architecture of ICT Resilience is by itself a business networking application in providing 'security-as-a-service' with all its dependencies, vulnerabilities, and possibilities to violate the privacy interests of data providers. Since security and privacy cannot be guaranteed by technology alone, other means should foster the participation of individuals and cor- rectness of their data and services. Data protection acts com- bined with adequate incentives are one option, however, they require reliable methods and tools for signaling and screening of actual behavior of all participants without harming their privacy and security interests. We see the challenges as inter- esting areas for research and finding solutions as a prerequisite for exploiting the potential of business networking applica- tions relying on extensive data processing.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Papers within ICT Resilience</head><p>All papers of this special issue contribute to one of the pre- sented components of ICT Resilience. Dehling and Sunyaev ('Secure provision of Patient-Centered Health Information Technology Services in Public Networks-Leveraging Security and Privacy Features Provided by the German Nationwide Health Information Technology Infrastructure') address the component Usage Control Policy Toolbox. They investigate security and privacy in business networking using the example of patient-centered health ICT services (PHS) based on the German infrastructure gematik. They identify security and privacy requirements of PHS, which could serve as a starting point for specifying isolation patterns for an information exchange of patients' health data between medi- cal service providers and third parties.</p><p>Gogoulos, Antonakopoulou, Lioudakis, Mousas, Kaklamani, and Venieris ('On the design of a privacy aware authorization engine for collaborative environment') also ad- dress the component Usage Control Policy Toolbox with a proposal for enforcing isolation of cross-organization informa- tion exchanges. Their authorization engine derives authorizations for data processing from a semantic model in accordance with the privacy and security interests of the participants.</p><p>Kieseberg, Schrittwieser, Mulazzani, Echizen, and Weippl ('An algorithm for collusion-resistant anonymization and fin- gerprinting of sensitive microdata') refer to Privacy Forensics in case of the disclosure of anonymized information to third parties. They present a k-anonymization scheme, which tags anonymized information by the procedure of their anonymization. Their evaluation considers colluding data consumers with the aim of non-authorized re-identification of the related identity to this information.</p><p>Rechert, von Suchodoletz, and Valizada ('Take Care of Your Belongings Today-Securing Accessibility to Complex Electronic Business Processes') address accessibil- ity of information for the purpose of keeping business pro- cesses resilient. Since the outcome and costs of reconstructing archived information with the configuration of the corre- sponding instance of a business process are difficult to esti- mate, their proposal is to emulate their reconstruction in possible future data processing environments using software. The aim is to identify clearly defined and controllable preser- vation strategies, which should be integrated in current busi- ness processes. This forecasting and emulation approach is one option for supporting the continuous learning of isolation and anti-isolation patterns for IT Risk Analysis.</p><p>We thank all authors for their valuable submissions, re- viewers and senior editors for the thorough and constructive comments and recommendations, and the editorial office for their support in editing this special issue.</p></div>		</body>
+		<back>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Driving force for innovation in mobility, health, energy and production, acatech-National Academy of Science and Engineering</title>
+	</analytic>
+	<monogr>
+		<title level="m">acatech</title>
+		<imprint>
+			<date type="published" when="2011" />
+		</imprint>
+	</monogr>
+	<note>Cyber-physical systems. acatech POSITION PAPER, http://www.acatech.de/fileadmin/user_upload/Baumstruktur_nach_ Website/Acatech/root/de/Publikationen/Stellungnahmen/acatech_ POSITION_CPS_Englisch_WEB.pdf. Accessed 27 Feb 2014</note>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">BBox: A distributed secure log architecture. 7th European Conference on Public-Key Infrastructures</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Accorsi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Services and Applications (EuroPKI&apos;10</title>
+		<imprint>
+			<date type="published" when="2011" />
+			<biblScope unit="page" from="109" to="124" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<monogr>
+		<title level="m" type="main">Mobile platform security-Synthesis lectures on information security, privacy, and trust</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">N</forename><surname>Asokan</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><surname>Davi</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Dmitrienko</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Heuser</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">K</forename><surname>Kostiainen</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><surname>Reshetova</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2013" />
+			<publisher>Morgan &amp; Claypool Publishers</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<monogr>
+		<title level="m" type="main">Basic concepts and taxonomy of dependable and secure computing</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Avizienis</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J.-C</forename><surname>Laprie</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Randell</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Landwehr</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2004" />
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="page">33</biblScope>
+		</imprint>
+	</monogr>
+	<note>IEEE Transactions on Dependable and Secure Computing</note>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Poisoning attacks against support vector machines</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Biggio</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Nelson</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Laskov</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">29th Int. Conf. on Machine Learning (ICML)</title>
+		<imprint>
+			<date type="published" when="2012" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<monogr>
+		<title level="m" type="main">Banking in the internet and mobile era</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><forename type="middle">W H</forename><surname>Bons</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Alt</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">H</forename><forename type="middle">G</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Weber</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2012" />
+			<publisher>Springer</publisher>
+			<biblScope unit="volume">22</biblScope>
+			<biblScope unit="page" from="197" to="202" />
+		</imprint>
+	</monogr>
+	<note>EM-Electronic Markets</note>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">The IT security situation in Germany in 2011</title>
+	</analytic>
+	<monogr>
+		<title level="m">Bundesamt für Sicherheit in der Informationstechnik</title>
+		<imprint>
+			<date type="published" when="2011" />
+		</imprint>
+	</monogr>
+	<note>Federal Office for Information Security. BSI, https://www.bsi.bund.de/EN/ Publications/SecuritySituation/SecuritySituation_node.html. Accessed 27 Feb 2014</note>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<monogr>
+		<title level="m" type="main">Why and where: A characterization of data provenance</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Buneman</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Khanna</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">W</forename><forename type="middle">C</forename><surname>Tan</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1973" />
+			<publisher>Springer</publisher>
+			<biblScope unit="page" from="316" to="330" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">An efficient system for nontransferable anonymous credentials with optional anonymity revocation</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Camenisch</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Lysanskaya</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">EUROCRYPT&apos;01, LNCS 2045</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2001" />
+			<biblScope unit="page" from="93" to="118" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Security without identification: transaction systems to make big brother obsolete</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Chaum</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Communications of the ACM</title>
+		<imprint>
+			<biblScope unit="volume">28</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page" from="1030" to="1044" />
+			<date type="published" when="1985" />
+			<publisher>ACM</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<monogr>
+		<title level="m" type="main">Annual incident reports 2012-analysis of article 13a incident reports</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Dekker</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Karsberg</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Lakka</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2013" />
+		</imprint>
+	</monogr>
+	<note>European Union Agency for Network and Information Security. ENISA), http:// www.enisa.europa.eu/activities/Resilience-and-CIIP/Incidentsreporting/annual-reports/annual-incident-reports-2012. Accessed 27 Feb 2014</note>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<monogr>
+		<title level="m" type="main">DIVSI Milieu study on trust and security on the Internet, condensed version</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Deutsches</forename><surname>Institut Für Vertrauen Und Sicherheit Im Internet</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">(divsi)</forename></persName>
+		</author>
+		<ptr target="https://www.divsi.de/publikationen/studien/divsi-milieu-studie/.Accessed27Feb2014" />
+		<imprint>
+			<date type="published" when="2012" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">On the security of public key protocols</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Dolev</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><forename type="middle">C</forename><surname>Yao</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Transactions on Information Theory</title>
+		<imprint>
+			<biblScope unit="volume">29</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="198" to="208" />
+			<date type="published" when="1983" />
+		</imprint>
+	</monogr>
+	<note>IEEE Computer Society</note>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">A few useful things to know about machine learning</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Domingos</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Communications of the ACM</title>
+		<imprint>
+			<biblScope unit="volume">55</biblScope>
+			<biblScope unit="issue">10</biblScope>
+			<biblScope unit="page" from="78" to="87" />
+			<date type="published" when="2012" />
+			<publisher>ACM</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Directive 2009/140/EC of the European Parliament and of the Council of 25 November 2009 amending Directives 2002/21/EC on a common regulatory framework for electronic communications networks and services</title>
+	</analytic>
+	<monogr>
+		<title level="m">EC on access to, and interconnection of, electronic communications networks and associated facilities, and 2002/20/EC on the authorisation of electronic communications networks and services. Official Journal of the European Communities</title>
+		<imprint>
+			<date type="published" when="2002" />
+			<biblScope unit="page" from="37" to="69" />
+		</imprint>
+	</monogr>
+	<note>European Commission.</note>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">A digital agenda for Europe. Communication from the Commission to the European Parliament, the Council, the European Economic and Social Committee and the Committee of the Regions</title>
+	</analytic>
+	<monogr>
+		<title level="m">European Commission</title>
+		<imprint>
+			<date type="published" when="2010" />
+		</imprint>
+	</monogr>
+	<note>COM 245 final/2</note>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Impossibility of distributed consensus with one faulty process</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><forename type="middle">J</forename><surname>Fischer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">N</forename><forename type="middle">A</forename><surname>Lynch</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><forename type="middle">S</forename><surname>Paterson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the ACM</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="374" to="382" />
+			<date type="published" when="1985" />
+			<publisher>ACM</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">Non-interactive key exchange</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><surname>Freire</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Hofheinz</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><surname>Kiltz</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">K</forename><surname>Paterson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">LNCS</title>
+		<imprint>
+			<biblScope unit="volume">7778</biblScope>
+			<biblScope unit="page" from="254" to="271" />
+			<date type="published" when="2013" />
+			<publisher>Springer</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<monogr>
+		<title level="m" type="main">Institutions and economic theory: The contribution of the new institutional economics (2nd ed</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><forename type="middle">G</forename><surname>Furubotn</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Richter</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2005" />
+		</imprint>
+	</monogr>
+	<note>Ann Arbor: University of Michigan Press</note>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<monogr>
+		<title level="m" type="main">Fundaments of fault-tolerant distributed computing in asynchronous environments</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Gärtner</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1999" />
+			<publisher>ACM</publisher>
+			<biblScope unit="volume">31</biblScope>
+			<biblScope unit="page" from="1" to="26" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<monogr>
+		<title level="m" type="main">The Future of Identity on the Information Society</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Gilliot</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">V</forename><surname>Matyas</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Wohlgemuth</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2009" />
+			<publisher>Springer</publisher>
+			<biblScope unit="page" from="351" to="390" />
+		</imprint>
+	</monogr>
+	<note>Privacy and identity</note>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">On the definition of resilience in systems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Y</forename><forename type="middle">Y</forename><surname>Haimes</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">498-501. Society for Risk Analysis</title>
+		<imprint>
+			<date type="published" when="2009" />
+			<biblScope unit="volume">29</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<monogr>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Hilty</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Basin</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Pretschner</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>On Obligations</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Esorics&amp;apos;05</surname></persName>
+		</author>
+		<imprint>
+			<publisher>Springer</publisher>
+			<biblScope unit="page" from="98" to="117" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Understanding the complexity of economic, ecological, and social systems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><forename type="middle">S</forename><surname>Holling</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Ecosystems</title>
+		<imprint>
+			<biblScope unit="volume">4</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="390" to="405" />
+			<date type="published" when="2001" />
+			<publisher>Springer</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<monogr>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><forename type="middle">D</forename><surname>Joseph</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Nelson</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">I</forename><surname>Rubenstein</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Tygar</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2011" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">4th ACM Workshop on Security and Artificial Intelligence</title>
+	</analytic>
+	<monogr>
+		<title level="m">Adversarial Machine Learning</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<biblScope unit="page" from="43" to="58" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<analytic>
+		<title level="a" type="main">A mandate for change is a mandate for smart</title>
+		<ptr target="IBMSmarterPlanet,https://www.ibm.com/smarterplanet/global/files/us__en_us__overview__68655_08_522_11092012.pdf" />
+	</analytic>
+	<monogr>
+		<title level="m">IBM Corporation</title>
+		<imprint>
+			<date type="published" when="2008" />
+		</imprint>
+	</monogr>
+	<note>Accessed 27 Feb 2014</note>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Platform for enterprise privacy practices: Privacy-enabled management of customer data</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Karjoth</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Schunter</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Waidner</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">2nd International Conference on Privacy-Enhancing Technologies (PET&apos;02)</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2002" />
+			<biblScope unit="page" from="69" to="84" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Can homomorphic encryption be practical? 3rd ACM Workshop on Cloud Computing Security</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Naehrig</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">K</forename><surname>Lauter</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">V</forename><surname>Vaikuntanathan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">CCSW&apos;11)</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2011" />
+			<biblScope unit="page" from="113" to="124" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<monogr>
+		<title level="m" type="main">Anonymity, unlinkability, unobservability, pseudonymity, and identity management-A consolidated proposal for terminology</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Pfitzmann</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Hansen</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2010" />
+		</imprint>
+	</monogr>
+	<note>Anon Terminology v0. 34, TU Dresden and ULD Schleswig-Holstein, http://dud.inf.tu-dresden.de/ Anon_Terminology.shtml. Accessed 27 Feb 2014</note>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<monogr>
+		<title level="m" type="main">Unconditional byzantine agreement for any number of faulty processes</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><surname>Pfitzmann</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><forename type="middle">;</forename><surname>Waidner</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Stacs&amp;apos;92</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1992" />
+			<publisher>Springer</publisher>
+			<biblScope unit="page" from="339" to="350" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">Distributed usage control</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Pretschner</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Hilty</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Basin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Communications of the ACM</title>
+		<imprint>
+			<biblScope unit="volume">49</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page" from="39" to="44" />
+			<date type="published" when="2006" />
+			<publisher>ACM</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<monogr>
+		<title level="m" type="main">Strategic headquarters for the promotion of an advanced information and telecommunications network society</title>
+		<ptr target="http://japan.kantei.go.jp/policy/it/2013/0614_declaration.pdf" />
+		<imprint/>
+	</monogr>
+	<note>Accessed 27 Feb 2014</note>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<analytic>
+		<title level="a" type="main">IT security and multilateral security</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">K</forename><surname>Rannenberg</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Pfitzmann</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Müller</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Multilateral Security in CommunicationsTechnology, Infrastructure, Economy. Addison-Wesley-Longman</title>
+		<imprint>
+			<date type="published" when="1999" />
+			<biblScope unit="page" from="21" to="29" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<monogr>
+		<title level="m" type="main">eCollaboration: on the nature and emergence of communication and collaboration technologies</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">K</forename><surname>Riemer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Steinfield</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Vogel</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2009" />
+			<publisher>Springer</publisher>
+			<biblScope unit="volume">19</biblScope>
+			<biblScope unit="page" from="181" to="188" />
+		</imprint>
+	</monogr>
+	<note>EM-Electronic Markets</note>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Hey, you, get off of my cloud: Exploring information leakage in third-party compute clouds</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><surname>Ristenpart</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><surname>Tromer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">H</forename><surname>Shacham</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Savage</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">16th ACM CCS</title>
+		<imprint>
+			<biblScope unit="page" from="199" to="212" />
+			<date type="published" when="2009" />
+			<publisher>ACM</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Personalization in privacy-aware highly dynamic systems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Sackmann</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Strüker</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Accorsi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Communications of the ACM</title>
+		<imprint>
+			<biblScope unit="volume">49</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page" from="32" to="38" />
+			<date type="published" when="2006" />
+			<publisher>ACM</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Access control: Policies, models, and mechanisms</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Samarati</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>De Capitani Di Vimercati</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">FOSAD 2000. LNCS 2171</title>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2001" />
+			<biblScope unit="page" from="134" to="196" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Isolation in cloud computing and privacy-enhancing technologies</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">N</forename><surname>Sonehara</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">I</forename><surname>Echizen</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Wohlgemuth</surname></persName>
+		</author>
+		<idno>Computing&apos; BISE, 3(3), 155-162. Gabler. Van der Aalst, W.</idno>
+	</analytic>
+	<monogr>
+		<title level="m">Special Issue &apos;Sustainable Cloud</title>
+		<imprint>
+			<publisher>ACM</publisher>
+			<date type="published" when="2011" />
+			<biblScope unit="volume">55</biblScope>
+			<biblScope unit="page" from="76" to="83" />
+		</imprint>
+	</monogr>
+	<note>Process mining</note>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Placing humans in the feedback loop of social infrastructures-NII research strategies on cyber-physical systems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">W</forename><surname>Wahlster</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Müller</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Informatik Spektrum</title>
+		<imprint>
+			<biblScope unit="volume">36</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="520" to="529" />
+			<date type="published" when="2013" />
+			<publisher>Springer</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<analytic>
+		<title level="a" type="main">Information Security and Cryptology-ICISC 2005</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Wang</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Ju</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">LNCS</title>
+		<imprint>
+			<biblScope unit="volume">3935</biblScope>
+			<biblScope unit="page" from="169" to="174" />
+			<date type="published" when="2006" />
+			<publisher>Springer</publisher>
+		</imprint>
+	</monogr>
+	<note>The dilemma of covert channels searching</note>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">Information accountability</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><forename type="middle">J</forename><surname>Weitzner</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">H</forename><surname>Abelson</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><surname>Berners-Lee</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Feigenbaum</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Hendler</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><forename type="middle">J</forename><surname>Sussman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Communications of the ACM</title>
+		<imprint>
+			<biblScope unit="volume">51</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="82" to="87" />
+			<date type="published" when="2008" />
+			<publisher>ACM</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<monogr>
+		<title level="m" type="main">Why Johnny can</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Whitten</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><forename type="middle">D</forename><surname>Tygar</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1999" />
+			<biblScope unit="page" from="169" to="184" />
+		</imprint>
+	</monogr>
+	<note>t encrypt: A usability evaluation of PGP 5.0&apos;, 8th USENIX Security Symposium Volume 8 (SSYM&apos;99</note>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<analytic>
+		<title level="a" type="main">Privacy with delegation of rights by identity management</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Wohlgemuth</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Müller</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">LNCS</title>
+		<imprint>
+			<biblScope unit="volume">3995</biblScope>
+			<biblScope unit="page" from="175" to="190" />
+			<date type="published" when="2006" />
+			<publisher>Springer</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<monogr>
+		<title level="m" type="main">Tagging disclosures of personal data to third parties to preserve privacy</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Wohlgemuth</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">I</forename><surname>Echizen</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">N</forename><surname>Sonehara</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><forename type="middle">;</forename><surname>Müller</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Sec 2010</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Ifip Aict 330</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Ifip</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2010" />
+			<biblScope unit="page" from="241" to="252" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

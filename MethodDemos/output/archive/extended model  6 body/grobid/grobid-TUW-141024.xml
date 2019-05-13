@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Embedding the Evidence Information in Guideline Representation Languages</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Alimë</forename><surname>Oztürk</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Institute of Software Technology and Interactive Systems</orgName>
+								<orgName type="institution">Vienna University of Technology</orgName>
+								<address>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Katharina</forename><surname>Kaiser</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Institute of Software Technology and Interactive Systems</orgName>
+								<orgName type="institution">Vienna University of Technology</orgName>
+								<address>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Patrick</forename><surname>Martini</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Institute of Software Technology and Interactive Systems</orgName>
+								<orgName type="institution">Vienna University of Technology</orgName>
+								<address>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Silvia</forename><surname>Miksch</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Institute of Software Technology and Interactive Systems</orgName>
+								<orgName type="institution">Vienna University of Technology</orgName>
+								<address>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="department">Department of Information and Knowledge Engineering</orgName>
+								<orgName type="institution">Danube University Krems</orgName>
+								<address>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Embedding the Evidence Information in Guideline Representation Languages</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<abstract>
+				<p>Clinical practice guidelines are widely used to support medical staff in treatment planning and decision-making, whereas, the classification of different recommendations in the CPGs are one of the most important information sources to use. However, there is a lack of consensus amongst guideline developers, regarding those classification schemes. To address this problem, we mapped the different graded and ungraded evidence information used by different guideline developing organizations into our meta schema. In this paper we describe how guideline representation languages, such as Asbru and PROforma can be extended to model our meta schema.</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.">Introduction</head><p>Clinical practice guidelines (CPGs) are one of the central topics of research in Artifical In- telligence in medicine. They can be described as "systematically developed statements to assist practitioner and patient decisions about appropriate health care for specific clinical circumstances" <ref type="bibr" target="#b2">[3]</ref>. The major goal of CPGs is to support physicians in their daily work providing information needed for the decision-making process for a particular patient and disease. We can say that rec- ommendations described in CPGs are one of the most important information sources to use during decision-making, because they provide phycisians various treatment options.</p><p>Recommendations are, in general, based on some kind of evidence, represented by different levels of evidence (LoEs), and on strengths of recommendations (SoRs). Several definitions of LoEs and SoRs exist by now. In the context of our work, the following definitions seem appropriate <ref type="bibr" target="#b1">[2]</ref>:</p><p>Levels of evidence (LoEs): The validity of an individual study is based on an assessment of its study type. According to some methodologies, LoEs can refer not only to individual studies but also to the quality of evidence from multiple studies about a specific question or the quality of evidence supporting a clinical intervention.</p><p>Strengths of recommendation (SoRs): The SoRs for clinical practice is based on a body of evidence. This approach takes into account the LoEs of individual studies, the type of outcomes measured by these studies, the number, consistency, and coherence of the evidence as a whole, the relationship between benefits, harms, and costs.</p><p>However, in addition to such graded recommendations, there also exist ungraded recommen- dations, where the guidelines do not contain any classification of the LoEs or SoRs. They usu- ally appear in guidelines as ordinary text fragments. This circumstance makes the classification of ungraded evidence information a challenging task. Such a classification is necessary, because evidence-based recommendations, that are classified recommendations, are better followed in prac- tice than recommendations not based on any scientific evidence <ref type="bibr" target="#b5">[6]</ref>.</p><p>Hence, the aim is to present evidence information of CPGs in computer-interpretable form. Such a representation allow guideline users and modellers to embed the evidence information in several methods and tools and support the decision-making process.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">Motivation</head><p>In order to facilitate the decision-making process, several guideline representation languages and systems have been developed. They provide physicians a computer interpretable representation of guidelines to enable automated decision-making support. However, LoEs and SoRs are inadequatly treated in guideline representation languages and tools, as they do not support the formalising and modeling process of recommendations with regard to the LoEs and SoRs sufficiently. They need to be extended to provide means for representing evidence information in CPGs. Therefore, a method is required to extend these guideline representation languages with the evidence information in computer-supported guidelines.</p><p>Guideline representation languages with well-structured syntax and semantics, such as Asbru <ref type="bibr" target="#b8">[9]</ref> and PROforma <ref type="bibr" target="#b3">[4]</ref> are of particular importance, because they have been developed to handle various concepts that care formalisation implies. Many guideline modelling tools (e.g., AsbruView, Tallis) are based on these languages. Our proposed extensions can be embedded into the syntax and semantic of these languages so that such tools can provide a computer-interpretable representation of the evidence information in CPGs. Hence, we decided to use Asbru and PROforma to model the evidence information according to our meta schema.</p><p>Asbru is a time-oriented, intention-based representation language to represent CPGs and clinical protocols in XML. It is used to represent guidelines in a set of hierarchical skeletal plans. Each plan consists of a name, a set of arguments, a time annotation, preferences, intentions, conditions, effects, and a plan body (for more detail consider <ref type="bibr" target="#b8">[9,</ref><ref type="bibr" target="#b7">8]</ref>). The preferences are of particular importance to us, because they describe the resource constraints, the costs, and the responsible actor. Our meta schema will be embedded into the definitions of preferences.</p><p>PROforma is a guideline representation language to support the management of medical pro- cedures as well as decision systems. It provides a basis for a method, a technology and different applications for developing and publishing executeable CPGs. A guideline application is modeled as a set of tasks and data items. The four basis classes are <ref type="figure">(1) plan, (2) decision, (3) action, and  (4</ref>) enquiry (compare <ref type="bibr" target="#b10">[11]</ref>). In order to embed the evidence information into the PROforma syntax we focused on the decision task, because this task is responsible for the decision-making process during execution.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">The way to the meta schema</head><p>We already stressed out the importance of a formal representation of evidence information in CPGs and analysed 21 CPGs developed by nine different organizations and co-operations. We manually extracted the data needed to embed the evidence information in CPGs into the representa- tion languages Asbru and PROforma. The extracted data included information about the guideline developing organization (GDOs), LoEs, SoRs, trade-off between benefits and harms, and costs (for more detail compare <ref type="bibr" target="#b6">[7]</ref>). <ref type="figure">Guideline developing organizations (GDOs): is</ref> essential to extract from and differentiate be- tween the different grading systems. For example, the Finnish Medical Society Duodecim <ref type="bibr">(FMSD)</ref> uses the letter A to grade a LoEs, whereas the Allergic Rhinitis and its Impact on Asthma Workshop Group (ARIA) uses the letter A to classify the SoRs.</p><p>Levels of evidence (LoEs): Our meta schema takes various types of medical studies into con- sideration and defines for each type of study different LoEs, indicating the quality of evidence on which the study is based. In order to get a hierarchical structure, we defined the LoEs on the basis of the study types, where meta-analysis is on the top and no study type at the bottom of the hierar- chy. The type of a study is of particular importance to us, because it is going to be used to assign grades to ungraded evidence information. Classification system is important to establish a relation between the study type and the quality of evidence the study is based on. Therefore, we introduce our own labels (e.g., I 3, II 6) that consists of a Roman numeral indicating the type of study and a number indicating the quality of evidence the study is based on, separated by an underscore (for more detail see <ref type="bibr" target="#b6">[7]</ref> ). This classification system will be used to formalize our meta schema and to extend the guideline representation languages Asbru and PROforma.</p><p>Strengths of recommendations (SoRs): In most of the CPGs (16 guidelines out of 21) we considered, the SoRs are not explicitly represented. In the remaining five guidelines, different labels are used to refer to SoRs. Therefore, we developed our own meta schema for SoRs, which is compatible with the ones used in those five guidelines. It was clear that the SoRs have to be distinguishable, meaningful, clear, and unambiguous. We thought that more than four hierarchical levels would not satisfy these objectives and defined levels of strength as <ref type="figure">(1)strong recommendation,  (2)recommendation, (3</ref>)weak recommendation, and (4)no recommendation.</p><p>Benefits and harms: Often CPGs contain texts about the benefits and possible harms of a partic- ular treatment. The CPGs we used do not contain any information about the trade-off between the benefits and harms either. They only contain a common description of known benefits and harms. We used the well defined categorization by the GRADE working group as a basis for defining our meta schema for representing the trade-off between benefits and harms, because tehy suggest to in- clude explicit information about the balance between the main health benefits of a treatment while considering its costs, as they may play a significant role during the decision-making process (see <ref type="bibr" target="#b0">[1]</ref>). We want this attribute to be included in the guideline representation languages.</p><p>Costs: CPGs have been developed to improve the quality of health care, while reducing avoid- able costs for providing this health care. Therefore, it is important that guideline users are informed about the potential costs and expected outcomes of different choices regarding the treatment. This information allows users to prioritize different options for treatment according to their value and cost-effectiveness <ref type="bibr" target="#b4">[5]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">Extension of Asbru and PROforma</head><p>In Section 3 we gave an overview of the basic attributes of evidence information we think to be mandatory when it is aimed to enable better support of physicians while decision-making. Now, we want to explain how they can be represented in the guideline representation languages Asbru and PROforma and how these languages have to be extended. In the following we summarise and name the seven attributes we propose The attributes organization, study type, strength, level of evidence, and scientific conclusion are essential, whereas benefit harm and costs are optional. Because Asbru and PROforma have their own syntax, it is necessary to propose the extension to both languages separately.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1.">Extending Asbru</head><p>As Asbru is an XML-based language, we defined a Document Type Definition (DTD) that de- scribes the use of our proposed seven attributes to formally represent evidence information in Asbru. The attribute scientific conclusion has to be included into the element preferences, which is a child of the plan element containing various information used in the plan selection phase (compare <ref type="bibr" target="#b7">[8]</ref>). The following XML representation is an example of a CPG modeled in Asbru.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>&lt;!ELEMENT</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>&lt;preferences&gt;</head><p>&lt;scientific conclusion organisation = This example states that, the guideline is developed by SIGN, whereas the medical recommendation is classified with III 2 referring to the study type Randomized Controlled Trials and indicating the strength Strong Recommendation. Its costs are estimated to be 1000 Euro per month, whereas the patient's discomfort will be at a low level <ref type="bibr" target="#b7">[8]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2.">Extending PROforma</head><p>The syntax of PROforma is described using the Backus Naur Form (BNF). We use the same syn- tax to present our extension that can be embedded into PROforma. Here, the scientific conclusion attribute has to be embedded into the main definitions of the attribute argument in the PROforma syntax (compare <ref type="bibr" target="#b9">[10]</ref>). </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.">Evaluation</head><p>To evaluate the motivation to our meta schema, the grading schema itself, and the proposed extensions to Asbru and PROforma, we composed a questionnaire of ten questions. They were about the correctness, feasibility, and understandability of, the hierarchical structure of our meta schema, the proposed LoEs and SoRs, the mappings between existing grading schemes and our schema, the attribute representing the trade-off between benefits and harms, and the assignment of our LoEs and SoRs to ungraded evidence information. We also formulated questions regarding the availability of needed information for the proposed attributes, the expected extent of facilitation of the decison-making process when using our grading schema, and the representability of our schema with regard to existing grading schemes.</p><p>We sent this questionnaire to 29 persons including guideline developers, physicians, and devel- opers of guideline representation languages. Most of them agreed with the correctness, understand- ability, and sensibility of the hierarchical structure, the quality of the LoEs and the SoRs, and the mapping tables for our schema. Some of them disagreed with the assignment of the SoRs to the ungraded evidence information. They believe that more information is needed than the LoEs and the SoRs to support a correct decision. We took all received answers into consideration to update our grading schema and representations, which yield to the enhanced version of our grading schema that we presented in this work.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.">Conclusion and future work</head><p>Our meta schema connects different schemes of LoEs and SoRs and provides a means to assign a LoE and a SoR to ungraded evidence recommendations based on the study type and quality of evidence if available. The meta schema provides a possibility to handle the multitude of grading systems on an equal level and facilitates the flow of the underlying information to be quickly and traceable. Additionally, evidence information about a particular recommendation provides guide- line users the facility to choose between recommendations with high level and recommendations with lower level during decision-making. In this paper, we presented two extensions to the guideline representation languages Asbru and PROforma, to enable them to represent evidence information according to our proposed meta schema. We think that these extensions are essential to facilitate the decision-making process in computer-based medical treatment planning.</p><p>For the near future, our focus is on enhancing our meta schema in order to apply it to guidelines from other domains (e.g., cancer) and on developing Information Extraction methods that are able to (semi-) automatically extract evidence information in CPGs according to our proposed meta schema.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0" validated="false"><head>evidence: contains the labels that refer to the type of study and the quality of its evidence (e.g., II 2, IV 3) study type: gives information about the concrete type of study (e.g., cohort study, etc.) strength: represents the stregnth of recommendation (e.g., strong recommendation)</head><label></label><figDesc>: scientific conclusion: is the main attribute representing the overall result organization: represents the name of the guideline developing organization levels of</figDesc><table>benefit harm: refers to the trade-off between benefits and harms of a treatment (only if available 
+in the CPG) 
+
+costs: provides information about the costs of a particular treatment (only if available in the CPG) 
+
+</table></figure>
+		</body>
+		<back>
+
+			<div type="acknowledgement">
+			</div>
+
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Grading quality of evidence and strength of recommendations</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">David</forename><surname>Atkins</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Best</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Peter</forename><forename type="middle">A</forename><surname>Briss</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Martin</forename><surname>Eccles</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Y</forename><surname>Falck-Ytter</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Signe</forename><surname>Flottorp</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Gordon</forename><forename type="middle">H</forename><surname>Guyatt</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Robin</forename><forename type="middle">T</forename><surname>Harbour</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><forename type="middle">C</forename><surname>Haugh</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Henry</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Suzanne</forename><surname>Hill</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Roman</forename><surname>Jaeschke</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Leng</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Alessandro</forename><surname>Liberati</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Nicola</forename><surname>Magrini</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">James</forename><surname>Mason</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Middleton</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Mrukowicz</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Dianne</forename><forename type="middle">O</forename><surname>Connell</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Andrew</forename><forename type="middle">D</forename><surname>Oxman</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Bob</forename><surname>Phillips</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Holger</forename><surname>Schünemann</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Tessa</forename><surname>Tan-Torres Edejer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">H</forename><surname>Varonen</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Gunn</forename><forename type="middle">E</forename><surname>Vist</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">John</forename><forename type="middle">W</forename><surname>Williams</surname><genName>Jr</genName></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Zaza</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">The Grade Working</forename><surname>Group</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMJ</title>
+		<imprint>
+			<biblScope unit="volume">328</biblScope>
+			<biblScope unit="issue">7454</biblScope>
+			<biblScope unit="page" from="1490" to="1498" />
+			<date type="published" when="2004-06" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Strength of recommandation taxonomy (sort): A patient-centered approach to grading evidence in the medical literature</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">H</forename><surname>Mark</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Jay</forename><surname>Ebell</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Barry</forename><forename type="middle">D</forename><surname>Siwek</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Steven</forename><forename type="middle">H</forename><surname>Weiss</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Jeffrey</forename><surname>Woole</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Bernard</forename><surname>Susman</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Marjorie</forename><surname>Ewigman</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Bowman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">American Family Physician</title>
+		<imprint>
+			<biblScope unit="volume">69</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="548" to="556" />
+			<date type="published" when="2004-02" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Marilyn</forename><forename type="middle">J</forename><surname>Field</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Kathleen</forename><forename type="middle">N</forename><surname>Lohr</surname></persName>
+		</author>
+		<title level="m">Clinical Practice Guidelines: Directions for a New Program</title>
+		<meeting><address><addrLine>Institute of Medicine, Washington DC</addrLine></address></meeting>
+		<imprint>
+			<publisher>National Academies Press</publisher>
+			<date type="published" when="1990" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Disseminating medical knowledge: The PROforma approach</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">John</forename><surname>Fox</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Nicky</forename><surname>Johns</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Ali</forename><surname>Rahmanzadeh</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Artificial Intelligence in Medicine</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="page" from="157" to="181" />
+			<date type="published" when="1998-09" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Competing practice guidelines: Using cost-effectiveness analysis to make optimal decisions</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">V</forename><surname>Attilio</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Alan</forename><forename type="middle">L</forename><surname>Granata</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Hillman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Annals of Internal Medicine</title>
+		<imprint>
+			<biblScope unit="volume">128</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="56" to="63" />
+			<date type="published" when="1998" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Attributes of clinical guidelines that influence use of guidelines in general practice: observational study</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Richard</forename><surname>Grol</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Johannes</forename><surname>Dalhuijsen</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Siep</forename><surname>Thomas</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMJ</title>
+		<imprint>
+			<biblScope unit="volume">317</biblScope>
+			<biblScope unit="page" from="858" to="861" />
+			<date type="published" when="1998" />
+		</imprint>
+	</monogr>
+	<note>Cees in &apos;t Veld, Guy Rutten, and Henk Mokkink</note>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">A meta schema for evidence information in clinical practice guidelines as a basis for decision-making</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Katharina</forename><surname>Kaiser</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Patrick</forename><surname>Martini</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Silvia</forename><surname>Miksch</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Alimë</forename><surname>Oztürk</surname></persName>
+		</author>
+		<idno>forthcoming. AMIA</idno>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 12th World Congress on Health (Medical) Informatics (Medinfo&apos;2007)</title>
+		<editor>Klaus Kuhn, Tze Yun Leong, and Jim Warren</editor>
+		<meeting>the 12th World Congress on Health (Medical) Informatics (Medinfo&apos;2007)<address><addrLine>Brisbane, Australia</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2007" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Asbru 7.3 reference manual</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Andreas</forename><surname>Seyfang</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Robert</forename><surname>Kosara</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Silvia</forename><surname>Miksch</surname></persName>
+		</author>
+		<idno>Asgaard- TR-2002-1</idno>
+	</analytic>
+	<monogr>
+		<title level="m">Institute of Software Technology &amp; Interactive Systems</title>
+		<meeting><address><addrLine>Vienna, Austria, Europe</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2002" />
+		</imprint>
+		<respStmt>
+			<orgName>Vienna University of Technology</orgName>
+		</respStmt>
+	</monogr>
+<note type="report_type">Technical Report</note>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">The Asgaard project: A task-specific framework for the application and critiquing of time-oriented clinical guidelines</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Yuval</forename><surname>Shahar</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Silvia</forename><surname>Miksch</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Peter</forename><surname>Johnson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Artificial Intelligence in Medicine</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="page" from="29" to="51" />
+			<date type="published" when="1998-09" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">The syntax and semantics of the PROforma guideline modeling language</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>David</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">John</forename><surname>Sutton</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Fox</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Medical Informatics Association (JAMIA)</title>
+		<imprint>
+			<biblScope unit="volume">10</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="433" to="443" />
+			<date type="published" when="2003-10" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">A study of PROforma, a development methodology for clinical procedures</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Arjen</forename><surname>Vollebregt</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Frank</forename><surname>Annette Ten Teije</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Johan</forename><surname>Van Harmelen</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Mees</forename><surname>Van Der Lei</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Mosseveld</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Artificial Intelligence in Medicine</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="195" to="221" />
+			<date type="published" when="1999" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

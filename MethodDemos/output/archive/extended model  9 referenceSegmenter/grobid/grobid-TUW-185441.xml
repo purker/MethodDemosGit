@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Measuring Shape Analysis Precision</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Viktor</forename><surname>Pavlu</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution">Institut für Computersprachen TU Wien Vienna</orgName>
+								<address>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><roleName>Faculty Mentor)</roleName><forename type="first">Markus</forename><surname>Schordan</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="institution">Institut für Computersprachen TU Wien Vienna</orgName>
+								<address>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Measuring Shape Analysis Precision</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<abstract>
+				<p>Shape analysis is a static program analysis technique for discovering properties of heap-allocated data structures. It is crucial to finding software bugs or to verify high-level correctness properties. Various analyses have been introduced but their relation in terms of precision often remains unclear as different analyses use different abstractions of the heap. The aim of our work is to compare the precision of shape analyses. We propose a novel algorithm based on three-valued logic that extracts alias sets from shape graphs. Smaller sets are more precise and indicate a more precise underlying shape analysis. Using this metric, we experimentally compare-for the first time-the relative quality of the state-of-the-art graph-based shape analyses and make recommendations concerning the combination of analysis parameters. II. CONTRIBUTIONS We implemented multiple instances of state-of-the-art graph-based shape analyses for a subset of the C++ programming language and developed an algorithm based on three-valued logic that extracts alias information from shape graphs. Using this algorithm as a metric indicating the precision of the underlying shape analysis we are able to judge the effects of individual analysis parameters on runtime and precision of the analyses. In detail, the contributions address theory, practice, and assessment of shape analyses: A. THEORY</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>II. CONTRIBUTIONS</head><p>We implemented multiple instances of state-of-the-art graph-based shape analyses for a subset of the C++ pro- gramming language and developed an algorithm based on three-valued logic that extracts alias information from shape graphs.</p><p>Using this algorithm as a metric indicating the preci- sion of the underlying shape analysis we are able to judge the effects of individual analysis parameters on runtime and precision of the analyses.</p><p>In detail, the contributions address theory, practice, and assessment of shape analyses:</p><p>A. THEORY</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>I. INTRODUCTION</head><p>Shape analysis is a static program analysis technique that approximates the structure of the runtime heap. It is closely related to pointer alias analysis but has its focus on the heap with dynamically allocated, recursive data structures. Using shape analysis results, many questions about the runtime heap can be answered at compile time. Such information is crucial to finding software bugs or to verify high-level correctness properties.</p><p>Various analyses have been introduced but their rela- tive quality in terms of precision often remains unclear as analyses cannot be compared directly due to different representations of analysis results.</p><p>The aim of our work is to compare parametrized ver- sions of shape analyses by the size of may-alias sets ex- tracted from shape analysis results. Smaller sets of pos- sible aliases are more precise and indicate a more precise underlying shape analysis. We are thus able to experi- mentally evaluate precision and analysis runtime trade- offs for parametrized versions of shape analysis algo- rithms that use different heap representations.</p><p>Parametrized versions of the state-of-the-art graph- based shape analyses, SRW <ref type="bibr">[1]</ref> and NNH <ref type="bibr" target="#b1">[2]</ref>, were im- plemented for C++ using the SATIrE program analysis framework <ref type="bibr" target="#b2">[3]</ref>. Measurements using the aforementioned metric show the relative quality of analyses and the im- pact analysis parameters have on precision and runtime. We are the first to show that the NNH shape analysis is strictly more precise than SRW. Experimental results al- low us to make recommendations concerning the combi- nation of analysis parameters.</p><p>We extended both the SRW <ref type="bibr">[1]</ref> and the NNH <ref type="bibr" target="#b1">[2]</ref> shape analysis algorithms to model information flows from function call sites to matching function bodies (inter- procedural). In their original formulation the analyses were intra-procedural.</p><p>We adapted the graph-based shape analyses from the- oretical programming languages to a subset of C++.</p><p>We developed an algorithm for alias extraction from shape graphs based on the technique described in Reps et. al. <ref type="bibr" target="#b3">[4]</ref>. Our algorithm improves precision in all cases where objects in the heap are linked with two or more indirections, e. g., linked lists with two or more elements.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>B. PRACTICE</head><p>We implemented the shape analyses and integrated them into the SATIrE program analysis framework where sub- sequent program analyses can now use them as powerful alias analyses.</p><p>We added automatic annotation of shape-and alias analysis results to SATIrE. The results obtained by the analyses are available as annotations to the SATIrE ab- stract syntax tree, as annotations to a program's source code, or as graphical visualization of a program's control flow graph.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>C. ASSESSMENT</head><p>We evaluated shape analysis abstractions and discovered that SRW shape analyses cannot contain must-alias in- formation. We found that the SRW algorithm does not always perform a strong update. Both findings were not previously published.</p><p>We systematically introduced five parameters to the shape-based alias analyses to thoroughly evaluate their effects on precision and runtime: (1) shape analysis al- gorithm, (2) inter-procedural context information, (3) re- taining temporary variables, (4) "common tails" exten- sion, and (5) lazy/extensive alias testing. This results in 32 variations of shape-based alias analyses for our com- parison.</p><p>Interpreting the observed results we were able to make recommendations concerning the combination of analy- sis parameters: -Ignoring context information produced the worst results and took the most time -always use context information for shape analyses. -We showed that the SRW shape analysis with an extensive alias test cannot be more precise than the lazy test on SRW graphs -always perform the lazy test for the SRW analysis results to save time. -NNH shape analysis and the lazy alias test pro- duce a poor match: analysis runtimes are always longer than with SRW but only in one case is the re- sult (minimally) more precise; the higher precision gained from NNH (and paid for by the longer anal- ysis runtime) is lost in the lazy alias test as it merges separate execution paths before the test which were deliberately kept apart during analysis. -Without temporary variables or the "common tail" extension, SRW and NNH have comparable preci- sion but SRW is roughly 5 times faster on our test cases. -Retaining temporary variables increased precision for both SRW and NNH (23% and 21% smaller alias sets, respectively) but also increased graph sizes and therefore analysis runtime (3 times) - here, the precision is expensive. -The "common tails" alias test increased precision only in combination with NNH, but then at no mea- surable increased cost -a cheap precision increase for an already precise analysis. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>IV. CONCLUSIONS</head><p>Our work was the first to implement the NNH shape anal- ysis algorithm. We extended state-of-the-art graph-based shape analyses to be used inter-procedurally on a subset of C++ and improved the precision of the established al- gorithm to extract alias information from shape graphs. Our work features the first comparison of the relative merits of the two state-of-the-art graph-based shape anal- yses termed SRW and NNH. We were thus able to an- swer a theoretically and practically important question, as to which is the more precise shape analysis, which was open since 1999.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>REFERENCES</head><p>The number of may-aliases computed from the SRW- or NNH shape analysis results is shown in <ref type="figure" target="#fig_1">Figure 1</ref>. A more detailed discussion can be found in the first author's thesis <ref type="bibr" target="#b4">[5]</ref>.</p><p>In summary, we can say:</p><p>-NNH is strictly more precise than SRW in all ob- served test cases -The fastest variant is: SRW, with context infor- mation, with lazy alias test, without common tails, without temporary variables -If more precision is required: NNH, with context information, with extensive alias test, with com- mon tails. Using our proposed metric we observed a 28% gain in precision (reduced alias set sizes) at 36 times increased runtime for our test cases.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Figure 1 :</head><label>1</label><figDesc>Figure 1: Number of May-Aliases computed from SRWand NNH shape analysis results (fewer may-aliases are more precise).</figDesc></figure>
+		</body>
+		<back>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Solving shape-analysis problems in languages with destructive updating</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Mooly</forename><surname>Sagiv</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Thomas</forename><forename type="middle">W</forename><surname>Reps</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Reinhard</forename><surname>Wilhelm</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM Transactions on Programming Languages and Systems</title>
+		<imprint>
+			<publisher>TOPLAS</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<monogr>
+		<title level="m" type="main">Principles of Program Analysis, chapter Shape Analysis</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Flemming</forename><surname>Nielson</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Chris</forename><surname>Hanne Riis Nielson</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Hankin</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1999" />
+			<publisher>Springer</publisher>
+			<biblScope unit="page" from="102" to="129" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Combining tools and languages for static analysis and optimization of high-level abstractions</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Markus</forename><surname>Schordan</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">24. Workshop der GI-Fachgruppe &quot;Programmiersprachen und Rechenkonzepte</title>
+		<imprint>
+			<date type="published" when="2007" />
+			<biblScope unit="page" from="72" to="81" />
+		</imprint>
+		<respStmt>
+			<orgName>Department of Computer Science, Christian-Albrechts-Universitt zu Kiel</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Shape analysis and applications</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Thomas</forename><forename type="middle">W</forename><surname>Reps</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Mooly</forename><surname>Sagiv</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Reinhard</forename><surname>Wilhelm</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">The Compiler Design Handbook: Optimizations and Machine Code Generation</title>
+		<imprint>
+			<publisher>CRC Press</publisher>
+			<date type="published" when="2002" />
+			<biblScope unit="page" from="175" to="218" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<monogr>
+		<title level="m" type="main">Shape-based alias analysis for objectoriented languages</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Viktor</forename><surname>Pavlu</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2009" />
+			<pubPlace>Vienna, Austria</pubPlace>
+		</imprint>
+		<respStmt>
+			<orgName>TU Wien, Department of Computer Science</orgName>
+		</respStmt>
+	</monogr>
+	<note>Master&apos;s thesis</note>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

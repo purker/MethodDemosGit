@@ -1,0 +1,814 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="de">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">MASTERARBEIT Coloring of the Self-Organising Maps based on class labels</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Anleitung</forename><surname>Von</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">ausgeführt am Institut für Softwaretechnik</orgName>
+								<orgName type="institution">Technischen Universität Wien</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><roleName>Prof</roleName><forename type="first">Ao</forename><forename type="middle">Andreas</forename><surname>Univ</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">ausgeführt am Institut für Softwaretechnik</orgName>
+								<orgName type="institution">Technischen Universität Wien</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Rauber</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">ausgeführt am Institut für Softwaretechnik</orgName>
+								<orgName type="institution">Technischen Universität Wien</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Taha</forename><forename type="middle">Abdel</forename><surname>Aziz</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">ausgeführt am Institut für Softwaretechnik</orgName>
+								<orgName type="institution">Technischen Universität Wien</orgName>
+							</affiliation>
+						</author>
+						<title level="a" type="main">MASTERARBEIT Coloring of the Self-Organising Maps based on class labels</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+					<note>Visualization can also involve the data itself so that it helps accessing information that are not available in the trained SOM, thereby enabling a deeper look inside the data. If the data comes with supervised class labels, these labels can be also involved in the visualization, thus enabling the user to have a clearer idea about the data and the structures learned by the SOM. In this work we propose a novel SOM visualization method, namely the SOM class coloring, which is based on the data class labels. This method nds a ii colored partitioning of the SOM lattice, that reects the class distribution. SOM class coloring helps discovering class information such as class topology, class clusters, and class distribution. Furthermore class labels can be assigned to new data items by estimating the point on the lattice, that best represents the data item and then assigning the class of the partition that includes this point to the data item.</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<abstract>
+				<p>Quellenstrasse 24B/13/13 A1100 Wien Wien, am 3. Jänner 2016 Unterschrift i Kurzfassung Die Selbstorganisierende Karte (SOM) ist ein nützliches und starkes Werkzeug für die Datenanalyse, besonders für groÿe Datensätze oder Datensätze von hoher Dimensionalität. SOM Visualisierungen bilden die Dimensionen des Datenmod-ells auf graphische Dimensionen wie Farbe und Position ab, so helfen sie der Navigation und dem Erforschen von dem SOM. SOM Visualisierungen können auch die Daten selbst einbeziehen, so dass der Zugri auf Informationen möglich wird, die in einem reinen SOM nicht verfügbar sind. Dadurch wird ein tieferer Einblick in die Daten möglich. Wenn die Daten mit klassen gekennzeichnet sind, können diese Klassen auch in der Visualisierung einbezogen werden, so dass, eine klarere Idee über die Klassinformation gewonnen wird. In dieser Arbeit schlagen wir eine neuartige SOM Visualisierungsmethode, nämlich die SOM Klassenfär-bung vor, welche auf den Datenklassen beruht. Diese Methode ndet eine farbige Partition des SOM-Gitters, die die Klassenstruktur widerspiegelt. Diese Visu-alisierung ermöglicht das entdecken von Klassinformation wie Klassenstruktur, Klassenverteilung und Klassenclusters. Auÿerdem können neue Daten Klassen zugeordnet werden und zwar indem der Punkt auf dem SOM-Gitter ermittelt wird, welcher das neue Datum (Messwert) am besten repräsentiert; das neue Datum wird dann jener Klasse zugeordnet, die die Partition repräsentiert, auf der sich der Punkt bendet. Abstract The Self-Organizing Map (SOM) is a useful and strong tool for data analysis, especially for large data sets or data sets of high dimensionality. SOM visualiza-tions map the data model dimensions to visual dimensions like color and position, thus they help exploring the SOM.</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="de">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">Introduction 2 Related Work 4</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.1</head><p>Self organizing map . . . . . . . . . . . . . . . . . . . . . . . . . . 4</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.1.1</head><p>The map initialization . . . . . . . . . . . . . . . . . . . . 5</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.1.2</head><p>The training process . . . . . . . . . . . . . . . . . . . . . 6</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.2</head><p>Clustering and classication . . . . . . . . . . . . . . . . . . . . . 8</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.2.1</head><p>Hierarchical algorithms . . . . . . . . . . . . . . . . . . . . 9</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.2.2</head><p>Partitive algorithms . . . . . . . . . . . . . . . . . . . . . . 10</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.2.3</head><p>Two-level clustering approach / Clustering of the SOM . . 11 <ref type="bibr">. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12 2.3.1 Sammon's Mapping . . . . . . . . . . . . . . . . . . . . . . 13 2.4 Visualizations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14</ref> 2.4.1 Visualization of SOM with Unlabeled data . . . . . . . . . 14</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3">Projection</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.4.2</head><p>Visualization of SOM with Labeled data . . . . . . . . . . 20</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.5</head><p>Summary . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21 <ref type="bibr">Toolbox . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 26 3.2 Problem formulation . . . . . . . . . . . . . . . . . . . . . . . . . 28</ref> 3.3 SOM coloring by color ooding . . . . . . . . . . . . . . . . . . . 28</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">Methods 25</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">SOM</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3.4</head><p>Using graphs to color the SOM . . . . . . . . . . . . . . . . . . . 32</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3.4.1</head><p>Voronoi diagrams and Delaunay triangulations . . . . . . . 32</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3.4.2</head><p>Voronoi cell coloring . . . . . . . . . . . . . . . . . . . . . 36</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3.4.3</head><p>Angular segmentation of Voronoi cells . . . . . . . . . . . . 38</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>iii</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>CONTENTS</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>iv</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3.4.4</head><p>Smooth partitioning of Voronoi cells . <ref type="bibr">. . . . . . . . . . . 39 3.5 Summary . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 49</ref> 4 Experements and evaluation 51</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4.1</head><p>Iris data . . . <ref type="bibr">. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 51 4.2 Text data . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 52 4.3 Audio data . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 55</ref> </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">Conclusions 69</head><p>List of Figures</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.1</head><p>Adapting the best-matching unit and its neighbors weights The input vector coordinates are marked with a cross, coordinates of the map nodes before modication are shown as full circles and after modication as empty circles.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">2.2</head><p>Agglomerative algorithm: (A) steps, (B) corresponding dendrogram . . . . . 10</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.3</head><p>U-Matrix, PMatrix, and U*Matrix <ref type="bibr">[Ult05]</ref>. (A)Dataset consisting of a mixture of two Gaussians with 2048 points each. (B)The U-Matrix of the dataset, darker colors correspond to large distances. (C)The P-Matrix of the dataset, darker colors correspond to larger dinsities. (D)The U*-Matrix of the dataset, which shows clearly the two Gaussians. . . . . . . . . . . . . . . . . . . 16</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.4</head><p>Hit Histogram visualization methods <ref type="bibr">[Ves99]</ref> (a)The size of the black hexagon is proportional to the value of the histogram in the corresponding unit. (b)The height of the bar tells the same thing as in (a). . . . . . . . . . . . . . . 17</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.5</head><p>SDH visualization with dierent values of the smoothing parameter s <ref type="bibr">[PRM02]</ref>.</p><p>The Data set consists of 5000 samples, that are randomly drawn from a prob- ability distribution, that is a mixture of 5 Gaussians. The SOM is of 10X10 units arranged on a rectangular grid. . . . . . . . . . . . . . . . . . . . 18</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.6</head><p>Gradient visualization with parameters: provides the same of information as in G3 in addition to the visualization of border and isolated components. . . . . . . . . . . . . . . . . . . . . . 23</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.8</head><p>Pie chart visualization . . . . . . . . . . . . . . . . . . . . . . . . . . 24</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3.1</head><p>SOM Toolbox overview An illustration of some features of the SOM Toolbox with banksearch data (A)The SOM lattice with units represented as pie charts (B)Zoomed details view with labels and pie charts (C)Pie chart representing the unit position and the class contribution (D)Smoothed data histogram vi- sualization as an example visualization (E)DMatrix visualization as another example (F)There are other visualizations that can be selected from the visu- alization menu . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 27</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3.2</head><p>Base conguration of the SOM Class Coloring (A)The SOM units located on the grid with their class contributions, that is given by function f. (B)Representation of A as it is in SOM Toolbox, where f is represented with pie chart. . . . . . 29</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3.3</head><p>Coloring by Simple Flooding assuming one class per unit. (A)Colored points representing the dominant classes of the SOM units, (B to D)The process of color ooding animated in 3 steps. <ref type="bibr">. . . . . . . . . . . . . . . . . . . . 30 3.4</ref> Unit substitution.(A) Multi class units represented by pie charts,(B)Substitution points that can be used by color ooding. . . . . . . . . . . . . . . . . . 30</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3.5</head><p>Instability eect in the color ooding. (A)While growing, the two blue points close the way and prevent the red point from growing to the left side. (B)After making a slight change in the position of one of the blue points, the red point can grow to the left side, which changes the end result dramatically. . . . . 31</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>vii</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3.6</head><p>Areas in Voronoi diagram (A) are similar to these produced by color ooding <ref type="bibr">(B). . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 32 3.7</ref> Relation between Voronoi diagram and Delaunay triangulation(DT). (A)a set of point (sites) in a 2-D space(B). (B)Voronoi faces (thin lines) and Delaunay triangulation (thick lines) of the sites in A. (C)The circumsphere of every triangle in DT contains no sites inside. . . . . . . . . . . . . . . . . . . 33</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3.8</head><p>Sweepline algorithm. The slides 1-9 animate the algorithm while nding the Voronoi diagram of the three sites in slide 1. In slide 2 a parabola for the upper site arises because the sweepline passes this site. In the next two slides the parabola grows while the sweepline moves. In slide 5 two parabolas for the two lower points arise because the sweepline passes these points. In the rest slides all parabolas grow while the line sweeping. The intersections of the parabolas form the edges of the Voronoi diagram as in slide 9 (red lines). . . 35</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3.9</head><p>Bowyer-Watson algorithm when adding new site. (A)The faces to be deleted are all faces whose circumsphere or itself contains the new added site. (B)Faces to delete are colored, and new faces are marked in dashed lines. (C)The resulting Delaunay triangulation after insertion and update. . . . . . . . . 36</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3.10</head><p>Region substitution. <ref type="bibr">. . . . . . . . . . . . . . . . . . . . . . . . . . . 38 3.11 Sector partitioning. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 39</ref> 3.12 (A)Notations used int this section(Note that we use the colors as class names for simplifying). (B)Connection lines between regions that have same classes. 40 from r4 that are nearest to L5 from the other side, are colored in blue. that gives the eect of an area extending over two regions In regions r2 and r3 the same thing is done with L2 and L3, because L2 and L3 have a common point the resulting colored area appears as a thin area, that extends over two regions In r4 the line L4 has the length 0 (is equivalent to a point), thus the resulting colored area has a circular shape. . . . . . . . . . . . . . . . . 41</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3.13</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3.14</head><p>Distance between a point and a line segment <ref type="bibr">[Sof]</ref>. . . . . . . . . . . . . . 43</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>viii</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3.15</head><p>Finding the lines segments (A)At rst each region is colored with the dominant class color. The class red is isolated because no neighbor region have this class; aline segment s with length 0 is added and the attractor function is applied.</p><p>In the nished coloring we see the class red as a circular area within the region.</p><p>(B)The class yellow in the region r remains after painting the dominant colors.</p><p>There is one neighbor, that have the same class which is r1, thus we add a segment s from the site to the middle of the common edge. The same thing happens when painting r1, from the view of r1 there is a neighbor region r that have the same class yellow, thus adding the line segment s1. After painting r and r1 we get continuous yellow area extending over the two regions. (C)In this case the two neighbor regions r1 and r2 are self neighbors and shares r with the vertex at s because all of the three regions have the class cyan, we add the line segment s with length 0 at the common vertex, so that the resulting class cluster is continuous for all of the three regions as it is seen in the nished coloring. (D)Because r have two neighbors of r1 and r2, that have the same class yellow, but they are not self neighbors, we add two segments s1 and s2 each one from the site location to the middle of the edge of the corresponding region. After nishing, we have a yellow stripe, that connect r1 and r2 crossing r. <ref type="bibr">. . . . . . . . . . . . . . . . . . . . . . . . . . 46</ref> 3.16 Smoothing of the border by using weighted line segments. (A)The border at the common edge has a zigzag form because the areas are not equal. (B)The line segments are weighted by using the contribution value as weights for the face points and the average for the common point. (C) Smooth partitioning as a result of the weighted sorting. . . . . . . . . . . . . . . . . . . . . 48</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3.17</head><p>The minimum visible class parameter. (A) Visualization with parameter set to 0. (B) The same data visualized with the parameter set to 50% and <ref type="bibr">(C)</ref> set the parameter set to 100%. <ref type="bibr">. . . . . . . . . . . . . . . . . . . . . . 49</ref> 3.18 Chessboard Visualization vs. smooth partition visualization. (A)the smooth partition visualization, (B)Chessboard visualization. In each case with and without voronoi borders. . . . . . . . . . . . . . . . . . . . . . . . . . 50</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4.1</head><p>Class coloring of the iris data. The areas marked with circles are examples of regions, where it is dicult to assign new data without using the coloring. . . 59</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>ix</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4.2</head><p>Class visualization overview of the banksearch data set. (A)Pie chart visual- ization. (B)Smoothed class coloring of the same data set. For the categories and themes see Table 4.1. . . . . . . . . . . . . . . . . . . . . . . . . . 60</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4.3</head><p>Class Coloring with dierent values of the parameter minimum visible class.</p><p>(A)the parameter is set to 100%. (B)the parameter is set to 50%. (C)the parameter is set to 0%. . . . . . . . . . . . . . . . . . . . . . . . . . . 61</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4.4</head><p>Class coloring with Voronoi cell border. (A) to (F) are signicant samples showing some strengths and drawbacks of the visualization. . . . . . . . . . 62</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4.5</head><p>Chessboard visualization of the banksearch dataset. . . . . . . . . . . . . 63</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4.6</head><p>Radio station data set. (A) Pie chart visualization. (B) Class coloring of the data set. The text labels describe the main categories of the genres. See <ref type="bibr">[LR06]</ref>. 64</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4.7</head><p>Class coloring of the radio search data set. The parameter minimum visi- ble class is set to dierent values (A) 0% (B) 30% (C) 60% (D)100%. The dominant classes in (C) do not agree with these seen by the human eye in (A). 65</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4.8</head><p>Class coloring of the radio search data set after the correction of the algorithm.</p><p>The parameter minimum visible class is set to dierent values (A) 0% (B) 30% (C) 60% (D)100%. The dominant classes in (C) agree with these seen by the human eye in (A). . . . . . . . . . . . . . . . . . . . . . . . . . . . . 66</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4.9</head><p>Class coloring of the banksearch data set after the correction of the algorithm.</p><p>Some of the drawbacks that was found in the least section have disappeared after the correction. For example the area marked with a circle is to be compared with Figure 4.4-(C). . . . . . . . . . . . . . . . . . . . . . . 67</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4.10</head><p>Chessboard visualization of the radio search data. . . . . . . . . . . . . . 68</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Introduction</head><p>Analyzing data usually needs more than getting pure statistical properties of the data set. There are many methods for quickly producing overall summaries of a data set. For example, ve-number summary consisting of some statistical values (greatest, median, lower quartile and upper quartile) provides a help understand- ing simple data sets of low dimensionality and limited volume <ref type="bibr">[Kas97]</ref>. Data structure and topology such as nding the clusters and class distribution of the data is very essential. The more data there is available the more dicult it is to understand this data set. Also, the dimensionality of the feature space represent- ing the data is a factor. For this problem there is an essential need of methods for data exploration and especially the methods, that can discover and illustrate eectively the structure of the data. Data mining is one of the elds where such exploratory methods are needed in the form of tools in Knowledge discovery in database (KDD), whose purpose is to nd new knowledge from databases where dimensionality, complexity, or amount of data is too large or complex for pure human observation to be studied. Data mining is now an important area of re- search, responding to the presence of large databases in commerce, industry, and research. Methods of data exploration vary depending on the nature of the data and the goal of study: clustering methods are the more conventional ones; they aim to organize the data patterns into groups, so that patterns in one group are more similar to each other than to those in another group. In other words clus- tering tries to reduce the amount of data items by grouping them. Clustering is useful in several areas such as pattern analysis, grouping, and machine-learning,</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1</head><p>document retrieval, image segmentation, and many other applications <ref type="bibr">[AJ99]</ref>.</p><p>Projection methods try to reduce the dimensionality of the data: they map the multidimensional data features to low dimensional space (usually 2D or 3D) that represents the data and can be easier visualized and studied. Of course this map- ping should preserve the original data topology as much as possible. If the goal of projection is to visualize the data, then low output dimensionality should be cho- sen in order to achieve meaningful visualizations. Visualization methods aim to map the dimensions of the data to visual dimensions such as position, color, etc. in a way that the observer can get a deeper insight in the structure of the data.</p><p>Of course the visual dimensions are limited, so if the data is of high dimensional- ity, direct visualization will be dicult, not helpful or impossible <ref type="bibr">[Ves99]</ref>. In such a case visualization should make use of the two previous methods (Clustering and projection) as a pre-processing step to prepare the data in a form that it can be eciently visualized. Self-Organizing Maps (SOMs) <ref type="bibr">[Koh97]</ref> are ecient tools that implicitly combine all of the previous methods. A SOM is a neural network consisting of low dimensional grid (mostly 2D) of nodes that are trained with high-dimensional data. The nodes on the trained map represent the original data in a manner that similar data points in the feature space are mapped to nodes which are close to each other on the map. SOMs are strong tools used in the data exploration. Some properties that distinguish SOM from the other data mining tools are that it is numerical instead of symbolic, nonparametric, and capable of learning without supervision <ref type="bibr">[Kas97]</ref>; Many variants and extensions of the standard SOM were proposed which try to cover some drawbacks of the standard SOM. In practical applications the process of deciding which method to use is essential: this depends on the nature of the data and the goal of ex- ploration; the following questions are in any case to be resolved: What kind of structure the method can extract?; How does it illustrate this structure?; Does the method reduce the data dimensionality and/or the number of data items?;</p><p>Which and if so which type of data pre-processing is necessary?. The focus of this work is visualization of the SOM, in particular SOMs that are trained with labeled data. It is meaningful here to distinguish between two things that are of great importance in this work: SOM is based on an unsupervised learning process in the meaning that no prior class information is needed to perform the training, because the learning is data-driven. Regardless of this fact, class information can be used in the form of labels which can be then used for exploration and visualization purposes; such labels can be collected in a pre-processing step, or even as a post-processing step. These labels do not aect the training process and the resulting structure or topology, but they help in generating visualizations displayed on top of the nished map. In particular we propose in this work a visualization method of SOM which is based on such class labels namely a SOM coloring that depends on these labels.</p><p>The remainder of this thesis is structured as follows: In Chapter 2 we will dis- cuss some related concepts and methods such as the concept of the Self-Organizing Map, some clustering and classication methods and methods for projection and visualization of the trained SOM. In Chapter 3 we present our novel method for coloring the SOM based on class labels. In Chapter 4 we test and evaluate our method with some collected data sets. Finally we present our conclusions in Chapter 5.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Chapter 2 Related Work</head><p>In this chapter we will introduce some of the concepts and worksljubíme that have been proposed which are closely related with the underlying issue, coloring of the SOM. In Section 2.1 the general issue of the SOM will be introduced.</p><p>In Section the winner neuron. This allows considering the SOM to be a method of projecting the data nonlinearly onto a lower-dimensional display. When using this algorithm the vectors similar in the initial space get close to each other on the nal map SOMs <ref type="bibr">[Koh97]</ref> </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1.1">The map initialization</head><p>If the map contains tens of thousands of neurons then it usually takes too much time to train the system for the practical tasks. Thus making choice of the nodes quantity requires a reasonable trade-o. Before training the map it is necessary to initialize the weight coecients of the neurons. • Initialization with patterns. Initial values are set to randomly chosen pat- terns of the training sample.</p><p>• PCA-based initialization. and its neighbors weights The input vector coordinates are marked with a cross, coordinates of the map nodes before modication are shown as full circles and after modication as empty circles.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.1.2">The training process</head><p>The learning process consists of sequential corrections of the vectors representing neurons. On every step of the learning process a random vector is chosen from the initial data set and then the best-matching neuron coecient vector (up now BMU or best-matching unit) is identied. This is the most similar unit to the input vector. The word 'similarity' in this task means the distance between the vectors. There are various distance metrics that can be used for this purpose. Where W c is the winner vector at index c, X is the input vector and W i is any Unit vector in the SOM. After the BMU is found the neural network weights are adapted. The winning unit and its neighbors adapt to represent the input by modifying their reference vectors towards the current input.  <ref type="bibr">(2.5)</ref> Where σ(t) is a diminishing function of time. This value is often called the radius of the neighborhood. At the beginning of the learning procedure it is fairly large, but it is made to gradually shrink during learning. Towards the end a single winning neuron is trained. Most frequently the linear decreasing function of time is used.</p><p>Let us proceed to the learning rate function α(t). where A and B are constants. There are two main phases in the learning pro- cess. At the beginning the learning rate and the neighborhood radius are fairly large, which allows ordering the neurons vectors according to the sample patterns distribution. Then the weights are accurately adjusted with the learning rate pa- rameters much smaller than they initially were. In case of using PCA-based initialization the rst step of rough adjustment can be skipped. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2">Clustering and classication</head><p>Cluster analysis is the organization of a collection of patterns into clusters based on similarity among these patterns. That is patterns belonging to a cluster are (more) similar to each other to than those in another clusters. nding important information such as the number of available patterns and the number, type, and scale of the features involved in the clustering.</p><p>Furthermore a subset of features may be selected to be the most important subset of the original feature set. This process is called feature selection. ity according to a criterion for merging or splitting clusters and partitive clustering algorithms, that identify the partition that optimizes a clustering criterion. Clustering algorithms will be discussed in the next sub sections in more details.</p><p>4. Data abstraction: is the process of extracting a simple and compact repre- sentation of a data set. In the clustering context, a typical data abstraction is a compact description of each cluster, usually in terms of cluster proto-</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>types.</head><p>To have optimal clustering, there are many parameters to be tuned. This depends also on the purpose of the clustering. We note, that the purpose is usually not to nd an optimal clustering of the data, but to have a clustering that enables an optimal and ecient exploring the data considering speed, robustness and the ability of visualization <ref type="bibr">[AJ99]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2.1">Hierarchical algorithms</head><p>Hierarchical clustering approaches can be divided into agglomerative and divi- sive algorithms, corresponding to bottom-up and top-down strategies, to build a hierarchical clustering tree. Agglomerative algorithms are more commonly used than the divisive methods and usually have the following steps: 1. Initialize: Assign each vector to its own cluster.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.</head><p>Compute distances between all clusters.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3.</head><p>Merge the two clusters that are closest to each other.</p><p>4. Return to step 2 until there is only one cluster left.</p><p>That means, that the algorithm begins with each element in its own cluster and the clusters are merged together iteratively according to the similarity between them. The process continue until all elements are in one cluster, see Figure 2.2-A.</p><p>A tree structure is provided as a result of this algorithm, which can represented with a tree diagram called dendrogram, depicted in Figure 2.2 -B. The dendro- diagram can be cut in any level providing a dierent clustering <ref type="bibr">[VA00]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.2.2">Partitive algorithms</head><p>In this approach the algorithm identies the partition by minimizing some error function. The number of clusters is either already predened or determined by the algorithm by trying various numbers of clusters. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3.</head><p>The most common partitive clustering algorithm is the k-means algorithm, which partitions N data points into K disjoint subsets S j containing N j data points.</p><p>The algorithm minimizes the sum-of-squares criterion E: </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>K j=1</head><p>Σ n∈S j ||x n − c j || <ref type="bibr">(2.7)</ref> where x n is a vector representing the nth data point and c j is the geometric centroid of the data points in S j .</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.2.3</head><p>Two-level clustering approach / Clustering of the SOM There are two main problems in the standard clustering algorithms mentioned in the previous sub sections above: the rst problem is the high computational costs when applying the algorithm directly on the original data, especially if a large collection of patterns underlies. The second problem is the sensibility to noise: applying the algorithm to original data makes it sensible to the occurrence of noise and outlier because this could make clusters overlap or have inaccurate boundaries. Both of these problems can be solved by using the two-level clus- tering approach: The clustering algorithm is not applied directly on the original data but rather on cluster prototypes, that are generated by a previously trained SOM. SOM nodes are considered as cluster prototypes and are grouped into clusters by applying a suitable clustering algorithm. The number of the cluster prototypes (nodes) must be much larger than the expected number of clusters but much smaller than the number of the data patterns. The computational costs is dramatically reduced especially in case of hierarchical algorithms. This is because the SOM algorithm can be applied to large data sets and the compu- tational complexity is linearly proportional with the number of input patterns, but on the other hand, the complexity scales quadratively with the number of map nodes (prototypes). However this overhead can be solved with special op- timization techniques. The problem of noise and outliers is also solved because the prototypes are the local averages of the original data produced by training the SOM und thus less sensible to outliers and nodes.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3">Projection</head><p>The structure of the data cloud formed by prototype vectors is the key for un- derstanding the data by giving answers to questions like what and where are the clusters, which shape has the data cloud, etc. Projection methods are very useful in answering such questions. Projecting data on to its underlying subspace can detect its real structures, facilitate functional analysis, and help making a judg- ment. Principally there are two types of projection methods: linear methods such as principal component analysis (PCA), and nonlinear such as multidimensional scaling (MDS) and SOM.</p><p>PCA is a linear transformation that transforms the data to a new coordinate system such that the greatest variance by any projection of the data comes to lie on the rst coordinate (called the rst principal component), the second greatest variance on the second coordinate, and so on. PCA can be used for dimensionality reduction in a dataset while retaining those characteristics of the dataset that contribute most to its variance, by keeping lower-order principal components and ignoring higher-order ones. PCA is an optimal linear projection algorithms, because it has the minimum mean-square-error values between the original data vectors and the points in the projection, thereby it achieves the equation 2 Where X = [x 1 , x 2 , .., x n ] T is the n-dimensional input vector. {q j , j = 1, 2, ...m, m ≤ n} are orthogonal vectors representing principal directions. The term q T j repre- sents the projection of x onto the j-th principal dimension.</p><p>PCA has limited power to project data of high dimensionality, and thus it has limited power for capturing nonlinear relationships in practical data. For this reason extensions to nonlinear PCA are used such as Generalized PCA, Kernel PCA, and principal curves and surfaces <ref type="bibr">[Yin03]</ref>.</p><p>Multidimensional scaling (MDS) is a nonlinear projection method, that tries to project points of data onto a two-dimensional plot, thereby preserving as close as possible the inter-point metrics. For this purpose arbitrary optimization algorithms can be used, MDS does not specify that a certain algorithm to be used. In the optimization process local minima and divergence problems may occur. Furthermore, this process incurs high commotional costs. These costs depend on the selected algorithm and the starting conguration. The overall structure of the data is maintained thereby.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.3.1">Sammon's Mapping</head><p>Sammon's mapping is a common example of MDS projection. This algorithm aims to minimize the dierence between inter-point distances in the original data and in the projection. The Sammon's mapping algorithm minimizes the stress function 2.9.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2</head><p>S sammon =</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">Σ</head><p>[d ij − D ij ] <ref type="bibr">(2.9)</ref> i&lt;j d ij d ij where X i and X j are two points in the input space and Y i and Y j are their projection points respectively, d ij is the Euclidean distances between X i and X j , D ij is the Euclidean distance between Y i and Y j , and n is the number of patterns.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>n</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Σ</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>n i&lt;j</head><p>It performs a recursive learning algorithm using the Newton optimization to achieve the optimal conguration <ref type="bibr">[Sam69]</ref>. Although this algorithm converges relatively fast, it has the drawback of high computational costs and higher risk of sub-optimal solution due to local minima. Furthermore Sammon mapping is a point-to-point mapping which means that all the inter-point distances must be explicitly calculated for every data set. In the broader since this means that there is no explicit mapping function. Accommodation of new data point needs recalculation of all points, which is a serious problem for applications that deal with sequential data <ref type="bibr">[Yin03]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.4">Visualizations</head><p>Data visualization is an important process in data mining. Generally, to visual- ize multi dimensional data, two steps are needed: the rst is vector quantization,</p><p>where the original data set is reduced to a smaller one, that still represents the original, suppresses noise and is easier to work with than the original set. The second is a vector projection to a low dimensionality (usually up to 3D). Of course in our context this projection must still represent the original vector set in terms of distances between vectors or at least topological ordering. Visualization is the process of projection the real dimensions to visual dimensions. Typical dimen- sions in this sense include positions, size, color and text labels. The number of visual dimensions available is essential: If there are many features involved in the visualization, it may be impossible to show them on one map and this leads to the issue of multiple visualization maps. It is an issue to visualize the data in a form, that it is easy to recognize corresponding areas on dierent maps. This process is called linking. Linking should be obvious to the observer. For example in case of SOM the linking dimension is the position. The same object in dierent map visualizations correspondents to the same position on the map. There are various algorithms to do these steps. In this and the following subsections a selection of visualization methods will be presented. A special case of visualization is the visualization achieved with SOM. SOM combine both of the two steps.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.4.1</head><p>Visualization of SOM with Unlabeled data Visualization of complex data with high dimensions and large number of items is one of the most important applications of SOM. Visualization with SOM is a special case of visualization in term of implicitly combining vector quantization and projection, while in other methods projection is completely subordinate to quantization. Another deference is that the projection grid of the SOM is regu- larly shaped: this makes it very easy to compare or link dierent visualizations.</p><p>The map resulting from a trained SOM can itself help as an exploration tool;</p><p>thereby similar data points are mapped to the same unit or to points that are placed near to each other; the labels mapped to these units on the map can be explored in a table-like fashion <ref type="bibr">[RPM03]</ref>. Depending on the goal of visualiza-tion, there are three categories of visualization methods: the rst is getting an abstract idea about the data including the overall shape and cluster structure.</p><p>The second category aims at the analysis of prototype vectors and characteristic of clusters. The third one has the purpose of examining and classication of new data. There also two categories of visualizations according to the source of information used: visualizations that shows the map in relation to the data set such as hit histograms and smoothed hit histograms, P-Matrix, etc., and visu- alizations that are derived from the model vectors which aim at showing cluster structure and boundaries such as U-Matrix, component planes visualizations and clustering of the SOM. These and other visualization methods will be discussed in the following subsections <ref type="bibr">[PDR]</ref>.</p><p>U-Matrix, P-Matrix and U*-Matrix U-Matrix <ref type="bibr">[Ultsch1992]</ref> is a distance-based visualization method that aims to vi- sualize the SOM by displaying the local distance structure on top of the SOM lattice; at each unit of the map the local distance to its neighbors is visualized as a height. This height is dened as the sum of distances to all immediate neighbors normalized by the largest height. This results in mountain ranges as boundaries for data clusters. This method produces good visualization if the data has clearly separated clusters, but problems can occur if the data has overlapping clusters or even slowly changing densities. P-Matrix <ref type="bibr">[Ult03a, Ult05]</ref> is a density-based visualization method in which the density distribution of the data is measured.</p><p>The value of local density for each unit is sampled and displayed with the help of the Pareto Density Estimation (PDE) method proposed in <ref type="bibr">[Ult03b]</ref>, because it is impossible to calculate the values for all possible neighbours. The U*-Matrix visualization combines both of the methods, thereby meeting the advantages and avoiding the drawbacks of them: the local distances produced by the U-Matrix result in a desired eect in areas with low data density because these areas should present cluster boundaries; on the other site local distances result undesired eect in dense regions because such distances could disrupt the cluster characteristic in these regions, therefore U*-Matrix aims to dampened the local distances of the U-Matrix in dense regions and to emphasize them in loose regions; in regions of average density local distances are changed. Figure 2.3 shows an example that  <ref type="bibr">[Ult05]</ref>. (A)Dataset consisting of a mixture of two Gaussians with 2048 points each. (B)The U-Matrix of the dataset, darker colors correspond to large distances. (C)The P-Matrix of the dataset, darker colors correspond to larger dinsities. (D)The U*-Matrix of the dataset, which shows clearly the two Gaussians.</p><p>demonstrates the visualizations. It is taken from <ref type="bibr">[Ult05]</ref>: Histograms Visualizing of the SOM</p><p>Hit histogram is a graphical representation of a SOM that shows the number of hits, i.e. mappings of data items, occurred per SOM node. Typically, while training the SOM hits are counted for every node while calculating the BMU.  <ref type="bibr">[Ves99]</ref> (a)The size of the black hexagon is proportional to the value of the histogram in the corresponding unit. (b)The height of the bar tells the same thing as in (a).</p><p>When SOM is already trained, these hit values are visualized on top of the SOM lattice. There are many methods to visualize these values. Figure 2.4 shows some of these methods. Hit histogram <ref type="bibr">[PRM02, Ves99]</ref> visualization is simple and can be achieved with linear costs. Yet, it has some drawbacks: data samples match normally to many SOM nodes in dierent rates assigning such samples only to the BMU results inaccurate visualization; assigning this sample to all matching hits also results in same inaccuracy because no information is given about the degree of match.</p><p>This problem is solved by using smoothed data histograms(SDH) proposed in <ref type="bibr">[PRM02]</ref>. SDH aims to visualize the clusters on the SOM by taking into account the probability density of the high-dimensional data. The SOM is used as a basis for the visualization. Instead of assigning a data sample to a specic unit, the SDH estimates a membership degree of every data sample to each unit. This membership is calculated based on distances between the data sample and all other units. The eect of these distances in the membership is controlled with a smoothing parameter s. Figure 2.5 shows a data set and its SDH visualization with various values of s: The inuence of s can be seen: for small values of s, Figure 2.5: SDH visualization with dierent values of the smoothing parameter s <ref type="bibr">[PRM02]</ref>. The Data set consists of 5000 samples, that are randomly drawn from a probability distribution, that is a mixture of 5 Gaussians. The SOM is of 10X10 units arranged on a rectangular grid.</p><p>more details are visualized but not the overall cluster topology. By increasing of the value of s, the general characteristics of the data become more visible.</p><p>Vector eld visualization A method of visualizing the cluster structure based on vectors is proposed in <ref type="bibr">[PDR]</ref>. The vectors are drawn on top of the SOM lattice in the form of arrows having one vector per unit. The length and direction of the vectors are determined so that they give information about the cluster structure. The directions of arrows point to the location of cluster centers and the lengths visualize the location of the unit inside the cluster in term of being a boundary unit or not: long arrows indicates that the unit is located closely to the cluster boundary while short arrows means in general that the unit is located closely to the cluster center or between two clusters to which the unit have equal similarity. In particular, the length of the arrow demonstrates the ratio between the dissimilarity of the unit to the area the arrow is pointing to and the dissimilarity of the unit to the area the arrow is pointing from. This visualization is similar to the U-Matrix  <ref type="bibr">[PDR]</ref> visualization but it has the some other advantages especially that the cluster centers visualized by the arrows are computed with the consideration of global areas. The visualization provides an overview of the cluster structure of the data, the locations of cluster centers and the interpolating units, and the similarity of units to the surrounding areas. The inuence of the neighborhood kernel on the visualization is controlled with a parameter σ. A large value of σ emphasizes the global cluster structure by enlarging the surrounding area that is taken into account while a smaller value emphasizes the ne details of clusters.</p><p>Figure 2.6 shows an example that illustrates this visualization. The example is taken from <ref type="bibr">[PDR]</ref> and shows vector eld visualizations with dierent values of σ of a 30X40 SOM that is trained with the Phonetic data set. Low values of σ lead to very granular visualizations, where only direct neighbors are taken into account for the computation of each arrow and thus only local gradients can be observed, as visualized in Figure 2.6 -(a) with σ = 1. By increasing this value, the clustering structure revealed shifts gradually from local towards global. Figure 2.6 -(b) provides a far better overview on the clustering structure, and individual regions can be distinguished with σ = 5. <ref type="figure" target="#fig_1">In Figure 2.6 -(c), the</ref> global structure is shown for σ = 15.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.4.2">Visualization of SOM with Labeled data</head><p>All of the visualizations presented in the previous sections either only make use of the SOM units to visualize the data set or access the data vectors to make calculations that help by visualizing the data topology. Graph-based class visualization A dierent visualization method is proposed in <ref type="bibr">[Aup03]</ref>, which is based on graph analysis. This method assumes a labeled data set; that is the class label for each datum is known. This means in case of a trained SOM the class for each data vector is known and the problem is to extract information about the topology of the classes by making use of graph analysis, in particular Gabriel graph. Gabriel graph GG is a sub graph of Delaunay triangulation <ref type="bibr">[For97]</ref> in which every edge has a forbidden region of a diameter with length equal to the edge length, Figure 2.7 - c; that is for every edge eij in GG the open ball with diameter |eij| contains no other edges other than eij. This method denes three qualities of data, that can occur in the visualization, Pie-chart class visualization In this section we will illustrate the pie chart visualization described in <ref type="bibr">[RPM03]</ref>.</p><p>Figure 2.8 shows an example of the pie chart visualization. In this visualization each unit is represented with a pie chart, that is located in the position of the unit. A pie chart has a number of sectors equal to the number of classes assigned to the represented unit. Each one of these sectors represents one of the classes and has an arc length which is proportional to the contribution fraction of this class.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.5">Summary</head><p>Exploring complex data sets, such as data sets with large vector dimensionality or/and large number of vector needs technics that help dealing with them, look- ing deeper inside them and understanding the relations inside them. The most important ones of these technics are clustering, projection and visualization.</p><p>Cluster analysis is the organization of a collection of patterns into clusters based on similarity among these patterns. There are types of clustering algo- rithms: Hierarchical algorithms, which can be divided into agglomerative and di- visive algorithms, corresponding to bottom-up and top-down strategies, to build a hierarchical clustering tree. Agglomerative algorithms begin with each element in its own cluster and the clusters are merged together iteratively according to the similarity between them. The process continue until all elements are in one clus- ter. The second type of clustering algorithms is the Partitive algorithm, which identies the partition by minimizing some error function. Visualization methods can have some of many goals such as visualizing the overall topology of the data, showing the local details inside clusters, showing labels and class or helping to assign new data items. Two steps are needed for visualization: The rst is vector quantization, i.e. reducing data set to a smaller one, that still represents the original data. The second is a vector projection to a low dimensionality. Visualization is the process of projection the real dimensions to visual dimensions like distance, color, position, etc. the topology of the classes and the way they are connected and the density of the connections between the dierent components, where two classes are drawn with their densities and topology; the class and quality graph G5 provides the same of information as in G3 in addition to the visualization of border and isolated components. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Chapter 3 Methods</head><p>In this work a novel method for visualization of the SOM will be proposed. The aim of this method is to provide a visualization by coloring the SOM lattice. In particular, a class visualization based on class labels is provided. We will call this method SOM Class Coloring and we will use the shortcut SCC to denote it. It is clear that this method assumes (1)a trained SOM, and (2) a data set consisting of labeled data items. These labels are taken as the classes of the data set and used to color the SOM lattice. SOM Class Coloring produces a coloring on top of the SOM grid having the lattice of a trained SOM as a visualization ground.</p><p>The purpose is to obtain a visualization which 1. reect the class topology of the data set.</p><p>2. help assigning new data items and labeling them with one or more classes.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>.</head><p>The rst step in the SOM Class Coloring is assigning the labels to the SOM nodes; this is a straightforward step. In this work we assume that this assignment is given and we don't take this step in more details.</p><p>This chapter is structured as follows: In Section 3.1 the SOM Toolbox is de- scribed in more details, which provides the base conguration for the SOM Class Coloring. Section 3.2 describes the problem formally. In Section 3.3 we will describe one of the tries to achieve the coloring by letting color point ood in all directions. Section 3.4 introduces the use of graphs for coloring the SOM by</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>25</head><p>discussing some theoretical issues like voronoi diagrams and Delaunay triangula- tions which are important for our coloring method and we will then introduce the attractor functions which provide the key algorithms for achieving the smoothed class coloring.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">SOM Toolbox</head><p>Although the trained SOM itself can be used to explore the data, there are infor- mation that cannot be visualized with the pure trained SOM; some information is always lost through dimension mapping which cannot hold the exact topology and all data relations. Many interfaces and tools were proposed which visual- ize the SOM and try to cover the drawback caused by lost information through mapping.</p><p>In this chapter the SOM Toolbox described in <ref type="bibr">[RPM03]</ref> will be illustrated having the focus on the visualization aspects. It comprises visualization tools which use the SOM as a visualization start point, it provides then the possibility to make various visualizations on top of the SOM lattice. As input the tool takes a vector le with the raw data, a class info le with the involved class names, and template le with information about the data such as the dimensionality. The tool performs the SOM training process and provides a ground visualization of the trained SOM as a SOM grid with the units represented as pie charts, that show the class contribution. Depending on the details level set by the user, labels can also be displayed on the grid, see Figure 3.1.</p><p>As we can see the SOM Toolbox provides a basis on which we can build various visualizations. In the next sections we will propose SOM Class Coloring visualization and then describe how to extend the SOM Toolbox with it.</p><p>Figure 3.1: SOM Toolbox overview An illustration of some features of the SOM Toolbox with banksearch data (A)The SOM lattice with units represented as pie charts (B)Zoomed details view with labels and pie charts (C)Pie chart representing the unit position and the class contribution (D)Smoothed data histogram visualization as an example visualization (E)D- Matrix visualization as another example (F)There are other visualizations that can be selected from the visualization menu</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Problem formulation</head><p>In this section we will give a formal description of the problem.</p><p>Let C = {c 1 , c 2 , ..c n |n ≥ 0} be the set of classes involved in the data set and U = {u 1 , u 2 , ...u m |m ≥ 0} the set of units in the SOM. We assume that the assignment relation A is known which is a function f : fractions of contribution for each class, that is f (u) = {a 1 , a 2 , ...a n |a ∈ R} where a i is a real number giving the contribution of class c i in the unit u the other classes.</p><p>We assume that the units are located on a SOM grid of the dimensions p × q where p is number of rows and q is the number of columns which implies a number of units m = p · q.</p><p>The problem is to color the grid plane in such a way that the class topology of the data is visualized and that, according to this coloring, a new data item can be assigned to a class. Figure 3.2 illustrates this base conguration.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3">SOM coloring by color ooding</head><p>The rst try to color the SOM was to let colored points ood, that is if we imagine the units as colored points and that the colors spread at the same time, we will get a colored map.</p><p>At this point we will try to dene and determine the process of ooding the color; there are several approaches how the ooding of a set of color points can be simulated: the rst one is that in each iteration a point grows to a ring more. The second is that in each iteration a point grows to one graphic grid (for example a pixel) more in this case the question arises which pixel: we can take the next one at the boundary or a randomly selected pixel from the boundary; this process continues as long as the reached areas are not occupied by other ooding points.</p><p>In the simplest case if each unit has one color (single class), things will go The SOM units located on the grid with their class contributions, that is given by function f. (B)Representation of A as it is in SOM Toolbox, where f is represented with pie chart.</p><p>smoothly and we will get easily a coloring, that represents the class topology.</p><p>Figure 3.3 illustrate the process of color ooding. As we can see, a reasonable coloring was produced by simple color ooding.</p><p>In fact this was too simple case: the main diculty in this issue is that a unit can contain data of many classes, that is it can have many colors. In such cases a direct color ooding can not produce a coloring that meets our expectation. let them ood as in the last example. We note here that this concept is not complete because it doesn't take into account the values of contribution of the classes, but it considers as if all classes were equally involved. That means if this concept works well for the rst step, it must be then extended to consider the contribution values.</p><p>We implemented the suggested concept and tested it and we found, that it Figure 3.3: Coloring by Simple Flooding assuming one class per unit. (A)Colored points representing the dominant classes of the SOM units, (B to D)The process of color ooding animated in 3 steps. Multi class units represented by pie charts,(B)Substitution points that can be used by color ooding.</p><p>Figure 3.5: Instability eect in the color ooding. (A)While growing, the two blue points close the way and prevent the red point from growing to the left side. (B)After making a slight change in the position of one of the blue points, the red point can grow to the left side, which changes the end result dramatically.</p><p>works with critical drawbacks especially the low accuracy and stability: a slice change in the locations of the substitution points could result a dramatic change in the resulting coloring. which the pixels are occupied(for example by randomly selection). The drawbacks seemed for us to be in the nature of the concept and thus we stopped to search in this direction. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4">Using graphs to color the SOM</head><p>Our next try was to use graphs segmentation for the visualization instead of color ooding. In this case the decision on Voronoi diagrams is straightforward, because it can produce a similar result like that of ooding the colors in Figure 3.3-(B).</p><p>This similarity is clear in Figure 3.6. Voronoi diagrams are discussed in details However we will face the same situation as in color ooding: After the voronoi areas are found, a solution must be found which considers units with many classes (colors) that have dierent ratios. Before we come to this issue, the Voronoi</p><p>Diagrams are discussed in the following subsection.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3.4.1</head><p>Voronoi diagrams and Delaunay triangulations Voronoi diagram <ref type="bibr">[For97]</ref> of a set of points (n points here called sites) located on a plane is the diagram that partitions this plane into exactly n regions, so that each Voronoi region is assigned to a site and consists of all points on the plane that are closer to this site than to any other site. More formally: Given a set of sites S = {s 1 , s 2 , ..s n } on a plane, then the Voronoi region R of a site s i is R(s i ) = {x : |x − s i | &lt;= |x − s j |, ∀j = i} where x is any point on the given plane, and the Voronoi diagram V of the site set S is dened: Voronoi diagrams are generally dened in n − dimentional space. In this work we will consider only 2 − dimensional spaces because a two dimensional visualization underlies.</p><p>There is a close relation between Voronoi diagrams and Delaunay triangula- tion. Delaunay triangulation <ref type="bibr">[For97]</ref> of a set of sites is the unique triangulation so that the circumsphere of every triangle contains no sites inside. voronoi diagram and Delaunay triangulation have a duality relation:</p><p>• Each vertex of Voronoi diagram is a center of a circumsphere of a triangle in the DT.</p><p>• Every line segment connecting two sites in two neighboring voronoi regions (two regions with a common edge) is an Edge in the DT. R(s i ), R(s j ) ∈ V (S) and have a common edge e ⇔ s i s j is an edge in DT (S) tained by a balanced search structure called the sweeping line. It is used in many application for solving problems such as nding Delaunay triangulation, voronoi diagrams and other problems like sorting, tree management, etc.</p><p>In this algorithm a sweep line crosses the space and produces events when passing the underlying sites. These events control the computing see Figure 3.8.</p><p>Actually the sweep line splits the problem domain into two regions, an explored region and an unexplored region. It applies an ordering to the problem because we reason about the explored area based on what we have seen so far and ignore the unexplored area, that is only the points crossing the sweep line aect the current computation since all other points are too far away. arises when the sweepline passes the site and grows while the line sweeping down, so that the base line denes the parabola for the corresponding site. The voronoi diagram is then given by the intersection points of the parabolas. Actually, not all the parabolas are computing while the beach line sweeps, because this would be very costly. Instead, only instances are calculated when the beach line changes topology for example when the sweepline passes a new site. More Information about this algorithm are available in <ref type="bibr">[For86]</ref>. animate the algorithm while nding the Voronoi diagram of the three sites in slide 1. In slide 2 a parabola for the upper site arises because the sweepline passes this site. In the next two slides the parabola grows while the sweepline moves. In slide 5 two parabolas for the two lower points arise because the sweepline passes these points. In the rest slides all parabolas grow while the line sweeping. The intersec- tions of the parabolas form the edges of the Voronoi diagram as in slide 9 (red lines). Bowyer-Watson algorithm when adding new site. (A)The faces to be deleted are all faces whose circumsphere or itself contains the new added site. (B)Faces to delete are colored, and new faces are marked in dashed lines. (C)The resulting Delaunay triangulation after insertion and update.</p><p>The randomized-incremental algorithm (Bowyer-Watson algorithm)</p><p>The randomized-incremental (RE) <ref type="bibr">[For86]</ref> algorithm in general adds the sites se- quentially to the Delaunay triangulation updating the triangulation after each addition; for this update three steps are needed, as in Figure 3.9: the rst step is discovering all triangles that are aected by the addition, which are the triangles whose circumspheres contains the added site; the second step is deleting all tri- angles discovered; the third step is the rebuilding of the empty region as a result of the deletion taking into account the new site, so that every new triangle has the new site as a vertex. The eciency of the algorithm depends on the eciency of the used algorithm for discovering faces to be deleted.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4.2">Voronoi cell coloring</head><p>In the case of single-class nodes, each voronoi cell can be assigned the according class color. As already said in previous chapters the diculty of our problem is that a SOM unit could have to many classes assigned. If the units were assigned to single classes, then coloring the voronoi regions with the corresponding colors should be the optimal solution of the problem.</p><p>In this section we will at rst describe some of the solutions for this problem, which we tried but have failed because of some reasons. Then we will intro- duce in the next subsections two methods that solve the problem and meet our expectations.</p><p>We started by a solution that is based on node substitution similar to the substitution described in 4. The sites are arranged by rotation about the node center, so that colors assigned to sites in a region as similar as possible to colors in the neighboring regions.</p><p>Suppose V is the Voronoi diagram before the substitution and V S is the Voronoi diagram for the substitution sites.</p><p>Because the substitution site are located (almost) in the same place as the unit itself, then we expect that the substitution (splitting of the units) makes only local changes in the voronoi regions of V in the meaning that the region boundaries of V exists also in V S and each of them is divided into further partitions. Furthermore, because the neighboring sites are taken into account in the arrangement, we expect to have continuous color regions, that go over the region boundaries of V to the other regions. See <ref type="table">Figure 3.10</ref> This method has several problems:</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1.</head><p>The class sharing value is not reected, because the areas of the subregions depend on the positions of the sites and the shape of the region. If these areas are to be controlled, the positions of the substitution sites must be moved but this requires that the whole Voronoi diagram to be changed, in the meaning that the region boundaries of V are also changed. For example in Figure 3.10-B, the region R consists of two classes c1 and c2 and thus divided into two areas; if we imagine, that class c1 contributes with only 1%, then we must move the node very close to the neighbor region to get an area of the 1% of the region area. But moving the node from its position aects the borders of the Voronoi cell itself. This means, that the whole voronoi diagram must be changed.</p><p>2. Only moving the sites is not sucient to meet the contribution grads (shar- ing fraction), also the rotation about the node is to be controlled. But this rotation could produce a conict with the aim to tune the own classes with the neighboring classes, as mentioned previously. In other words it could be impossible to consider both of having right areas and right directions for many classes by only positioning the node, because the produced areas depend also on the shape of the Voronoi cell.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4.3">Angular segmentation of Voronoi cells</head><p>We gave up the substitution and tried another method, namely to divide the voronoi region into sectors similar to a pie chart. Each of them is dened with an angle. The angles are to be calculated depending on the sharing value of the class and on the neighboring classes as depicted in Figure 3.11. The method solves the drawback in the substitution method which causes a global topology change if the sites are moved. But there is another problem or shortage with this solution: we consider the case in Figure 3.11, for input like in (A) the described method would produce a coloring like in (B). If we let a class have more than one sector, then the resulting coloring could be like (C). Actually, in this case the distribution of the classes seems like a red region, that spread over three Voronoi cells. However what we would like to have is something like the coloring in (D).</p><p>Also in case of an isolated class, we would like to have it as an isolated area in the middle of the Voronoi cell and not as a sector. Such a smoothed coloring can not be reached any using the sectoring method.</p><p>So we stopped our investing in this direction and searched for other methods.</p><p>We found two methods, that were satisfying: the rst is assigning every grid unit (pixel) to a class separately with the help of a distance algorithm, that takes into account the sharing value and the neighborhood and the second method is by coloring the dierent classes on a chessboard like grid with the areas according to their relative frequencies. Both of the two methods are described in details in the following subsections.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4.4">Smooth partitioning of Voronoi cells</head><p>In this section we will introduce a method for producing a smoothed partitioning of the voronoi regions into class (color) areas.</p><p>At rst let us dene some notations to help expressing the problem and our algorithms to solve them.</p><p>• R = {r 1 , r 2 , ..r n |n ≥ 0} is the set of voronoi regions which is drawn on top of the SOM lattice as described in Section 3.4.1 with the units as faces.</p><p>• C = {c 1 , c 2 , ..c m |m ≥ 0} is the set of all classes that exist in the data set.</p><p>• N (r i ) = {r i 1 , r i 2 , ...} is the set of the neighbor regions of region r i . These are regions that share r i with an edge. Notations used int this section(Note that we use the colors as class names for simplifying). (B)Connection lines between regions that have same classes.</p><p>• C(r i ) = {c i 1 , c i 2 , ...} is the set of classes share in the unit located at the face of r i .</p><p>• S(r i , c j ) ∈ R + is the value of the sharing of the class c j in the region r i .</p><p>• Furthermore we dene the term connection line which is an imaginary line that connects the site of a region r i with the middle of the edge of a neighboring region r n if there is a class c where c ∈ C(r i ) and c ∈ C(r n ). In other words this line denotes that a region has a class that also the neighboring region, to which the line is connected, has, as shown in A key issue in this method is a function for assigning pixels to classes according to a distance function we will call it attractor f unction because it produces an eect which is similar to the magnet eect, this function is applied on a region, a line segment, a class and a number n that denote the number of pixels to be assigned.The function works as follows:</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1.</head><p>At rst all pixels (or a predened number of pixel blocks in case lower granularity representation is desired for performance improvement ) in the Figure 3.13: The work of attractor function: In region r1, at rst the 34 grids, that are most close to L1, are colored in red then the next nearest 45 grids are colored in yellow. The 41 grids most nearest to L5 are colored in blue, also 14 grids from r4 that are nearest to L5 from the other side, are colored in blue. that gives the eect of an area extending over two regions In regions r2 and r3 the same thing is done with L2 and L3, because L2 and L3 have a common point the resulting colored area appears as a thin area, that extends over two regions In r4 the line L4 has the length 0 (is equivalent to a point), thus the resulting colored area has a circular shape.</p><p>region are sorted according to their distance to the line segment. shows this functionality.</p><p>The eect of this function is that line segments (we will call them attractors)</p><p>attracts the pixels of a specic color toward them. Depending on the position of this line segments in the Voronoi cell, the length, and direction of the segment • Point attractor: It is a line of length 0. It produces a circular area inside the region and is suitable for coloring isolated classes. See L4 in Figure 3.13.</p><p>In the remainder of this section we will describe the algorithm for the attractor function and then we will describe some rules for nding the ref erence lines de- pending on the classes that are present in a region and in it neighboring regions, so that the resulting coloring reects the class topology of the data.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Distance Function</head><p>The underlying distance function measures the distance between a point (grid center) and a line segment. In particular it measures the distance d from a point P to the closest point on the line segment P 0 P 1 . An easy and sucient way to nd the distance without measuring unnecessary distances is to consider the angles between the segment P 0 P 1 and the vectors P 0 P and P 1 P from the segment endpoints to P . See Figure 3.13. If either of these angles is 90 o , then the corresponding endpoint is the perpendicular base P (b).</p><p>Otherwise, if the angle is not 90</p><p>• , then the base lies to one side or the other of the endpoint according to whether the angle is acute or obtuse. Note that the two tests can be done just using the two dot products W 0 · V and V · V which are also the numerator and denominator of the formula to nd the parametric base of the perpendicular from P to the extended line L of the segment S </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>} Coloring algorithm</head><p>The underlying algorithm for coloring assumes that there is a SOM lattice with units labeled with classes and and their contribution fractions. A voronoi dia- gram is rst found with the units as sites. Then the resulting voronoi regions are colored each separately taking into account all of the neighbor regions. The coloring consists of the following steps:</p><p>• Finding a dominant class for each region and coloring the region with its color. The dominant class is not the class with largest fraction, but the class having the most number of neighbor regions, which have the same class. If the number is equal for several classes, then the dominant class is selected randomly from these.</p><p>• For the remaining classes, line segments are found depending on the classes in the region and in the neighborhood. The attractor function is then ap- plied on these line segments, thereby overwriting the dominant class color.</p><p>The algorithm for the rst step is straight forward: a simple iteration through the neighbor regions and counting the occurrence of the underlying class. If this is done for all classes in the region, then the one with the most hits is selected.</p><p>In the second step, the main issue is how to nd the best suitable line segments for applying the attractor function, so that the resulting coloring reects the data class topology as faithfully as possible. In the rest of this subsection, we will describe and improve an algorithm for solving this problem.</p><p>We consider four cases, that can occur concerning the relation between the class c being processed in the region r with the sharing fraction s and between the classes c i in the neighboring regions r n . We also assume that the region r contains p pixels. The following attractor types can be applied:</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1.</head><p>The class c is isolated: there is no neighboring region r ∈ r n that contains data of the class c. This is the simplest case because we do not need to consider a cluster that extends to other regions for this class. Thus we use the point attractor by adding a segment with length 0 (a point) in the site location and assign p * s pixels for the class c by applying the attractor function for this class and this line segment. See Figure 3.15 -A 2. There is only one neighboring region r n that contains the class c: in this case we try to attract the colored pixels at the region border close to r n .</p><p>Thus we add a segment line from the site location to the middle point of the common edge e (the edge between r and r n ) and apply the attractor function on this segment with p * s pixels. See Figure 3.15 -B 3. There are two neighbor regions r 1 and r 2 that have the class c and that are themselves neighbors to each others. This implies that r,r 1 ,r 2 all shares a vertex v. In this case we use the point attractor by add a line segment of length 0 to the point v (the common vertex). We do that hoping that when all of the three regions concentrate the color at this point, then we have a colored cloud extending over the three regions. <ref type="figure" target="#fig_6">See Figure 3.15 -C   4</ref>. There are more than one neighbor region {r 1 , .., r n |n &gt; 1} that have the class c but none of them is a neighbor of the other: we treat each of these regions similar as in case 2 with the dierence that the number of pixels assigned is (p * s)/n that is we add n line segments, one for each region from the site to the middle point of the corresponding common edge. See Border smoothing by weighting the line segments There is an undesired eect, that occurs if two neighboring areas in two neigh- At rst each region is colored with the dominant class color. The class red is isolated because no neighbor region have this class; aline segment s with length 0 is added and the attractor function is applied. In the nished coloring we see the class red as a circular area within the region. (B)The class yellow in the region r remains after painting the dominant colors. There is one neighbor, that have the same class which is r1, thus we add a segment s from the site to the middle of the common edge. The same thing happens when painting r1, from the view of r1 there is a neighbor region r that have the same class yellow, thus adding the line segment s1. After painting r and r1 we get continuous yellow area extending over the two regions. (C)In this case the two neighbor regions r1 and r2 are self neighbors and shares r with the vertex at s because all of the three regions have the class cyan, we add the line segment s with length 0 at the common vertex, so that the resulting class cluster is continuous for all of the three regions as it is seen in the nished coloring. (D)Because r have two neighbors of r1 and r2, that have the same class yellow, but they are not self neighbors, we add two segments s1 and s2 each one from the site location to the middle of the edge of the corresponding region. After nishing, we have a yellow stripe, that connect r1 and r2 crossing</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>r.</head><p>boring regions have the same color but they do not have smooth bordering. In particular, this occurs if a class has dierent contributions in the two neighboring regions or if the regions are of dierent areas, so that the the border lines at the common edge have a zigzag form. See Figure 3.16 -A. To solve this problem we use a weighted comparator for the sorting process needed in the attractor algorithm described in 3.4.4. Recall that the pixels are sorted according their distances to a line segment and then they are assigned to the class in this order.</p><p>The weighted comparator uses a weighted distance metric for nding the the distance to the line segment. That is, the line segment is assigned two weights for the two ends and the weights are taken in account in measuring the distance:</p><p>If p is the point to be measured and p where d(p, p 1 , p 2 ) the normal (not weighted) distance and w 1 , w 2 the weights for the line segment ends p 1 and p 2 respectively. The weighted distance results the eect that pixels tends to be concentrated more around the end point with the larger weight. Now if we have two neighboring regions having the same class like Figure 3.16 -A, where the contribution fractions for the class c are f 1 for region r 1 and f 2 for region r 2 , then we assign the points of the line segments connecting the two regions weights as follows: the face points take the contribution value as a weight w1 = f 1 , w 2 = f 2 , and the common point is assigned a weight of the value w 1 +w 2 2 . See Figure 3.16 -B. This implies that the pixel concentration on both sides of the common edge is the same for both regions regardless of the values of the contribution fractions. The minimum visible class parameter There are Nodes that have classes assigned with a low contribution. Some of these are outliers. If one is interested to have a visualization of a certain abstraction level for example if only the main class clusters are important, the such classes could make an undesired eect, because the are unimportant details.</p><p>For this reason we dened a parameter, the minimum visible class, which can be set by the user to values from 0 to 100%. This parameter denes the minimum Figure 3.16: Smoothing of the border by using weighted line segments. (A)The border at the common edge has a zigzag form because the areas are not equal. (B)The line segments are weighted by using the contribution value as weights for the face points and the average for the common point. (C) Smooth partitioning as a result of the weighted sorting. contribution, that a class must have in order to be painted. Setting the parameter to 0 will cause that all details are painted; while setting the parameter to 100% will cause that only the dominant classes are painted. setting the value to any other value will cause that only these classes are painted, that have a contribution equal or greater than this parameter. Note that the eect of this parameter is applied only on classes other than the dominant class, because the dominant class is painted in all cases as a background, which forms a base for painting the other classes. Figure 3.17 shows a comparison between three visualizations, with the parameter set to 0 in the rst and to 50% in the second, and to 100% in the third.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Chessboard visualization</head><p>In this section we describe another alternative for visualizing the regions with multiclass contribution. In this visualization every region r is divided into grids.</p><p>For every class c with contribution f in r, a number m = n * f grids is calculated, where n is the total number of the grids in the region. Now the pixels are are assigned to the classes by using a uniform distribution function. when each pixel is then colored with the corresponding class color we get a visualization like this in <ref type="table">Figure 3.18</ref> Figure 3.17: The minimum visible class parameter. (A) Visualization with parameter set to 0. (B) The same data visualized with the parameter set to 50% and (C) set the parameter set to 100%.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.5">Summary</head><p>To visualize a trained SOM with labeled data, we propose a method for coloring the SOM lattice according to the class labels. We assume that every unit in the trained SOM has one ore more classes assigned to it and every class is assigned a fraction which gives the contribution of the class in the unit. The Coloring method consists of the following steps:</p><p>• Partitioning the SOM lattice with a Voronoi diagram having the units as sites. That is every unit is the site of a Voronoi cell.</p><p>• Using the attractor function to partition the Voronoi cells, each one sepa- rately taking into account the classes in the unit and in the neighborhood.</p><p>The attractor function is an algorithm, that attracts the colored pixels to a line segment. To partition a Voronoi Cell with the attractor function, we select line segments with suitable lengths, directions, start and end points, taking into ac- count the classes in the unit and the classes in the neighboring units. Finally we apply the attractor function to these line segments and the corresponding classes.</p><p>Visible classes can be ltered according their contribution fractions with the help of the minimum visible class parameter, which can be set interactively by the user.</p><p>There is an alternative visualization which color the Voronoi cells with a chess board like coloring: The Voronoi cell is divided into squires, which are colored Figure 3.18: Chessboard Visualization vs. smooth partition visualization. (A)the smooth partition visualization, (B)Chessboard visualization. In each case with and without voronoi borders.</p><p>according a uniform distribution function taking into account the contribution fractions for each class.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Chapter 4</head><p>Experements and evaluation In this chapter we will test and evaluate our work with three data sets, selected from three dierent practical areas: the rst one the iris data set, which is a simple data set consisting of 150 sample of owers. The second data set is the banksearch data set, a standard data set for testing clustering and classication method in the web elds; it consists of 11000 web documents. The third one is an audio data set: it consists of audio samples taken from the broadcast of 8 radio station.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">Iris data</head><p>The Iris benchmark database is a data set with 150 random samples of owers with 4 attributes (sepal and petal length and width, of Iris plants). The iris data is a simple data set in relation of class distribution: as it is clear from the visualization there are no SOM nodes with multiple classes, each node has a single class assigned. Even so we can see the benet of the SOM coloring when it is compared with the pure pie chart visualization: with the help of the</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>51</head><p>SOM coloring we can directly see the class topology of the data with sharp class cluster boundaries. In fact the main class clusters can also be seen in the pie chart visualization, but the absence of exact borders make it dicult to decide for data points that are close to the cluster borders and those points that lie near outliers or noise nodes. See the regions marked with circles in Figure 4.1.</p><p>The main benet of the coloring in case of such simple data is the ability to label new data: after we obtain such a coloring from a labeled data set, we can assign a new unlabeled data by nding the best matching unit for this data and then nd in which colored area this unit is located. Note that the best matching unit can be eventually a new node, if so, we can see the benet in comparison with the pure pie chart visualization, where we must estimate and choose one of the nodes in the neighborhood to assign the class.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">Text data</head><p>In this section we will use the Banksearch data set described in <ref type="bibr">[SC02]</ref> to test and evaluate our visualization method. Banksearch data set was designed as a standard data set for general use in web document clustering and similar experi- ments and in particular for research in the eld of unsupervised clustering of web documents, so that clustering methods can be tested with a common data set is the smoothed class coloring of the trained SOM. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Dataset Id Dataset Category Associated Theme</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>A Commercial Banks</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Banking &amp; Finance</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>B Building Societies</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Banking &amp; Finance</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>C Insurance Agencies</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Banking &amp; Finance</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>D Java</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Programming languages</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>E C/C++ Programming Languages</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>F Visual Basic</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Programming languages</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>G Astronomy Science</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>H Biology Science</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>I Soccer Sport</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>J Motor Sport Sport</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>K Sport Sport</head><p>by comparing the pie chart visualization with the smoothed coloring in Fig- ure 4.2 we see that the class clusters are easier to recognize in the smooth coloring, especially those clusters formed by nodes with multiple classes. With pure pie chart visualization, it is dicult to recognize such class clusters. Smooth coloring provides sharp boundaries between class clusters. These boundaries are helpful in the process of assigning new data. This visualization is meaningful especially in the areas, where the classes are interleaved, because in this case the smoothed partitioning makes no sense.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.3">Audio data</head><p>In this subsection we will test and evaluate our visualization method by using the data set presented in <ref type="bibr">[LR06]</ref>, where a method for proling radio stations is described. broadcast classic music. The same thing holds also for the genre schlager and the radio station Bgld: Bgld Radio station broadcast very often schlager music.</p><p>Interweaved classes can be interpreted as radio stations, that broadcast similar or almost the same genres; an example could be the radio stations OE3 and TIROL, which are mostly represented by the area top/left in Figure 4.6 -B. Also it can interpreted as radio stations that broadcast genres in a wide spectrum and has no focus, such as the radio station ONE.</p><p>The area represents the genre Pop music (upper part of the gure) is very interleaved. This is meaningful because because Pop music is very popular and is broadcast by almost all radio stations. The same thing holds exactly for the area Speech especially those regions representing news genre, which is also expected, because all radio stations broadcast news.</p><p>In the areas with heavily interleaved classes we face the problem of ambiguous- ness: if the classes are uniformly (or nearly uniformly) distributed, the coloring algorithm fails to nd a denite order to color the areas; namely to nd the dom- inant class, which is painted as a background for the voronoi region, on which the other classes are painted. The selection of the dominant class depends on the class distribution in the neighborhood. In case of heavily interleaved areas and, the dominant class may be selected randomly. This means that more than one coloring are possible. Figure 4.6 -E shows such a case. On the contrary class distribution that meet the reality with a certain accuracy level, which varies depending on many factors; in such a situation we can ignore the error and the ambiguousness that result from the heavy interleaved class distribution.</p><p>Figure 4.7 shows the class coloring of the data set with dierent values of the parameter minimum visible class. As we see in the gure the visible details decrease as the parameter value increase. After comparing the visualizations areas marked with circles in (A), we see a dominant colors which are brown in the upper area and red in lower one. After setting the parameter to 100% the elementary classes should be eliminated and only the dominant class should be visible. If we look at the visualization in (D) we see that the corresponding areas (areas marked in circles) have a dierent classes than these dominant classes we see with our eyes; namely blue/cyan in the upper area and green in the lower one. This means that there is an error in the coloring algorithm. the actual unit, it counts the regions in the neighborhood which contain this class, then it selects the class with the maximum number of such regions. The algorithm does not take into account the contributions for these classes. This means that if most of the surrounding regions have a class then it is considered the dominant class regardless the contribution fraction of this class. So the marked area in <ref type="bibr">(A)</ref> right/buttom have the class green in most of the cells but in a low contribution, nevertheless it is considered as a dominant class and this is the error.</p><p>We corrected the algorithm to consider the weighted occurrence instead of only the occurrence of the class in the surrounding regions in nding the dominant class; That is, the dominant class is the class for which the sum of the fractions in the surrounding neighborhood is the maximum.</p><p>The same test after the correction produced a satisfying result, which matches the expectation and agree with the dominant class seen by the human eye. The result after correction is illustrated in Figure 4.8.</p><p>Also, we tested the banksearch data set after the correction and we found that some eects, which we considered as sub-optimal, disappeared. For example the eect in Figure 4.4-(C). The class coloring of the banksearch data set after the correction of the error is illustrated in Figure 4.9</p><p>Figure 4.10 shows the chessboard visualization of the radio search data set. In the visualization we can see the main clusters and the class topology and clouds of color mixture in the areas with interleaved class distribution. This coloring is meaningful because if you concentrates only at the full painted areas you see the dominant classes and thus the general class topology. Whereas if you concentrate at the color mixture you see the detailed class distribution.</p><p>Figure 4.1: Class coloring of the iris data. The areas marked with circles are examples of regions, where it is dicult to assign new data without using the coloring.</p><p>Figure 4.2: Class visualization overview of the banksearch data set. (A)Pie chart visual- ization. (B)Smoothed class coloring of the same data set. For the categories and themes see <ref type="table" target="#tab_42">Table 4.1.</ref> Figure 4.3: Class Coloring with dierent values of the parameter minimum visible class. (A)the parameter is set to 100%. (B)the parameter is set to 50%. (C)the parameter is set to</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>0%.</head><p>Figure 4.4: Class coloring with Voronoi cell border. (A) to (F) are signicant samples showing some strengths and drawbacks of the visualization. Figure 4.6: Radio station data set. (A) Pie chart visualization. (B) Class coloring of the data set. The text labels describe the main categories of the genres. See <ref type="bibr">[LR06]</ref>.</p><p>Figure 4.7: Class coloring of the radio search data set. The parameter minimum visible class is set to dierent values (A) 0% (B) 30% (C) 60% (D)100%. The dominant classes in (C) do not agree with these seen by the human eye in (A).</p><p>Figure 4.8: Class coloring of the radio search data set after the correction of the algo- rithm. The parameter minimum visible class is set to dierent values (A) 0% (B) 30% (C) 60% (D)100%. The dominant classes in (C) agree with these seen by the human eye in (A).</p><p>Figure 4.9: Class coloring of the banksearch data set after the correction of the algorithm. Some of the drawbacks that was found in the least section have disappeared after the correction. For example the area marked with a circle is to be compared with Figure 4.4-(C). </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Chapter 5 Conclusions</head><p>Self-Organizing Map is a strong and useful tool for analyzing large and/or complex data sets especially those of high dimensionality. If the SOM is designed to be a tool for human use, then a SOM visualization is useful or sometimes necessary.</p><p>SOM Visualizations are divided into two main categories: Visualization methods for unlabeled data, which are either visualizations that show the map in relation to the data set such as hit histograms or visualizations that are derived from the model vectors which aim at showing cluster structure and boundaries such as U-</p><p>Matrix. The second category includes visualizations that assume the availability of labeled data and uses these (class) labels to produce a visualization, which shows the class topology of the data such as the pie chart visualization.</p><p>In this work a novel visualization method for visualization of labeled data is proposed namely the SOM class coloring method. This method aims to produce a colored partitioning of the SOM lattice depending on the class distribution in the units. The coloring process has two main steps: The rst step is partitioning the SOM lattice by nding the Voronoi diagram having the unit positions as sites. The second step is partitioning each Voronoi cell separately depending on the classes in the corresponding unit and the classes in the neighboring cells. To achieve the second step, attractor functions are used: The attractor function is an algorithm, that attracts the colored pixels to a line segment. For partitioning a Voronoi cell with the attractor function, line segments with suitable lengths, directions, start and end points are selected, taking into account the classes in the unit and the classes in the neighboring units; nally the attractor function is</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>69</head><p>applied to these line segments and the corresponding classes.</p><p>An alternative method for coloring the cells is the chess board coloring, in which the Voronoi cell is divided into squires, which are colored according a uniform distribution function taking into account the contribution fractions for each class.</p><p>The class coloring method was tested with three dierent data sets, namely the iris data set, banksearch data set and an audio data set consisting of the broadcast of eight radio stations. The most of test showed satisfying results.</p><p>Some drawbacks were found such as the problem of ambiguousness; that is more than one coloring is possible. The problem occurs if the class distribution is very interleaved.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>.</head><label></label><figDesc></figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Figure 2 .</head><label>2</label><figDesc>Figure 2.2: Agglomerative algorithm: (A) steps, (B) corresponding dendrogram</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>E</head><label></label><figDesc>= Σ</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>Figure 2 .</head><label>2</label><figDesc>Figure 2.3: U-Matrix, PMatrix, and U*Matrix [Ult05]. (A)Dataset consisting of a mixture of two Gaussians with 2048 points each. (B)The U-Matrix of the dataset, darker colors correspond to large distances. (C)The P-Matrix of the dataset, darker colors correspond to larger dinsities. (D)The U*-Matrix of the dataset, which shows clearly the two Gaussians.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Figure 2 .</head><label>2</label><figDesc>Figure 2.4: Hit Histogram visualization methods [Ves99] (a)The size of the black hexagon is proportional to the value of the histogram in the corresponding unit. (b)The height of the bar tells the same thing as in (a).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>Figure 2 .</head><label>2</label><figDesc>Figure 2.6: Gradient visualization with parameters:(a) σ = 1, (b) σ = 5, (c) σ = 15 [PDR]</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>Figure 3 .</head><label>3</label><figDesc>Figure 3.2: Base conguration of the SOM Class Coloring (A)The SOM units located on the grid with their class contributions, that is given by function f. (B)Representation of A as it is in SOM Toolbox, where f is represented with pie chart.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>Figure 3 .</head><label>3</label><figDesc>Figure 3.4: Unit substitution.(A) Multi class units represented by pie charts,(B)Substitution points that can be used by color ooding.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_10"><head>See Figure 3 . 7 .</head><label>37</label><figDesc>More formally:</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_11"><head>Figure 3 .</head><label>3</label><figDesc>Figure 3.8: Sweepline algorithm. The slides 1-9 animate the algorithm while nding the Voronoi diagram of the three sites in slide 1. In slide 2 a parabola for the upper site arises because the sweepline passes this site. In the next two slides the parabola grows while the sweepline moves. In slide 5 two parabolas for the two lower points arise because the sweepline passes these points. In the rest slides all parabolas grow while the line sweeping. The intersections of the parabolas form the edges of the Voronoi diagram as in slide 9 (red lines).</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_12"><head>Figure 3 .</head><label>3</label><figDesc>Figure 3.12: (A)Notations used int this section(Note that we use the colors as class names for simplifying). (B)Connection lines between regions that have same classes.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_13"><head>Figure 3 .</head><label>3</label><figDesc>Figure 3.15: Finding the lines segments (A)At rst each region is colored with the dominant class color. The class red is isolated because no neighbor region have this class; aline segment s with length 0 is added and the attractor function is applied. In the nished coloring we see the class red as a circular area within the region. (B)The class yellow in the region r remains after painting the dominant colors. There is one neighbor, that have the same class which is r1, thus we add a segment s from the site to the middle of the common edge. The same thing happens when painting r1, from the view of r1 there is a neighbor region r that have the same class yellow, thus adding the line segment s1. After painting r and r1 we get continuous yellow area extending over the two regions. (C)In this case the two neighbor regions r1 and r2 are self neighbors and shares r with the vertex at s because all of the three regions have the class cyan, we add the line segment s with length 0 at the common vertex, so that the resulting class cluster is continuous for all of the three regions as it is seen in the nished coloring. (D)Because r have two neighbors of r1 and r2, that have the same class yellow, but they are not self neighbors, we add two segments s1 and s2 each one from the site location to the middle of the edge of the corresponding region. After nishing, we have a yellow stripe, that connect r1 and r2 crossing</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_9" validated="false"><head></head><label></label><figDesc>There are many clustering methods, however it is useful at this point to distinguish between supervised and unsupervised methods: in the case of supervised classication (discriminant analysis) a collection of already classied patterns is provided and the problem is to classify a new pattern. In the case of unsupervised classication (clustering) a collection of unclassied pattern is provided and the problem is to group this collection into meaningful clusters, but this process of labeling is data driven and not as according to a given class structure as in the case of supervised classication. The clustering process typically consist of the following steps:</figDesc><table>Pattern representation, pattern measure denition, grouping, data abstraction. 
+
+1. Pattern representation: this step involves preparing the input data and 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_10" validated="false"><head>If the features are in form that is not suitable for clustering, one or more transformation could be used to put the features in an appropriate form to</head><label>If</label><figDesc>3. Grouping: this is the process of partitioning of the date into groups. The partitions can be hard, where a pattern can belong to only one partition and it can be fuzzy, where a pattern can have membership degrees in many clusters. Furthermore there are two conceptual clustering algorithms: hier- archical algorithms, that produce many nested partitions based on similar-</figDesc><table>start clustering. 
+
+2. Pattern proximity measure denition: this is the distance function, that 
+
+is applied on pairs of patterns to measure the similarity between the two 
+
+patterns. There is a variety of distance measure functions. The simplest 
+
+one may be the Euclidean distance. 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_17" validated="false"><head>We dierentiate between methods for visualizing unlabeled data such as U-Matrix, P-Matrix, Vector Field Visualization and methods for visualizing labeled data, which have as a goal the</head><label></label><figDesc></figDesc><table>visualization of class topology based on the labels assigned to data items. Figure 2.7: Gabriel Graph Visualization [Aup03] (a)Notation for the three data qualities 
+dened in this method, from top to bottom: border, isolated, normal. (b)Voronoi diagram 
+(thin lines) and Delaunay triangulation (bold lines) of the data (circles). (c)Gabriel graph 
+(bold lines) of the data. (G2-G5)Number of nodes x ( edges y) in (between) corresponding 
+connected components of G2 and G4, are indicatd beside nodes (edges) of G3 and G5. The 
+class graph G3 shows </table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_19" validated="false"><head></head><label></label><figDesc>U → R n that assigns the classes of the data to the unit in which these data items are represented by, as well as the</figDesc><table></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_20" validated="false"><head></head><label></label><figDesc>; for example if we assume 5 classes and f (u) = {0.0, 0.25, 0.5, 0.25, 0.0} that means that the following data classes and their contribution fractions are assigned to the unit u: 25% from class c2, 50% from class c3, 25% from class c3 and 0.0 (or no data) of</figDesc><table></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_21" validated="false"><head></head><label></label><figDesc>To solve this problem we suggest the following concept: a unit with more than one class is substituted by a number of points equal to the number of classes, and these points are located closely to the original unit; then they are rotated round the original point so that they are arranged according to the classes at the neighboring units, that is we thereby aim to have neighboring classes as similar as possible as it is in Figure 3.4 illustrated. When all units are substituted, we</figDesc><table></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_22" validated="false"><head></head><label></label><figDesc>The random positioning could produce a dierent result for every run. We analyzed the issue and found that it is caused by a starvation eect which occurs as the following: in one case the ow of an isolated color is stopped by the ow of the surrounding ones; in the other case if a slice change is done, the ow of the isolated color nds a way outwards and grows dramatically more eventually in a dieren region. See Figure 3.5. This eect can also happen without making changes in the positions, but only by changing the order in</figDesc><table></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_23" validated="false"><head></head><label></label><figDesc>Figure 3.6: Areas in Voronoi diagram (A) are similar to these produced by color ooding (B).</figDesc><table></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_25" validated="false"><head>divide-and-conquer algorithm such as the gift-wrapping algorithm [For97]. The complexity of the problem depends on the used algorithm; however the most</head><label></label><figDesc></figDesc><table>There are many algorithms for computing the voronoi diagram; there are two 
+
+main approaches: algorithms make use of the duality and compute the Delaunay 
+
+triangulation such as the randomized-incremental algorithm [AS92] and Bowyer-
+
+Watson algorithm [Dev98]; other algorithms compute the voronoi diagram di-
+
+rectly such as the sweepline algorithm [For86]. There are other algorithms that use the optimal algorithms have a time complexity of O(n log n) such as the sweepline 
+
+algorithm. 
+
+In this work we will describe two of these algorithms: the sweepline algorithm 
+
+and the Bowyer-Watson, which was also implemented in the SOM Toolbox. 
+
+The sweepline algorithm 
+
+The sweepline algorithm was rst introduced by Steven Fortune in [For86] and is 
+
+often referred to as Fortunes Algorithm. This algorithm has complexity O(n log 
+
+n), which is optimal for this problem. This algorithm is well-suited to streaming 
+
+techniques; points are processed in sorted order and potential edges are main-
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_26" validated="false"><head></head><label></label><figDesc>In the problem of nding the voronoi diagram see Figure 3.8, the sweepline moves vertically from the top of the plane to its bottom, a parabola is maintained for every site: the parabola</figDesc><table></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_33" validated="false"><head>, dierent attractors are obtained, we list some them: • Edge of the Voronoi cell: applying the function on an edge of the region lets the color go to the border, now if the function is also applied to the same</head><label>dierent</label><figDesc></figDesc><table>edge but from the other side (in the neighboring region), then the resulting 
+
+area reects a cluster that extends over two regions. see the attractor L5 
+
+in Figure 3.13 applied in r1 and r3; this can be applied if two neighboring 
+
+regions share the same class. 
+
+• Line segment connecting the site with the middle of an edge: This attractor 
+
+is useful to produce a colored area that spreads over many Voronoi cells. 
+
+See L2 and L3 in Figure 3.13 
+
+• Line segment inside the Voronoi cell: produced a pseudo rectangular areas 
+
+inside the cell. See L1 in Figure 3.13 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_42" validated="false"><head>Table 4 .1: Categories and their associated themes in the banksearch dataset.</head><label>4</label><figDesc></figDesc><table></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_43" validated="false"><head>one Voronoi cell, they are painted as rings in the middle of the Voronoi cell. In fact this good quality holds for most of the cases.</head><label></label><figDesc></figDesc><table>Figure 4.3shows the class coloring of the same data with dierent values of the 
+
+parameter minimum visible class. In Figure 4.3 -(A) only the dominant classes 
+
+are visualized; This is achieved by sitting the parameter minimum visible class 
+
+to 100%. Recall that the coloring algorithm nd the dominant class for each 
+
+Voronoi cell and paint the class color as a background for the corresponding cell. 
+
+Then the algorithm paints the rest of the classes. By setting a large value for 
+
+the parameter minimum visible class, we prevent the algorithm from painting 
+
+classes other than the dominant class. The dominant class visualization shows 
+
+the general class topology by visualizing the main classes and ignoring the details 
+
+and outliers. In Figure 4.3 -(B) the parameter is set to 50%, only few details are 
+
+seen. In Figure 4.3-(C) the parameter is set to 0% and this causes the no classes 
+
+are ltered and thus all details are visualized. 
+
+In Figure 4.4 the the border of the voronoi cells are visible to help analyze the coloring. Furthermore 6 samples from dierent areas were zoomed. The pie chart 
+
+visualization of each sample is placed beside it to help comparing and analyzing 
+
+the sample. Samples of signicant meaning were selected; some of them show 
+
+strength and other shows drawbacks of the class coloring. 
+
+The sample in Figure 4.4 -(A) shows a drawback in the coloring algorithm, 
+
+namely nding the dominant class: The Voronoi cell marked with a circle was not 
+
+optimal partitioned: we expect that the blue area in the marked cell is connected 
+
+to the blue cluster in the neighborhood. Actually there is an isolated blue area 
+
+in this cell. after analyzing the sample we found that this happens if there are 
+
+two classes that are equally dominant. In our case they are blue and brown. 
+
+The randomly decision to one of the two classes results in such sub-optimal 
+
+partitioning. 
+
+The sample in Figure 4.4 -(B) shows an area with a heavy interleaved class 
+
+distribution: As it is shown in the pie chart visualization, the nodes in the sample 
+
+have up to 7 classes assigned. Partitioning such areas is not meaningful especially 
+
+if the cells are small and close to each other. The resulting coloring looks like 
+
+chessboard visualization. 
+
+The sample in Figure 4.4 -(C) also shows a drawback concerning the areas 
+
+marked with circles and colored in light gray. Three neighboring Voronoi cells 
+
+have the same class, namely the class colored in light gray; it is expected to have 
+
+a continuous gray area extending over the three cells. Actually we see four gray 
+
+areas, two in the median cell and one in each of the two other cells. We analyze 
+
+the case and found that this is caused by the class colored in green, which has two 
+
+special properties: isolated and has a large fraction in the cell. The algorithm 
+
+always assigns isolated classes rst of all. That is the most of the area is colored 
+
+in green which means there is no enough place to paint a gray stripe, which is 
+
+drawn through the cell and connect the two other cell. If we change the algorithm 
+
+to paint the isolated classes at the end, then we will face the problem, isolated 
+
+cells could be split int two or more parts, which is also not optimal. 
+
+The sample in Figure 4.4 -(D) shows an optimal partitioning in our opinion: 
+
+The class colored in brown form a continuous cluster that extends over many 
+
+Voronoi cells. The cluster borders are smoothed without zigzag boundaries. Iso-
+
+lated classes are also painted as expected. If there are more than one isolated class in The sample in Figure 4.4 -(E) shows a typical example of isolated classes. 
+
+Isolated classes are painted as a circle in the middle of the voronoi cell. If there 
+
+are more than one isolated class, then the they are painted as rings about the 
+
+circle. The order of painting (which class to which rings) is randomly selected. 
+
+The sample in Figure 4.4 -(F) shows the eect of the weighting to produce 
+
+smoothed borders without zigzag boundaries. The yellow area marked with a 
+
+circle has smoothed boundaries, i.e. at the points, that join the yellow areas in 
+
+the three cells cells. 
+
+Figure 4.5 shows the chessboard class coloring of the banksearch data set. 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_44" validated="false"><head>signals; that means that near areas on the Map represents similar genres regardless of the color(radio station).</head><label></label><figDesc></figDesc><table>The aim of this method is to use SOM to give listeners the possibility 
+
+to easy select the radio stations they like from the overwhelming number of radio 
+
+stations, that exist online and over the air. Radio station maps are created, 
+
+which visualize the proles of radio stations so that it is possible to directly pick 
+
+a specic program type instead of having to search for a suitable radio station. 
+
+In this data set, audio output of 8 radio stations was analyzed: features from 
+
+the audio signal received from each radio station were extracted, then a two-
+
+dimensional SOM was trained with this data. Rhythm Histograms and Statistical 
+
+Spectrum Descriptors were used for proling radio stations. Data was sampled 
+
+with a rate of one feature vector for every 6 seconds received from a radio station 
+
+broadcast. For more information see [LR06]. 
+
+Figure 4.6 shows the class coloring of the the data set. There are 8 classes, 
+
+which represent the radio stations. The coloring partitions the SOM-lattice into 
+
+8 partitions, which are painted on top the SOM lattice. The nodes are organized 
+
+according the similarity between feature vectors, which represent the genre of the broadcast To help testing and analyzing the coloring, we manually divided the lattice 
+
+into regions labeled with the most important categories of genres, such as speech, 
+classic, pop, schlager, etc. These labels was taken from [LR06]. Each region 
+
+represents a main genre and can be further divided into subregions that represents 
+
+dierent genres that are similar; for example speech can be divided into news, 
+
+reports, advertisement, etc. 
+
+At rst sight, we can see that there are some large areas painted in one 
+
+(main) color forming class clusters; also, there are other areas that are painted 
+
+in many colors and in some cases they are heavy interweaved. Class clusters can 
+
+be interpreted as radio stations that are specialized or have the focus on audio 
+
+broadcast of certain genres, an example for this type could be the radio station 
+
+Oe1 and Bgld: For some one who is familiar with these radio stations, this is 
+
+meaningful, because radio station Oe1 is a radio station which classic music as 
+
+one of the main broadcas categories, whereas the other analyzed stations seldom 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_45" validated="false"><head></head><label></label><figDesc>Figure 4.6 -F shows areas with classes, that are not very interleaved. These areas have a clear class structure, because the dominant classes and coloring order is algorithmically clear dened. In fact the ambiguousness in the coloring of heavy interleaved classes can be ignored: we can not assume that the trained SOM holds and reects the data exactly, but only the general topology and details up to a certain grad are hold; this means that the coloring algorithm deals with a</figDesc><table></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_47" validated="false"><head></head><label></label><figDesc>We analyzed the problem and found the error; it was namely in the algorithm, that nd the dominant class: the algorithm nds the dominant class as follows: for each class in</figDesc><table></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_49" validated="false"><head></head><label></label><figDesc>Figure 4.10: Chessboard visualization of the radio search data.</figDesc><table></table></figure>
+		</body>
+		<back>
+			<div type="annex">
+			</div>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Data clustering: a review</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><forename type="middle">J</forename><surname>Flynn Anil Jain</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><forename type="middle">N</forename><surname>Murty</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">ACM Computing Surveys</title>
+		<imprint>
+			<biblScope unit="volume">31</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page">264323</biblScope>
+			<date type="published" when="1999-09" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">A simple on-line randomized incremental algorithm for computing higher order voronoi diagrams</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Franz</forename><surname>Aurenhammer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Otfried</forename><surname>Schwarzkopf</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Annual Symposium on Computational Geometry, Proceedings of the seventh annual symposium on Computational geometry</title>
+		<meeting><address><addrLine>New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>ACM Press</publisher>
+			<date type="published" when="1992" />
+			<biblScope unit="page">363381</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">High-dimensional labeled data analysis with gabriel graphs</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Michael</forename><surname>Aupetit</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings Intl. European Symp. on Articial Neural Networks (ESANN&apos;03)</title>
+		<meeting>Intl. European Symp. on Articial Neural Networks (ESANN&apos;03)<address><addrLine>Bruges, Belgium</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2003" />
+		</imprint>
+	</monogr>
+	<note>Dside publications</note>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Improved incremental randomized delaunay triangulation</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Olivier</forename><surname>Devillers</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings 14th Annu. ACM Sympos. Computer Geometry</title>
+		<meeting>14th Annu. ACM Sympos. Computer Geometry</meeting>
+		<imprint>
+			<date type="published" when="1998" />
+			<biblScope unit="page">106115</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">A sweepline algorithm for voronoi diagrams</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Steven</forename><surname>Fortune</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">SCG 86: Proceedings of the second annual symposium on Computational geometry</title>
+		<meeting><address><addrLine>New York, NY, USA; New York, NY, USA</addrLine></address></meeting>
+		<imprint>
+			<publisher>ACM Press</publisher>
+			<date type="published" when="1986" />
+			<biblScope unit="page">313322</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<monogr>
+		<title level="m" type="main">Voronoi diagrams and delaunay triangulations</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Steven</forename><surname>Fortune</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1997" />
+			<biblScope unit="page">377388</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Data exploration using self-organizing maps</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Samuel</forename><surname>Kaski</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Acta Polytechnica Scandinavica, Mathematics, Computing and Management in Engineering Series No</title>
+		<imprint>
+			<biblScope unit="volume">82</biblScope>
+			<date type="published" when="1997-03" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Exploration of very large databases by self-organizing maps</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Teuvo</forename><surname>Kohonen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of ICNN&apos;97, International Conference on Neural Networks</title>
+		<meeting>ICNN&apos;97, International Conference on Neural Networks<address><addrLine>Piscataway, NJ</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="1997" />
+			<biblScope unit="page" from="1" to="6" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">Visually proling radio stations</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Thomas</forename><surname>Lidy</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Andreas</forename><surname>Rauber</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 7th International Conference on Music Information Retrieval (ISMIR 2006)</title>
+		<meeting>the 7th International Conference on Music Information Retrieval (ISMIR 2006)</meeting>
+		<imprint>
+			<date type="published" when="2006" />
+			<biblScope unit="volume">10</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<monogr>
+		<title level="m" type="main">Advanced visualization of self-organizingmaps with vector elds</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Georg</forename><surname>Pölzlbauer</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Michael</forename><surname>Dittenbach</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Andreas</forename><surname>Rauber</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Using smoothed data histograms for cluster visualization in self-organizing maps</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Elias</forename><surname>Pampalk</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Andreas</forename><surname>Rauber</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Dieter</forename><surname>Merkl</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the International Conference on Artical Neural Networks (ICANN&apos;02)</title>
+		<meeting>the International Conference on Artical Neural Networks (ICANN&apos;02)<address><addrLine>Madrid, Spain</addrLine></address></meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2002" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">The som-enhanced jukebox organization and visualization of music collections based on perceptual models</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Andreas</forename><surname>Rauber</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Elias</forename><surname>Pampalk</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Dieter</forename><surname>Merkl</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">New Music Research</title>
+		<imprint>
+			<biblScope unit="volume">32</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page">193210</biblScope>
+			<date type="published" when="2003-06" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">A nonlinear mapping for data structure analysis</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">John</forename><surname>Sammon</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">In IEEE Trans. Computer</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="page">401409</biblScope>
+			<date type="published" when="1969-05" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<monogr>
+		<title level="m" type="main">A large benchmark dataset for web</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Mark</forename><surname>Sinka</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">David</forename><surname>Corne</surname></persName>
+		</author>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Pareto density estimation: Probability density estimation for knowledge discovery</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Alfred</forename><surname>Ultsch</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings Conf. Soc. for Information and Classication</title>
+		<meeting>Conf. Soc. for Information and Classication<address><addrLine>Cottbus, Germany</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2003" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Esom-maps: tools for clustering, visualization, and classication with emergent som</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Alfred</forename><surname>Ultsch</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Technical Report</title>
+		<meeting><address><addrLine>Germany</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2005-03" />
+			<biblScope unit="volume">46</biblScope>
+		</imprint>
+		<respStmt>
+			<orgName>Dept. of Mathematics and Computer Science, D-35032 Marburg</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Clustering of the self-organizing map</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Juha</forename><surname>Vesanto</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><surname>Alhoniemi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE-NN</title>
+		<imprint>
+			<biblScope unit="volume">11</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page">586</biblScope>
+			<date type="published" when="2000-05" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<monogr>
+		<title level="m" type="main">SOM-based data visualization methods</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Juha</forename><surname>Vesanto</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1999" />
+			<biblScope unit="volume">3</biblScope>
+			<biblScope unit="page">11126</biblScope>
+		</imprint>
+	</monogr>
+<note type="report_type">IntelligentData-Analysis</note>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Nonlinear multidimensional data projection and visualisation</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Hujun</forename><surname>Yin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Lecture Notes in Computer Science 2690</title>
+		<meeting><address><addrLine>Manchester</addrLine></address></meeting>
+		<imprint>
+			<biblScope unit="page">60</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<monogr>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">U</forename><forename type="middle">K</forename><surname>1qd</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2003" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

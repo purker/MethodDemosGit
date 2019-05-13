@@ -1,0 +1,1537 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Negation Detection in Medical Documents Using Syntactical Methods</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+				<date type="published" when="2008-03-04">4. March 2008</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Stefan</forename><surname>Gindl</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Institute of Software Technology &amp; Interactive Systems</orgName>
+								<orgName type="institution">Vienna University of Technology</orgName>
+								<address>
+									<postCode>9925024, 12 1210</postCode>
+									<settlement>Weissenwolffgasse, Wien</settlement>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Negation Detection in Medical Documents Using Syntactical Methods</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published" when="2008-03-04">4. March 2008</date>
+						</imprint>
+					</monogr>
+					<note>M A S T E R &apos; S T H E S I S accomplished at the Dedicated to my mother. Without you this would have never been possible. i</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<abstract>
+				<p>Medical information is often stored in a narrative way, which makes the automated processing a difficult and time-consuming task. Persons responsible for the authoring of medical documents do not take care of a further processing with automated systems. So, information stored in medical writings is not directly usable for the processing with computers. Due to this, efforts have been made to transfer these narrative documents in a format easier processable with computers. This matter of fact also applies to clinical practice guidelines (CPGs). As many medical documents , CPGs are written in a narrative speech as well, without regards to a computer-assisted processing. For the implementation of CPGs in medical facilities an automated processing is therefore desirable. An important fact is that a lot of information in CPGs is provided in a negated form, expressing that certain circumstances in patients or treatments are not available, existing or applicable. Although negated, this information is nevertheless very useful, since it can express the absence of certain conditions or diseases in patients. Moreover, negations can describe which treatment options should not be taken into account for a given patient, helping a practising physician or nurse in his/her decision process for the assortment of a proper treatment. Thus, a proper Negation Detection in CPGs is an important task for the automated processing of this type of medical documents. It helps to accelerate the decision making process and can support medical staff in their care for patients. We developed algorithms capable of Negation Detection in CPGs. We use syntactical methods provided by the English language to achieve a precise detection of occuring negations. According to our results we are convinced that the involvement of syntactical methods can improve Negation Detection, not only in medical writings but also in arbitrary narrative texts. ii</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Introduction</head><p>A large part of medical information is only available in natural language, which makes an algorithmic processing with computers a very difficult task. So to say, this information is "locked up" in files and databases in a format not suitable for automated processing <ref type="bibr" target="#b30">[Hripcsak et al., 1995]</ref>. A lot of information in medical writings also underlies the concept of negation, which means, that certain treatment options or parts of a diagnosis, cannot or must not be applied for a specific patient. Negation Detection has been treated under the circumstances of pathology reports <ref type="bibr" target="#b43">[Mitchell et al., 2004]</ref>, discharge summaries or radiology reports <ref type="bibr" target="#b22">[Chapman et al., 2001]</ref>. Still, the processing of negated terms in more complicated writings is an open topic. Negation detection demands a lot of knowledge about language itself to correctly identify negated words or terms in free text. Endeavour on this topic may help to develop computer assisted treatment strategies to improve patient care.</p><p>The detection of negated terms in clinical practice guidelines (CPGs) allows the faster filter- ing of relevant information. It may be important for a practitioner to decide, which treatment options are available for a patient and which are not. This information can also be combined with the occurence of specific physiological conditions. Certain treatments cannot be conducted under certain physiological circumstances. A fast access to this information can contribute to a better treatment of patients. A former processing of guidelines including a Negation Detection supports a practitioner in his/her decision process. Otherwise, the human researcher would need to read through all possible options by himself, which can be a cumbersome and time-consuming process.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.1">Motivation</head><p>Negation is an important part of inter-human communication. It can be used to invert concepts and to show refusal of opinions. Sometimes persons in life-threatening situations use the simple word "no" to express their helplessness. In the developement of a person's psyche and character a "no" implies that this person has developed his or her own will and is able to express this. A person who never says "no" will never be asked to give his or her view on a problem, since the answer is already known. The concept of negation is therefore a universal concept in the most languages if not in all languages.</p><p>The existence of negations in language has been philosophised by man since more than 2000 years. Even Aristotle played with this peculiarities and tried to find a classification of the different types of negation in natural language and found four classes of negation. He came to the result that negation can be splitted into four types which he named as correlation (e.g., double vs. half), contrariety (e.g., good vs. bad), privation (e.g., blind vs. sighted) and contradiction (e.g., he sits vs. he does not sit) <ref type="bibr" target="#b29">[Horn, 1989]</ref>.</p><p>The right understanding of a negation demands a competent knowledge of the used language, since even one word can completely change the sense of the statement. The statement can then be inverted, weakened or amplified. The following simple example by Horn <ref type="bibr" target="#b29">[Horn, 1989]</ref> shows this effects in negated sentences (as cited in <ref type="bibr" target="#b44">[Mutalik et al., 2001]</ref>):</p><p>1. I'm not tired.</p><p>2. I'm not a bit tired. (which equals "I'm not at all tired.")</p><p>3. I'm not a little tired. (which equals "I'm quite tired.") Even this example shows the complexity of a negation in natural spoken or written language. In the first sentence the negation is very clear and one cannot be confused in its meaning. The following two sentences generate subtle problems, because one of them states the complete absence of tiredness ("I'm not a bit tired."), whereas the other sentence describes a condition of exhaustion ("I'm not a little tired."). A german reader who is not very familiar to the english language can get problems with phrases when they are written down. The second and third sentence seem to be equal and the lack of mimic art or a tonal amplification leaves the reader confused. An english native speaker will in contrast to a non-native speaker have no problems with the right understanding of the semantic of this sentences.</p><p>A search for negations in natural language is therefore a difficult task, but the search for them in a medical scope can be easier. Medical language is much more restricted than narrative speech, a physician will not use stilistic elements like double negation extensively to write reports or patients histories. Thanks to this fact a negation detection in a medical scope is supposed to be less difficult because of this restrictions.</p><p>Negation detection contributes to an information reduction when searching in databases. Search results can be minimized to the entities searched for, otherwise even negated entities would be returned in queries. This work contains already existing algorithms for the task of Negation Detection. It shows, how possible approaches can look like. We also present our approach of Negation Detection in the area of CPGs.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.2">Research Question</head><p>In this work we examine the question, which methods best fit for a Negation Detection in CPGs. As medical guidelines are not written in colloquial prose the assumption was obvious that occuring negations would not be of the same complicated type as they are in person-to- person language. Guidelines may lack the often vast usage of stilistic elements such as the double negation. This fact may make it easier to come up to algorithms which deliver a proper result.</p><p>In order to answer the asked question the research work was divided into following five sections:</p><p>Examining existing studies on Negation Detection. Initially we examined existing works related to Negation Detection. This part of our work is relevant to decide, whether existing algorithms or methods can be used for our research.</p><p>Selection and analysis of a set of guidelines for developing and testing of our method.</p><p>We have chosen a set of 20 CPGs which all deal with the topic "cancer". We used four of these guidelines to get an overview over the occuring negations (see <ref type="table" target="#tab_0">Table 1</ref>.1). With this information we developed methods to classify and identify negations.</p><p>Development of algorithms for Negation Detection in CPGs. After the hand-reading of the guidelines we have decided a proper Negation Detection of CPGs. We have analyzed, if already existing methods are applicable or if we had to develop algorithms tailored to CPGs.</p><p>Implementation. This part of our work contains the implementation of our methods, to see, if the approch is successful. Furthermore, a refinement was carried out to make the methods fit to the circumstances of the field of CPGs.</p><p>Evaluation. The evaluation presents the results obtained from our implementation of the al- gorithms. We provide statistical parameters used in the area of Natural Language Pro- cessing. We used the remaining 16 CPGs (see <ref type="table" target="#tab_0">Table 1</ref>.2) selected before for evaluating our algorithms. 4. Chronic cough due to lung tumors: ACCP evidence-based clinical practice guidelines.</p><p>[ <ref type="bibr" target="#b36">Kvale, 2006]</ref> In the following section we initially describe CPGs, their characteristics, and how they are used in medical facilities. Then we present related work to the subject of Negation Detection in the medical scope. Furthermore, we explain, what our approach to Negation Detection in CPGs is and how we have come to it. In Section 5, we carry out an evaluation to give measurements of the performance of our methods. In the last section we subsume the results of our work and give future directions for our approach.</p><p>Clinical practice guidelines (CPGs) are "systematically developed statements to assist practi- tioner and patient decisions about appropriate health care for specific clinical circumstances" <ref type="bibr" target="#b26">[Field and Lohr, 1990]</ref>. They represent the currently best known practice in a given medical case, they are, so to say, the "state-of-the-art" of a treatment.</p><p>The decision options collected in CPGs are gathered according to the best known evidence about a disease. Therefore, multidisciplinary expert groups together discuss the problem and all contribute to a CPG. Yet this is not the end of the development of a CPGs. As medical knowledge also grows and changes in time, CPGs also need to be reviewed from time to time in order to bring them into an actual state. This fact must be treated with special care, since CPGs claim to be the "state-of-the-art", the currently best known knowledge in a certain medical field.</p><p>In the following paragraph we give an introduction into the guideline development process</p><p>The developement of CPGs <ref type="bibr" target="#b54">[Shekelle et al., 1999]</ref> describe the appropriate stepwise devel- opment process of CPGs as follows:</p><p>1. Defining the CPG's topic: The first step in the development process is the selection of the CPG's topic. In this step it is important to exactly define which disease is treated. A refinement is inevitable or else the subject matter would be treated to broadly.</p><p>2. Determining the developement group: For a certain topic it is important to gather experts with the right expertise. Moreover, the employment of multidisciplinary groups is also of great significancy. Experts from different special fields contribute different opinions for a comprehensive treatment of a disease. For example, the treatment of cancer does not only require surgical knowledge but the knowledge of the usage of drug regimens (e.g., chemotherapy, use of epoetin) as well. Moreover, financial consideration should also merged with the naked treatment recommendations. Finally, the definition of group leaders is important for the organisation of the group, so that it effectively reaches the given aims.</p><p>3. Analysis of the evidence: It is important to ensure that all available evidence is col- lected, and therefore a systematic review of the evidence is the appropriate way of proceed- ing. To evaluate the available evidence, the underlying study design needs to be considered, as well as studies confirming the relevance of the evidence. Finally, a summarization of the aggregated evidence must be carried out.</p><p>4. Compiling evidence and writing the CPG: The evidence needs to be prepared for the deployment in medical facilities. Clinical circumstances as well as policy or financial aspects must be considered. The applicability of the developed CPG must be ensured.</p><p>5. Maintenance of the CPG in the practical environment: After the introduction of the CPG in a medical facility it needs to be reviewed at discrete points in time, and in case of obsolence an update is necessary. This ongoing revision of a CPG is of special importance, since CPGs, as mentioned earlier, are thought of as the "state-of-the-art" of a certain medical topic.</p><p>As one can see, the development of CPGs is a rather complicated and sophisticated process. However, this is necessary to ensure that CPGs remain the best known medical practice.</p><p>Although the best known practice is aggregated in CPGs, this does not mean that they must be performed in each and every case. The last decision, which treatment a patient should be given always depends on the medicating practitioner as well as the patient him-/herself. Only the practitioner has all information of the physiological state of a patient and only the patient is in the position to decide, whether he/she appreciates the treatment option or not. So, CPGs are also an aid for the patients themselves as well as their relatives.</p><p>CPGs are developed for certain circumstances, for example particular diseases or conditions in which potential patients can be. Moreover, CPGs can have several target groups, for instance physicians, nurses, patients, or students. In this way they aid the way of deciding, which treatment option properly fits to a patient's condition and disease. They are helpful for clinicians who "may also use guidelines to answer specific clinical questions arising out of their day to day practice" <ref type="bibr" target="#b25">[Feder et al., 1999]</ref>. For patients, CPGs represent information material, so that they can better estimate what is coming up to him/her until his/her (possible) convalescence. If targeted to students, who do not have the experience of a practicing physician, CPGs serve as important teaching material. Nevertheless, in most cases the target group of CPGs will be physicians and nurses.</p><p>An important topic in CPGs is the methodology used to analyze the evidence and to assess the quality and strength of the evidence. This means, what kind of research has been carried out to constitute the evidence of recommendations in a guideline. In this point, CPGs suffer from a lack of standardization. Each organization developing CPGs features a different kind of grading schema. This makes a cross-comparison a confusing task <ref type="bibr" target="#b19">[Atkins et al., 2004b]</ref>. Efforts have been carried out to tackle this problem. For example, the GRADE working group 1 aims a standardization of the grading schemas for the levels of evidence <ref type="bibr" target="#b18">[Atkins et al., 2005</ref><ref type="bibr" target="#b17">, Atkins et al., 2004a</ref>. Another attempt is to subsequently provide a meta schema based on the different existing schemas available in CPGs <ref type="bibr" target="#b34">[Kaiser et al., 2007]</ref>. In this approach the different schemas using different symbols for the levels of evidence are mapped to a meta schema, where all grading schemas are represented by the same symbols, thus making a comparison possible.</p><p>The section containing the actual instructions of a CPG is the recommendations section. Here, the intended user can gather information about treatment options, ways of diagnosis in certain cases, and what kind of evidence is provided for that specific recommendation. Although this section contains a lot of instructions, these instruction are not a must in each and every case. The strict obedience of a recommendation does not always lead to good results in the treatment of patients. The physician has to decide for him-/herself, if this treatment option is reasonable for a specific patient with specific physiological characteritics. Recommendations in CPGs can also be meant in a negative way. This makes sense when a certain treatment must not or should not be accomplished for a given patient. In this case it is meaningful to provide a foregoing sorting out or presentation of those recommendations not advisable. A Negation Detection helps to achieve this kind of information. Thus, treatment decision can be accelerated, since the physician needs not manually read through all sort of recommendations.</p><p>The authors of CPGs also give information about potential unforeseeable side effects caused by the implementation of a CPG. For example, some treatments for cancer can cause oncologic diseases by themselves. This fact needs to be regarded, when a CPG is launched in a med- ical facility. The so-called "Strength of recommendation" gives information on this topic. It describes, how securely a treatment option can be accomplished for certain circumstances. It provides aid for the decision if the specific treatment should be carried out or if there are factors which delimitate the benefits of the treatment. In other words, the strength of recommenda- tion expresses the trade-off between the benefits and potential harms of a therapy according to the underlying level of evidence, which can range from a very high level (achieved by meta- analysis of randomized clinical trials (RCTs)) to a low level (which indicates, that an evidence supporting the recommendation is absent). A distinct "Benefits/Harms of implementing the guideline recommendations" section often also provides supplementary information to this kind of questioning.</p><p>For the implementation of a CPG in a medical facility there is also a section for information about this topic. This supports the responsible persons in the implemenation process and errors in the implementation can be avoided. In general, it is easier to launch CPGs in medical facilities with a manageable target groupt. The larger and the more complex the organization's structure is, the more difficult is an implementation of CPGs. With growing complexity of the organization the barriers of implementation also grow <ref type="bibr" target="#b25">[Feder et al., 1999]</ref>.</p><p>As one can see, the development of a CPG is a very complex process. It can only be done by the cooperation of experts from several disciplines and by studying already existing knowledge about diseases and their options of diagnosis and treatment. The creation of a CPG is also a very sensible process, since false medical instructions can lead to mistakes in the treatment of patients and may lead to complications or even the death of persons. Although a CPG contains the best known knowledge on a certain health topic, the practitioner is always responsible for him-/herself to decide, if a specific recommendation is applicable for a patient or not. As mentioned earlier, they are intended to assist, not to dictate a physician.</p><p>Negation Detection contributes to a faster processing of CPGs and allows the responsible persons to achieve relevant information more quickly. As mentioned earlier, negative recommen- dations can be especially emphasised foregoing, or treatment options not advisable for a certain disease in a patient with a certain condition can be displayed. The proper detection of nega- tions is therefore a contribution to the improvement of the implementation and dissemination of CPGs and their deployment in medical facilities Chapter 3</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Related Work</head><p>Although the subject of negation has already been discussed by the ancient Greek there have been little achievements of an automated negation understanding and processing. Specifically in the field of medicine there are only few studies concerning this topic. The two most important studies relating to an automated negation detection in medical documents have been carried out by the University of Pittsburgh and the Yale University School of Medicine. Furthermore, the University of Sofia in Bulgaria has performed a study for the identification of negations in the Bulgarian language, which is by now a merely researched field in this language.</p><p>In order to fully understand the explanation of used Negation Detection techniques, the knowledge of some important resources supporting Natural Language Processing in the realm of medicine will be necessary. The following section gives an insight into used resources relevant for the comprehension of the performed studies. Section 5 describes statistical measures necessary for the evaluation of the presented methods. In Sections 3.3 to 3.10 we describe related work for Negation Detection in the medical scope.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Background</head><p>For the automated processing of medical texts systematized terminology collections are applied to index biomedical concepts. A brief introduction into the used terminologies is given in the following subsections. First, we will give a brief summary of the basic vocabulary used under those circumstances, according to .</p><p>• Nomenclature: a collection of names for a certain field of knowledge</p><p>• Classification: the attempt to identify similarities in entities and to aggregate them into classes</p><p>• Thesaurus (such as the UMLS metathesaurus): simplifies the search in bibliographic databases by providing an inter-relation between concepts.</p><p>In the subsequent section we present popular terminology systems created for the medical scope.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.1">SNOMED -Systematized Nomenclature of Medicine -Cinical Terms</head><p>® SNOMED ® represents a systematized medical terminology. It is a "comprehensive and precise clinical reference terminology that provides unsurpassed clinical content and expressivity for clinical documentation and reporting." <ref type="bibr">[SNOMED]</ref>. SNOMED ® was developed by the College of American Pathologists (CAP). The CAP had by now worked with the ancestor of SNOMED ® , SNOP (Systematized Nomenclature of Pathology). In the year 1974 SNOP was extended with the help of Dr. Roger Coté in order to contain vocabulary beyond the scope of the pathologic special field and SNOMED ® was born.</p><p>In 1977 SNOMED ® was turned from its printed representation into an electronic tool, created to facilitate the use for physicians, researchers, and healthcare professionals.</p><p>With SNOMED-RT (Reference Terminology) a new generation of SNOMED ® was intro- duced in January 1999. SNOMED-RT was created to better fulfill the needs in the fields of health states, disease states, pathophysiology, treatments and outcome.</p><p>In the same year in March a fusion of SNOMED-RT and the United Kingdom National Health Service (NHS) Clinical Terms Version 3 (former known as the Read Codes) was per- formed. SNOMED-CT ® (Clinical Terms), the currently most comprehensive vocabulary for medical terms, evolved from this merging.</p><p>In SNOMED-CT ® medical information such as diseases is defined by concepts. These con- cepts are refined by several hierarchies or axes, for example, "disease", "finding site" or "pro- cedure". In order to identify concepts they are provided with a concept ID, which is a simple numerical value. Existing relations among concepts are stored too.</p><p>The information provided for a given concept is composed of a unique numerical code, a unique name (the so called "Fully Specified Name") and further descriptions such as synonyms. Moreover, information about the concept's location in the hierarchy and relations between other concepts are recorded.</p><p>Important facts of SNOMED-CT ® [SNOMED]:</p><p>• Its included Semantic Net contains over 300,000 medical concepts and the relationships among them</p><p>• More than 7 million relationships are available</p><p>• The concepts cover several fields such as diagnosis, drug definition, findings, procedures, anatomy etc.</p><p>• Multiple axes and hierarchies are provided</p><p>• It includes three main hierarchies (finding, disease, procedure) and 15 supporting hierar- chies</p><p>• A description logic is used for concept representation </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.2">International Classification of Diseases and Related Health Problems (ICD)</head><p>The ICD is released by the World Health Organization (WHO) and emerged from a catalogue of causes of death which was introduced by the French physician Jaques Bertillon in the year 1893. The American Public Health Association (APHA) recommended the adoption of this catalogue for the improvement of medical treatment in the USA, Canada, and Mexico. In order to keep the register up to date the APHA recommended a revision every ten years, which was accomplished In 1977 the WHO published the 9th revision of the ICD (ICD-9)consisting of three volumes, the first two of them containing diagnosis codes, the third covering procedure codes. From the ICD-9 emerged the ICD-9-CM (Clinical Modifications), which is used for the calculation of hospital treatment costs in order to facilitate the account with concerned insurance companies.</p><p>The currently used versions are the 1999 published 10th revision (ICD-10) and the ICD-9- CM.</p><p>The ICD-10 provides alphanumerical codes for the identification of diseases or abnormal findings in humans. The ICD contains 22 different fields, each having a unique code. Diseases or findings within a special field are then identified by this field's code and an additional numeric code specific for the finding. For example, the occurence of neoplasms is coded with the letters C and D, malign neoplasm have the range from C00 to C97 applied. C30 to C39 stands for malign neoplasms of the respiratory and intrathoracic organs. The value C34 is used for malign neoplasms of bronchus and lung. To conclude, the diagnosis "lung cancer in the upper lobe" would be codified by the alphanumeric value C34.1.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.3">Unified Medical Language System (UMLS)</head><p>The UMLS is a controlled collection of vocabularies with its internal structure designed to map between them. The system was initially designed in 1986 by the National Library of Medicine, USA.</p><p>As UMLS is a collection of various vocabularies, it allows conversion of medical terms from one vocabulary into another. This fact is described in <ref type="bibr" target="#b32">[Humphreys and Schuyler, 1993]</ref> as follows:</p><p>The UMLS approach assumes continuing diversity in the formats and vocabularies of different information sources and in the language employed by different elements of the biomedical community. It is not an attempt to build a single standard biomedical vocabulary.</p><p>The structure of the UMLS contains three main knowledge sources:</p><p>1. The Metathesaurus ® : It represents the base of the UMLS, containing 5 million con- cept names identifying more then 1 million biomedical concepts. These names come from over 100 controlled medical vocabularies such as SNOMED CT or the ICD-9-CM. Metathe- saurus is intended to enable the work with the different vocabularies and provides facilities for the information exchange between different medical databases. The scope of it is as wide as the underlying used source vocabularies. A software program can receive informa- tion from Metathesaurus, users can pose inquiries and they can obtain help for a conversion of a vocabulary to the existing uniform vocabularies.</p><p>2. The Semantic Network: Semantic networks are generally the representation of a given knowledge base <ref type="bibr" target="#b40">[McCray, 1989]</ref>. The network contains nodes to represent semantic con- cepts and links for the representation of relations between the concepts. For example, there are nodes for the representation of organisms, biologic function or chemicals. For UMLS the network is established to facilitate the use of the system. It categories the concepts in the UMLS Metathesaurus and offers relations between concepts.</p><p>3. The SPECIALIST Lexicon: It lexicon provides the lexical information for the SPE- CIALIST Natural Language Processing System. It can be used as a general English lexicon expanded by a medical vocabulary. The tools were developed to deal with the high vari- ability of words in the natural language. The identification of inflected words (i.e., treat: treats -treated -treating) can be accomplished with these.</p><p>The UMLS is an ontology -a system describing instances, concepts, attributes, and rela- tions. But other than common ontologies it has a two-level structure:</p><p>1. The Metathesaurus, a unified collection of many different medical terminologies, a compi- lation of terms, concepts, relationships, and associated information;</p><p>2. The Semantic Network containing semantic types (one may think of semantic types as high-level concepts, i.e., broad categories), organized in a hierarchy of IS-A links.</p><p>Lee and Geller <ref type="bibr" target="#b38">[Lee and Geller, 2006</ref>] call such a structure a Terminological Knowledge Base (TKB):</p><p>...any structure that consists of (1) a semantic network of semantic types; (2) a thesaurus of concepts; and (3) assignments of every concept to at least one semantic type</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Evaluation</head><p>The accuracy of an implemented algorithm needs to be analysed with approved statistical pa- rameters, in order to allow a comparison with different, already existing algorithms. The value of a statistical parameter is also a statement about the efficiency and precision of an algorithm. High values signify a high quality of the used procedure. Although this seems to be a simple decision strategy for the usage of an algorithm, one has to be careful with the outcome of statis- tical analyses. Ignorance or the intentional abuse of these statistical parameters can very easily lead to a wrong decision for the choice of an algorithm. In a strict medical context adulterations are used to enable the launching of a new medication which has not been tested carefully enough before.</p><p>For the evaluation mainly four statistical parameters are used, which are listed below.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.1">Sensitivity/Recall</head><p>The sensitivity is a statistical parameter and very often used in medicine. It provides information about the ability of a test to identify individuals having a special disease (an individual having a given disease is called "positive", e.g., "HIV-positive", meaning that the person carries the HI-virus). In other words, the sensitivity evaluates the probability of detecting a statistical unit to be positive, if this unit is really positive. The better the test, the more of the individuals having a given disease are identified. The formula for this statistical parameter is relatively simple. As sensitivity reflects the accuracy of finding positive test results (i.e., the presence of a disease, the presence of a negation), the number of the found true positive statistical units is divided by all existing positive units in a basic population (when talking of sensitivity in biological circumstances): Sensitivity = TruePositives TruePositives + FalseNegatives In the case of information retrieval systems, the sensitivity is replaced by the so-called recall. For the calculation of this statistical parameter, partially correct identifications of entities are used too. Partially correct means, that in a selection process an entity has been correctly identified, but only a part of it. Therefore, the partially correct results contribute half the value of a true positive result <ref type="bibr" target="#b39">[Lehnert et al., 1994]</ref>. The formula looks as follows: </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.3">Positive Predictive Value (PPV)/Precision</head><p>The positive predictive value provides information about the probability of having a given dis- ease, when a test result is positive. A medical test should have a high PPV, otherwise a patient or his examining physician could never be sure, if the searched disease is present in fact.</p><p>For the calculation of this value a simple formula can be used. It is the number of true positive results divided by all positive result (false positives are included):</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>PPV = TruePositives TruePositives + FalsePositives</head><p>The positive predictive value for the ELISA test is 91 %. This means, that of 100 persons with a positive test result, in fact nine of them do not carry the HI-virus, so they are mistakenly considered to be positive.</p><p>In the area of information retrieval the positive predictive value corresponds to the so-called precision. Here, partially correct results also get only half the value of a true positive <ref type="bibr" target="#b39">[Lehnert et al., 1994]</ref>. The precision can be calculated as follows:</p><formula xml:id="formula_0">1 Precision = TruePositives + 2 * PartiallyCorrects TruePositives + FalsePositives + PartiallyCorrects</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.4">Negative Predictive Value (NPV)</head><p>This value is the counterpart of the positive predictive value. It gives information on the prob- ability of the lack of a given feature, if a test resul is negative. The formula is similar to the formula of the PPV:</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>NPV = TrueNegatives TrueNegatives + FalseNegatives</head><p>The ELISA test has a negative predictive value of 99.999 %.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.5">Correlation between Statistical Parameters</head><p>Sensitivity and specifity are strongly related: the knowledge of only one of these two statistical parameters is not a very meaningful measurement of the accuracy of a testing procedure. For example, the sensitivity can easily be pushed to 100 % by regarding each and every test result as positive. Only when combined with the specificity (which would in this case normally be surprisingly low) the sensitivity becomes a suitable measurement. Both PPV and NPV are dependent on the so called prevalence, which is either the total number of occuring positive objects in a statistical universe or the ratio of the number of occuring positive objects at a specific time and the total number of objects in that universe at that time.When the prevalence is high it is easy to gain a good PPV, vice versa it is easy to obtain a good NPV if the prevalence is low.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3">A Simple Algorithm for Identifying Negated Findings and Diseases in Discharge Summaries -NegEx</head><p>This study carried out by the working group around Wendy Chapman proceeded on the assump- tion that a relatively simple detection algorithm can produce usable results <ref type="bibr" target="#b22">[Chapman et al., 2001]</ref>. They designed an algorithm called NegEx and applied it to discharge summaries to find out, if findings and diseases were negated by the physicians. The found results were compared to the results of a former used baseline algorithm.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3.1">Preprocessing of Selected Documents</head><p>The input of both algorithms was a preprocessed text sequence, the output of the both is the decision if a phrase is negated in a sentence. Preprocessing was done in three steps:</p><p>1. Only one sentence per line: this leads to an information loss when more then one sentence is negated by one and the same negation.</p><p>2. Removal of punctuation: syntactic information represented by punctuation was ex- tracted.</p><p>3. Indexing of findings and diseases: in each sentence medical terms were replaced by their UMLS-representation. Because of the large extent of UMLS the indexed terms were delimited to the scope of "Finding", "Disease or Syndrome" and "Mental or Behavioral Dysfunction".</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3.2">Description of the Algorithms</head><p>For the realization of the study two algorithms were used. A simple baseline algorithm was compared with the more sophisticated NegEx algorithm. The baseline algorithm was an algorithm used by the so called IPS system to identify patient subgroups and was created by the University of Pittsburgh. It searches for six negation phrases and marks all UMLS terms from the negation phrase to the end of the sentence.</p><p>NegEx was designed on the basis of this simple algorithm but was extended by 29 negation phrases to a total amount of 35 detectable negations. The phrases were searched by manually reading 1050 reports. In comparison with the baseline algorithm NegEx uses a more complex way of extraction. While the baseline algorithm negates everything from the occurence of the negation until the end of the sentence, NegEx differs between two basic negation types, where one group comprises pseudo-negations which only change the meaning of a term (e.g., "gram- negative") or which are double negatives (e.g., "not ruled out"). The second group covers the real negations and these are extracted by NegEx. In this group a differentiation between the position of the negation phrase in relation to the negated phrase is carried out. In the first type the negationen phrase is positioned before the UMLS term:</p><formula xml:id="formula_1">&lt;negation phrase&gt; * &lt;UMLS term&gt;</formula><p>In the second type the negation phrase is positioned after the UMLS term:</p><formula xml:id="formula_2">&lt;UMLS term&gt; * &lt;negation phrase&gt;</formula><p>The asterisk stands in this context for up to five tokens which can be either words or UMLS terms. With this method negated UMLS terms can be detected even if they do not stand next to the negation phrase. Moreover, a more distinct extraction than with the baseline algorithm is possible.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3.3">Performance Analysis</head><p>A performance analysis was carried out which came to the result, that both algorithms marked negation with practicable precision. The baseline algorithm had its strength in sensitivity and negative predictive value, NegEx performed better in specifity and negative predictive value. <ref type="table" target="#tab_2">Table 3</ref>.1 shows the detailled results of each algorithm: These results follow from the different designs of the two algorithms. The baseline algorithm, extracting everything from a found negation to the end of the sentence were the negation was found, results in a high sensitivity, but this also leads to an extraction of words which are not really negated. This fact lowers the positive predictive value.</p><p>NegEx with its higher precision results in a very high specificity, however, the disadvantage of its design is, that words, which are actually negated, are not extracted because of their spatial distance to the negation phrase. This loss in sensitivity could be removed by a widening of the scope, within words are extracted, yet would this lead to a loss of specificity.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3.4">Applications of NegEx</head><p>In <ref type="bibr" target="#b41">[Meystre and Haug, 2005</ref>] an implementation of NegEx serves for the identification of nega- tions too. In this work a system was created to allow automated processing of problem lists in medical reports. As they are important components of medical records they need to be as accu- rate and up to date as possible. In reality, the hand written problem lists are often incomplete and therefore there is a need for simple processing routines, so that the problem lists gain in accuracy.</p><p>In order to identify medical concepts a mapping of the free text to the UMLS by MetaMap <ref type="bibr" target="#b16">[Aronson, 2001]</ref>, an element of the SPECIALIST lexicon, is carried out. As MetaMap does not support negation detection a following implementation of a detection algorithm was required and the authors chose the NegEx algorithm. The authors have not carried out an efficiency analysis of their implementation of NegEx but relied on the values given in the study by Chapman and colleagues <ref type="bibr" target="#b22">[Chapman et al., 2001]</ref>.</p><p>Another work <ref type="bibr" target="#b43">[Mitchell et al., 2004</ref>] uses the NegEx-algorithm for the detection of nega- tions in pathology reports. In a first step, a number of pathology was randomly selected. Four pathologists read through these reports and assigned negated concepts. Discrepancies between the pathologists were mostly eliminated by a comparison between the negated concepts. The reports assigned by the pathologists were used as a gold-standard for the evalution of the auto- mated system.</p><p>The system works in three steps: the pathology reports are at first split up into the document sections "Gross Description", "Final Diagnosis", "Microscopic Description", "Comment" and "Other". Afterwards, concepts are annotated using a set of UMLS semantic types. This set was chosen to fit the needs of pathology reports. In a last step, negated concepts are identified using the algorithms of NegEx. For the evaluation the author used recall and precision, both in lenient and strict version.</p><p>Although NegEx was originally not designed for a usage in pathology reports it performed quite well. <ref type="table" target="#tab_2">Table 3</ref>.2 shows the results of the evaluation: The table shows, that NegEx performed worst in the case of the Microscopic description section. This is due to the fact, that this section is generally written in a more narrative way, whereas the Final diagnosis is written in a more restricted way. This circumstance leads to the good values within this section.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4">Use of Methods for the Parsing Process of Formal Computer</head><p>Languages -NegFinder</p><p>In <ref type="bibr" target="#b44">[Mutalik et al., 2001</ref>] a different approach to negation detection was chosen. Here, a lexical scanner and a parser were applied, which are methods used to develop tools for the processing of (formal) computer languages. This procedure resulted in considerable values of sensitivity and specifity. To achieve these results, a system of several components was used like a pipeline. Each component represents a step to the final result, which is the accentuation of negated phrases in the processed text.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4.1">The Components Pipeline</head><p>The interesting text file undergoes four steps of operation. The result is a modified version of the original with all negations marked up, so the found negations are easier to be verified by a human reader.</p><p>The pipeline consists of the following components:</p><p>1. Concept finding: This step is carried out to find UMLS concepts in the document. If such a concept is found, some information about it is stored in the output. This information consists of the phrase that matches the concept, its length, the position in the text, and the UMLS concept.</p><p>2. Input transformation: In the second step the information of the first step is combined with the original document. Each phrase that represents a UMLS concept is replaced by its UMLS concept ID.</p><p>3. Lexing/Parsing: The output of the former steps is passed to a lexical scanner (lexer). This lexical scanner contains knowledge of a large amount of possible negation signals.</p><p>Moreover, the lexer is able to classify found negation. It is able to decide, if a given negation signal normally precedes or succeeds its negated phrase, or if it generally negates more then one concept. After this, the parser receives the classified sentences as single tokens. It applies its grammar rules to connect the negation signals with the phrases they negate. When this step is finished, a document is available that contains the information about found negations.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">Verification:</head><p>The original document is marked up using different colours for different types of negation, the negation signal themselves are marked with a special colour. Nega- tion signals get the color blue, a negated concept is marked in red, combined concepts can be seen in orange and text phrases not representing medical concepts are highlighted in magenta.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4.2">Concept Finding</head><p>The algorithm used for the identification of concepts tries to match phrases up to five words. If this is not possible, it splits the phrases into subsections and performs another matching attempt.</p><p>For the purpose of concept matching the authors use the IBM Intelligent Miner for Text, which allows linguistic analysis and is able to identify special terms like names or abbreviations 1 . The medical vocabulary used comes from the UMLS Metathesaurus, which is stored on a MS SQL Server.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4.3">Input Transformation</head><p>In this processing step recognised medical concepts are replaced by their UMLS-IDs. The output of this step is a file containing numbers and textual sequences, very difficult to read for a human except he/she knows the concepts associated with the ID. This output file is then passed to the lexical scanner.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4.4">The Lexical Scanner</head><p>The lexer is used for the identification of occuring negation signals. Moreover, it is able to determine the scope of the affected terms. For the purpose of finding negation signals more than 60 words or patterns are recorded, which enable the lexer to mark up negations.</p><p>Thanks to its implementation the lexer is able to answer following questions considering a negation:</p><p>1. Is the negation signal a preceding or succeeding one? The word "no" normally negates terms following it, whereas in the case of "not present" the negated terms stands before the negation signal.</p><p>2. Is only one concept or more than one concept negated? "No", for example, is able to negate more than one following term.</p><p>3. The lexer is also able to decide in negations of more than one concept, if the negation signal normally precedes or succeeds the negated phrases. For this purpose, it uses a difference between the conjunction operators "or" and "and". "Or" normally indicates a preceding negation signal ("no murmurs, rubs or gallops"), whereas "and" signifies a succeeding signal ("murmurs, rubs and gallops are absent").</p><p>Above this, the lexer is also able to tell the parser about the scope of a negation. For this purpose it uses a vocabulary of terminating terms. This terms indicate, that the end of the negated phrases is reached and that a new part of the sentence begins. For example, many prepositions terminate a negated sequence as a general rule. In the sentence "no complications during surgery" only the concept of complications is negated. Another example for terminat- ing terms are relative pronouns, such as "which" or "that". In the note "There was absence of temperature sense which supports spinothalamic involvement" the negation of the concept "temperature sense" just indicates the occurence of "spinothalamic involvement".</p><p>When the lexer has finished its decision finding process, it passes the indexed phrases as single tokens to the parser.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4.5">The Parser</head><p>The parser used in this study works on the tokens it receives from the lexical scanner. Infor- mation about negation terminators or the scope in which a negation signal negates is provided by the lexical scanner. Because there is no need for an exhaustive analysis of the syntax, the grammar used by the parser is much simpler than normally used for the processing of natural language.</p><p>The actual job of the parser is to finally decide about the characteristics of a negation. It decides, where a negation starts or ends, how many words are concerned by the negation signal and if the negated phrases precedes or succeeds the negation operator. The accomplishment of this job is strongly dependent on the information it receives from the lexer. If there is no information about negation terminators, it considers the end of the negation three words after the negation operator. The number of exactly three words for the scope of a negation was given by an analysis of the sensitivity and specifity reached with a scope of more, or less, than three words.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4.6">Evaluation</head><p>The evaluation of the algorithm was splitted into two parts. In one part, the designers of NegFinder validated marked up documents, in the other part an independent observer was engaged to do this.</p><p>In the first of these two mentioned parts, the NegFinder was applied to a test set of 60 medical documents. The output of this procedure was then validated by the three authors. For this, they read through the documents, in which the negations were already marked up. They counted as well negations the NegFinder had missed (false-negatives) as negations the algorithms had marked by mistake (false-positives). Moreover, information about incorrectly marked negations was collected.</p><p>For the other part of the evaluation an independent human observer read through ten medical documents and tried to allocate negations exhaustively. After this, the NegFinder was applied to this set and the results were compared.</p><p>To sum it up it can be said, that in the first part already marked documents were controlled by human observers, in the second part the human observer was controlled by Negfinder. This lead to following values for the sensitivity and specifity of the algorithm(see <ref type="table" target="#tab_2">Table 3</ref>.3):</p><p>A slight difference in the specifity of the two evaluation procedures can be noticed. This dif- ference, statistically not significant, shows, that reading through already marked up documents creates a bias distorting the true result. On the other hand the difference is so small, that the two evaluation procedures can be treated equivalent. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4.7">Applications of NegFinder</head><p>The NegFinder algorithm was applied in the work about the knowledge-based MediClass system, which supports the processing of both free text and coded data in electronic medical records (EMR) <ref type="bibr" target="#b28">[Hazlehurst et al., 2005]</ref>. MediClass (for "medical classifier") can operate on any EMR which can use the Clinical Document Architecture (CDA) for data representation. CDA is a document structure based on XML to store and transfer clinical documents, which was developed by the Health Layer Seven health care standards organization (the seven stands for the seventh layer of the ISO/OSI Basic Reference Model).</p><p>In order to recognize the change of the semantic meaning of concepts in EMR modifiers are searched for which can influence the meaning of a concept regarding it's severity, classification and negation. For negation detection, a small set of negation terms is used for the processing with NegFinder's lexer and parser, since the authors believe that even a little number of detected negation signals lead to reasonable results.</p><p>Unfortunately, the authors do not provide statistical values for the reached accuracy of their implementation of NegFinder.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.5">A Controlled Trial of Automated Classification of Negation from Clinical Notes</head><p>The aim of this work was to draw a comparison between the precision of an automated negation detection procedure and a human observer <ref type="bibr" target="#b24">[Elkin et al., 2005</ref>]. In the study 41 clinical docu- ments were parsed with the Mayo Vocabulary Server Parsing Engine, which uses the SNOMED CT ® terminology to discover medical concepts. For the analysis of this procedure an independent human observer was employed, who read through the resulting records. Incorrect negations were detected to find out possibilities of improvement of the algorithm.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.5.1">Method</head><p>A set of 41 medical reports was used to evaluate the accuracy of an automated negation detection system. These reports were provided to the Mayo Vocabulary Server as ASCII files containing data in free text. With the Mayo Health Record Parser these text files were splitted into subsections typical for the reports, such as "History", "Physical Examination", "Diagnostic Testing".</p><p>This output was then preprocessed to differ between textual fragments and operators like "And", "Or", "Maybe" and so on. Medical concepts in the text were then indexed using SNOMED CT ® . After this procedure, the actual negation assignment takes place. For this purpose, a so called "automated negation assignment grammar" is used. This grammar splits free text phrases into four semantic components:</p><p>1. Kernel concepts: these contain the semantic basis of the phrase 2. Modifiers: Modifiers change the meaning of kernel concepts in a medical way, e.g. ""severity" expresses the level or stage of a disease.</p><p>3. Qualifiers: Here a qualifier changes the meaning of a term regarding its temporal or administrative content like "recurrent".</p><p>4. Negation qualifiers: these are signals for the occurence of a negation.</p><p>Moreover, a collection of negation stopping phrases is used. These phrases signal the end of a negation's scope. For example, in the phrase "The patient denied a history of previous cardiac disease other than palpitations which he experienced while giving representation resultingin syncope", other then limits the scope of the negation signal "denied" to "a history of previous cardiac disease".</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.5.2">Statistical Analysis</head><p>To evaluate the quality of this automated negation detection system, a human reviewer had to read through the reports. By the evaluation of the human reader the indexing of SNOMED- CT ® turned out to be error-prone. Out of actually 2028 negative concepts, SNOMED-CT ® had missed 205 concepts, so these concepts were not passed to the negation assignment module.</p><p>All in all, the system provides very good values in accuracy. <ref type="table" target="#tab_2">Table 3</ref>.4 shows the outcome of the statistical analysis: In the process of indexing medical terms and tagging negations, an electronic health record (EHR) undergoes five separate steps which are worked off in a serial pipeline. The output of this procedure is a patient's chronicle containing position and scope of found negations and the medical information of this patient.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.6.1">System Architecture</head><p>As mentioned earlier, the system contains of five separate modules, each adding more informa- tion to the processed file. Before an EHR is passed to MEHR, it is splitted in the eleven topics typical for bulgarian health records, which are: personal data, anamnesis, status, examina- tions, consultations, debate, treatment, treatment results, recommendations, working abilities, diagnosis. After this procedure MEHR begins with the analysis of the received file in five steps:</p><p>1. Annotation and chunking: The A&amp;C module begins with tagging syntactical structures in the received file. It is programmed in Perl and works like a part-of-speech tagger. This module contains a lexicon with about 50 000 words and contains medical vocabulary and terms typical for EHRs.</p><p>2. Post processing module: The post processing module uses a lexicon with verbs specific for medicine. It also works with verb frames and grammar rules to identify verbal chunks.</p><p>3. Negation treatment module: In this step the negation detection begins and found negations are marked. A detailled description of the working method of this module is given in the following subsection.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">Extractor:</head><p>This module uses a database with medicine-specific terms to describe the patient's symptoms and diagnosis.</p><p>5. Filling scenario templates module: To obtain a correct patient's chronicle this module fills in obligatory and opitional fields of a form mask. It ultimately creates the patient's chronicle.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.6.2">Details of Negation Identification</head><p>The authors of the study differ between two kinds of negation, which are common in the bulgarian language: general negations, where a whole statement is negated, and partial negations, in which only one or more parts of a statement are negated. A general negation in Bulgarian is often indicated by the word "ne" (not). With this negation signal an action signalled by a verb is negated, and general negation means, that a verb is negated. Added negation signals like "ni" (nor) or "nito" (neither) are used to repeat the negation or to increase its strength. However, the use of these two negation signals turns the general negation into a partial type. For example, in the sentence "He does not drink." the whole concept of drinking is negated, whereas in the sentence "He does not drink neither wine nor whiskey" the two drinks are negated seperately. Another signal for a negation a verb action, i.e. a general negation, is in Bulgarian the preposition "bez" (without) followed by the concerned verb succeeded by the particle "da". MEHR treats both variants in the same way.</p><p>In a partial negation a phrase or even an attribute of a verb, but not the verb itself is negated. The preposition "bez" is also used in this context, but this time there is no succeeding "da" provided. A single attribute is negated, e.g. "dixane bez hripove" (breathing without crepitating). Another case are the so called inherent negatives. These are verbs having a negative meaning but are presented in a positive form. Examples for them are:</p><p>• "nnma" (there is not, not exist) as the negation of "nma" (there is, exist). The positive verb differs from the negating verb just by the letter "ya", so they are different words, whereas the English only uses "not" in this case to negate an existence.</p><p>• "lipsvam" (absent) as the negation of "pris (be available).</p><p>• "otriqam" (deny) as the negation of "priznavam" (confess).</p><p>The authors also direct their attention to sentences with a more complex structure. Com- bined elements which then are negated by only one negation signal need a special treatment, i.e. "bez hirzutizzm amenorea" (without hirsurtism, amenorea). The same applies for sentences, in which more verbs are negated. In Bulgarian for this purpose a repetition of "ne" (not) is used, so that the number of "ne" and the number of the negated verbs are the same.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.6.3">Evaluation</head><p>With the proposed procedure an identification rate of negations of about 57 % could be reached. 15 % of the negations could not be identified and 28 % were registered incorrectly. An incorrect match means, that the range of the by a negation signal affected concepts was misunderstood.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.6.4">Conclusio</head><p>As one can see from the description of the five modules, MEHR is more than only a negation recognition system. Although one module is only responsible for the treatment of negations in an EHR, the main goal of the system is more ambitious. The aim is to create a system that automatically is able to produce completely filled chronicles out of electronic health records. Negation detection is just the first step towards this ultimate goal.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.7">Automatic Mapping Clinical Notes to Medical Terminolo- gies</head><p>The study of <ref type="bibr" target="#b47">[Patrick et al., 2006</ref>] was carried out to measure the accuracy of medical concept matching in free text medical reports. Additionally, the used algorithm was extended in order to identify negated medical concepts too. The following description of this study focuses primarily on the aspects of negation processing. The procedure of negation assignment consists of four correlative steps. The input to the systems were clinical notes, which in practice are stored in written free text.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.7.1">Method</head><p>As mentioned before, the processing routine contains four steps, beginning with the preprocess- ing of the input record:</p><p>1. Preprocessing the input: The input record undergoes a normalisation process.</p><p>2. Concept matching with SNOMED-CT ® : Medical concepts are replaced by their concept ID.</p><p>3. Detection of negations: The identification process is explained in detail in subsection 3.7.3.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">Qualification and term composition:</head><p>This step is used to assign medical concepts that are combined with qualifiers, which in these circumstances are terms that contain extra information about a concept but which do not alter its sense.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.7.2">Preprocessing</head><p>This step has two main tasks to achieve, which are interesting since they help to simplify the input records for a later negation assignment. At first, the input is converted into a basic format. This means, that the file is split into its seperate sentences, all letters are converted to lower case, and differently written phrases are unified (haemocyte vs. hemocyte). The authors of the study call this the normalisation. After this, the record is POS tagged by the GENIA tagger. This part-of-speech tagger is especially designed for the usage in a biomedical scope. Another important point in this phase of processing is the identification of so called "admin- istrative entities". These entities include information about the dosages of medication, duration of an inhabitation in hospital etc. Quantitative units like "kilogram" are identified as well.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.7.3">Negation Detection</head><p>In this work the same simple algorithm is used as in <ref type="bibr" target="#b22">[Chapman et al., 2001]</ref>. For the detection of the negation signal, the same signal list as used in this study is employed, but unlike <ref type="bibr" target="#b22">[Chapman et al., 2001]</ref> here a general distinction between two superior types of negation is carried out. On the one hand there are so called pre-coordinated negated phrases, on the other hand there are phrases explicitly negated by a negation signal. Pre-coordinated are negated phrases which are already stored as concepts in SNOMED-CT ® , like "no headache", whereas the other type is the classic negation, where a negation term or phrase negates a concept. This second type of negations is treated by an algorithm similar to NegEx, differentiating between phrases that are preceded or succeeded by their negation flag. The scope of a negation signal is also set to five words before or after the signal.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.7.4">Evaluation</head><p>As the algorithm used in this study is the same as in <ref type="bibr" target="#b22">[Chapman et al., 2001]</ref>, the same statistical values can be applied. Unfortunately, the authors do not deliver any information about an improvement in relation to NegEx thanks to the usage of pre-coordinated phrases.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.8">Concept Negation in Free Text Components of Vaccine Safety Reports</head><p>In the work of <ref type="bibr" target="#b58">[Tolentino et al., 2006</ref>] methods of concept matching and integrated negation detection were applied to surveillance systems for the monitoring of adverse events following immunization (AEFI). AEFI reports contain similar free text components as other clinical narrative reports like radiology reports, physical examinations or discharge summaries. Considering this fact the study was carried out to evaluate results of the application of UMLS mapping and negation detection algorithms in this medical special field.</p><p>After the tagging of the AEFI free text records with the UMLS Metathesaurus a rule-based, finite state machine algorithm was applied for the detection of negated concepts. The algorithms negation vocabulary list contained only five negation signal, which were no, neither/nor, ruled out, denies and without.</p><p>Despite the only very little number of used negation signals the algorithm results in rather high values in recall and precision. Recall and precision are parameter used in the special field of information retrieval. They are applied to evaluate the results of a searching process. The recall measures, how many of the relevant documents of a statistical universe could be found by the searching strategy. The precision describes, how many of the found documents were relevant documents and is therefore a measurement for the accuracy of a searching strategy. The detection algorithm used in this study reached a recall of 89 % and a precision of 94 %.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.9">Ad-Hoc Classification of Electronic Clinical Documents - NegExpander</head><p>This work presents an early work on the topic of Negation Detecion. The authors mainly occupied themselves with the topic of "Ad-Hoc Classification", where "a user needs to sort a large number of documents into non-standard categories." <ref type="bibr" target="#b15">[Aronow and Feng, 1997]</ref> For their work they also conducted research to identify negated findings in radiology reports. They state, that the challenges of an automated processing of medical writings are constituted of the often poor quality of medical data. Medical data is in most cases not explicitly intended for a processing with computers.</p><p>For their part of Negation Detection they implemented a system called NegExpander. This system expands the scope of a negation trigger across conjunctive phrases or colons. The sentence No suspicious masses, suspicious calcifications or secondary signs of malignancy are seen.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>is expanded to</head><p>No suspicious masses, no suspicious calcifications or no secondary signs of malignancy are seen.</p><p>Thanks to this expansion, all three phrases affected by the negation trigger "no" can be identified. For the identification of noun phrases a part-of-speech tagger is used.</p><p>Due to the fact, that the work was conducted on the topic of ad-hoc classification, the authors do not give explicit numbers of their outcome on Negation Detection. In spite of this, the expansion to determine the scope of a negation trigger is interesting.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.10">A Hybrid Approach to Automated Negation Detection in Clinical Radiology Reports</head><p>In this hybrid approach a regular expression matching is combined with a grammatic parsing <ref type="bibr" target="#b31">[Huang and Lowe, 2007]</ref>. The grammatic parsing is carried out by the Stanford parser <ref type="bibr" target="#b35">[Klein and Manning, 2003]</ref>, which is capable of generating a full parse tree of sentences. The information derived from this parsing tree is used to initially identify possible negated phrases in the sentence, identifying negation triggers by a regular expression matcher. Afterwards, the actual negated phrase is determined by using grammar rules typical for the specific negation trigger. In order to achieve the grammar rules, a set of 30 radiology reports was used. The quality of the grammar was then tested with another set of 470 reports. With this information, the negation detection module (NDM) was implemented. The performance of the NDM was again tested on a set of 132 reports.</p><p>The authors did not constrain to UMLS concepts as negated phrases. They marked up biomedical noun phrases, regardless of whether they were UMLS concepts or not.</p><p>The evaluation of the hybrid approach was carried out with the help of four physicians and the test set of 132 reports. The physicians were put into (changing) groups of two and obtained at a time 30 reports, which were already processed by the NDM. Twelve of these reports were used to evaluate a bias due to the usage of pre-tagged reports. The left 120 reports were used to establish the gold-standard, against which the NDM was tested.</p><p>As statistical parameters the authors used slightly different version of recall and precision as presented in Sections 3.2.1 and 3.2.3, a strict and a lenient version. In the strict version, partially correct findings are not added to the true positives, whereas in the case of the lenient version they are added. In the following the used formulas are shown:  <ref type="table" target="#tab_2">Table 3</ref>.5 shows the results of the evaluation. As it can be clearly seen, the hybrid approach performed very well in the scope of radiology reports. </p><formula xml:id="formula_3">Strict</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.11">Discussion</head><p>In the previous sections we presented approaches related to the topic of Negation Detection in the medical scope. All of them used different algorithms, which performed quite well in practice. They had in common, that they all used a rather simple type of clinical writing for which the algorithms were applied. Discharge summaries (see Section 3.3), electronic health records (Section 3.6), or pathology reports (Section 3.10) are all written in a restricted medical language. This fact simplifies the problem of a Negation Detection.</p><p>In clinical practice guidlines, the used language is more complex. They are written in a prosaic style, with numerous nested sentences and a more sophisticated, speech-like language. Due to this, a Negation Detection needs to take care of this problems.</p><p>Although CPGs are more complicated than medical reports, they are not as complicated as real free text, as it is used in novels or poems. They will not use stilistic elements like metaphors, alliterations, or double negations. Such elements would complicate the identification of negations even more, since they do not require the adherence to strict linguistic patterns. On the contrary, they are often used to intentionally complicate sentences to provide additional possibilities of expression. The management of such would require algorithms, which really can understand the human language.</p><p>In the following section we describe our method of Negation Detection in CPGs, called NegHunter. It uses grammatical characteristics of the English language to search for negations.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Chapter 4 NegHunter</head><p>In the following we describe the way of developing our Negation Detection algorithms. We took a set of four CPGs (cp. Table 1.1) in order to get an overview about different kinds of negations. This analysis showed that the occuring trigger phrases strongly vary from the triggers used in related work. Here, triggers are composed of several terms, which represent the trigger as a whole. For example, in the work of <ref type="bibr" target="#b22">[Chapman et al., 2001</ref>] triggers such as "sufficient to rule the patient out against" are used. Triggers can either affect a phrase which precedes or succeeds them.</p><p>In CPGs the situation is different. Here, a combination of terms to triggers is not useful. Due to a more complex language style in CPGs, such a way of proceeding would lead to a vast amount of trigger phrases. A classification of negations leading to a smaller number of triggers is required. Thus, we came to the decision to use the English syntax for a classification. The syntax provides possibilities to decide, which phrase in a sentence is affected by a trigger. This happens by the usage of tenses and prepositions. Thus we need a method to automatically analyze sentences on a syntactical level. We use the MetaMap Transfer (MMTx) in order to acquire a part-of-speech tagging of the sentences in a guideline.</p><p>Our method NegHunter uses the part-of-speech information to identify negated phrases. In the following, we give a short overview of MMTx. Afterwards, we present the algorithm we developed for Negation Detection in CPGs (see Section 4.2).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">MetaMap Transfer (MMTx)</head><p>MMTx was designed to provide Natural Language Processing in combination with a mapping to UMLS terminology. It is built upon the original MetaMap <ref type="bibr" target="#b16">[Aronson, 2001]</ref>, which was implemented in Prolog, and uses the same algorithms as the original. In order to make the programm available for a larger public MMTx uses to the Java language.</p><p>The software takes a natural language text as input and allows a hierarchical splitting into the following levels of text parts (see also <ref type="figure">Figure 4</ref>.1):</p><p>1. Section: Each text is cut into several sections, which are either determined by their textual mark-up (such as abstract, method summary, etc.) or by the text structure, where paragraphs are used to identify the sections.</p><p>2. Sentence: A sentence is, as one would assume, an arrangement of words with a semantical content.</p><p>4. Lexical Element: Lexical elements can consist of one or more words. "Cancer" is a lexical element just as "breast cancer" is.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.">Token:</head><p>The token is the atomic element of each sentence, determined by a preceding and succeeding whitespace.</p><p>For the implementation of NegHunter, the classification down to the "phrase"-level was used (see <ref type="figure">Figure 4.</ref>2). The used negation detection algorithms work with the information provided by this level of sentence classification.</p><p>The MMTx "phrase" is separated into several types of phrases. These types, differing con- cerning their tense, part-of-speech type (e.g., a noun phrase or adverb phrase) are used to decide the scope of the trigger, in which negated phrases are expected.</p><p>The most relevant "phrase"-classifications available in MMTx are:</p><p>• Noun phrase,</p><p>• Verb phrase, • Adverb phrase,</p><p>• Prep phrase, and</p><p>• Unknown phrase: A phrase is categorized as an unknown phrase if no other assignement is sufficient.</p><p>All of these phrase types are syntactical elements, of which the English language is built upon. A brief summary on these elements will allow to have their real meaning in mind:</p><p>Noun phrase. A noun is the attempt to subsume the massive diversification of physical ar- tifacts of the sensually ascertainable environment and of the abstract concepts of the intellectual world with solitary intellectual entities. They are the semantic objects, with which the content of speech is modeled. A physical artifact is everything that one is (in the broadest sense) to touch (like "sunglass" or "ice". The "sun" is also a physical artifact, al- though no one would ever be able to touch it). Abstract concepts, however, are everything that is ascertainable with the mind, like ideas, thoughts or theories ("subconsciousness", "peace" or "freedom" would be examples for this category). The borders between them can not be strictly drawn. For example, a "person" can either be physically present (e.g., an unknown human in a crowded place) or an abstract representation for the variety of all persons (e.g., the empty database storage for the clients of a company). The true meaning can only be determined within the context of the used noun. In a noun phrase, the noun itself is the so called "head" of the phrase. Although a noun phrase can consist of only the noun, this is a rather infrequent case. Normally, they occur together with articles and specifying adjectives.</p><p>Verb phrase. The linguistic element of verbs puts all objects into a specific relationship to their environment. They occur in different tenses, are affected by adverbs and can put a sentence in the active or passive voice. They express the state of objects (e.g., "the man is old"), their actions with other objects (e.g., "the player hits the ball) or processes on themselves (e.g., "the tree grows").</p><p>Adverb phrase. Adverbs are normally used to change or intensify the meaning of verbs, ad- jectives or other adverbs. MMTx regards the term "not" as an adverb phrase.</p><p>Prepositional phrases. Prepositional phrases consist of noun phrases which include a prepo- sition. Prepositions add auxiliary information like place, time, or direction declarations to the original noun phrase. Initializing triggers, which indicate such a phrase can be:</p><p>• Place: "in" or "on", for example:</p><p>The guideline developers met in Cincinnati.</p><p>• Time: "in" or "on", for example:</p><p>The guideline was reviewed in the year 2005.</p><p>• Direction: "to" or "into", for example:</p><p>The patient was pushed into the CT.</p><p>• Other: "by" or "of", for example:</p><p>The treatment is recommended by leading oncologists.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">The Negation Detection Algorithms</head><p>Negation Detection in CPGs is a great challenge due to the complicated language structure of this type of medical document. Contrary to medical reports, such as discharge summaries, radiology reports etc., they use a sophisticated, speech-like language. This leads to the occurence of negations that cannot be determined by a certain number of negation triggers. In reports these triggers, which are several terms combined to one trigger phrase ("sufficient to rule the patient out against", <ref type="bibr" target="#b22">[Chapman et al., 2001]</ref>), are repeated continuously. A search for such constructed triggers in CPGs is not as easy. One would have to create a large collection of trigger phrases with only little possibility of classifying into manageable types. Moreover, every new guideline would contain new trigger phrases, making a permanent enlargement of the collection of trigger phrases obligatory. Such a method would be very cumbersome and time-consuming. Thus, a different approach was used. As language itself provides information on which phrases are negated in a sentence via the syntax (or the grammar of the language), we decided to use this information for our Negation Detection. This approach is also similar to the way, the human brain processes negations. Humans are able to decode the semantic content of a phrase and can decide, if this specific phrase is a negation trigger. If it is, the brain decides using the syntax which phrase in the sentence is negated.</p><p>Our approach is undoubtedly not as efficient as the brain's methods. Yet it uses methods of language processing which help us to identify negated phrases in natural language writings, where a simple subsumption of terms to triggers is not possible due to the complexity of the underlying text.</p><p>Speaking of the usage of the syntax of the language, we mean that grammatical elements like the tenses influence the direction, in which a trigger term works. It can either affect phrases that have been mentioned earlier in a sentence (a succeeding trigger respectively a preceding negated phrase) or phrases that follow after the trigger (a preceding trigger respectively a succeeding negated phrase). We have come up to five classes in which the negations are split up:</p><p>The Adverbial Negation: This type of negation works via a verb, which is affected by a negation term. The tense helps to decide, where in the sentence the concerning phrase is allocated.</p><p>The Intra-Phrase Triggered Negation: Here, the negation trigger is integrated in the phrase itself. The phrase can then be regarded as negated.</p><p>The Prepositional Negation: The trigger is a phrase which requires a succeeding preposi- tional phrase. The negated phrase is this prepositional phrase.</p><p>The Adjective Negation: Triggers are adjectives with capability of negating phrases in a sentence.</p><p>The Verb Negation: This negation class is triggered by verbs.</p><p>In the following sections we describe, how our approach works and which pieces of information of the grammar are used to support the decision process.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2.1">The Adverbial Negation</head><p>This first type of negation is a very common one. An adverb is the actual negation trigger. Its occurence means, that the verb affected by this adverb negates a noun phrase, which is related to the verb. Verbs work on subjects or objects in a sentence. The task is to correctly identify this subject or object. That is, an adverb negates a noun phrase via a verb. The verb itself is not the negated term, since a negation of a verb alone would not make sense. For example, "not existing" says, that something does not exist. The important question is to identify the thing that is not existent. Considering verbs as negated would on the other hand be a simple and trivial task, since verbs always stand closely to the adverb working as trigger phrase. So, a proper method of identifying related noun phrases is crucial. In CPGs, we have the triggers "not" and "never" as adverbial triggers.</p><p>Negations using the trigger "not" are the most frequent negations in medical guidelines. Nearly 50 % of all negations occuring in the observed twenty guidelines are triggered by this term. Moreover, it is not only a very frequent trigger, it is also a very complex one. They do not only underlie inflections due to varying tense and number but also to the active and passive voice. This circumstances require a sophisticated treatment of this type of negation.</p><p>NegHunter uses the specific appearance of verb structures regarding their tense to decide, whether a sentence contains an active or passive voice context. On this basis it decides, which term is meant to be negated.</p><p>In order to clarify the considerations behind this way of proceeding, we provide a brief summary of the active and passive voice.</p><p>The active voice: Here, the subject operates via the verb with the object in a specific way.</p><p>In the example</p><p>The radiogram identifies multiple calcifications in the left breast.</p><p>the subject "radiogram" comes via "identifies" with "multiple calcifications" into action.</p><p>The passive voice: Here, the subject itself is operated by the verb. When turning an originally active form sentence into passive, the former object becomes the subject. For example:</p><p>Multiple calcifications in the left breast are identified by the radiogram.</p><p>Here, "multiple calcifications" are targeted by the verb structure "are identified" and specified by the prepositional phrase "by the radiogram".</p><p>These considerations allow the modelling of this kind of negations. When in the case of the active voice a subject operates on an object, then, in the negated form, this object is excluded from the operation. The negated object is the noun phrase following the concerning verb phrase. NegHunter uses this information to identify the object.</p><p>In order to find out, if a verb structure is in active or passive voice, NegHunter uses infor- mation of the verb combination to decide, which tense the verb structure has. Based on this information we can see, whether the phrase is in active or passive voice.</p><p>The following two sentences explain the same matter of fact. Whereas, the first sentence is written in active voice, the second is in passive voice. Both of them use the same tense (Past Tense):</p><p>Guideline developers did not perform a formal cost analysis.</p><p>A formal cost analysis was not performed by the guideline developers.</p><p>In the first case, the structure of the verb form is recognized by MMTx as follows (see <ref type="table" target="#tab_8">Table  4</ref>.1: The composition of the verb structure "did not perform" as "verb phrase + not + verb phrase" indicates that the sentence is in active voice. It is unique for the tenses</p><p>• Simple Present Active</p><p>• Simple Past Active</p><p>• Present Perfect Active</p><formula xml:id="formula_4">• Future I • Past Perfect • Conditional I.</formula><p>In an analog manner, the indicators for the passive voice in the second sentence are defined (see <ref type="table" target="#tab_8">Table 4</ref>.2). An order like "be verb + not + verb phrase" is typical for following tenses:</p><p>• Simple Present Passive</p><p>• Simple Past Passive</p><p>On the basis of this information, we apply separate rules for the identification of negated phrases. In the active voice, the rule works as follows: The following example shows the result of the tagging process of a sentence in the active voice with NegHunter :</p><p>Guideline developers do not recommend chemotherapy . <ref type="bibr" target="#b1">1</ref> The tagging process for the sentence expressed in passive voice leads to the following result:</p><p>Chemotherapy is not recommended by guideline developers.</p><p>Other examples for a common sentence structure would be the following tenses, each with example sentences:</p><p>• Present Perfect Passive: Chemotherapy has not been recommended</p><p>• Future I Passive: Chemotherapy will not be recommended</p><p>• Past Perfect Passive: Chemotherapy had not been recommended</p><p>• Conditional I Passive: Chemotherapy would not be recommended In these cases, the sentence structure is built in the order represented in <ref type="table" target="#tab_8">Table 4</ref>.3: The structure is shown exemplarily for Present Perfect Passive in <ref type="table" target="#tab_8">Table 4</ref>.3, but it applies to all tenses formerly mentioned.</p><p>The following tables show the sentence structure of all tenses, starting with the common structure of Simple Present, Simple Past, Present Perfect, Future I, Past Perfect and Conditional I, all of them in the active voice. For each tense a short example sentence is provided showing only the verb structure, no noun phrases or other sentence components are included.  <ref type="table" target="#tab_8">Table 4</ref>.4 shows the collection of the tenses "Simple Present", "Simple Past", "Present Perfect", "Future II", "Past Perfect" and "Conditional I".       As one can see in the tables above there are several decisions to be made in order to receive the right tense. After this decision is made the negated concept represented by a noun is tagged. This noun can be placed before or after the negation trigger depending on whether the verb phrase is in active or passive form. In order to fully cover negated concepts we use a range of three noun phrases tagged before or after the verb phrase. We have chosen a number of three noun phrases in order to receive a good compromise between false-positive and false-negative phrases. We believe that a negation covers only a small number of phrases and not a thread of numerous phrases.</p><p>The next section deals with negations, where the triggers are already included in noun phrases.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2.2">The Intra-Phrase Triggered Negation</head><p>In this kind of negation the negation trigger is included in a phrase. The trigger therefore negates exactly this phrase. For example, the sentence</p><p>Evidence obtained from at least one well-designed controlled study without randomi- sation.</p><p>contains the negated concept "randomisation". In this case, the negation is triggered by the term "without". MMTx classifies "without randomisation" as a prepositional phrase.</p><p>NegHunter has classified four triggers for the Intra-Phrase Triggered Negation:</p><p>1. without: occuring within a prepositional phrase 2. no: indicates negated noun phrases 3. inappropriate: within noun phrases 4. ineffective: also within noun phrases</p><p>The following rules are applied for the detection negated phrases of this type:</p><p>&lt;Adjective Negation&gt; ::= &lt;Trigger Phrase&gt; &lt;Noun Phrase&gt; &lt;Trigger Phrase&gt; ::= "without" | "no"| "inappropriate" | "ineffective"</p><p>For example, in the sentence</p><p>There is no clinical evidence that Hormone Replacement Therapy should be withheld from patients with a history of cervical cancer the concept "clinical evidence" is negated by the term "no".</p><p>NegHunter identifies the negation triggers and afterwards it splits up the phrase allowing a differentiation in negation trigger and negated term. The term which is contained in the phrase with the trigger is then regarded as the negated phrase. In the subsequent sentence the effect of the trigger "no" is shown:</p><p>There is no clinical evidence that Hormone Replacement Therapy should be with- held from patients with a history of cervical cancer. <ref type="bibr" target="#b2">2</ref> In case of the negation with "without" the result would look similar:</p><p>Evidence obtained from at least one well-designed controlled study without randomisation .</p><p>All triggers are searched for with and without capital letters in order to also identify negations placed at the beginning of a sentence.</p><p>The two triggers "ineffective" and "inappropriate" can also occur singularly in a sentence. Related to the Intra-Phrase Triggered Negation they both are combined with other terms result- ing in a noun phrase respectively a prepositional phrase. When this precondition is not given, these two triggers are handled by the rules of the class "Adjective Negation", explained in 4.2.4.</p><p>In the following section we provide information about a negation type, where prepositional phrases are affected by negation triggers.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2.3">The Prepositional Negation</head><p>The prepositional negation is initialized by certain phrases which require a following preposi- tional phrase. Indeed, this prepositional phrase is the negated concept in the particular sentence. Trigger phrases can either be nouns or adjectives.</p><p>For CPGs we use the subsequent terms initializing a prepositional negation:</p><p>• absence</p><p>• none</p><p>• lack</p><p>• free</p><p>• freedom Each of these phrases is followed by a prepositional phrase which is the negated phrase. The following schema represents the rule for this type of negation:</p><p>&lt;Prepositional Negation&gt; ::= &lt;Negation Trigger&gt; &lt;Negated Phrase&gt; We apply the subsequent definitions:</p><p>&lt;Negation Trigger&gt; ::= &lt;Noun Trigger&gt; | &lt;Adjective Trigger&gt; &lt;Noun Trigger&gt; ::= "absence" | "lack" | "freedom" &lt;Adjective Trigger&gt; ::= "free" | "none" &lt;Negated Phrase&gt; ::= &lt;Prepositional Phrase&gt;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>The sentence</head><p>Performing an anastomosis in this setting is dependent on the patient's general con- dition at the time of resection and the absence of other factors that indicate the need for a stoma to be created.</p><p>shows an example of the usage of the trigger "the absence". Although it is a prepositional phrase it is considered as a negated phrase 3 . "The absence of other factor" equals the statement "no other factors", where "other factors" are the negated phrase (one must keep in mind, that "no other factors" actually is an intra-phrase triggered negation, the comparison should only simplify the understanding). With other verbs, negated phrases which are prepositional phrases too are not treated as prepositional. They are negated phrases and therefore are also tagged as such.</p><p>In the case of the trigger "lack" the tagging process is accomplished similarly:</p><p>The chemotherapy offered will depend on the duration of the response after receiving first-line chemotherapy or the lack of response to first-line chemotherapy.</p><p>The last sentence allows a similar comparison as mentioned in the last example. The state- ment "the lack of response to first-line chemotherapy" expresses the same fact as the statement "there is no response to first-line chemotherapy". Because of this, the prepositional phrase is actually a negated phrase. Furthermore, the following example shows the effect of the trigger "none":</p><p>Women can be cared for in primary care if the family history shows only one first- degree or second-degree relative diagnosed with breast cancer at older than age 40 years, provided that none of the following are present in the family history.</p><p>Here, the prepositional phrase "of the following" is effected by the trigger. "None" always expresses the fact, that the semantic concept of the following phrase is not valid. Thus, the phrase after "none" is considered as negated. In CPGs, this trigger term is often used in sentence, where a related negated phrase does not exist. This is then the case, when the actual negated phrase occur in a preceding sentence. For example,</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>AVAILABILITY OF COMPANION DOCUMENTS. None available</head><p>In this case, "AVAILABILITY OF COMPANION DOCUMENTS" is a headline, and in the following paragraph the statement is expressed, that these companion documents are not available. In this case, the trigger term is tagged, but the related phrase is not. We do not provide a cross-sentence tagging, since this would lead to unpredictable results. Note the following sentences:</p><p>There are many patients in the hospital. None has cancer.</p><p>In the hospital are many patients. None has cancer.</p><p>These two sentences are only simple ones, yet the negated phrases occur on different locations within the sentences. When the sentence structure becomes more complex, these differences grow larger. This makes a proper Negation Detection to a task of the second sight. Therefore, NegHunter does not provide such tagging strategies.</p><p>There are also two triggers, which would not be regarded as triggers by persons not familiar with the medical language. These triggers are "free" and "freedom". In the normal spoken or written language, the two terms always have a rather positive connotation. To be free of something is always a good thing. This is also the case in medicine, but here, the freedom from something means, that a specific concept could not be observed. The subsequent sentence shows an example:</p><p>The patient is free of pain .</p><p>To be free of pain is a positive fact for the patient. In the context of medicine this sentence also has the very important semantic of a lack of pain, i.e., there is no pain. This circumstances make the terms "free" and "freedom" to important triggers. "Freedom" works similarly:</p><p>Freedom from pain is an important indicator for the recovery of a patient.</p><p>Here, pain is also negated by "freedom". The presence of pain would otherwise lead to the need of a treatment of the specific patient. This matter of fact is very important for CPGs.</p><p>In this class of negations prepositional information can also be added to a negated phrase. When this case occurs, the prepositional phrase containing the addtional information is high- lighted in cornflowerblue too, as shown in the following example:</p><p>Indicates absence of directly applicable clinical studies of good quality.</p><p>The subsequent section deals with negation types, where the negation is initialized by ad- jective triggers.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2.4">The Adjective Negation</head><p>English adjectives can also be used as negation triggers. For CPGs we identified the terms "ineffective" and "inappropriate" as such triggers. The precondition of the usage of these two adjectives as triggers is that they are not combined to a noun phrase with other terms (e.g., "Ineffective treatment of patients...", see Subsection 4.2.2). This means, that the terms need to occur singularly in a sentence. The following decision schema is applied for the adjective negation:</p><p>&lt;Adjective Negation&gt; ::= &lt;Negated Phrase&gt; &lt;Arbitrary Phrase Thread&gt; &lt;Be Verb&gt; &lt;Adjective Trigger&gt;</p><p>The elements of this rule are defined as follows:</p><p>&lt;Negated Phrase&gt; ::= &lt;Noun Phrase&gt; &lt;Arbitrary Phrase Thread&gt; ::= &lt;Arbitrary Phrase except Noun Phrase&gt; | (&lt;Arbitrary Phrase except Noun Phrase&gt; &lt;Arbitrary Phrase Thread&gt;) &lt;Adjective Trigger&gt; ::= "ineffective" | "inappropriate"</p><p>The adjective trigger is preceded by a verb phrase indicating that this combination negates the status of a phrase. Moreover, a number of arbitrary phrase can be located between this combination and the noun phrase, which is negated. These arbitrary phrases must not be noun phrases themselves. In Recommendation indicates at least fair evidence that the service is ineffective or that harm outweighs benefit. the term "ineffective" occurs singularly in the sentence, indicating that the preceding phrase is negated.</p><p>In the sentence A superficial shave biopsy is inappropriate for suspicious pigmented lesions.</p><p>the trigger also occurs alone in the sentence. So, the phrase "A superficial shave biopsy" is considered as a negated phrase.</p><p>The two triggers for the Adjective Negation can also occurs as triggers of another class of negation types, as mentioned earlier. When one of these triggers appears within a noun phrase or a prepositional phrase they are handled as an Intra-Phrase Triggered Negation. In this case the rules described in Section 4.2.2 are applied.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2.5">The Verb Negation</head><p>Negations can also be triggered by verbs. If such a verb occurs in a sentence, the phrase related to this verb is considered negated. According to the suffix we decide, whether a verb represents an expression in the active or passive voice. For example, the suffix "ing" indicates the passive voice (e.g., "A treatment option is lacking"), whereas the suffix "s" indicates the active voice (e.g., "The patient lacks a good health status"). The decision rule for the verb negation is the following:</p><p>&lt;Verb Negation Active Voice&gt; ::= &lt;Active Verb Trigger&gt; &lt;Negated Phrase&gt; Here, the negation trigger is defined as:</p><p>&lt;Active Verb Trigger&gt; ::= "lack" | "lacks" | "lacked" | "deny" | "denies" | "denied"</p><p>For the passive voice, the rule is:</p><p>&lt;Verb Negation Passive Voice&gt; ::= &lt;Negated Phrase&gt; &lt;Passive Verb Trigger&gt;</p><p>The negation trigger is a verb in its passive voice:</p><p>&lt;Passive Verb Trigger&gt; ::= "lacking" | "denying"</p><p>In both cases, the negated phrase is a noun phrase:</p><p>&lt;Negated Phrase&gt; ::= &lt;Noun Phrase&gt; We identified the two triggers "lack" and "deny" as such verb triggers. The following example sentence shows the occurence of the trigger "lack" in active voice:</p><p>The patient lacks a good health status .</p><p>Here, as the sentence is written in active voice, the triggers negateds the succeeding phrase "a good health status". In the passive voice, a preceding phrase is negated by the triggers:</p><p>Recommendation indicates that evidence that the service is effective is lacking .</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2.6">Assigning Prepositional Information</head><p>With prepositional phrases auxiliary information is provided in many cases. From our point of view it is important to label this additional pieces of information, since they deliver a specification of a negated concept. We decided to tag all prepositional phrases which directly follow negated phrases. In the sentence Women who do not meet the criteria for referral should be cared for in primary care by giving standard written information. <ref type="bibr" target="#b4">4</ref> we see a prepositional phrase tagged in blue. In this case, only one preposition followed the negated concept. In opposition to this case, in the following sentence more than one prepositional phrase is added to the concept:</p><p>The use of anthracyclines in first line chemotherapy treatment of epithelial ovarian cancer is not recommended outside randomised controlled tri- als (RCTs )</p><p>For such cases we decided to tag all prepositional phrases which directly follow a concept. Once the thread of prepositional phrases is split up by another type of phrase the affinity to the concept is ended up and the tagging process stops too.</p><p>The following example shows prepositional information applied to an intra-phrase triggered negation:</p><p>Requires availability of well conducted clinical studies but no randomised clinical trials on the topic of recommendation .</p><p>In this case we have two pieces of additional information added to the negated concept which for that reason are also provided with metadata that signs them as belonging to the negated phrase. The trigger "ineffective" shows a similar behaviour:</p><p>Ineffective treatment of patients maximizes the costs.</p><p>In the class of prepositional negations, prepositonal information can also be added to the negated phrase. When this case occurs, we discriminate between the negated phrase and the added information. It is important that the prepositional negated phrase and the prepositional information are not confused, since they are different concepts in the sentence. The following sentence, already introduced in Section 4.2.3, shows such a case:</p><p>The chemotherapy offered will depend on the duration of the response after receiving first-line chemotherapy or the lack of response to first-line chemotherapy.</p><p>Here the negated phrase and its added information are treated differently, although both originate from the same lexical category.</p><p>Prepositional information represents an essential part of information that must also be de- clared as belonging to the negated phrase. This kind of information often provides explanations which must not be lost in the Negation Detection process.</p><p>The next section gives a summary over our developed approach and resumes our aggregated knowledge.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.3">Summary</head><p>In the preceding section we described our Negation Detection method called NegHunter. NegHunter uses the MMTx software as a framework for document and sentence analysis. The information gained from the processing of CPGs with MMTx are used for the identification of the underlying negation class. Each identified negation is matched to one of five defined negation categories, which have been developed and named in regard to their syntactical features. This means, that part-of-speech characteristics of the negation triggers themselves as well as their behaviour on negated phrases are used for their naming. For example, the "adverbial negation" uses adverbs, which affect a phrase via a verb and thus negate this phrase. "Adjective negation" as well as "verb negation" can be understood straightforward, as in these types the triggers are either adjectives or verbs. The "intra-phrase triggered negation" owes it's name to the circumstance that the triggers are contained in the phrase they negate. Yet, triggers can be of several lexical categories, for example, "without" is a preposition, whereas "ineffective" is an adjective. The "prepositional negation" is triggered by terms, which affecta subsequent prepositional phrase, although they again can arise from several lexical categories (e.g. "lack" as a noun triggers a prepositional negation as well as "free", which is an adjective).</p><p>This negation classification allows a targeted detection of negated phrases. This approach is necessary since CPGs are medical documents written in free speech, not restricted to conventions that could be used for a simpler algorithm design. As each individual has an individual writing style, all CPGs vary from from each other. NegHunter uses the basis of language itsel, so on this way we are able to overcome the vast possibilities of variations.</p><p>We believe thanks to the general structure of our algorithms that a deployment of NegHunter on documents different from CPGs can als be considered. NegHunter uses dealings of the English language which may also be applicable for other writings.</p><p>In the following section we provide the evaluation of our system. In Chapter 6 we resume our research and give a future outline of possible enhancements to our existing system.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Chapter 5 Evaluation</head><p>The final part of our work on Negation Detection consists of the evaluation of our approach. With this part we provide information about the performance of the presented algorithms. Moreover, we show the distribution of occuring negated phrases with their underlying classification.</p><p>The evaluation was carried out as follows: we initially developed a gold standard of our test set of totally 16 CPGs (see Section 1.2). In a second step we compared this gold standard with the results of the processing with NegHunter. Afterwards, we calculated the statistical values of recall and precision, which are generally used to evaluate Natural Language Processing systems (see Sections 3.2.1 and 3.2.3). Finally, we tried to identify errors in the tagging process which emerged due to the MMTx framework and errors related to NegHunter.</p><p>In the subsequent section we give an overview over the distribution of the phrases we iden- tified as negated in our test set of 16 CPGs.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.1">Distribution of Identified Negated Phrases</head><p>In the 16 CPGs we used to test our negation detection algorithms we found 642 sentences containing totally 731 negated phrases. Of these 731 negated phrases, an overwhelmingly large number belonged to the class of the adverbial negation. This class of negation is not only the most frequent class but also the most complicated to process. It is difficult to identify negations of this type, since the concerning phrases can occur on the complete opposite end of the place of the trigger in the sentence. Other types of negations are easier to treat, since the phrase related to trigger is always expected subsequently to the trigger. <ref type="figure">Figure 5</ref>.1 shows a pie chart of the distribution of negated phrases. As one can see the most dominant class is the adverbial negation with a total of 69 % of all counted negations. Another very frequent class is the intra-phrase triggered negation which holds one quarter of all phrases. Prepositional negation and verb negation occur in 3 % and 2 %, respectively and the adjective negation as the smallest class amounts to only 1 % of the detected negated phrases.</p><p>The vast amount of adverbial negations in CPGs has also a large effect on the outcome. The complexity leads to difficulties in the identification of the actual negated phrases. As these difficulties concern a negation class with a vast amount of occurences, overall recall and precision are strongly influenced and consequently lowered. Good results of the other classes cannot equalise this effect, because their number is too small. Alternatively, an efficient treatment of this negation type has a positive impact on the overall parameters.</p><p>In the following section we give an impression of the performance of NegHunter in each negation class. We show, how efficient NegHunter identifies negations of the different types. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2">Analysing the Performance of NegHunter</head><p>The analysis of the performance of NegHunter was carried out using the statistical parameters recall and precision presented in Sections 3.2.1 and 3.2.3. The recall is a measurement for the quality of a method to identify interesting targets. The following formula simplifies this matter of fact:</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Recall = Identified Relevant Targets All Exisiting Relevant Targets</head><p>On the other hand, the precision measures, how good a system discards elements of no inter- est. It's value gives information about how many irrelevant targets were (incorrectly) identified. See the subsequent formula for a simplified represention: Precision = Identified Relevant Targets All Identified Targets A high value in recall means that a detection method has nearly covered all interesting enti- ties, a high value in precision means that no redundant entities have been identified. An illegal way of maximizing recall would be to consider each and every entity in a writing as interest- ing. Although in this case recall would become 100 %, a high amount of needless information is detected too. Consequently, the value of precision would be very low (this depends on the amount of available entities: if there are 100 entities in a document of which 99 are of interest, then the consideration of all 100 entities as interesting would have high values in both recall and precision). The same can be applied to precision: minimizing the false positive detection to gain a high precision means that a lot of interesting pieces of information may have been lost during the detection process.</p><p>To calculate the two parameters we also have to consider partially correct results. A result is partially correct, if only a fraction of the whole entity could be correctly identified. For example, if the result of a tagging process would be "surgery", but the actual interesting target had been "minimal invasive surgery", this lack of a part of the original target would lead to one only partially correct result. In this case, the results counts only half the value of a true positive. The partially correctness is therefore a crucial element of the calculation for the analysis of the performance of a method.</p><p>In order to evaluate the vast amount of sentences in CPGs containing negations, we imple- mented a program to accomplish this task. This programm has as input a goldstandard CPG. Within this CPG it searches for negation triggers. When a negation trigger is found, the whole sentence is analysed for the negated phrases (which are already tagged since it is a goldstan- dard) and the analysis results are stored. Afterwards, the taggings are removed. What remains is the original sentence of the CPG before it was turned into the goldstandard. The original sentence is now sent to NegHunter, which processes it. The processed sentence is then again returned to the evaluation programm which analyzes it again and stores these results. Then, both goldstandard results and NegHunter results are compared to eachother. The consequence of this process is, that we afterwards have a number of true positive, false positive, false negative and partially correct results. These numbers are stored and the analysis results of all sentences in the guideline are added together, so we get overall true positives, false positives, etc.. The results of each guideline is stored in a spreadsheet. After the processing of all test-CPGs we had the true positives, false positives, etc. and calculated recall and precision with following two formulas: In the part now following we give a detailled analysis of the performance of NegHunter in each negation class.</p><p>The Adverbial Negation: This most frequent class of negation totally amounts to 507 negated phrases, these are 69 % of all negated phrases. Of these phrases 75.54 % were correctly identified, 19.92 % where missed by the detection algorithm and 4.54 % were detected only partially correct.  The cell of the percentage of the false positive is empty, because of the fact that false positives are actually not part of the collectivity of negated phrases. They are phrases incorrectly considered as negated by the algorithm.</p><p>Our method achieves a recall of 77.81 % and a precision of 60.32 % in this negation type.</p><p>The Intra-Phrase Triggered Negation: 25 % of all negated phrases originate from the intra- phrase triggered negation. 90.11 % of these were correctly identified, whereas 7.14 % were missed by the algorithm. 2.75 % could only be identified partially. In <ref type="table" target="#tab_20">Table 5</ref>.2 all values are listed. The Prepositional Negation: The third most frequent class had an occurence of 19 negated phrases. Nearly 95 % of these were idenified accurately. The exact values are listed in <ref type="table" target="#tab_20">Table 5</ref>.3.  The Adjective Negation: In this smallest class of all negations (five negated phrases) we achieved results as shown in <ref type="table" target="#tab_20">Table 5</ref>.5.   <ref type="table" target="#tab_20">Table 5</ref>.7 the particular values of recall and precision are also summarized again. In the subsequent section we give an impression of errors not related to the negation detection algorithms but to the underlying software MMTx. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2.1">Errors Related to MMTx</head><p>In some cases, errors occured due to an incorrect part-of-speech tagging by the MMTx software.</p><p>MMTx is a very sophisticated software which leads to good results in the Natural Language Processing.</p><p>In the adverbial negation, we could find the most errors (this class is the most frequent one). We had 20 false positive, 21 false negative, and 15 partially correct results in that negation type. The following sentence gives an example:</p><p>While the presence of some indicators such as perineural involvement or vascular tumor emboli alone may not necessarily indicate a high risk of recurrence, ...</p><p>Here, the phrase "a high risk" is not properly identified by MMTx. While "a risk" is correctly detected as a noun phrase, the combination with "high" leads to an incorrect result (MMTx cannot identify "a high risk" and therefore regards it as an unknown phrase), which leads to a false negative result in the evaluation. Another good example to show the limitations of MMTx is this sentence: Trials powered to detect specified differences in main outcomes may not have suffi- cient power to detect adverse events that are less frequent.</p><p>In this sentence, MMTx detects the phrase "sufficient power to" as belonging together and classifies it as a noun phrase. This wrong classification brings one more only partially correct result for our evaluation.</p><p>In the intra-phrase triggered negation we had only five partially correct results. For example, in There was no systematic attempt to search for all the "grey literature" (conferences, abstracts, theses and unpublished literature).</p><p>the actual negated phrase would be the "systematic attempt". MMTx unfortunately appends the "to" to this phrase, leading to a partially correct result.</p><p>In the verb negation we had a similar problem:</p><p>The panel lacked a consensus to recommend it.</p><p>In this example the term "to" is also appended to the actual negated phrase "a consensus", which generates an only partially correct result. In the class of verb negation, four partially correct results were caused by MMTx. <ref type="table" target="#tab_20">Table 5</ref>.8 shows the numbers of registered MMTx errors related to their particular negation class, whereas Table 5.9 contains the relative number of MMTx errors compared to the overall errors. In this table one can see that on overwhelmingly large number of partially correct results is generated by MMTx itself (75 %), whereas only a relative small number of false positive (7.55 %) and false negative (18.26 %) comes from MMTx.  </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2.2">Discussion</head><p>The program shows its strength in the class of the intra-phrase triggered negation, the prepo- sitional negation as well as the adjective negation. In the case of the intra-phrase triggered negation and the prepositional negation this matter of fact emerges through the easy structure of these classes. The concerned negated phrases occurs immediately after the trigger. Thus, a proper handling of this type is not a problem. The adverbial negation and the verb negation need more sophisticated strategies. In these types verbs give information about where a phrase affected by a trigger can be. For the purpose of a proper Negation Detecion, one has to keep the effect of different tenses in mind. The knowledge of the tenses determines, whether a sentence is written in active or passive voice. On this basis, a decision can be made, where the negated phrase occurs in a sentence. The problem of finding negated phrases is also the fact that they can occur on positions far away from the specific trigger. Due to this problem we have not only the failure of not detecting the phrase, but also the failure of spuriously detecting phrases in the space between trigger and actual negated phrase. Although a tagging scope of three phrases away from an adverbial trigger is a good compromise between recall and precision, there nevertheless occur errors. We also had to place value on the optimization of the recall of our method, as it is easier to remove mistakenly tagged phrases afterwards as it is to find them again. Thus, we had to accept an increasing number of false positive tagging, leading to a decreasing value in precision.</p><p>We believe that a Negation Detection using syntactical methods can improve the handling of negations in medical writings. As we use methods which are also applicable in writings different from medical documents, our approach can also be applied to documents in other domains. It is imaginable, that an approach using full-parsing, which also regards the sentence position of phrases can increase the performance of our algorithms. Moreover, the deployment of our method of Negation Detection is also possible in a non-medical area, since our algorithms are universally applicable for the English language. A restriction to the medical topic is therefore not implicitly necessary.</p><p>A refinement for the search of negated phrases for a specific topic using semantic methods is also possible. One could search for phrases which explicitly only concern the field of negative recommendations, or otherwise, one could accomplish a search for diseases or conditions, in which a certain CPG, respectively a part of it, is not applicable.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Chapter 6 Conclusion</head><p>In our presented approach we use syntactical information of the English language to decide, whether phrases in a sentence are affected by a negation trigger or not. The English grammar provides with its tenses and parts-of-speech enough information to allocate potential negated phrases. We use this information and created a classification system which contains five global classes of negation, which are distinguished by their different grammatical type. Negations work- ing on neutral (in the sense that they are not negation triggers themselves) verbs using adverbs are therefore classified as "adverbial negation", while negations using adjectives are referred to as "adjective negations", and negations triggered by verbs are "verb negations". Furthermore, we have two more types called "intra-phrase triggered negation" and the "prepositional negation". In the first case, the triggers are contained in the negated phrase itself, and can be of several lexical categories (e.g., a preposition such as "without" or an adjective such as "ineffective"). In the second case, the triggers concern subsequent prepositional phrases and are not assignable to one specific lexical category too (e.g. the adjective "free" or the noun "lack"). Currently, our system is strongly limited to syntactical features. As a future outline, the involvement of meth- ods using semantical aspects is conceivable. On the current base of processing, a subsequent deployment of semantical methods can augment the quality of Negation Detection and refine search parameters for interested persons. Compare the following example of <ref type="bibr" target="#b22">[Chapman et al., 2001]</ref>, which demonstrates negations with different contents that may be useful under different circumstances:</p><p>We did not treat the infection. We did not detect an infection.</p><p>The first sentence indicates the absence of the treatment of an infection. Nevertheless, this infection is existent, whereas in the second sentence the existence of the infection itself is negated. This slight difference may seem dispensable, but in the medical context it gets an importance not negligible. With NegHunter's syntactical methods in combination with a semantic level, medical data can be obtained specifically. Whereas one may be interested in negated findings in a certain CPG, another person maybe wants to find treatment options not advisable for special circumstances. Therefore, NegHunter provides a broad basis for Negation Detection which can be armed with special semantic concepts for any medical topic of interest.</p><p>Another option of including semantic into the Negation Detection is the observance of terms which are capable of modifying the strength of a negation. In our approach, the detection is a binary decision, i.e., a phrase can either be negated or not. In some cases, this binary method may not be sufficient. For example, in the sentence Chemotherapy is not always recommended as a treatment.</p><p>the term "Chemotherapy" is negated, but the term "always" softens this absolute negation. In other words, chemotherapy is not recommended in the most cases (for example, when the physiological status of a person is extremly bad), anyhow, it can be appropriate under certain circumstances. As practitioners are strongly advised to critically adopt CPGs, the presentation of this type of information can therefore also be necessary.</p><p>Furthermore, we decided to chose a flexible implementation of our method in order to make it portable to arbitrary documents. Thanks to NegHunter's classification of negations, an aug- mentation of already available negation triggers is always possible, thus making the system applicable for the usage in other types of documents. The new trigger only has to be assigned to a negation class and NegHunter then applies it's rulebase for this trigger. This makes NegHunter portable on other documents types as well as extensible and maintainable.</p><p>Our system provides methods for a targeted detection of negations, thus making it capable of processing even CPGs, which under different circumstances are difficult to handle, since they are written in free speech. Former approaches lack these features, so NegHunter makes a great contribution for the topic of automated processing of CPGs. Thus, it aids the handling of CPGs and alleviates their deployment in the practical field.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>Figure 3 .</head><label>3</label><figDesc>Figure 3.1 on page 10 shows a graphical representation of the underlying architecture: As of April 2007, SNOMED-CT ® was taken over by the International Health Terminology Standards Development Organisation (IHTSDO), which is a non-profit association with place of residence in Denmark.</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Figure 3 . 1 :</head><label>31</label><figDesc>Figure 3.1: Illustration of the SNOMED-CT ® components [SNOMED International, 2006]</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>Figure 4 . 2 :</head><label>42</label><figDesc>Figure 4.2: Entities of MMTx's textfeature package used within NegHunter</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_3"><head>&lt;Adverbial</head><label></label><figDesc>Negation Active Voice&gt; ::= &lt;Active Negation Trigger&gt; &lt;Arbitrary Phrase Thread&gt; &lt;Negated Phrases&gt; For the rule the following definitions are applied: &lt;Active Negation Trigger&gt; ::= (&lt;Verb Phrase&gt; &lt;Adverb Trigger&gt; &lt;Verb Phrase&gt;) | (&lt;Be Verb&gt; &lt;Adverb Trigger&gt; &lt;Verb Phrase -ing&gt;) | (&lt;Verb Phrase&gt; &lt;Adverb Trigger&gt; &lt;Verb Phrase&gt; &lt;Verb Phrase&gt;) &lt;Adverb Trigger&gt; ::= "not" | "never" &lt;Verb Phrase -ing&gt; ::= &lt;Verb Phrase&gt; "ing" &lt;Negated Phrases&gt; ::= [&lt;Noun Phrase&gt;] [&lt;Noun Phrase&gt;] [&lt;Noun Phrase&gt;] &lt;Arbitrary Phrase Thread&gt; ::= &lt;Arbitrary Phrase except Noun Phrase&gt; | (&lt;Arbitrary Phrase except Noun Phrase&gt; &lt;Arbitrary Phrase Thread&gt;) For examples on these rules see Tables 4.4 to 4.6. In the case of the passive voice, we apply the following rule: &lt;Adverbial Negation Passive Voice&gt; ::= &lt;Negated Phrases&gt; &lt;Arbitrary Phrase Thread&gt; &lt;Passive Negation Trigger&gt; The definitions for this rule are the same as for the former rule, except for the negation trigger. Its definition is as follows (see examples in Tables 4.7 to 4.10): &lt;Passive Negation Trigger&gt; ::= (&lt;Be Verb&gt; &lt;Adverb Trigger&gt; &lt;Verb Phrase&gt;) | (&lt;Verb Phrase&gt; &lt;Adverb Trigger&gt; &lt;Be Verb&gt; &lt;Verb Phrase&gt;) | (&lt;Be Verb &gt; &lt;Adverb Trigger&gt; &lt;Be Verb&gt; &lt;Verb Phrase&gt;) | (&lt;Verb Phrase&gt; &lt;Adverb Trigger&gt; &lt;Verb Phrase&gt; &lt;Be Verb&gt; &lt;Verb Phrase&gt;)</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Figure 5 . 1 :</head><label>51</label><figDesc>Figure 5.1: Distribution of negated phrases</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0" validated="false"><head>Table 1 .</head><label>1</label><figDesc></figDesc><table>1: The training set of the used CPGs. 
+
+1. Breast cancer. [Singapore Ministry of Health, National Committee on Cancer Care, 2004] 
+
+2. Cervical cancer. [Singapore Ministry of Health, 2004a] 
+
+3. Chemotherapeutic management of stage IV non-small cell lung cancer. [Socinsky et al., 
+2003] 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2" validated="true"><head>Table 3 .1: Comparison of the performance of the baseline algorithm and NegEx.</head><label>3</label><figDesc></figDesc><table>Baseline algorithm NegEx 
+(%) 
+(%) 
+Sensitivity 
+88.27 
+77.84 
+Specificity 
+85.27 
+94.51 
+PPV 
+68.42 
+84.49 
+NPV 
+93.01 
+91.73 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3" validated="true"><head>Table 3 .2: Recall and Precision of NegEx in Pathology Reports</head><label>3</label><figDesc></figDesc><table>Reports section 
+Precision 
+Recall 
+Lenient Average Strict Lenient Average Strict 
+Gross Description 
+0.87 
+0.68 
+0.49 
+0.57 
+0.45 
+0.32 
+Final Diagnosis 
+0.88 
+0.84 
+0.80 
+0.84 
+0.80 
+0.76 
+Microscopic Description 
+0.29 
+0.19 
+0.10 
+0.55 
+0.37 
+0.19 
+Comment 
+0.63 
+0.50 
+0.37 
+0.42 
+0.34 
+0.25 
+Other 
+0.068 
+0.047 
+0.027 
+0.074 
+0.052 
+0.029 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_4" validated="true"><head>Table 3 .3: Differences in sensitivity and specifity in the two different examining methods.</head><label>3</label><figDesc></figDesc><table>Human observers read 
+Human observer and NegFinder 
+through documents marked 
+worked independently 
+up with NegFinder 
+(%) 
+(%) 
+Sensitivity 
+95.3 
+95.7 
+Specificity 
+97.7 
+91.8 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_5" validated="true"><head>Table 3 .4: The procedure proposed by [Elkin et al., 2005] reaches high values in all statistical parameters.</head><label>3</label><figDesc></figDesc><table>Value of the statistical parameter 
+(%) 
+Sensitivity 
+97.2 
+Specificity 
+98.8 
+PPV 
+91.2 
+NPV 
+99.6 
+
+3.6 Negation Processing in Electronic Health Records in Bul-
+garian 
+
+This study comes from the university of Sofia and deals with the problem of processing a language 
+different from English, namely Bulgarian [Boytcheva et al., 2005]. For the English language the 
+strongest effort in Natural Language Processing and negation detection has been made, whereas 
+other languages have been treated more like stepchildren. The University of Sofia worked on a 
+system called MEHR (Maintaining Electronically Health Records) for the indexing of medical 
+terms and facts like negations in electronic health records, written in Bulgarian. 
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_7" validated="false"><head>Table 3 .5: Performance of the Hybrid Approach on 120 Radiology Reports</head><label>3</label><figDesc></figDesc><table>Specificity Sensitivity PPV 
+(%) 
+(%) 
+(%) 
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_8" validated="false"><head>Table 4 .1: A Simple Past Active Sentence and the splitting into its phrase components</head><label>4</label><figDesc></figDesc><table>Phrase Classification Verb Phrase Adverb Phrase Verb Phrase 
+Term 
+did 
+not 
+perform 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_9" validated="false"><head>Table 4 .2: The classification of the phrase in a Simple Past Passive sentence</head><label>4</label><figDesc></figDesc><table>Phrase Classification Be Verb Adverb Phrase Verb Phrase 
+Term 
+was 
+not 
+performed 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_10" validated="false"><head>Table 4 .3: The classification of a phrase in Present Perfect Passive</head><label>4</label><figDesc></figDesc><table>Phrase Classification Verb Phrase Adverb Phrase Be Verb Verb Phrase 
+Term 
+has 
+not 
+been 
+recommended 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_11" validated="true"><head>Table 4 .4: In the active voice the phrase classification is similar for seven tenses.</head><label>4</label><figDesc></figDesc><table>Phrase Classification Verb Phrase Adverb Phrase Verb Phrase 
+Simple Present 
+do 
+not 
+recommend 
+Simple Past 
+did 
+not 
+recommend 
+Present Perfect 
+have 
+not 
+recommended 
+Future I 
+will 
+not 
+recommend 
+Past Perfect 
+had 
+not 
+recommended 
+Conditional I 
+would 
+not 
+recommend 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_12" validated="false"><head>Table 4 .</head><label>4</label><figDesc>5 shows the tenses Present Progressive Active and Past Progressive Active: Table 4.6 shows the classification of Future II and Conditional II in active voice. These three tables cover all tenses in the active voice. Tables 4.7 to 4.10 show the specific sentence structure for all tenses but this time in the passive voice. Present Perfect Passive, Future I Passive, Past Perfect Passive and Conditional I Passive are shown in Table 4.8. The passive voice structure of Present Progressive and Past Progressive is listed in Table 4.9. Table 4.10 shows the tenses Future II and Conditional II in passive voice.</figDesc><table></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_13" validated="false"><head>Table 4 .5: The structure of Present and Past Progressive Active.</head><label>4</label><figDesc></figDesc><table>Phrase Classification Be Verb Adverb Phrase 
+Verb Phrase 
+Present Progressive 
+are 
+not 
+recommending 
+Past Progressive 
+were 
+not 
+recommending 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_14" validated="false"><head>Table 4 .</head><label>4</label><figDesc></figDesc><table>6: Future II and Conditional II in Active Voice spanning three Verb Phrases with their 
+usage. 
+
+Phrase Classification Verb Phrase Adverb Phrase Verb Phrase Verb Phrase 
+Future II 
+will 
+not 
+have 
+recommended 
+Conditional II 
+would 
+not 
+have 
+recommended 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_15" validated="false"><head>Table 4 .7: Simple Present and Simple Past in the Passive Voice</head><label>4</label><figDesc></figDesc><table>Phrase Classification Be Verb Adverb Phrase Verb Phrase 
+Simple Present 
+is 
+not 
+recommended 
+Simple Past 
+was 
+not 
+recommended 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_16" validated="true"><head>Table 4 .8: Present Perfect, Past Perfect, Future I and Conditional I Passive.</head><label>4</label><figDesc></figDesc><table>Phrase Classification Verb Phrase Adverb Phrase Be Verb Verb Phrase 
+Present Perfect 
+has 
+not 
+been 
+recommended 
+Past Perfect 
+had 
+not 
+been 
+recommended 
+Future I 
+will 
+not 
+be 
+recommended 
+Conditional I 
+would 
+not 
+be 
+recommended 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_17" validated="false"><head>Table 4 .9: Present and Past Progressive Passive.</head><label>4</label><figDesc></figDesc><table>Phrase Classification Be Verb Adverb Phrase Be Verb Verb Phrase 
+Present Progressive 
+is 
+not 
+being 
+recommended 
+Past Progressive 
+was 
+not 
+being 
+recommended 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_18" validated="true"><head>Table 4 .10: The passive form of Future II and Conditional II.</head><label>4</label><figDesc></figDesc><table>Phrase 
+Verb Phrase Adverb Phrase Verb Phrase Be Verb Verb Phrase 
+Classification 
+Future II 
+will 
+not 
+have 
+been 
+recommended 
+Conditional II 
+would 
+not 
+have 
+been 
+recommended 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_20" validated="false"><head>Table 5 .</head><label>5</label><figDesc>1 shows a detailled listing of detected phrases.</figDesc><table></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_21" validated="true"><head>Table 5 .1: Evaluation results of the adverbial negation</head><label>5</label><figDesc></figDesc><table>Adverbial Negation Absolute number Percentage 
+True Positive 
+383 
+75.54 % 
+False Positive 
+248 
+False Negative 
+101 
+19.92 % 
+Partially Correct 
+23 
+4.54 % 
+Overall 
+755 
+100 % </table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_22" validated="true"><head>Table 5 .2: Evaluation results of the intra-phrase triggered negation</head><label>5</label><figDesc></figDesc><table>Intra-Phrase Triggered Negation Absolute number Percentage 
+True Positive 
+164 
+90.11 % 
+False Positive 
+1 
+False Negative 
+13 
+7.14 % 
+Partially Correct 
+5 
+2.75 % 
+Overall 
+183 
+100 % 
+
+In this class we measured a recall of 91.48 % and a precision of 97.94 %. 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_23" validated="true"><head>Table 5 .3: Evaluation results of the prepositional negation</head><label>5</label><figDesc></figDesc><table>Prepositional Negation Absolute number Percentage 
+True Positive 
+18 
+94.74 % 
+False Positive 
+5 
+False Negative 
+1 
+5.26 % 
+Partially Correct 
+0 
+0 % 
+Overall 
+24 
+100 % 
+
+Recall of this class is 94.74 %, precision measures to 78.26 %. 
+
+The Verb Negation: This negation class had an occurence of 18 phrases with a remarkable 
+high number of false positive results of 11. The values are shown in Table 5.4. 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_24" validated="true"><head>Table 5 .4: Evaluation results of the verb negation</head><label>5</label><figDesc></figDesc><table>Verb Negation Absolute number Percentage 
+True Positive 
+14 
+77.78 % 
+False Positive 
+11 
+False Negative 
+0 
+0 % 
+Partially Correct 
+4 
+22.22 % 
+Overall 
+29 
+100 % 
+
+We calculated a recall of 88.89 % and a precision of 55.17 %. </table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_25" validated="true"><head>Table 5 .5: Evaluation results of the adjective negation</head><label>5</label><figDesc></figDesc><table>Adjective Negation Absolute number Percentage 
+True Positive 
+5 
+83.33 % 
+False Positive 
+0 
+False Negative 
+1 
+16.67 % 
+Partially Correct 
+0 
+0 % 
+Overall 
+6 
+100 % 
+
+In this class we achieved a recall of 83.33 % and a precision of 100 %. 
+
+Overall values: The overall values give information on how good NegHunter performed with-
+out distinction between different negation classes. Due to the large number of adverbial 
+negations this type strongly influence overall recall and precision. We achieved a recall of 
+82.08 % and a precision in the amount of 68.1 %. Table 5.6 lists all values. 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_26" validated="true"><head>Table 5 .6: Overall evaluation results</head><label>5</label><figDesc></figDesc><table>Overall values Absolute number Relative number 
+True Positive 
+584 
+58.58 % 
+False Positive 
+265 
+26.58 % 
+False Negative 
+116 
+11.63 % 
+Partially Correct 
+32 
+3.21 % 
+Overall 
+996 
+100 % 
+
+In </table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_27" validated="true"><head>Table 5 .7: Recall and Precision in each negation class</head><label>5</label><figDesc></figDesc><table>Negation Class 
+Recall Precision 
+Adverbial Negation 
+77.81 % 
+60.32 % 
+Intra-Phrase Triggered Negation 91.48 % 
+97.94 % 
+Prepositional Negation 
+94.74 % 
+78.26 % 
+Adjective Negation 
+83.33 % 
+100 % 
+Verb Negation 
+88.89 % 
+55.17 % 
+Overall 
+83.92 % 69.36 % 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_28" validated="true"><head>Table 5 .8: Errors of MMTx related to their negation classes</head><label>5</label><figDesc></figDesc><table>Negation Class 
+False Positive False Negative Partially Correct 
+Adverbial Negation 
+20 
+21 
+15 
+Intra-Phrase Triggered Negation 
+0 
+0 
+5 
+Verb Negation 
+0 
+0 
+4 
+Overall 
+20 
+21 
+24 </table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_29" validated="true"><head>Table 5 .9: Percentage of MMTx errors compared to overall errors</head><label>5</label><figDesc></figDesc><table>Negation class Percentage 
+False Positives 
+7.55 % 
+False Negatives 
+18.1 % 
+Partially Correct 
+75 % 
+
+</table></figure>
+
+			<note place="foot" n="1"> http://www.gradeworkinggroup.org (last assessed December 29, 2007)</note>
+
+			<note place="foot" n="1"> http://www.searchtools.com/index.html, accessed 18.09.06</note>
+
+			<note place="foot" n="3">. Phrase: This is a meaningfully arranged combination of words within a sentence. Phrases also include syntactical elements like articles and adverbs.</note>
+
+			<note place="foot">Figure 4.1: Entitity-Relationship-diagram of the textfeature package of MMTx [Divita, 2005]</note>
+
+			<note place="foot" n="1"> The trigger term is highlighted in yellow, the negated phrase in springgreen.</note>
+
+			<note place="foot" n="2"> The trigger is again in yellow, the negated terms are in green. This kind of highlighting phrases will be continued in the whole subsequent work.</note>
+
+			<note place="foot" n="3"> in Subsection 4.2.6 we describe the handling of prepositions, which represent accessory information that can be added to negated phrases</note>
+
+			<note place="foot" n="4"> Prepositional information is highlighted by a blue box.</note>
+		</body>
+		<back>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<monogr>
+		<title level="m" type="main">Table 1.2: The test set of the used CPGs</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<monogr>
+		<title level="m" type="main">Colorectal cancer. [Singapore Ministry of Health</title>
+		<imprint>
+			<date type="published" when="2004" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<monogr>
+		<title level="m" type="main">A national clinical guideline</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Cutaneous</forename><surname>Melanoma</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2003" />
+		</imprint>
+	</monogr>
+	<note>Scottish Intercollegiate Guidelines Network (SIGN)</note>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">Epithelial ovarian cancer. A national clinical guideline</title>
+	</analytic>
+	<monogr>
+		<title level="m">Scottish Intercollegiate Guidelines Network (SIGN)</title>
+		<imprint>
+			<date type="published" when="2003" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<monogr>
+		<title level="m" type="main">Guideline for the management of cancer pain in adults and children</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Miaskkowski</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2005" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<monogr>
+		<title level="m" type="main">Long term follow up of survivors of childhood cancer. A national clinical guideline</title>
+		<imprint>
+			<date type="published" when="2004" />
+		</imprint>
+	</monogr>
+	<note>Scottish Intercollegiate Guidelines Network (SIGN</note>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<monogr>
+		<title level="m" type="main">Lung cancer. Palliative care</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Kvale</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2003" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<monogr>
+		<title level="m" type="main">Management of hepatocellular carcinoma</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Bruix</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2005" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<monogr>
+		<title level="m" type="main">Management of patients with lung cancer. A national clinical guideline</title>
+		<imprint/>
+	</monogr>
+	<note>Scottish Intercollegiate Guidelines Network (SIGN), 2005a] Management of transitional cell carcinoma of the bladder</note>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Practice parameters for colon cancer</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Otchy</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Scottish Intercollegiate Guidelines Network (SIGN)</title>
+		<imprint>
+			<date type="published" when="2004" />
+		</imprint>
+	</monogr>
+	<note>A national clinical guideline</note>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Staging evaluation-Hodgkin&apos;s disease</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Wagner ;</forename><surname>Simon</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Wolkov</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Small cell lung cancer</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<date type="published" when="2003" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<monogr>
+		<title level="m" type="main">The diagnosis and treatment of lung cancer</title>
+		<imprint>
+			<date type="published" when="2005" />
+		</imprint>
+		<respStmt>
+			<orgName>National Collaborating Centre for Acute Care</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<monogr>
+		<title level="m" type="main">The role of cytotoxic therapy with hematopoietic stem cell transplantation in the therapy of multiple myeloma: an evidence-based review</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Hahn</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2003" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<monogr>
+		<title level="m" type="main">The role of postoperative chemoradiotherapy for advanced squamous cell carcinoma of the head and neck</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Winquist</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2004" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<monogr>
+		<title level="m" type="main">Use of epoetin in patients with cancer: evidence-based clinical practice guidelines of the</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Rizzo</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2002" />
+			<publisher>American Society of Clinical Oncology and the American Society of Hematology</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<monogr>
+		<title level="m" type="main">Ad-hoc classification of electronic clinical documents</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><forename type="middle">B</forename><surname>Aronow</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F. ; D-Lib</forename><surname>Feng</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Magazine</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1997" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Effective mapping of biomedical text to the UMLS Metathesaurus: the MetaMap program</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><forename type="middle">R</forename><surname>Aronson ; Aronson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. of the AMIA Symposium</title>
+		<meeting>of the AMIA Symposium</meeting>
+		<imprint>
+			<date type="published" when="2001" />
+			<biblScope unit="page" from="17" to="21" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<monogr>
+		<title level="m" type="main">Grading quality of evidence and strength of recommendations</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Atkins</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2004" />
+			<biblScope unit="volume">328</biblScope>
+			<biblScope unit="page" from="1490" to="1498" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">Systems for grading the quality of evidence and the strength of recommendations II: Pilot study of a new system</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Atkins</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Health Services Research</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="issue">25</biblScope>
+			<date type="published" when="2005" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Systems for grading the quality of evidence and the strength of recommendations i: Critical appraisal of existing approaches</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Atkins</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Health Services Research</title>
+		<imprint>
+			<biblScope unit="issue">38</biblScope>
+			<biblScope unit="page">4</biblScope>
+			<date type="published" when="2004" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">Some aspects of negation processing in electronic health records</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">[</forename><surname>Boytcheva</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. of International Workshop Language and Speech Infrastructure for Information Access in the Balkan Countries</title>
+		<meeting>of International Workshop Language and Speech Infrastructure for Information Access in the Balkan Countries</meeting>
+		<imprint>
+			<date type="published" when="2005" />
+			<biblScope unit="page" from="1" to="8" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">American Association for the Study of Liver Diseases</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">[</forename><surname>Bruix</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Hepatology</title>
+		<imprint>
+			<biblScope unit="volume">42</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="1208" to="1236" />
+			<date type="published" when="2005" />
+		</imprint>
+	</monogr>
+	<note>Management of hepatocellular carcinoma</note>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">A simple algorithm for identifying negated findings and diseases in discharge summaries</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">[</forename><surname>Chapman</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Biomedical Informatics</title>
+		<imprint>
+			<biblScope unit="volume">34</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="301" to="310" />
+			<date type="published" when="2001" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Divita</surname></persName>
+		</author>
+		<ptr target="http://mmtx.nlm.nih.gov/" />
+		<title level="m">MMTX-API Documentation</title>
+		<imprint>
+			<date type="published" when="2005" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">A controlled trial of automated classification of negation from clinical notes</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">[</forename><surname>Elkin</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Medical Informatics and Decision Making</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="issue">13</biblScope>
+			<biblScope unit="page" from="1" to="7" />
+			<date type="published" when="2005" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">Clinical guidelines: Using clinical guidelines</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">[</forename><surname>Feder</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMJ</title>
+		<imprint>
+			<biblScope unit="volume">318</biblScope>
+			<biblScope unit="page" from="728" to="730" />
+			<date type="published" when="1999" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<monogr>
+		<title level="m" type="main">Clinical Practice Guidelines: Directions for a New Program</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Field</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><forename type="middle">J</forename><surname>Lohr ; Field</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">K</forename><forename type="middle">N</forename><surname>Lohr</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1990" />
+			<publisher>National Academies Press</publisher>
+			<pubPlace>Institute of Medicine, Washington DC</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">The role of cytotoxic therapy with hematopoietic stem cell transplantation in the therapy of multiple myeloma: an evidence-based review</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">[</forename><surname>Hahn</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Biol Blood Marrow Transplant</title>
+		<imprint>
+			<biblScope unit="volume">9</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="4" to="37" />
+			<date type="published" when="2003" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Mediclass: A system for detecting and classifying encounter-based clinical events in any electronic medical record</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">[</forename><surname>Hazlehurst</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Medical Informatics Association (JAMIA)</title>
+		<imprint>
+			<biblScope unit="volume">12</biblScope>
+			<biblScope unit="issue">5</biblScope>
+			<biblScope unit="page" from="517" to="529" />
+			<date type="published" when="2005" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<monogr>
+		<title level="m" type="main">A Natural History of Negation</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><forename type="middle">R</forename><surname>Horn</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1989" />
+			<publisher>University of Chicago Press</publisher>
+			<pubPlace>Chicago, Illinois</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<analytic>
+		<title level="a" type="main">Unlocking clinical data from narrative reports: A study of natural language processing</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">[</forename><surname>Hripcsak</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Annals of Internal Medicine</title>
+		<imprint>
+			<biblScope unit="volume">122</biblScope>
+			<biblScope unit="issue">9</biblScope>
+			<biblScope unit="page" from="681" to="688" />
+			<date type="published" when="1995" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<analytic>
+		<title level="a" type="main">A novel hybrid approach to automated negation detection in clinical radiology reports</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Lowe ;</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Y</forename><surname>Huang</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">H</forename><forename type="middle">J</forename><surname>Lowe</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Medical Informatics Association (JAMIA)</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="page" from="304" to="311" />
+			<date type="published" when="2007" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b32">
+	<monogr>
+		<title level="m" type="main">The Unified Medical Language System: Moving beyond the vocabulary of bibliographic retrieval</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Schuyler</forename><forename type="middle">;</forename><surname>Humphreys</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><forename type="middle">L</forename><surname>Humphreys</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Schuyler</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1993" />
+			<publisher>Meckler</publisher>
+			<biblScope unit="page" from="31" to="44" />
+			<pubPlace>Westport, CT</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b33">
+	<monogr>
+		<title level="m" type="main">Medical terminology systems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">K</forename><surname>Kaiser ; Kaiser</surname></persName>
+		</author>
+		<idno>Asgaard-TR- 2007-1</idno>
+		<imprint>
+			<date type="published" when="2007" />
+		</imprint>
+		<respStmt>
+			<orgName>Vienna University of Technology, Institute of Software Technology and Interactive Systems</orgName>
+		</respStmt>
+	</monogr>
+<note type="report_type">Technical Report</note>
+</biblStruct>
+
+<biblStruct xml:id="b34">
+	<analytic>
+		<title level="a" type="main">A meta schema for evidence information in clinical practice guidelines as a basis for decision-making</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">[</forename><surname>Kaiser</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Studies in Health Technology and Informatics</title>
+		<imprint>
+			<biblScope unit="volume">129</biblScope>
+			<biblScope unit="page" from="925" to="929" />
+			<date type="published" when="2007" />
+			<publisher>AMIA, IOS Press</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b35">
+	<analytic>
+		<title level="a" type="main">Accurate Unlexicalized Parsing</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Klein</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Manning ; Klein</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Manning</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc of the 41st Meeting of the Association for Computational Linguistics</title>
+		<meeting>of the 41st Meeting of the Association for Computational Linguistics</meeting>
+		<imprint>
+			<date type="published" when="2003" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b36">
+	<analytic>
+		<title level="a" type="main">Chronic cough due to lung tumors: ACCP evidence-based clinical practice guidelines</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Kvale</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Chest</title>
+		<imprint>
+			<biblScope unit="volume">129</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="147" to="153" />
+			<date type="published" when="2006" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b37">
+	<analytic>
+		<title level="a" type="main">Lung cancer. palliative care</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">[</forename><surname>Kvale</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Chest</title>
+		<imprint>
+			<biblScope unit="volume">123</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="284" to="311" />
+			<date type="published" when="2003" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b38">
+	<analytic>
+		<title level="a" type="main">Semantic enrichment for medical ontologies</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Y</forename><surname>Lee</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Geller</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. of Biomedical Informatics</title>
+		<imprint>
+			<biblScope unit="volume">39</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="209" to="226" />
+			<date type="published" when="2006" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b39">
+	<analytic>
+		<title level="a" type="main">Evaluating an information extraction system</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">[</forename><surname>Lehnert</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Integrated ComputerAided Engineering</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="1" to="29" />
+			<date type="published" when="1994" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b40">
+	<monogr>
+		<title level="m" type="main">UMLS Semantic Network. The 13th annual SCAMC</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><forename type="middle">T</forename><surname>Mccray ; Mccray</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1989" />
+			<biblScope unit="page" from="503" to="507" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b41">
+	<analytic>
+		<title level="a" type="main">Automation of a problem list using natural language processing</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Meystre</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Haug ; Meystre</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><forename type="middle">J</forename><surname>Haug</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMC Medical Informatics and Decision Making</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="issue">30</biblScope>
+			<date type="published" when="2005" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b42">
+	<monogr>
+		<title level="m" type="main">Guideline for the management of cancer pain in adults and children</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">[</forename><surname>Miaskkowski</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2005" />
+			<publisher>APS</publisher>
+			<biblScope unit="volume">3</biblScope>
+			<pubPlace>Glenview (IL</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b43">
+	<monogr>
+		<title level="m" type="main">Implementation and evaluation of a negation tagger in a pipeline-based system for information extraction from pathology reports</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">[</forename><surname>Mitchell</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2004" />
+			<biblScope unit="page" from="663" to="667" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b44">
+	<analytic>
+		<title level="a" type="main">Use of general-purpose negation detection to augment concept indexing of medical documents: A quantitative study using the UMLS</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">[</forename><surname>Mutalik</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of the American Medical Informatics Association (JAMIA)</title>
+		<imprint>
+			<biblScope unit="volume">8</biblScope>
+			<biblScope unit="issue">6</biblScope>
+			<biblScope unit="page" from="598" to="609" />
+			<date type="published" when="2001" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b45">
+	<monogr>
+		<title level="m" type="main">The diagnosis and treatment of lung cancer. Clinical practice guideline</title>
+		<imprint>
+			<date type="published" when="2005" />
+			<pubPlace>London (UK</pubPlace>
+		</imprint>
+		<respStmt>
+			<orgName>National Collaborating Centre for Acute Care ; National Institute for Clinical Excellence (NICE)</orgName>
+		</respStmt>
+	</monogr>
+	<note>National Collaborating Centre for Acute Care</note>
+</biblStruct>
+
+<biblStruct xml:id="b46">
+	<analytic>
+		<title level="a" type="main">Practice parameters for colon cancer</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">[</forename><surname>Otchy</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Dis Colon Rectum</title>
+		<imprint>
+			<biblScope unit="volume">47</biblScope>
+			<biblScope unit="issue">8</biblScope>
+			<biblScope unit="page" from="1269" to="1284" />
+			<date type="published" when="2004" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b47">
+	<analytic>
+		<title level="a" type="main">Automatic mapping clinical notes to medical terminologies</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">[</forename><surname>Patrick</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2006 Australasian Language Technology Workshop (ALTW2006)</title>
+		<meeting>the 2006 Australasian Language Technology Workshop (ALTW2006)</meeting>
+		<imprint>
+			<date type="published" when="2006" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b48">
+	<analytic>
+		<title level="a" type="main">Use of epoetin in patients with cancer: evidence-based clinical practice guidelines of the american society of clinical oncology and the american society of hematology</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">[</forename><surname>Rizzo</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Blood</title>
+		<imprint>
+			<biblScope unit="volume">100</biblScope>
+			<biblScope unit="issue">7</biblScope>
+			<biblScope unit="page" from="2003" to="2020" />
+			<date type="published" when="2002" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b49">
+	<analytic>
+		<title level="a" type="main">Cutaneous melanoma. A national clinical guideline. SIGN publication 72</title>
+	</analytic>
+	<monogr>
+		<title level="m">Scottish Intercollegiate Guidelines Network (SIGN)</title>
+		<meeting><address><addrLine>Edinburgh</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2003" />
+		</imprint>
+	</monogr>
+	<note>Scottish Intercollegiate Guidelines Network (SIGN). Scotland</note>
+</biblStruct>
+
+<biblStruct xml:id="b50">
+	<analytic>
+		<title level="a" type="main">Epithelial ovarian cancer. A national clinical guideline. SIGN publication 75</title>
+	</analytic>
+	<monogr>
+		<title level="m">Scottish Intercollegiate Guidelines Network (SIGN)</title>
+		<meeting><address><addrLine>Edinburgh</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2003" />
+		</imprint>
+	</monogr>
+	<note>Scottish Intercollegiate Guidelines Network (SIGN). Scotland</note>
+</biblStruct>
+
+<biblStruct xml:id="b51">
+	<analytic>
+		<title level="a" type="main">Long term follow up of survivors of childhood cancer. A national clinical guideline</title>
+	</analytic>
+	<monogr>
+		<title level="m">Scottish Intercollegiate Guidelines Network (SIGN)</title>
+		<meeting><address><addrLine>Edinburgh</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2004" />
+			<biblScope unit="volume">76</biblScope>
+		</imprint>
+	</monogr>
+	<note>SIGN publication. Scotland</note>
+</biblStruct>
+
+<biblStruct xml:id="b52">
+	<analytic>
+		<title level="a" type="main">Management of patients with lung cancer. A national clinical guideline</title>
+	</analytic>
+	<monogr>
+		<title level="m">Scottish Intercollegiate Guidelines Network (SIGN)</title>
+		<meeting><address><addrLine>Edinburgh</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2005" />
+			<biblScope unit="volume">80</biblScope>
+		</imprint>
+	</monogr>
+	<note>Scottish Intercollegiate Guidelines Network (SIGN). Scotland</note>
+</biblStruct>
+
+<biblStruct xml:id="b53">
+	<analytic>
+		<title level="a" type="main">Management of transitional cell carcinoma of the bladder. A national clinical guideline</title>
+	</analytic>
+	<monogr>
+		<title level="m">Scottish Intercollegiate Guidelines Network (SIGN)</title>
+		<meeting><address><addrLine>Edinburgh</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2005" />
+			<biblScope unit="volume">85</biblScope>
+		</imprint>
+	</monogr>
+	<note>Scottish Intercollegiate Guidelines Network (SIGN). Scotland</note>
+</biblStruct>
+
+<biblStruct xml:id="b54">
+	<analytic>
+		<title level="a" type="main">Clinical guidelines: Developing guidelines</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">[</forename><surname>Shekelle</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BMJ</title>
+		<imprint>
+			<biblScope unit="volume">318</biblScope>
+			<biblScope unit="page" from="593" to="596" />
+			<date type="published" when="1999" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b55">
+	<analytic>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Wagner ;</forename><surname>Simon</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Simon</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">H</forename><surname>Wagner</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Small cell lung cancer. Chest</title>
+		<imprint>
+			<biblScope unit="volume">123</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="259" to="271" />
+			<date type="published" when="2003" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b56">
+	<analytic>
+		<title level="a" type="main">Colorectal cancer. Clinical practice guideline, Singapore Ministry of Health</title>
+	</analytic>
+	<monogr>
+		<title level="m">SNOMED CT</title>
+		<meeting><address><addrLine>Singapore; Singapore; Singapore Ministry of Health; Singapore</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2004" />
+		</imprint>
+	</monogr>
+	<note>Breast cancer. Clinical practice guideline. SNOMED International, 2006] SNOMED International</note>
+</biblStruct>
+
+<biblStruct xml:id="b57">
+	<analytic>
+		<title level="a" type="main">Chemotherapeutic management of stage IV non-small cell lung cancer</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Socinsky</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Chest</title>
+		<imprint>
+			<biblScope unit="volume">123</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="226" to="243" />
+			<date type="published" when="2003" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b58">
+	<analytic>
+		<title level="a" type="main">Concept negation in free text components of vaccine safety reports</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">[</forename><surname>Tolentino</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. of the AMIA 2006 Symposium</title>
+		<meeting>of the AMIA 2006 Symposium</meeting>
+		<imprint>
+			<date type="published" when="2006" />
+			<biblScope unit="page">1122</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b59">
+	<analytic>
+		<title level="a" type="main">The role of postoperative chemoradiotherapy for advanced squamous cell carcinoma of the head and neck. Clinical practice guideline 5-10</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">[</forename><surname>Winquist</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Cancer Care Ontario (CCO)</title>
+		<imprint>
+			<date type="published" when="2004" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b60">
+	<analytic>
+		<title level="a" type="main">Staging evaluation-hodgkin&apos;s disease. Clinical practice guideline</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">[</forename><surname>Wolkov</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">American College of Radiology (ACR)</title>
+		<imprint>
+			<date type="published" when="2005" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

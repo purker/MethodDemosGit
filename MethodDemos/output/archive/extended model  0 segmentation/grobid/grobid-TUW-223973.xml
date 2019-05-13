@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Identifying Condition-Action Sentences Using a Heuristic-based Information Extraction Method</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Reinhardt</forename><surname>Wenzina</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Institute of Software Technology and Interactive Systems</orgName>
+								<orgName type="institution">Vienna University of Technology</orgName>
+								<address>
+									<addrLine>Favoritenstrasse 9-11</addrLine>
+									<postCode>1040</postCode>
+									<settlement>Vienna</settlement>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Katharina</forename><surname>Kaiser</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Institute of Software Technology and Interactive Systems</orgName>
+								<orgName type="institution">Vienna University of Technology</orgName>
+								<address>
+									<addrLine>Favoritenstrasse 9-11</addrLine>
+									<postCode>1040</postCode>
+									<settlement>Vienna</settlement>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Identifying Condition-Action Sentences Using a Heuristic-based Information Extraction Method</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>computer-interpretable clinical guidelines</term>
+					<term>medical guide-line formalization</term>
+					<term>Many-Headed Bridge (MHB)</term>
+					<term>UMLS</term>
+					<term>Information Extraction (IE)</term>
+				</keywords>
+			</textClass>
+			<abstract>
+				<p>Translating clinical practice guidelines into a computer-inter-pretable format is a challenging and laborious task. In this project we focus on supporting the early steps of the modeling process by automatically identifying conditional activities in guideline documents in order to model them automatically in further consequence. Therefore, we developed a rule-based, heuristic method that combines domain-independent information extraction rules and semantic pattern rules. The classification also uses a weighting coefficient to verify the relevance of the sentence in the context of other information aspects, such as effects, intentions , etc. Our evaluation results show that even with a small set of training data, we achieved a recall of 75 % and a precision of 88 %. This outcome shows that this method supports the modeling task and eases the translation of CPGs into a semi-formal model.</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>lished. background information</head><p>Administration of inhaled steroids at or above 400 mcg a day of BDP or equivalent may be associated effect with systemic side-effects .</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3</head><p>In order to identify condition-action sentences we propose a rule-based method using a combination of linguistic and semantic information. Furthermore, we in- troduce a weighting coefficient called relevance rate (rr) that shows whether a sentence is relevant for modeling.</p><p>The following section gives a short overview on the usage of information ex- traction methods as well as knowledge-based approaches for guideline modeling. Our method is explained in Section 3 and subsequently evaluated and discussed in Sections 4 and 5.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">Background and Related Work</head><p>Guideline developers edit CPGs in a free-text format. In order to transform the medical knowledge described in a guideline into execution models a translation process is required. Moser and Miksch <ref type="bibr">[14]</ref> detected prototypical patterns in free- text guidelines to bridge this gap. Serban et al. <ref type="bibr">[18]</ref> proposed an ontology-driven extraction of linguistic patterns to pre-process a CPG in order to retrieve control knowledge. The evaluation showed that the modeling as well as the authoring process of guidelines was supported. Language engineering methods were used in SeReMed <ref type="bibr">[5]</ref> to detect diagnoses or procedures in medical documents. The method was successfully applied to X-ray reports. These documents however, show a standardized structure and therefore are easier to handle by knowledge engineering methods than CPGs. Taboada et al. <ref type="bibr">[23]</ref> identified relationships be- tween diagnoses and therapy entities in free-text documents by matching the core information units of a sentence with a collection of predefined relationships but the quality of this matching was not rated. To implement a rule based ap- proach to recognize medical entities the MeTAE (Medical Texts Annotation and Exploration) platform was used by Abacha and Zweigenbaum <ref type="bibr">[1]</ref>. Additionally, semantic relations between each pair of these entities were identified by means of MetaMap <ref type="bibr">[2]</ref>. Consequently, relations between a problem (e.g., disease) and a corresponding treatment were found. The method was applied to selected arti- cles and abstracts of PubMed but not to CPGs. In <ref type="bibr">[8]</ref> a heuristic-based approach using information extraction methods independent of the final guideline repre- sentation language was defined. This method was implemented and applied to several guidelines containing a high amount of semi-structured text. The adop- tion of this methodology on 'living-guidelines' <ref type="bibr">[9]</ref> showed promising results. A set of semantic patterns representing activities based on semantic relations was generated by <ref type="bibr">Kaiser et al. [10]</ref> to identify medical activities in CPGs. Its effec- tiveness was proved by a study which showed that a large part of control flow related aspects could be identified. The relation between the activity and a cor- responding condition, however, was not part of the method but is an important <ref type="bibr">4</ref> </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">Methods</head><p>Condition-based medical activities are expressed in clinical practice guidelines in various ways and mostly found in single sentences. These sentences affect the clinical pathway and therefore are relevant to the computer-interpretable model of the guideline. In order to classify such a sentence as relevant, we based our approach on the following hypothesis:</p><p>1. A sentence owns a certain domain independent linguistic structure, and 2. contains recurrent domain dependent semantic key patterns.</p><p>We propose a rule-based, heuristic method using linguistic and semantic pat- terns to classify sentences in CPGs as relevant for describing conditional activ- ities in order to move towards an automatic translation of such sentences into MHB in a following future step (an example is shown in <ref type="figure" target="#fig_1">Figure 1</ref>). Therefore, we analyzed a CPG document to develop a general linguistic pattern set and a semantic pattern set based on UMLS Semantic Types. These pattern sets then form the basis for the subsequent classification by calculating the relevance rate (rr).  </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Knowledge Sources and Tools</head><p>The Unified Medical Language System (UMLS) <ref type="bibr">[11]</ref> combines selected health and biomedical vocabularies to facilitate the standardized exchange of medical data between computer systems. It offers three different components:</p><p>1. The Metathesaurus which is an aggregation of medical terms and codes of different vocabularies (e.g., MeSH, SNOMED CT, etc.). 2. The Semantic Network which reduces the complexity of the Metathesaurus by assigning semantic types to the concepts of the Metathesaurus in order to group and define relationships among them. 3. The SPECIALIST Lexicon and Lexical Tools which provide natural language processing tools.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>5</head><p>The open source framework for text engineering GATE (Version 6) <ref type="bibr">[4]</ref> allows the combination of different text engineering components to develop reusable applications. The following components were used in our method:</p><p>-ANNIE: A set of information extraction (IE) components, distributed within the GATE system and relying on finite state algorithms and the JAPE lan- guage <ref type="bibr">[3]</ref>. -OpenNLPChunker supports the detection of phrases within a parsed text. -MetaMap Annotator: A tagger that maps biomedical texts to the UMLS Metathesaurus and discovers Metathesaurus concepts and their semantic types <ref type="bibr">[2]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Manual Development of the General Linguistic Pattern Set</head><p>For the development of the general linguistic pattern set we used a chapter from an Asthma guideline developed by SIGN <ref type="bibr">[17]</ref>, where chapter 4: pharmacological management had been modeled in the semi-structured modeling language MHB- F <ref type="bibr">[21]</ref> by a guideline modeling expert. We analyzed this chapter with regard to the control flow aspects and started generating an initial linguistic pattern set based on trigger words (12 occurrences for 'if' and 4 occurrences for 'should'). In order to identify the semantic clauses of a sentence (these are the parts de- scribing the condition and the consequence), the patterns had to be grouped into 6 different patterns for 'if' and 4 different patterns for 'should' (some straightfor- ward patterns are listed in <ref type="table" target="#tab_1">Table 2</ref>). Condition and consequence are distinguished according to the sentence's syntax, punctuation and its sequence of phrases. Two complex examples including conditions spread over multiple phrases are shown in <ref type="figure">Figure 2</ref>.</p><p>We assigned a weighting factor to every pattern of the set -the value 0.5 to show that only a trigger word was found and 1.0 to express that also the semantic clauses were identified. These constants can be adapted for new rule types in the future. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.3">Generation of the Domain-Dependent Semantic Pattern Set</head><p>Amongst the general syntactic patterns we also used semantic patterns based on the UMLS Semantic Network. Therefore, we used the MetaMap plugin within the GATE framework to automatically identify medical concepts in our text and assign them to their corresponding UMLS concepts and semantic types (represented by four-letter abbreviations -e.g., 'popg' stands for 'Population Group'). By this way it was possible to find out the sequence of semantic types in the clauses of the sentences (see <ref type="figure" target="#fig_4">Figure 3)</ref>. If there is no response to treatment the drug should be discontinued.</p><p>semantic types "fndg" "cnce" "phsu" "fndg" from UMLS SN delivered by the MetaMap-Application "fndg": Finding; "cnce": Conceptual Entity; "phsu": Pharmacological Substance Finally, the complete semantic abstraction of a sentence including rule type, semantic clause type and sequence of semantic types was added to the semantic pattern pool (see <ref type="table" target="#tab_2">Table 3</ref>). A total of 32 entries was automatically generated.  </p><formula xml:id="formula_0">IF consequence [idcn][qlco][resa][ftcn][ftcn] SHOULD condition [aggp][podg][dsyn] SHOULD consequence [qnco][tmco][resa][orch, phsu][idcn] SHOULD condition [podg][qlco][ftcn][orgf][qlco][gngm][phsu]</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4">Calculation of the Relevance Rate</head><p>The relevance rate rr is a measure to find out whether a sentence contains a condition-action combination. Furthermore, it shall classify a sentence as crucial for the clinical pathway in contrast to other information aspects like intentions or explanations which are modeled in MHB-F in a different way. To find this se- mantic difference the syntax of the sentences as well as their containing medical semantic types must be respected. In order to calculate the relevance rate for a selected sentence its semantic abstraction has to be generated and compared with every entry in the semantic pattern pool. If the rule type and the semantic clause type are matching, the similarity of the sequences of the semantic types is calculated by using the Dice coefficient <ref type="bibr">[12]</ref>. The highest value is selected for further calculation.</p><p>In general, the value of the relevance rate rr is the sum of -the weight(w) of the applied general IE rule, and -the sum of the maximum similarity value (s i ) for each semantic clause of the sentence divided by the number of semantic clauses (n) identified by the general IE rules.</p><formula xml:id="formula_1">rr = w + n i=1 max{s i } n<label>(1)</label></formula><p>The weight of the IE rule and the arithmetic average of the similarity values - both in the range between 0 and 1 -have the same influence on the rr. The similarity value s i of the semantic clause of a sentence and a matching entry in the semantic pattern pool were calculated as follows:</p><p>-If the semantic clause contains only one semantic type it is compared to those entries of the semantic pattern pool that also show only one semantic type (to receive a better accuracy). In the case that both types are equal the value for s i is set to 1.0, otherwise -both sequences of semantic types are interpreted as a string each and two sets of 4-letter string bigrams are composed out of them. Subsequently, these two sets are used for the calculation of the Dice coefficient. Example:</p><p>Given are the sequence of semantic types of a new semantic clause S and the sequence of semantic types of a matching entry of the semantic pattern pool P . The resulting 4-letter string bigrams are:</p><formula xml:id="formula_2">S = {"f ndgorgf ′′ , "orgf qlco ′′ , "qlcogngm ′′ , "gngmphsu ′′ } P = {"strdgngm ′′ , "gngmphsu ′′ , "phsuortf ′′ }.</formula><p>The Dice coefficent is defined as twice the shared information over the sum of cardinalities:</p><formula xml:id="formula_3">s i = 2n t n s + n p<label>(2)</label></formula><p>where n t corresponds to the number of bigrams found in both sets, n s is the number of bigrams in S, and n p the number of bigrams in P . So the result of this example is s =</p><formula xml:id="formula_4">2 * 1 2 4+3 = 7 .</formula><p>The general interpretation of the rr is shown in <ref type="table" target="#tab_3">Table 4</ref>. value interpretation rr = 0.5 only a trigger word or word combination were found; no semantic clause could be identified rr = 1.0 an appropriate general IE pattern was found and seman- tic clauses could be identified 1.0 &lt; rr &lt;= 2.0 additionally, a semantic similarity between the sequences of the semantic types was detected</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">Evaluation</head><p>The guidelines Management of active low-risk labour -Admission for Birth <ref type="bibr">[16]</ref> (chapters 1, 2.1, 2.2, and 2.3) and CBO Treatment of Breast Cancer (chapter 3) were applied to evaluate the method. These guidelines were intentionally selected, because they cover a completely different medical application area in contrast to the Asthma guideline and furthermore an MHB 1 <ref type="bibr">[21]</ref> model already existed, used as a "golden standard".</p><p>The IE rules for the domain independent patterns and the generation of the semantic patterns were implemented with GATE -the processing resources for applied to the guidelines and the identified sentences were annotated with the semantic types retrieved from the UMLS via the MetaMap plugin. 50 sentences were found which complied to the IE rules. Twenty out of the 50 sentences had been modeled in MHB as control flow related aspects (activities based on special medical conditions) and therefore their rr was expected to be higher than 1. The other 30 sentences represented information about intentions and explanations in MHB with an expected rr lower or equal 1. The evaluation results are shown in <ref type="table" target="#tab_4">Table 5</ref> differentiated by the rule types. With the described method it was possible to identify 15 sentences which correctly contained control flow related aspects. Only two sentences got an in- correct rr higher than 1. They were not correctly rated, because they did not describe condition-based activities. Other 5 sentences got an rr lower than 1 although their rr should have been higher as they contained condition-based activities. Thus, the method had a recall of 75% and a precision of 88% (see <ref type="table" target="#tab_5">Table 6</ref>). The negative predictive value of 79% was higher than the recall value and showed that 28 sentences had been correctly classified.  If, notwithstanding these procedures cer- vical dilatation doesn't progress, consider cesarean section after 2-3 hours of regu- lar and painful contraction with no cervical changes.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>10</head><p>0.5 Sentences with such a linguistic structure did not exist in the Asthma guideline → no IE rule was implemented to identify semantic clauses If dilatation progress is not regular (&lt;1 cm/hour in nulliparous, &lt;1,5 cm/hours in parous) consider: -amniotomy; -oxytocin administration.</p><p>0.5 A list of resulting activities was not found in the Asthma guideline → no IE rule was implemented to iden- tify semantic clauses</p><p>In case of abnormal FHR, monitoring should be continuous.</p><p>1.0 The sentence was wrongly catego- rized with a rule for 'should' be- cause no rules for "in case of" were implemented → no semantic simi- larity within the semantic pool pat- tern was found</p><p>After umbilical cord clamping, if the sec- ond stage of labour has been physiological, the baby is given to the mother and cov- ered.</p><p>1.0 The semantic clauses were found,</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>11</head><p>Generally, the results proved that the rules of type "if" showed much bet- ter results for the precision (93%) and the recall (82%) than the ones of type "should". Nevertheless, the negative predictive value for the latter type showed a rate of 93%.</p><p>The analyzed guidelines contained 7 sentences with control flow related in- formation but they were not classified because their patterns did not exist in the Asthma guideline. Consequently, no corresponding general linguistic IE rule ex- isted in the pattern pool. An extension of the general linguistic pattern set with rules for the trigger words "when", "could" and "in case of" should be taken into consideration. Additionally, 1 condition based activity could not be found, because the semantic information was distributed over more than one sentence. In <ref type="table" target="#tab_6">Table 7</ref> selected examples are shown with a relevance rate lower or equal than 1.0 together with the corresponding reasons.</p><p>Even though only a small amount of training data (16 sentences) was avail- able from the Asthma guideline, our method identified condition-based activities for control flow related aspects in a guideline document. Furthermore, it showed that the combination of domain independent information extraction rules and an automatically created semantic pattern pool leads to valuable results.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">Conclusions and Further Work</head><p>The aim of this paper was to develop a method to identify condition-action sen- tences. By defining a set of linguistic patterns we split up sentences semantically -from one selected training guideline -into their clauses showing the condition and the consequence. We used the UMLS Semantic Network <ref type="bibr">[13]</ref> to find out which types of medical concepts were applied in these clauses. The outcome was a semantic abstraction of every training sentence which then was stored in a semantic pattern pool. This pool facilitated the classification of new sentences regarding to their relevance to the corresponding MHB-F model expressed by the measure relevance rate (rr).</p><p>Modeling experts benefit from the method in two ways:</p><p>1. Condition-based activities in free-text guidelines, which must be modeled in MHB-F, are identified and rated. 2. These sentences are automatically split into the condition and the resulting activity.</p><p>An integration of the presented method into modeling tools will ease the work of all parties involved. Ongoing steps will be (1) the implementation of additional information ex- traction rules to expand the general linguistic pattern set in order to improve the hit rate; (2) the extension of the semantic pattern pool with additional training data in order to increase the significance of the relevance rate; (3) the applica- tion of the method in the context of 'living-guidelines' <ref type="bibr">[20]</ref>; (4) an investigation, 12 whether this method can support the modeling of processes also in other appli- cation areas by substituting the UMLS SN by other domain dependent thesauri; (5) the refinement of information extraction rules to make a step towards an au- tomatic translation of condition-based activities of free-text guidelines into the modeling language MHB-F; and (6) the development of case studies to evidence the effectiveness of the method in real-world scenarios. If it is possible to tap the full potential of the presented method, the implementation of CPGs will be fostered tremendously.</p><p>Acknowledgement. This research was carried out as part of project no. TRP71- N23 funded by the Austrian Science Fund (FWF). </p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head></head><label></label><figDesc>example sentence corresponding MHB chunk (XML) &lt;control&gt; &lt;if-then condition="NOT (admission criteria)" degree-of-certainty="Should" result="Assessment of fetal wellbeing including monitoring"&gt; ................... &lt;/control&gt; "If the patient does not fit the criteria for admission an assessment of fetal wellbeing including appropriate use of electronic fetal monitoring should be performed."</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>Fig. 1 .</head><label>1</label><figDesc>Fig. 1. A condition-action sentence represented as MHB-chunk</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_2"><head>6 If</head><label>6</label><figDesc>Fig. 2. Sentences with multi-part conditions</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_4"><head>Fig. 3 .</head><label>3</label><figDesc>Fig. 3. Semantic abstraction of a sentence</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_5"><head>7</head><label>7</label><figDesc></figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_6"><head>8</head><label>8</label><figDesc></figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_7"><head>S</head><label></label><figDesc>: [fndg] [orgf] [qlco] [gngm] [phsu] and P : [strd] [gngm] [phsu] [ortf].</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_8"><head>9 the calculation of the relevance rate are shown in Figure 4 .Fig. 4 .</head><label>944</label><figDesc>Fig. 4. Processing resources used in GATE</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_9"><head>References 1 .</head><label>1</label><figDesc>Abacha, A.B., Zweigenbaum, P.: Automatic extraction of semantic relations be- tween medical entities: a rule based approach. Journal of Biomedical Semantics 2(Suppl 5), S4+ (2011) 2. Aronson, A.R., Lang, F.M.M.: An overview of MetaMap: historical perspective and recent advances. Journal of the American Medical Informatics Association : JAMIA 17(3), 229-236 (May 2010) 3. Cunningham, H., Maynard, D., Bontcheva, K., Tablan, V.: GATE: A framework and graphical development environment for robust NLP tools and applications. In: Proceedings of the 40th Anniversary Meeting of the Association for Computational Linguistics (2002) 4. Cunningham, H., Maynard, D., Bontcheva, K., Tablan, V., Aswani, N., Roberts, I., Gorrell, G., Funk, A., Roberts, A., Damljanovic, D., Heitz, T., Greenwood, M.A., Saggion, H., Petrak, J., Li, Y., Peters, W.: Text Processing with GATE (Version 6). University of Sheffield Department of Computer Science (2011), http://tinyurl.com/gatebook 5. Denecke, K.: Semantic structuring of and information extraction from medical documents using the UMLS. Methods of Information in Medicine 47(5), 425-434 (2008) 6. Field, M.J., Lohr, K.N. (eds.): Clinical Practice Guidelines: Directions for a New Program. National Academies Press, Institute of Medicine, Washington DC (1990) 7. Isern, D., Moreno, A.: Computer-based execution of clinical guidelines: A review. International Journal of Medical Informatics 77(12), 787 -808 (2008) 8. Kaiser, K., Akkaya, C., Miksch, S.: How can information extraction ease formalizing treatment processes in clinical practice guidelines? A method and its evaluation. Artificial Intelligence in Medicine 39(2), 151-163 (2007) 9. Kaiser, K., Miksch, S.: Versioning computer-interpretable guidelines: Semi- automatic modeling of 'Living Guidelines' using an information extraction method. Artificial Intelligence in Medicine 46(1), 55-66 (2009) 10. Kaiser, K., Seyfang, A., Miksch, S.: Identifying treatment activities for modelling computer-interpretable clinical practice guidelines. In: Riao, D., Teije, A., Miksch, S., Peleg, M. (eds.) Knowledge Representation for Health-Care, Lecture Notes in Computer Science, vol. 6512, pp. 114-125. Springer Berlin Heidelberg (2011) 11. Lindberg, D., Humphreys, B., McCray, A.: The Unified Medical Language System. Methods of Information in Medicine 32(4), 281-291 (1993) 13 12. Manning, C.D., Schütze, H.: Foundations of statistical natural language processing. MIT Press, Cambridge, MA, USA (1999) 13. McCray, A.: UMLS Semantic Network. In: Proc. of the 13th Annual Symposium on Computer Applications in Medical Care(SCAMC). pp. 503-507 (1989) 14. Moser, M., Miksch, S.: Improving clinical guideline implementation through pro- totypical design patterns. In: Miksch, S., Hunter, J., Keravnou, E. (eds.) Artificial Intelligence in Medicine, Lecture Notes in Computer Science, vol. 3581, pp. 126- 130. Springer Berlin Heidelberg (2005) 15. Peleg, M., Tu, S., Bury, J., Ciccarese, P., Fox, J., Greenes, R., Hall, R., John- son, P.D., Jones, N., Kumar, A., Miksch, S., Quaglini, S., Seyfang, A., Short- liffe, E.H., Stefanelli, M.: Comparing Computer-Interpretable Guideline Models: A Case-Study Approach, . The Journal of the American Medical Informatics Associ- ation (JAMIA) 10(1), 52-68 (Jan -Feb 2003) 16. Remine: Documentation of formalized guidelines (2010), http://www.remine- project.eu/ 17. Scottish Intercollegiate Guidelines Network (SIGN): British Guideline on the Man- agement of Asthma. A national clinical guideline. Scottish Intercollegiate Guide- lines Network (SIGN) (May 2011) 18. Serban, R., ten Teije, A., van Harmelen, F., Marcos, M., Polo-Conde, C.: Extraction and use of linguistic patterns for modelling medical guidelines. Artif. Intell. Med. 39(2), 137-149 (Feb 2007) 19. Seyfang, A., Kaiser, K.: MHB-F Specification (2011) 20. Seyfang, A., Martnez-Salvador, B., Serban, R., Wittenberg, A., Miksch, S., Marcos, M., Teije, A.T., Rosenbrand, K.: Maintaining formal models of living guidelines efficiently. In: Proc. of the 11th Conference on Artificial Intelligence in Medicine (AIME07). Springer Verlag (2007) 21. Seyfang, A., Miksch, S., Marcos, M., Wittenberg, J., Polo-Conde, C., Rosenbrand, K.: Bridging the gap between informal and formal guideline representations. In: Brewka, G., Coradeschi, S., Perini, A., Traverso, P. (eds.) European Conference on Artificial Intelligence (ECAI-2006). vol. 141, pp. 447-451. IOS Press, Riva del Garda, Italy (2006) 22. Sonnenberg, F.A., Hagerty, C.G.: Computer-interpretable clinical practice guide- lines. where are we and where are we going ? Yearb Med Inform pp. 145-58+ (2006) 23. Taboada, M., Meizoso, M., Riaño, D., Alonso, A., Martínez, D.: From natural language descriptions in clinical guidelines to relationships in an ontology. In: Pro- ceedings of the 2009 AIME international conference on Knowledge Representation for Health-Care: data, Processes and Guidelines. pp. 26-37. KR4HC'09, Springer- Verlag, Berlin, Heidelberg (2010)</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0" validated="false"><head>Table 1 .</head><label>1</label><figDesc></figDesc><table>Examples of sentences and their categorization in MHB-F 
+
+sentence 
+MHB-F aspect 
+
+An episiotomy should be performed if there is a clin-
+
+ical need such as instrumental birth or suspected 
+
+decision based activity 
+
+fetal compromise. 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1" validated="false"><head>Table 2 .</head><label>2</label><figDesc></figDesc><table>Selected general linguistic patterns 
+
+# rule type pattern 
+weight(w) 
+
+1 IF 
+* [Ii]f * 
+0.5 
+
+2 IF 
+If {condition} {consequence}. 
+1.0 
+
+3 IF 
+If {condition}, {consequence}. 
+1.0 
+
+4 IF 
+{consequence} if {condition}. 
+1.0 
+
+5 IF 
+If {condition} then {consequence}. 
+1.0 
+
+6 SHOULD 
+* should have * 
+0.5 
+
+7 SHOULD 
+* should be * 
+0.5 
+
+... .. 
+... 
+... 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2" validated="false"><head>Table 3 . Structure of the semantic pattern pool (selected samples)</head><label>3</label><figDesc></figDesc><table>rule type 
+semantic clause type 
+sequence of semantic types 
+
+IF 
+condition 
+[fndg][cnce] 
+
+IF 
+consequence 
+[phsu][fndg] 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3" validated="false"><head>Table 4 .</head><label>4</label><figDesc>Interpretation of the relevance rate</figDesc><table></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_4" validated="false"><head>Table 5 .</head><label>5</label><figDesc></figDesc><table>Evaluation results I (rr &gt;1: tp and fp; rr ≤ 1: fn and tn) 
+
+type: IF 
+type: SHOULD 
+total 
+
+tp fn 
+14 
+3 
+1 
+2 
+15 
+5 
+Gold Standard fp tn 
+1 
+2 
+1 
+26 
+2 
+28 
+
+tp = true positive; fn = false negative; fp = false positive; tn = true negative 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_5" validated="true"><head>Table 6 . Evaluation results II</head><label>6</label><figDesc></figDesc><table>type: IF 
+type: SHOULD 
+total 
+
+Guideline 
+REC PRE NPV REC PRE NPV REC PRE NPV 
+
+Breast Cancer 
+100% 
+67% 100% 
+-
+-100% 100% 67% 100% 
+
+Adm. for Birth 
+80% 100% 
+0% 33% 50% 
+88% 
+72% 93% 
+75% 
+
+total 
+82% 
+93% 
+40% 33% 50% 
+93% 
+75% 88% 
+85% 
+
+REC 
+the number of correctly identified sentences over the number of the modeled sentences in the 
+golden standard (=recall) 
+
+PRE 
+the number of correctly identified sentences over the entire number of identified sentences (=pre-
+cision) 
+
+NPV 
+the number of correctly not identified sentences over the number of not modeled sentences in 
+the golden standard (=negative predictive value) 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_6" validated="false"><head>Table 7 .</head><label>7</label><figDesc></figDesc><table>Selected sentences with an rr ≤ 1.0 
+
+sentence 
+rr 
+reason 
+
+</table></figure>
+		</body>
+		<back>
+			<div type="references">
+
+				<listBibl/>
+			</div>
+		</back>
+	</text>
+</TEI>

@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Informal and formal medical guidelines: Bridging the gap</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Marije</forename><surname>Geldof</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Dept. of Artificial Intelligence</orgName>
+								<orgName type="institution">Vrije Universiteit Amsterdam</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Annette</forename><surname>Ten Teije</surname></persName>
+							<affiliation key="aff0">
+								<orgName type="department">Dept. of Artificial Intelligence</orgName>
+								<orgName type="institution">Vrije Universiteit Amsterdam</orgName>
+							</affiliation>
+						</author>
+						<author role="corresp">
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Frank</forename><surname>Van Harmelen</surname></persName>
+							<email>{annette,frank.van.harmelen}@cs.vu.nl</email>
+							<affiliation key="aff0">
+								<orgName type="department">Dept. of Artificial Intelligence</orgName>
+								<orgName type="institution">Vrije Universiteit Amsterdam</orgName>
+							</affiliation>
+							<affiliation key="aff1">
+								<orgName type="department">Dept. of Computer Science</orgName>
+								<orgName type="institution">Universitat Jaume I</orgName>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Peter</forename><surname>Votruba</surname></persName>
+							<affiliation key="aff2">
+								<orgName type="department">Institute of Software Technology and Interactive Systems</orgName>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Informal and formal medical guidelines: Bridging the gap</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<abstract>
+				<p>The role of medical guidelines is becoming more and more important in the medical field. Within the Protocure project it has been shown that the quality of medical guidelines can be improved by formalisation. However formal-isation turns out to be a very time-consuming task, resulting in a formal guideline that is much more complex than the original version and the relation with this original guideline is often unclear. This paper presents a case study where the relation between the informal medical guideline and its formal counterpart is investigated. This has been used to determine the gaps between the formal and informal guidelines and the cause of the size explosion of the formal guidelines.</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">Introduction</head><p>Medical practice guidelines are "systematically developed statements to assist practi- tioners and patient decisions about appropriate health care for specific circumstances" <ref type="bibr" target="#b1">[2]</ref>. They contain more or less precise recommendations about the medical tests or in- terventions to perform, or about other aspects of clinical practice. These guidelines are used by a wide variety of medical professionals: medical specialists, family doctors, hospital nurses.</p><p>The interest in medical guidelines has resulted in the development of a number of special purpose knowledge representation languages intended for modelling guidelines <ref type="bibr" target="#b2">[3,</ref><ref type="bibr" target="#b6">7,</ref><ref type="bibr" target="#b8">9]</ref>. They provide the opportunity to formalise informal guidelines into more for- mal objects. However formalisation of a guideline turns out to be a very time-consuming task, resulting in a formal guideline that is much more complex than the original ver- sion and even more importantly the relation between the informal (original) and formal guideline is not always clear: which parts of the informal guideline correspond to which parts of the formal model, are all parts of the informal guideline covered in the formal model, etc. This paper presents the results of an analysis (more fully reported in <ref type="bibr" target="#b4">[5]</ref>)of two informal medical guidelines and their formalised counterparts. For this analysis the relation between the informal guideline and formal guideline was made explicit. The focus of the analysis was among others: (1) whether everything in the original guideline that should have been modelled has in practice been modelled; (2) whether elements in the formal guideline are explicitly stated, implicitly stated or completely missing in the original guideline; (3) why formal guidelines are so much bigger in size than their informal counterparts.</p><p>The contribution of this analysis is the categorisation of the gaps between informal and formal versions of the guidelines, a clarification of the size explosion and last but not least the explicit representation of the relation between two selected informal guide- lines and their formal counterparts. The latter among others resulted in the visualisation of anomalies already found during the formalisation.</p><p>The structure of the paper is as follows. Section 2 describes our case study. Section 3 discusses the gaps between the informal and formal representations of guidelines and our observations in the process of making the relation between informal and formal models explicit. Section 4 indicates the causes of increased complexity in the formal models. Finally section 5 concludes and discusses some open issues and future work.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">The case study</head><p>This study has been carried out within the Protocure project (www.protocure.org), a European project which aims to evaluate the use of formal methods for quality im- provement of medical guidelines. The guidelines selected and formalised in Asbru <ref type="bibr" target="#b8">[9]</ref> within the Protocure project have been used as a starting point. The definition of the relations between the original and formal guideline has been done with the Guideline Markup Tool <ref type="bibr" target="#b9">[10]</ref>.</p><p>The selected guidelines The guidelines that have been used in this study are the American Academy of Pediatrics practice guideline for the Management of Hyper- bilirubinemia in the Healthy Term Newborn <ref type="bibr" target="#b0">[1]</ref> and the Dutch College of General Prac- titioners (NHG) standard for Type 2 Diabetes Mellitus <ref type="bibr" target="#b7">[8]</ref>.</p><p>Asbru: a representation language for medical guidelines Asbru is a plan represen- tation language to represent clinical guidelines as time-oriented, skeletal plans <ref type="bibr" target="#b8">[9]</ref>. It can be used to express clinical guidelines as skeletal plans that can be instantiated for every patient. <ref type="bibr" target="#b3">[4]</ref>.</p><p>In Asbru a clinical guideline consists of a name, a set of arguments, including a time annotation (representing the temporal scope of the plan) and five elementary com- ponents: preferences, intentions, conditions, effects and a plan body, which describes the actions to be executed. The plan name is compulsory and all the other components are optional. Each plan may contain an arbitrary number of subplans within its plan body, which may themselves be decomposed into sub-subplans. So a plan can include several potentially decomposable sequential, concurrent or cyclical plans.</p><p>Guideline Markup Tool GMT is an editor that helps translating guidelines from free text into Asbru <ref type="bibr" target="#b9">[10]</ref>. One of the functionalities of this tool that has been used in this case study is to define links between an original guideline (in the form of a natural text with tables and diagrams), and its Asbru model. To define a link the user selects a piece of the original guideline and a related piece of the formal guideline and inserts a link, which connects the two pieces. With this functionality all the relations between an original guideline and its formal model have been defined.</p><p>Within this study we obtain insight in the relation between original and formalised guideline by defining a link for each relationship between the two versions of guidelines with the Guideline Markup Tool. These links between the original guideline and its formal model can serve different purposes: (i) to give insight in the relation between the original guideline and its formalisation. (ii) to enable discussion with domain experts. (iii) to reveal if everything in the original guideline that should have been modelled in the formal guidelines really has been modelled. (iv) in case the original guideline is updated, changes can much easier be made in the formal model, since the place where the adjustment should be made can easily be found with the link pointing there. (v) to help the modeller during the formalisation process.</p><p>Types of links The links that have been defined within this study can roughly be distinguished in two ways. A link can be characterised as explicit or implicit. Further- more the level (high or low) at which a link is defined can be different (see <ref type="bibr" target="#b4">[5]</ref>). Below, we discuss the explicit and implicit links in more detail.</p><p>Explicit links are links that show a very direct, obvious relation. For example the original diabetes guideline speaks about "fat metabolism problems" and the formal di- abetes guideline uses the condition "fat-metabolism = true". Implicit links on the other hand are much less apparent. They do relate two parts of the original and formalised guideline that belong together, but the relation is not completely fitting.</p><p>Several reasons for implicit links can be identified. For example domain experts may have clarified terms that are vague in the original guideline. This results in a detailed statement in the formalisation, which is related to a more vague statement in the original guideline. For example the original diabetes guidelines speaks about "older age", which with advice from domain experts has been translated with "age &gt; 60".</p><p>Another reason for an implicit link can be the need for a certain medical parameter. To be able to use this parameter its value first needs to be obtained. Original guidelines mostly consider it to be clear this value needs to be obtained and don't mention it explicitly. In the formal guideline, on the other hand an explicit statement to obtain this value is needed.</p><p>Third of all, common knowledge in the original guideline can cause a different model in the formalisation. For example the diabetes guideline prescribes to check the blood pressure. It can be considered as a common fact that for checking blood pres- sure, both lower and higher blood pressure need to be measured. In this case the orig- inal guideline speaks about "blood pressure", while the formal guideline speaks about "higher blood pressure" and "lower blood pressure", which results in two implicit links.</p><p>Finally sometimes related aspects in the original guideline are put together in a "superplan", which is subdivided in subplans that represent these different aspects. Be- sides explicit links to these subplans, also an implicit link from the "superplan" to the collection of related aspects is desirable.</p><p>The distinction between explicit and implicit links shows that some of the relations between the original guideline and its formal guideline are very obvious, but others are much more indirect for various reasons.</p><p>Analysis of defined links During the formalisation process of the two guidelines different anomalies have been identified and documented <ref type="bibr" target="#b5">[6]</ref>. Some of these anoma- lies concerned information that was missing from the original guideline. The linking process makes these pieces of missing information visually apparent, because they are parts of the formal guideline that remain unrelated to any part of the informal guideline.</p><p>One of the most surprising results was that new anomalies were uncovered. Some had not been identified during the formalisation process and others had even been in- troduced during the formalisation process.</p><p>Furthermore the links have visualised those parts of the original guideline that have not been translated in the formal guideline. These links give insight in the choices of the modeller of the formal guideline.</p><p>Not only are there parts of the original guideline that remain unlinked, there are even more parts of the formal model that remain unlinked, because there is no direct relation with the original guideline. Mostly this is caused by information that is not explicit in the original guideline but thought necessary in the formal guideline. These unlinked parts show that the formal guidelines are much more extensive compared to the original guideline, in this study considered as extra complexity. The next section will deal with all the different aspects causing this extra complexity that have been identified on the basis of the defined links.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">Where does the complexity come from?</head><p>Formal guidelines turn out to be much more extensive than their original versions. Con- sidering the two guidelines used in this study, jaundice consisted originally of 8 pages and its formalisation in an intermediate representation form is 40 pages long. The dia- betes model is even 56 pages long while its original covered only 4 pages.</p><p>We distinguish three main causes of this additional complexity: additional infor- mation, domain specification and nearly identical plans. In this section we focus on the first cause additional info, which is illustrated with six concrete reasons. During the for- malisation of medical guidelines, additional information can be necessary for a proper formalisation. The additional information can appear in different forms:</p><p>1. Background knowledge. First of all medical guidelines in general assume certain background knowledge to be common knowledge for medical practitioners.</p><p>2. Missing information about conditions. Conditions control the sequence of pro- posed actions in the guideline. Sometimes a condition is implicitly derived from the original guideline or derived from additional information that has been gained from domain experts.</p><p>3. The intentions of plans. When actions are performed with respect to medical diagnosis or treatment, it is often useful to realise why this action is being performed at all. This can be expressed by defining the intentions of a plan. In most cases intentions are not explicitly stated in the original guideline, but considered to be known by the medical practitioner.</p><p>4. Missing information about the repetition of actions. In a cyclical plan the defini- tion of the time-interval on which the plan should be repeated, the so-called retry delay has to be specified. Sometimes this retry delay has to be gained from a medical expert.</p><p>5. An important aspect of medical guidelines is how all the different steps and ac- tions within the guideline are managed. Should the specified plans and actions be per- formed in parallel, in sequence etc. ? To be able to represent these kind of control as- pects a formal representation language should provide control structures to define how the plans of a guideline should be executed. Asbru contains many different kind of such control structures. Many times this control information is not explicitly stated in the original guideline. It can be either derived from the original guideline or obtained from domain experts.</p><p>6. A plan can be user-performed, which means this plan is executed through some action by the user. Mostly it is apparent which actions should be executed by the user so this is not explicitly stated in the original guideline.</p><p>We give some numbers for illustrating how the above different complexity aspects appear in the two selected guidelins. Conditions: 14 times in Jaundice, 24 times in Diabetes; Intentions: 18 times in Jaundice, 17 times in Diabetes; Retry delays: once in Jaundice, 5 times in Jaundice; Control structures: 28 times in Jaundice, 50 times in Diabetes; User-performed plans: 19 times in Jaundice, 20 times in Diabetes.</p><p>All the aspects of increasing complexity mentioned above appear in Asbru, but will also show up in any other formal representation language.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">Conclusions</head><p>We have presented an analysis of the relationship between an informal medical guide- line and its formal counterpart. It turned out different sorts of relationships could be identified. Links can be either explicit or implicit and they can appear at high or low level. Furthermore some of the anomalies that had already been found during formali- sation were nicely visualised and surprisingly also new anomalies were found.</p><p>Not all parts of both the original guidelines as well as the formal guideline could be related to their counterpart though. Some parts of the original guideline remained unlinked, but even a bigger amount of the formal guideline remained unlinked. All ap- pearances of this last example indicate causes of the size explosion of formal guidelines. All these reasons of increased complexity have been categorised.</p><p>Challenges for the future can be found in developing medical guidelines hand in hand with their formal counterparts assisted by the definition of the links between them. The modeling choices are then explicit represented and formal and informal guidelines are no longer separated objects.</p></div>
+			<note place="foot">This work has been partially supported by the European Commission&apos;s IST program, under contract number IST-2001-33049-Protocure. Part of this work (e.g., GMT) was done within the Asgaard Project, which is supported by Fonds zur Frderung der wissenschaftlichen Forschung&quot; (Austrian Science Fund), grant P12797-INF.</note>
+		</body>
+		<back>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Academy of Pediatrics, Provisional Committee for Quality Improvement and Subcommittee on Hyperbilirubinemia. Practice parameter: management of hyperbilirubinemia in the healthy term newborn</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Aap</forename><surname>American</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Pediatrics</title>
+		<imprint>
+			<biblScope unit="volume">94</biblScope>
+			<biblScope unit="page" from="558" to="565" />
+			<date type="published" when="1994" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<monogr>
+		<title level="m" type="main">Clinical Practice Guidelines: Directions for a New Program. Institute of Medicine</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Field</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">K</forename><surname>Lohr</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1990" />
+			<publisher>National Academy Press</publisher>
+			<pubPlace>Washington D.C.</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">PROforma: a general technology for clinical decision support systems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Fox</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">N</forename><surname>Johns</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><surname>Lyons</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Rahmanzadeh</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Thomson</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Wilson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Computer Methods and Programs in Biomedicine</title>
+		<imprint>
+			<biblScope unit="volume">54</biblScope>
+			<biblScope unit="page" from="59" to="67" />
+			<date type="published" when="1997" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title level="a" type="main">The concept and implementation of skeletal plans</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Friedland</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Y</forename><surname>Iwasaki</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of automated reasoning</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="161" to="208" />
+			<date type="published" when="1985" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<monogr>
+		<title level="m" type="main">The formalisation of medical protocols: easier said than done</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Geldof</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2003" />
+		</imprint>
+		<respStmt>
+			<orgName>Vrije Universiteit Amsterdam</orgName>
+		</respStmt>
+	</monogr>
+	<note>Master&apos;s thesis</note>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<analytic>
+		<title level="a" type="main">Improving medical protocols through formalization: a case study</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Marcos</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">H</forename><surname>Roomans</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Ten Teije</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Van Harmelen</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. of the 6th Int. Conf. on Integrated Design and Process Technology</title>
+		<meeting>of the 6th Int. Conf. on Integrated Design and ess Technology</meeting>
+		<imprint>
+			<date type="published" when="2002" />
+		</imprint>
+	</monogr>
+	<note>IDPT-02</note>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Guideline Interchange Format: a model for representing guidelines</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><surname>Ohno-Machado</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Gennari</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Murphy</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">N</forename><surname>Jain</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Tu</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Oliver</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><surname>Pattison-Gordon</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Greenes</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><surname>Shortliffe</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><forename type="middle">Octo</forename><surname>Barnett</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">J. of the American Medical Informatics Ass</title>
+		<imprint>
+			<biblScope unit="volume">5</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="357" to="372" />
+			<date type="published" when="1998" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">NHG-Standaard Diabetes Mellitus Type 2 (eerste herziening)</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Rutten</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Verhoeven</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Heine</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">W</forename><surname>De Grauw</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Cromme</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">K</forename><surname>Reenders</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">E</forename><surname>Van Ballegooie</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><surname>Wiersma</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Huisarts en Wetenschap</title>
+		<imprint>
+			<biblScope unit="volume">42</biblScope>
+			<biblScope unit="issue">2</biblScope>
+			<biblScope unit="page" from="67" to="84" />
+			<date type="published" when="1999" />
+		</imprint>
+	</monogr>
+	<note>First revision</note>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">The asgaard project: a task-specific framework for the application and critiquing of time-oriented clinical guidelines</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Y</forename><surname>Shahar</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Miksch</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Johnson</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">AIM</title>
+		<imprint>
+			<biblScope unit="volume">14</biblScope>
+			<biblScope unit="page" from="29" to="51" />
+			<date type="published" when="1998" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<monogr>
+		<title level="m" type="main">Master&apos;s thesis, Institute of Software Technology and Interactive Systems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Votruba</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="2003" />
+			<publisher>Austria</publisher>
+			<pubPlace>Vienna</pubPlace>
+		</imprint>
+		<respStmt>
+			<orgName>Vienna University of Technology</orgName>
+		</respStmt>
+	</monogr>
+	<note>Structured knowledge acquisition for asbru</note>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

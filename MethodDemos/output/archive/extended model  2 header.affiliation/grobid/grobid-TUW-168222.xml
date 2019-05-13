@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Optimization of communication by analyzing the interlocutor&apos;s wording</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author role="corresp">
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Gudrun</forename><surname>Kellner</surname></persName>
+							<email>Email: kellner@ec.tuwien.ac.at</email>
+							<affiliation key="aff0">
+								<orgName type="institution">E-Commerce Group Institute of Software Technology and Interactive Systems Vienna University of Technology Vienna</orgName>
+								<address>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Optimization of communication by analyzing the interlocutor&apos;s wording</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<abstract>
+				<p>Recent research results on communication science mention a relation between the inter-locutor&apos;s perceptional preferences, his or her mental representations and his or her choice of expressions. However, there is not any tool for analyzing such. In my research I combined lexical with computational linguistic methods to develop a software prototype that is able to analyze text on the usage of perceptional expressions. This analyzing tool can help to identify the interlocutor&apos;s perceptional preference for easier meeting his or her way of thinking and thereby facilitate the understanding. Still, for the German language, not much research on the relation between an individual&apos;s perceptional preference and his or her language use has been done yet. To be able to go deeper into that idea, (1) a lexical corpus of perceptional expressions and (2) a software tool that automatically filters those expressions from a text are needed. Those two steps shall be explained in this abstract.</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>II. A LEXICAL CORPUS OF PERCEPTIONAL EXPRESSIONS</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>I. INTRODUCTION</head><p>All communication is based on perception. With the establishment of constructivism the knowledge about individual differences in perception spread. It seems reasonable to assume that the individual form of perception also influences the language of a person. Interestingly, this theory hasn't yet shown great af- fects in the research on individual and personal lan- guage use. The Neurolinguistic Programming (NLP) offers a model that seems as a first step in closing this gap: The idea of sensual-specific perception which comes noticeable in the individual language use is described by the keyword "representational systems". Accord- ing to this, every person has one or two sensory sys- tems preferably used to perceive his or her environ- ment. From the five senses arises the classification in visual, auditory, kinesthetic, olfactory and gustatory perception modalities. Each of these perception classes forms a sensomotor complex, in the NLP called representational system. As the inner represen- tations are accessed for expressing thoughts, the preferred sensory system of a speaker can be told by his or her diction and wording.</p><p>The research about the optimization of communi- cation furnished proof that the percentage of under- standing is higher when a speaker adjusts his diction to the diction of his addressee -what applies with a high probability also to the use of perceptional words.</p><p>For a systematic analysis of the use of perceptional expressions, a corpus is needed, containing a collec- tion of the most often used words and expressions that can be directly linked to one of the perceptional classes mentioned above. That corpus was built with the input of 13 different resources and contains more than 840 different entries with at least 200 words and expressions per perceptional class. For further details and the complete corpus see <ref type="bibr">[1]</ref>.</p><p>During the examination of the corpus it was found that usually only the root word is decisive for the assignment to a representational class, but that such a root word can occur in different combinations. This follows the fact that in the German language it is possible to combine words and thereby create new ones. That possibility causes a problem when search- ing for a semantic unit that can also be part of a com- pound word. For example, when searching for the signal word "rot" <ref type="bibr">[red]</ref>, the output should also in- clude words like "Morgenrot" <ref type="bibr">[dawn]</ref> and "rotgrün" [red and green] containing the same semantic root, but not words like "Brot" <ref type="bibr">[bread]</ref> or "Schrot" [bruised grain] which include the same sequence of characters, but have no semantic link to the searched word. A search algorithm that also takes compound words into account would especially be helpful when scanning a German text for a list of signal words.</p><p>Therefore, a search algorithm using a new model describing word composition was developed.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>REFERENCES</head><p>As a consequence of the multiple combining possi- bilities of root words, an appropriate analyzing tool should not only be able to find the expressions con- tained by the corpus, but also all possible combina- tions that are based on the same semantic root.</p><p>To solve this problem, a model of possible word structures was developed. Following that model, it can be determined which letters or syllables may occur around a root word without changing its se- mantic meaning (and hence the assignment to the respective perceptional class). This model was intro- duced with the aim to provide a clear description of word composition transferable into an algorithm and, based on the root word, describes the structure of compound words as follows: <ref type="bibr">[1]</ref>  The following notation was used: Round brackets mark optional, but maximal single occurrence, square brackets highlight optional (even multiple) occur- rence of elements.</p><p>Based on the word components mentioned in the Duden Grammatik <ref type="bibr">[2]</ref>, for each element of the model a list of letter combinations was set up. The analyz- ing tool joins the corpus of perceptional expressions with the model of word structure and the lists of possible word composition elements. After having identified the searched sequence of characters in a word, the algorithm analyzes the characters around it.</p><p>Step by step it checks whether the environment either represents a semantically inseparable part of the sequence of characters (which indicates a different word meaning) or is the rest of a compound word and thereby should be part of the output result.</p><p>The tests with the tool let presume that the occur- rence of perceptional expression depends on the sort of text and on the topic. A user's test report on some instant food i.e., had a very high rate of gustatory vocabulary.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>IV. FURTHER RESEARCH</head><p>At the moment I'm working on using this tool in user modeling. As in the Internet (and esp. in blogs and forums) there is quite a lot of text which can be di- rectly linked to a user, this could be a rich source for modeling the user's mental representations of percep- tional information. With such knowledge about the user, advertisements with a higher acceptance can be designed and chosen with respect to the user's indi- vidual perceptional preference.</p></div>		</body>
+		<back>
+			<div type="references">
+
+				<listBibl/>
+			</div>
+		</back>
+	</text>
+</TEI>

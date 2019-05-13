@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Add-A-Tag: Learning Adaptive User Profiles from Bookmark Collections</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Elke</forename><surname>Michlmayr</surname></persName>
+							<email>michlmayr@wit.tuwien.ac.at steve.cayzer@hp.com</email>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Steve</forename><surname>Cayzer</surname></persName>
+							<affiliation key="aff1">
+								<orgName type="institution">HP Labs</orgName>
+								<address>
+									<addrLine>Filton Road, Stoke Gifford</addrLine>
+									<postCode>BS34 8QZ</postCode>
+									<settlement>Bristol</settlement>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Paul</forename><surname>Shabajee</surname></persName>
+							<email>paul.shabajee@hp.com</email>
+							<affiliation key="aff1">
+								<orgName type="institution">HP Labs</orgName>
+								<address>
+									<addrLine>Filton Road, Stoke Gifford</addrLine>
+									<postCode>BS34 8QZ</postCode>
+									<settlement>Bristol</settlement>
+									<country key="GB">United Kingdom</country>
+								</address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation key="aff0">
+								<orgName type="institution" key="instit1">♦ Women&apos;s Postgraduate College for Internet Technologies (WIT)</orgName>
+								<orgName type="institution" key="instit2">Vienna University of Technology</orgName>
+								<address>
+									<settlement>Vienna</settlement>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Add-A-Tag: Learning Adaptive User Profiles from Bookmark Collections</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>tagging user profiles adaptivity</keywords>
+			</textClass>
+			<abstract>
+				<p>In this paper we construct adaptive user profiles from tagging data. We present and evaluate an algorithm for creating such profiles, characterizing its behavior through statistical analysis.</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.">Introduction</head><p>Collaborative tagging systems, also called folksonomies or so- cial bookmarking services, allow their users to manage book- marks online and to annotate them with free-text keywords (tags) for improving re-discovery of information. The most well-known service, del.icio.us <ref type="bibr" target="#b3">[4]</ref>, was started in 2003 and many other services have followed since. Since many users of a folksonomy stick with the same bookmark collection for years, these data contain very fine-grained information about a user's changing interests over time.</p><p>This paper describes how to utilize data from a social book- marking service to create user profiles that can in turn be used for Information Filtering (IF). Unlike many other profile learning mechanisms, which usually rely on relevance feed- back from the user, our method does not require any addi- tional user input. Moreover, since tagging data is time-based, it allows us to create user profiles that dynamically adapt to drifts in users' interests. The profile should represent the most important parts of a users' behavior (that is, some com- pression, clustering or summarization needs to be performed). Both persistent long-term interests and transient short-term interests should co-exist in the profile.</p><p>are used in combination, the more intense this relationship is. This is represented by a graph with labeled nodes and undirected weighted edges in which nodes correspond to tags and edges correspond to the relationship between tags. Each time a new tag is used, a new node for this tag is added to the graph. Each time a new combination of tags is used, a new edge with weight α between the corresponding nodes is created in the graph. If two tags co-occur again, the weight for the corresponding edge is increased by β.</p><p>To include the age of the bookmarks in the user profile we extend the co-occurrence approach with the evaporation technique known from ant algorithms <ref type="bibr" target="#b1">[2]</ref>. Evaporation is a simple method to add time-based information to the weights of edges in a graph: Each time the profile graph is updated with tags from a newly added bookmark, the weights of each edge in the graph is decreased slightly by removing a small percentage of its current value.</p><p>Consider a user u adding a bookmark item b tagged with tags t1, . . . , tn to his or her bookmark collection. The profile graph Gu = (V, E) where V = v1, . . . , vn is the set of vertices (which correspond to tags) and E = e1, . . . , en is the set of edges, is updated as follows. Firstly, the existing information in the graph is changed by applying the evaporation formula shown in Equation 1 to every edge ex ∈ E</p><formula xml:id="formula_0">we x ← we x − ρ · we x ,<label>(1)</label></formula><p>where ρ ∈ [0, 1] is a constant and we x is the weight of edge ex. Secondly, the n new tags from bookmark b: t1, . . . , tn are added to the graph. For every combination titj where i, j ∈ 1, . . . , n and i &lt; j, the following procedure is executed:</p><p>1. For every tag tx (x ∈ i, j), add a corresponding ver- tex vx to graph Gu, if vx does not exist.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">The Add-A-Tag algorithm</head><p>We focus not only on which tags have been used, but rather on which tags have been used in combination. This can be achieved by relying on the co-occurrence technique. If two tags are used in combination (co-occur ) by a certain user for annotating a certain bookmark, there is some kind of se- mantic relationship between them. The more often two tags * This research has partly been funded by the Austrian Fed- eral Ministry for Education, Science, and Culture (bm:bwk), and the European Social Fund (ESF) under grant 31.963/46- VII/9/2002.</p><p>2. If it does not yet exist, add an edge with weight α be- tween vertex vi and vertex vj to graph Gu, where con- stant α is a real number and α &gt; 0.</p><p>3. Otherwise, if an edge between vertex vi and vertex vj exists, increase its weight by β. Constant β is a real number and β &gt; 0. This is executed each time the user adds an bookmark item to the bookmark collection. It creates a profile graph. Ex- tracting the user profile from the profile graph is defined as follows.</p><p>1. Create a ordered set Es from E = e1, . . . , en. Es con- tains all edges ex (x ∈ 1, . . . , n) from graph Gu ordered in decreasing order by their weights we x .</p><p>ICWSM'2007 Boulder, Colorado, USA 2. Create set E k by extracting the top k elements from set Es, where k is a natural number and k &gt; 0.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1.5</head><p>3. Create graph G u ′ which contains all edges from E k and all vertices vx from graph Gu which are incident to one of the edges in E k .</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1.25</head><p>No Evaporation Evaporation User Activity (log) No evaporation Evaporation User Activity 1</p><p>The size of the user profile G u ′ is determined by the value chosen for parameter k.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>0.75</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">Evaluation of profile adaptivity</head><p>The amount of change in the user profile depends on the profile creation mechanism, but also on the user's activity pattern. We assess it by comparing the Add-A-Tag algorithm (1) with and (2) without using the evaporation feature. The user's activity pattern serves as a reference value. We need a way for determining the change of a profile over time. If we compute the user profile of user u at time t1 and again at time t2, we need to be able to measure the difference (distance) between these two user profiles. Since measuring graph distances is a only partly solved issue <ref type="bibr" target="#b0">[1]</ref>, we map the graphs onto a simpler structure which only contains the in- formation we need for the comparison. This structure is a set of edges in decreasing weight order. We define the metric dist(S1, S2) for the distance between two sets S1 and S2 based on the Kendall τ coefficient <ref type="bibr" target="#b2">[3]</ref> -a standard measure for com- paring ordered sets that includes rank correlation -as shown in Equations 2a to 2c. The result values for dist(S1, S2) are in the range of 0 (if S1 and S2 are the same, that is, equally ranked) to 1 (if S1 and S2 are in reverse order). </p><formula xml:id="formula_1">dist(S1, S2) = 1 − 2 * τ (S1, S2) n * (n − 1) , where<label>(2a)</label></formula><p>τ (S1, S2) = ¯ τi,j(S1, S2) , and (2b)</p><formula xml:id="formula_2">i,j∈P</formula><p>The result is shown in <ref type="figure">Figure 1</ref>. What the trend lines reveal is that both approaches exhibit a change pattern that is pro- portional to the user's activity pattern, but the Add-A-Tag approach with evaporation (dashed curve) shows a consider- ably higher amount of change and fits better with the activity pattern (solid grey curve). If the evaporation feature is not used (solid black curve), the degree of change in the user pro- file decreases over time. This is particularly the case for the results in the time span between week 80 and week 100. Al- though the trend line for user activity shows that the user is adding new bookmarks to the collection, the most often used tag combinations are dominant and prevent newly arising tag combinations from being included in the profile.</p><formula xml:id="formula_3">¯ τi,j(S1, S2) =   (2c)</formula></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">Conclusion</head><p> 0 if i and j are in same order in S1 and S2 1 otherwise In Equation 2a, variable n is the size of the sets. In Equa- tion 2b, P is the set of pairs of distinct elements in S1 and S2. The Kendall τ is applicable only for sets which have the same members and -consequently -are of same size. For our setting, this means that those set members that are present in only one of the sets need to be added to the other one. We append the missing set members to the end of the set in order not to affect the ranking of the pairs. Now we compute the user profiles for a sample user's book- mark collection. We incrementally create the profile graph by adding the bookmark items in their temporal order, and -each time after adding all bookmarks that were created by the user within the time span of one week -we extract the user profile from the profile graph. Using this procedure we retrieve a set of user profiles In this paper we proposed the Add-A-Tag algorithm for learn- ing adaptive user profiles from bookmark collections, which is based on a combination of (1) the co-occurrence technique for determining the relationships between tags and (2) an evapo- ration feature as known from ant algorithms for adapting the user profile to trends over time. We evaluated the algorithm by defining a metric appropriate for quantifying the amount of change over time. What we can show is that the user pro- files created with Add-A-Tag are adaptive in the sense that they change according to changes in tag usage in a continuous stream of tagging data.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>References</head><formula xml:id="formula_4">G u ′ = {G wx u ′ |x = {1, . .</formula><p>. , n}} for user u and each week wx. In the next step, we apply the metric dist to these data in order to assess the amount of change between the weekly snapshots of the profiles. The user profile G w x+1 up for week wx+1 is compared to the user profile G</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>0. 5 0. 25 dist</head><label>525</label><figDesc>Fig. 1: Adaptivity comparison for the co-occurrence (α = 1.0, β = 1.0, ρ = 0, k = 20) and the Add-A-Tag approach (α = 1.0, β = 1.0, ρ = 0.01, k = 20)</figDesc></figure>
+		</body>
+		<back>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<monogr>
+		<title level="m" type="main">Distance in graphs</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Buckley</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">F</forename><surname>Harary</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1990" />
+			<publisher>Addison-Wesley</publisher>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<monogr>
+		<title level="m" type="main">New Ideas in Optimization, chapter The Ant Colony Optimization Meta-Heuristic</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Dorigo</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><forename type="middle">D</forename><surname>Caro</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1999" />
+			<publisher>McGraw-Hill</publisher>
+			<biblScope unit="page" from="11" to="32" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<analytic>
+		<title level="a" type="main">Comparing Top k Lists</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Fagin</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Kumar</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Sivakumar</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">SIAM Journal on Discrete Mathematics</title>
+		<imprint>
+			<biblScope unit="volume">17</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="134" to="160" />
+			<date type="published" when="2003-10" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<analytic>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">!</forename><surname>Yahoo</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Inc</surname></persName>
+		</author>
+		<ptr target="http://del.icio.us.wxupforthepreviousweekwx" />
+	</analytic>
+	<monogr>
+		<title level="j">Del.icio.us Social Bookmarking Service</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>
