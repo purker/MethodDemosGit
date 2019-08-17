@@ -1,3 +1,6 @@
 # Requirements ParsCit
-* installed Perl
-* installed ParsCit
+* Perl, with modules:
+  * cpan XML::XPath
+  * cpan XML::Writer
+  * cpan XML::Writer::String
+* ParsCit
