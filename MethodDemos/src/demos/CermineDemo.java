@@ -31,6 +31,7 @@ import pl.edu.icm.cermine.exception.TransformationException;
 import pl.edu.icm.cermine.structure.model.BxDocument;
 import pl.edu.icm.cermine.structure.model.BxImage;
 import pl.edu.icm.cermine.structure.transformers.BxDocumentToTrueVizWriter;
+import utils.FileCollectionUtil;
 
 public class CermineDemo extends AbstractDemo
 {
@@ -49,12 +50,14 @@ public class CermineDemo extends AbstractDemo
 
 	public static void main(String[] args) throws Exception
 	{
+		/*List<File> groundTruthFiles = new ArrayList<>();
+		groundTruthFiles.add(Demos.getAllGroundTruthFiles().subList(0, 1));
+		groundTruthFiles.add(new File("D:\\output\\methods\\GroundTruthNoSubDir\\TUW-176845.pdf"));*/
 
-		List<File> groundTruthFiles = new ArrayList<>();
-		// groundTruthFiles.add(Demos.getAllGroundTruthFiles().subList(0, 1));
-		groundTruthFiles.add(new File("D:\\output\\methods\\GroundTruthNoSubDir\\TUW-176845.pdf"));
+		List<String> idList = new ArrayList<>();
 
-		new CermineDemo().runDemoList(groundTruthFiles, Demos.grobIdOutputDir);
+		idList.add("205933");
+		new CermineDemo().runDemoList(FileCollectionUtil.getAllGroundTruthFilesByIds(idList), Demos.cermineOutputDir);
 		// ContentExtractor.main(new String[]
 		// {"-path", "D:/output/GroundTruth-subset"});// , "-outputs", "trueviz"});// , "-str", "D:/output/GroundTruth-subset/file.txt"});
 

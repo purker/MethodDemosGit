@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import config.Config;
 import method.Method;
 import utils.ExecUtil;
+import utils.FileCollectionUtil;
 
 public class ParscitDemo extends AbstractDemo
 {
@@ -15,18 +17,16 @@ public class ParscitDemo extends AbstractDemo
 	private static final boolean INPUT_IN_XML_FORMAT = true; // true=xml, false=txt
 
 	// "cmd.exe /c citeExtract.pl C:/Users/Angela/git/ParsCit/demodata/sample1.txt"
-	private static final String PARSCIT_HOME = "C:/Users/Angela/git/ParsCit/bin";
+	private static final String PARSCIT_HOME = "D:/Java/git/ParsCit/bin";
 	private static final List<String> command = Arrays.asList("cmd.exe", "/c", "citeExtract.pl", "-m", "extract_all");
 
 	public static void main(String[] args) throws IOException
 	{
-		List<File> files = new ArrayList<>();
+		List<String> idList = new ArrayList<>();
 		// List<File> groundTruthFiles = Demos.getAllGroundTruthFilesAsTxt().subList(0, 1);
 
-		File inputFile = new File("D:/output/GroundTruth/Zeitschriftenartikel/TUW-205933-omnipage.xml");
-
-		files.add(inputFile);
-		new ParscitDemo().runDemoList(files, Demos.parsCitOutputDir);
+		idList.add("205933");
+		new ParscitDemo().runDemoList(FileCollectionUtil.getAllGroundTruthFilesOmnipageById(idList), Demos.parsCitOutputDir);
 	}
 
 	@Override
@@ -42,8 +42,8 @@ public class ParscitDemo extends AbstractDemo
 			commandWithParameters.add("-i");
 			commandWithParameters.add("xml");
 		}
-		commandWithParameters.add(inputFile.toString());
-		commandWithParameters.add(outputFile.toString());
+		commandWithParameters.add(inputFile.getAbsolutePath());
+		commandWithParameters.add(outputFile.getAbsolutePath());
 		String err = ExecUtil.execInWorkingDir(new File(PARSCIT_HOME), commandWithParameters);
 
 		return err;

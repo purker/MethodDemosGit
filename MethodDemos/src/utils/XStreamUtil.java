@@ -89,7 +89,7 @@ public class XStreamUtil
 			@Override
 			public boolean allows(Class type)
 			{
-				return type.getPackage().getName().startsWith("mapping.result");
+				return type.getPackage().getName().startsWith("mapping.result") || type.getPackage().getName().startsWith("org.grobid");
 			}
 		});
 

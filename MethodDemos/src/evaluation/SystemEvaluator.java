@@ -341,7 +341,7 @@ public abstract class SystemEvaluator
 
 			case SECTIONS:
 				//Sections which are Acknowledgements are ignored
-			return new ListInformationResult(type, origPub, testPub, Publication::getSections, Section::getTitle, s -> !s.getTitle().matches(Section.acknowledgementRegex));
+				return new ListInformationResult(type, origPub, testPub, Publication::getSections, Section::getTitle, s -> !s.getTitle().matches(Section.acknowledgementRegex));
 
 			case SECTION_LEVELS:
 				Set<StringRelation> headersOrig = new HashSet<>();

@@ -51,20 +51,20 @@ public class Demos
 	{
 		Duration.addStart(DurationEnum.ALL);
 
-		List<String> idList = Config.groundTruthIds;
-		// List<String> idList = Arrays.asList("139761");
+		//List<String> idList = Config.groundTruthIds;
+		List<String> idList = Arrays.asList("139761");
 
 		boolean runDemos = true;
 		boolean runCermineDemo = false;
-		boolean runGrobidDemo = true;
-		boolean runParsCitDemo = false;
-		boolean runPdfxDemo = false;
+		boolean runGrobidDemo = false;
+		boolean runParsCitDemo = true;
+		boolean runPdfxDemo = true;
 		boolean runCermineMapper = true;
 		boolean runGrobidMapper = true;
 		boolean runParsCitMapper = true;
 		boolean runPdfxMapper = true;
 
-		boolean startEvaluation = true;
+		boolean startEvaluation = false;
 
 		// List<File> groundTruthFiles = FileCollectionUtil.getExtractedFilesByMethod(method)
 		List<File> groundTruthFiles = FileCollectionUtil.getAllGroundTruthFilesByIds(idList);
@@ -162,7 +162,7 @@ public class Demos
 
 	public static List<File> getAllGroundTruthFiles()
 	{
-		List<File> groundTruthFiles = getAllFilesAlsoFromSubDirectories(inputDir, ".pdf");
+		List<File> groundTruthFiles = getAllFilesFromDirectories(inputDir, ".pdf");
 		return groundTruthFiles;
 	}
 
@@ -174,6 +174,9 @@ public class Demos
 
 	public static List<File> getAllFilesAlsoFromSubDirectories(File inputFolder, String extension)
 	{
+		for (File file : inputFolder.listFiles()) {
+			System.out.println(file);
+		}
 		return Arrays.stream(inputFolder.listFiles()).flatMap(file -> Arrays.stream(file.listFiles())).filter(file -> file.getName().endsWith(extension)).collect(Collectors.toList());
 	}
 

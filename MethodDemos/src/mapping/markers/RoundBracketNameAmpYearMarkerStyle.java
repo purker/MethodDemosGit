@@ -6,7 +6,7 @@ import utils.ReferenceUtil;
 
 /**
  * 141336<br>
- * 1: by Janson (1987) and Tak´acs (1988)<br>
+ * 1: (Janson, 1987)<br>
  * 2: (Chen & Interian, 2005)<br>
  * 3: (Janson, Luczak, & Rucinski, 2000)<br>
  * 4: (Cocco, Dubois, Mandler, & Monasson, 2003)<br>
@@ -14,7 +14,6 @@ import utils.ReferenceUtil;
  */
 public class RoundBracketNameAmpYearMarkerStyle extends AbstractMarkerStyle
 {
-
 	@Override
 	public String getMarkerString(Reference reference)
 	{
@@ -52,5 +51,4 @@ public class RoundBracketNameAmpYearMarkerStyle extends AbstractMarkerStyle
 		sb.append(")");
 		return sb.toString();
 	}
-
 }

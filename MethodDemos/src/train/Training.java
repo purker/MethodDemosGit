@@ -48,7 +48,7 @@ public class Training {
 		// trainExistingModelAndEvaluate();
 		// trainAndEvaluate();
 
-		renameModels("original-model.wapiti", "model.wapiti", false);
+		//renameModels("original-model.wapiti", "model.wapiti", false);
 
 		// dumpModels();
 	}
@@ -230,8 +230,8 @@ public class Training {
 	}
 
 	/**
-	 * @param beforeString
-	 * @param renameTo
+	 * @param beforeString string of file name that will be renamed
+	 * @param renameTo replacement string, that replaces beforeString
 	 * @param move
 	 *            true=move, false=copy
 	 * @throws Exception
@@ -247,12 +247,12 @@ public class Training {
 			@Override
 			public boolean accept(File dir, String name)
 			{
-				if(dir.getName().equals("table"))
-				{
-					return true;
-				}
-				else
-					// if(dir.getName().equals("all")) // folder in patent dir
+				//				if(dir.getName().equals("table"))
+				//				{
+				//					return true;
+				//				}
+				//				else
+				// if(dir.getName().equals("all")) // patent.all
 					// {
 					// return false;
 					// }

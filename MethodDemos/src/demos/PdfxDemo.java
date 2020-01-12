@@ -25,13 +25,11 @@ public class PdfxDemo extends AbstractDemo
 	// Usage:
 	// curl --data-binary @"/path/to/my.pdf" -H "Content-Type: application/pdf" -L "http://pdfx.cs.man.ac.uk"
 	// Example:
-	// curl -s --data-binary @'D:\output\GroundTruth\BeiträgeausTagungsbänden\TUW-137078.pdf' -H 'Content-Type: application/pdf' -L 'http://pdfx.cs.man.ac.uk' -o 'D:\output\PDFX\TUW-137078.xml'
+	// curl -s --data-binary @'D:\output\GroundTruth\Beitrï¿½geausTagungsbï¿½nden\TUW-137078.pdf' -H 'Content-Type: application/pdf' -L 'http://pdfx.cs.man.ac.uk' -o 'D:\output\PDFX\TUW-137078.xml'
 	public static final List<String> command = Arrays.asList("curl", "-s", "--data-binary", "path(getsreplaced)", "-H", "\"Content-Type: application/pdf\"", "-L", "\"http://pdfx.cs.man.ac.uk\"", "-o");
 
 	public static void main(String[] args) throws ExecuteException, IOException
 	{
-		List<File> groundTruthFiles = Demos.getAllGroundTruthFiles().subList(0, 1);
-
 		List<File> files = new ArrayList<>();
 		files.add(new File("D:\\output\\methods\\GroundTruthNoSubDir\\TUW-247743.pdf"));
 
