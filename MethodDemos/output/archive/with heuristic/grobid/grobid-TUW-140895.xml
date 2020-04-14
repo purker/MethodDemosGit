@@ -1,0 +1,1314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">MAGISTERARBEIT An Ant Colony Optimisation Algorithm for the Bounded Diameter Minimum Spanning Tree Problem</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+				<date>Römerweg 31 A-2801 Katzelsdorf Wien, Jänner 2006</date>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<affiliation>
+								<orgName>function, f (T ) ≤ f (T ) ∀ T ∈ S, or maximum objective value function, f (T ) ≥ f (T ) ∀ T ∈ S, </orgName>
+								<address><addrLine>has of</addrLine></address>
+							</affiliation>
+						</author>
+						<author>
+							<affiliation>
+								<orgName> tree T = (V, E T ), with edge set E T ⊆ E,</orgName>
+							</affiliation>
+						</author>
+						<title level="a" type="main">MAGISTERARBEIT An Ant Colony Optimisation Algorithm for the Bounded Diameter Minimum Spanning Tree Problem</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date type="published">Römerweg 31 A-2801 Katzelsdorf Wien, Jänner 2006</date>
+						</imprint>
+					</monogr>
+					<note>Univ.-Prof. Dipl.-Ing. Dr.techn. Günther Raidl Univ.Ass. Dipl.-Ing. Martin Gruber durch Boris Kopinitsch, Bakk.techn. ZUSAMMENFASSUNG Im Rahmen dieser Magisterarbeit wurde ein Ant Colony Optimisation Algorithmus für das durchmesserbeschränkte minimale Spannbaum Problem erarbeitet. Bei diesem Prob-lem handelt es sich um ein N P-schweres kombinatorisches Optimierungsproblem mit zahl-reichen praktischen Anwendungsgebieten, zum Beispiel im Netzwerkdesign. Der Algorith-mus wurde mit einer lokalen Optimierungsheuristik, nämlich einem Variable Neighbour-hood Descent, erweitert. Diese lokale Optimierungsheuristik arbeitet auf vier verschiedenen Nachbarschaftsstrukturen, bei deren Entwicklung besonders auf eine effiziente Evaluierung der Nachbarschaft einer Lösung Wert gelegt wurde. Vergleiche mit verschiedenen evolu-tionären Algorithmen und einer variablen Nachbarschaftssuche auf euklidischen Instanzen bis zu 1000 Knoten hinsichtlich Lösungsqualität als auch Berechnungszeit zeigen, dass der Ant Colony Optimisation Algorithmus bei ausreichend Zeit die bisher besten bekan-nten Ergebnisse zum Teil deutlichübertreffendeutlich¨deutlichübertreffen kann, hingegen bei Testläufen mit starker Zeitbeschränkung nicht die Lösungsqualität der variablen Nachbarschaftssuche erreichen kann. Definition 2: Given an undirected, connected graph G = (V, E) of n = |V | nodes and</note>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<abstract>
+				<p>This master thesis presents an ant colony optimisation algorithm for the bounded diameter minimum spanning tree problem, a N P-hard combinatorial optimisation problem with various application fields, e.g. when considering certain aspects of quality in communication network design. The algorithm is extended with local optimisation in terms of a variable neighbourhood descent algorithm based on four different neighbourhood structures. These neighbourhood structures have been designed in a way to enable a fast identification of the best neighbouring solution. The proposed algorithm is empirically compared to various evolutionary algorithms and a variable neighbourhood search implementation on Euclidean instances based on complete graphs with up to 1000 nodes considering either solution quality as well as computation time. It turns out that the ant colony optimisation algorithm performs best among these heuristics with respect to quality of solution, but cannot reach the results of the variable neighbourhood search implementation concerning computation 1. INTRODUCTION The bounded diameter minimum spanning tree (BDMST) problem is a combinatorial op-timisation problem. Combinatorial optimisation problems belong to the group of optimi-sation problems, that in turn are divided into two groups. One, encoding solutions with real-valued variables and one, encoding solutions with discrete variables. Combinatorial op-timisation problems belong to the latter one. The definition of a combinatorial optimisation problem given here, follows that by Blum and Roli in [ also called search or solution space. To solve a combinatorial optimisation problem as defined above, a solution T ∈ S with either minimum objective value to be found. T is called a global optimal solution. Representative combinatorial optimisation problems are the travelling salesman problem, the quadratic assignment problem, timetabling and scheduling problems. After having introduced the definition of the combinatorial optimisation problem that of the bounded diameter minimum spanning tree problem can be given. m = |E| edges, where each edge e has associated costs c e ≥ 0, the bounded diameter minimum spanning tree problem is defined as the spanning minimum weight e∈E T c e , where the diameter D is bounded above by a constant ≥ 2. The eccentricity of a node v, with v ∈ V , is defined as the maximum number of edges on a path from v to any other node in the minimum spanning tree T. The diameter bound D 1. Introduction 7 From this definition follows that the centre of T is either, in case of an even diameter bound, the single node or, in case of an odd diameter bound, the pair of adjacent nodes of minimum eccentricity. Thus the bounded diameter minimum spanning tree problem can also be interpreted as the search for a minimum spanning tree rooted at an unknown centre (having depth 0) and whose maximal depth is restricted to The BDMST problem is known to be N P-hard for 4 ≤ D ≤ n − 1 [15]. Within the context of this master thesis, simply BDMST problem instances based on complete graphs are considered, since incomplete graphs can be anytime transformed into complete graphs, by setting the edge costs for not really available edges extremely high, so that these edges do not surface in solutions. The BDMST problem is not just of scientific interest, there are various real world applications , for example in communication network design. When considering certain aspects of quality of service, e.g. a maximum communication delay or minimum noise-ratio, BDMSTs become of great importance. A further practical application can be found in [5]: When planning a Linear Light-wave Network (LLN) an undirected multi-graph G = (V, E) is used, representing the network. This multi-graph G has to be decomposed into edge disjoint trees forming at least one spanning tree. Nevertheless, the aim of this decomposition process is to gain many spanning trees with a small diameter. Another application field of the BDMST problem is data compression. Bookstein et al. have introduced a way of transferring the problem of compressing correlated bit-vectors into the problem of finding a minimum spanning tree [7]. The decompression time of a given bitmap vector is proportional to its depth within the tree. Thus the whole running time depends on the height of the built tree. So a MST with a bounded diameter is preferable. The BDMST problem is also met in the field of mutual exclusion algorithms. When con</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8</head><p>covered by the vehicles or the number of vehicles to be used. In general some additional constraints have to be met, for example each costumer has to be visited exactly once by exactly one vehicle. Another one could be, that the demand each vehicle has to satisfy is not allowed to exceed the vehicle's capacity D. Or that each vehicle has to start and end its tour in the depot. A further constraint could be that the total tour length of each vehicle is not allowed to exceed a bound L. From these example constraints follows that the vehicle routing problem (VRP) is closely related to the travelling salesman problem <ref type="bibr">(TSP)</ref>, as a solution for the VRP consists of several TSP solutions with common start and end cities. Famous heuristics for solving TSP instances, e.g. the Christofides heuristic, use minimum spanning trees. Thus, in case an additional constraint requires that the lengths of the vehicle tours are limited to size L, for applying these heuristics to discover a tour for a vehicle they have to be extended in terms of using BDMSTs instead of MSTs.</p><p>This master thesis will present an ant colony optimisation algorithm for the bounded di- ameter minimum spanning tree problem. The ant colony optimisation is extended with a local search strategy, namely a variable neighbourhood descent, to improve overall solu- tion quality. The following chapter will give an overview of already evolved exact as well as heuristic methods for solving a BDMST instance. In chapter 3 the basic concepts of two metaheuristics, namely ant colony optimisation and variable neighbourhood search, are introduced. Chapter 4 presents four different neighbourhood structures the variable neighbourhood descent algorithm is based on. In chapter 5 the ant colony optimisation algorithm for the BDMST problem, developed within the context of this master thesis, is described in full details. Chapter 6 gives an overview of the implementation of the ant colony optimisation algorithm. And finally in Chapter 7 the performance of the ant colony optimisation algorithm compared to that of the variable neighbourhood search implemen- tation for the BDMST, proposed by Gruber and Raidl <ref type="bibr" target="#b19">[21]</ref>, and some other state-of-the-art</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">PREVIOUS WORK</head><p>A couple of exact algorithms for the bounded diameter minimum spanning tree problem has been designed. The majority of them relies on network flow-based multi-commodity mixed integer linear programming (MIP) or Miller-Tucker-Zemlin (MTZ) formulations. By intro- ducing multi-source multi-destination network flow models <ref type="bibr" target="#b24">[27]</ref> Magnanti and Wong per- formed fundamental work of using MIPs in the field of network design. A multi-commodity formulation for the BDMST problem has been proposed by Achuthan and Caccetta <ref type="bibr" target="#b2">[3]</ref>.</p><p>Achuthan et al. suggested an improvement of this formulation in <ref type="bibr" target="#b3">[4]</ref>.</p><p>A couple of different advanced multi-commodity flow (MCF) formulations for the BDMST problem, counting and limiting the hops on paths from a virtual root node to any other node, has been introduced by Gouveia and Magnanti <ref type="bibr" target="#b16">[18]</ref>. For the sake of achieving tight LP-relaxation bounds, they had to accept a quite large number of variables in their models.</p><p>In <ref type="bibr" target="#b17">[19]</ref> Gouveia et al. proposed an extended flow formulation for the BDMST problem in case of an odd diameter D.</p><p>Santos et al. <ref type="bibr" target="#b13">[14]</ref> used modified and lifted Miller-Tucker-Zemlin subtour elimination in- equalities, ensuring that the diameter bound is not violated. This MTZ-based model is claimed to work well on BDMST problem instances having a diameter bound D close to the diameter of the unconstrained minimum spanning tree.</p><p>A compact 0-1 integer linear programming (ILP) model embedded into a branch and cut environment has been published by Gruber and Raidl <ref type="bibr">[22]</ref>. Computational results turned out that BDMST instances, having an underlying dense graph, with small to moderate diameter bounds, are solved significantly faster than by the MTZ-based model from Santos et al. <ref type="bibr" target="#b13">[14]</ref>. However the looser the diameter bound the faster the MTZ-based model becomes. Therefore it cannot be said, that one approach dominates the other. When comparing the ILP with various MCF formulations from Gouveia and Magnanti <ref type="bibr" target="#b16">[18]</ref>, similar results were yielded.</p><p>Experiments turned out that all these exact approaches for solving a BDMST problem</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>10</head><p>nodes when considering fully connected graphs. As these exact algorithms are not able to yield the optimal solution for large problem instances in practicable time, several heuristics have been evolved to obtain solutions for large instances, too.</p><p>One of these heuristics is the so called one time tree construction (OTTC) algorithm by Abdalla et al. <ref type="bibr">[1]</ref>. This greedy construction heuristic, based on the minimum spanning tree algorithm of Prim, starts by selecting a single node at random and then repeatedly extends the tree by adding the cheapest available edge, that connects a new node to the so far built tree. To guarantee that the diameter bound is not violated it must keep track of the eccentricities of all already appended nodes and update this information every time a new node is connected to the tree, a time consuming procedure. It turned out that the choice of the first node has crucial effects on the quality of the solution.</p><p>Julstrom <ref type="bibr" target="#b23">[26]</ref> modified the OTTC approach by starting from a predetermined centre node.</p><p>This idea simplifies the OTTC algorithm significantly, as the diameter constraint can be displaced by a height restriction of for the spawned MST tree. This centre-based tree construction (CBTC) provides relatively good solutions on random instances. Nevertheless, on Euclidean instances the randomised centre-based tree construction (RTC) <ref type="bibr" target="#b27">[31]</ref>, that uses a permutation of all nodes and connects them with the cheapest possible edge to the tree in the order given by this permutation, whereas the centre is build by the first (two) node(s), yields much better results.</p><p>Clementi et al. <ref type="bibr" target="#b7">[8]</ref> describe other construction heuristics, e.g. a modification of Kruskal's MST algorithm, for the related height-constrained MST problem.</p><p>As the solutions obtained by these construction heuristics were still not satisfactory, dif- ferent evolutionary algorithms (EAs) <ref type="bibr" target="#b27">[31,</ref><ref type="bibr">24,</ref><ref type="bibr" target="#b22">25]</ref> have been developed, to further improve the quality of these solutions. The initial population for these evolutionary algorithms is provided by one of the greedy construction heuristics. On instances up to 1000 nodes the evolutionary algorithms are in a position to significantly improve these initial solutions.</p><p>The best metaheuristic published so far for Euclidean instances, outperforming the EAs mentioned above in solution quality as well as running time, is a variable neighbourhood</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">METAHEURISTICS</head><p>Since combinatorial optimisation (CO) problems are of major interest for the scientific as well as for the industrial world, several algorithms have been evolved to meet them.</p><p>These algorithms can be classified into exact algorithms and heuristics. Exact algorithms guarantee to find an optimal solution for finite size CO problems in bounded time <ref type="bibr">[30]</ref>.</p><p>As long as not proofed that P = N P, no polynomial time algorithms exist for N P-hard CO problems <ref type="bibr">[15]</ref>. Due to their heigh computational time complexity exact algorithms are in general only applicable to instances of relatively small or moderate size. To attack even bigger instances heuristics have been evolved. Heuristics abandon the guarantee of finding an optimal solution for the sake of returning a valid solution in useable time. For some heuristics, referenced as approximate algorithms, it has been proven, that the yielded solution is not more (when the objective function has to be minimised) or less (when the objective function has to be maximised) than a factor φ times the optimal solution.</p><p>Among heuristics two basic types, constructive and local search methods, are differentiated.</p><p>Constructive methods, as the name already presumes, create a solution for a CO problem from scratch. They append step by step to an initially empty solution components until a valid solution is reached. Local search methods start with an initial solution. They try to replace this initial solution T by a better solution from a predefined neighbourhood of T . Both definitions given here, either that of a neighbourhood of a solution T as well as that of a local optimal (minimum) solution with respect to a predefined neighbourhood structure N , follow those by Blum and Roli in <ref type="bibr" target="#b5">[6]</ref>.</p><p>Definition 3: The neighbourhood structure is a function N : S → 2 S 1 that assigns each T ∈ S a set of neighbours N (T ) ⊆ S, where S is the search or solution space. N (T ) is called neighbourhood of T . Local search algorithms are also called iterative improvement algorithms, as moves are only performed if they result in an improvement of the existing solution. To identify an improvement move usually one of the two main strategies, namely first improvement and best improvement, is used. First improvement means, that the local search algorithm stops searching the neighbourhood N (T ) of an existing solution T as soon as an improvement move has been identified. By contrast the best improvement strategy enumerates the com- plete neighbourhood N (T ) to identify the best improvement move. Local search algorithms terminate as soon as a local optimal (minimum) solution has been reached.</p><p>Beside these basic heuristics so-called metaheuristics have been developed. The aim of this concept is to build high level frameworks based on several heuristics, allowing an effective and efficient exploration of the whole solution space. Until now no universal valid definition of the term metaheuristic has prevailed, therefore a multitude of definitions from various scientists and organisations exists. In my opinion, the most appropriate one is the following from Voß et al.:</p><p>"A metaheuristic is an iterative master process that guides and modifies the operations of subordinate heuristics to efficiently produce high-quality solutions. It may manipulate a complete (or incomplete) single solution or a collection of solutions at each iteration. The subordinate heuristics may be high (or low) level procedures, or a simple local search, or just a construction method." <ref type="bibr" target="#b31">[35]</ref> The term metaheuristics, that was first introduced in 1986 by Glover <ref type="bibr" target="#b14">[16]</ref>, also reflects the aim of this concept, since it is composed of two Greek words, heuriskein, meaning "to find" and meta, meaning "beyond, in an upper level". Nowadays, several metaheuristics have been proposed. Ant colony optimisation, variable neighbourhood search, evolutionary algorithms, simulated annealing, iterated local search and tabu search, to name just a selection.</p><p>The following two sections present the basic ideas of the variable neighbourhood search</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>13</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1">Variable Neighbourhood Search</head><p>The variable neighbourhood search (VNS) metaheuristic was first proposed by Hansen and Mladenovi´cMladenovi´c <ref type="bibr" target="#b25">[28,</ref><ref type="bibr">29]</ref>. The basic principle of VNS is to improve a given solution T by a systematic change of different neighbourhood structures. VNS is based on following three simple facts. imply that T is a local minimum to any other neighbourhood structure. structures are relatively close to each other.</p><p>It can be gathered from these three facts that in general a local optimal solution with respect to at least one neighbourhood structure has something in common with the global optimal solution. It is only for sure that the local minimum provides some information, that can also be found in the global optimal solution. Unfortunately, this information cannot be extracted from the local minimum. So an organised search in the predefined neighbourhood structures of this local minimum is performed in order to improve it. There are three possible ways to guide this neighbourhood search: deterministic, stochastic or both combined.</p><p>The deterministic approach, called variable neighbourhood descent (VND), manages in a deterministic way the change of neighbourhoods. The VND concept exploits fact one, namely that a local optimal solution with respect to one neighbourhood structure is not necessarily one to another neighbourhood structure. <ref type="table" target="#tab_3">Algorithm 1</ref> gives an overview of the VND concept. Before executing Algorithm 1 the different neighbourhood structures N 1 , . . . , N k have to be defined. The idea of the VND concept is to compute iteratively a local optimum with respect to all different neighbourhood structures. Every time a new best solution is discovered, assume by exploiting neighbourhood structure N i with i ≤ k, the algorithm jumps back to the first neighbourhood structure as it cannot be guaranteed that this new best solution is also a local minimum with respect to all preceding neighbourhood </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>14</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2</head><p>while i ≤ k do</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3</head><p>find best neighbouring solution T ∈ N i (T );</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4</head><p>if T better than best solution found so far then</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>5</head><p>save T as new best solution T ;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>6</head><p>i = 1;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7</head><p>else i = i + 1;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8</head><p>by exploiting neighbourhood structure N i , it is ensured that the actual best solution is a local optimal solution with respect to all preceding neighbourhood structures N j with j &lt; i.</p><p>At the end the algorithm terminates in a solution T that is a local minimum with respect to all neighbourhood structures defined for the VND.</p><p>The stochastic approach is referenced as reduced variable neighbourhood search (RVNS). <ref type="table" target="#tab_4">Algorithm 2</ref> presents the basic idea of the RVNS concept. After defining the different neighbourhood structures N 1 , . . . , N k the algorithm starts by computing an initial solution T . In the RVNS concept each neighbourhood structure is no longer explored completely, identifying the best move. Instead, in each iteration (lines 4 to 9), including all neigh- bourhood structures N i with 1 ≤ i ≤ k, a solution T ∈ N i (T ) is arbitrarily chosen and compared if it is better than the so far best solution T . This process is called shaking.</p><p>Again, as already shown in Algorithm 1, an improvement of the best solution T terminates the current iteration and starts a new one, beginning with neighbourhood N 1 . </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1</head><p>while termination condition not met do</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2</head><p>i = 1;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3</head><p>while i ≤ k do</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4</head><p>select completely random a solution T ∈ N i (T );</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>5</head><p>if T better than best solution found so far then</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>6</head><p>save T as new best solution T ;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7</head><p>i = 1;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8</head><p>else i = i + 1;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>9</head><p>However, this shaking makes it impossible to guarantee that at any time the best solution found so far is a local minimum with respect to all neighbourhood structures. Therefore a</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>15</head><p>further improvement or a maximum CPU time. The RVNS method seems to be practicable if the enumeration of a whole neighbourhood is too cost-intensive, e.g. in case of a large neighbourhood with an exponential number of neighbouring solutions.</p><p>And finally, the approach including a deterministic as well as a stochastic component is known as basic variable neighbourhood search. In principle the basic VNS is an extension of the RVNS concept. <ref type="table" target="#tab_5">Algorithm 3</ref> presents the idea of the basic VNS. Assuming the different neighbourhood structures N 1 , . . . , N k have been defined, the algorithm starts by creating an initial solution, that is simultaneously the best solution T found so far. After shaking T , that is always performed within the context of the actual neighbourhood under consideration N i (T ) with i ≤ k, the resulting solution T ∈ N i (T ) is tried to be further improved by local search methods. This complete random selection of a solution T ∈ N i (T ), where T represents the best solution found so far, avoids any possible cycling.</p><p>A drawback of this behaviour is, as already mentioned for the RVNS concept, that it cannot be assured at any time that a solution T is locally optimal with respect to all neighbourhood structures. Therefore the use of a termination condition becomes essential.</p><p>Again if the local search methods yield an improvement of the overall best solution T found so far, the current iteration is aborted and a new one is started, beginning by shaking T within N 1 (T ). This shaking yields a solution T ∈ N 1 (T ) as input for the local search methods. As proposed in <ref type="bibr">[23]</ref>, these local search methods can be replaced by a complete VND. However, as a consequence of using a VNS/VND combination the shaking process has to be extended, since VND always yields a local optimal solution T with respect to all neighbourhood structures. Therefore, within a shaking process m ≥ 2 moves based on a single neighbourhood have to be performed to facilitate this VNS/VND combination an escape from local optimal solutions with respect to all neighbourhood structures. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1</head><p>while termination condition not met do</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2</head><p>i = 1;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3</head><p>while i ≤ k do</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4</head><p>select completely random a solution T ∈ N i (T );</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>5</head><p>try to improve T by using local search methods;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>6</head><p>if T better than best solution found so far then</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7</head><p>save T as new best solution T ;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8</head><p>i = 1;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>9</head><p>else i = i + 1;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>16</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2">Ant Colony Optimisation</head><p>The ant colony optimisation (ACO) metaheuristic belongs to the class of ant algorithms.</p><p>Ant algorithms were first proposed by Dorigo et el. <ref type="bibr" target="#b9">[10,</ref><ref type="bibr" target="#b12">13]</ref> as a multi agent approach for various difficult combinatorial optimisation problems, e.g. the travelling salesman problem (TSP) or the quadratic assignment problem (QAP). Ant algorithms are based on the be- haviour of real ants. Of main interest is their foraging behaviour and, in particular, their ability to find the shortest paths between their nest and food sources.</p><p>The key component of this ability is a chemical substance, called pheromone. While walking ants deposit pheromone on the ground, building a pheromone trail. Pheromone can be sensed by ants. Therefore these pheromone trails enable ants to find their way back as well as other ants to find food sources, discovered by nest-mates. Furthermore, when ants have to choose between several trails, they tend to pick, in probability, those with high pheromone concentration. It has been experimentally shown that in case of different trails to the food source, this pheromone trail following behaviour is responsible for finding the shortest path. One of these conducted experiments to study this behaviour in controlled conditions is the binary bride experiment by Deneubourg et al. <ref type="bibr" target="#b8">[9]</ref>. In this experiment the nest was separated by two branches of same length from the food source. Initially the two branches were pheromone free. Due to the fact of random fluctuations a few more ants randomly selected one branch, in the experiment the upper one. As ants deposit pheromone, the greater number of ants on the upper branch laid more pheromone on it, that in turn stimulated more ants to choose the upper branch, and so on. Finally nearly all ants chose the upper branch. A modification of this experiment, where the branches are of different length, can be found in <ref type="bibr" target="#b15">[17]</ref>.</p><p>Remarkable is the fact that a single ant has only the capability of finding a path to the food source. Only the coaction of the whole ant colony enables finding the shortest path between the nest and the food source. Therefore the foraging behaviour of ant colonies can bee seen as a distributed optimisation process, using only indirect communication, accomplished through pheromone trails. This indirect communication between nest-mates is known as stigmergy <ref type="bibr" target="#b18">[20]</ref>.</p><p>The key design component of the ACO metaheuristic is to portion computational resources to a set of agents (artificial ants), that in turn provide through cooperative interaction good solutions. As artificial ants are a reproduction of real ants, we can distinguish between</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>17</head><p>• • Stigmercy: As real ants, artificial ants deposit pheromone on the paths used for constructing a solution. This pheromone laying behaviour modifies the problem rep- resentation, that in turn is the basis for the indirect communication among artificial ants. This way of indirect communication is, as already mentioned, called stigmercy.</p><p>• Local moves: Real ants are not able to jump to any position they want to. So do artificial ants, since they only move through adjacent problem states. Therefore artificial ants accomplish as their natural counterparts only local moves.</p><p>• State transition policy: As real ants, artificial ants apply a stochastic local de- cision policy while moving through adjacent problem states. This decision policy is exclusively based on local information, consisting of the pheromone trails and some- times some a priori problem-specific information. Furthermore, local means that this information can only be accessed from the state in which it was released. Sometimes this condition is relaxed so that local information can also be accessed from neigh- bouring states. So as real ants, artificial ants do not make use of lookahead concepts to predict future states.</p><p>• Memory: Memory is a characteristic of artificial ants, that is not found in their natural counterparts. Each artificial ant has some memory capacity to store past activities, that in turn can be used to prevent ants from entering invalid problem states. Another practical application of using memory capacity is to compute the quality of the generated solution.</p><p>• Amount of pheromone: In contrast to real ants, artificial ants are able to evaluate the fitness of the solution found. Depending on this value they are able to bias the amount of pheromone laid on the paths forming the solution. In general the amount of pheromone deposited by an ant is proportional to the fitness of the solution constructed by this ant.</p><p>• Time of pheromone laying: Artificial ants are not only capable of regulating the amount of pheromone they deposit, they are also able to influence the time</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>18</head><p>algorithms adapt the time when pheromone is laid to the problem. For many problems the deposition of pheromone after generating the solution turned out to be more practical.</p><p>• Additional capabilities: The basic capabilities can be extended to improve overall performance. Lookahead, backtracking or local optimisation are examples of these extra capabilities, to name just a few.</p><p>On principle the activity of the ant colony optimisation metaheuristic can be described as follows. In each iteration of an ACO algorithm an ant colony, consisting of a finite size of artificial ants, equipped with the above listed characteristics, tries to find good solutions to a difficult combinatorial optimisation problem. A solution is a minimum cost path through the different problem states. It should be clear that this path has to satisfy all problem constraints. The basic ACO concept envisions two tasks for each artificial ant. The first one is constructing either whole solutions or parts of a solution. Important is that while accomplishing this task ants only move through adjacent problem states. Each time an artificial ant moves from one state to the next, it uses a stochastic local decision policy, based solely on local information, that is information that can be only accessed from the actual state. To avoid ants to enter invalid problem states this local decision policy can be extended with private information of the artificial ant. The second task each artificial ant has to achieve is depositing pheromone. This can be arranged in several ways. The one extreme is that while moving through adjacent problem states ants deposit pheromone on the paths used. The other is that after finishing task one, thus the whole solution or a part of it has been constructed, ants evaluate the fitness of the solution and deposit pheromone depending on its quality. Combinations and variations of these two extremes are also possible pheromone depositing strategies. This pheromone laying behaviour is the key component of the ACO metaheuristic, since it changes the representation of the problem, more precisely the way how the problem is experienced by other artificial ants, and therefore influences the further search process. After accomplishing these two tasks, creating or improving a solution and depositing pheromone, the artificial ant "dies", respectively is deleted from the colony.</p><p>Beside these two basic tasks of artificial ants, two further procedures can be used to en- hance the performance of the ACO metaheuristic, pheromone trail evaporation and daemon activities. The process of decreasing intensity of pheromone trails, assuming no further</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>19</head><p>evaporation becomes essential when prohibiting a too fast convergence.  <ref type="bibr" target="#b9">[10,</ref><ref type="bibr" target="#b12">13]</ref>. Three ant system algorithms have been introduced, that differ only in the pheromone update process. In ant-density (constant amount of pheromone) and ant-quantity (amount of pheromone inversely proportional to the costs of the chosen trail) algorithms ants deposit pheromone while constructing the solution. On the contrary to this two approaches, in ant-cycle algorithms ants lay pheromone after having finished building a solution. Computations on a set of benchmark problems <ref type="bibr" target="#b9">[10,</ref><ref type="bibr" target="#b12">13]</ref> showed, that the performance of ant-cycle algorithms was superior to those of ant-density and ant- quantity algorithms. So research concentrated on the characteristics of ant-cycle, which is nowadays known as ant system, whereas the two other algorithms were abandoned. Other remarkable characteristics of ant system algorithms are that every ant deposits pheromone and that the amount of pheromone is proportional to the fitness of the solution found. AS algorithms do not make use of daemon activities, since the pheromone trail evaporation process is delegated to every ant. So each artificial ant is not only responsible for depositing pheromone on the paths used, but also for decreasing pheromone on all paths, either those used as well as those not. The memory capability is used to prohibit ants from entering invalid problem states. In general, before starting an AS algorithm, each path, connecting two adjacent problem states, is initialised with a small positive amount of pheromone.</p><p>Experimental results on small TSP instances <ref type="bibr" target="#b12">[13]</ref> showed that the AS approach reached and sometimes even exceeded the performance of some general purpose heuristics compared to. Unfortunately, on larger problem instances it could not keep up with other heuristics.</p><p>So several other ACO metaheuristics have evolved to improve the performance of the ant</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>20</head><p>One of this refined approaches was proposed by Stützle and Hoos <ref type="bibr" target="#b30">[34,</ref><ref type="bibr" target="#b29">33]</ref>  is in the main an ant system with three slightly differences. First, the pheromone trails are updated by a daemon that deposits extra pheromone on the best discovered tour. Second, the amount of pheromone on each path connecting two adjacent problem states has to be within a given interval [τ M in , τ M ax ]. The pheromone amount τ is not allowed to fall under τ M in , nor to exceed τ M ax . And finally, as a third difference, the pheromone amount on each path is initialised to the maximum τ M ax .</p><p>Another ACO metaheuristic developed to improve the poor performance of the basic AS is the ant colony system (ACS) introduced by Dorigo and Gambardell in 1996 <ref type="bibr" target="#b11">[12,</ref><ref type="bibr" target="#b10">11]</ref>.</p><p>The main difference to the ant system is the daemon activity guarding the pheromone update. It picks within one iteration only the best solution constructed by an ant and deposits pheromone only on the paths forming this solution. So only a single artificial ant of the whole colony deposits its pheromone. Furthermore, the daemon is responsible for the pheromone trail evaporation process. Another difference can be found in the details of the local decision policy.</p><p>To conclude, the basic concepts of the ant colony optimisation heuristic are quite simple, inspired by nature. Nevertheless, for a concrete ACO implementation various problem specific decisions have to be made, for example the number of artificial ants the colony should consist of, the kind of pheromone update to be used, including depositing as well as evaporation, the usage of a local decision policy and a-priori problem-specific local infor- mation. Another problem dependent key component is the initialisation of the pheromone amount on the paths, connecting adjacent problem states. Experience shows that the ACO metaheuristic can only yield good results when applied to problems where each state in the search space does not have a large number of neighbouring solutions. Otherwise the probability that artificial ants will visit the same state is marginal due to the huge number of possible moves. As a consequence the key component of an ACO, making local decisions based on pheromone information, does not work anymore because of the small pheromone differences on the various paths.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">NEIGHBOURHOOD STRUCTURES</head><p>This chapter will present the four different neighbourhood structures, namely Edge Ex- change, Node Swap, Centre Exchange and Level Change. These neighbourhood structures have been developed together with Gruber and Raidl, who used already improved ver- sions of some of them in their VNS for the BDMST <ref type="bibr" target="#b19">[21]</ref>. Beside the definitions and data structures for these neighbourhood structures also pseudo-code to completely enumerate the different neighbourhoods is introduced, since the local search strategy used by the ant colony optimisation approach, presented in this master thesis, follows a best improve- ment strategy. As already explained in the previous chapter using a best improvement strategy requires to explore the whole neighbourhood of a given solution T to identify the most profitable move. An incremental enumeration of a neighbourhood, after having it completely explored once, depends on the neighbourhood structure. Precondition for an incremental enumeration is the possibility to store information during the exploration of a neighbourhood that allows a faster identification of the successive best move, as well as a locally restricted influence on this information of an executed move. Such an incremental enumeration of the neighbourhood is introduced for Node Swap and Level Change.</p><p>A solution T is interpreted as a directed outgoing arborescence, i.e a directed tree rooted at a centre to be determined. The following data structures are used:</p><p>• For all nodes v ∈ V a list succ(v), storing all immediate successors of node v.</p><p>• An array pred, containing the direct predecessor for each node. For the centre node <ref type="bibr">(s)</ref> the value will be NULL.</p><p>• An array lev, storing for each node v ∈ V the level v is assigned to. Valid levels, nodes can be assigned to, are within the range <ref type="bibr">[0, ...</ref>, where a level of 0 denotes a centre node. Note, that the level a node v is assigned to is not always equal to the depth of v in the tree with respect to the centre.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>22</head><p>For representing a valid solution, for example the successor lists or the predecessor array would be sufficient. The appreciation for using additional data structures is to speed up computation in various situations.</p><p>The four different neighbourhood structures can be separated into two groups according to the data structures the neighbourhood enumeration is based on. On the one hand there are Edge Exchange and Node Swap concentrating on the predecessor and successor relationships of the nodes. As these relationships are usually associated with trees, we denote this group as tree based. Whereas on the other hand for Centre Exchange and Level Change the level a node is assigned to is of major interest. We will refer to this group as level based.</p><p>Another important difference between the four neighbourhood structures is their ability to change the centre of a solution T . This is quite an important fact, since we never know (assuming we are dealing with instances that cannot be solved by exact algorithms in pleasing time) if the current centre is the best choice for a certain instance. As the name already presumes Centre Exchange concentrates its neighbourhood enumeration on finding a new centre, but also Node Swap includes the possibility of a centre change.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1">Tree Based Neighbourhoods</head><p>Edge Exchange and Node Swap operate on a tree structure, since they use basically the successor lists and the predecessor array. The lev array is utilised to store the depth of a node v with respect to the centre. From the level sets only V 0 is of interest, since it facilitates immediate access to the centre node(s).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1.1">Edge Exchange Neighbourhood</head><p>The Edge Exchange neighbourhood of a feasible solution T is defined as follows: Neighbours are all feasible solutions T that differ only in a single directed edge. In other words, Edge</p><p>Exchange simply cuts off a subtree S and reconnects this subtree S at any other feasible place of T , see Figure 4.1.</p><p>To fully and efficiently explore the neighbourhood of the current solution T we introduce some additional data structures:</p><p>• A static n × (n − 1) array, named sorted neighbour list, storing for each node v ∈ V • An array h storing for each node v ∈ V the height of the subtree rooted at v. For leaf nodes this value will be 0.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>23</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>u</head><p>The idea behind this sorted neighbour list is to consider only nodes as new predecessor for a disconnected subtree, that are cheaper than the current one. This static array can be computed in advance in O(n 2 ). The height array is calculated in O(n).</p><p>Since a best improvement strategy is used, the complete enumeration of the neighbourhood of a given solution T can be described as in Algorithm 4. For each node v, except those forming the centre, a cheaper predecessor is tried to be found using the sorted neighbour list of v. The actual move is saved as new best move if three conditions (line 7) are met.</p><p>First, only the most profitable move is saved. Second, it has to be guaranteed that the diameter bound is not violated when moving the whole subtree S rooted at v. Third, it has to be assured that after reconnecting subtree S no circle has been introduced. So the third condition ensures that the subtree S is not appended to any node u within S. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1</head><p>for each node v ∈ V \ V 0 do</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2</head><p>i = 0;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3</head><p>while c(N i (v), v) &lt; c(pred(v), v) do</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4</head><p>u = N i (v);</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>5</head><p>∆c = c(pred(v), v) − c(u, v);</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>6</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>if</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7</head><p>∆c &gt; ∆c * ∧ lev(u)+1+h(v) ≤ ∧ lev(u) ≤ lev(v)∨v / ∈ path(V 0 , u)</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>then</head><p>store this move as new best move m * = (u, v) and update ∆c * = ∆c;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8</head><p>i = i + 1;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>9</head><p>The total size of the Edge Exchange neighbourhood is O(n 2 ). For computing the new</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>24</head><p>can be done in constant time. Thus, the total time to explore the whole neighbourhood and to identify the best move is also O(n 2 ).</p><p>An incremental enumeration of the neighbourhood after executing the most profitable move seemed not to be practicable, as the information collected while computing the best im- provement move cannot be exploited efficiently. So for reaching a local optimal solution <ref type="table" target="#tab_10">Algorithm 4</ref> has to be called as long as it yields a profitable move. After the best im- provement move has been identified it is performed and the data structures are updated accordingly. Therefore node v is deleted from the successor list of its old predecessor and appended to the successor list of its new one. Furthermore, the predecessor of node v is actualised. Moreover, the height value of the new and old predecessor has to be updated and -if necessary -the depth for all nodes, that are part of the moved subtree S rooted at v.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1.2">Node Swap Neighbourhood</head><p>The Node Swap neighbourhood of a feasible solution T is defined as follows: Neighbours are all feasible solutions T where a node v and one of its immediate successors u ∈ succ <ref type="bibr">(v)</ref> have changed their position within the tree. In other words, node v that was predecessor of node u before the move is now an immediate successor of node u. Furthermore, node u inherits all successors of node v and the successor list of node v, succ(v), is cleared.</p><p>Reconnecting all immediate successors of v to u ensures that the diameter bound is not violated. Figure 4.2 illustrates this issue.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>v</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>u u v</head><p>Fig. For this neighbourhood it is possible to implement an incremental exploration after having identified the most profitable move. Therefore we introduce additional data structures:</p><p>• For every profitable move the following information is saved: The old root node v, the new root node u, the predecessor pred(v) and successor list succ(v) of the old</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>25</head><p>and finally a list l of all nodes that have to be checked once again when the move is performed, since only their situation alters if node u and v change their position.</p><p>Members of this list l are pred(v), u, and all nodes n ∈ succ(v)\{u}.</p><p>• A priority queue Q containing all profitable moves, including the information saved for each move. The priority queue Q has always the most lucrative move on top.</p><p>After having explored the whole neighbourhood and identified the most profitable move, this priority queue plays the key role for computing the successive best move within the neighbourhood.</p><p>Using again a best improvement strategy the full exploration of the Node Swap neighbour- hood of a solution T can be described as in Algorithm 5. Already the first line points out a major difference to the Edge Exchange neighbourhood. The Node Swap neighbourhood does not exclude the centre nodes, enabling neighbouring solutions T having a different centre. After having selected a node v the algorithm computes in lines 3 to 8 the current costs c v of the connections from v to its immediate successors, succ(v), and, if v / ∈ V 0 , also the current costs from v to its predecessor. Then each node u ∈ succ(v) is tried to be swapped with node u. Lines 10 to 15 calculate the costs c u of this potential new arrangement. This time the connections from u to each node in succ(v) \ u are essential plus the connection from u to v. And again, if v / ∈ V 0 , also the costs from u to v's current predecessor. In case the diameter is odd the costs from u to the second centre node have to be taken into account. In line 16 the costs saved by a node swap of v and u are computed.</p><p>If this leads to an improvement greater than the best found so far then node u is marked as best node for a swap with node v. After having tested every node u ∈ succ(v) <ref type="figure" target="#fig_0">line 20</ref> checks if a profitable move has been identified. If so the move and the corresponding data is put into the priority queue Q.</p><p>The total size of the Node Swap neighbourhood is O(n). The evaluation of a single neigh- bouring solution depends on the degree of the node under consideration. Therefore the time required to completely enumerate the whole neighbourhood is O(n · d max ), where d max denotes the maximum degree of any node in the current solution.</p><p>For reaching a local optimal solution with respect to the Node Swap neighbourhood an incremental enumeration can be applied after having explored the whole neighbourhood once. Since the worst case scenario has to be taken into account the incremental enumer- ation still requires time in O(n · d max ), nevertheless, it speeds up computation in practice </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>26</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>13</head><p>if diameter D is odd ∧ v ∈ V 0 then</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>14</head><p>c u += c(u, other centre node);</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>15</head><p>∆c = c v − c u ;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>16</head><p>if (∆c &gt; ∆c * ) then</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>17</head><p>∆c * = ∆c;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>18</head><p>bestN ode = u;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>19</head><p>if ∆c * &gt; 0 then</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>20</head><p>put move into priority queue Q;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>21</head><p>Incremental enumeration of the neighbourhood of solution T After executing the most lucrative move, only certain nodes have to be checked in order to have once again all possible improvement moves stored in the priority queue Q. The nodes affected when executing an improvement move are part of the data stored for it in Q, they can be found in list l. So for an incremental enumeration of the Node Swap neighbourhood only a slight modification of Algorithm 5 is required: Instead of executing it for all nodes,</p><p>as stated in the first line, it is only executed for those affected when performing the best move received from Q.</p><p>The complete algorithm to reach a local optimal solution is now as follows: First the whole neighbourhood is explored as described in <ref type="table" target="#tab_11">Algorithm 5</ref> to identify the first best move.</p><p>Afterwards, the priority queue Q contains all profitable moves, having the best one on top.</p><p>Then, as long as the priority queue Q is not empty, the first element, containing the best improvement move, is received from Q. In the following it has to be checked if this move</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>27</head><p>move was evaluated. This means that it is verified, if node v, that will be replaced by one of its successors u, still has the same predecessor and the same successors. Only in this case the move is considered to be still valid and will be executed. Otherwise it is ignored and the next move is fetched from the priority queue Q. Therefore the set of immediate successors of node v, succ(v), and its predecessor, pred(v), are saved along with the move.</p><p>Assuming a move turns out to be valid it is executed immediately: The successor list of pred(v) has to be updated, by deleting node v and adding node u. Furthermore, each node that was a direct successor of node v before performing the move has to be deleted from the successor list of node v and added, excluding node u, to the successor list of node u. In addition the predecessors of all rearranged nodes have to be set accordingly: Node v gets node u as its new predecessor, u gets the old predecessor of node v, pred(v), and all old successors of node v, succ(v), get node u as their new predecessor. The last step before fetching the next move from the priority queue Q is the update of all affected nodes as described above. A local optimal solution is reached when the priority queue Q is empty.</p><p>At this place it has to be mentioned that Gruber and Raidl demonstrated in <ref type="bibr" target="#b19">[21]</ref> that</p><p>the exploration of this Node Swap neighbourhood can be implemented more efficiently by directly manipulating the moves stored in the priority queue when updates are required.</p><p>As a consequence Q always contains only valid moves and so there is no need for the corresponding validity test and list l.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2">Level Based Neighbourhoods</head><p>The Centre Exchange and Level Change neighbourhood structures are not based on the pre- decessor and successor relationships of the nodes but on the levels (0 ≤ lev(v) ≤ v ∈ V ) the nodes are assigned to. There are always exactly 1 + D mod 2 nodes with a level of 0, building the centre. From the level information a local optimal tree can easily be derived:</p><p>Each node v ∈ V \ V 0 is connected to the least cost predecessor p with lev(p) &lt; lev(v). If there are multiple potential predecessors for a node v with the same minimum edge costs, v always connects to one with minimum level.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2.1">Centre Exchange Neighbourhood</head><p>The Centre Exchange neighbourhood of a feasible solution T is defined as follows: Neigh- bours are all feasible solutions T where exactly one centre node c ∈ V 0 is replaced by any</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>28</head><p>of potential predecessors for c. • For each move the old and the new centre nodes are stored. Furthermore, a list l of new successor ↔ predecessor relations ((u, v): node u will get node v as new predecessor). <ref type="table" target="#tab_14">Algorithm 6</ref> describes the complete enumeration of the Centre Exchange neighbourhood.</p><p>As the name suggests this neighbourhood focuses on finding a new centre. This is quite an important fact, since beside Centre Exchange there is only the Node Swap neighbourhood that is able to change the centre, but not on this scale. In line 3 the centre node c is assigned to level Afterwards, a new predecessor has to be found for c. Candidates are all nodes v with 0 ≤ lev(v) &lt; Note that a potential predecessor for the moved centre node c at level 0 exists only in case of an odd diameter. the (old) centre, is tried as new centre node. For each node u ∈ V 1 it has to be checked in case of an odd diameter if it is cheaper to connect u to the new centre node v or the remaining second centre node. The even diameter case is much simpler since all nodes u ∈ V 1 have to be appended to v, because v is their only available predecessor. This happens in lines 11 to 14. For all nodes at the levels 2 to the old level of v it has to be checked if now v is a cheaper predecessor than their current one. In line 16 the attempt installing node v as new centre node is evaluated. If it turns out that moving node v to the centre is the most profitable move found so far it is saved as new best move (lines 17-19).</p><p>The total size of this neighbourhood is O(n). The worst-case time complexity to evaluate a </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>29</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>14</head><p>check for all nodes at the levels 2 to l v if u would be a cheaper predecessor</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>15</head><p>than their current one; if yes add the corresponding pair to l; evaluate ∆c of whole move;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>16</head><p>if ∆c &gt; ∆c * then</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>17</head><p>save move as new best move using c, v, l;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>18</head><p>∆c * = ∆c;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>19</head><p>a complete exploration of the neighbourhood of a given solution T , including identifying the most lucrative move, can only be done in O(n 2 ).</p><p>An incremental enumeration of the neighbourhood is not presented here, since an im- plementation is not straightforward and we assume that the solution this neighbourhood structure is applied to is already of some good quality. Therefore it is unlikely to have a longer chain of consecutive improvement moves. A local optimal solution can be reached by calling <ref type="table" target="#tab_14">Algorithm 6</ref> as long as it yields an improvement move. After having identified the most profitable move of the whole neighbourhood it is executed by deleting the old centre node c from the set V 0 and the new centre node v from the set V lev(v) . Then they are appended to their new level sets, c to V and v to V 0 . Furthermore, the level array lev is updated by setting lev(c) = and lev(v) = 0. To complete the move the predecessor array and successor lists are updated based on the information stored in the list l. In case</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>30</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2.2">Level Change Neighbourhood</head><p>The Level Change neighbourhood of a feasible solution T is defined as follows: Neighbours are all feasible solutions T where the level of exactly one node v ∈ V \ V 0 is either decre- mented or incremented. 1 ≤ lev(v) ≤ must hold after moving node v. The Level Change neighbourhood is the second one for which an incremental enumeration, after having explored the whole neighbourhood once, is presented. As for the incremental enumeration of the Node Swap neighbourhood again additional data structures are required.</p><p>• For every profitable move the following information has to be stored: First the direc- tion of the move, indicating if it is an increment or decrement one. Furthermore, the costs ∆c saved by it, and finally a list l representing new successor ↔ predecessor relations.</p><p>• A priority queue Q always having the most profitable move on top.</p><p>• An array dec, saving for each node a pointer to its decrement move within Q, and one array inc, storing a pointer to its increment move. These two arrays are necessary to have immediate access to all moves saved in the priority queue Q. <ref type="table" target="#tab_16">Algorithm 7</ref> describes the exploration of the whole Level Change neighbourhood. As stated in line one this algorithm is executed for all nodes, excluding those forming the centre. The algorithm is split into two parts. In the first one (lines 2 to 11) the algorithm decrements the level of node v and saves this move if profitable. A decrement move is only possible if lev(v) &gt; 1, since this neighbourhood does not effect the centre, but decrementing a node u with l(u) = 1 would put this node u into the centre. After decrementing the level of v for each node u at the old level of v it has to be checked if it is now cheaper to reconnect u to </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>31</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>14</head><p>for each node u ∈ V lev(v) do</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>15</head><p>if c(u, v) &lt; c(helper, v) then helper = u;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>16</head><p>if helper = pred(v) then</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>17</head><p>add (v, helper) to l;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>18</head><p>for each node u ∈ succ(v) do</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>19</head><p>find new predecessor p for node u with lev(p) &lt; lev(u); add (u, p) to l;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>20</head><p>evaluate ∆c of whole move;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>21</head><p>if ∆c &gt; 0 then</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>22</head><p>put move into priority queue Q;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>23</head><p>of v, v's predecessor is kept. Otherwise, a new predecessor has to be found (lines 7, 8) in the appropriate levels. In line 9 the costs of this move are evaluated. If it turns out that decrementing v will improve the solution this move is put into the priority queue Q. Even if the move does not change the objective value instantly (∆c = 0) it is put into the priority queue since a node at a lower level can act as potential predecessor for a larger number of other nodes, this could be valuable for subsequent iterations. Such a move, where the level of a node is decremented but the tree derived from the level information does not change, is called a null move in the following.</p><p>In the second part (lines 12 to 23) the algorithm increments the level and saves this move if profitable. An increment of the level of node v is only possible if lev(v) &lt; since after incrementing a node u with lev(u) = the diameter bound would be violated in</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>32</head><p>v can be connected as successor in a cheaper way lev(u) = lev new (v)) a new predecessor with an appropriate level, since u and v are now on the same level and so cannot be connected any longer. In line 21 the increment move of v is evaluated and if it gains an improvement it is put into the priority queue Q.</p><p>As the Level Change neighbourhood is of size O(n) and in the worst-case scenario for each decrement or increment move a node has to be compared with nearly every other node, a complete enumeration of it requires time in O(n 2 ).</p><p>A local optimal solution has been reached when the priority queue Q is empty. In the fol- lowing section an incremental enumeration of the Level Change neighbourhood is presented that can be applied after having explored a whole neighbourhood once. In this section it</p><p>will also be described how to efficiently update information stored in Q when executing a move which has local impact on other nodes and their ability to improve the solution with a level increment or decrement. The incremental enumeration cannot reduce the worst-time complexity of O(n 2 ), but still speeds up the computation time essential in practice.</p><p>Incremental enumeration of the neighbourhood of solution T Assuming the whole neighbourhood has been explored applying Algorithm 7 and all im- provement moves are saved in the priority queue Q, now the best move is fetched and performed. Therefore the node to be moved is deleted from its old and added to its new level: According to the direction of the move it is assigned either to the higher level, in case of an increment move, or to the lower level in case of a decrement move. Furthermore, the predecessor array and successor lists are updated based on the list l included in the data stored for a move in Q.</p><p>In order to have again all possible improvement moves in a valid state in the priority queue Q, the following rechecks and updates have to be done after executing a move. We have to distinguish between a decrement and increment move. • If there is an increment move for node v in the priority queue, delete it 1. Decrement the level of node v.</p><p>Node v continues moving one level down, as this move was not possible before.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.</head><p>Increment the level of the new predecessor of v, pred new (v), if its level is l − 1</p><p>and if this move is already in the priority queue Q. To verify if this move is already in the priority queue Q the inc array is used.</p><p>The case that pred new (v) loses v as successor is new. So a new predecessor for v has to be found, this information must be added to the successor ↔ predecessor list and the costs saved by this improvement ∆c have to be updated accordingly.</p><p>If the improvement ∆c becomes negative or equal to zero after the update, the corresponding increment move can be removed from the priority queue Q (this holds true for every following increment move, too).</p><p>3. Decrement the level of each old successor u of v with lev(u) = l + 2. Note that these nodes will remain successors of v.</p><p>This move might not change the represented tree and therefore the objective value, but as already mentioned it should be considered as an improvement move since it may allow further nodes to decrement their level leading to other improvement moves.</p><p>If such a move is already in the priority queue Q only the predecessor of u and</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>34</head><p>Otherwise this move has to be evaluated from scratch with the exception that there is no need to search for a predecessor for u, since it can keep v for sure. Node u will lose its current predecessor and now v might become its new one.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">Decrement</head><p>If such a move can be found in the priority queue Q only the predecessor of u stored in this move has to be checked against v. In case v would be the better choice, the predecessor of u and ∆c have to be updated accordingly.</p><p>Otherwise, the decrement move of u has to be evaluated completely new includ- ing the search for a new predecessor.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>5.</head><p>Decrement the level of each node u being a new successor of v (note that all these new successors are on level l + 1) if such a decrement move is already in the priority queue Q.</p><p>Before moving v to level l node u had another predecessor, assume w. So the calculated ∆c of this move was based on the connection between u and w. Now u has v as its predecessor (c(u, v) has to be less than c(u, w)). In addition, the move can contain the information that u would have become the new predecessor of v at its old level l + 1, but after moving v to level l this is no longer possible.</p><p>Furthermore, the move can include new successors of u now connected to v; they have to be checked if still u would be the better predecessor for them.</p><p>So there are three possible impacts to ∆c and the successor ↔ predecessor list of the move that have to be updated accordingly.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>6.</head><p>Decrement the level of each node u at level l + 1 not being a new successor of v if there is already a corresponding move in the priority queue Q.</p><p>The situation is more or less the same as above with the restriction that the predecessor of u does not change when moving v to level l.</p><p>So there are only two possible impacts to ∆c and the successor ↔ predecessor list. In this case the objective value gain can only decrease, making this move worse.</p><p>7. Increment the level of each node u being a new successor of v if such a move is already in the priority queue Q.</p><p>The only possibility for an increment move to be profitable is that afterwards</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>35</head><p>There are two cases: <ref type="bibr">(a)</ref> In the move stored in Q, v would have become the new predecessor of u.</p><p>After moving v to level l this is already the case so the move can be deleted without any further investigations.</p><p>(b) Otherwise u is now connected cheaper than it was before when the move was evaluated so ∆c of the corresponding move has to be updated accordingly.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8.</head><p>Decrement the level of each node u at level l, excluding v, if u would be a cheaper predecessor for v than its current predecessor, i.e. c(v, u) &lt; c(v, pred new (v)).</p><p>If a decrement move for u is already found in Q only the new connection between u and v has to be added. Furthermore, ∆c of the corresponding move has to be updated.</p><p>Otherwise, the move has to be calculated from scratch.</p><p>9. Increment the level of each node u at level l excluding v.</p><p>Now node v could be a new predecessor for u and for all old successors of u at level l + 1, as they lose their predecessor.</p><p>If there is already an increment move for u in the priority queue two things have to be checked: <ref type="bibr">(a)</ref> The move contains another new predecessor, assume w, for u. If v would be a cheaper predecessor than w, update the corresponding information and the improvement ∆c.</p><p>(b) Old successors of u at level l + 1 will lose their predecessor. For all of these nodes there will be a new predecessor stored in the move.</p><p>-In the meantime (after the decrement move of v) it is possible that an old successor, assume w, of u is now successor of v. In this case w will not lose its predecessor, the corresponding information stored in the move record of u must be removed and ∆c has to be updated.</p><p>-For all nodes still successors of u (after performing the move of v) the new predecessor stored in the move has to be compared to v if v would be a better choice and if so, the corresponding information and ∆c must be updated.</p><p>-In case u is the old predecessor of v there will be a new predecessor for v stored in the move. This information can be removed and ∆c has to</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>36</head><p>If no increment move for u can be found in the priority queue Q, the move has to be calculated completely new. • If there is a decrement move of node v in the priority queue, delete it (it would be no longer valid).</p><p>• Reevaluate the following moves:</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1.</head><p>Increment the level of v.</p><p>Node v continues moving a level up, as this move was not possible before.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.</head><p>Increment the level of the old predecessor of v, pred old (v), if its level is equal to l − 2.</p><p>Note that in this case v will not lose its predecessor. Therefore, if the move is already in the priority queue Q, only the objective value gain ∆c will change and the new connection of v to another predecessor can be deleted.</p><p>Otherwise, the move has to be evaluated from scratch.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3.</head><p>Decrement the level of each node u at level l − 1 if such a move is already in the priority queue Q and u would be a cheaper predecessor for v than the old</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>37</head><p>If this move is not in the priority queue Q it still has not to be considered, as nothing changed to make this move profitable. Nevertheless, if the move is already in Q the costs saved by this move ∆c include the benefit of connecting v to u instead of connecting it to pred old (v). Therefore, ∆c and the fact that v is already connected to u have to be updated.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4.</head><p>Increment the level of each node u at level l − 1 if such a move is already in the priority queue Q.</p><p>The move of v to level l has a lot of side effects on already existing increment moves of other nodes from level l − 1 to l. For example v is no longer available as predecessor for u and all old successors of u at level l. In addition, v and some old successors of v at level l could now have u as their new predecessor and so would require to find a new node they can connect to. Due to these various special cases an increment move of u already found in Q is evaluated from scratch.</p><p>5. Decrement the level of each node u at level l excluding v.</p><p>In case such a move is found in the priority queue Q two things have to be checked.</p><p>(a) Node v could become a new successor of u if u is a cheaper predecessor for v than its new one, i.e. c(u, v) &lt; c(pred new <ref type="figure">(v), v).</ref> (b) Old successors of v at level l have lost their predecessor. Node u could now be attractive as new predecessor, if this connection is not already saved in the decrement move of u.</p><p>In both cases the objective value gain ∆c and the successor ↔ predecessor list of the move object have to be updated accordingly.</p><p>If such a move is not found in the priority queue Q it has to be evaluated from scratch. For efficiency the computation can be split into two steps. The only things changed are the two points described above, u is a possible new predecessor for v and for old successors of v. If the evaluation of these changes does not lead to a positive ∆c the move cannot be valuable. Therefore, the computation can already be aborted at this point.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>6.</head><p>Increment the level of each old successor u of v at level l.</p><p>After executing the move of node v from level l − 1 to l node u has got a new</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>38</head><p>can get back its old and cheaper predecessor v.</p><p>If such a move is already in the priority queue Q then only ∆c has to be updated accordingly, since before v's increment move u was successor of v and u has now a different predecessor. The increment move of u stored in the priority queue Q means that there is another, cheaper predecessor for u at level l so it is not necessary to check the new predecessor of u stored in the move record against v.</p><p>If no such move can be found in the priority queue Q the increment move of u has to be evaluated completely new.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.</head><p>Decrement the level of each successor u of v at level l + 1 if such a move is already in the priority queue.</p><p>If no such move is found in Q it can be ignored since nothing happened that would now make a decrement of node u profitable.</p><p>In case there is such a move, u will lose v as predecessor so a new predecessor</p><p>has to be found leading to a different objective value gain ∆c. The rest of the move can be taken without any change.</p><p>8. Decrement the level of each node u at level l + 1 with predecessors at level l, excluding successors of v, if such a move is already stored in the priority queue Q and u would have become successor of v.</p><p>Node u will lose its best predecessor v after performing its decrement move.</p><p>Again, the move itself can keep unchanged, only a new predecessor has to be</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.">ANT COLONY OPTIMISATION FOR THE BDMST PROBLEM</head><p>In this chapter the concrete design of the ant colony optimisation algorithm for the bounded diameter minimum spanning tree problem, developed within the context of this master thesis, is presented. As already mentioned, ACO algorithms can be extended with extra capabilities to improve overall system efficiency, e.g. lookahead, local optimisation or back- tracking strategies, to name just a few. The ACO algorithm introduced here is equipped with a local optimisation heuristic, namely a variable neighbourhood descent. So before going into the details of the ACO algorithm for the BDMST problem itself, first a VND for the BDMST is introduced, as this VND plays an important role within the ant colony optimisation algorithm.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.1">Variable Neighbourhood Descent</head><p>In Chapter 3.1 various strategies to guide a search within a certain neighbourhood have been described. For the ACO the deterministic variable neighbourhood descent <ref type="bibr">(VND)</ref> framework is used. The different neighbourhood structures for this VND are those four presented in the preceding chapter, namely Edge Exchange, Node Swap, Centre Exchange and Level Change.</p><p>The VND algorithm introduced here varies a little from the general VND framework as proposed by Hansen and Mladenovi´cMladenovi´c <ref type="bibr">[23]</ref>. When following this general VND framework, the algorithm stops exploring a certain neighbourhood of a solution T , N i (T ) with i &gt; 1, after identifying the best neighbouring solution of T with respect to this neighbourhood structure, T ∈ N i (T ). It sets T to T and switches back immediately to the first neigh- bourhood structure N 1 . However, as a best improvement strategy is used to identify an improvement move, the whole neighbourhood has to be enumerated. Depending on the de- finition of the neighbourhood structure it is sometimes possible to store information while exploring the whole neighbourhood (as shown in the previous chapter). This information allows a faster computation of the successive best move when a move has only local impact </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>40</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>9</head><p>Change neighbourhood structures. To benefit from this incremental exploration the VND algorithm presented here does not switch back to the first neighbourhood after having identified the best improvement move. Instead it computes a local optimal solution with respect to the current neighbourhood structure under consideration and only jumps back to the first neighbourhood N 1 , in case the solution could be improved.</p><p>After defining the different neighbourhood structures the VND is based on, the order these neighbourhoods should by applied to a solution has to be determined. This decision has crucial impact either on the computation time as well as on the quality of solutions obtained.</p><p>The neighbourhood order for this VND algorithm has been taken from the VNS for the BDMST proposed by Gruber and Raidl <ref type="bibr" target="#b19">[21]</ref>, as the neighbourhood structures used in their VNS algorithm are basically the same as those utilised within this VND framework. <ref type="table" target="#tab_22">Algorithm 8</ref> gives an overview of the VND framework used within the context of this master thesis. Starting from a solution T , first the Edge Exchange neighbourhood tries to improve T by moving around whole subtrees. When a local minimum with respect to the Edge</p><p>Exchange neighbourhood is reached, T is tried to be further improved by optimising the arrangement of every node and its immediate successors (Node Swap). This is again done -as already mentioned and in contrast to the general VND -until a local optimal solution T is found. Afterwards, in case T is better than T , T is saved as new so far best solution T within this VND and the algorithm jumps back to the first neighbourhood structure.</p><p>If T was already a local minimum due to these two neighbourhoods the Centre Exchange neighbourhood tempts to further improve it by changing the centre node(s). Again, if the Centre Exchange neighbourhood yields an improvement move, the algorithm does not switch back immediately to the Edge Exchange neighbourhood. Instead, it computes a</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>41</head><p>afterwards. And finally, if T is a local minimum with respect to the Edge Exchange,</p><p>Node Swap and Centre Exchange neighbourhood, Level Change tries to optimally arrange all non-centre nodes within the level structure. When this VND algorithm terminates it reached a local optimal solution with respect to all four different neighbourhood structures.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2">Ant Colony Optimisation</head><p>As already presented in Chapter 3.2, several different ant algorithms have been developed.</p><p>The ACO for the BDMST problem, proposed within the context of this master thesis, is based on the ant colony system (ACS), first proposed by Dorigo et al. in 1996 <ref type="bibr" target="#b11">[12,</ref><ref type="bibr" target="#b10">11]</ref>. A property taken from the ACS for the travelling salesman problem (TSP) is the pheromone initialisation process. Another adapted characteristic is that every artificial ant is only responsible for constructing a solution, since the pheromone update process is managed by a daemon. This daemon identifies, as it is representative for ACS algorithms, the best solution found by the whole colony in one iteration and updates the pheromone information proportional to the fitness of this best solution found. Pheromone trail evaporation is also performed by the daemon. A main difference between the ACS concept and the ant colony optimisation metaheuristic presented here lies in the local decision policy. In general the decision policy of ACS algorithms includes a heuristic component when computing a state transition. This heuristic component for the local decision policy is completely omitted for this ACO algorithm.</p><p>For the implementation of the ACO algorithm some data structures are required, most of them already known from the four different neighbourhoods:</p><p>• Again the successor lists succ, storing for each node its immediate successors, the predecessor array pred, saving for each node its predecessor in the directed tree from the centre to the leaves, the level information lev, stating the level a node is assigned to and the level sets V l with l = 0, . . . , containing all nodes at the level l, are used.</p><p>• In addition, a two dimensional n × ( + 1) pheromone matrix is needed to keep one pheromone entry for each combination of a node and a level. The value τ i,j reflects the desirability of assigning node i to level j.</p><p>The level information lev and level sets V l ⊂ V are of major interest, as the ant colony opti-</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>42</head><p>regarding pheromone deposition in comparison to the basic ACO concept for the TSP pro- posed by Dorigo <ref type="bibr" target="#b9">[10,</ref><ref type="bibr" target="#b12">13]</ref>. There they operate on a graph G = (V, E) where pheromone is deposited -either by ants themselves or by a daemon -on edges e ∈ E contained in the solution. The ACO algorithm presented here does not deposit pheromone on edges but exploits the fact that once given the level information lev(v) for all nodes v ∈ V an optimal solution for the bounded diameter spanning tree problem with respect to this level infor- mation lev can be easily derived. the level information lev. So the pheromone information reflects instead of the desirability of using an edge the desirability of assigning a node to a certain level. <ref type="table" target="#tab_24">Algorithm 9</ref> gives an overview of the ant colony optimisation algorithm developed in the context of this master thesis.</p><p>To be able to construct a solution based on the information stored in the pheromone matrix, it has to be first initialised. This initial amount of pheromone for each combination of node and level has to be in relation to those values the pheromone update process is going to write into the matrix. E.g., if the initial values are too big compared to those, the pheromone update process is going to deposit, it will last very long until the ant colony will be capable of exploiting the information stored in the pheromone matrix. To guarantee that ants are able to use the collected information very soon the pheromone initialisation process follows the scheme of ACS algorithm for the TSP <ref type="bibr" target="#b11">[12,</ref><ref type="bibr" target="#b10">11]</ref>, where the initial amount of pheromone deposited is proportional to the product of an initial solution value and the total number of nodes of the instance graph. Therefore in the first line of Algorithm 9 a solution S using the randomised tree construction (RTC) heuristic <ref type="bibr" target="#b27">[31]</ref> is computed. The solution value obtained from the RTC heuristic, together with the total number of nodes n is used to initialise the pheromone matrix with τ i,j = 1/(S * n), i = 0, . . . , n − 1 and j = 0, . . . ,</p><p>Until no termination condition is met (line 3), which can be either a time limit, a maximum number of iterations without further improvement or both combined, in each iteration an colony of a finite number of artificial ants tries to find good solutions based on the so far collected information on the problem instance.</p><p>Each artificial ant builds a solution based on the information stored in the pheromone matrix. As already mentioned, the solution construction process exploits the fact that a </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>43</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2</head><p>while termination condition not met do</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3</head><p>for each ant of the colony do</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4</head><p>create a solution T , based on the information saved in the pheromone matrix; <ref type="figure">VND(T );   6</ref> determine best solution T found by the whole colony;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>5</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7</head><p>update pheromone matrix using T ;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8</head><p>if T better than bestSolution then</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>9</head><p>bestSolution = T ;</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>10</head><p>So each ant simply sets each node to a certain level. The level a node is assigned to is selected randomly with a probability proportional to the pheromone information stored for this node, i.e. P i,l is the probability that node i is assigned to level l.</p><p>P i,l = τ i,l l =1 τ i,l In general -due to the stochastic level selection process -each node can be assigned to any level as long as no entry in the pheromone matrix is zero. This is a desirable behaviour except for level 0, where the number of nodes is fixed in advance based on the diameter bound. Therefore the centre node(s) is (are) selected separately based on the information stored in the first column of the pheromone matrix (the pheromone values of level 0 for each node). As said above this local decision policy has no heuristic component, every node is assigned to a certain level independently from all other nodes, only the decoding step - deriving a tree from the level information -makes use of a problem specific heuristic when using for each non centre node its cheapest available predecessor.</p><p>To improve solutions built by artificial ants the variable neighbourhood descend for the BDMST, presented in the previous section, is applied to these solutions. Thus each ant constructs a solution based on the information stored in the pheromone matrix. Afterwards the VND algorithm tries to improve this solution (lines 5 to 6).</p><p>The daemon is responsible for collecting all solutions found by the ant colony in the current iteration (line 7). From this pool of solutions it selects the best one T and determines the amount of pheromone, that is proportional to the fitness of this best solution, going The parameter ρ, with 0 ≤ ρ ≤ 1 has a crucial impact on the convergence of the ant colony.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>44</head><p>The greater ρ the faster the ant colony commits itself to a certain solution, it converges faster, perhaps too fast. On the contrary, the smaller ρ the later the ant colony is able to exploit already collected knowledge of the problem instance, in terms of the pheromone matrix, to construct good solutions, but therefore the solution space is explored in more detail. So using this parameter the behaviour of this ant colony optimisation algorithm can be influenced substantially and adjusted for different applications.</p><p>In line 9 and 10 the daemon verifies if the best solution found by the ant colony in the current iteration is better than the best solution found so far. If so this solution is saved as new best solution. the most important attributes and methods of the respective classes.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.">IMPLEMENTATION</head><p>The Instance class encapsulates all relevant information concerning a BDMST problem instance that does not change during computations, e.g. the underlying graph or the diameter bound. Due to this fact, each run of the ant colony optimisation algorithm has exactly one Instance object.</p><p>The InstanceParser is responsible for parsing the input file and storing the relevant information in the corresponding data structures. The InstanceParser is able to parse various file formats, e.g. GNUplot or EA graph instances. GNUplot files were created at the Institute of Computer Graphics and Algorithms for testing and visualising purposes.</p><p>EA files are instances from the Beasley's OR-Library 2 which haven been originally intended for Euclidean Steiner tree problems. As in <ref type="bibr" target="#b27">[31,</ref><ref type="bibr" target="#b22">25,</ref><ref type="bibr" target="#b19">21]</ref> these instances have been used for comparing this ACO with other state-of-the-art metaheuristics.</p><p>The Solution class is used for representing solutions for a certain problem instance. To ex- press a valid solution the attribute successorVector, storing for each node its immediate successors, would be sufficient, but to enable faster computations additional attributes  are used. The predecessor attribute stores for each node its direct predecessor and centreNode keeps the centre node. In case of an odd diameter centreNode2 saves the second one. To express the correlation between a Solution object and the instance it be- longs to, a pointer to the Instance object is passed to in the constructor of the Solution class. This pointer enables the Solution object to access instance specific information, like number of nodes, diameter bound or connection costs between two nodes. Impor- tant methods of the Solution class are ValidateSolution() and CalcSolValue(). The ValidateSolution() method verifies if the solution represented by this Solution object contains all nodes of the problem instance, if the diameter bound is not violated and if the solution is free of circles. If it turns out that the Solution object represents a valid BDMST true is returned, otherwise false. The CalcSolValue() method calculates the total costs of the solution represented by the object and returns this objective value.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">uses</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">calls</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1..* 1..* InstanceParser</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Local</head><p>The LocalSearch class is an abstract class and merges common attributes and meth- ods of the implementation of the four different neighbourhood structures, namely Edge</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>47</head><p>LocalSearch class a reference to a Solution object is passed to. This enables different LocalSearch objects, in case they are referencing the same object, to operate on the same Solution object in a sequential order. Additional instance specific information can be accessed via this reference to the Solution object and its pointer to the Instance object.</p><p>The Execute() method, each subclass of LocalSearch has to implement, starts the im- provement process, stopping in a local optimal solution with respect to the neighbourhood structure implemented by this subclass. In case the objective value of the solution passed to the constructor of the LocalSearch class has been improved, Execute() returns true, otherwise false.</p><p>EdgeExchange is a subclass of the abstract LocalSearch class and implements the Edge</p><p>Exchange neighbourhood. All improvement moves found by the Execute() method are executed directly on the Solution object passed to it in the constructor. This holds true for all other subclasses of the abstract LocalSearch class, too.</p><p>Node Swap, another subclass of LocalSearch, implements the second neighbourhood struc- ture based on the successor and predecessor relationships of the nodes, beside Edge Ex- change, namely -as the name already presumes -Node Swap.</p><p>The LevelBased class is abstract and summarises attributes and methods used by its two subclasses, CentreExchange and LevelChange, implementing neighbourhoods based on the level representation of a solution. An example for such an additional attribute is nodesAtLevel which stores for each level all nodes assigned to it.</p><p>As already mentioned CentreExchange and LevelChange are subclasses of LevelBased.</p><p>The Execute() method of CentreExchange computes a local optimal solution with re- spect to the Centre Exchange neighbourhood, whereas LevelChange implements the Level</p><p>Change neighbourhood.</p><p>The Aco class is the core of this ant colony optimisation program. It is responsible for creating all the required objects, as there are for example the sole object of the Instance class, objects of Solution and subclasses of the abstract LocalSearch class. Furthermore, it administrates -strictly speaking initialises and updates -the pheromone matrix. Based on the information stored in this pheromone matrix each artificial ant builds a solution by calling the CreateSolution() method. These solutions are then tried to be locally improved by a variable neighbourhood descent algorithm using the four different neigh-</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>48</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.1">User Manual</head><p>The proposed ant colony optimisation metaheuristic, implemented in C++, is a simple command line program, named Aco. The program was developed under Linux 2.4.21.</p><p>The program was compiled using gcc in version 3.3.1 under glibc in version 2.3.2. To start the program some mandatory parameters have to be specified. If they are missing the program will prompt an error message followed by a usage instruction. Furthermore,</p><p>Aco has some optional parameters, that can be omitted when starting the ant colony optimisation program. In the following a synopsis of the program parameters is shown.</p><p>./Aco -t graphtype -d diameter -i instancefile [-g instancefile] <ref type="bibr">[-r rho]</ref> [-s time_limit] <ref type="bibr">[-l iteration_limit]</ref>  <ref type="bibr">[-a ants]</ref> Here in alphabetical order the list describing all optional as well as mandatory parameters of the Aco program in detail:</p><p>• a is an optional parameter. It indicates the number of artificial ants forming the ant colony. If it is omitted a default colony size of 10 ants is used.</p><p>• d is a mandatory parameter, since it specifies the diameter bound. The number declared has to be a positive integer number greater or equal to 4, otherwise an error message is prompted.</p><p>• i has also to be specified, stating the path to the instance file.</p><p>• g is only a mandatory parameter when a GNUplot graph instance is used, since GNUplot instances consist of two files, a point and a line file. So in case of a GNUplot graph instance the parameter g takes the line file, the corresponding point file has to be specified using parameter i. In case of all other graph types this parameter has to be omitted, otherwise an error message is prompted.</p><p>• l specifies the maximum number of iterations without an improvement of the best solution found so far. As it is an optional parameter it can be omitted, in this case the program sets it per default to 1000.</p><p>• r is an optional parameter, with 0 ≤ r ≤ 1. This parameter represents the ρ value used in the pheromone update process. The greater ρ, the faster the ant colony</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>49</head><p>• s is an optional parameter indicating the time limit in seconds, otherwise no time limit is set. Only positive integer numbers are valid values for this parameter, all other specifications will result in a corresponding error message.</p><p>• t is a mandatory parameter and specifies the type of the instance file. The instance parser used by this program is able to read in four different file formats: Santos graph (Santos et al. <ref type="bibr" target="#b13">[14]</ref>)</p><p>The output of the Aco program is sent to standard out (std::cout) per default, but it can easily be redirected to any file with the help of the appropriate Unix operator "&gt;". The output starts with a summary of all instance relevant information, e.g. instance file, number of nodes or diameter bound. Then a summary of each iteration follows, containing various information on every ant of the colony. Each ant builds a solution exploiting the knowledge stored in the pheromone matrix. Afterwards, this solutions is tried to be improved by a VND algorithm using four different neighbourhood structures. This iteration summary states for each artificial ant the total costs of the solution found after local improvement by VND, the total costs of the best solution found so far, time needed so far and finally an indicator if the current best solution was achieved by this ant. Finally, when a termination condition is met -either time limit or x rounds without further improvement of the best found solution -a complete summary of the optimisation process is printed, containing again all instance relevant information plus total costs of the best solution found and the time in seconds until the program was terminated. Note, that it in general the time stated at the end of this summary is not the time required to achieve the best solution. In the following a sample output of an Aco run is presented: <ref type="bibr">------------------------------------------------------------------------</ref> Bounded diameter minimum spanning tree problem: ACO <ref type="bibr">[ver. 1.0 / 10.2005] ------------------------------------------------------------------------</ref> Reading in instance ... Successfully read in EA instance... ../.. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>50</head><p>Creating Solution object to save best solution ... done Creating Solution object for computations ... done Creating EdgeExchange object ... done Creating NodeSwap object ... done Creating CentreExchange object ... done Creating LevelChange object ... done - <ref type="bibr">-----------------------------------------------------------------------</ref> Starting Ant Colony Optimisation  <ref type="figure">-------------------------------------------------------------------------</ref> * Ant 0 found 1877464 <ref type="bibr">[vnd]</ref> 1877464 <ref type="bibr">[ACO]</ref> </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.75">sec. * Ant 1 found</head><p>1858671 <ref type="bibr">[vnd]</ref> 1858671 <ref type="bibr">[ACO]</ref> </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.65">sec. Ant 2 found</head><p>1885506 <ref type="bibr">[vnd]</ref> 1858671 <ref type="bibr">[ACO]</ref> </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.30">sec. Ant 4 found</head><p>1918045 <ref type="bibr">[vnd]</ref> 1836331 <ref type="bibr">[ACO]</ref> 8.92 sec.  <ref type="bibr">[vnd]</ref> 1836331 <ref type="bibr">[ACO] 20.05 sec. ------------------------------------------------------------------------Updating pheromone matrix...</ref> 1836331 <ref type="bibr">[ACO] 20.05 sec. ------------------------------------------------------------------------Ant 0 found 1844813 [vnd]</ref> 1836331 <ref type="bibr">[ACO]</ref> 21.46 sec. .</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>. . * Ant 8 found</head><p>1676033 <ref type="bibr">[vnd]</ref> 1676033 <ref type="bibr">[ACO]</ref> 2726.53 sec. . . .  <ref type="figure">sec.   -------------------------------------------------------------------------  7</ref>. COMPUTATIONAL RESULTS For comparison the same instances, diameter bounds, time limits and termination condi- tions as in <ref type="bibr" target="#b19">[21]</ref> were used. The instances were taken from the Beasley's OR-Library 1 and have been originally proposed for the Euclidean Steiner tree problem. All nodes of a graph are settled within the unit square and the Euclidean distance between any pair of nodes corresponds to the edge costs between these two nodes. Furthermore, as in <ref type="bibr" target="#b19">[21]</ref>, the tests were grouped into long-term and short-term runs.  In addition, for the ACO the mean times for identifying the best solutions are given. As indicated in <ref type="table">Table 7.1</ref> ρ varies among the different instance sizes in order to obtain better solutions. The results for the EAs as well as those for the VNS are taken from <ref type="bibr" target="#b19">[21]</ref>.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>51</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.919</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>0.07</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.831</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.919</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="0.05">7.759</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.819</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="0.03">0.01</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.759</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.771</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="0.007">196.06</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">7.873</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8.017</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>0.08</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.853</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8.043</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>0.09</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.852</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.891</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>0.03</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.849</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.869</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="0.004">126.43</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">7.990</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8.139</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>0.08</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.982</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8.137</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="0.09">7.904</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.962</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>0.04</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.907</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.946</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="0.014">200.40</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">8.009</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8.143</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>0.07</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.996</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8.122</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="0.06">7.979</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8.046</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>0.03</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.979</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.995</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="0.005">200.15</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5">8.193</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8.335</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>0.08</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8.198</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8.313</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>0.08</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8.165</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8.203</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>0.03</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8.164</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8.168</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>0.002</head><p>Like the VNS implementation the ACO algorithm outperforms the two EAs concerning either best as well as mean solution values. The greater the instances the larger the gap between the ACO algorithm and the VNS.</p><p>While on instances of size n the ACO algorithm to finish at least five to eight complete iterations. <ref type="table">Table 7.2</ref> presents the results of the short-term runs. It shows the number of nodes, the diameter bound, the instance number, and the time limit in seconds. Furthermore, for each metaheuristic the objective values of the best solutions found, the mean values and the standard deviations are listed. For each instance 50 (EAs) respectively 30 <ref type="bibr">(VNS, ACO)</ref> independent runs have been performed.</p><p>In addition for the ACO algorithm the parameter ρ used for the experiments is given, since varying it depending on the time limit and instance size yielded better results. Again the results for the EAs as well as those for the VNS are taken from <ref type="bibr" target="#b19">[21]</ref>.</p><p>From Table 7.2 it can be seen that the ACO algorithm consistently outperforms the two EAs. Considering the 500 node instances, the mean values of the ACO with tighter time limits, as well as those of the VNS, are even better than the objective values of the best solutions found by any of the EAs. Unfortunately, the good results of the VNS cannot be reached by the ACO. Looking at the 500 node instances it can be seen that when using a time limit of 500 seconds the ACO algorithm comes closer to the results of the VNS but cannot really exceed them. Just on two instances the ACO yields a better solution, and it beats the VNS only one time concerning the mean values. these solutions can be improved significantly by the variable neighbourhood descent, but at the expense of a high running time. Another aspect that has to be taken into account in the short-term runs is the value chosen for the parameter ρ which controls how much influence the best solution identified within one iteration shall have on the pheromone and -consequently -on the probabilities calculated based on this pheromone information for the following iterations. Remember, that based on these probabilities all artificial ants construct solutions. The greater the ρ value the higher the probability to assign node v to level l also in a subsequent iteration (if this combination was part of the best solution) since the pheromone value for this combination of node and level will dominate the other ones relatively fast. As a consequence the ACO algorithm converges to a certain solution after only a small number of iterations. As the first solutions are in general of a poor quality (even after the VND local improvement step), a great ρ value will not yield good solutions at all, since a solution close to these bad solutions will be favoured very soon. On the other hand, if the value of the parameter ρ is chosen too low the pheromone updates written into the pheromone matrix are so small compared to the values already stored there that they have only marginal effects on the probabilities calculated from the pheromone information.</p><p>So within the next iteration nearly the same probabilities can be met. When using a too tough time limit with respect to the ρ value it is likely to occur that the already collected information cannot be exploited at all. <ref type="table">Table 7.2</ref> indicates this effect. For instances with 500 nodes and a time limit of 50 seconds a relatively great ρ value has been used in order</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>56</head><p>decupling the time limit an obviously smaller ρ can be applied. certain solution. This leads inevitably to much better results.</p><p>Generally it can be noted, that the ACO algorithm is very slow in the beginning of the computation process, as the solutions constructed in this phase are very poor and the variable neighbourhood descent part can substantially improve these solutions, but this local improvement step is very time consuming. As time proceeds the artificial ants will construct better and better solutions, due to the information stored in the pheromone matrix. As a consequence the neighbourhood descent part needs less and less time to improve these solutions. So the time required for one iteration decreases over the whole runtime of the ACO algorithm, as the time needed by an artificial ant to build a solution</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="8.">CONCLUSIONS</head><p>This master thesis proposed an ant colony optimisation algorithm for the bounded diam- eter minimum spanning tree problem. Its main characteristic is that it makes use of a local optimisation heuristic, namely a variable neighbourhood descent, to improve overall solution quality. This VND approach is based on four different neighbourhood structures for the BDMST problem, namely Edge Exchange, Node Swap, Centre Exchange and Level Change. When developing these neighbourhood structures main focus was on an efficient and fast exploration of a certain neighbourhood, for example computing only cost differ- ences when evaluating a solution. For two of them, namely Node Swap and Level Change, an incremental enumeration, applied after having identified and executed the most prof- itable move, was presented. This incremental exploration could not reduce the theoretical worst case time complexity, but accelerated computation essential in practise.</p><p>Another important characteristic of the ant colony optimisation algorithm, developed within the context of this master thesis, is the way artificial ants construct solutions. A tree is not built by starting from a single node and successive connecting the remaining ones, but ants distribute the nodes to various levels, since given this level information always a local optimal minimum spanning tree ensuring the diameter bound can be derived in an easy and straightforward way.</p><p>To evaluate the overall performance of the ant colony optimisation algorithm it was com- pared to the so-far-leading variable neighbourhood search implementation for the BDMST, that operates on the same neighbourhood structures, as well as to three evolutionary algo- rithms, namely a permutation, a random-key and a edge-set coded EA. Results on complete Euclidean instances turned out, that when considering solution quality the ACO algorithm is not only superior to the EAs but also to the VNS, especially on larger instances. In case the computation time is highly restricted the solutions provided by the ACO algorithm are in-between those of the EAs and those of the VNS.</p><p>To conclude, the ant colony optimisation algorithm, proposed within the context of this</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_0"><head>4. 2 :</head><label>2</label><figDesc>Fig. 4.2: Node Swap neighbourhood</figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" xml:id="fig_1"><head>D 2</head><label>2</label><figDesc></figDesc></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0" validated="false"><head>Definition 4 :</head><label>Definition 4</label><figDesc></figDesc><table>A solution T is called a local optimal (minimum) solution with respect 
+
+to a neighbourhood structure N , if ∀ T ∈ N (T ): f (T ) ≤ f (T ), where f is the objective 
+
+1 212 
+
+function to be minimised. A solution T is called a strict local optimal (minimum) solution, 
+
+if f (T ) &lt; f (T ) ∀ T ∈ N (T ). 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1" validated="false"><head>Fact 1 : A local minimum T with respect to a single neighbourhood structure does not</head><label>Fact 1</label><figDesc></figDesc><table></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2" validated="false"><head>Fact 2 :</head><label>Fact 2</label><figDesc>The optimal solution has to be a local minimum with respect to all neighbourhood structures. Fact 3: For many problems local minima with respect to one or more neighbourhood</figDesc><table></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_3" validated="false"><head>Algorithm 1 : Variable Neighbourhood Descent</head><label>Algorithm 1</label><figDesc></figDesc><table>create initial solution T ; 
+
+1 
+
+i = 1; 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_4" validated="false"><head>Algorithm 2 : Reduced Variable Neighbourhood Search</head><label>Algorithm 2</label><figDesc></figDesc><table>create initial solution T ; 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_5" validated="false"><head>Algorithm 3 : Basic Variable Neighbourhood Search</head><label>Algorithm 3</label><figDesc></figDesc><table>create initial solution T ; 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_6" validated="false"><head>Ant colony : Ant algorithms consist of a finite size colony of artificial ants. These artificial ants, forming the colony, act as real ants independently and concurrently. Despite this two properties artificial ants show -as their counterparts in the real</head><label>Ant colony</label><figDesc></figDesc><table>world -a cooperative behaviour. 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_7" validated="false"><head>The strength of pheromone trail evaporation and pheromone depositing on the one hand, as well as the stochasticity of the local decision policy on the other hand are responsible that the ant</head><label></label><figDesc></figDesc><table>colony optimisation metaheuristic is not trapped soon in a local optimum, but exploits 
+
+already accumulated knowledge. To find the right balance between the pheromone update 
+
+process and the stochasticity of the decision policy is essential, since only then an explo-
+
+ration of many different search areas of the solution space is possible. Daemon activities 
+
+describe actions that cannot be accomplished by a single ant. Therefore they are executed 
+
+by a global guard, called a daemon. A typical activity is biasing the search process by 
+
+depositing some additional pheromone on paths forming an especially good solution. 
+
+Over the years many different ACO metaheuristics have evolved. More or less they all have 
+
+their roots in the first ACO algorithm developed, the so called ant system (AS) proposed 
+
+in 1991 by Dorigo </table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_8" validated="false"><head>in 1997 . They presented a MAX − MIN ant system (MMAS) for the travelling salesman problem, that</head><label>in 1997</label><figDesc></figDesc><table></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_10" validated="false"><head>Algorithm 4 :</head><label>Algorithm 4</label><figDesc></figDesc><table>Edge Exchange Neighbourhood Search 
+
+∆c  *  = 0; 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_11" validated="false"><head>Algorithm 5 : Node Swap</head><label>Algorithm 5</label><figDesc></figDesc><table>for each node v ∈ V do 
+
+1 
+
+∆c  *  = 0; bestN ode = N U LL; 
+
+2 
+
+if v ∈ V 0 then 
+
+3 
+
+c v = 
+
+m∈succ(v) c(v, m); 
+
+4 
+
+if diameter D is odd then 
+
+5 
+
+c v += c(v, other centre node); 
+
+6 
+
+else 
+
+7 
+
+c v = c(pred(v), v) + 
+
+m∈succ(v) c(v, m); 
+
+8 
+
+for each u ∈ succ(v) do 
+
+9 
+
+if v ∈ V 0 then 
+
+10 
+
+c u = 
+
+m∈(succ(v)∪{v})\{u} c(u, m); 
+
+11 
+
+else 
+
+12 
+
+c u = c(pred(v), u) + 
+
+m∈(succ(v)∪{v})\{u} c(u, m); 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_14" validated="false"><head>Algorithm 6 : Centre Exchange Neighbourhood Search</head><label>Algorithm 6</label><figDesc></figDesc><table>for node c ∈ V 0 do 
+
+1 
+
+∆c  *  = 0; 
+
+2 
+
+assign c to level 
+
+3 
+
+find least cost predecessor p for c with 0 ≤ lev(p) &lt; add (c, p) to l; 
+
+4 
+
+for each node v ∈ succ(c) with lev(u) &gt; 1 do 
+
+5 
+
+find a new predecessor p for node v with lev(p) &lt; lev(v); add (v, p) to l; 
+
+6 
+
+helperList = l; 
+
+7 
+
+for each node v ∈ V \ V 0 do 
+
+8 
+
+l = helperList; 
+
+9 
+
+for each node u ∈ V 1 do 
+
+10 
+
+if diameter D is odd ∧ c(u, second centre node) &lt; c(u, v) then 
+
+11 
+
+add (u, second centre node) to l; 
+
+12 
+
+else 
+
+13 
+
+add (u, v) to l; 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_15" validated="false"><head>Figure 4 .</head><label>Figure 4</label><figDesc></figDesc><table>4 
+
+visualises the Level Change neighbourhood. 
+
+0 
+
+c 1 
+c 2 
+
+1 
+
+. . . 
+. . . 
+
+H − 1 
+
+H = 
+
+D 
+
+2 
+
+Fig. 4.4: Level Change neighbourhood 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_16" validated="false"><head>Algorithm 7 : Level Change Neighbourhood Search</head><label>Algorithm 7</label><figDesc></figDesc><table>for node v ∈ V \ V 0 do 
+
+1 
+
+if lev(v) &gt; 1 then 
+
+2 
+
+lev new (v) = lev(v) − 1; 
+
+3 
+
+for each node u ∈ V lev(v) do 
+
+4 
+
+if c(u, v) &lt; c(u, pred(u)) then 
+
+5 
+
+append (u, v) to list l; 
+
+6 
+
+if lev(pred(v)) == lev new (v) then 
+
+7 
+
+find new predecessor p for node v with lev(p) &lt; lev new (v); add (v, p) to l; 
+
+8 
+
+evaluate ∆c of whole move; 
+
+9 
+
+if ∆c ≥ 0 then 
+
+10 
+
+put move into priority queue Q; 
+
+11 
+
+if lev(v) &lt; then 
+
+12 
+
+lev new (v) = lev(v) + 1; 
+
+13 
+
+helper = pred(v); 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_17" validated="false"><head>(lines 15, 16). If no such predecessor can be found an improvement is impossible. Assuming a cheaper predecessor was found, in lines 18 to 20 the algorithm assigns to all old successors u of v (u ∈ succ(v), with</head><label></label><figDesc></figDesc><table></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_18" validated="false"><head>Case 1 :</head><label>Case 1</label><figDesc>The performed move decremented the level of node v from l + 1 to l.</figDesc><table></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_19" validated="false"><head></head><label></label><figDesc>(it would be no longer valid).</figDesc><table>33 
+
+pred new (v) 
+
+l − 1 
+
+2 
+
+1 
+
+v new 
+
+8 
+8 
+8 
+8 
+
+l 
+
+pred old (v) 
+
+9 
+9 
+9 
+9 
+
+v old 
+
+6 
+5 
+5 
+6 
+
+l + 1 
+
+succ new (v) 
+succ new (v) 
+
+7 
+7 
+
+3 
+
+3 
+3 
+
+4 
+4 
+
+l + 2 
+
+succ old (v) 
+
+succ old (v) 
+succ old (v) 
+
+Fig. 4.5: Decrement move of node v (case 1) 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_20" validated="false"><head>the level of each node u at level l+2 having its predecessor pred(u) =</head><label></label><figDesc></figDesc><table>v at level l + 1. 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_21" validated="false"><head>Case 2 :</head><label>Case 2</label><figDesc></figDesc><table>The performed move incremented the level of node v from l − 1 to l. 
+
+pred old (v) 
+
+l − 2 
+
+2 
+
+3 
+
+3 
+
+3 
+
+3 
+
+l − 1 
+
+v old 
+
+pred new (v) 
+
+4 
+
+4 
+
+4 
+
+4 
+
+5 
+
+5 
+
+5 
+
+5 
+
+l 
+
+v new 
+
+succ old (v) 
+succ old (v) 
+
+6 
+
+1 
+6 
+
+8 
+7 
+7 
+7 
+8 
+
+l + 1 
+
+succ still (v) 
+
+succ still (v) 
+succ still (v) 
+
+Fig. 4.6: Increment move of node v (case 2) 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_22" validated="false"><head>Algorithm 8 :</head><label>Algorithm 8</label><figDesc></figDesc><table>VND(T ) 
+
+k = 1; 
+
+1 
+
+while k ≤ 4 do 
+
+2 
+
+improve T until local optimum reached with respect to neighbourhood . . . 
+
+3 
+
+switch k do 
+
+4 
+
+case 1 : Edge Exchange; 
+
+5 
+
+case 2 : Node Swap; 
+
+6 
+
+case 3 : Centre Exchange; 
+
+7 
+
+case 4 : Level Change; 
+
+8 
+
+if T improved and k = 1 then k = 1; else k = k + 1; 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_23" validated="false"><head>Therefore simply for each non centre node v the least cost</head><label></label><figDesc></figDesc><table>predecessor p with lev(p) &lt; lev(v) has to be found. In case of several possible least cost 
+
+predecessors, always one with minimum level is selected. Thus ants construct a solution 
+
+not by "running" through the graph structure, but by assigning nodes to levels, building 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_24" validated="false"><head>Algorithm 9 : ACO for the BDMST create an initial solution S using the RTC heuristic;</head><label>Algorithm 9</label><figDesc></figDesc><table>1 
+
+initialise the pheromone matrix with 1/(S  *  n); 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_25" validated="false"><head>This behaviour , that only the best ant deposits pheromone, was first proposed for ACS</head><label>This behaviour</label><figDesc></figDesc><table>algorithms. The quantity of pheromone deposited is determined as follows: 
+
+∆τ i,j = 
+
+ 
+ 
+
+1/T if lev(i) == j in T 
+
+ 
+
+0 
+otherwise 
+
+After having calculated the amount of pheromone to be deposited, the pheromone matrix is 
+
+updated (line 8). This update process combines the pheromone laying and the pheromone 
+
+evaporation process and follows the scheme introduced for ACS algorithms: 
+
+τ i,j = (1 − ρ)τ i,j + ρ∆τ i,j 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_28" validated="false"><head>Search +currentSolution : Solution</head><label></label><figDesc></figDesc><table>+InstanceParser() 
+
++LocalSearch(inout currSol : Solution) 
++Execute() : bool 
+
+EdgeExchange 
+
+NodeSwap 
+
++EdgeExchange(inout currSol : Solution) 
++Execute() : bool 
+
+LevelBased 
++nodesAtLevel 
+
++LevelBased(inout currSol : Solution) 
+
++NodeSwap(inout currSol : Solution) 
++Execute() : bool 
+
+CentreExchange 
+
+LevelChange 
+
++CentreExchange(inout currSol : Solution) 
++Execute() : bool 
+
++LevelChange(inout currSol : Solution) 
++Execute() : bool 
+
+Fig. 6.1: Class diagram 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_29" validated="false"><head>-0 GNUplot graph</head><label>-0</label><figDesc></figDesc><table>-1 CostMatrix graph (Gouveia and Magnanti [18]) 
+
+-2 EA graph 
+
+-3 </table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_38" validated="false"><head>Comparing the ACO with the VNS it can</head><label></label><figDesc></figDesc><table>be seen that on instances with 100 nodes the ACO algorithm is still close to the VNS 
+
+implementation concerning best solutions, but is already better regarding mean values. 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_39" validated="false"><head>], since it makes use of operators with linear time complexity and therefore scales much better with larger instances. The same tests should be performed but for the 1000 node instances the time limit turned out to be really though for the ACO.</head><label></label><figDesc></figDesc><table>= 250 the ACO performs already clearly better than the VNS 
+
+concerning best as well as mean solutions, on instances with 500 nodes the mean objective 
+
+value of the solutions found by the ACO is close to -in one case it is even better than -
+
+the best solution identified by the VNS. In addition, the standard deviation of the ACO 
+
+algorithm is much smaller than those of the three other metaheuristics. Furthermore, it is 
+
+interesting to observe, that the time limit was never reached. For each instance size 1000 
+
+iterations without further improvement terminated the ACO algorithm, in contrast to, for 
+
+example, the VNS, which requires the whole 4000 seconds to compute the solutions listed 
+
+for the instances with 500 nodes. 54 
+
+set coded EA from [31When using the time limit of 100 seconds no useful results could be achieved due to the 
+
+following reason: In the first iteration of the colony with its ten artificial ants every solution 
+
+constructed by an artificial ant is more or less random, as the pheromone matrix contains no 
+
+practical information yet (it is initialised uniformly). Therefore the variable neighbourhood 
+
+descent part of the ACO algorithm can substantially improve these solutions, but this 
+
+improvement process requires a lot of time due to the fact that the quality of the solution 
+
+constructed by an ant is very poor. As a consequence only four to six solutions could 
+
+be processed within the time limit of 100 seconds. Since not even one iteration could be 
+
+finished within this time limit, thus no update of the pheromone matrix was performed, 
+
+no relevant results for the ACO can be presented here for the 1000 nodes instances in 
+
+combination with a time limit of 100 seconds. Using a time limit of 1000 seconds enables 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_41" validated="false"><head>This smaller ρ is responsible for the behaviour that the algorithm does not favour -as fast as in the prior test category</head><label></label><figDesc></figDesc><table>-a certain solution, but explores a greater part of the solution space before preferring a 
+
+</table></figure>
+		</body>
+		<back>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<analytic>
+		<title level="a" type="main">Models for vehilce routing problems</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="middle">Caccetta</forename><surname>And</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 10th National Conference of the Australian Society for Operations Research, pages</title>
+		<meeting>the 10th National Conference of the Australian Society for Operations Research, pages</meeting>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<monogr>
+				<title level="m">294</title>
+		<imprint>
+			<date type="published" when="1990" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<monogr>
+		<title level="m" type="main">Minimum weight spanning trees with bounded diameter</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="middle">Caccetta</forename><surname>And</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1992" />
+			<biblScope unit="page" from="261" to="276" />
+		</imprint>
+	</monogr>
+	<note>Australasian Journal of Combinatorics</note>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<monogr>
+		<title level="m" type="main">Computational meth-ods for the diameter restricted minimum weight spanning tree problem</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><surname>Achuthan</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Caccetta</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">And</forename><surname>Caccetta</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><forename type="middle">F Geelen</forename></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1994" />
+			<biblScope unit="page" from="51" to="71" />
+		</imprint>
+	</monogr>
+	<note>Australasian Journal of Combinatorics</note>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<analytic>
+		<title level="a" type="main">Multicasting in a linear lightwave network</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">K</forename><surname>Bala</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">And</forename><surname>Petropoulos</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">T</forename><forename type="middle">E Stern</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">IEEE INFOCOM&apos;93, pages 1350-1358</title>
+		<imprint>
+			<date type="published" when="1993" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<monogr>
+		<title level="m" type="main">Metaheuristics in combinatorial optimization: Overview and conceptual comparison</title>
+		<imprint>
+			<date type="published" when="2003" />
+			<publisher>ACM Computing Surveys</publisher>
+			<biblScope unit="volume">35</biblScope>
+			<biblScope unit="page" from="268" to="308" />
+		</imprint>
+	</monogr>
+	<note>Christian Blum and Andrea Roli</note>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<analytic>
+		<title level="a" type="main">Compression of correlated bit-vectors</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><forename type="middle">T Klein</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Information Systems</title>
+		<imprint>
+			<biblScope unit="volume">16</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page" from="387" to="400" />
+			<date type="published" when="1991" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<analytic>
+		<title level="a" type="main">Experimental analysis of practically efficient algorithms for bounded-hop accumulation in ad-hoc wireless networks</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Clementi</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Ianni</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Monti</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">And</forename><forename type="middle">Silvestri</forename><surname>Rossi</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 19th IEEE International Parallel and Distrib-uted Processing Symposium (IPDPS&apos;05), workshop 12, volume 13</title>
+		<meeting>the 19th IEEE International Parallel and Distrib-uted Processing Symposium (IPDPS&apos;05), workshop 12, volume 13</meeting>
+		<imprint>
+			<date type="published" when="2005" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<analytic>
+		<title level="a" type="main">The self-organizing ex-ploratory pattern of the argentine ant</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Deneubourg</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Aron</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">And</forename><surname>Goss</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><forename type="middle">- Pasteels</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Insect Behavior</title>
+		<imprint>
+			<biblScope unit="page" from="159" to="168" />
+			<date type="published" when="1990" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<monogr>
+				<title level="m">M. Dorigo. Optimization, Learning and Natural Algorithms</title>
+		<imprint/>
+	</monogr>
+	<note>PhD thesis, 60</note>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<analytic>
+		<title level="a" type="main">Ant colonies for the traveling salesman problem</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><forename type="middle">M Gambardella</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">BioSystems</title>
+		<imprint>
+			<biblScope unit="page" from="73" to="81" />
+			<date type="published" when="1997" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<analytic>
+		<title level="a" type="main">Ant colony system: A coopeartive learning ap-proach to the traveling salesman problem</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">L</forename><forename type="middle">M Gambardella</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">IEEE Transactions on Evolutionary Com-putation</title>
+		<imprint>
+			<biblScope unit="volume">1</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="53" to="66" />
+			<date type="published" when="1997" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<monogr>
+		<title level="m" type="main">Positive feedback as a search strategy</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">V</forename><surname>Dorigo</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">And</forename><forename type="middle">Colorni</forename><surname>Maniezzo</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1991" />
+		</imprint>
+		<respStmt>
+			<orgName>Dipartimento die Elettronica, Politecnico di Milano, IT</orgName>
+		</respStmt>
+	</monogr>
+	<note>Technical Report 91-016</note>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<analytic>
+		<title level="a" type="main">Solving diameter constrained minimum spanning tree problems in dense graphs</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">A</forename><surname>Santos</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">And</forename><surname>Lucena</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">C</forename><forename type="middle">C Ribeiro</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the International Workshop on Experimental Algorithms, volume 3059 of LNCS, pages 458-467</title>
+		<meeting>the International Workshop on Experimental Algorithms, volume 3059 of LNCS, pages 458-467</meeting>
+		<imprint>
+			<publisher>Springer</publisher>
+			<date type="published" when="2004" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Future paths for integer programming and links to artificial intelligence</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="middle">Glover</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Oper. Res</title>
+		<imprint>
+			<biblScope unit="page" from="533" to="549" />
+		</imprint>
+	</monogr>
+<note type="report_type">Comput</note>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<analytic>
+		<title level="a" type="main">Self-organized shortcuts in the argentine ant</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Goss</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><forename type="middle">L</forename><surname>Aron</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">And</forename><surname>Deneubourg</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><forename type="middle">M Pasteels</forename></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Naturwissenschaften</title>
+		<imprint>
+			<biblScope unit="page" from="579" to="581" />
+			<date type="published" when="1989" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<analytic>
+		<title level="a" type="main">Network flow models for designing diameter-constrained minimum spanning and Steiner trees</title>
+	</analytic>
+	<monogr>
+		<title level="m">Luis Gouveia and Thomas L. Magnanti</title>
+		<imprint>
+			<date type="published" when="2003" />
+			<biblScope unit="volume">41</biblScope>
+			<biblScope unit="page" from="159" to="173" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<analytic>
+		<title level="a" type="main">and Christina Requejo. A 2-path approach for odd-diameter-constrained minimum spanning and Steiner trees</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Thomas</forename><forename type="middle">Magnanti</forename><surname>Gouveia</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Networks</title>
+		<imprint>
+			<biblScope unit="volume">44</biblScope>
+			<biblScope unit="issue">4</biblScope>
+			<biblScope unit="page">254</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<analytic>
+		<title level="a" type="main">La reconstruction du nid et les coordinations interindividuelles chez bellicositermes natalensis et cubitermes sp. la théorie de la stigmergie: essai d´interprétation du comportement des termites constructeurs</title>
+	</analytic>
+	<monogr>
+		<title level="j">Insectes Sociaux</title>
+		<imprint>
+			<biblScope unit="page">41</biblScope>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<analytic>
+		<title level="a" type="main">Variable Neighborhood Search for the Bounded Di-ameter Minimum Spanning Tree Problem</title>
+	</analytic>
+	<monogr>
+		<title level="m">PhD thesis, Institute of Computer Graphics 61</title>
+		<editor>M. Gruber and Günther. R. Raidl</editor>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<monogr>
+				<title level="m">185</title>
+		<meeting><address><addrLine>Lisbon, Portugal</addrLine></address></meeting>
+		<imprint>
+			<date type="published" when="2005" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b21">
+	<analytic>
+		<title level="a" type="main">A permutation-coded evolutionary algorithm for the bounded-diameter minimum spanning tree problem</title>
+		<idno>A. Barry, F. Rothlauf, D. Thierens, et al., editors</idno>
+	</analytic>
+	<monogr>
+		<title level="m">2003 Genetic and Evolutionary Computation Confer-ence&apos;s Workshops Proceedings, Workshop on Analysis and Desgn of Representations</title>
+		<imprint>
+			<date type="published" when="2003" />
+			<biblScope unit="page" from="2" to="7" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b22">
+	<analytic>
+		<title level="a" type="main">Encoding bounded-diameter minimum spanning trees with per-mutations and with random keys</title>
+	</analytic>
+	<monogr>
+		<title level="m">Genetic and Evolutionary Computation Conference-GECCO 2004, volume 3102 of LNCS, pages</title>
+		<imprint>
+			<publisher>Bryant A. Julstrom</publisher>
+		</imprint>
+	</monogr>
+	<note>In Kalyanmoy Deb et al</note>
+</biblStruct>
+
+<biblStruct xml:id="b23">
+	<analytic>
+		<title level="a" type="main">Submitted for publication in the ACM Journal of Experimental Algorithmics</title>
+	</analytic>
+	<monogr>
+		<title level="j">Technical report</title>
+		<imprint>
+			<date type="published" when="2004" />
+			<publisher>Bryant A. Julstrom</publisher>
+		</imprint>
+		<respStmt>
+			<orgName>St. Cloud State University</orgName>
+		</respStmt>
+	</monogr>
+	<note>Greedy heuristics for the bounded-diameter minimum spanning tree problem</note>
+</biblStruct>
+
+<biblStruct xml:id="b24">
+	<analytic>
+		<title level="a" type="main">Network design and transportation planning: Models and algorithms</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="middle">Wong</forename><surname>And</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Transportation Science</title>
+		<imprint>
+			<biblScope unit="volume">18</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<date type="published" when="1984" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b25">
+	<analytic>
+		<title level="a" type="main">A variable neighborhood algorithm-a new metaheuristic for combi-natorial optimization</title>
+	</analytic>
+	<monogr>
+		<title level="m">N. Mladenovi´cMladenovi´c</title>
+		<imprint>
+			<publisher>Montreal</publisher>
+			<date type="published" when="1995" />
+		</imprint>
+	</monogr>
+	<note>Abstracts of papers presented at Optimization Days</note>
+</biblStruct>
+
+<biblStruct xml:id="b26">
+	<monogr>
+				<title level="m">1097-1100</title>
+		<imprint>
+			<date type="published" when="1997" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b27">
+	<analytic>
+		<title level="a" type="main">Raidl and Bryant A. Julstrom. Greedy heuristics and an evolutionary 62 et al</title>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the 2003 ACM Symposium on Applied Computing, pages</title>
+		<meeting>the 2003 ACM Symposium on Applied Computing, pages</meeting>
+		<imprint/>
+	</monogr>
+	<note>Günther R</note>
+</biblStruct>
+
+<biblStruct xml:id="b28">
+	<analytic>
+		<title level="a" type="main">Kerry Raymond. A tree-based algorithm for distributed mutual exclusion</title>
+	</analytic>
+	<monogr>
+		<title level="j">ACM Transactions on Computer Systems</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="issue">1</biblScope>
+			<biblScope unit="page" from="61" to="77" />
+			<date type="published" when="1989" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b29">
+	<analytic>
+		<title level="a" type="main">Introducing MAX − MIN ant system</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="middle">Hoos</forename><surname>And</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proceedings of the International Conference on Artifical Neural Networks and Genetic Algorithms, pages</title>
+		<meeting>the International Conference on Artifical Neural Networks and Genetic Algorithms, pages</meeting>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b30">
+	<monogr>
+		<title level="m" type="main">ant system and local search for the travel-ing salesman problem</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">H</forename><forename type="middle">Hoos Max</forename><surname>Min</surname></persName>
+		</author>
+		<idno>Proceedings of IEEE-ICEC-EPS&apos;97, IEEE Conference on Evolutionary Computation and Evolutionary Programming Conference, pages 309-314. IEEE Press</idno>
+		<imprint>
+			<date type="published" when="1997" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b31">
+	<monogr>
+		<title level="m" type="main">Meta-Heuristics-Advances and Trends in Local Search Paradigms for Optimization</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Voß</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">I</forename><forename type="middle">H</forename><surname>Martello</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">And</forename><forename type="middle">Routacirol</forename><surname>Osman</surname></persName>
+		</author>
+		<imprint>
+			<pubPlace>Dordrecht, The Netherlands</pubPlace>
+		</imprint>
+	</monogr>
+	<note>Kluwer Academic Publishers</note>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

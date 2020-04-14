@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main"></title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<abstract/>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">FORMAL VERIFICATION OF SOFTWARE</head><p>The course Formal Verification of Software has been taught for two decades, but until recently only theoretically in the style of Dijkstra <ref type="bibr">[4]</ref> and Gries <ref type="bibr">[6]</ref>. The slow but steady progress in the automation of program verification led us in 2003 to evaluate several tools in order to select one for use in the course. <ref type="bibr">[5]</ref> All of them can be used free of charge for academic and teaching purposes.</p><p>Frege <ref type="figure">Program Prover (FPP) [9</ref>] FPP supports a small subset of Ada consisting of typical imperative program structures like loop-, case-and if-statements. The only data types available are integer and boolean. The language for specifying pre-and post-conditions is rather restricted. E.g., function definitions, recursive specifications and structured data types like arrays are not supported. FPP is able to verify simple programs and to compute their weakest pre-conditions. The prover, Analytica, acts as a black box signalling either the validity of a formula or returning unprovable sub-formulas; formal proofs are not supplied.</p><p>Due to its simplicity and its web interface, FPP is easy to learn and use. It seems to be a valuable tool for illustrating the ideas of formal program verification in basic courses. It is not suitable, however, for advanced courses on the subject or for real world applications. Neither is it able to deal with standard examples from Dijkstra and Gries involving arrays, nor does it support object- oriented features. Moreover, the terse output in pure ASCII makes it difficult to trace errors.</p><p>The KeY system <ref type="bibr">[1]</ref> The KeY system supports a subset of Java known as JavaCard, which is increasingly used for mobile and embedded devices. Verification is based on dynamic logic, a generalization of the Hoare calculus. The system cooperates with CASE tools like Together Control Center, Solo or Architect. Objects and constraints can be specified using UML and OCL.</p><p>Java, UML, OCL, and CASE tools are familiar to software engineers and students alike, which helps in getting started. Nevertheless, KeY cannot be recommended for such target groups at present: the interactive prover and its interaction with the user are in their infancy and are inadequate for serious use. Moreover, OCL is not expressive enough to specify complex program behaviour. Considering that KeY is still in alpha stage, it seems to be worthwhile to reevaluate the system in a few years in order to see whether it lives up to expectations. <ref type="figure">Perfect Developer (PD) [3</ref>] PD consists of a full-fledged object-oriented programming language called Perfect, of a powerful automated theorem prover, and of a code generator translating programs from Perfect to Java, Ada, and C++. A rich collection of built-in data types, classes, functions and theories allows the user to write concise specifications on a fairly abstract level. UML class diagrams can be imported to generate the skeleton of classes automatically.</p><p>PD is a technically mature product that is ready for use in a regular development process. However, software engineers will need some time to become sufficiently aquainted with the many features of Perfect. Moreover, at least a basic knowledge of formal logic is required to be able to interpret the prover output and to use it for detecting errors in the specification or in the program. Perfect Developer is also well suited for teaching advanced courses on formal program verification. Usually there will not be enough time to cover all features of Perfect. Therefore a tutorial is required that concentrates on just those elements of the language that are necessary to implement and verify instructive examples like those in <ref type="bibr">[6]</ref>.</p><p>PD is that tool of the four that comes closest to the ideal of automated program verification. But there are still some shortcomings. One is that the prover currently does not support induction. Consequently certain recursive functions and loops cannot be verified by the system. E.g., if one specifies multiplication recursively by iterating over the first argument but decides to implement it as a loop over the second argument, the loop invariant cannot be proved automatically since the proof involves induction; in such a case the user has to provide a lemma whose correctness Automated Tools for Teaching Formal Software Verification</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>6</head><p>Industrial applications</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>PVS PD</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>KeY</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>FPP Toy/Academic system</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>-</head><p>Little formal training Strong background in logic required has to be verified outside the system. In practice this limitation is not as severe as it seems: The principle of proof-by-contract generates dozens of proof obligations even for toy programs, most of which are rather trivial and therefore are verified by PD's prover automatically; the user can focus his attention on a few unproven assertions resulting from the core algorithms. Another weakness, at least from an academic point of view, is the lack of information concerning the internals of the prover. Ideally the logical rules used in correctness proofs should be open for inspection such that independent proof checkers can establish additional trust in the system. Finally, the prover does not support all specification methods equally well: It may happen that a natural and obvious specification of an algorithm leads to unprovable assertions, whereas a less obvious one using different builtins succeeds. Ideally, the user should be able to formalise the informal specification of a problem as directly as possible without paying attention to the prover. <ref type="figure">Prototype Verification System (PVS) [8</ref>] PVS is a powerful interactive theorem prover, which has been used for various real world applications. In contrast to the other systems it does not generate verified program code, but it proves properties of algorithms. The prover is versatile and offers many possibilities. It is automatic to a certain degree, but usually requires frequent user interactions.</p><p>Due to its many basic inference rules and tactics it takes a long learning phase to become familiar with the system. Morover, users of PVS need a firm background in mathematics and formal logic to guide the prover. In our opinion typical software engineers and average students of computer science will have a hard time using PVS. Graduate or Ph.D. students might have a chance, provided they are given enough time. For courses with just a few hours per week in the lab PVS seems to be too complex. <ref type="table" target="#tab_0">Table 2</ref> compares the four selected tools FPP, KeY, PD, and PVS regarding formal background in logic and application area. Based on this evaluation we decided to use Perfect Developer for our course in formal software verification.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">OBSERVATIONS</head><p>The first assignment in the lab on formal program verification was to install Perfect Developer under Windows or Linux, and to get aquainted with the system by working through the online tutorial offered on the web site of Escher Technologies, the company behind PD. As a check we asked the students to write a report listing the errors in the tutorial; there are a few, which can be easily corrected provided the assignment is taken seriously. This assignment posed no difficulties for the students; the errors found varied between zero and several dozens.</p><p>The second, third and fourth assignment consisted of selecting two problems from a list of six easy and one problem from a list of four harder problems (see the appendix for a short description of the problems). The students had to write a formal specification in Perfect, refine it to an executable function and verify the correctness. The algorithms were required to run in time O(n) or O(n log n), respectively. The students had to write a report including their errors, solutions, and the time they had spent on the problem. In case they were not able to get PD to verify their solution completely Automated they had to provide formal arguments explaining why their specification and implementation was correct nevertheless.</p><p>Not quite surprisingly, the gathered data indicate that students with a knowledge of mathematics and some experience in software engineering performed significantly better than students with less background in these areas. This observation is confirmed statistically by separating the students into two groups: those doing a bachelor or master program in informatics, and those doing a bachelor or master in business informatics. In the curriculum valid until 2006, the latter had a few hours less on math, algorithmics and programming than their colleagues in one of the studies in informatics. <ref type="table">Table 3</ref> and Table 4 show that on average students in informatics needed less time and got better grades than their colleagues in business informatics.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">CONCLUSION</head><p>Using automated tools for teaching formal methods helps to convince students that formal methods work. Nevertheless, formal methods still require the ability to think in an abstract and declarative manner and to analyse formal proofs. According to our experience a thorough education in mathematics and logic as well as a training in different programming paradigms forms a sound basis. <ref type="bibr">[1]</ref> Wolfgang Ahrendt, Thomas Baar, Bernhard Beckert, Richard Bubel, Martin Giese, Reiner H ¨ ahnle, Wolfram Menzel, Wojciech Mostowski, Andreas Roth, Steffen Schlager, and Peter H. Schmitt. The KeY tool. Software and System Modeling, 4 <ref type="bibr">(1):32-54, 2005. [2]</ref> Edmund M. Clarke, Orna Grumberg, and Doron A. Peled. Model Checking. MIT Press, 2000. <ref type="bibr">[3]</ref> David Crocker. Perfect Developer: A tool for Object-Oriented Formal Specification and Refinement. Tools Exhibition Notes at Formal Methods Europe, 2003. <ref type="bibr">[4]</ref> Edsger Dijkstra. A Discipline of Programming. Prentice Hall, 1976. <ref type="bibr">[5]</ref> Ingo Feinerer. Formal program verification: A comparison of selected tools and their theoretical foundations. Master's thesis, Technische UniversitätUniversit¨Universität Wien, Vienna, Austria, January 2005. <ref type="bibr">[6]</ref> David Gries. The Science of Programming. Springer, 1987. <ref type="bibr">[7]</ref> Michael R.A. Huth and Mark D. Ryan. Logic in Computer Science -modelling and reasoning about systems. Cambridge University Press, 2003. <ref type="bibr">[8]</ref> Sam Owre, John Rushby, and Natarajan Shankar. PVS: A prototype verification system.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>REFERENCES</head><p>In Deepak Kapur, editor, 11th International Conference on Automated Deduction </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>APPENDIX: PROBLEMS TO BE VERIFIED WITH PERFECT DEVELOPER Easy Problems</head><p>Cardinality of intersection: Given two sorted lists of integers, compute the cardinality of their intersection in linear time.</p><p>Merging of lists: Given two sorted lists of integers, compute a sorted list containing the elements of the original lists in linear time.</p><p>Minimal distance: Given two sorted lists of integers, A and B, compute the minimum of abs(A <ref type="bibr">[i]</ref>, B <ref type="bibr">[i]</ref>) for all i, j in linear time.</p><p>Longest plateau: Given a sorted list of integers, determine the length of the longest sublist of identical elements in linear time.</p><p>Index of maximum: Given a list of integers, determine the index of a maximal element in linear time.</p><p>Sortedness: Check in linear time whether a list of integers is sorted.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Slightly harder problems</head><p>Count inversions: Given a list, A, of n integers, count the pairs (i, j) of indices satisfying i &lt; j and A <ref type="bibr">[i]</ref> &gt; A <ref type="bibr">[j]</ref> in time O(n log n).</p><p>Count Boolean inversions: Given a list, A, of Booleans, count the pairs (i, j) of indices satisfying i &lt; j, A <ref type="bibr">[i]</ref> and ¬A <ref type="bibr">[j]</ref>, in linear time.</p><p>Length of longest monotone sublist: Given a list of integers, compute the length of the longest non-increasing or non-decreasing sublist in linear time.</p><p>Length of longest left-minimal sublist: Given a list of integers, compute in linear time the length of the longest sublist, where the first element of the sublist is minimal among the elements of the sublist.</p></div><figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_0" validated="false"><head>TABLE 2 :</head><label>2</label><figDesc></figDesc><table>Comparison of FPP, KeY, PD and PVS 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1" validated="false"><head>Tools for Teaching Formal Software Verification</head><label></label><figDesc></figDesc><table>Informatics: 
+0-15 
+15-30 
+30-45 
+
+Business Informatics: 
+15-30 
+45-60 
+60-75 
+
+TABLE 3: Time needed for assignments (hours) 
+
+Informatics: 
+1 
+2 
+3 4 5 
+
+Business Informatics: 
+1 
+2 
+3 
+4 
+5 
+
+TABLE 4: Final grades (1=excellent, 5=failed) 
+
+</table></figure>
+		</body>
+		<back>
+			<div type="references">
+
+				<listBibl/>
+			</div>
+		</back>
+	</text>
+</TEI>

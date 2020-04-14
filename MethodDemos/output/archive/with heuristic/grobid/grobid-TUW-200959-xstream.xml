@@ -1,0 +1,750 @@
+<Publication>
+  <id>TUW-200959</id>
+  <title></title>
+  <publicationDateString>2008-02-15</publicationDateString>
+  <publicationYear>2008</publicationYear>
+  <publicationMonth>02</publicationMonth>
+  <publicationDay>15</publicationDay>
+  <note>DIGRAPH DECOMPOSITIONS AND MONOTONICITY IN DIGRAPH SEARCHING Stephan Kreutzer and Sebastian Ordyniak , Oxford University Computing Laboratory, University of Oxford {kreutzer,ordyniak}@comlab.ox.ac.uk</note>
+  <abstractText>arXiv:0802.2228v1 [cs.DM] 15 Feb 2008 We consider monotonicity problems for graph searching games. Variants of these games-defined by the type of moves allowed for the players-have been found to be closely connected to graph decompositions and associated width measures such as path-or tree-width. Of particular interest is the question whether these games are monotone, i.e. whether the cops can catch a robber without ever allowing the robber to reach positions that have been cleared before. The monotonicity problem for graph searching games has intensely been studied in the literature, but for two types of games the problem was left unresolved. These are the games on digraphs where the robber is invisible and lazy or visible and fast. In this paper, we solve the problems by giving examples showing that both types of games are non-monotone. Graph searching games on digraphs are closely related to recent proposals for digraph decom-positions generalising tree-width to directed graphs. These proposals have partly been motivated by attempts to develop a structure theory for digraphs similar to the graph minor theory developed by Robertson and Seymour for undirected graphs, and partly by the immense number of algorith-mic results using tree-width of undirected graphs and the hope that part of this success might be reproducible on digraphs using a &quot;directed tree-width&quot;. For problems such as disjoint paths and Hamiltonicity, it has indeed been shown that they are tractable on graphs of small directed tree-width. However, the number of such examples is still small. We therefore explore the limits of the algorithmic applicability of digraph decompositions. In particular, we show that various natural candidates for problems that might benefit from digraphs having small &quot;directed tree-width&quot; remain NP-complete even on almost acyclic graphs. 1 Introduction The seminal work of Robertson and Seymour in their graph minor project has focused much attention on graph decompositions and associated measures of graph connectivity such as tree-or path-width. Aside from the interest in graph structure theory, these notions have also proved fruitful in the development of algorithms. The tree-width of a graph is a measure of how tree-like the graph is and small tree-width allows for graph decompositions along which recursive algorithms can work. Many problems that are intractable in general can be solved efficiently on graphs of bounded tree-width. These include such classical NP-complete problems as finding a Hamiltonian-cycle in a graph or detecting if a graph is three-colourable. See [9, 8] and references therein for an introduction to tree-width. Closely related to the theory of graph decompositions is the theory of graph searching games. In a graph searching game a number of searchers, or cops, tries to catch a fugitive, or robber, hiding in the graph. There are many variants of these games. The robber can hide on edges or vertices, he can be fast or lazy, he can be visible or not, the game can be played on undirected or directed graphs, and many more. Graph searching games are particularly interesting in relation to graph decompositions, as many width measures for graphs based on decompositions can also be described in terms of variants of Cops and Robber games. For instance, in 1993, Seymour and Thomas [12] showed that the tree-width of a graph equals the minimal number of cops required to catch a visible and fast robber (minus one). Dendris, Kirousis, and Thilikos [10] gave an analogous characterisation in terms of an invisible, lazy robber game. Other variants of Cops and Robber games have also been used to characterise the path-width of graphs and similar connectivity measures. An important concept in the theory of graph searching games is monotonicity. A game is monotone , if whenever k cops can catch a robber on a graph they can do so without allowing the robber to re-occupy vertices. In general, restricting the cops to monotone strategies may require additional cops to catch a robber. LaPaugh [20] gave a first proof of monotonicity for a Cops and Robber game. Since then, monotonicity has been intensely studied and a large number of monotonicity results have been established. See e.g. [20, 7, 10, 4, 13, 14, 21, 27] or the survey [2] and references therein. Despite the considerable interest and the large number of results in this field, two cases have so far resisted any attempts to solve the monotonicity problem-the Cops and Robber game with a visible, fast robber and the game with an invisible, lazy robber, both played on digraphs. In this paper,we solve the problems by showing that both games are non-monotone. Digraph decompositions. In recent years, attempts have been made to generalise the notion of tree-decompositions and their algorithmic applications to directed graphs. Clearly, we can define the tree-width of a directed graph as the tree-width of the undirected graph we get by forgetting the direction of edges, a process which leads to some loss of information. This loss may be significant, if the algorithmic problems we are interested in are inherently directed. A good example is the problem of detecting Hamiltonian cycles. While we know that this can be solved easily on graphs with small tree-width, there are directed graphs with very simple connectivity structure which have large tree-width. Therefore, several proposals have been made to extend the notions of tree-decompositions and tree-width to directed graphs (see [24, 17, 4, 6, 25, 16]). In particular, Reed [24] and Johnson, Robertson, Seymour, and Thomas [17] introduce the notion of directed tree-width and they show that Hamiltonicity can be solved for graphs of bounded directed tree-width in polynomial time. Following this initial paper, several alternative definitions of directed graph decompositions have been proposed, with the aim of overcoming some shortcomings of the original definition. Obdržàlek [23] and Berwanger, Dawar, Hunter, and Kreutzer [5] introduce the notion of DAG-width and Hunter and Kreutzer [16] introduce the notion of Kelly-width. All three proposals are supported by algo-rithmic applications and various equivalent characterisations in terms of obstructions, elimination orderings, and, in particular, variants of Cops and Robber games on directed graphs. However, so</abstractText>
+  <keywords/>
+  <authors/>
+  <affiliations/>
+  <sections>
+    <Section>
+      <level>2</level>
+      <title>Preliminaries</title>
+      <referenceIds>
+        <string>ref9</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3</level>
+      <title>Cops and robber games</title>
+      <referenceIds>
+        <string>ref14</string>
+        <string>ref13</string>
+        <string>ref13</string>
+        <string>ref2</string>
+        <string>ref3</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.1</level>
+      <title>Non-Monotonicity of DAG-Games</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>C</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>2</level>
+      <title>1</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>C2 C0</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>C</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>1</level>
+      <title>1</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>1</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>3.2</level>
+      <title>Non-Monotonicity of Kelly-Games</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>C1 C0 X1</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>X 2</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>C2</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>C X</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4</level>
+      <title>Limits of Algorithmic Applications</title>
+      <referenceIds>
+        <string>ref13</string>
+        <string>ref3</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.1</level>
+      <title>Minimum Equivalent Subgraph</title>
+      <referenceIds>
+        <string>ref18</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>a)</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>g) If</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.2</level>
+      <title>Feedback Vertex Set / Feedback Arc Set</title>
+      <referenceIds>
+        <string>ref15</string>
+        <string>ref21</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>4.3</level>
+      <title>Graph Grundy Numbering and Kernel</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>0</level>
+      <title>1</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>0</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>1</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>1</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>0</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>1</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>0</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>h</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>h</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>h</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>h</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>E</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>E E</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>E E E</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>T T</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>T</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>h</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>h</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>h</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>h</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>T T</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>T</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>h</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>h</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>h</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>h</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>c &apos;</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>h</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>h</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>h</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>h</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>c &apos;</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>1</level>
+      <title>0</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>0</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>1</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>0</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>1</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>1</level>
+      <title>0</title>
+      <referenceIds>
+        <string>ref21</string>
+        <string>ref21</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>1.</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <title>2.</title>
+      <referenceIds>
+        <string>ref21</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <level>5</level>
+      <title>Conclusion and Open Problems</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+  </sections>
+  <citationContexts/>
+  <references>
+    <Reference>
+      <id>ref1</id>
+      <referenceIdString>b0</referenceIdString>
+      <title>Searching and sweeping graphs: A brief survey</title>
+      <source>COMBINATORICS 04</source>
+      <authors/>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref2</id>
+      <referenceIdString>b1</referenceIdString>
+      <title>Directed path-width and monotonicity in digraph searching</title>
+      <source>Graphs Combin</source>
+      <authors/>
+      <volume>22</volume>
+      <issue>2</issue>
+      <pageFrom>161</pageFrom>
+      <pageTo>172</pageTo>
+      <publicationDateString>2006</publicationDateString>
+      <publicationYear>2006</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref3</id>
+      <referenceIdString>b2</referenceIdString>
+      <title>DAG-width and parity games</title>
+      <source>STACS 2006, volume 3884 of Lecture Notes in Comput. Sci., pages 524-536</source>
+      <publisher>Berlin</publisher>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A</string>
+          </firstNames>
+          <lastName>Berwanger</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>P</string>
+          </firstNames>
+          <lastName>Dawar</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>And</string>
+          </firstNames>
+          <lastName>Hunter</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>S</string>
+          </firstNames>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2006</publicationDateString>
+      <publicationYear>2006</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref4</id>
+      <referenceIdString>b3</referenceIdString>
+      <title>Entanglement-A measure for the complexity of directed graphs with applications to logic and games</title>
+      <source>LPAR, pages 209-223</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>E</string>
+          </firstNames>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref5</id>
+      <referenceIdString>b4</referenceIdString>
+      <title>Monotonicity in graph searching</title>
+      <source>Journal of Algorithms</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Seymour</string>
+          </firstNames>
+          <lastName>And</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>239</pageFrom>
+      <pageTo>245</pageTo>
+      <publicationDateString>1991</publicationDateString>
+      <publicationYear>1991</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref6</id>
+      <referenceIdString>b5</referenceIdString>
+      <title>Treewidth: Algorithmic techniques and results</title>
+      <source>MFCS&apos;97, volume 1295, pages 19-36</source>
+      <authors/>
+      <publicationDateString>1997</publicationDateString>
+      <publicationYear>1997</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref7</id>
+      <referenceIdString>b6</referenceIdString>
+      <source>A partial k-arboretum of graphs with bounded treewidth</source>
+      <authors/>
+      <note>Theoretical Com-puter Science</note>
+      <pageFrom>1</pageFrom>
+      <pageTo>45</pageTo>
+      <publicationDateString>1998</publicationDateString>
+      <publicationYear>1998</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref8</id>
+      <referenceIdString>b7</referenceIdString>
+      <title>Fugitive-search games on graphs and related parameters</title>
+      <source>TCS</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>L</string>
+            <string>M</string>
+          </firstNames>
+          <lastName>Dendris</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>And</string>
+          </firstNames>
+          <lastName>Kirousis</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>D</string>
+            <string>M Thilikos</string>
+          </firstNames>
+        </ReferenceAuthor>
+      </authors>
+      <issue>2</issue>
+      <pageFrom>233</pageFrom>
+      <pageTo>254</pageTo>
+      <publicationDateString>1997</publicationDateString>
+      <publicationYear>1997</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref9</id>
+      <referenceIdString>b8</referenceIdString>
+      <source>Graph theory, volume 173 of Graduate Texts in Mathematics</source>
+      <publisher>R. Diestel</publisher>
+      <authors/>
+      <publicationDateString>2005</publicationDateString>
+      <publicationYear>2005</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref10</id>
+      <referenceIdString>b9</referenceIdString>
+      <source>Graph searching, and a min-max theorem for tree-width</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Thomas</string>
+          </firstNames>
+          <lastName>And</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <note>Journal of Combinatorial Theory</note>
+      <pageFrom>22</pageFrom>
+      <pageTo>33</pageTo>
+      <publicationDateString>1993</publicationDateString>
+      <publicationYear>1993</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref11</id>
+      <referenceIdString>b10</referenceIdString>
+      <source>Sweeping Graphs and Digraphs. PhD thesis</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Dyer</string>
+          </firstNames>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2004</publicationDateString>
+      <publicationYear>2004</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref12</id>
+      <referenceIdString>b11</referenceIdString>
+      <title>On the monotonicity of games generated by symmetric sub-modular functions</title>
+      <source>177+</source>
+      <authors/>
+      <note>Lecture Notes in Computer Science</note>
+      <publicationDateString>2001</publicationDateString>
+      <publicationYear>2001</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref13</id>
+      <referenceIdString>b12</referenceIdString>
+      <source></source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>N</string>
+          </firstNames>
+          <lastName>Johnson</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>P</string>
+            <string>D Seymour</string>
+          </firstNames>
+          <lastName>Robertson</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2001</publicationDateString>
+      <publicationYear>2001</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref14</id>
+      <referenceIdString>b13</referenceIdString>
+      <title>Directed tree-width</title>
+      <source>Journal of Combinatorial Theory, Series B</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>N</string>
+          </firstNames>
+          <lastName>Johnson</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>P</string>
+            <string>D</string>
+          </firstNames>
+          <lastName>Robertson</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>And</string>
+            <string>Thomas</string>
+          </firstNames>
+          <lastName>Seymour</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>82</volume>
+      <issue>1</issue>
+      <pageFrom>138</pageFrom>
+      <pageTo>154</pageTo>
+      <publicationDateString>2001</publicationDateString>
+      <publicationYear>2001</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref15</id>
+      <referenceIdString>b14</referenceIdString>
+      <source>Rm M. Karp. Complexity of Computer Science. Plenum Press New York</source>
+      <authors/>
+      <publicationDateString>1972</publicationDateString>
+      <publicationYear>1972</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref16</id>
+      <referenceIdString>b15</referenceIdString>
+      <source>Recontamination does not help to search a graph</source>
+      <authors/>
+      <note>Journal of the ACM</note>
+      <pageFrom>224</pageFrom>
+      <pageTo>254</pageTo>
+      <publicationDateString>1993</publicationDateString>
+      <publicationYear>1993</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref17</id>
+      <referenceIdString>b16</referenceIdString>
+      <title>Monotonicity property of non-deterministic graph searching</title>
+      <source>Proceedings of the 33rd International Workshop on Graph-Theoretic Concepts in Computer Science (WG</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Nisse</string>
+          </firstNames>
+          <lastName>And</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <note>to appear</note>
+      <publicationDateString>2007</publicationDateString>
+      <publicationYear>2007</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref18</id>
+      <referenceIdString>b17</referenceIdString>
+      <source>An algorithm for finding a minimum equivalent graph of a digraph</source>
+      <publisher>ACM</publisher>
+      <authors/>
+      <volume>16</volume>
+      <pageFrom>455</pageFrom>
+      <pageTo>460</pageTo>
+      <publicationDateString>1969</publicationDateString>
+      <publicationYear>1969</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref19</id>
+      <referenceIdString>b18</referenceIdString>
+      <title>In 6th Twente Workshop on Graphs and Combina-torial Optimization (Enschede</title>
+      <source>B. Reed</source>
+      <publisher>Amsterdam</publisher>
+      <authors/>
+      <note>Notes Discrete Math., page 8 pp</note>
+      <publicationDateString>1999</publicationDateString>
+      <publicationYear>1999</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref20</id>
+      <referenceIdString>b19</referenceIdString>
+      <title>d-width: a more natural measure for directed tree width</title>
+      <source>volume 3618 of Lecture Notes in Comput. Sci., pages 745-756</source>
+      <publisher>Berlin</publisher>
+      <authors/>
+      <note>In Mathematical founda-tions of computer science 2005</note>
+      <publicationDateString>2005</publicationDateString>
+      <publicationYear>2005</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref21</id>
+      <referenceIdString>b20</referenceIdString>
+      <title>Having a grundy-numbering is np-complete</title>
+      <source>Technical report</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Leeuwen</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <issue>16</issue>
+      <publicationDateString>1976</publicationDateString>
+      <publicationYear>1976</publicationYear>
+      <type>j</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref22</id>
+      <referenceIdString>b21</referenceIdString>
+      <title>Digraph strong searching: Monotonicity and complexity</title>
+      <source>AAIM, pages 37-46</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Cao</string>
+          </firstNames>
+          <lastName>And</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationDateString>2007</publicationDateString>
+      <publicationYear>2007</publicationYear>
+      <type>m</type>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+  </references>
+</Publication>

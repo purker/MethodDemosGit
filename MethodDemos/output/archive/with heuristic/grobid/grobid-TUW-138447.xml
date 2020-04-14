@@ -1,0 +1,886 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main">Alessandro Artusi and Alexander Wilkie Institute of Computer Graphics and Algorithms</title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+						<author>
+							<affiliation key="aff0">
+								<orgName type="institution">Vienna University of Technology</orgName>
+								<address>
+									<addrLine>Karlsplatz 13/186</addrLine>
+									<postCode>A-1040</postCode>
+									<settlement>Vienna</settlement>
+									<country key="AT">Austria</country>
+								</address>
+							</affiliation>
+						</author>
+						<title level="a" type="main">Alessandro Artusi and Alexander Wilkie Institute of Computer Graphics and Algorithms</title>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<abstract>
+				<p>A key problem in multimedia systems is the faithful reproduction of color. One of the main reasons why this is a complicated issue are the different color reproduction technologies used by the various devices; displays use easily modeled additive color mixing, while printers use a subtractive process, the characterization of which is much more complex than that of self-luminous displays. In order to resolve these problems several processing steps are necessary, one of which is accurate device characterization. Our study examines different learning algorithms for one particular neural network technique which already has been found to be useful in related contexts-namely radial basis function network models-and proposes a modified learning algorithm which improves the colorimetric characterization process of printers. In particular our results show that is possible to obtain good performance by using a learning algorithm that is trained on only small sets of color samples, and use it to generate a larger look-up table (LUT) through use of multiple polynomial regression or an interpolation algorithm. We deem our findings to be a good start point for further studies on learning algorithms used in conjunction with this problem. Keywords: Radial basis function networks, regression, colorimetric characterization of printing devices 1. INTRODUCTION In multimedia systems, different color reproduction devices-while serving the same purpose-exhibit large discrepancies in their raw output. This is due to the fact that they usually employ different color mixing technologies (additive or subtractive), Correspondence: Email: artusi@cg.tuwien.ac.at use different input color spaces and hence have different gamuts, and that their device characteristics can change with time and usage. These facts usually do not permit a faithful matching of colors between devices if no precautions are taken. Colorimetric characterization is one step in the colorimetric reproduction process that permits faithful image reproduction across different display devices. Its goal is to define a mapping function between the device-dependent color spaces in question (such as RGB or CMYK) and device-independent color spaces (such as CIELAB or CIEXYZ), and vice versa. There are three main approaches to defining this mapping function: physical models, empirical models and exhaustive measurements. Physical modeling of imaging devices involves building mathematical models that find a relationship between the colorimetric coordinates of the input (or output) image element and the signals used to drive an output device (or the signals originating from an input device). The advantage of these approaches is that they are robust, typically require few colorimetric measurements in order to characterize the device, and allow for easy recharacterization if some component of the imaging system is modified. The disadvantage is that the models are often quite complex to derive and can be complicated to implement. Physical models are often used for the colorimetric characterization of displays and scanners. Empirical modeling of imaging devices involves collecting a fairly large set of data and then statistically fitting a relationship between device coordinates and colorimetric coordinates. Empirical models are often higher-order multidimensional polynomials, or neural network models. They require fewer measurements than LUT techniques, but they need more than physical models. Empirical models are often used for scanners and printers. Often the colorimetric characterization of printers requires an exhaustive measurement in order to obtain good performances. samples of the device drive signals are sampled and colorimetrically measured. Many more measurements have to be used for devices with poor repeatability. Lookup tables can be used to process image data via multidimensional interpolation. This technique has different disadvantages: the large number of measurements that has to be made, difficulties in interpolating the highly nonlinear data and difficult recharacterization if any aspect of the device changes. The advantage of exhaustive measurement techniques is that they require no knowledge of the device physics. In general a good algorithm for colorimetric characterization must have the following characteristics: small training set, fast response, good accuracy and it must allow for a fast recharacterization. This paper proposes a modification of an existing</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡</head><p>models used in our experiments, and the proposed new model. Section 4 explains how the training and test set were generated and reports some experimental results.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2.">STATE OF THE ART</head><p>There is a large number of publications on the colorimetric characterization of printers that propose different models for solv- ing this problem: Kang and Anderson § propose the application of neural networks and polynomial regression. Albanese,</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Campadelli and Schettini</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡ and Tominaga</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢ ¤ £</head><p>have used feed-forward neural networks trained by back-propagation and obtained promising results. However, their approach also has some disadvantages: the need for a big training set (several hundred to several thousand samples), high computational cost, and a comparatively large maximum color error for high quality color reproductions. One of these problems has been solved by Artusi, Campadelli and Schettini</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢</head><p>: in their work they reduced the size of the training set to 216 measured samples, while retaining a maximum error that is comparable to -in some cases even better than -previous approaches.</p><p>There are no references to be found in the literature about the use of radial basis function networks for the colorimetric characterization of printers, but there is a wealth of other publications about them and their applications (such as Orr,</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥ ¦ Bishop, Carozza § and Lee</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>£ ).</head><p>The work we present is novel in seven ways: to begin with, this is the first work that uses radial basis function networks to resolve the colorimetric characterization of printers. Second, we used a new learning model to train such networks; our approach is based on a modification of the proposal by Carozza. § Third, we use only 125 measured samples for the training of the network. Fourth, the computational costs for this training are very low when compared to previous techniques and allow to use this model in consumer products. Fifth, it is a general model which one can also use to define other transformations between color spaces. Sixth, it is possible to have a fast recharacterization of the device because the computational cost of the whose values are unknown, and it is possible to successfully estimate the desired result from the training set.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.">BACKGROUND</head><p>In the case of non-parametric regression there is no, or very little, a priori knowledge about the form of the true function which is being estimated. The colorimetric characterization problem, presented in these papers, is a non-parametric regression problem, because one does not know the mapping function properties the algorithm will arrive at in advance. There are different approaches to resolve non-parametric regression problems; when one uses equation systems in this context they may contain many free parameters that have no physical meaning in the problem domain (interpolation models, multiple polynomials regression), or one can use neural networks instead.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.1.">Neural networks</head><p>The base of a neural network is a formal neuron. It is defined as a series of inputs, a series of outputs and by a function that maps specific inputs to series of outputs.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥</head><p>Neural networks consist of collections of connected formal neurons. Each formal neuron computes a simple nonlinear function F on the weighted sum of its input. The function F is referred to as activation function and its output is defined as the activation of the formal neuron. Long term knowledge is stored in the network in the form of interconnection weights that link such formal neurons.</p><p>There are different neural network structures : total connected networks, partial connected networks, multilayer networks (feedforward, feedback), and autoassociative networks. In a neural network, the learning phase is a process where a set of weights are defined that produces a desired response as a reaction to certain input patterns.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥</head><p>There are two main techniques for the learning phase: supervised learning and non-supervised learning. In supervised learning the function is learned from samples which a "teacher" supplies. This set of samples, referred to as the training set, contains elements which consist of paired values of the independent (input) variable and the dependent (output) variable.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥</head><p>In the case of non-supervised learning, it reaches an internal model that captures the regularity in the inputs without taking other information into account.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.2.">Basis functions</head><p>A linear model for a function ¢ ¡ ¤ £ ¦ ¥ can be expressed in the following form</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥ : ¢ ¡ ¤ £ ¥</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡ ¢ £ §</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¤ © ¨ ¤</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡ ¤ £ ¦ ¥ (1)</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¤ ¦ ¥ The model</head><p>is expressed as a linear combination of a set of m fixed functions, often referred to as basis functions. The</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>flexibility of</head><p>, its ability to fit many different functions, derives only from the freedom to choose different values for the weights. The basis functions and any parameters which they might contain are fixed. If the basis function parameters can also change during the learning process, the model is considered non-linear. Any set of functions can be used as a basis set, although it is desirable that they are differentiable. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">© 7 3 8 @ 9 A</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡ C B E D ¨</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>£ 1 0 3 B £</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥ Polynomial functions</head><p>Radial functions are a special class of basis function.  The number of basis functions does not have to be the same as the number of input points, and is typically smaller.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡ ¤ £ ¦ ¥</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="8">@ 9 A "</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡ ¤ £</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1">0 F</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥ G ¢</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Multiquadratic</head><p>The bias parameters are included in the sum term of the linear model from equation (1).</p><p>In the case of a non-linear model there are two more modifications if the basis function can move, change size, or if there is more than one hidden layer: </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4</head><p>basis functions whose outputs are linearly combined with weights § ¤ into the network output. This example could be a linear model of RBFn if the parameters of the basis function</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>£ ¥ ¤</head><p>, in the hidden layer, do not change during the learning process. Instead if they change during the learning process the RFBn is non-linear. Also if there is more than one hidden layer of basis functions £ ¤ i n the structure of the RBFn the network is a non-linear model. There are two stages for the training is the output target. In many cases this amounts to an over-fitting problem, and the main effect of this is that the neural network loses its generalization capacity. In order to counter the effects of over-fitting it is possible to utilize results from regularization theory. Regularization theory suggests to attach a term called regularization parameter in equation (6), in order to obtain a weight vector which is more robust against noise in the training set. In regularization theory, there are two main techniques: global ridge regression, where one uses unique regularization parameters for all basis functions, and local ridge regression, where there is a regularization parameter for every basis function. For the case of global ridge regression one has to modify equation (6) as follows:</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.4.">Linear network models</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡ ¡ £</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡ £ ¢</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="0">¢ ¡ ¤ £</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥ ¥</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¨ ¢ £ § ¢ ¤</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¤ (8)</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¤</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¤</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¤</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢ 7</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¤ ¦ ¥</head><p>where m is the basis function index. In the case of local ridge regression equation (6) has to be modified to:</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>(9)</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡ ¡ £</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡ £ ¢</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="0">¢ ¡ ¤ £</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥¥</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢ ¢ £</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¤ © ¨</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>§ ¢ ¤</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¤</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¤</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¤</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7">¤</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.5.">Forward selection</head><p>One way to give linear models the flexibility of non-linear models is to go through a process of selecting a subset of basis functions from a larger set of candidates.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥</head><p>In linear regression theory subset selection is well known and one popular version is forward selection in which the model starts empty</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡ 4 ¡</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥</head><p>and the basis functions are selected one at a time and added to the network. The basis function to add is the one which most reduces the sum squared errors in equation (6); this is repeated until no further improvements are made. There are different criterions to decide when to stop the forward selection process: generalised cross-validation (GCV),¢ unbiased estimate of variance (UEV),£ final predictor error (FPE)</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>and the</head><p>Bayesian information criterion (BIC).</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¤ ¢</head><p>A matrix which often used in the analysis of linear networks is the projection matrix <ref type="bibr" target="#b9">(10)</ref> this square matrix projects vectors in</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥ ¡ § ¦</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>0</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>£</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¨</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¨ D ¨</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>£ © ¨</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¦</head><p>-dimensional space perpendicular to the</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4</head><p>-dimensional space spanned by the model.</p><p>The importance of the matrix ¥ is evident in the new form of the equation (6)</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡ ¢</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>D ¨</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥ ¢ ¨</head><p>¢ ¤ <ref type="bibr">(11)</ref> and, in the case of local ridge regression, the cost function (9) is <ref type="bibr" target="#b10">(12)</ref> A good measure of model performance is its variance. It can be estimated by</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢ D ¨</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥ ¨</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¤</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>G ¢ ¡ (13)</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¦ 0 4</head><p>where ¦ is the number of patterns in the training set and</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4</head><p>is the number of parameters in the model (weigths). The variance (13) is calculated using one of these methods after each new basis function is added. With the GCV selection criterion</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>as¨¢</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>D ¨</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢ ¨</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¤</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>G</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢ ¢ ¡ ¤ £</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¦</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡ (14)</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¦</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="0">¦ ¥¥¢</head><p>where l is the effective number of parameters</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¦</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="0">¨ §</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>G</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>© F ¡</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥ (15)</head><p>For the unbiased estimate of variance criterion (UEV), it is</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢ D ¨</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢ ¨</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¤</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>G ¢ £</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡ ¥</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡ (16)</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¦</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="0">¨ ¥¥</head><p>while for the final prediction error (FPE) it amounts to</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢ D ¨</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢ ¨</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¤</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>G</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¦</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¨ (17)</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¦</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="0">¦ ¥</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¦</head><p>Finally, for the Bayesian information criterion (BIC) it is</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¦</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡ " ¥</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¦</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¨</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥ D ¨</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢ ¨</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>G</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢ ! ¡</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="0">6</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¨ (18)</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¦</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="0">¦ ¥</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¦</head><p>An efficient method of performing forward selection is the orthogonal least squares method as discussed in Orr</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¦</head><p>; it is based on the orthogonalisation of the columns of the design matrix. This involves a particular form of the covariance matrix, which consists of a triangular and a diagonal matrix; this fact can be used to greatly accelerate the computation.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.6.">Non-linear network models</head><p>In the non-linear model the basis function parameters are not fixed, and it is possible to estimate them during the learning process. This gives more flexibility to the network model. In literature there is a large number of publications that propose different models to estimate these basis function parameters. In this section we present two existing models, also used in our experiments § .</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>£</head><p>In particular we present in detail the model of Carozza, § in order to understand the differences with the model presented in this paper. In Carozza § a new algorithm for function approximation from noisy data was presented. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¤ ¦ ¥ £</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¦ ¡0</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¤</head><p>¦ ¤ § § © ¨ </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¤ ¦ ¤ ¢</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥ (22)</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¤ ¦ ¥</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>$ ¨</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>G ¢ ¤</head><p>In order to reduce the empirical risk given by (20), the output weights for the neuron are chosen as § ¤ ¡  concept of robust RBFs and makes suggestions on how to choose a function candidate which fulfils this role.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢ ! 0</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢ ¤ §</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¤</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡ ¤ £</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥ (23)</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>! where the output</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¤ is such that</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡ £ ¢</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>! 0</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢ ¤ §</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¤</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>! 0</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡ ¤ £</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥¥</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢ §</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡ ¤ £ ¦ ¥</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¨ 2 "</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡ ¤ £ ¦ ¥</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>£</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>£ ¤ §</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡ ¤ £ ¦ ¥</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>&amp; ) &amp;</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>!</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.">PROPOSED MODEL</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.1.">Modified estimator for RBFN weights</head><p>The proposed model is a modification of an existing one. § In particular we have modified the estimation of the weights by introducing a pseudoinverse matrix ¦ instead of using the extend chained version of the Nadaraja-Watson estimator for updating the weights. The pseudoinverse method works by resolving the following general system of linear equations:</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>£ ¨ §</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡ ¤ (27) where</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>£</head><p>is the matrix of the basis functions o design matrix of dimension</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢ ¨ §</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">B</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>G</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>© ¢¦ § §</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>£ F §</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>G</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢ ¨ §</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">B</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>G " !</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>, is the</head><p>matrix of output vectors of dimension</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢ §</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¨ §</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">B</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>G § §</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>£</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¦ # § §</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>F §</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>G</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢ % $</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>, and</head><p>is the weights matrix of dimension</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢ ¨ §</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">B</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>G</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>&amp; " !</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢ % $</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>. The number</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>$</head><p>indicate the three dimensional space of the input and output vectors. In this equation there appears a Moore- </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>£</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¨ is Hermitian¨£</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Hermitian¨</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Hermitian¨£</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>is Hermitian</head><p>The solution of the linear system (27), throught the pseudo inverse matrix, is the matrix § §</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>£ D ¨</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>£</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¨</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>£</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>D ¥ ¨ (29)</head><p>There are different methods to resolve the linear system (27): Gauss-Jordan elimination, Gaussian elimination with Back- substitution, LU decomposition and Singular value decomposition (SVD) etc. We used the SVD method because in comparision with the other methods it gives satisfactory results and is a most fast algorithm. The output of the network trained with our model is not calculated as in the model proposed by Carozza, § but rather by a sum of products of basis function output weights. The RBFn model used in our experiments adopts only one hidden layer, and three dimensional Gaussian basis functions for the nodes in the hidden layer with the same variance </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>£</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>G . In</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.2.">Our algorithm</head><p>In this section we present our algorithm in pseudo code format, followed by a brief explanation. . In order to obtain it we follow the initialization suggested in the section 4. This model has the capacity to generate the structure of the RBFn. In fact, it adds a new node during each iteration and initializes its parameters</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>F ,</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>G and §</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>.</head><p>This operation stops when the termination criterion is satisfied. In the case of the first node, is updated following the technique proposed by Carrozza. § This technique consists to use the following equation for each node</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>:</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¤</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>G</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>G ! ¨</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡ © ¥</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>© ¥</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥ (33) ¡ ¢</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6">7</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¦</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7">¦ ©</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢</head><p>where the terms alpha and epsilon, after preliminar experiments, were set to the following initial values , is less than ¡ ¢</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>G</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>F</head><p>the old error value. We repeat the updating operation for the parameter</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>G !</head><p>until the maximum epochs condition is respected</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡ ¡ §</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>©</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4</head><p>. In case the error condition is not matched till the maximum value of epochs §</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>©</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4</head><p>the new value for the</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>parameters</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>G !</head><p>remain equal at the old one. This operation is repeated for all nodes of the hidden layer. for the nodes of the hidden layer.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.">EXPERIMENTAL RESULTS</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.1.">Training and test sets</head><p>The colorimetric patterns of the training and test sets which we used in these experiments are formed by pairs of three dimen-color. For the training phase of our experiments we used four different sets of this kind, labeled Training1 through Training4.  <ref type="bibr">(34)</ref> where ¡ § ¡ ¤</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥¢</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>0</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¤ 0 B</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¦ ¤</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7">¡ ©</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>© ¥¢</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7">¡B</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥¢</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¤ ¢ ¡ ¤ ¤</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¤ ¤</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>©</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>B</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥</head><p>is the output of the models and</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>©</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>B</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¤</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥</head><p>is the target output. The experiments were conducted using several different ink-jet printers, namely an Epson Stylus Pro5000 (with photo quality paper), an Olivetti Artjet 20 (with coated paper) and a HP2000C (with cut sheet paper). The code for the algorithms tested in these experiments was written in C and Matlab.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.2.">Results</head><p>The first step in our research was to find a good learning algorithm to train the RBFn function with small training sets. Our proposed own non-linear model was again implemented in Matlab. All these algorithms were then compared to multiple polynomial regression and tetrahedral interpolation.</p><p>When we wanted to find out whether a particular learning algorithm is adequate to solve the posed problem, we first tested it only for the conversion CMY¨CIELAB</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>CMY¨</head><p>CMY¨CIELAB on an Epson Stylus Pro5000, and only if this preliminary test turned out favourably, we conducted further experiments on other printers and with the conversion CIELAB¨CMY CIELAB¨ CIELAB¨CMY. In every table of the columns Our results demonstrate that this model is already able to improve on the performance of multiple polynomial regression for polynomials with up to 60 terms and tetrahedral interpolation, shown in table 3, in the case of the set Training1. However, this does not extend to the set Training2, where the unmodified RBFn approach fares no better than the conventional techniques.</p><p>This is probably due to the fact that in this case the network encounters over-fitting problems as mentioned in section 3.4. In order to resolve this problem we have tried to use regularization theory (local and global ridge regression), but this failed to improve the results. These results are shown in the table 2.</p><p>Another approach was to generate more training sets with smaller numbers of samples compared to the original large set Training1. We produced two such sets in the way suggested by Moroni, samples respectively. Results from test runs with these sets are reported in table 6, for multiple polynomial regression, instead for RBFn linear models with forward selection without local ridge regression, and with local ridge regression in the tables 4 and 5 respectively. These results show that there are indeed improvements with respect to multiple polynomial regression with the set Training3, and equal performance with Training4.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¡ labeled</head><p>However, compared to the still large size of the new reduced training sets the improvement is rather small. In this phase of the experiments we also tried other innovative learning algorithms found in literature (such as Lee</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>£ and</head><p>Carozza § ), but the results we obtained were of poor quality. We then altered our strategy and decided to modify an existing learning algorithm. Our the choice here has been to modify the learning algorithm proposed by Carozza, § mainly because it does not get significantly more complex when it is modified, and also because it does not have inherent convergence problems like the algorithm of Lee.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>£</head><p>The results we obtained are shown in tables 7 and 8; the tests were done on an Epson Stylus Pro5000 for the function CMY¨CIELAB CMY¨ CMY¨CIELAB.</p><p>The results show how it is possible to obtain performance that is better than that of multiple polynomial regression and tetrahedral interpolation with only 125 samples. This is shown in the last two columns beginning at the right of table 3 for both sets (Training and Test) and both error metrics (average and maximum). In order to make sure that these results are consistently reproducible over time we repeated the experiment in May, June and July, and used different (but similar) sets of 125 training samples in each case; the progression of the error over time is shown in table 8. The results are in line with the first experiment reported in table 7. In order to validate our model we performed similar tests on two more ink-jet color printers from other manufacturers, namely a HP2000C and an Olivetti Artjet20. The results are shown in table 9 for the Epson Stylus Pro5000, in table 10 for the HP2000C and in table 11 for the Olivetti Artjet20. The results show that there is an improvement over multiple polynomial regression for every ink-jet color printer. The results shown in the tables 9 to 11 demonstrate that our model has general validity.</p><p>The final problem we discuss in this paper is the definition of the function CIELAB¨CMY</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>CIELAB¨</head><p>CIELAB¨CMY using our model; now the main problem is that of the definition of a suitable termination condition for the learning process. If we use the same condition that we used for the definition of the function CMY¨CIELAB</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>CMY¨</head><p>CMY¨CIELAB and compute the error in CIELAB space, is necessary to use the inverse transformation for each termination check, which in turn also implies that a neural network for this inverse case ought to be used. This solution is not feasible because the computational cost of the inverse network training phase is significant, and too much accuracy is lost through the repeated conversions. Neither is it possible to compute the error in CMY space, because this approach is inherently incapable of knowing when to stop the learning process. large number of training samples needed. The small size of the training set also permits a fast recharacterization of devices.</p><p>We believe that there are several possible ways to evolve these models for colorimetric characterization problems: investi- gation of different mathematical models for the estimation of the basis function parameters, research on different mathematical models for the estimation of the weights, introduction of one or two more hidden layers in the structure of the RBFn, and <ref type="table">Table 7</ref>. Initial error measurements of CMY¨CIELAB</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>CMY¨</head><p>CMY¨CIELAB conversion using the proposed RBFn for the Training2 and Test datasets on the Epson Stylus Pro5000.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Training2 Test Average Maximum Average Maximum</head><p>Proposed RBFn</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>0.797</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1.893</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1.831</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>6.763</head><p>Table 8. Subsequent error measurements of CMY¨CIELAB</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>CMY¨</head><p>CMY¨CIELAB conversion using the proposed RBFn for the Training2 and Test datasets on the Epson Stylus Pro5000 measured at one month intervals.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Month Training2 Test Average Maximum Average Maximum</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>May</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>0.927</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1.980</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.024</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>6.833</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>June</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>0.744</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1.537</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.043</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>5.780</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>July</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>0.784</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1.737</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.210</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>5.699</head><p>Table 9. Error comparison of CMY¨CIELAB</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>CMY¨</head><p>CMY¨CIELAB conversion using the proposed RBFn and regression with different polynomials for the Training2 and Test datasets on the Epson Stylus Pro5000.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Method Training2 Test Average Maximum Average Maximum</head><p>Proposed RBFn</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>0.797</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1.893</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1.831</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>6.763</head><p>Regression polynomials 60 terms</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.495</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.674</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3.228</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>9.798</head><p>Regression polynomials 69 terms</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.458</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.639</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3.176">10.111</head><p>Regression polynomials 87 terms</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1.721</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>5.453</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.654</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8.277</head><p>Regression polynomials 105 terms</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1.475</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4.337</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.571</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.676</head><p>Table 10. Error comparison of CMY¨CIELAB</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>CMY¨</head><p>CMY¨CIELAB conversion using the proposed RBFn and regression with different polyno- mials for the Training2 and Test datasets on the Hewlett Packard HP 2000 C.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Method Training2 Test Average Maximum Average Maximum</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Proposed RBFn</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.876</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>5.774</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3.691</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>9.800</head><p>Regression polynomials 60 terms</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.610">19.141</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.396">18.794</head><p>Regression polynomials 69 terms</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="6.516">19.344</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.728">18.995</head><p>Regression polynomials 87 terms</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.182">11.187</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="5.502">13.077</head><p>Regression polynomials 105 terms mials for the Training2 and Test datasets on the Olivetti Artjet 20.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4.607">10.714</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4.744</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Method Training2 Test Average Maximum Average Maximum</head><p>Proposed RBFn</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1.752</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4.084</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.537</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>6.660</head><p>Regression polynomials 60 terms</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.901">10.268</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.236</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>9.739</head><p>Regression polynomials 69 terms</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="1.851">10.400</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.266</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>9.864</head><p>Regression polynomials 87 terms</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1.514</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>9.100</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1.994</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8.664</head><p>Regression polynomials 105 terms</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1.305</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>9.100</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>1.936</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8.664</head><p>Table 12. Error of CIELAB¨CMY</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>CIELAB¨</head><p>CIELAB¨CMY conversion for the Test dataset on the Epson Stylus Pro5000.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>Method Average Maximum</head><p>Regression with printer LUT (729)</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.244</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>9.894</head><p>Regression with LUT created by proposed RBFn (729)</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>2.290</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8.890</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>FIGURE CAPTIONS</head><p>Figure 1 Radial Basis Function Network. <ref type="figure">Figure 1</ref>. Radial Basis Function Network</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¢ ¡ ¤ £</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>¥ ¤ ¦ ¨ § ©</head></div><figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_1" validated="false"><head>There are two main types of regression problems in statistics</head><label>There are</label><figDesc></figDesc><table>¥ 
+
+: parametric and non-parametric. In parametric regression the 
+
+form of the functional relationship between the dependent and independent variables is known, but may contain parameters 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_7" validated="false"><head>The authors and the basis function center F and the output connection weights are settled in accordance with an extended chained version of the Nadaraja-Watson estimator. The output network for the neuron , in accordance with the Nadaraja-Watson estimator, is</head><label></label><figDesc></figDesc><table>£ 
+¡ 
+
+ § 
+¤ 
+© ¨ 
+
+
+£ 
+
+¦ 
+
+¡0 
+
+¥ ¤ 
+¦ ¤ § 
+
+¥ 
+
+¢ 
+
+
+ § 
+
+¢ ¡ 
+
+¡£ 
+¥ 
+
+¡ 
+
+¤ 
+¦ ¥ 
+
+
+ § 
+© ¨ 
+
+¤ 
+¦ ¤ 
+¢ 
+
+
+
+
+£ 
+¡ 
+
+(19) 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_18" validated="false"><head>The color sets for the training and test phases are obtained by printing a number of hues, specified in CMY space, in</head><label></label><figDesc></figDesc><table>squares of approximately 1 cm 
+
+¢ 
+
+at the highest resolution the printer has to offer. These color swatches are then measured with 
+
+a SPECTROLINO spectrophotometer produced by GretagMacbeth. 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_19" validated="false"><head>The sets Training1 and Training2 were</head><label>The sets</label><figDesc></figDesc><table>made up of 729 and 125 colors, respectively, which were obtained by uniform sampling 
+
+in CMY space. The sets Training3 and Training4 consisted of 392 and 252 colors, which were obtained as suggested by 
+
+Moroni. 
+
+¡ 
+
+The Test set contains 777 colors obtained by random sampling of CMY space. The error of the models was 
+
+calculated in CIELAB space according to the formula 
+
+¡ 
+
+¤ 
+
+¡ 
+
+¢ ¡ 
+
+0 
+
+£ ¡ 
+¥ ¤ 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_21" validated="false"><head>We began the experiments by initially testing existing learning algorithms, specifically those proposed by Golub,¢ Efron,£color printer Epson Stylus Pro 5000; we used two training sets (labeled Training1 and Training2 in the tables) and tested the networks with a set labeled Test. The results for linear model with forward selection and</head><label>We began</label><figDesc></figDesc><table>Mallows 
+
+and Schwarz 
+
+¤ ¢ 
+
+on the without ridge regression are shown in table 1 for the function CMY¨CIELAB 
+
+CMY¨ 
+
+CMY¨CIELAB. 
+
+</table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_22" validated="false"><head>Training3 and Training4, with 392 and 252</head><label></label><figDesc></figDesc><table></table></figure>
+<figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_26" validated="false"><head>Table 11 . Error comparison of CMY¨CIELAB CMY¨ CMY¨CIELAB conversion using the proposed RBFn and regression with different polyno-</head><label>11</label><figDesc></figDesc><table></table></figure>
+		</body>
+		<back>
+			<div type="references">
+
+				<listBibl>
+
+<biblStruct xml:id="b0">
+	<monogr>
+		<title/>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Artusi</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Stampanti</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Colori</surname></persName>
+		</author>
+		<imprint>
+			<biblScope unit="page" from="1996" to="97" />
+		</imprint>
+		<respStmt>
+			<orgName>Tesi di laurea in Informatica, Univ. Degli studi di Milano</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b1">
+	<analytic>
+		<title level="a" type="main">Schettini &quot;Boosting learning Algorithms for the Colorimetric Characterization of Color Printers</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Artusi</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Campadelli</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">Proc. WIRN&apos;98: 283-289, Vietri, Giugn</title>
+		<meeting>WIRN&apos;98: 283-289, Vietri, Giugn</meeting>
+		<imprint>
+			<date type="published" when="1998" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b2">
+	<monogr>
+		<title level="m" type="main">Schettini &quot;Inkjet color printer caliration by back-propagation&quot;. Communication at the Workshop on Envaluation Criteria of Neural Net Efficiency in Industrial Applications</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><surname>Albanese</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Campadelli</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1995" />
+		</imprint>
+	</monogr>
+<note type="report_type">Vietri</note>
+</biblStruct>
+
+<biblStruct xml:id="b3">
+	<monogr>
+				<title level="m">C. M. Bishop &quot;Neural Networks for Pattern Recognition&quot;. Calendor Press Oxford</title>
+		<imprint>
+			<date type="published" when="1996" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b4">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><forename type="middle">J</forename><surname>Bishop</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><forename type="middle">Westland</forename><surname>Bushnell</surname></persName>
+		</author>
+		<title level="m">Application of Neural Networks to the Computer Recipe Prediction&quot; Color research and application</title>
+		<imprint>
+			<date type="published" when="1991" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b5">
+	<monogr>
+		<title level="m" type="main">Rampone &quot;Function approximation from noisy data by an incremental RBF network&quot;. Pattern Recognition, volume 32, numero 12</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><surname>Carozza</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1999" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b6">
+	<monogr>
+		<title level="m" type="main">Tibshirani &quot;An Introduction to the Bootstrap&quot;. Chapman and Hall</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><forename type="middle">J</forename><surname>Efron</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1993" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b7">
+	<monogr>
+				<title level="m">Mark D. Fairchild &quot;Color Appearance Models&quot;, Addison Wesley</title>
+		<imprint>
+			<date type="published" when="1998" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b8">
+	<monogr>
+		<title level="m" type="main">Wahba &quot;Generalised croos-validation as a method for choosing a good ridge parameters</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">M</forename><surname>Golub</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">G</forename><surname>Heat</surname></persName>
+		</author>
+		<imprint>
+			<date type="published" when="1979" />
+			<biblScope unit="volume">21</biblScope>
+			<biblScope unit="page" from="215" to="223" />
+		</imprint>
+	</monogr>
+<note type="report_type">Technometrics</note>
+</biblStruct>
+
+<biblStruct xml:id="b9">
+	<analytic>
+		<title level="a" type="main">Robust radial basis function neural networks</title>
+	</analytic>
+	<monogr>
+		<title level="m">on systems, man and cybernetics, vol 29, 674-685</title>
+		<imprint>
+			<publisher>IEEE trans</publisher>
+			<date type="published" when="1999" />
+		</imprint>
+	</monogr>
+	<note>Lee et al</note>
+</biblStruct>
+
+<biblStruct xml:id="b10">
+	<monogr>
+				<ptr target="MatlabFunction&quot;.website&quot;http://www.mathworks.com&quot;" />
+		<title level="m">Mathworks</title>
+		<imprint>
+			<date type="published" when="2000" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b11">
+	<monogr>
+				<title level="m">N. Moroni Barcelona HP Res. Labs, Personal Communication</title>
+		<imprint>
+			<date type="published" when="1996" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b12">
+	<analytic>
+		<title level="a" type="main">Orr &quot;Regularisation in the selection of radial basis function centres</title>
+	</analytic>
+	<monogr>
+		<title level="j">Neural Computation</title>
+		<imprint>
+			<biblScope unit="volume">7</biblScope>
+			<biblScope unit="issue">3</biblScope>
+			<biblScope unit="page" from="606" to="623" />
+			<date type="published" when="1995" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b13">
+	<monogr>
+		<title level="m" type="main">Orr &quot;Introduction to Radial Basis Function Networks&quot;</title>
+		<imprint>
+			<date type="published" when="1996" />
+		</imprint>
+		<respStmt>
+			<orgName>Center of Cognitive Science, University of Edinburgh</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b14">
+	<analytic>
+		<title level="a" type="main">Anderson &quot;Neural network application to the color scanner and printer calibrations</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">P</forename><forename type="middle">G</forename><surname>Kang</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="j">Journal of Electronic Imaging</title>
+		<imprint>
+			<biblScope unit="page" from="25" to="135" />
+			<date type="published" when="1992" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b15">
+	<monogr>
+				<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">S</forename><forename type="middle">A</forename><surname>Press</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">W</forename><forename type="middle">T</forename><surname>Teukolsky</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">B</forename><forename type="middle">P Flannery</forename><surname>Vetterling</surname></persName>
+		</author>
+		<title level="m">Numerical Recipes in C The Art of Scentific Computing&quot;. Second Edition</title>
+		<imprint>
+			<date type="published" when="1992" />
+		</imprint>
+		<respStmt>
+			<orgName>Cambrige University press</orgName>
+		</respStmt>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b16">
+	<monogr>
+		<title level="m" type="main">Rawlings &quot;Applied Regression Analysis&quot;</title>
+		<imprint>
+			<date type="published" when="1988" />
+			<pubPlace>Wadsworth &amp; Brooks/Cole, Pacific Grove, CA</pubPlace>
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b17">
+	<monogr>
+				<title level="m">G. Schwarz &quot;Estimating the dimension of a model&quot;. Annals of Statistics</title>
+		<imprint>
+			<date type="published" when="1978" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b18">
+	<monogr>
+				<title level="m">S. Tominaga &quot;A color mapping method for CMYK Printers&quot;. Proc. 4th IS&amp;T&amp;SID&apos;s Color Imaging Conference: Color Science, Systems and Applications, 1996. Alessandro Artusi received his masters degree in computer science at the University of Computer Science in Milano in 1997. From November</title>
+		<imprint/>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b19">
+	<monogr>
+		<title level="m" type="main">he worked on an Italian project &quot;Progetto Italiano Tema 4 Nuove Technologie per la stampa tessile</title>
+		<imprint>
+			<date type="published" when="2000" />
+		</imprint>
+	</monogr>
+</biblStruct>
+
+<biblStruct xml:id="b20">
+	<analytic>
+		<title level="a" type="main">He worked from November 2001 to March 2002 on an Austrian project &quot;Real Time Renderin of Urban Environments&quot;. In April 2002 started to work on an European project &quot;RealReflect&quot;. The main field of his present interests include colour science</title>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Project</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Pavr</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Phd</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Characterization</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Appearance</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Mapping</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Real</forename><surname>Mapping</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Networks</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Gcv</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Uev</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Bic</forename><surname>Fpe</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Gcv</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Uev</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Bic</forename><surname>Fpe</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Criterious</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Gcv</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><surname>Uev</surname></persName>
+		</author>
+		<author>
+			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">Bic</forename><surname>Fpe</surname></persName>
+		</author>
+	</analytic>
+	<monogr>
+		<title level="m">and received his PhD in 2001, also from the Vienna University of Technology. His research interests include predictive rendering, colour science and global illumination. TABLES Table 1. Error comparison of CMY¨CIELAB CMY¨ CMY¨CIELAB conversion using the initial RBFn, with the selection criterious</title>
+		<imprint>
+			<date type="published" when="1996" />
+		</imprint>
+	</monogr>
+	<note>Training4 and Test datasets on the Epson Stylus Pro5000. Method Training3 Test Training4 Test Avg Max Avg Max Avg Max Avg Max Regression polynomials 60 terms</note>
+</biblStruct>
+
+				</listBibl>
+			</div>
+		</back>
+	</text>
+</TEI>

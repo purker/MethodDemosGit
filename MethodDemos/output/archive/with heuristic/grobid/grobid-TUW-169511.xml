@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobid-home/schemas/xsd/Grobid.xsd"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+	<teiHeader xml:lang="en">
+		<encodingDesc>
+			<appInfo>
+				<application version="0.4.5-dummy" ident="GROBID" when="2017-12-29T00:16+0000">
+					<ref target="https://github.com/kermitt2/grobid">GROBID - A machine learning software for extracting information from scholarly documents</ref>
+				</application>
+			</appInfo>
+		</encodingDesc>
+		<fileDesc>
+			<titleStmt>
+				<title level="a" type="main"></title>
+			</titleStmt>
+			<publicationStmt>
+				<publisher/>
+				<availability status="unknown"><licence/></availability>
+			</publicationStmt>
+			<sourceDesc>
+				<biblStruct>
+					<analytic>
+					</analytic>
+					<monogr>
+						<imprint>
+							<date/>
+						</imprint>
+					</monogr>
+				</biblStruct>
+			</sourceDesc>
+		</fileDesc>
+		<profileDesc>
+			<textClass>
+				<keywords>
+					<term>Waiting Strategies for Regular and Emergency Patient Transportation Guenter Kiechle 1</term>
+					<term>Karl F Doerner 2</term>
+					<term>Michel Gendreau 3</term>
+					<term>and Richard F Hartl 2 1 Vienna Technical University</term>
+					<term>Karlsplatz 13</term>
+					<term>1040 Vienna</term>
+					<term>Austria guenterkiechle@salzburgresearchat 2 University of Vienna</term>
+					<term>Department of Business Administration</term>
+					<term>Bruenner Strasse 72</term>
+					<term>1210 Vienna</term>
+					<term>Austria {karl</term>
+				</keywords>
+			</textClass>
+			<abstract>
+				<p>Many emergency service providers, especially ambulance departments and companies who provide non-public maintenance services, face the problem that their fleet of vehicles has to provide two different types of services: 1. Cover a certain region and provide immediate service when an emergency occurs; 2. Provide some regular service (e.g., the pickup and delivery of patients , predetermined service tasks, periodic pickups . . .). This is the current situation for the largest Austrian emergency service providers (e.g., the Austrian Red Cross), where the same fleet is used to provide both types of services. Dynamic aspects thus directly influence the schedule for the regular service. When an emergency occurs and an ambulance is required, the vehicle with the shortest distance to the emergency is assigned to serve the emergency patient. Therefore , it may happen that an ambulance vehicle that has to carry out a scheduled transport order of a patient, which has not started yet, is used to serve the emergency request and the schedule for the regular services has to be re-optimized and another vehicle has to be reassigned</p>
+			</abstract>
+		</profileDesc>
+	</teiHeader>
+	<text xml:lang="en">
+		<body>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>3</head><p>and it can be used to fulfill regular patient transportation orders. When this situation occurs, the schedule for the regular transport orders has also to be re-optimized to take advantage of this additional vehicle to improve the objective function.</p><p>To evaluate the solution quality various scenarios have to be calcu- lated. In the evaluation of the different scenarios, vehicle movements and the spatial distribution of empty vehicles are monitored over time. The distance matrix is also updated whenever an emergency request occurs.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="2">Problem Description</head><p>In our study we consider a combination of two problems</p><p>• the Dial-a-Ride Problem (DARP) for regular patient transportation and • dispatching ambulance vehicles for emergency cases.</p><p>In the classical DARP, a set of requests announced beforehand are served from a single depot. These requests have hard time windows and a preferred pickup or delivery time. In the problem of dispatching ambulance vehicles for emergency cases, one must ensure short response times in a dynamic environment. The regular patient transportation problem can be considered to be a variation of DARP with additional real world constraints regarding customer preferences or requirements. A comprehensive description of the DARP is given in <ref type="bibr">[2]</ref>.</p><p>Each transport order or request incorporates a pickup location and a delivery location. For each transportation request a time window and a service or loading time for each pickup and delivery location is given. Concerning time windows, we have two different situations -on the one hand, patients should be picked-up as late as possible from their home when they are being transported to hospitals (outbound request); on the other hand, patients should be picked-up as early as possible when they are transported from the hospital back home (inbound request). Time window violations are not allowed and deviations from the de- sired pick-up and drop-off times within the specified time window are considered in the objective function.</p><p>Time windows for each request are defined either by a desired de- livery time for outbound requests or a desired pickup time for inbound requests. The resulting time window is calculated by allowing an early pickup or an early delivery by 30 minutes. The pickup or delivery has to be performed within this time window. We allow also a maximum ride time for each passenger. This maximum ride time is defined for each customer by calculating the shortest path from the pickup to the delivery location and allowing an additional ride time of 30 minutes. In our computational tests the vehicle capacity is two, therefore the max- imum number of patients that can be transported at the same time is two. Waiting is not allowed with a passenger on board.</p><p>In our real world problem for the regular patients it is desired to minimize transportation costs and to maximize quality of service for patients. And for the emergency patients it is desired to minimize re- sponse time for emergency requests.</p><p>In the objective function for the constructive procedure the reg- ular patients (transportation costs, quality of service) are considered whereas the response time minimization is considered in the different waiting strategies. Quality of service for the regular transport orders is measured by the deviation of the preferred delivery time for the out- bound request and the deviation of the preferred pickup time for the inbound request respectively.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="3">Dynamic aspects</head><p>After computing a solution for the problem at hand using one of the proposed solution procedures, improving the coverage criterion is possi- ble without changing the solution structure. More precisely, movements of vehicles may be delayed or pushed forward in time while the sequence of transport requests on each tour remains unchanged.</p><p>The distribution is measured at discrete points in time for all empty vehicles, e.g., at equal intervals from the first pick-up to the last drop- off during the day or optimization period. Besides the empty vehicle positions, we use a set of equidistant raster points in the respective area. The covered raster points by the empty vehicles within a certain radius are calculated and used as a proxy for the response time.</p><p>Therefore, we distinguish four different waiting strategies to influ- ence movements of empty vehicles on their way from a delivery lo- cation to the next pickup location. The first two strategies are static ones called 'early arrival' and 'late arrival'. Early arrival means, that a vehicle departs to its next pickup location immediately after deliv- ering the last patient and waits at the pickup location until the next pickup starts. On the contrary, late arrival means, that a vehicle waits at the last delivery location just as long as possible to arrive at the</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>5</head><p>The last two strategies are dynamic variants of the former ones, which use late arrival or early arrival as default, but may change the strategy for each single request if an individual coverage calculation indicates an improvement. For each single request both coverage values (late and early arrival) are calculated. The strategy with the better global coverage is performed. Note that potential movements of other vehicles while the respective vehicle drives from delivery to pickup lo- cation are not considered in this proxy evaluation.</p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="4">Evaluation of the approach</head><p>In order to test the solution procedures with a comprehensive set of parameters and emergency instances, a simulation environment for the problem at hand was implemented. The efficiency of the solution proce- dures was evaluated with real world data from the city of Graz provided by the Austrian Red Cross. We used 15 problem instances with a num- ber of regular transport requests ranging from 152 to 286 and grouped them into three classes of five instances each. p.m. and for each outbound request a corresponding inbound request occurs a few hours later.</p><p>In the computational studies, we evaluated the impact of different waiting strategies as described above. Hence, we evaluated response times to artifical emergency transport requests for a large number of runs. For each instance and each waiting strategy we measured re- sponse times for three randomly distributed emergency requests over 2000 independent runs. In <ref type="table" target="#tab_2">Table 1</ref> we report average response time, maximum response time and coverage for each instance class as well as for each waiting strategy. The improvements of the dynamic strategies compared to the static counterpart are reported in the last two rows of the tables (imp.).</p><p>The results show that the dynamic strategies outperform the static ones, whereas early arrival generally performs better than late arrival. The average response time using early arrival strategy can be reduced from 5.04 to 5.01 minutes. Also the maximum response time in the case of early arrivals can be reduced from 7.87 minutes to 7.83 min- utes. The improved coverage enables these improvements. By using a dynamic waiting strategy the coverage can be improved e.g. for the early arrival strategy by 1.65 %. Improvements from the static to theaverage response time maximum response time instance class small medium large average small medium large average static late arrival  Gendreau, M., Guertin, F., Potvin, J.-Y., and Séguin, R. <ref type="figure">(2002): "Neigh-</ref> borhood Search heuristic for a Dynamic Vehicle Dispatching Problem with Pickups and Deliveries". Technical Report, Centre de recherche sur les transports, Université de Montréal. Forthcoming in Transportation Research C. 4. Gendreau, M., Laporte, G., and Semet, F. </p></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>5.38</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>5.19</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>5.12</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>5.23</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8.32</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8.09</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.93</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="8.11">static early arrival</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>5.20</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>5.00</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4.94</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>5.04</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8.07</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.85</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.69</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7.87">dynamic late arrival</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>5.17</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>5.00</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4.97</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>5.05</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8.03</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.83</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.72</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head n="7.86">dynamic early arrival 5.14</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4.97</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>4.93</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>5.01</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>8.01</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.81</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.67</head></div>
+<div xmlns="http://www.tei-c.org/ns/1.0"><head>7.83</head></div><figure xmlns="http://www.tei-c.org/ns/1.0" type="table" xml:id="tab_2" validated="true"><head>Table 1 . Response times and coverage subject to waiting strategies</head><label>1</label><figDesc></figDesc><table>Acknowledgements Financial support from the Austrian Science 
+Fund (FWF) under grant #L286-N04 is gratefully acknowledged. 
+
+References 
+
+1. Attanasio, A., Cordeau, J.-F., Ghiani, G., and Laporte, G. (2004) Parallel 
+Tabu search heuristics for the dynamic multi-vehicle dial-a-ride problem. 
+Parallel Computing 30:377-387. 
+2. Cordeau, J.-F., and Laporte, G. (2003) "The Dial-a-Ride Problem 
+(DARP): Variants modelling issues and algorithms". 4OR 1, pp. 89-101. 
+3. </table></figure>
+		</body>
+		<back>
+			<div type="references">
+
+				<listBibl/>
+			</div>
+		</back>
+	</text>
+</TEI>
