@@ -70,7 +70,7 @@ public class PublicationIterator implements Iterable<PublicationPair>
 			}
 			else
 			{
-				throw new IllegalArgumentException("No extracted version of file " + originalFile + " found!");
+				throw new IllegalArgumentException("No extracted version of file " + originalFile.getAbsolutePath() + " found!");
 			}
 
 		}

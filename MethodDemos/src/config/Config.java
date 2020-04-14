@@ -17,6 +17,8 @@ public interface Config
 	File parsCitOutputDir = new File("output/extracted/parscit");
 	File pdfxOutputDir = new File("output/extracted/pdfx");
 
+	File archiveDir = new File("output/archive");
+
 	File loggingDir = new File("output/");
 
 	String pGrobidOrigin = "D:/Java/git/grobid-0.4.4/";
@@ -77,4 +79,9 @@ public interface Config
 	String trainingOutput = "output/training/output/work";
 	String trainingError = "output/training/error";
 	String trainingDumpedModels = "output/training/dumpedmodels";
+
+	String filenameExtendedModels = "model.wapiti.extended";
+	String filenameOriginalModels = "original-model.wapiti";
+	String filenameUsedModels = "model.wapiti";
+
 }

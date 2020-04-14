@@ -1,11 +1,9 @@
 package demos;
 
-import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -25,7 +23,7 @@ import utils.FileCollectionUtil;
  * http://grobid.readthedocs.io/en/latest/Grobid-java-library/
  *
  */
-public class GrobidDemo extends AbstractDemo implements Closeable
+public class GrobidDemo extends AbstractDemo implements AutoCloseable
 {
 	private static final Method METHOD = Method.GROBID;
 
@@ -46,7 +44,9 @@ public class GrobidDemo extends AbstractDemo implements Closeable
 	{
 		List<File> groundTruthFiles = new ArrayList<>();
 
-		List<String> idList = Arrays.asList("194561");
+		int index = 16;
+		List<String> idList = Config.groundTruthIds;
+		// List<String> idList = Arrays.asList("141758");
 		groundTruthFiles.addAll(FileCollectionUtil.getAllGroundTruthFilesByIds(idList));
 
 		new GrobidDemo().runDemoList(groundTruthFiles, Demos.grobIdOutputDir);
@@ -59,21 +59,14 @@ public class GrobidDemo extends AbstractDemo implements Closeable
 	 * https://github.com/kermitt2/grobid-example
 	 */
 	@Override
-	String runDemoSingleFile(File inputFile, File outputFile) throws IOException
+	String runDemoSingleFile(File inputFile, File outputFile) throws Exception
 	{
-		try
-		{
-			String resultString = engine.fullTextToTEI(inputFile, config);
-			FileUtils.writeStringToFile(outputFile, resultString, StandardCharsets.UTF_8);
+		System.out.println(inputFile);
 
-			System.out.println(inputFile);
+		String resultString = engine.fullTextToTEI(inputFile, config);
+		FileUtils.writeStringToFile(outputFile, resultString, StandardCharsets.UTF_8);
 
-			return null;
-		}
-		catch(Exception e)
-		{
-			return e.getMessage();
-		}
+		return null;
 	}
 
 	public static Engine initEngine()
@@ -110,4 +103,5 @@ public class GrobidDemo extends AbstractDemo implements Closeable
 	{
 		engine.close();
 	}
+
 }
