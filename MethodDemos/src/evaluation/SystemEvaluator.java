@@ -125,8 +125,6 @@ public abstract class SystemEvaluator
 	 */
 	public AbstractCollectionResult<?> evaluate(PublicationIterator files, boolean printResults) throws IOException
 	{
-		System.out.println("Starting Evaluation: " + getMethod() + " (" + iter.size() + " files)");
-
 		int i = 0;
 		for(PublicationPair pair : iter)
 		{
@@ -205,7 +203,8 @@ public abstract class SystemEvaluator
 
 	private AbstractSingleInformationResult<?> getResultFromReferenceType(EvalInformationType type, Reference reference, Reference reference2)
 	{
-		switch (type) {
+		switch(type)
+		{
 			case REFERENCE_ID:
 				return new SimpleInformationResult(type, reference, reference2, Reference::getIdString);
 			case REFERENCE_MARKER:
