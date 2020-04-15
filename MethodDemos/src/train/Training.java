@@ -57,50 +57,6 @@ public class Training
 	}
 
 	/**
-	 * deletes all corpus/[tei|raw] directories
-	 */
-	private static void deleteExistingTrainingData() throws IOException
-	{
-		for(IGrobidModel model : GrobidModels.values())
-		{
-			File corpusFile = GrobidProperties.getCorpusPath(resources, model);
-			File teiCorpusPath = new File(corpusFile, "tei");
-			File rawCorpusPath = new File(corpusFile, "raw");
-
-			if(teiCorpusPath.exists())
-			{
-				FileUtils.cleanDirectory(teiCorpusPath);
-				if(rawCorpusPath.exists())
-				{
-					FileUtils.cleanDirectory(rawCorpusPath);
-				}
-			}
-			else
-				if(corpusFile.exists())
-				{
-					FileUtils.cleanDirectory(corpusFile);
-				}
-		}
-
-	}
-
-	private static void dumpModels()
-	{
-		GrobidDemo.init();
-		addTrainers();
-
-		for(AbstractTrainer trainer : trainers)
-		{
-			File model = new File(trainer.getModel().getModelPath());
-			File outputFile = new File(Config.trainingDumpedModels, trainer.getModel().getModelName() + ".dumped.txt");
-
-			System.out.println("trainer " + trainer.getClass().getSimpleName() + "\n\tdump model " + model + " ");
-			WapitiModel.dump(model, outputFile);
-			System.out.println("\tfinished");
-		}
-	}
-
-	/**
 	 * test extended models one by one
 	 * 
 	 * @throws Exception
@@ -167,6 +123,50 @@ public class Training
 		System.out.println(archiveStatistics);
 	}
 
+
+	/**
+	 * deletes all corpus/[tei|raw] directories
+	 */
+	private static void deleteExistingTrainingData() throws IOException
+	{
+		for(IGrobidModel model : GrobidModels.values())
+		{
+			File corpusFile = GrobidProperties.getCorpusPath(resources, model);
+			File teiCorpusPath = new File(corpusFile, "tei");
+			File rawCorpusPath = new File(corpusFile, "raw");
+
+			if(teiCorpusPath.exists())
+			{
+				FileUtils.cleanDirectory(teiCorpusPath);
+				if(rawCorpusPath.exists())
+				{
+					FileUtils.cleanDirectory(rawCorpusPath);
+				}
+			}
+			else
+				if(corpusFile.exists())
+				{
+					FileUtils.cleanDirectory(corpusFile);
+				}
+		}
+
+	}
+
+	private static void dumpModels()
+	{
+		GrobidDemo.init();
+		addTrainers();
+
+		for(AbstractTrainer trainer : trainers)
+		{
+			File model = new File(trainer.getModel().getModelPath());
+			File outputFile = new File(Config.trainingDumpedModels, trainer.getModel().getModelName() + ".dumped.txt");
+
+			System.out.println("trainer " + trainer.getClass().getSimpleName() + "\n\tdump model " + model + " ");
+			WapitiModel.dump(model, outputFile);
+			System.out.println("\tfinished");
+		}
+	}
 
 	private static void addTrainers()
 	{
