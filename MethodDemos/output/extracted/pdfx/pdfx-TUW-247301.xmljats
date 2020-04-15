@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  SYSTEM "http://dtd.nlm.nih.gov/archiving/3.0/archivearticle3.dtd">
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:mml="http://www.w3.org/1998/Math/MathML"
+         xmlns:xlink="http://www.w3.org/1999/xlink">
+   <front>
+      <journal-meta>
+         <journal-id/>
+         <journal-title-group>
+            <journal-title/>
+         </journal-title-group>
+         <issn/>
+         <publisher>
+            <publisher-name/>
+         </publisher>
+      </journal-meta>
+      <article-meta>
+         <title-group>
+            <article-title>Polynomial Combined Rewritings for Linear Existential Rules and DL-Lite with n-ary Relations</article-title>
+         </title-group>
+         <supplement>
+            <p>Georg Gottlob 1 , Marco Manna 2 , and Andreas Pieris 3 1 Department of Computer Science, University of Oxford, UK <email>georg.gottlob@cs.ox.ac.uk</email> 2 Department of Mathematics and Computer Science, University of Calabria, Italy <email>manna@mat.unical.it</email> 3 Institute of Information Systems, Vienna University of Technology, Austria <email>pieris@dbai.tuwien.ac.at</email>
+            </p>
+         </supplement>
+      </article-meta>
+   </front>
+   <body>
+      <sec>
+         <title>1 Introduction</title>
+      </sec>
+      <sec>
+         <title>2 Proof Generator</title>
+         <p>We assume the reader is familiar with the chase procedure . Recall that the chase for a database D and a set Σ of rules, denoted chase ( D, Σ ) , is a universal model of D and Σ , and thus ( D ∪ Σ ) | = q iff chase ( D, Σ ) | = q , for each CQ q . The instance chase ( D, Σ ) can be naturally seen as a directed labeled graph, called chase graph , denoted CG ( D, Σ ) . It is also easy to verify that for linear rules, CG ( D, Σ ) is a directed forest; for details on the chase, see, e.g., [<xref id="XR28" ref-type="bibr" rid="R1">1</xref>]. Our main technical tool is called proof generator, and it formalizes the intuitive idea that (Boolean) CQ answering under linear rules can be realized as a reachability problem on the chase graph. Let us illustrate the key ideas underlying the proof generator via a simple example.</p>
+         <p>Example 1. Let D = { p ( a, b, c ) , p ( b, c, d ) } , and let Σ be the set of linear rules (for brevity, the universal quantifiers are omitted): p ( X, Y, Z ) → ∃ W p ( X, W, Y ) p ( X, Y, Z ) → ∃ W p ( Z, W, Y ) p ( X, Y, Z ) → ∃ W p ( Y, X, W ) p ( X, Y, Z ) → p ( Y, Z, X ) .</p>
+         <p>Given the BCQ q = ∃ A ∃ B ∃ C ∃ D ( p ( A, a, B ) ∧ p ( C, B, b ) ∧ p ( D, c, b )) , as shown in <xref id="XR31" ref-type="fig" rid="F1(a)">Figure 1(a)</xref>, there exists a homomorphism h (dashed arrows in the figure) that maps q to an initial segment of the chase graph of D and Σ , and thus ( D ∪ Σ ) | = q . It is interesting to observe that the nulls occurring in h ( q ) , i.e., z 1 , z 3 , z 4 and z 5 , form a rooted forest F , depicted in <xref id="XR33" ref-type="fig" rid="F1(b)">Figure 1(b)</xref>, with the following properties; for brevity, let ν ( z ) be the atom in CG ( D, Σ ) where the null z is invented (see shaded atoms in <xref id="XR34" ref-type="fig" rid="F1(a)">Figure 1(a)</xref> for ν ( z 1 ) , ν ( z 3 ) , ν ( z 4 ) and ν ( z 5 ) ): (i) for every root node z , ν ( z ) is reachable from D ; (ii) for every edge ( z, w ) , ν ( w ) is reachable from ν ( z ) ; and (iii) for every atom a ∈ h ( q ) , there exists a unique path π in F that contains all the nulls in a , and, assuming that the leaf node of π is z , a is reachable from ν ( z ) . Indeed, it is easy to verify that ν ( z 1 ) and ν ( z 5 ) are reachable from D , ν ( z 3 ) and ν ( z 4 ) are reachable from ν ( z 1 ) , and finally, h ( p ( A, a, B )) = p ( z 3 , a, z 1 ) is reachable from ν ( z 3 ) , h ( p ( C, B, b )) = p ( z 4 , z 1 , b ) is reachable from ν ( z 4 ) , and h ( p ( D, c, b )) = p ( z 5 , c, b ) is reachable from ν ( z 5 ) . Roughly speaking, the triple consisting of: (1) the homomorphism h , that maps q to the chase; (2) the function ν , that gives the atoms in the chase where the nulls occurring in h ( q ) were invented; and (3) the forest F , that encodes how the nulls of h ( q ) depend on each other, as well as the order of their generation, is what we call a proof generator for q w.r.t. D and Σ . The existence of such a triple, allows us to generate the part of the chase due to which the query is entailed, i.e., the proof of the query (hence the name “proof generator”). Therefore, for query answering purposes under linear rules, we simply need to check if such a proof generator exists. Lemma 1. ( D ∪ Σ ) | = q iff there exists a proof generator for q w.r.t. D and Σ .</p>
+      </sec>
+      <sec>
+         <title>3 The Combined Rewriting</title>
+         <p>We give a positive answer to our research question regarding linear rules and the polynomial combined approach. More precisely, we show that: Theorem 1. The class of linear rules is polynomially combined Q -rewritable, where Q ∈ { FO , NDL } . To establish the above theorem, we heavily rely on the notion of the proof generator. Fix a (Boolean) CQ q , a database D , and a set Σ of linear rules. By Lemma 1, it suffices to construct in polynomial time a query q Σ ∈ Q (independently of D ), and a database D Σ (independently of q ), such that D Σ | = q Σ iff a proof generator for q w.r.t. D and Σ exists. Roughly, the query q Σ guesses a triple ( h, ν, F ) (as described in Example 1), and then verifies that the guessed triple is a proof generator for q w.r.t. D and Σ . The interesting part of q Σ is the component that applies the crucial reachability checks required by the definition of the proof generator. Although the path among two atoms in the chase graph may be of exponential size, its existence can be checked via Q -queries of polynomial size. An immediate consequence of Theorem 1 is that: Corollary 1. The description logic DLR-Lite R is polynomially combined Q -rewritable, where Q ∈ { FO , NDL } . The results of this work are, for the moment, of theoretical nature and we do not claim that they will directly lead to better practical algorithms. We believe that a smart implementation of the proposed techniques can lead to more efficient rewriting procedures; this will be the subject of future research. We are also planning to optimize the proposed rewriting algorithm, with the aim of constructing queries of optimal size.  Acknowledgements. G. Gottlob was supported by the EPSRC Programme Grant EP/M025268/ “VADA: Value Added Data Systems – Principles and Architecture”. M. Manna was supported by the MIUR project “SI-LAB BA2KNOW – Business Anali- tycs to Know”, and by Regione Calabria, programme POR Calabria FESR 2007-2013, projects “ITravel PLUS” and “KnowRex: Un sistema per il riconoscimento e l’estrazione di conoscenza”. A. Pieris was supported by the Austrian Science Fund (FWF): P25207- N23 and Y698.</p>
+      </sec>
+      <sec>
+         <title>References</title>
+      </sec>
+   </body>
+   <back>
+      <ref-list>
+         <ref id="R1">
+            <mixed-citation>1. Calı, A., Gottlob, G., Lukasiewicz, T.: A general Datalog-based framework for tractable query answering over ontologies. J. Web Sem. 14, 57–83 (2012)</mixed-citation>
+         </ref>
+         <ref id="R2">
+            <mixed-citation>2. Gottlob, G., Kikot, S., Kontchakov, R., Podolskii, V.V., Schwentick, T., Zakharyaschev, M.: The price of query rewriting in ontology-based data access. Artif. Intell. 213, 42–59 (2014)</mixed-citation>
+         </ref>
+         <ref id="R3">
+            <mixed-citation>3. Gottlob, G., Manna, M., Pieris, A.: Polynomial combined rewritings for existential rules. In: KR (2014)</mixed-citation>
+         </ref>
+         <ref id="R4">
+            <mixed-citation>4. Gottlob, G., Manna, M., Pieris, A.: Polynomial rewritings for linear existential rules. In: IJCAI (2015)</mixed-citation>
+         </ref>
+         <ref id="R5">
+            <mixed-citation>5. Kontchakov, R., Lutz, C., Toman, D., Wolter, F., Zakharyaschev, M.: The combined approach to query answering in DL-Lite. In: KR (2010)</mixed-citation>
+         </ref>
+         <ref id="R6">
+            <mixed-citation>6. Kontchakov, R., Lutz, C., Toman, D., Wolter, F., Zakharyaschev, M.: The combined approach to ontology-based data access. In: IJCAI. pp. 2656–2661 (2011)</mixed-citation>
+         </ref>
+         <ref id="R7">
+            <mixed-citation>7. Lutz, C., Toman, D., Wolter, F.: Conjunctive query answering in the description logic EL using a relational database system. In: IJCAI. pp. 2070–2075 (2009)</mixed-citation>
+         </ref>
+      </ref-list>
+   </back>
+</article>

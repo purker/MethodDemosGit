@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  SYSTEM "http://dtd.nlm.nih.gov/archiving/3.0/archivearticle3.dtd">
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:mml="http://www.w3.org/1998/Math/MathML"
+         xmlns:xlink="http://www.w3.org/1999/xlink">
+   <front>
+      <journal-meta>
+         <journal-id/>
+         <journal-title-group>
+            <journal-title/>
+         </journal-title-group>
+         <issn/>
+         <publisher>
+            <publisher-name/>
+         </publisher>
+      </journal-meta>
+      <article-meta>
+         <title-group>
+            <article-title>MODELLING OF VISUAL FEATURE DERIVATION IN THE VIZIR FRAMEWORK</article-title>
+         </title-group>
+         <supplement>
+            <p>Horst Eidenberger Institute of Software Technology and Interactive Systems, Vienna University of Technology Favoritenstrasse 9-11, A-1040 Wien, Austria (Europe) phone: +43 1 58801 18853, fax: +43 1 58801 18898, email: <email>hme@ims.tuwien.ac.at</email> web: www.ims.tuwien.ac.at</p>
+         </supplement>
+         <abstract>
+            <sec>
+               <p>If visual information retrieval should make further progress, it will be necessary to identify new ways to derive visual properties from higher levels of understanding than the pixel level (e.g. from low-level features). The paper outlines the implementation of modelling of feature hierarchies in the visual information retrieval framework VizIR (free under GPL). The approach allows for the derivation of high-level features from low-level features by aggregation and localisation as well as semantic enrichment with additional knowledge. The technical implementation is based on the MPEG-7 structures for aggregation and specialisation.</p>
+            </sec>
+         </abstract>
+      </article-meta>
+   </front>
+   <body>
+      <sec>
+         <title>1. INTRODUCTION</title>
+      </sec>
+      <sec>
+         <title>2. BACKGROUND</title>
+      </sec>
+      <sec>
+         <title>2.1 MPEG-7</title>
+         <sec>
+            <title>aggregation and localisation structures</title>
+         </sec>
+         <sec>
+            <title>2.2 Semantic feature enrichment</title>
+         </sec>
+      </sec>
+      <sec>
+         <title>3. THE VIZIR PROJECT</title>
+         <p>The next three subsections describe the VizIR project in general and, in greater detail, the environment, in which we are applying descriptor aggregation, localisation and enrichment techniques to enhance features and improve content-based retrieval results.</p>
+         <sec>
+            <title>3.1 Overview</title>
+            <p>The VizIR framework is an open and extendible software workbench for content-based video and image retrieval. It implements state of the art technologies such as the visual MPEG-7 descriptors, the Multimedia Retrieval Markup Language [<xref id="XR20" ref-type="bibr" rid="R5">5</xref>] for loose coupling of query engines and user interfaces, etc. and novel paradigms for feature extraction, querying (e.g. 3D user interfaces for integrated browsing and retrieval) and evaluation. VizIR is free software: it is released as source code under GNU Public License. The VizIR project intends to pro- vide a common software platform that can be used by researchers as a workbench for further VIR research, by software engineers for the development of VIR components for media and database applications and by lecturers for teaching VIR concepts. The VizIR framework was carefully designed to guarantee that these requirements can be met. Technically, the VizIR framework components are based on the Java programming language, the Java SDK, the Java Media Framework for media processing and other freely available software libraries. The current status of the project, software releases, documentation and development resources can be found on the project website [<xref id="XR21" ref-type="bibr" rid="R6">6</xref>]. VizIR is an open project: new users and contributors are always welcome.</p>
+         </sec>
+         <sec>
+            <title>3.2 General framework design</title>
+            <p>The most important part of VizIR is a class framework for feature extraction, querying, refinement, VIR user interfaces, communication, evaluation and benchmarking. Cen- tral element is a service kernel. This class is responsible for media administration and query execution. It communicates with query engines, user interfaces and media databases through XML messages (based on the Multimedia Retrieval Markup Language, MRML [ <xref id="XR24" ref-type="bibr" rid="R5">5</xref>]) and web services. Media access is hidden in a class that enables accessing the view of visual media (at arbitrary resolution and based on an arbitrary colour model) at any point in time. By that, images and videos can be accessed with a uniform API. Descriptors and media renderer classes make use of the media access class to derive features and to visualise media objects in user interfaces. All elements of user interfaces (including query definition and refinement panels, metadata panels, sketch drawing panels, etc.) are modelled as independent classes that interact with each other through well-defined events and listener methods (locally) or through XML-based web services (remotely). They can be combined arbitrarily to create VIR user interfaces and easily be supplemented by additional querying methods. VizIR query engines are derived from a common model. This model defines how queries are executed technically (not how the querying logic works). This includes the interface to MRML communication classes, the service kernel and paradigms for database access. All VizIR components are based on an object-oriented database model: If desired, the resources of instances of any class in the framework can be serialised and kept persistent in a database. This feature is guaranteed by an underlying persistence system. The object- oriented database system may be chosen arbitrarily. In our test environment we are currently using a relational database (MySQL) and an object mapping tool (Hibernate). See [<xref id="XR26" ref-type="bibr" rid="R2">2</xref>] and [<xref id="XR27" ref-type="bibr" rid="R3">3</xref>] for more information on the VizIR architecture.</p>
+         </sec>
+         <sec>
+            <title>3.3 Visual feature modelling</title>
+            <p>Implementation of visual descriptors is a key requirement in the VizIR framework. Descriptor data should be calculated directly from media content and it has to be guaranteed that the descriptor designer does not have to care for storing the descriptor data in the database. VizIR provides two types of classes for the implementation of visual descriptors: DescriptorInfo classes DescriptorLogic classes Derivates of DescriptorInfo classes hold the (XML) descriptions extracted by features. These classes have a unique name and their objects have unique IDs. Objects can be stored to and read from a database. DescriptorInfo classes are also factories that can be used to create their associated DescriptorLogic objects. DescriptorLogic classes contain just two methods: ex- tractFeature() to extract feature data from given media content and calculateDistance() to measure distance to a second instance of the same descriptor (a DescriptorInfo object). Since DescriptorLogic classes contain no relevant status information, they do not need to be made persistent and may have arbitrary names. The VizIR framework can easily be extended with new descriptors by creating a new DescriptorInfo class, creating a new mapping (if the default mapping is not sufficient) and implementing a private DescriptorLogic class with the feature extraction logic. New descriptors can be used as soon as the database mapping (an XML document) is available.</p>
+         </sec>
+      </sec>
+      <sec>
+         <title>4. FEATURE DERIVATION MODELLING</title>
+         <p>Below, it will be discussed how the described descriptor models can be adapted to allow for feature aggregation, localisation and semantic enrichment. Additionally, in Subsection 4.4 relevant implementation details will be sketched.</p>
+         <sec>
+            <title>4.1 Overview</title>
+            <p>Generally, descriptors could simply be added to the framework as new classes that make use of already existing algorithms. To enable this scenario, the algorithms used in DescriptorLogic classes (e.g. time to frequency transformations, edge operators) would have to be implemented with a well-designed configurable API and collected in software libraries. Still, for the sake of transparency, good software design and maximum code reuse, it would be desirable to have more sophisticated descriptor extension mechanisms available.</p>
+            <p>DescriptorInfo create DescriptorLogicA Semantic feature enrichment Data Algorithm DescriptorInfo create</p>
+            <fig id="F1">
+               <caption>
+                  <p>Figure 1: General architecture of high-level feature modelling in VizIR.</p>
+               </caption>
+               <graphic xlink:href=""/>
+            </fig>
+            <p> 
+               <xref id="XR37" ref-type="fig" rid="F1">Figure 1</xref> describes the general architecture of descriptor design and derivation in the VizIR framework. The left side of the figure shows the data classes. The right side shows the algorithms. The top half shows a low-level descriptor. The bottom half shows a derived descriptor. The design depicted in the figure will be discussed in the next two subsections. Essentially, the idea is that semantically enriched descriptors should be derived from data classes, since they may use completely different algorithms. Aggregated and localised descriptors should be derived from the algorithm classes, because they produce different data classes by using the same or similar algorithms.</p>
+         </sec>
+         <sec>
+            <title>4.2 Feature aggregation and localisation</title>
+            <p>In VizIR, descriptors are stored to databases through an object-oriented mapping technique. Instances of descriptors containing media-specific data are serialised to BLOBs. The BLOBs are referenced by unique IDs (including the class name). For this approach it is necessary that descriptors that create specific output have unique names. Unfortunately, for example, in the MPEG-7 standard, visual descriptors can be configured to create different descriptions (e.g. Scalable Colour histograms may have 32 or 64 bins). If the descriptor classes creating these descriptions would be of the same name and be configured for specific use (e.g. by getters/setters), incompatible descriptions could not be distinguished in VizIR. Therefore, as a first step for aggregation/localisation it is necessary to find an appropriate solution for descriptor configuration. The solution in VizIR, shown in the top right of <xref id="XR40" ref-type="fig" rid="F1">Figure 1</xref>, is straight-forward: The fundamental description procedure is implemented in a DescriptorLogic class. This class may be defined as being abstract. Optionally, the algorithmic details may be laid down in a separate DescriptorModel class (e.g. transformations, visual operators). For parameterisation, the</p>
+            <p>DescriptorLogic use DescriptorModel parameterise DescriptorLogicB ... Lower-level descriptor Aggregation / Higher-level descriptor localisation DescriptorLogic</p>
+            <p>DescriptorLogic class has a constructor with all relevant parameters. To use a specific version of the descriptor it is sub- classed with a default descriptor that calls the super descriptor with the desired parameters (e.g. histogram size). Since the sub-class needs to have a unique name, its instances can easily be stored to a database and be distinguished from other versions of the same descriptor. The same pattern is used for aggregation and localisation. This feature is implemented as a parameter of type Spatio-Temporal Locator (MPEG-7; in VizIR: a Java class). Then, basically, a spatially and/or temporally specific version of a descriptor is a sub-class of the general descriptor algorithm. In case of aggregation, if an additional envelope is required (e.g. a Time Series container or a Figure Trajectory , see Subsection 2.1) it is necessary to overload the corre- sponding DescriptorInfo class of DescriptorLogic as well. Again, since the class name of the derived class is unique, this means no problem for the persistence system. <xref id="XR43" ref-type="fig" rid="F2">Figure 2</xref> shows a further case of simple localisation and aggregation. If the specialised feature is the result of sub- sampling of existing descriptor data, the aggregation/localisation process can be performed by an XSL transformer encapsulated in a DescriptorLogic class.</p>
+         </sec>
+         <sec>
+            <title>4.3 Semantic feature enrichment</title>
+            <p>In contrast to aggregation and localisation, completely different workflows and algorithms are used for semantic enrichment of features. In consequence, it would not make sense to derive semantic descriptors on the algorithm level ( DescriptorLogic ). In VizIR, semantic feature classes are descriptions ( DescriptorInfo objects) derived from existing descriptions. <xref id="XR46" ref-type="fig" rid="F3">Figure 3</xref> sketches this process. Descriptor data and additional knowledge are used to create semantic features. If the enrichment process is linear and all required</p>
+            <p>MPEG-7 aggregation / localisation structures XSL Derived MPEG-7 Trans- MPEG-7 descriptor former compliant data descriptor Framework components</p>
+            <fig id="F2">
+               <caption>
+                  <p>Figure 2: Simple aggregation/localisation of features.</p>
+               </caption>
+               <graphic xlink:href=""/>
+            </fig>
+            <p>information is available as XML structured data, again, an XSL transformer is sufficient to create the semantic feature. If a more sophisticated logic (e.g. a statistical procedure) is applied for semantic enrichment, it is recommended to embed the enrichment process in a DescriptorLogic class that is not derived from the feature extraction classes used for the low-level features. This paradigm guarantees the existence of reasonable data and logic classes for any type of feature. Consequently, arbitrarily long chains of semantic enrichment, aggregation and localisation of features can be modelled and implemented in VizIR.</p>
+         </sec>
+      </sec>
+      <sec>
+         <title>4.4 Implementation details</title>
+         <p>VizIR is based on the Java programming language. Although persistence management is based on an object-oriented database model, it is an important design goal that descriptors are stored into the database in a valid XML format (e.g. the MPEG-7 schemes). Non-VizIR applications (e.g. XSL transformers) have to be able to read the descriptions as well. Internally, descriptions are represented by appropriate mem- ory structures (essentially, one class per tag). Handling is based on the Document Object Model (DOM) of the World Wide Web Consortium. The JDom package is used for description parsing and writing. To guarantee that the database requirement is met, JDom is used to (redundantly) serialise the description DOMs to string variables. These strings are stored in the database and used as starting point for semantic enrichment of features. As pointed out above, XSL transformers could solve some of the problems associated with feature aggregation, localisation and enrichment. At the moment, several frameworks for XSL transformation are available and under development. We are currently preferring the Cocoon framework of the Apache project [<xref id="XR52" ref-type="bibr" rid="R7">7</xref>], as it is Java-based, in a mature state and easy to install and use. For the applications pro- posed above, implementing an appropriate transformation style-sheet would be sufficient.</p>
+         <sec>
+            <title>2.1 MPEG-7</title>
+         </sec>
+      </sec>
+      <sec>
+         <title>5. CONCLUSION</title>
+         <p>In this paper, we sketch solutions for the manipulation of visual features in the visual information retrieval framework  VizIR. Considered manipulations are aggregation of feature data over time, localisation in time and/or space and semantic enrichment of features with additional knowledge. Solu- tions are software patterns for the derivation of feature logic classes and data classes as well as interfaces to helpful ex- ternal components (e.g. XSL transformers). The presented solutions will be implemented in the VizIR framework and be made available to the VIR community as free software.</p>
+         <p>Descriptor data Descriptor data High-level ... descriptor logic Additional knowledge High-level ... descriptor information</p>
+         <fig id="F3">
+            <caption>
+               <p>Figure 3: Semantic enrichment of features in VizIR.</p>
+            </caption>
+            <graphic xlink:href=""/>
+         </fig>
+      </sec>
+      <sec>
+         <title>ACKNOWLEDGEMENTS</title>
+         <p>The author would like to thank Christian Breiteneder and Roman Divotkey for their valuable suggestions for im- provement. The VizIR project is supported by the Austrian Scientific Research Fund FWF und grant number P16111- N05.</p>
+      </sec>
+      <sec>
+         <title>REFERENCES</title>
+      </sec>
+   </body>
+   <back>
+      <ref-list>
+         <ref id="R1">
+            <mixed-citation>[1] S.F. Chang, T. Sikora and A. Puri, "Overview of the MPEG-7 standard", IEEE Transactions on Circuits and Systems for Video Technology , vol. 11, no. 6, pp. 688-695, June 2001.</mixed-citation>
+         </ref>
+         <ref id="R2">
+            <mixed-citation>[2] H. Eidenberger and C. Breiteneder, "VizIR – A Framework for Visual Information Retrieval", Journal of Visual Languages and Computing , vol. 14, pp. 443-469, Sep- tember 2003.</mixed-citation>
+         </ref>
+         <ref id="R3">
+            <mixed-citation>[3] H. Eidenberger, "Media Handling for Visual Information Retrieval in VizIR", in Proc. SPIE Visual Communica- tions and Image Processing Conference 2003 , SPIE vol. 5150, July 2003, pp. 1078-1088.</mixed-citation>
+         </ref>
+         <ref id="R4">
+            <mixed-citation>[4] B.S. Manjunath, J.R. Ohm, V.V. Vasudevan and A. Ya- mada, "Color and texture descriptors", IEEE Transactions on Circuits and Systems for Video Technology , vol. 11, no. 6, pp. 703-715, June 2001.</mixed-citation>
+         </ref>
+         <ref id="R5">
+            <mixed-citation>[5] University of Geneva, Multimedia Retrieval Markup Language website, <ext-link ext-link-type="uri" href="http://www.mrml.net/,">http://www.mrml.net/,</ext-link> last visited 2004-01-07.</mixed-citation>
+         </ref>
+         <ref id="R6">
+            <mixed-citation>[6] Vienna University of Technology, VizIR project website, <ext-link ext-link-type="uri" href="http://vizir.ims.tuwien.ac.at/,">http://vizir.ims.tuwien.ac.at/,</ext-link> last visited 2004-01-07.</mixed-citation>
+         </ref>
+         <ref id="R7">
+            <mixed-citation>[7] Apache project, Cocoon framework website, <ext-link ext-link-type="uri" href="http://cocoon.apache.org/,">http://cocoon.apache.org/,</ext-link> last visited 2004-01-07</mixed-citation>
+         </ref>
+      </ref-list>
+   </back>
+</article>

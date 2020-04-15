@@ -1,0 +1,945 @@
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN" "JATS-archivearticle1.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+  <front>
+    <journal-meta />
+    <article-meta>
+      <title-group>
+        <article-title>Intertranslatability of Abstract Argumentation Frameworks</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <string-name>Sylwia Polberg</string-name>
+          <xref ref-type="aff" rid="aff0">0</xref>
+        </contrib>
+        <aff id="aff0">
+          <label>0</label>
+          <institution>University College London</institution>
+          ,
+          <country country="UK">United Kingdom</country>
+        </aff>
+      </contrib-group>
+      <abstract>
+        <p>argumentation is a rich research subfield of AI and till today, numerous frameworks for it have been proposed. It is thus natural to ask whether one can translate between these structures, and what are the price and consequences of undergoing this process. Although every study explains how a given structure relates to the cornerstone of abstract argumentation - Dung's framework - there are less results available concerning the connections between more advanced formalisms. Moreover, the existing research is not particularly systematized or classified in a way that would clearly show us the properties of a given transformation. In our work, we address these issues by creating an in-depth compendium on the intertranslatability of argumentation frameworks, describing approximately eighty translations. Furthermore, we provide a system for analyzing a given transformation in terms of its functional, syntactical, semantical and computational properties and the underlying methodology.</p>
+      </abstract>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="sec-1">
+      <title>-</title>
+      <p>
+        Over the last years, argumentation has become an
+influential subfield of artificial intelligence, with applications
+ranging from legal reasoning
+        <xref ref-type="bibr" rid="ref11 ref20 ref28 ref5">(Bench-Capon, Prakken, and Sartor
+2009)</xref>
+        to dialogues and persuasion
+        <xref ref-type="bibr" rid="ref11 ref20 ref28">(McBurney and Parsons
+2009; Prakken 2009)</xref>
+        to medicine
+        <xref ref-type="bibr" rid="ref18 ref19">(Fox et al. 2010; Hunter
+and Williams 2012)</xref>
+        to eGovernment
+        <xref ref-type="bibr" rid="ref23">(Atkinson,
+BenchCapon, and McBurney 2006)</xref>
+        . Within it, we can distinguish
+the abstract argumentation approaches, at the heart of which
+lies Dung’s argumentation framework
+        <xref ref-type="bibr" rid="ref13">(Dung 1995)</xref>
+        . Since
+the structure itself was relatively limited, as it took into
+account only the conflict relation between the arguments, it
+inspired the search for more general models
+        <xref ref-type="bibr" rid="ref10 ref17 ref27">(Brewka,
+Polberg, and Woltran 2014)</xref>
+        . Throughout the years, many of its
+extensions were proposed, ranging from the ones
+employing various strengths and preferences to those that focus
+on researching new types of relations between arguments
+        <xref ref-type="bibr" rid="ref1 ref10 ref12 ref17 ref21 ref22 ref23 ref24 ref27 ref3 ref7 ref8">(Baroni et al. 2011; Cayrol and Lagasquie-Schiex 2013;
+Nielsen and Parsons 2007; Nouioua 2013; Polberg and Oren
+2014; Brewka and Woltran 2010; Amgoud and Vesic 2011;
+Bench-Capon 2003; Modgil 2009)</xref>
+        .
+      </p>
+      <p>Such an amount of frameworks should not come as a
+surprise. Argumentation is a wide area with numerous
+applications, in which one has to face different classes of problems.
+Frameworks of a given type can be seen as tools to model
+particular issues and concepts, which on one side gives us
+more insight into how to approach the problems, but on the
+other affects the framework’s design. Nevertheless, with so
+many available structures, it is only natural to ask whether
+one can translate one framework into another, and what are
+the price and consequences of undergoing this process.</p>
+      <p>
+        The ability to transform one framework into another is
+both of theoretical and practical value. The majority of the
+existing formalisms does not have a dedicated solver.
+Therefore, a translation into one that does, such as Dung’s
+framework or abstract dialectical framework
+        <xref ref-type="bibr" rid="ref16 ref17 ref27 ref8">(Egly, Gaggl, and
+Woltran 2010; Ellmauthaler and Strass 2014)</xref>
+        , can
+facilitate the development of argumentation–based applications.
+Moreover, if our purpose is to solve a variety of problems for
+which different frameworks are suitable, translations would
+allow us to choose the most adequate one to work “in the
+background”.
+      </p>
+      <p>Our study can be seen as more research–oriented. The
+behavior of the semantics and what structural changes a
+framework has to undergo gives us an insight into how e.g. a given
+relation between arguments works and how it can or
+cannot be simulated by other concepts. For example, we can try
+to transform one form of support into another, support into
+attack or preference into an argument. However, the
+ability to perform a conversion is one thing; what is also
+important is the price we need to pay for it, and by this we
+do not mean just the computational cost of the process.
+Depending on how intrusive the modifications are, our source
+framework can be represented in a way that it is no longer
+possible to retrieve the original structure from it. We can
+be forced to assume some structure of arguments, drop or
+add – possibly exponentially many – elements of the
+framework. As a result, we can reach a point in which propagating
+the change in the source structure to the target one can
+become nearly impossible without repeating the translation
+altogether. This can make using translations in a dynamic
+setting quite problematic. Finally, even if we manage to create a
+non–intrusive, well–behaved translation, it might be the case
+it is such only for a subclass of the possible source
+frameworks. Similarly, an intricate transformation can be
+significantly simplified if certain assumptions are made.
+Therefore, the efficiency, semantics behavior, structural changes
+and domain coverage attributed with a given translation can
+be used to compare both the transformations and different
+argumentation frameworks.</p>
+      <p>
+        The result of our work is an in–depth compendium on
+the intertranslatability of argumentation frameworks,
+consisting of approximately eighty translations. Our focus will
+be on the Dung’s framework
+        <xref ref-type="bibr" rid="ref13">(Dung 1995)</xref>
+        , frameworks with
+joint attacks
+        <xref ref-type="bibr" rid="ref23">(Nielsen and Parsons 2007)</xref>
+        and recursive
+attacks
+        <xref ref-type="bibr" rid="ref3">(Baroni et al. 2011)</xref>
+        , extended argumentation
+framework and its collective generalization
+        <xref ref-type="bibr" rid="ref1 ref21 ref22">(Modgil 2009;
+Modgil and Bench-Capon 2011)</xref>
+        , bipolar argumentation
+framework
+        <xref ref-type="bibr" rid="ref12">(Cayrol and Lagasquie-Schiex 2013)</xref>
+        , argumentation
+framework with necessities
+        <xref ref-type="bibr" rid="ref24">(Nouioua 2013)</xref>
+        , evidential
+system
+        <xref ref-type="bibr" rid="ref10 ref17 ref27">(Polberg and Oren 2014)</xref>
+        and abstract dialectical
+framework
+        <xref ref-type="bibr" rid="ref8">(Brewka and Woltran 2010)</xref>
+        . We not only propose a
+number of new approaches, but also complete and, if
+necessary, correct, the existing ones
+        <xref ref-type="bibr" rid="ref1 ref10 ref11 ref12 ref17 ref20 ref21 ref23 ref24 ref26 ref26 ref27 ref3 ref8 ref8 ref9">(Nielsen and Parsons 2007;
+Oren, Reed, and Luck 2010; Baroni et al. 2011; Cayrol and
+Lagasquie-Schiex 2009; Nouioua 2013; Brewka et al. 2013;
+Modgil and Bench-Capon 2011; Oren, Reed, and Luck
+2010; Polberg and Oren 2014; Cayrol and Lagasquie-Schiex
+2013)</xref>
+        . As a result of our study, the abstract dialectical
+frameworks emerge as perhaps the most general structures,
+capable of handling even the extended argumentation framework,
+for which the existing results were more limited
+        <xref ref-type="bibr" rid="ref1 ref21">(Modgil and
+Bench-Capon 2011)</xref>
+        .
+      </p>
+      <p>
+        In order to be able to compare our approaches and speak
+of their quality, we also introduce a classification system for
+describing a given translation in terms of functional,
+syntactical, semantical and computational properties. These
+attributes are meant to grasp different aspects of a
+transformation that we have discussed previously. Furthermore, we
+identify certain common patterns behind various translations
+and thus also propose to categorize them with respect to
+the underlying methodology. Finally, when possible, we use
+the existing research on semantics signatures
+        <xref ref-type="bibr" rid="ref15">(Dunne et al.
+2015; Dyrkolbotn 2014)</xref>
+        in order to show whether the
+proposed translations can or cannot be replaced by methods
+with more desirable semantical aspects.
+      </p>
+      <p>Acknowledgments
+The author is a member of the Vienna PhD School of
+Informatics. This research was funded by project I1102 supported
+by the Austrian Science Fund FWF. The author is currently
+supported by EPSRC Project EP/N008294/1 “Framework
+for Computational Persuasion”.</p>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <ref id="ref1">
+        <mixed-citation>
+          <string-name>
+            <surname>Amgoud</surname>
+            ,
+            <given-names>L.</given-names>
+          </string-name>
+          , and
+          <string-name>
+            <surname>Vesic</surname>
+            ,
+            <given-names>S.</given-names>
+          </string-name>
+          <year>2011</year>
+          .
+          <article-title>A new approach for preference-based argumentation frameworks</article-title>
+          .
+          <source>Annals of Mathematics and Artificial Intelligence</source>
+          <volume>63</volume>
+          :
+          <fpage>149</fpage>
+          -
+          <lpage>183</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref2">
+        <mixed-citation>
+          2006.
+          <article-title>PARMENIDES: Facilitating deliberation in democracies</article-title>
+          .
+          <source>Artificial Intelligence and Law</source>
+          <volume>14</volume>
+          (
+          <issue>4</issue>
+          ):
+          <fpage>261</fpage>
+          -
+          <lpage>275</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref3">
+        <mixed-citation>
+          <string-name>
+            <surname>Baroni</surname>
+            ,
+            <given-names>P.</given-names>
+          </string-name>
+          ;
+          <string-name>
+            <surname>Cerutti</surname>
+            ,
+            <given-names>F.</given-names>
+          </string-name>
+          ;
+          <string-name>
+            <surname>Giacomin</surname>
+            ,
+            <given-names>M.</given-names>
+          </string-name>
+          ; and Guida,
+          <string-name>
+            <surname>G.</surname>
+          </string-name>
+          <year>2011</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref4">
+        <mixed-citation>
+          <source>International Journal of Approximate Reasoning</source>
+          <volume>52</volume>
+          (
+          <issue>1</issue>
+          ):
+          <fpage>19</fpage>
+          -
+          <lpage>37</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref5">
+        <mixed-citation>
+          <string-name>
+            <surname>Bench-Capon</surname>
+            ,
+            <given-names>T. J. M.</given-names>
+          </string-name>
+          ;
+          <string-name>
+            <surname>Prakken</surname>
+            , H.; and Sartor,
+            <given-names>G.</given-names>
+          </string-name>
+          <year>2009</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref6">
+        <mixed-citation>
+          Springer.
+          <fpage>363</fpage>
+          -
+          <lpage>382</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref7">
+        <mixed-citation>
+          <string-name>
+            <surname>Bench-Capon</surname>
+            ,
+            <given-names>T. J. M.</given-names>
+          </string-name>
+          <year>2003</year>
+          .
+          <article-title>Persuasion in practical argument using value-based argumentation frameworks</article-title>
+          .
+          <source>Journal of Logic and Computation</source>
+          <volume>13</volume>
+          (
+          <issue>3</issue>
+          ):
+          <fpage>429</fpage>
+          -
+          <lpage>448</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref8">
+        <mixed-citation>
+          <string-name>
+            <surname>Brewka</surname>
+            ,
+            <given-names>G.</given-names>
+          </string-name>
+          , and
+          <string-name>
+            <surname>Woltran</surname>
+            ,
+            <given-names>S.</given-names>
+          </string-name>
+          <year>2010</year>
+          .
+          <article-title>Abstract Dialectical Frameworks</article-title>
+          . In
+          <string-name>
+            <surname>Lin</surname>
+          </string-name>
+          , F.;
+          <string-name>
+            <surname>Sattler</surname>
+            ,
+            <given-names>U.</given-names>
+          </string-name>
+          ; and Truszczynski, M., eds.,
+          <source>Proceedings of the Twelfth International Conference on Principles of Knowledge Representation and Reasoning</source>
+          ,
+          <string-name>
+            <surname>KR</surname>
+          </string-name>
+          <year>2010</year>
+          . Toronto, Ontario, Canada: AAAI Press.
+        </mixed-citation>
+      </ref>
+      <ref id="ref9">
+        <mixed-citation>
+          <string-name>
+            <surname>Brewka</surname>
+            ,
+            <given-names>G.</given-names>
+          </string-name>
+          ; Ellmauthaler,
+          <string-name>
+            <surname>S.</surname>
+          </string-name>
+          ; Strass,
+          <string-name>
+            <given-names>H.</given-names>
+            ;
+            <surname>Wallner</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J. P.</given-names>
+            ; and
+            <surname>Woltran</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>S.</surname>
+          </string-name>
+          <year>2013</year>
+          .
+          <article-title>Abstract Dialectical Frameworks Revisited</article-title>
+          . In
+          <string-name>
+            <surname>Rossi</surname>
+          </string-name>
+          , F., ed.,
+          <source>Proceedings of the 23rd International Joint Conference on Artificial Intelligence, IJCAI</source>
+          <year>2013</year>
+          ,
+          <volume>803</volume>
+          -
+          <fpage>809</fpage>
+          . Beijing, China: AAAI Press / IJCAI.
+        </mixed-citation>
+      </ref>
+      <ref id="ref10">
+        <mixed-citation>
+          <string-name>
+            <surname>Brewka</surname>
+            ,
+            <given-names>G.</given-names>
+          </string-name>
+          ; Polberg,
+          <string-name>
+            <given-names>S.</given-names>
+            ; and
+            <surname>Woltran</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>S.</surname>
+          </string-name>
+          <year>2014</year>
+          .
+          <article-title>Generalizations of Dung frameworks and their role in formal argumentation</article-title>
+          .
+          <source>Intelligent Systems, IEEE</source>
+          <volume>29</volume>
+          (
+          <issue>1</issue>
+          ):
+          <fpage>30</fpage>
+          -
+          <lpage>38</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref11">
+        <mixed-citation>
+          <string-name>
+            <surname>Cayrol</surname>
+            ,
+            <given-names>C.</given-names>
+          </string-name>
+          , and
+          <string-name>
+            <surname>Lagasquie-Schiex</surname>
+            , M.-
+            <given-names>C.</given-names>
+          </string-name>
+          <year>2009</year>
+          .
+          <article-title>Bipolar abstract argumentation systems</article-title>
+          . In Simari, G., and
+          <string-name>
+            <surname>Rahwan</surname>
+          </string-name>
+          , I., eds.,
+          <source>Argumentation in Artificial Intelligence</source>
+          . Springer.
+          <fpage>65</fpage>
+          -
+          <lpage>84</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref12">
+        <mixed-citation>
+          <string-name>
+            <surname>Cayrol</surname>
+            ,
+            <given-names>C.</given-names>
+          </string-name>
+          , and
+          <string-name>
+            <surname>Lagasquie-Schiex</surname>
+            , M.-
+            <given-names>C.</given-names>
+          </string-name>
+          <year>2013</year>
+          .
+          <article-title>Bipolarity in argumentation graphs: Towards a better understanding</article-title>
+          .
+          <source>International Journal of Approximate Reasoning</source>
+          <volume>54</volume>
+          (
+          <issue>7</issue>
+          ):
+          <fpage>876</fpage>
+          -
+          <lpage>899</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref13">
+        <mixed-citation>
+          <string-name>
+            <surname>Dung</surname>
+            ,
+            <given-names>P. M.</given-names>
+          </string-name>
+          <year>1995</year>
+          .
+          <article-title>On the acceptability of arguments and its fundamental role in nonmonotonic reasoning, logic programming and n-person games</article-title>
+          .
+          <source>Artificial Intelligence</source>
+          <volume>77</volume>
+          :
+          <fpage>321</fpage>
+          -
+          <lpage>357</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref14">
+        <mixed-citation>
+          2015.
+          <article-title>Characteristics of multiple viewpoints in abstract argumentation</article-title>
+          .
+          <source>Artificial Intelligence</source>
+          <volume>228</volume>
+          :
+          <fpage>153</fpage>
+          -
+          <lpage>178</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref15">
+        <mixed-citation>
+          <string-name>
+            <surname>Dyrkolbotn</surname>
+            ,
+            <given-names>S. K.</given-names>
+          </string-name>
+          <year>2014</year>
+          .
+          <article-title>How to argue for anything: Enforcing arbitrary sets of labellings using afs</article-title>
+          .
+          <source>In Principles of Knowledge Representation and Reasoning: Proceedings of the Fourteenth International Conference, KR 2014</source>
+          , Vienna, Austria,
+          <source>July 20-24</source>
+          ,
+          <year>2014</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref16">
+        <mixed-citation>
+          <string-name>
+            <surname>Egly</surname>
+            ,
+            <given-names>U.</given-names>
+          </string-name>
+          ;
+          <string-name>
+            <surname>Gaggl</surname>
+            ,
+            <given-names>S. A.</given-names>
+          </string-name>
+          ; and
+          <string-name>
+            <surname>Woltran</surname>
+            ,
+            <given-names>S.</given-names>
+          </string-name>
+          <year>2010</year>
+          .
+          <article-title>Answer-set programming encodings for argumentation frameworks</article-title>
+          .
+          <source>Argument and Computation</source>
+          <volume>1</volume>
+          (
+          <issue>2</issue>
+          ):
+          <fpage>147</fpage>
+          -
+          <lpage>177</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref17">
+        <mixed-citation>
+          <string-name>
+            <surname>Ellmauthaler</surname>
+            ,
+            <given-names>S.</given-names>
+          </string-name>
+          , and
+          <string-name>
+            <surname>Strass</surname>
+            ,
+            <given-names>H.</given-names>
+          </string-name>
+          <year>2014</year>
+          .
+          <article-title>The DIAMOND system for computing with abstract dialectical frameworks</article-title>
+          . In Parsons, S.; Oren,
+          <string-name>
+            <given-names>N.</given-names>
+            ;
+            <surname>Reed</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>C.</given-names>
+            ; and
+            <surname>Cerutti</surname>
+          </string-name>
+          , F., eds.,
+          <source>International Conference on Computational Models of Argument (COMMA</source>
+          <year>2014</year>
+          ), volume
+          <volume>266</volume>
+          <source>of Frontiers in Artificial Intelligence and Applications</source>
+          ,
+          <volume>233</volume>
+          -
+          <fpage>240</fpage>
+          . IOS Press.
+        </mixed-citation>
+      </ref>
+      <ref id="ref18">
+        <mixed-citation>
+          <string-name>
+            <surname>Fox</surname>
+            ,
+            <given-names>J.</given-names>
+          </string-name>
+          ;
+          <string-name>
+            <surname>Glasspool</surname>
+            ,
+            <given-names>D.</given-names>
+          </string-name>
+          ;
+          <string-name>
+            <surname>Patkar</surname>
+            ,
+            <given-names>V.</given-names>
+          </string-name>
+          ; Austin,
+          <string-name>
+            <given-names>M.</given-names>
+            ;
+            <surname>Black</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>L.</given-names>
+            ;
+            <surname>South</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M.</given-names>
+            ;
+            <surname>Robertson</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>D.</given-names>
+            ; and
+            <surname>Vincent</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>C.</surname>
+          </string-name>
+          <year>2010</year>
+          .
+          <article-title>Delivering clinical decision support services: There is nothing as practical as a good theory</article-title>
+          .
+          <source>Journal of Biomedical Informatics</source>
+          <volume>43</volume>
+          (
+          <issue>5</issue>
+          ):
+          <fpage>831</fpage>
+          -
+          <lpage>843</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref19">
+        <mixed-citation>
+          <string-name>
+            <surname>Hunter</surname>
+            ,
+            <given-names>A.</given-names>
+          </string-name>
+          , and
+          <string-name>
+            <surname>Williams</surname>
+            ,
+            <given-names>M.</given-names>
+          </string-name>
+          <year>2012</year>
+          .
+          <article-title>Aggregating evidence about the positive and negative effects of treatments</article-title>
+          .
+          <source>Artificial Intelligence in Medicine</source>
+          <volume>56</volume>
+          (
+          <issue>3</issue>
+          ):
+          <fpage>173</fpage>
+          -
+          <lpage>190</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref20">
+        <mixed-citation>
+          <string-name>
+            <surname>McBurney</surname>
+            ,
+            <given-names>P.</given-names>
+          </string-name>
+          , and
+          <string-name>
+            <surname>Parsons</surname>
+            ,
+            <given-names>S.</given-names>
+          </string-name>
+          <year>2009</year>
+          .
+          <article-title>Dialogue games for agent argumentation</article-title>
+          . In Simari, G., and
+          <string-name>
+            <surname>Rahwan</surname>
+          </string-name>
+          , I., eds.,
+          <source>Argumentation in Artificial Intelligence</source>
+          . Springer.
+          <fpage>261</fpage>
+          -
+          <lpage>280</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref21">
+        <mixed-citation>
+          <string-name>
+            <surname>Modgil</surname>
+            ,
+            <given-names>S.</given-names>
+          </string-name>
+          , and
+          <string-name>
+            <surname>Bench-Capon</surname>
+            ,
+            <given-names>T. J. M.</given-names>
+          </string-name>
+          <year>2011</year>
+          .
+          <article-title>Metalevel argumentation</article-title>
+          .
+          <source>Journal of Logic and Computation</source>
+          <volume>21</volume>
+          (
+          <issue>6</issue>
+          ):
+          <fpage>959</fpage>
+          -
+          <lpage>1003</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref22">
+        <mixed-citation>
+          <string-name>
+            <surname>Modgil</surname>
+            ,
+            <given-names>S.</given-names>
+          </string-name>
+          <year>2009</year>
+          .
+          <article-title>Reasoning about preferences in argumentation frameworks</article-title>
+          .
+          <source>Artificial Intelligence</source>
+          <volume>173</volume>
+          (
+          <fpage>9</fpage>
+          -10):
+          <fpage>901</fpage>
+          -
+          <lpage>934</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref23">
+        <mixed-citation>
+          <string-name>
+            <surname>Nielsen</surname>
+            ,
+            <given-names>S. H.</given-names>
+          </string-name>
+          , and
+          <string-name>
+            <surname>Parsons</surname>
+            ,
+            <given-names>S.</given-names>
+          </string-name>
+          <year>2007</year>
+          .
+          <article-title>Argumentation in Multi-Agent Systems</article-title>
+          : Third International Workshop, ArgMAS 2006 Hakodate, Japan, May 8,
+          <source>2006 Revised Selected and Invited Papers</source>
+          . Berlin, Heidelberg: Springer Berlin Heidelberg.
+          <article-title>chapter A Generalization of Dung's Abstract Framework for Argumentation: Arguing with Sets of Attacking Arguments</article-title>
+          ,
+          <fpage>54</fpage>
+          -
+          <lpage>73</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref24">
+        <mixed-citation>
+          <string-name>
+            <surname>Nouioua</surname>
+            ,
+            <given-names>F.</given-names>
+          </string-name>
+          <year>2013</year>
+          .
+          <article-title>Scalable uncertainty management: 7th international conference</article-title>
+          , sum
+          <year>2013</year>
+          , washington, dc, usa, september
+          <volume>16</volume>
+          -
+          <fpage>18</fpage>
+          ,
+          <year>2013</year>
+          . proceedings. volume
+          <volume>8078</volume>
+          <source>of LNCS.</source>
+        </mixed-citation>
+      </ref>
+      <ref id="ref25">
+        <mixed-citation>
+          <string-name>
+            <surname>Berlin</surname>
+          </string-name>
+          , Heidelberg: Springer Berlin Heidelberg. chapter AFs with Necessities:
+          <source>Further Semantics and Labelling Characterization</source>
+          ,
+          <fpage>120</fpage>
+          -
+          <lpage>133</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref26">
+        <mixed-citation>
+          <string-name>
+            <surname>Oren</surname>
+            ,
+            <given-names>N.</given-names>
+          </string-name>
+          ;
+          <string-name>
+            <surname>Reed</surname>
+            ,
+            <given-names>C.</given-names>
+          </string-name>
+          ; and Luck,
+          <string-name>
+            <surname>M.</surname>
+          </string-name>
+          <year>2010</year>
+          .
+          <article-title>Moving between argumentation frameworks</article-title>
+          .
+          <source>In Proceedings of the 2010 conference on Computational Models of Argument: Proceedings of COMMA</source>
+          <year>2010</year>
+          ,
+          <volume>379</volume>
+          -
+          <fpage>390</fpage>
+          . Amsterdam, The Netherlands, The Netherlands: IOS Press.
+        </mixed-citation>
+      </ref>
+      <ref id="ref27">
+        <mixed-citation>
+          <string-name>
+            <surname>Polberg</surname>
+            ,
+            <given-names>S.</given-names>
+          </string-name>
+          , and
+          <string-name>
+            <surname>Oren</surname>
+            ,
+            <given-names>N.</given-names>
+          </string-name>
+          <year>2014</year>
+          .
+          <article-title>Revisiting support in abstract argumentation systems</article-title>
+          . In Parsons, S.; Oren,
+          <string-name>
+            <given-names>N.</given-names>
+            ;
+            <surname>Reed</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>C.</given-names>
+            ; and
+            <surname>Cerutti</surname>
+          </string-name>
+          , F., eds.,
+          <source>Computational Models of Argument - Proceedings of COMMA</source>
+          <year>2014</year>
+          , volume
+          <volume>266</volume>
+          <source>of Frontiers in Artificial Intelligence and Applications</source>
+          ,
+          <volume>369</volume>
+          -
+          <fpage>376</fpage>
+          . IOS Press.
+        </mixed-citation>
+      </ref>
+      <ref id="ref28">
+        <mixed-citation>
+          <string-name>
+            <surname>Prakken</surname>
+            ,
+            <given-names>H.</given-names>
+          </string-name>
+          <year>2009</year>
+          .
+          <article-title>Models of persuasion dialogue</article-title>
+          . In Simari, G., and
+          <string-name>
+            <surname>Rahwan</surname>
+          </string-name>
+          , I., eds.,
+          <source>Argumentation in Artificial Intelligence</source>
+          . Springer.
+          <fpage>281</fpage>
+          -
+          <lpage>301</lpage>
+          .
+        </mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

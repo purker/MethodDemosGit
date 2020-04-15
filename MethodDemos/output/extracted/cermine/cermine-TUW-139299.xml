@@ -1,0 +1,549 @@
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN" "JATS-archivearticle1.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+  <front>
+    <journal-meta>
+      <journal-title-group>
+        <journal-title>March</journal-title>
+      </journal-title-group>
+    </journal-meta>
+    <article-meta>
+      <title-group>
+        <article-title>Interactive Visualization of Time-Oriented Treatment Plans and Patient Data THESIS SUMMARY</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <string-name>Wolfgang Aigner</string-name>
+        </contrib>
+      </contrib-group>
+      <pub-date>
+        <year>2004</year>
+      </pub-date>
+      <volume>15</volume>
+      <issue>2004</issue>
+      <abstract>
+        <p>This thesis presents methods to support protocol-based care in medicine. Time-oriented treatment plans and patient data are represented visually providing various interaction possibilities to aid execution and analysis of medical therapy plans formulated in the representation language Asbru. We introduce a two-view approach consisting of a Logical View and a Temporal View. The Logical View depicts therapy plans using a flow-chart like representation based on “clinical algorithm maps”. The Temporal View on the other hand depicts plans as well as patient data in form of parameters and variables over time. The plan visualization method within the Temporal View is based on the idea of LifeLines. For being able to depict hierarchical structures and temporal uncertainties, we extended this concept and a novel glyph called PlanningLine has been developed. The development is embedded into a 3-step evaluation process including a user study with eight domain experts (physicians) at the beginning to acquire users' needs, a design evaluation, and an evaluation of our software prototype at the end of the thesis project.</p>
+      </abstract>
+    </article-meta>
+  </front>
+  <body>
+    <fig>
+      <graphic xlink:href="D:\output\methods\cermine\cermine-TUW-139299.images\img_3_1.png" />
+    </fig>
+    <sec id="sec-1">
+      <title>Introduction</title>
+      <p>The use of clinical guidelines and treatment plans has a profound history in the medical field and is
+widely used. The purpose of such representations and documents is primarily to enable discussion
+and communication among medical staff (physicians, nursing personnel, etc.) as well as improving the
+quality of care by setting up certain “standard procedures”.</p>
+      <p>Most clinical guidelines are represented in plain text, rarely including tables and flow-charts.
+Computer support is desirable for various reasons: First of all obviously to ease document exchange, editing,
+and reuse. Furthermore, due to the semiformal structure of such documents, taking it a step further
+towards creation, runtime, and analysis support introduces a much higher level of aid. Tool support
+in this sense helps to cope with ongoing information overflow, eases quality assessment, and facilitates
+information respectively knowledge exchange. Clinical guidelines and protocols can be seen as skeletal
+plans as used in some planning approaches.</p>
+      <p>Planning techniques are well known in the field of Artificial Intelligence (AI). Various approaches and
+solutions to solve planning problems have been carried out by the AI-, respectively planning community
+since the 1960s. But most of these techniques can only be applied to well defined and limited problems.
+The real-world domain medicine requires much more flexibility: Well defined problems and processes
+are the exception rather than the rule, and uncertainty is an important factor. Traditional planning
+approaches are not able to support these requirements. Therefore, special techniques for medical plan
+management, like the Asgaard/Asbru [Miksch, 1999] approach (this work is part of) and others [Wang
+et al., 2001], have been carried out.</p>
+      <p>Most of the scientific projects dealing with medical treatment planning concentrate on the knowledge
+representation and acquisition as well as the implementation of that knowledge in real world
+environments. From a human-machine point of view, they focus almost entirely on the “machine end” of the
+human-machine chain. Very little work has been carried out to bridge the gap between the formal AI
+methods used “behind the scenes” and real consumers: physicians, nursing and other medical
+personnel. This work is intended to fill this gap. It aids physicians during plan execution by providing an
+easy-to-use, intuitive interface approach towards medical treatment planning, starting from the user’s
+point of view.
+The top level goals of this thesis are to:
+• provide a considerable treatment documentation,
+• offer better analysis support by using appropriate visualization methods,
+• merge various information sources,
+• improve therapy, and
+• help to concentrate on the essentials in the daily routine.</p>
+      <p>These goals represent vital improvements and advantages for the work process of physicians.
+2</p>
+    </sec>
+    <sec id="sec-2">
+      <title>The Plan Representation Language Asbru</title>
+      <p>The underlying plan representation language used for this work is Asbru [Seyfang et al., 2002, Miksch
+et al., 1997] which is a time-oriented, intention-based, skeletal plan-specification representation language
+that is used in the Asgaard Project to represent clinical guidelines and protocols.</p>
+      <p>Visualizing Asbru plans imposes six fundamental problem characteristics on the representation that
+have to be considered:
+• time-oriented data from the past to future planning data including a rich set of time attributes
+allowing to depict uncertainties
+• logical sequences
+• hierarchical decomposition
+• non-uniform element types
+• state characteristics of conditions
+• flexible execution order (sequential, parallel, unordered, any-order)</p>
+      <p>Based on the identified basic issues, we investigated related work in medical treatment planning,
+information visualization, medicine, and commercial medical software products.
+3</p>
+    </sec>
+    <sec id="sec-3">
+      <title>Related</title>
+    </sec>
+    <sec id="sec-4">
+      <title>Work</title>
+      <p>The related work presented here is only a part of the state-of-the-art research carried out in this thesis,
+but represents the most important and most influential ones:</p>
+      <p>
+        There is a number of scientific projects dealing with protocol based care in medicine present
+        <xref ref-type="bibr" rid="ref11 ref6">(see
+[Peleg et al., 2003, www.openclinical.org, 2003])</xref>
+        , but only some of these projects provide graphical tools
+at all, and most of them only for authoring plans. They use a flowchart- or workflow-like presentation
+depicting the elements used in their formal representation.
+      </p>
+      <p>The most widely used visual representation of clinical guidelines in the medical domain are so-called
+flow-chart algorithms also known as clinical algorithm maps [Hadorn, 1995, Society for Medical Decision
+Making, 1992]. But these clinical algorithm maps were intended to be used on paper only and have
+never been enriched by computer support as for example navigation or versatile annotation possibilities.
+Furthermore, flow-charts cannot straightforwardly be used to represent temporal data, concurrent tasks,
+or the complex conditions used in Asbru.</p>
+      <p>A simple and intuitive information visualization technique representing processes respectively states
+over time are so called “Life Lines” [Plaisant et al., 1998] which have previously been used to depict
+patient histories.</p>
+      <p>Because none of the existing visualization methods fulfilled all the requirements defined, we framed
+out a new conceptual design.</p>
+    </sec>
+    <sec id="sec-5">
+      <title>Design and Implementation</title>
+      <p>We took a two-view approach introducing a Logical View and a Temporal View for representing plans,
+parameters, and variables (see Fig. 1). For the Logical View we created a flowchart-like representation
+based on clinical algorithm maps. For depicting plans within the Temporal View, we extended the
+LifeLine concept and developed a novel glyph called PlanningLine. A PlanningLine is able to represent
+incidents having temporal uncertainties. Moreover, this glyph is not limited to the medical domain, but
+can be used for a variety of applications.</p>
+      <p>In order to proof our concept and give as well as get a better impression especially of interaction
+issues, we implemented a Java prototype. For displaying the flowchart-like part of our
+representation to depict plan step elements, we use the graph drawing framework JGraph [Alder, 2002a, Alder,
+2002b]. This is a flexible, small, and powerful package using the Model-View-Controller paradigm and
+is structured analogous to the standard Swing component javax.swing.JTree.
+5</p>
+    </sec>
+    <sec id="sec-6">
+      <title>User Involvement</title>
+      <p>We applied a user-centric approach when developing our visual representation: We involved real
+consumers from the very beginning by carrying out a user study and evaluated our design as well as
+our prototype thoroughly. This increases the quality of design, the user acceptance, and serves as an
+indicator of the maturity of development.</p>
+      <p>The first step of major importance for requirement analysis in our development process was to
+conduct a user study with eight physicians to gain deeper insights into the medical domain, work practices,
+application of guidelines in daily work, users’ needs, expectations, and imaginations. When
+summarizing and evaluating the results of our user study the following desired fundamental characteristics can be
+recognized: a simple and transparent structure, intuitive interaction (easy to learn and comprehend),
+a cleaned up interface, a high level of application safety (undo where possible), time saving (allowing
+quick and effective work), fast, and flexible.</p>
+      <p>We have examined and proven the usefulness of our two-view approach (Logical View and Temporal
+View) by performing a 3-step evaluation process including the user study, design evaluation, and
+prototype evaluation as described in detail in Chapters 7 and 8 of the thesis.
+The use of software in contrast to paper allows us to support the process of exploring and understanding
+treatment plans at a higher level. It enables a meaningful navigation, providing annotations on demand
+for not overwhelming the viewer, and keeping orientation by using Focus + Context techniques, thus
+increasing the flexibility in working with treatment plans. The interaction is carried out intuitively
+by applying well known techniques from standard software supported by different Focus + Context
+techniques for keeping an overview. The most important user requirement of being time-saving is
+achieved by combining intuitive navigation and rich information presentation including annotations
+and linked documents in a structured way. This is in contrast to working with paper-based treatment
+protocols that are often a mix of text, tables, and graphics, scattered over various pages, making it hard
+to keep an overview and conceive the logic of a guideline.</p>
+      <p>An additional value besides communicating plans to domain experts became apparent during
+development: The visualization of plans helps to spot problems, bugs, and ambiguities in the formal plan
+representation which are hard to see and detect otherwise. Furthermore, the visualization serves as an
+important basis for the communication between medical domain experts and computer scientists.</p>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <ref id="ref1">
+        <mixed-citation>
+          [Alder, 2002a] Alder,
+          <string-name>
+            <surname>G.</surname>
+          </string-name>
+          (
+          <year>2002a</year>
+          ).
+          <article-title>Design and Implementation of the JGraph Swing Component</article-title>
+          .
+          <source>Technical Report 1.0.6.</source>
+        </mixed-citation>
+      </ref>
+      <ref id="ref2">
+        <mixed-citation>
+          [Alder, 2002b] Alder,
+          <string-name>
+            <surname>G.</surname>
+          </string-name>
+          (
+          <year>2002b</year>
+          ).
+          <article-title>The Home Page of JGraph</article-title>
+          . http://jgraph.sourceforge.net.
+        </mixed-citation>
+      </ref>
+      <ref id="ref3">
+        <mixed-citation>
+          <source>[Hadorn</source>
+          , 1995] Hadorn,
+          <string-name>
+            <surname>D. C.</surname>
+          </string-name>
+          (
+          <year>1995</year>
+          ).
+          <article-title>Use of Algorithms in Clinical Practice Guideline Development: Methodology Perspectives</article-title>
+          . AHCPR Pub., (No.
+          <fpage>95</fpage>
+          -0009):
+          <fpage>93</fpage>
+          -
+          <lpage>104</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref4">
+        <mixed-citation>
+          <source>[Miksch</source>
+          , 1999] Miksch,
+          <string-name>
+            <surname>S.</surname>
+          </string-name>
+          (
+          <year>1999</year>
+          ).
+          <article-title>Plan Management in the Medical Domain</article-title>
+          .
+          <source>AI Communications</source>
+          ,
+          <volume>12</volume>
+          (
+          <issue>4</issue>
+          ):
+          <fpage>209</fpage>
+          -
+          <lpage>235</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref5">
+        <mixed-citation>
+          [Miksch et al.,
+          <year>1997</year>
+          ] Miksch,
+          <string-name>
+            <given-names>S.</given-names>
+            ,
+            <surname>Shahar</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>Y.</given-names>
+            ,
+            <surname>Horn</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>W.</given-names>
+            ,
+            <surname>Popow</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>C.</given-names>
+            ,
+            <surname>Paky</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>F.</surname>
+          </string-name>
+          , and Johnson,
+          <string-name>
+            <surname>P.</surname>
+          </string-name>
+          (
+          <year>1997</year>
+          ).
+          <article-title>Time-Oriented Skeletal Plans: Support to Design and Execution</article-title>
+          .
+          <source>In Fourth European Conference on Planning (ECP'97)</source>
+          . Springer.
+        </mixed-citation>
+      </ref>
+      <ref id="ref6">
+        <mixed-citation>
+          [Peleg et al.,
+          <year>2003</year>
+          ] Peleg,
+          <string-name>
+            <given-names>M.</given-names>
+            ,
+            <surname>Tu</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>S.</given-names>
+            ,
+            <surname>Bury</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J.</given-names>
+            ,
+            <surname>Ciccarese</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>P.</given-names>
+            ,
+            <surname>Fox</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J.</given-names>
+            ,
+            <surname>Greenes</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>R.</surname>
+          </string-name>
+          , Hall,
+          <string-name>
+            <surname>R.</surname>
+          </string-name>
+          , Johnson,
+          <string-name>
+            <given-names>P.</given-names>
+            ,
+            <surname>Jones</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>N.</given-names>
+            ,
+            <surname>Kumar</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>A.</given-names>
+            ,
+            <surname>Miksch</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>S.</given-names>
+            ,
+            <surname>Quaglini</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>S.</given-names>
+            ,
+            <surname>Seyfang</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>A.</given-names>
+            ,
+            <surname>Shortliffe</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>E.</given-names>
+            , and
+            <surname>Stefanelli</surname>
+          </string-name>
+          (
+          <year>2003</year>
+          ).
+          <article-title>Comparing Computer-Interpretable Guideline Models: A Case-Study Approach</article-title>
+          .
+          <source>The Journal of the American Medical Informatics Association (JAMIA)</source>
+          ,
+          <volume>10</volume>
+          (
+          <issue>1</issue>
+          ):
+          <fpage>52</fpage>
+          -
+          <lpage>68</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref7">
+        <mixed-citation>
+          [Plaisant et al.,
+          <year>1998</year>
+          ] Plaisant,
+          <string-name>
+            <given-names>C.</given-names>
+            ,
+            <surname>Mushlin</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>R.</given-names>
+            ,
+            <surname>Snyder</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>A.</given-names>
+            ,
+            <surname>Li</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J.</given-names>
+            ,
+            <surname>Heller</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>D.</given-names>
+            , and
+            <surname>Shneiderman</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>B.</surname>
+          </string-name>
+          (
+          <year>1998</year>
+          ).
+          <article-title>LifeLines: Using Visualization to Enhance Navigation and Analysis of Patient Records</article-title>
+          .
+          <source>In Proceedings of the 1998 American Medical Informatic Association Annual Fall Symposium</source>
+          , pages
+          <fpage>76</fpage>
+          -
+          <lpage>80</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref8">
+        <mixed-citation>
+          [Seyfang et al.,
+          <year>2002</year>
+          ] Seyfang,
+          <string-name>
+            <given-names>A.</given-names>
+            ,
+            <surname>Kosara</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>R.</given-names>
+            , and
+            <surname>Miksch</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>S.</surname>
+          </string-name>
+          (
+          <year>2002</year>
+          ).
+          <article-title>Asbru 7.3 Reference Manual</article-title>
+          .
+          <source>Technical Report Asgaard-TR-2002-1</source>
+          , Vienna University of Technology,
+          <source>Institut of Software Technology &amp; Interactive Systems</source>
+          , Vienna, Austria, Europe.
+        </mixed-citation>
+      </ref>
+      <ref id="ref9">
+        <mixed-citation>
+          <article-title>[Society for Medical Decision Making, 1992] Society for Medical Decision Making (</article-title>
+          <year>1992</year>
+          ).
+          <article-title>Proposal for Clinical Algorithm Standards</article-title>
+          .
+          <source>Medical Decision Making</source>
+          ,
+          <volume>12</volume>
+          (
+          <issue>02</issue>
+          ):
+          <fpage>149</fpage>
+          -
+          <lpage>154</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref10">
+        <mixed-citation>
+          <string-name>
+            <surname>[Wang</surname>
+          </string-name>
+          et al.,
+          <year>2001</year>
+          ]
+          <string-name>
+            <surname>Wang</surname>
+            ,
+            <given-names>D.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Peleg</surname>
+            ,
+            <given-names>M.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Tu</surname>
+            ,
+            <given-names>S.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Shortliffe</surname>
+            ,
+            <given-names>E.</given-names>
+          </string-name>
+          , and
+          <string-name>
+            <surname>Greenes</surname>
+            ,
+            <given-names>R.</given-names>
+          </string-name>
+          (
+          <year>2001</year>
+          ).
+          <article-title>Representation of Clinical Practice Guidelines for Computer-Based Implementations</article-title>
+          .
+          <source>MedInfo</source>
+          ,
+          <volume>10</volume>
+          (Pt 1):
+          <fpage>285</fpage>
+          -
+          <lpage>9</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref11">
+        <mixed-citation>
+          <source>[www.openclinical.org</source>
+          ,
+          <year>2003</year>
+          <article-title>] www</article-title>
+          .openclinical.org (
+          <year>2003</year>
+          ).
+          <article-title>Open Clinical - Knowledge Management for Medical Care</article-title>
+          . http://www.openclinical.org.
+        </mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

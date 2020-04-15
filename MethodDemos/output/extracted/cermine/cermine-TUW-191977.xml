@@ -1,0 +1,392 @@
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN" "JATS-archivearticle1.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+  <front>
+    <journal-meta />
+    <article-meta>
+      <title-group>
+        <article-title>A Functionality Perspective on Digital Library Interoperability</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <string-name>G. Athanasopoulos</string-name>
+          <xref ref-type="aff" rid="aff1">1</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>E. Fox</string-name>
+          <email>fox@vt.edu</email>
+          <xref ref-type="aff" rid="aff0">0</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Y. Ioannidis</string-name>
+          <xref ref-type="aff" rid="aff1">1</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>G. Kakaletris</string-name>
+          <xref ref-type="aff" rid="aff1">1</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>N. Manola</string-name>
+          <xref ref-type="aff" rid="aff1">1</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>C. Meghini</string-name>
+          <email>carlo.meghini@isti.cnr.it</email>
+          <xref ref-type="aff" rid="aff4">4</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>A. Rauber</string-name>
+          <email>rauber@ifs.tuwien.ac.at</email>
+          <xref ref-type="aff" rid="aff3">3</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>D. Soergel</string-name>
+          <email>dsoergel@buffalo.edu</email>
+          <xref ref-type="aff" rid="aff2">2</xref>
+        </contrib>
+        <aff id="aff0">
+          <label>0</label>
+          <institution>Dept. of Computer Science, Virginia Tech</institution>
+          ,
+          <addr-line>Blacksburg, VA</addr-line>
+          ,
+          <country country="US">USA</country>
+        </aff>
+        <aff id="aff1">
+          <label>1</label>
+          <institution>Dept. of Informatics and Telecommunications, University of Athens</institution>
+          ,
+          <country country="GR">Greece</country>
+        </aff>
+        <aff id="aff2">
+          <label>2</label>
+          <institution>Dept. of Library and Information Studies, University of Buffalo</institution>
+          ,
+          <addr-line>New York</addr-line>
+          ,
+          <country country="US">USA</country>
+        </aff>
+        <aff id="aff3">
+          <label>3</label>
+          <institution>Dept. of Software Technology and Interactive Systems, Vienna University of Technology</institution>
+          ,
+          <addr-line>Vienna</addr-line>
+          ,
+          <country country="AT">Austria</country>
+        </aff>
+        <aff id="aff4">
+          <label>4</label>
+          <institution>Istituto della Scienza e delle Tecnologie della Informazione, Consiglio Nazionale delle Ricerche</institution>
+          ,
+          <addr-line>Pisa</addr-line>
+          ,
+          <country country="IT">Italy</country>
+        </aff>
+      </contrib-group>
+      <abstract>
+        <p>Digital Library (DL) interoperability requires addressing a variety of issues associated with functionality. We report on the analysis and solutions identified by the Functionality Working Group of the DL.org project during its deliberations on DL interoperability. Ultimately, we hope that work based on our perspective will lead to improved architectures and software, as well as to greater interoperability, for next-generation DL systems.</p>
+      </abstract>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="sec-1">
+      <title>-</title>
+      <p>A huge volume of information and knowledge is acquired and managed by distinct
+Digital Libraries (DLs). This leads to problems for academic and public libraries that
+often work with scores of such DLs and seek to support patrons facing a broad range
+of systems and services. Similar problems are faced by students, faculty, researchers,
+scholars, knowledge workers, and the general public. Also of concern is e-science,
+where labs and centers must use different DLs to address global challenges.</p>
+      <p>Interoperability among all the DLs needed in each case is a serious concern.
+Manifesting a broad range of features and capabilities, DL systems employ diverse
+proprietary solutions and varying applications of a broad range of standards. The
+problem is further aggravated by the complexity and scale of modern DL systems and
+problems such as API mismatch, data format mismatch, and missing components.</p>
+      <p>
+        Interoperability has been the main issue of concern for the DL.org project [
+        <xref ref-type="bibr" rid="ref4">4</xref>
+        ]. Its
+work is based on the DELOS Digital Library Reference Model [
+        <xref ref-type="bibr" rid="ref3">3</xref>
+        ], in particular, the
+multi-dimensional representation of the DL domain and the identification of six
+primary concepts that characterize Digital Libraries: content, users, functionality,
+policy, quality, and architecture. In this paper, we present results from the discussions
+of the DL.org Functionality Working Group [
+        <xref ref-type="bibr" rid="ref4">4</xref>
+        ]. This Working Group is focusing on
+interoperability with respect to one of these concepts, DL functionality, while still
+remaining within the broader context of the entire DL space.
+2
+      </p>
+    </sec>
+    <sec id="sec-2">
+      <title>Functions, Interoperability, and Compatibility</title>
+      <p>
+        There are many definitions of function. The Reference Model defines function as: “an
+action a DL component or a DL user performs” [
+        <xref ref-type="bibr" rid="ref3">3</xref>
+        ]. In software engineering, a
+function is a portion of code or a module that performs a specific task (or action); it is
+embedded within a larger program but remains relatively independent from the rest of
+the code. Function interoperability is often concerned with software modules that
+implement a DL function. The mathematical definition of a function as a mapping
+from a domain to a range is not important here.
+      </p>
+      <p>Function interoperability is of particular importance in DLs, as indicated in Table
+1. Such interoperability serves three main purposes: i) To provide users of one DL
+access to the content and functionality of other DLs; ii) To harmonize the user
+experience provided by different DLs so that the user who has learned to use one DL
+can use other DLs easily; iii) To save effort in creating new DLs or adding
+functionality to existing DLs, by reusing existing software components.
+two levels. More formally, DL B is product-compatible with DL A with respect to
+functionality if the following hold:
+1. DL B provides all functions that DL A provides (product compatibility with
+respect to functions provided),
+2. DL B uses the same interface with DL A to invoke functions, where interface
+refers to names of functions, shape and color of buttons, screen layout, command
+names, and syntax (full product compatibility).</p>
+      <p>From a framework based point of view, function interoperability requires:
+1. an entity-relationship schema,
+2. a taxonomy of the ways in which functions can interoperate, and
+3. a template for the description of functions and software components.
+3</p>
+    </sec>
+    <sec id="sec-3">
+      <title>Specifications, Solutions, and Ontologies</title>
+      <p>A function specification, using a template such as the following, facilitates
+identification of what a function does and how a system or a human may interact with it.
+• Function Behavior: providing a description of what a function does and of the
+supported interaction with actors (systems/users)
+• API/Interface Specification: illustrating the Input and Output data and
+parameters, data formats/standards, pre-conditions and post-conditions
+• Dependencies/Relationships/Use: detailing the operating environment in
+which a function runs; other functions needed; functions that invoke this
+function; composite functions and workflows
+• Interoperability Concerns: documenting what is required for interoperability
+and how does a specific implementation meet these requirements
+• Performance evaluation, assessment, and advice for use</p>
+      <p>Specifications of many of the above properties can use existing widely used
+standards such as IDL, WSDL, SAWSDL, OWL-S, WSMO, or BPEL4WS.</p>
+      <p>
+        Clearly, there are generic concerns regarding interoperability of functions that cut
+across all types of software systems and others that are particular to DLs. A function
+can be implemented as a service; thus the Service Oriented Computing (SOC) domain
+is of particular interest. In that context, there are already proposed static and dynamic
+solutions. Static solutions can be found in the e-Framework (www.e-framework.org)
+or the RosettaNet community (www.rosettanet.org). Both initiatives accommodate a
+standards-based service-oriented approach with well-defined services that facilitate
+the whole range of the functionality and provided features. On the other hand,
+dynamic solutions address several of the specified issues and rely on the use of
+formally defined theories for the automated provision of adapters. Adapters handling
+incompatibilities (e.g., with interfaces, behavior, and pre/post conditions) have been
+developed by the SOC research community [
+        <xref ref-type="bibr" rid="ref1 ref2">1, 2</xref>
+        ]. These two distinctive types of
+solutions can serve as the basis for DL function interoperability as well.
+      </p>
+      <p>
+        Another important aspect when dealing with interoperability is that functions can
+be related in various ways, including the common relationship of sub-function. As
+Table 2 shows, the standard DL function “search” has many sub-functions, especially
+when advanced search is concerned. Thus, it is essential that taxonomic or, even
+better, ontological descriptions of DL functions be provided. A thorough treatment of
+this matter is given elsewhere [
+        <xref ref-type="bibr" rid="ref5">5</xref>
+        ], using the 5S framework; other work involves
+ontology mappings, alignments, and merging [
+        <xref ref-type="bibr" rid="ref6">6</xref>
+        ].
+      </p>
+      <p>Quick Search Advanced Search
+Enter a query and click search Enter keywords or phrases for selected fields
+Enter keywords or phrases for Select keyword from a list
+selected field Select Boolean operator (explicit)
+Limit results Define phrase match (explicit)
+Search subscribed titles Search within results
+Clear Limit results to (preselection), Sort by (preselection)
+Select display options, Display X results per page</p>
+      <p>Display search history
+4</p>
+    </sec>
+    <sec id="sec-4">
+      <title>Conclusions</title>
+      <p>The Functionality Working Group of the DL.org project has explored issues,
+approaches, and solutions related to the interoperation of DL functions. Essential are
+appropriate description mechanisms and registries that will facilitate the publication
+and discovery of functions. More work is also needed on function taxonomies and
+ontologies, function composition, and the relationship to interoperability of the other
+DL concepts, as addressed by other DL.org Working Groups.</p>
+      <p>Acknowledgments. Partially supported by the European Commission under project
+“DL.org: Digital Library Interoperability, Best Practices and Modelling Foundations”,
+Contract num: 231551.
+5</p>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <ref id="ref1">
+        <mixed-citation>
+          1.
+          <string-name>
+            <surname>Benatallah</surname>
+            ,
+            <given-names>B.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Casati</surname>
+            ,
+            <given-names>F.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Grigori</surname>
+            ,
+            <given-names>D.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Nezhad</surname>
+            ,
+            <given-names>R.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Toumani</surname>
+            ,
+            <given-names>F.</given-names>
+          </string-name>
+          :
+          <article-title>Developing Adapters for Web Services Integration</article-title>
+          .
+          <source>In 17th Conference on Advanced Information Systems Engineering (CAISE)</source>
+          ,
+          <year>June 2005</year>
+          , Porto, Portugal
+        </mixed-citation>
+      </ref>
+      <ref id="ref2">
+        <mixed-citation>
+          2.
+          <string-name>
+            <surname>Bordeaux</surname>
+            ,
+            <given-names>L.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Salaün</surname>
+            ,
+            <given-names>G.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Berardi</surname>
+            ,
+            <given-names>D.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Mecella</surname>
+            ,
+            <given-names>M.</given-names>
+          </string-name>
+          :
+          <article-title>When are two Web Services Compatible</article-title>
+          ? In 5th VLDB Workshop on Technologies for E-Services,
+          <year>August 2004</year>
+          , Toronto, Canada
+        </mixed-citation>
+      </ref>
+      <ref id="ref3">
+        <mixed-citation>
+          3.
+          <string-name>
+            <surname>Candela</surname>
+            ,
+            <given-names>L.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Castelli</surname>
+            ,
+            <given-names>D.</given-names>
+          </string-name>
+          , et al.:
+          <source>The DELOS Digital Library Reference Model, Foundations for Digital Libraries, Ver</source>
+          <volume>0</volume>
+          .
+          <fpage>98</fpage>
+          ., DELOS Network of Excellence - Project no.
+          <volume>507618</volume>
+          (
+          <year>2008</year>
+          )
+        </mixed-citation>
+      </ref>
+      <ref id="ref4">
+        <mixed-citation>
+          4. DL.
+          <article-title>org: Digital Library Interoperability, Best Practices and Modelling Foundations. EU funded project</article-title>
+          ,
+          <source>Contract no. 231551</source>
+          , Available at: http://www.dlorg.eu
+        </mixed-citation>
+      </ref>
+      <ref id="ref5">
+        <mixed-citation>
+          5.
+          <string-name>
+            <surname>Goncalves</surname>
+            ,
+            <given-names>M. A.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Fox</surname>
+            ,
+            <given-names>E. A.</given-names>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>L. T.</given-names>
+            <surname>Watson</surname>
+          </string-name>
+          .
+          <article-title>Towards a Digital Library Theory: A Formal Digital Library Ontology</article-title>
+          .
+          <source>Int. J. Digital Libraries</source>
+          <volume>8</volume>
+          (
+          <issue>2</issue>
+          ):
+          <fpage>91</fpage>
+          -
+          <lpage>114</lpage>
+          , April 2008
+        </mixed-citation>
+      </ref>
+      <ref id="ref6">
+        <mixed-citation>
+          6.
+          <string-name>
+            <surname>Noy</surname>
+          </string-name>
+          , N.:
+          <article-title>Semantic Integration: A Survey of Ontology-based Approaches</article-title>
+          .
+          <source>ACM SIGMOD Record</source>
+          <volume>33</volume>
+          (
+          <issue>4</issue>
+          ),
+          <year>2004</year>
+          , pp.
+          <fpage>65</fpage>
+          -
+          <lpage>70</lpage>
+        </mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

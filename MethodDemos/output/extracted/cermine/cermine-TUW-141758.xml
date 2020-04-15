@@ -1,0 +1,2882 @@
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN" "JATS-archivearticle1.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+  <front>
+    <journal-meta />
+    <article-meta>
+      <title-group>
+        <article-title>Negation Detection in Medical Documents Using Syntactical Methods</article-title>
+      </title-group>
+      <contrib-group>
+        <aff id="aff0">
+          <label>0</label>
+          <institution>accomplished at the Institute of Software Technology &amp; Interactive Systems of the Vienna University of Technology</institution>
+        </aff>
+        <aff id="aff1">
+          <label>1</label>
+          <institution>under supervision of Ao.Univ.Prof. Mag. Dr. Silvia Miksch and Mag. Dr. Katharina Kaiser</institution>
+        </aff>
+      </contrib-group>
+      <pub-date>
+        <year>2008</year>
+      </pub-date>
+      <fpage>5</fpage>
+      <lpage>10</lpage>
+      <abstract>
+        <p>by Stefan Gindl 9925024 Weissenwolffgasse 12 1210 Wien</p>
+      </abstract>
+    </article-meta>
+  </front>
+  <body>
+    <fig>
+      <graphic xlink:href="D:\output\methods\cermine\cermine-TUW-141758.images\img_1_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="D:\output\methods\cermine\cermine-TUW-141758.images\img_18_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="D:\output\methods\cermine\cermine-TUW-141758.images\img_31_1.png" />
+    </fig>
+    <sec id="sec-1">
+      <title>Dedicated to my mother.</title>
+    </sec>
+    <sec id="sec-2">
+      <title>Without you this would have never been possible.</title>
+      <p>Medical information is often stored in a narrative way, which makes the automated processing a
+difficult and time-consuming task. Persons responsible for the authoring of medical documents do
+not take care of a further processing with automated systems. So, information stored in medical
+writings is not directly usable for the processing with computers. Due to this, efforts have been
+made to transfer these narrative documents in a format easier processable with computers.</p>
+      <p>This matter of fact also applies to clinical practice guidelines (CPGs). As many medical
+documents, CPGs are written in a narrative speech as well, without regards to a computer-assisted
+processing. For the implementation of CPGs in medical facilities an automated processing is
+therefore desirable. An important fact is that a lot of information in CPGs is provided in a negated
+form, expressing that certain circumstances in patients or treatments are not available, existing
+or applicable. Although negated, this information is nevertheless very useful, since it can express
+the absence of certain conditions or diseases in patients. Moreover, negations can describe which
+treatment options should not be taken into account for a given patient, helping a practising
+physician or nurse in his/her decision process for the assortment of a proper treatment. Thus, a
+proper Negation Detection in CPGs is an important task for the automated processing of this
+type of medical documents. It helps to accelerate the decision making process and can support
+medical staff in their care for patients.</p>
+      <p>We developed algorithms capable of Negation Detection in CPGs. We use syntactical
+methods provided by the English language to achieve a precise detection of occuring negations.
+According to our results we are convinced that the involvement of syntactical methods can
+improve Negation Detection, not only in medical writings but also in arbitrary narrative texts.</p>
+      <sec id="sec-2-1">
+        <title>Kurzfassung</title>
+        <p>Medizinische Daten werden in der Regel in natu¨rlicher Sprache abgespeichert. Dies liegt daran,
+dass medizinisches Personal im Normalfall keine Ru¨cksicht auf eine sp¨atere Verarbeitung in
+automatisierten Systemen nimmt. Die Informationen sind daher nicht sofort fu¨r eine Verarbeitung
+mit Computern verfu¨gbar. Aus diesem Grund wurden vielfach Anstrengungen unternommen,
+um die Daten in ein fu¨r Computer verarbeitbares Format u¨berzufu¨hren.</p>
+        <p>Dieser Umstand gilt auch fu¨r medizinische Leitlinien (sogenannte “Clinical Practice
+Guidelines” (CPGs)). Sie sind, wie alle medizinischen Dokumente, ebenfalls in natu¨rlicher Sprache
+verfaßt, ohne Ru¨cksichtnahme auf eine computergestu¨tzte Verarbeitbarkeit. Die Einfu¨hrung von
+medizinischen Leitlinien im klinischen Umfeld macht allerdings eine automatisierte
+Verarbeitung wu¨nschenswert. In diesem Zusammenhang muß weiters beachtet werden, dass ein großer
+Teil der Information in medizinischen Leitlinien in negierter Form vorhanden ist. Die Tatsache,
+dass diese negiert vorliegt, macht sie aber deswegen nicht irrelevant oder weniger
+beachtenswert. Im Gegenteil, oftmals werden auf diese Art und Weise ungeeignete Behandlungsverfahren
+gekennzeichnet, beziehungsweise Behandlungen, die bei gegebenen physiologischen Zust¨anden
+nicht durchgefu¨hrt werden sollen oder du¨rfen. Solche Informationen k¨onnen den Behandelnden
+helfen, die richtigen Therapieverfahren anzuwenden oder auch gewisse Verfahren abzulehnen.
+Dementsprechend ist die Erfassung von Negationen (die sogenannte “Negation Detection”) in
+medizinischen Leitlinien ein essentieller Bestandteil fu¨r die automatisierte Weiterverarbeitung
+dieser Art von medizinischen Dokumenten. Entscheidungsprozesse werden somit beschleunigt
+und dies wirkt sich positiv auf die Behandlung der Patienten aus.</p>
+        <p>Um diese Aufgabe zu l¨osen haben wir Algorithmen entwickelt, die das Auffinden von
+Negationen in medizinischen Leitlinien erm¨oglichen sollen. Dazu benutzen wir syntaktische Verfahren,
+die die englische Grammatik gezielt ausnu¨tzen, um aufgetretene Negationen exakt aufzuspu¨ren.
+Unsere gewonnenen Resultate zeigen, dass die Verwendung syntaktischer Methoden dabei hilft,
+die Identifikation von Negationen zu verbessern, wobei unsere Methoden nicht nur auf
+medizinische Dokumente, sondern auf jede Art von natu¨rlichsprachlichem Text anwendbar sind.
+Contents
+iv
+5
+2 Clinical Practice Guidelines</p>
+        <sec id="sec-2-1-1">
+          <title>6 Conclusion</title>
+          <p>Bibliography</p>
+        </sec>
+      </sec>
+      <sec id="sec-2-2">
+        <title>List of Figures</title>
+        <p>3.1 Illustration of the SNOMED-CT®components [SNOMED International, 2006] .
+4.1
+4.2</p>
+        <p>Entitity-Relationship-diagram of the textfeature package of MMTx [Divita, 2005]
+Entities of MMTx’s textfeature package used within NegHunter . . . . . . . . . .
+Distribution of negated phrases . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+10
+Chapter 1</p>
+      </sec>
+      <sec id="sec-2-3">
+        <title>Introduction</title>
+        <p>A large part of medical information is only available in natural language, which makes an
+algorithmic processing with computers a very difficult task. So to say, this information is “locked
+up” in files and databases in a format not suitable for automated processing [Hripcsak et al.,
+1995]. A lot of information in medical writings also underlies the concept of negation, which
+means, that certain treatment options or parts of a diagnosis, cannot or must not be applied for
+a specific patient. Negation Detection has been treated under the circumstances of pathology
+reports [Mitchell et al., 2004], discharge summaries or radiology reports [Chapman et al., 2001].
+Still, the processing of negated terms in more complicated writings is an open topic. Negation
+detection demands a lot of knowledge about language itself to correctly identify negated words
+or terms in free text. Endeavour on this topic may help to develop computer assisted treatment
+strategies to improve patient care.</p>
+        <p>The detection of negated terms in clinical practice guidelines (CPGs) allows the faster
+filtering of relevant information. It may be important for a practitioner to decide, which treatment
+options are available for a patient and which are not. This information can also be combined
+with the occurence of specific physiological conditions. Certain treatments cannot be conducted
+under certain physiological circumstances. A fast access to this information can contribute to a
+better treatment of patients. A former processing of guidelines including a Negation Detection
+supports a practitioner in his/her decision process. Otherwise, the human researcher would need
+to read through all possible options by himself, which can be a cumbersome and time-consuming
+process.
+1.1</p>
+        <p>Motivation
+Negation is an important part of inter-human communication. It can be used to invert concepts
+and to show refusal of opinions. Sometimes persons in life-threatening situations use the simple
+word “no” to express their helplessness. In the developement of a person’s psyche and character
+a “no” implies that this person has developed his or her own will and is able to express this. A
+person who never says “no” will never be asked to give his or her view on a problem, since the
+answer is already known. The concept of negation is therefore a universal concept in the most
+languages if not in all languages.</p>
+        <p>The existence of negations in language has been philosophised by man since more than
+2000 years. Even Aristotle played with this peculiarities and tried to find a classification of the
+different types of negation in natural language and found four classes of negation. He came to the
+result that negation can be splitted into four types which he named as correlation (e.g., double
+vs. half), contrariety (e.g., good vs. bad), privation (e.g., blind vs. sighted) and contradiction
+(e.g., he sits vs. he does not sit) [Horn, 1989].</p>
+        <p>The right understanding of a negation demands a competent knowledge of the used language,
+since even one word can completely change the sense of the statement. The statement can then
+be inverted, weakened or amplified. The following simple example by Horn [Horn, 1989] shows
+this effects in negated sentences (as cited in [Mutalik et al., 2001]):
+1. I’m not tired.
+2. I’m not a bit tired. (which equals “I’m not at all tired.”)
+3. I’m not a little tired. (which equals “I’m quite tired.”)</p>
+        <p>Even this example shows the complexity of a negation in natural spoken or written language.
+In the first sentence the negation is very clear and one cannot be confused in its meaning. The
+following two sentences generate subtle problems, because one of them states the complete
+absence of tiredness (“I’m not a bit tired.”), whereas the other sentence describes a condition of
+exhaustion (“I’m not a little tired.”). A german reader who is not very familiar to the english
+language can get problems with phrases when they are written down. The second and third
+sentence seem to be equal and the lack of mimic art or a tonal amplification leaves the reader
+confused. An english native speaker will in contrast to a non-native speaker have no problems
+with the right understanding of the semantic of this sentences.</p>
+        <p>A search for negations in natural language is therefore a difficult task, but the search for
+them in a medical scope can be easier. Medical language is much more restricted than narrative
+speech, a physician will not use stilistic elements like double negation extensively to write reports
+or patients histories. Thanks to this fact a negation detection in a medical scope is supposed to
+be less difficult because of this restrictions.</p>
+        <p>Negation detection contributes to an information reduction when searching in databases.
+Search results can be minimized to the entities searched for, otherwise even negated entities
+would be returned in queries. This work contains already existing algorithms for the task of
+Negation Detection. It shows, how possible approaches can look like. We also present our
+approach of Negation Detection in the area of CPGs.
+1.2</p>
+        <p>Research Question
+In this work we examine the question, which methods best fit for a Negation Detection in
+CPGs. As medical guidelines are not written in colloquial prose the assumption was obvious
+that occuring negations would not be of the same complicated type as they are in
+person-toperson language. Guidelines may lack the often vast usage of stilistic elements such as the double
+negation. This fact may make it easier to come up to algorithms which deliver a proper result.</p>
+        <p>In order to answer the asked question the research work was divided into following five
+sections:</p>
+        <sec id="sec-2-3-1">
+          <title>Examining existing studies on Negation Detection. Initially we examined existing works</title>
+          <p>related to Negation Detection. This part of our work is relevant to decide, whether existing
+algorithms or methods can be used for our research.</p>
+        </sec>
+        <sec id="sec-2-3-2">
+          <title>Selection and analysis of a set of guidelines for developing and testing of our method.</title>
+          <p>We have chosen a set of 20 CPGs which all deal with the topic “cancer”. We used four of
+these guidelines to get an overview over the occuring negations (see Table 1.1). With this
+information we developed methods to classify and identify negations.</p>
+        </sec>
+        <sec id="sec-2-3-3">
+          <title>Development of algorithms for Negation Detection in CPGs. After the hand-reading of</title>
+          <p>the guidelines we have decided a proper Negation Detection of CPGs. We have analyzed,
+if already existing methods are applicable or if we had to develop algorithms tailored to
+CPGs.</p>
+          <p>Implementation. This part of our work contains the implementation of our methods, to see, if
+the approch is successful. Furthermore, a refinement was carried out to make the methods
+fit to the circumstances of the field of CPGs.</p>
+          <p>Evaluation. The evaluation presents the results obtained from our implementation of the
+algorithms. We provide statistical parameters used in the area of Natural Language
+Processing. We used the remaining 16 CPGs (see Table 1.2) selected before for evaluating our
+algorithms.</p>
+          <p>In the following section we initially describe CPGs, their characteristics, and how they are
+used in medical facilities. Then we present related work to the subject of Negation Detection in
+the medical scope. Furthermore, we explain, what our approach to Negation Detection in CPGs
+is and how we have come to it. In Section 5, we carry out an evaluation to give measurements
+of the performance of our methods. In the last section we subsume the results of our work and
+give future directions for our approach.
+4. Guideline for the management of cancer pain in adults and children. [Miaskkowski et al.,
+2005]
+Chapter 2</p>
+        </sec>
+      </sec>
+      <sec id="sec-2-4">
+        <title>Clinical Practice Guidelines</title>
+        <p>Clinical practice guidelines (CPGs) are “systematically developed statements to assist
+practitioner and patient decisions about appropriate health care for specific clinical circumstances”
+[Field and Lohr, 1990]. They represent the currently best known practice in a given medical
+case, they are, so to say, the “state-of-the-art” of a treatment.</p>
+        <p>The decision options collected in CPGs are gathered according to the best known evidence
+about a disease. Therefore, multidisciplinary expert groups together discuss the problem and
+all contribute to a CPG. Yet this is not the end of the development of a CPGs. As medical
+knowledge also grows and changes in time, CPGs also need to be reviewed from time to time in
+order to bring them into an actual state. This fact must be treated with special care, since CPGs
+claim to be the “state-of-the-art”, the currently best known knowledge in a certain medical field.</p>
+        <p>In the following paragraph we give an introduction into the guideline development process
+The developement of CPGs [Shekelle et al., 1999] describe the appropriate stepwise
+development process of CPGs as follows:
+1. Defining the CPG’s topic: The first step in the development process is the selection
+of the CPG’s topic. In this step it is important to exactly define which disease is treated.</p>
+        <p>A refinement is inevitable or else the subject matter would be treated to broadly.
+2. Determining the developement group: For a certain topic it is important to gather
+experts with the right expertise. Moreover, the employment of multidisciplinary groups is
+also of great significancy. Experts from different special fields contribute different opinions
+for a comprehensive treatment of a disease. For example, the treatment of cancer does
+not only require surgical knowledge but the knowledge of the usage of drug regimens
+(e.g., chemotherapy, use of epoetin) as well. Moreover, financial consideration should
+also merged with the naked treatment recommendations. Finally, the definition of group
+leaders is important for the organisation of the group, so that it effectively reaches the
+given aims.
+3. Analysis of the evidence: It is important to ensure that all available evidence is
+collected, and therefore a systematic review of the evidence is the appropriate way of
+proceeding. To evaluate the available evidence, the underlying study design needs to be considered,
+as well as studies confirming the relevance of the evidence. Finally, a summarization of
+the aggregated evidence must be carried out.</p>
+        <sec id="sec-2-4-1">
+          <title>4. Compiling evidence and writing the CPG: The evidence needs to be prepared for</title>
+          <p>the deployment in medical facilities. Clinical circumstances as well as policy or financial
+aspects must be considered. The applicability of the developed CPG must be ensured.</p>
+        </sec>
+        <sec id="sec-2-4-2">
+          <title>5. Maintenance of the CPG in the practical environment: After the introduction of</title>
+          <p>the CPG in a medical facility it needs to be reviewed at discrete points in time, and in
+case of obsolence an update is necessary. This ongoing revision of a CPG is of special
+importance, since CPGs, as mentioned earlier, are thought of as the “state-of-the-art” of
+a certain medical topic.</p>
+          <p>As one can see, the development of CPGs is a rather complicated and sophisticated process.
+However, this is necessary to ensure that CPGs remain the best known medical practice.</p>
+          <p>Although the best known practice is aggregated in CPGs, this does not mean that they must
+be performed in each and every case. The last decision, which treatment a patient should be
+given always depends on the medicating practitioner as well as the patient him-/herself. Only
+the practitioner has all information of the physiological state of a patient and only the patient
+is in the position to decide, whether he/she appreciates the treatment option or not. So, CPGs
+are also an aid for the patients themselves as well as their relatives.</p>
+          <p>CPGs are developed for certain circumstances, for example particular diseases or conditions
+in which potential patients can be. Moreover, CPGs can have several target groups, for instance
+physicians, nurses, patients, or students. In this way they aid the way of deciding, which
+treatment option properly fits to a patient’s condition and disease. They are helpful for clinicians
+who “may also use guidelines to answer specific clinical questions arising out of their day to day
+practice” [Feder et al., 1999]. For patients, CPGs represent information material, so that they
+can better estimate what is coming up to him/her until his/her (possible) convalescence. If
+targeted to students, who do not have the experience of a practicing physician, CPGs serve
+as important teaching material. Nevertheless, in most cases the target group of CPGs will be
+physicians and nurses.</p>
+          <p>An important topic in CPGs is the methodology used to analyze the evidence and to assess
+the quality and strength of the evidence. This means, what kind of research has been carried
+out to constitute the evidence of recommendations in a guideline. In this point, CPGs suffer
+from a lack of standardization. Each organization developing CPGs features a different kind of
+grading schema. This makes a cross-comparison a confusing task [Atkins et al., 2004b]. Efforts
+have been carried out to tackle this problem. For example, the GRADE working group1 aims
+a standardization of the grading schemas for the levels of evidence [Atkins et al., 2005, Atkins
+et al., 2004a]. Another attempt is to subsequently provide a meta schema based on the different
+existing schemas available in CPGs [Kaiser et al., 2007]. In this approach the different schemas
+using different symbols for the levels of evidence are mapped to a meta schema, where all grading
+schemas are represented by the same symbols, thus making a comparison possible.</p>
+          <p>The section containing the actual instructions of a CPG is the recommendations section.
+Here, the intended user can gather information about treatment options, ways of diagnosis in
+certain cases, and what kind of evidence is provided for that specific recommendation. Although
+this section contains a lot of instructions, these instruction are not a must in each and every
+case. The strict obedience of a recommendation does not always lead to good results in the
+treatment of patients. The physician has to decide for him-/herself, if this treatment option is
+reasonable for a specific patient with specific physiological characteritics. Recommendations in
+CPGs can also be meant in a negative way. This makes sense when a certain treatment must
+not or should not be accomplished for a given patient. In this case it is meaningful to provide
+a foregoing sorting out or presentation of those recommendations not advisable. A Negation
+1http://www.gradeworkinggroup.org (last assessed December 29, 2007)
+Detection helps to achieve this kind of information. Thus, treatment decision can be accelerated,
+since the physician needs not manually read through all sort of recommendations.</p>
+          <p>The authors of CPGs also give information about potential unforeseeable side effects caused
+by the implementation of a CPG. For example, some treatments for cancer can cause oncologic
+diseases by themselves. This fact needs to be regarded, when a CPG is launched in a
+medical facility. The so-called “Strength of recommendation” gives information on this topic. It
+describes, how securely a treatment option can be accomplished for certain circumstances. It
+provides aid for the decision if the specific treatment should be carried out or if there are factors
+which delimitate the benefits of the treatment. In other words, the strength of
+recommendation expresses the trade-off between the benefits and potential harms of a therapy according
+to the underlying level of evidence, which can range from a very high level (achieved by
+metaanalysis of randomized clinical trials (RCTs)) to a low level (which indicates, that an evidence
+supporting the recommendation is absent). A distinct “Benefits/Harms of implementing the
+guideline recommendations” section often also provides supplementary information to this kind
+of questioning.</p>
+          <p>For the implementation of a CPG in a medical facility there is also a section for information
+about this topic. This supports the responsible persons in the implemenation process and errors
+in the implementation can be avoided. In general, it is easier to launch CPGs in medical facilities
+with a manageable target groupt. The larger and the more complex the organization’s structure
+is, the more difficult is an implementation of CPGs. With growing complexity of the organization
+the barriers of implementation also grow [Feder et al., 1999].</p>
+          <p>As one can see, the development of a CPG is a very complex process. It can only be done by
+the cooperation of experts from several disciplines and by studying already existing knowledge
+about diseases and their options of diagnosis and treatment. The creation of a CPG is also a
+very sensible process, since false medical instructions can lead to mistakes in the treatment of
+patients and may lead to complications or even the death of persons. Although a CPG contains
+the best known knowledge on a certain health topic, the practitioner is always responsible for
+him-/herself to decide, if a specific recommendation is applicable for a patient or not. As
+mentioned earlier, they are intended to assist, not to dictate a physician.</p>
+          <p>Negation Detection contributes to a faster processing of CPGs and allows the responsible
+persons to achieve relevant information more quickly. As mentioned earlier, negative
+recommendations can be especially emphasised foregoing, or treatment options not advisable for a certain
+disease in a patient with a certain condition can be displayed. The proper detection of
+negations is therefore a contribution to the improvement of the implementation and dissemination
+of CPGs and their deployment in medical facilities
+Chapter 3</p>
+        </sec>
+      </sec>
+      <sec id="sec-2-5">
+        <title>Related Work</title>
+        <p>Although the subject of negation has already been discussed by the ancient Greek there have
+been little achievements of an automated negation understanding and processing. Specifically in
+the field of medicine there are only few studies concerning this topic. The two most important
+studies relating to an automated negation detection in medical documents have been carried out
+by the University of Pittsburgh and the Yale University School of Medicine. Furthermore, the
+University of Sofia in Bulgaria has performed a study for the identification of negations in the
+Bulgarian language, which is by now a merely researched field in this language.</p>
+        <p>In order to fully understand the explanation of used Negation Detection techniques, the
+knowledge of some important resources supporting Natural Language Processing in the realm of
+medicine will be necessary. The following section gives an insight into used resources relevant for
+the comprehension of the performed studies. Section 5 describes statistical measures necessary
+for the evaluation of the presented methods. In Sections 3.3 to 3.10 we describe related work
+for Negation Detection in the medical scope.
+3.1</p>
+        <p>Background
+For the automated processing of medical texts systematized terminology collections are applied
+to index biomedical concepts. A brief introduction into the used terminologies is given in the
+following subsections. First, we will give a brief summary of the basic vocabulary used under
+those circumstances, according to [Kaiser, 2007].</p>
+        <p>• Nomenclature: a collection of names for a certain field of knowledge
+• Classification: the attempt to identify similarities in entities and to aggregate them into
+classes
+• Thesaurus (such as the UMLS metathesaurus): simplifies the search in bibliographic
+databases by providing an inter-relation between concepts.</p>
+        <p>In the subsequent section we present popular terminology systems created for the medical
+scope.
+3.1.1</p>
+        <p>SNOMED - Systematized Nomenclature of Medicine - Cinical Terms®
+SNOMED®represents a systematized medical terminology. It is a ”comprehensive and precise
+clinical reference terminology that provides unsurpassed clinical content and expressivity for
+clinical documentation and reporting.” [SNOMED].</p>
+        <p>SNOMED®was developed by the College of American Pathologists (CAP). The CAP had by
+now worked with the ancestor of SNOMED®, SNOP (Systematized Nomenclature of Pathology).
+In the year 1974 SNOP was extended with the help of Dr. Roger Cot´e in order to contain
+vocabulary beyond the scope of the pathologic special field and SNOMED®was born.</p>
+        <p>In 1977 SNOMED®was turned from its printed representation into an electronic tool, created
+to facilitate the use for physicians, researchers, and healthcare professionals.</p>
+        <p>With SNOMED-RT (Reference Terminology) a new generation of SNOMED®was
+introduced in January 1999. SNOMED-RT was created to better fulfill the needs in the fields of
+health states, disease states, pathophysiology, treatments and outcome.</p>
+        <p>In the same year in March a fusion of SNOMED-RT and the United Kingdom National
+Health Service (NHS) Clinical Terms Version 3 (former known as the Read Codes) was
+performed. SNOMED-CT®(Clinical Terms), the currently most comprehensive vocabulary for
+medical terms, evolved from this merging.</p>
+        <p>In SNOMED-CT®medical information such as diseases is defined by concepts. These
+concepts are refined by several hierarchies or axes, for example, ”disease”, ”finding site” or
+”procedure”. In order to identify concepts they are provided with a concept ID, which is a simple
+numerical value. Existing relations among concepts are stored too.</p>
+        <p>The information provided for a given concept is composed of a unique numerical code, a
+unique name (the so called ”Fully Specified Name”) and further descriptions such as synonyms.
+Moreover, information about the concept’s location in the hierarchy and relations between other
+concepts are recorded.</p>
+        <p>Important facts of SNOMED-CT®[SNOMED]:
+• Its included Semantic Net contains over 300,000 medical concepts and the relationships
+among them
+• More than 7 million relationships are available
+• The concepts cover several fields such as diagnosis, drug definition, findings, procedures,
+anatomy etc.
+• Multiple axes and hierarchies are provided
+• It includes three main hierarchies (finding, disease, procedure) and 15 supporting
+hierarchies
+• A description logic is used for concept representation
+Figure 3.1 on page 10 shows a graphical representation of the underlying architecture:
+As of April 2007, SNOMED-CT®was taken over by the International Health Terminology
+Standards Development Organisation (IHTSDO), which is a non-profit association with place
+of residence in Denmark.
+3.1.2</p>
+        <p>International Classification of Diseases and Related Health Problems
+(ICD)
+The ICD is released by the World Health Organization (WHO) and emerged from a catalogue of
+causes of death which was introduced by the French physician Jaques Bertillon in the year 1893.
+The American Public Health Association (APHA) recommended the adoption of this catalogue
+for the improvement of medical treatment in the USA, Canada, and Mexico. In order to keep the
+register up to date the APHA recommended a revision every ten years, which was accomplished
+by the Mixed Commissions, a group consisting of the International Statistical Institute and the
+Health Organization of the League of Nations until 1948.</p>
+        <p>At that time the WHO was committed the function of revising the ICD, which happened
+one year later with the 6th revision.</p>
+        <p>In 1977 the WHO published the 9th revision of the ICD (ICD-9)consisting of three volumes,
+the first two of them containing diagnosis codes, the third covering procedure codes. From
+the ICD-9 emerged the ICD-9-CM (Clinical Modifications), which is used for the calculation of
+hospital treatment costs in order to facilitate the account with concerned insurance companies.</p>
+        <p>The currently used versions are the 1999 published 10th revision (ICD-10) and the
+ICD-9CM.</p>
+        <p>The ICD-10 provides alphanumerical codes for the identification of diseases or abnormal
+findings in humans. The ICD contains 22 different fields, each having a unique code. Diseases
+or findings within a special field are then identified by this field’s code and an additional numeric
+code specific for the finding. For example, the occurence of neoplasms is coded with the letters
+C and D, malign neoplasm have the range from C00 to C97 applied. C30 to C39 stands for
+malign neoplasms of the respiratory and intrathoracic organs. The value C34 is used for malign
+neoplasms of bronchus and lung. To conclude, the diagnosis “lung cancer in the upper lobe”
+would be codified by the alphanumeric value C34.1.
+3.1.3</p>
+        <p>Unified Medical Language System (UMLS)
+The UMLS is a controlled collection of vocabularies with its internal structure designed to map
+between them. The system was initially designed in 1986 by the National Library of Medicine,
+USA.</p>
+        <p>As UMLS is a collection of various vocabularies, it allows conversion of medical terms from
+one vocabulary into another. This fact is described in [Humphreys and Schuyler, 1993] as follows:</p>
+      </sec>
+    </sec>
+    <sec id="sec-3">
+      <title>The UMLS approach assumes continuing diversity in the formats and vocabularies of different information sources and in the language employed by different elements of the biomedical community. It is not an attempt to build a single standard biomedical vocabulary.</title>
+      <p>The structure of the UMLS contains three main knowledge sources:
+1. The Metathesaurus®: It represents the base of the UMLS, containing 5 million
+concept names identifying more then 1 million biomedical concepts. These names come from
+over 100 controlled medical vocabularies such as SNOMED CT or the ICD-9-CM.
+Metathesaurus is intended to enable the work with the different vocabularies and provides facilities
+for the information exchange between different medical databases. The scope of it is as
+wide as the underlying used source vocabularies. A software program can receive
+information from Metathesaurus, users can pose inquiries and they can obtain help for a conversion
+of a vocabulary to the existing uniform vocabularies.
+2. The Semantic Network: Semantic networks are generally the representation of a given
+knowledge base [McCray, 1989]. The network contains nodes to represent semantic
+concepts and links for the representation of relations between the concepts. For example,
+there are nodes for the representation of organisms, biologic function or chemicals. For
+UMLS the network is established to facilitate the use of the system. It categories the
+concepts in the UMLS Metathesaurus and offers relations between concepts.
+3. The SPECIALIST Lexicon: It lexicon provides the lexical information for the
+SPECIALIST Natural Language Processing System. It can be used as a general English lexicon
+expanded by a medical vocabulary. The tools were developed to deal with the high
+variability of words in the natural language. The identification of inflected words (i.e., treat:
+treats - treated - treating) can be accomplished with these.</p>
+      <p>The UMLS is an ontology — a system describing instances, concepts, attributes, and
+relations. But other than common ontologies it has a two-level structure:
+1. The Metathesaurus, a unified collection of many different medical terminologies, a
+compilation of terms, concepts, relationships, and associated information;
+2. The Semantic Network containing semantic types (one may think of semantic types as
+high-level concepts, i.e., broad categories), organized in a hierarchy of IS-A links.</p>
+      <p>
+        Lee and Geller [Lee and Geller, 2006] call such a structure a Terminological Knowledge Base
+(TKB):
+...any structure that consists of (
+        <xref ref-type="bibr" rid="ref1 ref11 ref7">1</xref>
+        ) a semantic network of semantic types; (
+        <xref ref-type="bibr" rid="ref12 ref8">2</xref>
+        ) a
+thesaurus of concepts; and (
+        <xref ref-type="bibr" rid="ref13 ref4 ref9">3</xref>
+        ) assignments of every concept to at least one semantic
+type
+3.2
+      </p>
+      <p>Evaluation
+The accuracy of an implemented algorithm needs to be analysed with approved statistical
+parameters, in order to allow a comparison with different, already existing algorithms. The value
+of a statistical parameter is also a statement about the efficiency and precision of an algorithm.
+High values signify a high quality of the used procedure. Although this seems to be a simple
+decision strategy for the usage of an algorithm, one has to be careful with the outcome of
+statistical analyses. Ignorance or the intentional abuse of these statistical parameters can very easily
+lead to a wrong decision for the choice of an algorithm. In a strict medical context adulterations
+are used to enable the launching of a new medication which has not been tested carefully enough
+before.</p>
+      <p>For the evaluation mainly four statistical parameters are used, which are listed below.
+3.2.1</p>
+      <p>Sensitivity/Recall
+The sensitivity is a statistical parameter and very often used in medicine. It provides information
+about the ability of a test to identify individuals having a special disease (an individual having
+a given disease is called “positive”, e.g., “HIV-positive”, meaning that the person carries the
+HI-virus). In other words, the sensitivity evaluates the probability of detecting a statistical unit
+to be positive, if this unit is really positive. The better the test, the more of the individuals
+having a given disease are identified.</p>
+      <p>The formula for this statistical parameter is relatively simple. As sensitivity reflects the
+accuracy of finding positive test results (i.e., the presence of a disease, the presence of a negation),
+the number of the found true positive statistical units is divided by all existing positive units in
+a basic population (when talking of sensitivity in biological circumstances):</p>
+      <p>P TruePositives
+Sensitivity =</p>
+      <p>P TruePositives + P FalseNegatives</p>
+      <p>In the case of information retrieval systems, the sensitivity is replaced by the so-called recall.
+For the calculation of this statistical parameter, partially correct identifications of entities are
+used too. Partially correct means, that in a selection process an entity has been correctly
+identified, but only a part of it. Therefore, the partially correct results contribute half the value
+of a true positive result [Lehnert et al., 1994]. The formula looks as follows:</p>
+      <p>Recall =</p>
+      <p>P TruePositives + 21 ∗ P PartiallyCorrects</p>
+      <p>P TruePositives + P FalseNegatives + P PartiallyCorrects
+3.2.2</p>
+      <p>Specificity
+This is the counterpart of the sensitivity, measuring the accuracy of finding true negative entities.
+The specificity is the probability of a test resulting negative, if the examined statistical unit is
+negative in actual fact. It is calculated by dividing the number of true negative statistical units
+by all existing negative units in the basic population:</p>
+      <p>P TrueNegatives
+Specificity =</p>
+      <p>P TrueNegatives + P FalsePositives</p>
+      <p>The existence of an HI-virus is tested with the so called ELISA test (Enzyme-linked
+Immunosorbent Assay). This test comes with both sensitivity and specifity about 99.5 %, other
+sources speak of 99.9 %. Such high values for this two statistical parameters indicate, that the
+test is of an excellent quality.</p>
+      <p>Guideline developers do not recommend chemotherapy .1
+The tagging process for the sentence expressed in passive voice leads to the following result:</p>
+    </sec>
+    <sec id="sec-4">
+      <title>Chemotherapy is not recommended by guideline developers.</title>
+      <p>Other examples for a common sentence structure would be the following tenses, each with
+example sentences:
+• Present Perfect Passive: Chemotherapy has not been recommended
+• Future I Passive: Chemotherapy will not be recommended
+• Past Perfect Passive: Chemotherapy had not been recommended
+• Conditional I Passive: Chemotherapy would not be recommended
+In these cases, the sentence structure is built in the order represented in Table 4.3:</p>
+      <p>The structure is shown exemplarily for Present Perfect Passive in Table 4.3, but it applies
+to all tenses formerly mentioned.</p>
+      <p>The following tables show the sentence structure of all tenses, starting with the common
+structure of Simple Present, Simple Past, Present Perfect, Future I, Past Perfect and Conditional
+I, all of them in the active voice. For each tense a short example sentence is provided showing
+only the verb structure, no noun phrases or other sentence components are included.</p>
+      <p>1The trigger term is highlighted in yellow, the negated phrase in springgreen.</p>
+      <sec id="sec-4-1">
+        <title>Phrase Classification</title>
+      </sec>
+      <sec id="sec-4-2">
+        <title>Present Progressive</title>
+      </sec>
+      <sec id="sec-4-3">
+        <title>Past Progressive</title>
+        <p>As one can see in the tables above there are several decisions to be made in order to receive
+the right tense. After this decision is made the negated concept represented by a noun is tagged.
+This noun can be placed before or after the negation trigger depending on whether the verb
+phrase is in active or passive form. In order to fully cover negated concepts we use a range of
+three noun phrases tagged before or after the verb phrase. We have chosen a number of three
+noun phrases in order to receive a good compromise between false-positive and false-negative
+phrases. We believe that a negation covers only a small number of phrases and not a thread of
+numerous phrases.</p>
+        <p>The next section deals with negations, where the triggers are already included in noun
+phrases.</p>
+        <p>The Intra-Phrase Triggered Negation
+In this kind of negation the negation trigger is included in a phrase. The trigger therefore
+negates exactly this phrase. For example, the sentence</p>
+      </sec>
+    </sec>
+    <sec id="sec-5">
+      <title>Evidence obtained from at least one well-designed controlled study without randomisation.</title>
+      <p>contains the negated concept “randomisation”. In this case, the negation is triggered by the
+term “without”. MMTx classifies “without randomisation” as a prepositional phrase.</p>
+      <p>NegHunter has classified four triggers for the Intra-Phrase Triggered Negation:
+1. without : occuring within a prepositional phrase
+2. no: indicates negated noun phrases
+3. inappropriate: within noun phrases
+4. ineffective: also within noun phrases
+The following rules are applied for the detection negated phrases of this type:
+&lt;Adjective Negation&gt; ::= &lt;Trigger Phrase&gt; &lt;Noun Phrase&gt;
+&lt;Trigger Phrase&gt; ::= “without” | “no”| “inappropriate” | “ineffective”
+For example, in the sentence</p>
+    </sec>
+    <sec id="sec-6">
+      <title>There is no clinical evidence that Hormone Replacement Therapy should be withheld from patients with a history of cervical cancer</title>
+      <p>the concept “clinical evidence” is negated by the term “no”.</p>
+      <p>NegHunter identifies the negation triggers and afterwards it splits up the phrase allowing a
+differentiation in negation trigger and negated term. The term which is contained in the phrase
+with the trigger is then regarded as the negated phrase. In the subsequent sentence the effect
+of the trigger “no” is shown:</p>
+    </sec>
+    <sec id="sec-7">
+      <title>There is no clinical evidence that Hormone Replacement Therapy should be with</title>
+      <p>held from patients with a history of cervical cancer.2
+In case of the negation with “without” the result would look similar:</p>
+    </sec>
+    <sec id="sec-8">
+      <title>Evidence obtained from at least one well-designed controlled study without randomisation .</title>
+      <p>All triggers are searched for with and without capital letters in order to also identify negations
+placed at the beginning of a sentence.</p>
+      <p>The two triggers “ineffective” and “inappropriate” can also occur singularly in a sentence.
+Related to the Intra-Phrase Triggered Negation they both are combined with other terms
+resulting in a noun phrase respectively a prepositional phrase. When this precondition is not given,
+these two triggers are handled by the rules of the class “Adjective Negation”, explained in 4.2.4.</p>
+      <p>In the following section we provide information about a negation type, where prepositional
+phrases are affected by negation triggers.</p>
+      <p>2The trigger is again in yellow, the negated terms are in green. This kind of highlighting phrases will be
+continued in the whole subsequent work.
+4.2.3</p>
+      <p>The Prepositional Negation
+The prepositional negation is initialized by certain phrases which require a following
+prepositional phrase. Indeed, this prepositional phrase is the negated concept in the particular sentence.
+Trigger phrases can either be nouns or adjectives.</p>
+      <p>For CPGs we use the subsequent terms initializing a prepositional negation:
+• absence
+• none
+• lack
+• free
+• freedom</p>
+      <p>Each of these phrases is followed by a prepositional phrase which is the negated phrase. The
+following schema represents the rule for this type of negation:</p>
+      <p>&lt;Prepositional Negation&gt; ::= &lt;Negation Trigger&gt; &lt;Negated Phrase&gt;
+We apply the subsequent definitions:
+&lt;Negation Trigger&gt; ::= &lt;Noun Trigger&gt; | &lt;Adjective Trigger&gt;
+&lt;Noun Trigger&gt; ::= “absence” | “lack” | “freedom”
+&lt;Adjective Trigger&gt; ::= “free” | “none”
+&lt;Negated Phrase&gt; ::= &lt;Prepositional Phrase&gt;
+The sentence</p>
+      <p>Performing an anastomosis in this setting is dependent on the patient’s general
+condition at the time of resection and the absence of other factors that indicate the
+need for a stoma to be created.</p>
+      <p>shows an example of the usage of the trigger “the absence”. Although it is a prepositional
+phrase it is considered as a negated phrase3. “The absence of other factor” equals the statement
+“no other factors”, where “other factors” are the negated phrase (one must keep in mind, that
+“no other factors” actually is an intra-phrase triggered negation, the comparison should only
+simplify the understanding). With other verbs, negated phrases which are prepositional phrases
+too are not treated as prepositional. They are negated phrases and therefore are also tagged as
+such.</p>
+      <p>In the case of the trigger “lack” the tagging process is accomplished similarly:</p>
+    </sec>
+    <sec id="sec-9">
+      <title>The chemotherapy offered will depend on the duration of the response after receiving first-line chemotherapy or the lack of response to first-line chemotherapy.</title>
+      <p>The last sentence allows a similar comparison as mentioned in the last example. The
+statement “the lack of response to first-line chemotherapy” expresses the same fact as the statement
+“there is no response to first-line chemotherapy”. Because of this, the prepositional phrase is
+actually a negated phrase. Furthermore, the following example shows the effect of the trigger
+“none”:</p>
+      <p>3in Subsection 4.2.6 we describe the handling of prepositions, which represent accessory information that can
+be added to negated phrases</p>
+    </sec>
+    <sec id="sec-10">
+      <title>Women can be cared for in primary care if the family history shows only one firstdegree or second-degree relative diagnosed with breast cancer at older than age 40 years, provided that none of the following are present in the family history.</title>
+      <p>Here, the prepositional phrase “of the following” is effected by the trigger. “None” always
+expresses the fact, that the semantic concept of the following phrase is not valid. Thus, the
+phrase after “none” is considered as negated. In CPGs, this trigger term is often used in
+sentence, where a related negated phrase does not exist. This is then the case, when the actual
+negated phrase occur in a preceding sentence. For example,</p>
+    </sec>
+    <sec id="sec-11">
+      <title>AVAILABILITY OF COMPANION DOCUMENTS. None available</title>
+      <p>In this case, “AVAILABILITY OF COMPANION DOCUMENTS” is a headline, and in
+the following paragraph the statement is expressed, that these companion documents are not
+available. In this case, the trigger term is tagged, but the related phrase is not. We do not provide
+a cross-sentence tagging, since this would lead to unpredictable results. Note the following
+sentences:</p>
+    </sec>
+    <sec id="sec-12">
+      <title>There are many patients in the hospital. None has cancer.</title>
+    </sec>
+    <sec id="sec-13">
+      <title>In the hospital are many patients. None has cancer.</title>
+      <p>These two sentences are only simple ones, yet the negated phrases occur on different locations
+within the sentences. When the sentence structure becomes more complex, these differences
+grow larger. This makes a proper Negation Detection to a task of the second sight. Therefore,
+NegHunter does not provide such tagging strategies.</p>
+      <p>There are also two triggers, which would not be regarded as triggers by persons not familiar
+with the medical language. These triggers are “free” and “freedom”. In the normal spoken
+or written language, the two terms always have a rather positive connotation. To be free of
+something is always a good thing. This is also the case in medicine, but here, the freedom from
+something means, that a specific concept could not be observed. The subsequent sentence shows
+an example:</p>
+    </sec>
+    <sec id="sec-14">
+      <title>The patient is free of pain .</title>
+      <p>To be free of pain is a positive fact for the patient. In the context of medicine this sentence
+also has the very important semantic of a lack of pain, i.e., there is no pain. This circumstances
+make the terms “free” and “freedom” to important triggers. “Freedom” works similarly:</p>
+    </sec>
+    <sec id="sec-15">
+      <title>Freedom from pain is an important indicator for the recovery of a patient.</title>
+      <p>Here, pain is also negated by “freedom”. The presence of pain would otherwise lead to the
+need of a treatment of the specific patient. This matter of fact is very important for CPGs.</p>
+      <p>In this class of negations prepositional information can also be added to a negated phrase.
+When this case occurs, the prepositional phrase containing the addtional information is
+highlighted in cornflowerblue too, as shown in the following example:</p>
+    </sec>
+    <sec id="sec-16">
+      <title>Indicates absence of directly applicable clinical studies of good quality.</title>
+      <p>The subsequent section deals with negation types, where the negation is initialized by
+adjective triggers.
+4.2.4</p>
+      <p>The Adjective Negation
+English adjectives can also be used as negation triggers. For CPGs we identified the terms
+“ineffective” and “inappropriate” as such triggers. The precondition of the usage of these two
+adjectives as triggers is that they are not combined to a noun phrase with other terms (e.g.,
+“Ineffective treatment of patients...”, see Subsection 4.2.2). This means, that the terms need
+to occur singularly in a sentence. The following decision schema is applied for the adjective
+negation:
+&lt;Adjective Negation&gt; ::= &lt;Negated Phrase&gt; &lt;Arbitrary Phrase Thread&gt; &lt;Be
+Verb&gt; &lt;Adjective Trigger&gt;
+The elements of this rule are defined as follows:
+&lt;Negated Phrase&gt; ::= &lt;Noun Phrase&gt;
+&lt;Arbitrary Phrase Thread&gt; ::= &lt;Arbitrary Phrase except Noun Phrase&gt; | (&lt;Arbitrary
+Phrase except Noun Phrase&gt; &lt;Arbitrary Phrase Thread&gt;)
+&lt;Adjective Trigger&gt; ::= “ineffective” | “inappropriate”</p>
+      <p>The adjective trigger is preceded by a verb phrase indicating that this combination negates
+the status of a phrase. Moreover, a number of arbitrary phrase can be located between this
+combination and the noun phrase, which is negated. These arbitrary phrases must not be noun
+phrases themselves. In</p>
+    </sec>
+    <sec id="sec-17">
+      <title>Recommendation indicates at least fair evidence that the service is ineffective or that harm outweighs benefit.</title>
+      <p>the term “ineffective” occurs singularly in the sentence, indicating that the preceding phrase
+is negated.</p>
+      <p>In the sentence</p>
+    </sec>
+    <sec id="sec-18">
+      <title>A superficial shave biopsy is inappropriate for suspicious pigmented lesions.</title>
+      <p>the trigger also occurs alone in the sentence. So, the phrase “A superficial shave biopsy” is
+considered as a negated phrase.</p>
+      <p>The two triggers for the Adjective Negation can also occurs as triggers of another class of
+negation types, as mentioned earlier. When one of these triggers appears within a noun phrase
+or a prepositional phrase they are handled as an Intra-Phrase Triggered Negation. In this case
+the rules described in Section 4.2.2 are applied.
+4.2.5</p>
+      <p>The Verb Negation
+Negations can also be triggered by verbs. If such a verb occurs in a sentence, the phrase related
+to this verb is considered negated. According to the suffix we decide, whether a verb represents
+an expression in the active or passive voice. For example, the suffix “ing” indicates the passive
+voice (e.g., “A treatment option is lacking”), whereas the suffix “s” indicates the active voice
+(e.g., “The patient lacks a good health status”). The decision rule for the verb negation is the
+following:</p>
+      <p>&lt;Verb Negation Active Voice&gt; ::= &lt;Active Verb Trigger&gt; &lt;Negated Phrase&gt;
+Here, the negation trigger is defined as:
+For the passive voice, the rule is:
+&lt;Active Verb Trigger&gt; ::= “lack” | “lacks” | “lacked” | “deny” | “denies” | “denied”
+&lt;Verb Negation Passive Voice&gt; ::= &lt;Negated Phrase&gt; &lt;Passive Verb Trigger&gt;
+The negation trigger is a verb in its passive voice:</p>
+      <p>&lt;Passive Verb Trigger&gt; ::= “lacking” | “denying”
+In both cases, the negated phrase is a noun phrase:</p>
+      <p>&lt;Negated Phrase&gt; ::= &lt;Noun Phrase&gt;</p>
+      <p>We identified the two triggers “lack” and “deny” as such verb triggers. The following example
+sentence shows the occurence of the trigger “lack” in active voice:</p>
+    </sec>
+    <sec id="sec-19">
+      <title>The patient lacks a good health status .</title>
+      <p>Here, as the sentence is written in active voice, the triggers negateds the succeeding phrase
+“a good health status”. In the passive voice, a preceding phrase is negated by the triggers:</p>
+    </sec>
+    <sec id="sec-20">
+      <title>Recommendation indicates that evidence that the service is effective is lacking .</title>
+      <p>4.2.6
+With prepositional phrases auxiliary information is provided in many cases. From our point of
+view it is important to label this additional pieces of information, since they deliver a specification
+of a negated concept. We decided to tag all prepositional phrases which directly follow negated
+phrases. In the sentence</p>
+    </sec>
+    <sec id="sec-21">
+      <title>Women who do not meet the criteria for referral should be cared for in primary</title>
+      <p>care by giving standard written information.4
+we see a prepositional phrase tagged in blue. In this case, only one preposition followed the
+negated concept. In opposition to this case, in the following sentence more than one prepositional
+phrase is added to the concept:</p>
+    </sec>
+    <sec id="sec-22">
+      <title>The use of anthracyclines in first line chemotherapy treatment of epithelial ovarian cancer is not recommended outside randomised controlled trials (RCTs )</title>
+      <p>For such cases we decided to tag all prepositional phrases which directly follow a concept.
+Once the thread of prepositional phrases is split up by another type of phrase the affinity to the
+concept is ended up and the tagging process stops too.</p>
+      <p>The following example shows prepositional information applied to an intra-phrase triggered
+negation:</p>
+      <p>4Prepositional information is highlighted by a blue box.</p>
+    </sec>
+    <sec id="sec-23">
+      <title>Requires availability of well conducted clinical studies but no randomised clinical trials on the topic of recommendation .</title>
+      <p>In this case we have two pieces of additional information added to the negated concept which
+for that reason are also provided with metadata that signs them as belonging to the negated
+phrase. The trigger “ineffective” shows a similar behaviour:</p>
+    </sec>
+    <sec id="sec-24">
+      <title>Ineffective treatment of patients maximizes the costs.</title>
+      <p>In the class of prepositional negations, prepositonal information can also be added to the
+negated phrase. When this case occurs, we discriminate between the negated phrase and the
+added information. It is important that the prepositional negated phrase and the prepositional
+information are not confused, since they are different concepts in the sentence. The following
+sentence, already introduced in Section 4.2.3, shows such a case:</p>
+    </sec>
+    <sec id="sec-25">
+      <title>The chemotherapy offered will depend on the duration of the response after receiving first-line chemotherapy or the lack of response to first-line chemotherapy.</title>
+      <p>Here the negated phrase and its added information are treated differently, although both
+originate from the same lexical category.</p>
+      <p>Prepositional information represents an essential part of information that must also be
+declared as belonging to the negated phrase. This kind of information often provides explanations
+which must not be lost in the Negation Detection process.</p>
+      <p>The next section gives a summary over our developed approach and resumes our aggregated
+knowledge.
+4.3</p>
+      <p>Summary
+In the preceding section we described our Negation Detection method called NegHunter. NegHunter
+uses the MMTx software as a framework for document and sentence analysis. The information
+gained from the processing of CPGs with MMTx are used for the identification of the underlying
+negation class. Each identified negation is matched to one of five defined negation categories,
+which have been developed and named in regard to their syntactical features. This means, that
+part-of-speech characteristics of the negation triggers themselves as well as their behaviour on
+negated phrases are used for their naming. For example, the “adverbial negation” uses adverbs,
+which affect a phrase via a verb and thus negate this phrase. “Adjective negation” as well as
+“verb negation” can be understood straightforward, as in these types the triggers are either
+adjectives or verbs. The “intra-phrase triggered negation” owes it’s name to the circumstance
+that the triggers are contained in the phrase they negate. Yet, triggers can be of several lexical
+categories, for example, “without” is a preposition, whereas “ineffective” is an adjective. The
+“prepositional negation” is triggered by terms, which affecta subsequent prepositional phrase,
+although they again can arise from several lexical categories (e.g. “lack” as a noun triggers a
+prepositional negation as well as “free”, which is an adjective).</p>
+      <p>This negation classification allows a targeted detection of negated phrases. This approach is
+necessary since CPGs are medical documents written in free speech, not restricted to conventions
+that could be used for a simpler algorithm design. As each individual has an individual writing
+style, all CPGs vary from from each other. NegHunter uses the basis of language itsel, so on
+this way we are able to overcome the vast possibilities of variations.</p>
+      <p>We believe thanks to the general structure of our algorithms that a deployment of NegHunter
+on documents different from CPGs can als be considered. NegHunter uses dealings of the English
+language which may also be applicable for other writings.</p>
+      <p>In the following section we provide the evaluation of our system. In Chapter 6 we resume
+our research and give a future outline of possible enhancements to our existing system.
+Chapter 5</p>
+      <sec id="sec-25-1">
+        <title>Evaluation</title>
+        <p>The final part of our work on Negation Detection consists of the evaluation of our approach. With
+this part we provide information about the performance of the presented algorithms. Moreover,
+we show the distribution of occuring negated phrases with their underlying classification.</p>
+        <p>The evaluation was carried out as follows: we initially developed a gold standard of our test
+set of totally 16 CPGs (see Section 1.2). In a second step we compared this gold standard with
+the results of the processing with NegHunter. Afterwards, we calculated the statistical values of
+recall and precision, which are generally used to evaluate Natural Language Processing systems
+(see Sections 3.2.1 and 3.2.3). Finally, we tried to identify errors in the tagging process which
+emerged due to the MMTx framework and errors related to NegHunter.</p>
+        <p>In the subsequent section we give an overview over the distribution of the phrases we
+identified as negated in our test set of 16 CPGs.</p>
+        <p>Distribution of Identified Negated Phrases
+In the 16 CPGs we used to test our negation detection algorithms we found 642 sentences
+containing totally 731 negated phrases. Of these 731 negated phrases, an overwhelmingly large
+number belonged to the class of the adverbial negation. This class of negation is not only the
+most frequent class but also the most complicated to process. It is difficult to identify negations
+of this type, since the concerning phrases can occur on the complete opposite end of the place of
+the trigger in the sentence. Other types of negations are easier to treat, since the phrase related
+to trigger is always expected subsequently to the trigger.</p>
+        <p>Figure 5.1 shows a pie chart of the distribution of negated phrases. As one can see the most
+dominant class is the adverbial negation with a total of 69 % of all counted negations. Another
+very frequent class is the intra-phrase triggered negation which holds one quarter of all phrases.
+Prepositional negation and verb negation occur in 3 % and 2 %, respectively and the adjective
+negation as the smallest class amounts to only 1 % of the detected negated phrases.</p>
+        <p>The vast amount of adverbial negations in CPGs has also a large effect on the outcome.
+The complexity leads to difficulties in the identification of the actual negated phrases. As these
+difficulties concern a negation class with a vast amount of occurences, overall recall and precision
+are strongly influenced and consequently lowered. Good results of the other classes cannot
+equalise this effect, because their number is too small. Alternatively, an efficient treatment of
+this negation type has a positive impact on the overall parameters.</p>
+        <p>In the following section we give an impression of the performance of NegHunter in each
+negation class. We show, how efficient NegHunter identifies negations of the different types.</p>
+        <p>Analysing the Performance of NegHunter
+The analysis of the performance of NegHunter was carried out using the statistical parameters
+recall and precision presented in Sections 3.2.1 and 3.2.3. The recall is a measurement for the
+quality of a method to identify interesting targets. The following formula simplifies this matter
+of fact:</p>
+        <p>Recall =</p>
+        <p>P Identified Relevant Targets</p>
+        <p>P All Exisiting Relevant Targets</p>
+        <p>On the other hand, the precision measures, how good a system discards elements of no
+interest. It’s value gives information about how many irrelevant targets were (incorrectly) identified.
+See the subsequent formula for a simplified represention:</p>
+        <p>Precision =</p>
+        <p>P Identified Relevant Targets</p>
+        <p>P All Identified Targets</p>
+        <p>A high value in recall means that a detection method has nearly covered all interesting
+entities, a high value in precision means that no redundant entities have been identified. An illegal
+way of maximizing recall would be to consider each and every entity in a writing as
+interesting. Although in this case recall would become 100 %, a high amount of needless information
+is detected too. Consequently, the value of precision would be very low (this depends on the
+amount of available entities: if there are 100 entities in a document of which 99 are of interest,
+then the consideration of all 100 entities as interesting would have high values in both recall
+and precision). The same can be applied to precision: minimizing the false positive detection to
+gain a high precision means that a lot of interesting pieces of information may have been lost
+during the detection process.</p>
+        <p>To calculate the two parameters we also have to consider partially correct results. A result is
+partially correct, if only a fraction of the whole entity could be correctly identified. For example,
+if the result of a tagging process would be “surgery”, but the actual interesting target had been
+“minimal invasive surgery”, this lack of a part of the original target would lead to one only
+partially correct result. In this case, the results counts only half the value of a true positive.
+The partially correctness is therefore a crucial element of the calculation for the analysis of the
+performance of a method.</p>
+        <p>In order to evaluate the vast amount of sentences in CPGs containing negations, we
+implemented a program to accomplish this task. This programm has as input a goldstandard CPG.
+Within this CPG it searches for negation triggers. When a negation trigger is found, the whole
+sentence is analysed for the negated phrases (which are already tagged since it is a
+goldstandard) and the analysis results are stored. Afterwards, the taggings are removed. What remains
+is the original sentence of the CPG before it was turned into the goldstandard. The original
+sentence is now sent to NegHunter, which processes it. The processed sentence is then again
+returned to the evaluation programm which analyzes it again and stores these results. Then,
+both goldstandard results and NegHunter results are compared to eachother. The consequence
+of this process is, that we afterwards have a number of true positive, false positive, false negative
+and partially correct results. These numbers are stored and the analysis results of all sentences
+in the guideline are added together, so we get overall true positives, false positives, etc.. The
+results of each guideline is stored in a spreadsheet. After the processing of all test-CPGs we had
+the true positives, false positives, etc. and calculated recall and precision with following two
+formulas:</p>
+        <p>Recall =
+Precision =</p>
+        <p>P TruePositives + 12 ∗ P PartiallyCorrects
+P TruePositives + P FalseNegatives + P PartiallyCorrects</p>
+        <p>P TruePositives + 21 ∗ P PartiallyCorrects</p>
+        <p>P TruePositives + P FalsePositives + P PartiallyCorrects</p>
+        <p>In the part now following we give a detailled analysis of the performance of NegHunter in
+each negation class.</p>
+        <p>The Adverbial Negation: This most frequent class of negation totally amounts to 507 negated
+phrases, these are 69 % of all negated phrases. Of these phrases 75.54 % were correctly
+identified, 19.92 % where missed by the detection algorithm and 4.54 % were detected only
+partially correct.
+The cell of the percentage of the false positive is empty, because of the fact that false
+positives are actually not part of the collectivity of negated phrases. They are phrases
+incorrectly considered as negated by the algorithm.</p>
+        <p>Our method achieves a recall of 77.81 % and a precision of 60.32 % in this negation type.
+The Intra-Phrase Triggered Negation: 25 % of all negated phrases originate from the
+intraphrase triggered negation. 90.11 % of these were correctly identified, whereas 7.14 % were
+missed by the algorithm. 2.75 % could only be identified partially. In Table 5.2 all values
+are listed.</p>
+        <sec id="sec-25-1-1">
+          <title>Intra-Phrase Triggered Negation</title>
+          <p>True Positive
+False Positive</p>
+          <p>False Negative
+Partially Correct</p>
+          <p>Overall</p>
+          <p>In this class we measured a recall of 91.48 % and a precision of 97.94 %.</p>
+          <p>The Prepositional Negation: The third most frequent class had an occurence of 19 negated
+phrases. Nearly 95 % of these were idenified accurately. The exact values are listed in
+Table 5.3.</p>
+          <p>Recall of this class is 94.74 %, precision measures to 78.26 %.</p>
+          <p>The Verb Negation: This negation class had an occurence of 18 phrases with a remarkable
+high number of false positive results of 11. The values are shown in Table 5.4.</p>
+        </sec>
+        <sec id="sec-25-1-2">
+          <title>Verb Negation</title>
+          <p>True Positive
+False Positive</p>
+          <p>False Negative
+Partially Correct</p>
+          <p>Overall</p>
+          <p>We calculated a recall of 88.89 % and a precision of 55.17 %.
+The Adjective Negation: In this smallest class of all negations (five negated phrases) we
+achieved results as shown in Table 5.5.</p>
+          <p>In this class we achieved a recall of 83.33 % and a precision of 100 %.</p>
+          <p>Overall values: The overall values give information on how good NegHunter performed
+without distinction between different negation classes. Due to the large number of adverbial
+negations this type strongly influence overall recall and precision. We achieved a recall of
+82.08 % and a precision in the amount of 68.1 %. Table 5.6 lists all values.</p>
+          <p>In Table 5.7 the particular values of recall and precision are also summarized again. In
+the subsequent section we give an impression of errors not related to the negation detection
+algorithms but to the underlying software MMTx.</p>
+          <p>Errors Related to MMTx
+In some cases, errors occured due to an incorrect part-of-speech tagging by the MMTx software.
+MMTx is a very sophisticated software which leads to good results in the Natural Language
+Processing.</p>
+          <p>In the adverbial negation, we could find the most errors (this class is the most frequent one).
+We had 20 false positive, 21 false negative, and 15 partially correct results in that negation type.
+The following sentence gives an example:</p>
+        </sec>
+      </sec>
+    </sec>
+    <sec id="sec-26">
+      <title>While the presence of some indicators such as perineural involvement or vascular tumor emboli alone may not necessarily indicate a high risk of recurrence, ...</title>
+      <p>Here, the phrase “a high risk” is not properly identified by MMTx. While “a risk” is correctly
+detected as a noun phrase, the combination with “high” leads to an incorrect result (MMTx
+cannot identify “a high risk” and therefore regards it as an unknown phrase), which leads to a
+false negative result in the evaluation. Another good example to show the limitations of MMTx
+is this sentence:</p>
+    </sec>
+    <sec id="sec-27">
+      <title>Trials powered to detect specified differences in main outcomes may not have sufficient power to detect adverse events that are less frequent.</title>
+      <p>In this sentence, MMTx detects the phrase “sufficient power to” as belonging together and
+classifies it as a noun phrase. This wrong classification brings one more only partially correct
+result for our evaluation.</p>
+      <p>In the intra-phrase triggered negation we had only five partially correct results. For example,
+in</p>
+    </sec>
+    <sec id="sec-28">
+      <title>There was no systematic attempt to search for all the “grey literature” (conferences, abstracts, theses and unpublished literature).</title>
+      <p>the actual negated phrase would be the “systematic attempt”. MMTx unfortunately appends
+the “to” to this phrase, leading to a partially correct result.</p>
+      <p>In the verb negation we had a similar problem:</p>
+    </sec>
+    <sec id="sec-29">
+      <title>The panel lacked a consensus to recommend it.</title>
+      <p>In this example the term “to” is also appended to the actual negated phrase “a consensus”,
+which generates an only partially correct result. In the class of verb negation, four partially
+correct results were caused by MMTx. Table 5.8 shows the numbers of registered MMTx errors
+related to their particular negation class, whereas Table 5.9 contains the relative number of
+MMTx errors compared to the overall errors. In this table one can see that on overwhelmingly
+large number of partially correct results is generated by MMTx itself (75 %), whereas only a
+relative small number of false positive (7.55 %) and false negative (18.26 %) comes from MMTx.</p>
+      <sec id="sec-29-1">
+        <title>Negation Class</title>
+        <p>Adverbial Negation
+Intra-Phrase Triggered Negation</p>
+        <p>Verb Negation</p>
+        <p>Overall
+The program shows its strength in the class of the intra-phrase triggered negation, the
+prepositional negation as well as the adjective negation. In the case of the intra-phrase triggered
+negation and the prepositional negation this matter of fact emerges through the easy structure
+of these classes. The concerned negated phrases occurs immediately after the trigger. Thus, a
+proper handling of this type is not a problem.</p>
+        <p>The adverbial negation and the verb negation need more sophisticated strategies. In these
+types verbs give information about where a phrase affected by a trigger can be. For the purpose
+of a proper Negation Detecion, one has to keep the effect of different tenses in mind. The
+knowledge of the tenses determines, whether a sentence is written in active or passive voice. On
+this basis, a decision can be made, where the negated phrase occurs in a sentence. The problem
+of finding negated phrases is also the fact that they can occur on positions far away from the
+specific trigger. Due to this problem we have not only the failure of not detecting the phrase, but
+also the failure of spuriously detecting phrases in the space between trigger and actual negated
+phrase. Although a tagging scope of three phrases away from an adverbial trigger is a good
+compromise between recall and precision, there nevertheless occur errors. We also had to place
+value on the optimization of the recall of our method, as it is easier to remove mistakenly tagged
+phrases afterwards as it is to find them again. Thus, we had to accept an increasing number of
+false positive tagging, leading to a decreasing value in precision.</p>
+        <p>We believe that a Negation Detection using syntactical methods can improve the handling of
+negations in medical writings. As we use methods which are also applicable in writings different
+from medical documents, our approach can also be applied to documents in other domains.
+It is imaginable, that an approach using full-parsing, which also regards the sentence position
+of phrases can increase the performance of our algorithms. Moreover, the deployment of our
+method of Negation Detection is also possible in a non-medical area, since our algorithms are
+universally applicable for the English language. A restriction to the medical topic is therefore
+not implicitly necessary.</p>
+        <p>A refinement for the search of negated phrases for a specific topic using semantic methods
+is also possible. One could search for phrases which explicitly only concern the field of negative
+recommendations, or otherwise, one could accomplish a search for diseases or conditions, in
+which a certain CPG, respectively a part of it, is not applicable.</p>
+        <p>Chapter 6</p>
+        <sec id="sec-29-1-1">
+          <title>Conclusion</title>
+          <p>In our presented approach we use syntactical information of the English language to decide,
+whether phrases in a sentence are affected by a negation trigger or not. The English grammar
+provides with its tenses and parts-of-speech enough information to allocate potential negated
+phrases. We use this information and created a classification system which contains five global
+classes of negation, which are distinguished by their different grammatical type. Negations
+working on neutral (in the sense that they are not negation triggers themselves) verbs using adverbs
+are therefore classified as “adverbial negation”, while negations using adjectives are referred to as
+“adjective negations”, and negations triggered by verbs are “verb negations”. Furthermore, we
+have two more types called “intra-phrase triggered negation” and the “prepositional negation”.
+In the first case, the triggers are contained in the negated phrase itself, and can be of several
+lexical categories (e.g., a preposition such as “without” or an adjective such as “ineffective”). In
+the second case, the triggers concern subsequent prepositional phrases and are not assignable to
+one specific lexical category too (e.g. the adjective “free” or the noun “lack”). Currently, our
+system is strongly limited to syntactical features. As a future outline, the involvement of
+methods using semantical aspects is conceivable. On the current base of processing, a subsequent
+deployment of semantical methods can augment the quality of Negation Detection and refine
+search parameters for interested persons. Compare the following example of [Chapman et al.,
+2001], which demonstrates negations with different contents that may be useful under different
+circumstances:</p>
+        </sec>
+      </sec>
+    </sec>
+    <sec id="sec-30">
+      <title>We did not treat the infection.</title>
+    </sec>
+    <sec id="sec-31">
+      <title>We did not detect an infection.</title>
+      <p>The first sentence indicates the absence of the treatment of an infection. Nevertheless, this
+infection is existent, whereas in the second sentence the existence of the infection itself is negated.
+This slight difference may seem dispensable, but in the medical context it gets an importance
+not negligible. With NegHunter’s syntactical methods in combination with a semantic level,
+medical data can be obtained specifically. Whereas one may be interested in negated findings in
+a certain CPG, another person maybe wants to find treatment options not advisable for special
+circumstances. Therefore, NegHunter provides a broad basis for Negation Detection which can
+be armed with special semantic concepts for any medical topic of interest.</p>
+      <p>Another option of including semantic into the Negation Detection is the observance of terms
+which are capable of modifying the strength of a negation. In our approach, the detection is a
+binary decision, i.e., a phrase can either be negated or not. In some cases, this binary method
+may not be sufficient. For example, in the sentence</p>
+    </sec>
+    <sec id="sec-32">
+      <title>Chemotherapy is not always recommended as a treatment.</title>
+      <p>CHAPTER 6. CONCLUSION
+the term “Chemotherapy” is negated, but the term “always” softens this absolute negation.
+In other words, chemotherapy is not recommended in the most cases (for example, when the
+physiological status of a person is extremly bad), anyhow, it can be appropriate under certain
+circumstances. As practitioners are strongly advised to critically adopt CPGs, the presentation
+of this type of information can therefore also be necessary.</p>
+      <p>Furthermore, we decided to chose a flexible implementation of our method in order to make
+it portable to arbitrary documents. Thanks to NegHunter’s classification of negations, an
+augmentation of already available negation triggers is always possible, thus making the system
+applicable for the usage in other types of documents. The new trigger only has to be assigned to
+a negation class and NegHunter then applies it’s rulebase for this trigger. This makes NegHunter
+portable on other documents types as well as extensible and maintainable.</p>
+      <p>Our system provides methods for a targeted detection of negations, thus making it capable
+of processing even CPGs, which under different circumstances are difficult to handle, since they
+are written in free speech. Former approaches lack these features, so NegHunter makes a great
+contribution for the topic of automated processing of CPGs. Thus, it aids the handling of CPGs
+and alleviates their deployment in the practical field.
+[Aronow and Feng, 1997] Aronow, D. B. and Feng, F. (1997). Ad-hoc classification of electronic
+clinical documents. D-Lib Magazine.
+[Aronson, 2001] Aronson, A. R. (2001). Effective mapping of biomedical text to the UMLS</p>
+      <p>
+        Metathesaurus: the MetaMap program. In Proc. of the AMIA Symposium, pages 17–21.
+[Elkin et al., 2005] Elkin, P. L., Brown, S. H., Bauer, B. A., Husser, C. S., Carruth, W.,
+Bergstrom, L. R., and Wahner-Roedler, D. L. (
+        <xref ref-type="bibr" rid="ref32">2005</xref>
+        ). A controlled trial of automated
+classification of negation from clinical notes. BMC Medical Informatics and Decision Making,
+5(
+        <xref ref-type="bibr" rid="ref22">13</xref>
+        ):1–7.
+[Field and Lohr, 1990] Field, M. J. and Lohr, K. N. (1990). Clinical Practice Guidelines:
+Directions for a New Program. National Academies Press, Institute of Medicine, Washington
+DC.
+[Hazlehurst et al., 2005] Hazlehurst, B., Frost, H. R., Sittig, D. F., and Stevens, V. J. (
+        <xref ref-type="bibr" rid="ref32">2005</xref>
+        ).
+      </p>
+      <p>
+        Mediclass: A system for detecting and classifying encounter-based clinical events in any
+electronic medical record. Journal of the American Medical Informatics Association (JAMIA),
+12(
+        <xref ref-type="bibr" rid="ref14 ref3 ref6">5</xref>
+        ):517–529.
+[Horn, 1989] Horn, L. R. (
+        <xref ref-type="bibr" rid="ref37">1989</xref>
+        ). A Natural History of Negation. University of Chicago Press,
+      </p>
+      <p>
+        Chicago, Illinois.
+[Hripcsak et al., 1995] Hripcsak, G., Friedman, C., Alderson, P. O., DuMouchel, W., Johnson,
+S. B., and Clayton, P. D. (1995). Unlocking clinical data from narrative reports: A study of
+natural language processing. Annals of Internal Medicine, 122(
+        <xref ref-type="bibr" rid="ref18">9</xref>
+        ):681–688.
+[Huang and Lowe, 2007] Huang, Y. and Lowe, H. J. (2007). A novel hybrid approach to
+automated negation detection in clinical radiology reports. Journal of the American Medical
+      </p>
+    </sec>
+    <sec id="sec-33">
+      <title>Informatics Association (JAMIA), 14:304–311.</title>
+      <p>[Humphreys and Schuyler, 1993] Humphreys, B. L. and Schuyler, P. (1993). The Unified
+Medical Language System: Moving beyond the vocabulary of bibliographic retrieval. pages 31–44.</p>
+      <p>Meckler, Westport, CT.
+[Kaiser, 2007] Kaiser, K. (2007). Medical terminology systems. Technical Report
+Asgaard-TR2007-1, Vienna University of Technology, Institute of Software Technology and Interactive
+Systems.
+[Kaiser et al., 2007] Kaiser, K., Martini, P., Miksch, S., and O¨ztu¨rk, A. (2007). A meta schema
+for evidence information in clinical practice guidelines as a basis for decision-making. volume
+129 of Studies in Health Technology and Informatics, pages 925–929, Brisbane, Australia.</p>
+      <p>AMIA, IOS Press.
+[Klein and Manning, 2003] Klein, D. and Manning, C. (2003). Accurate Unlexicalized Parsing.</p>
+    </sec>
+    <sec id="sec-34">
+      <title>In Proc of the 41st Meeting of the Association for Computational Linguistics.</title>
+      <p>
+        [Kvale, 2006] Kvale, P. (2006). Chronic cough due to lung tumors: ACCP evidence-based clinical
+practice guidelines. Chest, 129(
+        <xref ref-type="bibr" rid="ref1 ref11 ref7">1</xref>
+        ):147–153.
+[Kvale et al., 2003] Kvale, P., Simoff, M., and Prakash, U. (2003). Lung cancer. palliative care.
+      </p>
+      <p>
+        Chest, 123(
+        <xref ref-type="bibr" rid="ref1 ref11 ref7">1</xref>
+        ):284–311.
+[National Collaborating Centre for Acute Care, 2005] National Collaborating Centre for Acute
+Care (
+        <xref ref-type="bibr" rid="ref32">2005</xref>
+        ). The diagnosis and treatment of lung cancer. Clinical practice guideline, National
+Institute for Clinical Excellence (NICE), London (UK).
+[Patrick et al., 2006] Patrick, J., Wang, Y., and Budd, P. (2006). Automatic mapping clinical
+notes to medical terminologies. Proceedings of the 2006 Australasian Language Technology
+      </p>
+    </sec>
+    <sec id="sec-35">
+      <title>Workshop (ALTW2006).</title>
+      <p>
+        [Rizzo et al., 2002] Rizzo, J., Lichtin, A., Woolf, S., Seidenfeld, J., Bennett, C., Cella, D.,
+Djulbegovic, B., Goode, M., Jakubowski, A., Lee, S., Miller, C., Rarick, M., Regan, D., Browman,
+G., and Gordon, M. (2002). Use of epoetin in patients with cancer: evidence-based clinical
+practice guidelines of the american society of clinical oncology and the american society of
+hematology. Blood, 100(
+        <xref ref-type="bibr" rid="ref16">7</xref>
+        ):2003–2020.
+[Scottish Intercollegiate Guidelines Network (SIGN), 2003a] Scottish Intercollegiate Guidelines
+Network (SIGN) (2003a). Cutaneous melanoma. A national clinical guideline. SIGN
+publication 72, Scottish Intercollegiate Guidelines Network (SIGN), Edinburgh (Scotland).
+[Scottish Intercollegiate Guidelines Network (SIGN), 2003b] Scottish Intercollegiate Guidelines
+Network (SIGN) (2003b). Epithelial ovarian cancer. A national clinical guideline. SIGN
+publication 75, Scottish Intercollegiate Guidelines Network (SIGN), Edinburgh (Scotland).
+[Scottish Intercollegiate Guidelines Network (SIGN), 2005a] Scottish Intercollegiate Guidelines
+Network (SIGN) (2005a). Management of patients with lung cancer. A national clinical
+guideline. SIGN publication 80, Scottish Intercollegiate Guidelines Network (SIGN), Edinburgh
+(Scotland).
+CT.
+      </p>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <ref id="ref1">
+        <mixed-citation>
+          <source>1 Introduction 1 1</source>
+          .1
+          <string-name>
+            <surname>Motivation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1</surname>
+          </string-name>
+          <year>1</year>
+          .2 Research
+          <string-name>
+            <surname>Question . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>2 3.6.3</article-title>
+          <string-name>
+            <surname>Evaluation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 22</surname>
+          </string-name>
+          <year>3</year>
+          .
+          <issue>6</issue>
+          .4
+          <string-name>
+            <surname>Conclusio . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>22 3.7 Automatic Mapping Clinical Notes to Medical</article-title>
+          <string-name>
+            <surname>Terminologies . . . . . . . . . . . 22</surname>
+          </string-name>
+          <year>3</year>
+          .
+          <issue>7</issue>
+          .1
+          <string-name>
+            <surname>Method . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 22</surname>
+          </string-name>
+          <year>3</year>
+          .
+          <issue>7</issue>
+          .2
+          <string-name>
+            <surname>Preprocessing . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23</surname>
+          </string-name>
+          <year>3</year>
+          .
+          <issue>7</issue>
+          .3 Negation
+          <string-name>
+            <surname>Detection . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23</surname>
+          </string-name>
+          <year>3</year>
+          .
+          <issue>7</issue>
+          .4
+          <string-name>
+            <surname>Evaluation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>23 3.8 Concept Negation in Free Text Components of Vaccine Safety Reports</article-title>
+          . .
+          <source>. . . . 23 3</source>
+          .9
+          <string-name>
+            <surname>NegExpander . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 24</surname>
+          </string-name>
+          <year>3</year>
+          .10
+          <string-name>
+            <given-names>A</given-names>
+            <surname>Hybrid</surname>
+          </string-name>
+          <string-name>
+            <surname>Approach . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 24</surname>
+          </string-name>
+          <year>3</year>
+          .11
+          <string-name>
+            <surname>Discussion . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 26</surname>
+          </string-name>
+        </mixed-citation>
+      </ref>
+      <ref id="ref2">
+        <mixed-citation>
+          <source>4 NegHunter 27 4</source>
+          .1 MetaMap
+          <string-name>
+            <surname>Transfer</surname>
+            <given-names>(MMTx) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 27</given-names>
+          </string-name>
+          <year>4</year>
+          .2
+          <string-name>
+            <given-names>The</given-names>
+            <surname>Negation</surname>
+          </string-name>
+          <string-name>
+            <surname>Detection Algorithms . . . . . . . . . . . . . . . . . . . . . . . . . 30</surname>
+          </string-name>
+          <year>4</year>
+          .
+          <issue>2</issue>
+          .1
+          <string-name>
+            <given-names>The</given-names>
+            <surname>Adverbial</surname>
+          </string-name>
+          <string-name>
+            <surname>Negation . . . . . . . . . . . . . . . . . . . . . . . . . . . . 31</surname>
+          </string-name>
+          <year>4</year>
+          .
+          <issue>2</issue>
+          .2 The
+          <string-name>
+            <surname>Intra-Phrase Triggered</surname>
+            <given-names>Negation . . . . . . . . . . . . . . . . . . . . . 36</given-names>
+          </string-name>
+          <year>4</year>
+          .
+          <issue>2</issue>
+          .3
+          <string-name>
+            <given-names>The</given-names>
+            <surname>Prepositional</surname>
+          </string-name>
+          <string-name>
+            <surname>Negation . . . . . . . . . . . . . . . . . . . . . . . . . . 37</surname>
+          </string-name>
+          <year>4</year>
+          .
+          <issue>2</issue>
+          .4
+          <string-name>
+            <given-names>The</given-names>
+            <surname>Adjective</surname>
+          </string-name>
+          <string-name>
+            <surname>Negation . . . . . . . . . . . . . . . . . . . . . . . . . . . . 39</surname>
+          </string-name>
+          <year>4</year>
+          .
+          <issue>2</issue>
+          .5
+          <string-name>
+            <given-names>The</given-names>
+            <surname>Verb</surname>
+          </string-name>
+          <string-name>
+            <surname>Negation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 39</surname>
+          </string-name>
+          <year>4</year>
+          .
+          <issue>2</issue>
+          .6
+          <string-name>
+            <given-names>Assigning</given-names>
+            <surname>Prepositional</surname>
+          </string-name>
+          <string-name>
+            <surname>Information . . . . . . . . . . . . . . . . . . . . . 40</surname>
+          </string-name>
+          <year>4</year>
+          .3
+          <string-name>
+            <surname>Summary . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 41</surname>
+          </string-name>
+        </mixed-citation>
+      </ref>
+      <ref id="ref3">
+        <mixed-citation>
+          <source>5 Evaluation 43 5</source>
+          .1 Distribution of
+          <string-name>
+            <surname>Identified Negated Phrases . . . . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>43 5.2 Analysing the Performance of NegHunter . .</article-title>
+          <string-name>
+            <surname>. . . . . . . . . . . . . . . . . . . . 44</surname>
+          </string-name>
+          <year>5</year>
+          .
+          <issue>2</issue>
+          .1 Errors Related to
+          <string-name>
+            <surname>MMTx . . . . . . . . . . . . . . . . . . . . . . . . . . . 47</surname>
+          </string-name>
+          <year>5</year>
+          .
+          <issue>2</issue>
+          .2
+          <string-name>
+            <surname>Discussion . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>49 1.1 The training set of the used</article-title>
+          <string-name>
+            <surname>CPGs. . . . . . . . . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>3 1.2 The test set of the used</article-title>
+          <string-name>
+            <surname>CPGs. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4</surname>
+          </string-name>
+        </mixed-citation>
+      </ref>
+      <ref id="ref4">
+        <mixed-citation>
+          <article-title>3.1 Comparison of the performance of the baseline algorithm</article-title>
+          and
+          <source>NegEx. . . . . . . 15 3</source>
+          .
+          <article-title>2 Recall and Precision of NegEx in Pathology</article-title>
+          <string-name>
+            <surname>Reports . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>16 3.3 Differences in sensitivity and specifity in the two different examining methods. . 19 3.4 The procedure proposed by [Elkin et al</article-title>
+          .,
+          <year>2005</year>
+          <article-title>] reaches high values in all statistical parameters</article-title>
+          <string-name>
+            <surname>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>20 3.5 Performance of the Hybrid Approach on 120 Radiology</article-title>
+          <string-name>
+            <surname>Reports . . . . . . . . . . 25</surname>
+          </string-name>
+        </mixed-citation>
+      </ref>
+      <ref id="ref5">
+        <mixed-citation>
+          4.1
+          <string-name>
+            <given-names>A Simple</given-names>
+            <surname>Past</surname>
+          </string-name>
+          <article-title>Active Sentence and the splitting into its phrase components</article-title>
+          .
+          <source>. . 32 4</source>
+          .
+          <article-title>2 The classification of the phrase in a Simple Past Passive sentence</article-title>
+          <string-name>
+            <surname>. . . . . . . . .</surname>
+          </string-name>
+          <article-title>33 4.3 The classification of a phrase in Present Perfect</article-title>
+          <string-name>
+            <surname>Passive . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>34 4.4 In the active voice the phrase classification is similar for seven tenses</article-title>
+          . .
+          <source>. . . . . 34 4</source>
+          .
+          <article-title>5 The structure of Present and Past Progressive</article-title>
+          <string-name>
+            <surname>Active. . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>35 4.6 Future II and Conditional II in Active Voice spanning three Verb Phrases with their usage</article-title>
+          <string-name>
+            <surname>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>35 4.7 Simple Present and Simple Past in the Passive</article-title>
+          <string-name>
+            <surname>Voice . . . . . . . . . . . . . . . . 35</surname>
+          </string-name>
+          <year>4</year>
+          .8 Present Perfect, Past Perfect,
+          <string-name>
+            <given-names>Future I</given-names>
+            and
+            <surname>Conditional</surname>
+          </string-name>
+          <string-name>
+            <surname>I Passive. . . . . . . . . . 35</surname>
+          </string-name>
+          <year>4</year>
+          .9 Present and
+          <string-name>
+            <surname>Past Progressive Passive. . . . . . . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>35 4.10 The passive form of Future II</article-title>
+          and
+          <string-name>
+            <surname>Conditional</surname>
+            <given-names>II. . . . . . . . . . . . . . . . . . . 35</given-names>
+          </string-name>
+        </mixed-citation>
+      </ref>
+      <ref id="ref6">
+        <mixed-citation>
+          <article-title>5.1 Evaluation results of the adverbial negation</article-title>
+          <string-name>
+            <surname>. . . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>45 5.2 Evaluation results of the intra-phrase triggered</article-title>
+          <string-name>
+            <surname>negation . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>46 5.3 Evaluation results of the prepositional negation</article-title>
+          <string-name>
+            <surname>. . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>46 5.4 Evaluation results of the verb negation</article-title>
+          <string-name>
+            <surname>. . . . . . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>46 5.5 Evaluation results of the adjective negation</article-title>
+          <string-name>
+            <surname>. . . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>47 5.6 Overall evaluation results</article-title>
+          <string-name>
+            <surname>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>47 5.7 Recall and Precision in each negation class</article-title>
+          <string-name>
+            <surname>. . . . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>47 5.8 Errors of MMTx related to their negation classes</article-title>
+          <string-name>
+            <surname>. . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>48 5.9 Percentage of MMTx errors compared to overall errors</article-title>
+          <string-name>
+            <surname>. . . . . . . . . . . . . . . 49</surname>
+          </string-name>
+        </mixed-citation>
+      </ref>
+      <ref id="ref7">
+        <mixed-citation>
+          1. Breast cancer.
+          <source>[Singapore Ministry of Health, National Committee on Cancer Care</source>
+          ,
+          <year>2004</year>
+          ]
+        </mixed-citation>
+      </ref>
+      <ref id="ref8">
+        <mixed-citation>
+          2. Cervical cancer.
+          <source>[Singapore Ministry of Health</source>
+          , 2004a]
+        </mixed-citation>
+      </ref>
+      <ref id="ref9">
+        <mixed-citation>
+          3.
+          <article-title>Chemotherapeutic management of stage IV non-small cell lung cancer</article-title>
+          . [Socinsky et al.,
+          <year>2003</year>
+          ]
+        </mixed-citation>
+      </ref>
+      <ref id="ref10">
+        <mixed-citation>
+          4.
+          <article-title>Chronic cough due to lung tumors: ACCP evidence-based clinical practice guidelines</article-title>
+          .
+          <source>[Kvale</source>
+          ,
+          <year>2006</year>
+          ]
+        </mixed-citation>
+      </ref>
+      <ref id="ref11">
+        <mixed-citation>
+          1. Colorectal cancer.
+          <source>[Singapore Ministry of Health</source>
+          , 2004b]
+        </mixed-citation>
+      </ref>
+      <ref id="ref12">
+        <mixed-citation>
+          <article-title>2. Cutaneous melanoma. A national clinical guideline. [Scottish Intercollegiate Guidelines Network (SIGN)</article-title>
+          ,
+          <year>2003a</year>
+          ]
+        </mixed-citation>
+      </ref>
+      <ref id="ref13">
+        <mixed-citation>
+          3.
+          <article-title>Epithelial ovarian cancer. A national clinical guideline. [Scottish Intercollegiate Guidelines Network (SIGN)</article-title>
+          ,
+          <year>2003b</year>
+          ]
+        </mixed-citation>
+      </ref>
+      <ref id="ref14">
+        <mixed-citation>
+          <article-title>5. Long term follow up of survivors of childhood cancer. A national clinical guideline</article-title>
+          .
+          <source>[Scottish Intercollegiate Guidelines Network (SIGN)</source>
+          ,
+          <year>2004</year>
+          ]
+        </mixed-citation>
+      </ref>
+      <ref id="ref15">
+        <mixed-citation>
+          6. Lung cancer.
+          <source>Palliative care. [Kvale</source>
+          et al.,
+          <year>2003</year>
+          ]
+        </mixed-citation>
+      </ref>
+      <ref id="ref16">
+        <mixed-citation>
+          7. Management of hepatocellular carcinoma. [Bruix et al.,
+          <year>2005</year>
+          ]
+        </mixed-citation>
+      </ref>
+      <ref id="ref17">
+        <mixed-citation>
+          8.
+          <article-title>Management of patients with lung cancer. A national clinical guideline. [Scottish Intercollegiate Guidelines Network (SIGN), 2005a] Management of transitional cell carcinoma of the bladder</article-title>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref18">
+        <mixed-citation>
+          <article-title>9. A national clinical guideline. [Scottish Intercollegiate Guidelines Network (SIGN)</article-title>
+          ,
+          <year>2005b</year>
+          ]
+        </mixed-citation>
+      </ref>
+      <ref id="ref19">
+        <mixed-citation>
+          10.
+          <article-title>Practice parameters for colon cancer</article-title>
+          .
+          <source>[Otchy</source>
+          et al.,
+          <year>2004</year>
+          ]
+        </mixed-citation>
+      </ref>
+      <ref id="ref20">
+        <mixed-citation>
+          11.
+          <article-title>Small cell lung cancer</article-title>
+          .
+          <source>[Simon and Wagner</source>
+          ,
+          <year>2003</year>
+          ]
+        </mixed-citation>
+      </ref>
+      <ref id="ref21">
+        <mixed-citation>
+          12.
+          <string-name>
+            <surname>Staging</surname>
+          </string-name>
+          evaluation
+          <article-title>- Hodgkin's disease [Wolkov et al</article-title>
+          .,
+          <year>2005</year>
+          ]
+        </mixed-citation>
+      </ref>
+      <ref id="ref22">
+        <mixed-citation>
+          13.
+          <article-title>The diagnosis and treatment of lung cancer</article-title>
+          .
+          <source>[National Collaborating Centre for Acute Care</source>
+          ,
+          <year>2005</year>
+          ]
+        </mixed-citation>
+      </ref>
+      <ref id="ref23">
+        <mixed-citation>
+          14.
+          <article-title>The role of cytotoxic therapy with hematopoietic stem cell transplantation in the therapy of multiple myeloma: an evidence-based review</article-title>
+          .
+          <source>[Hahn</source>
+          et al.,
+          <year>2003</year>
+          ]
+        </mixed-citation>
+      </ref>
+      <ref id="ref24">
+        <mixed-citation>
+          15.
+          <article-title>The role of postoperative chemoradiotherapy for advanced squamous cell carcinoma of the head and neck</article-title>
+          . [Winquist et al.,
+          <year>2004</year>
+          ]
+        </mixed-citation>
+      </ref>
+      <ref id="ref25">
+        <mixed-citation>
+          16.
+          <article-title>Use of epoetin in patients with cancer: evidence-based clinical practice guidelines of the American Society of Clinical Oncology and the American Society of Hematology</article-title>
+          . [Rizzo et al.,
+          <year>2002</year>
+          ]
+        </mixed-citation>
+      </ref>
+      <ref id="ref26">
+        <mixed-citation>
+          [Atkins et al., 2004a]
+          <string-name>
+            <surname>Atkins</surname>
+            ,
+            <given-names>D.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Best</surname>
+            ,
+            <given-names>D.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Briss</surname>
+            ,
+            <given-names>P. A.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Eccles</surname>
+            ,
+            <given-names>M.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Falck-Ytter</surname>
+            ,
+            <given-names>Y.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Flottorp</surname>
+            ,
+            <given-names>S.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Guyatt</surname>
+            ,
+            <given-names>G. H.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Harbour</surname>
+          </string-name>
+          , R. T.,
+          <string-name>
+            <surname>Haugh</surname>
+            ,
+            <given-names>M. C.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Henry</surname>
+            ,
+            <given-names>D.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Hill</surname>
+            ,
+            <given-names>S.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Jaeschke</surname>
+            ,
+            <given-names>R.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Leng</surname>
+            ,
+            <given-names>G.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Liberati</surname>
+            ,
+            <given-names>A.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Magrini</surname>
+            ,
+            <given-names>N.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Mason</surname>
+            ,
+            <given-names>J.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Middleton</surname>
+            ,
+            <given-names>P.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Mrukowicz</surname>
+          </string-name>
+          , J.,
+          <string-name>
+            <surname>O'Connell</surname>
+            ,
+            <given-names>D.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Oxman</surname>
+            ,
+            <given-names>A. D.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Phillips</surname>
+            ,
+            <given-names>B.</given-names>
+          </string-name>
+          , Schu¨nemann, H.,
+          <string-name>
+            <surname>Edejer</surname>
+            ,
+            <given-names>T.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Varonen</surname>
+            ,
+            <given-names>H.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Vist</surname>
+            ,
+            <given-names>G. E.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Williams</surname>
+            Jr.,
+            <given-names>J. W.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Zaza</surname>
+            ,
+            <given-names>S.</given-names>
+          </string-name>
+          , and The GRADE Working Group (
+          <year>2004a</year>
+          ).
+          <article-title>Grading quality of evidence and strength of recommendations</article-title>
+          .
+          <volume>328</volume>
+          (
+          <issue>7454</issue>
+          ):
+          <fpage>1490</fpage>
+          -
+          <lpage>1498</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref27">
+        <mixed-citation>
+          [Atkins et al.,
+          <year>2005</year>
+          ] Atkins,
+          <string-name>
+            <given-names>D.</given-names>
+            ,
+            <surname>Briss</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>P. A.</given-names>
+            ,
+            <surname>Eccles</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M.</given-names>
+            ,
+            <surname>Flottorp</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>S.</given-names>
+            ,
+            <surname>Guyatt</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>G. H.</given-names>
+            ,
+            <surname>Harbour</surname>
+          </string-name>
+          , R. T.,
+          <string-name>
+            <surname>Hill</surname>
+            ,
+            <given-names>S.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Jaeschke</surname>
+            ,
+            <given-names>R.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Liberati</surname>
+            ,
+            <given-names>A.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Magrini</surname>
+            ,
+            <given-names>N.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Mason</surname>
+          </string-name>
+          , J.,
+          <string-name>
+            <surname>O'Connell</surname>
+            ,
+            <given-names>D.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Oxman</surname>
+            ,
+            <given-names>A. D.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Phillips</surname>
+            ,
+            <given-names>B.</given-names>
+          </string-name>
+          , Schu¨nemann, H.,
+          <string-name>
+            <surname>Edejer</surname>
+            ,
+            <given-names>T.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Vist</surname>
+            ,
+            <given-names>G. E.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Williams</surname>
+            Jr.,
+            <given-names>J. W.</given-names>
+          </string-name>
+          , and The GRADE Working Group (
+          <year>2005</year>
+          ).
+          <article-title>Systems for grading the quality of evidence and the strength of recommendations II: Pilot study of a new system</article-title>
+          .
+          <source>BMC Health Services Research</source>
+          ,
+          <volume>5</volume>
+          (
+          <issue>25</issue>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref28">
+        <mixed-citation>
+          [Atkins et al., 2004b]
+          <string-name>
+            <surname>Atkins</surname>
+            ,
+            <given-names>D.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Eccles</surname>
+            ,
+            <given-names>M.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Flottorp</surname>
+            ,
+            <given-names>S.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Guyatt</surname>
+            ,
+            <given-names>G. H.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Henry</surname>
+            ,
+            <given-names>D.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Hill</surname>
+            ,
+            <given-names>S.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Liberati</surname>
+            ,
+            <given-names>A.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>O'Connell</surname>
+            ,
+            <given-names>D.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Oxman</surname>
+            ,
+            <given-names>A. D.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Phillips</surname>
+            ,
+            <given-names>B.</given-names>
+          </string-name>
+          , Schu¨nemann, H.,
+          <string-name>
+            <surname>Edejer</surname>
+            ,
+            <given-names>T.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Vist</surname>
+            ,
+            <given-names>G. E.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Williams</surname>
+            Jr.,
+            <given-names>J. W.</given-names>
+          </string-name>
+          , and The GRADE Working Group (
+          <year>2004b</year>
+          ).
+          <article-title>Systems for grading the quality of evidence and the strength of recommendations i: Critical appraisal of existing approaches</article-title>
+          .
+          <source>BMC Health Services Research</source>
+          ,
+          <volume>4</volume>
+          (
+          <issue>38</issue>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref29">
+        <mixed-citation>
+          [Boytcheva et al.,
+          <year>2005</year>
+          ] Boytcheva,
+          <string-name>
+            <given-names>S.</given-names>
+            ,
+            <surname>Strupchanska</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>A.</given-names>
+            ,
+            <surname>Paskaleva</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>E.</given-names>
+            , and
+            <surname>Tcharaktchiev</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>D.</surname>
+          </string-name>
+          (
+          <year>2005</year>
+          ).
+          <article-title>Some aspects of negation processing in electronic health records</article-title>
+          .
+          <source>Proc. of International Workshop Language and Speech Infrastructure for Information Access in the Balkan Countries</source>
+          , pages
+          <fpage>1</fpage>
+          -
+          <lpage>8</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref30">
+        <mixed-citation>
+          [Bruix et al.,
+          <year>2005</year>
+          ] Bruix,
+          <string-name>
+            <given-names>J.</given-names>
+            ,
+            <surname>Sherman</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>M.</surname>
+          </string-name>
+          ,
+          <article-title>and Practice Guidelines Committee, American Association for the Study of Liver Diseases (</article-title>
+          <year>2005</year>
+          ).
+          <article-title>Management of hepatocellular carcinoma</article-title>
+          .
+          <source>Hepatology</source>
+          ,
+          <volume>42</volume>
+          (
+          <issue>5</issue>
+          ):
+          <fpage>1208</fpage>
+          -
+          <lpage>1236</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref31">
+        <mixed-citation>
+          [Chapman et al.,
+          <year>2001</year>
+          ] Chapman,
+          <string-name>
+            <given-names>W. W.</given-names>
+            ,
+            <surname>Bridewell</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>W.</given-names>
+            ,
+            <surname>Hanbury</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>P.</given-names>
+            ,
+            <surname>Cooper</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>G. F.</given-names>
+            , and
+            <surname>Buchanan</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>B. G.</surname>
+          </string-name>
+          (
+          <year>2001</year>
+          ).
+          <article-title>A simple algorithm for identifying negated findings and diseases in discharge summaries</article-title>
+          .
+          <source>Journal of Biomedical Informatics</source>
+          ,
+          <volume>34</volume>
+          (
+          <issue>5</issue>
+          ):
+          <fpage>301</fpage>
+          -
+          <lpage>310</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref32">
+        <mixed-citation>
+          <source>[Divita</source>
+          , 2005] Divita,
+          <string-name>
+            <surname>G.</surname>
+          </string-name>
+          (
+          <year>2005</year>
+          ).
+          <article-title>MMTX-API Documentation</article-title>
+          . http://mmtx.nlm.nih.gov/.
+        </mixed-citation>
+      </ref>
+      <ref id="ref33">
+        <mixed-citation>
+          [Feder et al.,
+          <year>1999</year>
+          ] Feder,
+          <string-name>
+            <given-names>G.</given-names>
+            ,
+            <surname>Eccles</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M.</given-names>
+            ,
+            <surname>Grol</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>R.</given-names>
+            ,
+            <surname>Griffiths</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>C.</given-names>
+            , and
+            <surname>Grimshaw</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>J.</surname>
+          </string-name>
+          (
+          <year>1999</year>
+          ).
+          <article-title>Clinical guidelines: Using clinical guidelines</article-title>
+          .
+          <source>BMJ</source>
+          ,
+          <volume>318</volume>
+          :
+          <fpage>728</fpage>
+          -
+          <lpage>730</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref34">
+        <mixed-citation>
+          [Hahn et al.,
+          <year>2003</year>
+          ] Hahn,
+          <string-name>
+            <given-names>T.</given-names>
+            ,
+            <surname>Wingard</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J.</given-names>
+            ,
+            <surname>Anderson</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>K.</given-names>
+            ,
+            <surname>Bensinger</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>W.</given-names>
+            ,
+            <surname>Berenson</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J.</given-names>
+            ,
+            <surname>Brozeit</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>G.</given-names>
+            ,
+            <surname>Carver</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J.</given-names>
+            ,
+            <surname>Kyle</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>R.</surname>
+          </string-name>
+          , and
+          <string-name>
+            <surname>PL</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>P. M.</surname>
+          </string-name>
+          (
+          <year>2003</year>
+          ).
+          <article-title>The role of cytotoxic therapy with hematopoietic stem cell transplantation in the therapy of multiple myeloma: an evidence-based review</article-title>
+          .
+          <source>Biol Blood Marrow Transplant</source>
+          ,
+          <volume>9</volume>
+          (
+          <issue>1</issue>
+          ):
+          <fpage>4</fpage>
+          -
+          <lpage>37</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref35">
+        <mixed-citation>
+          <source>[Lee and Geller</source>
+          , 2006] Lee,
+          <string-name>
+            <given-names>Y.</given-names>
+            and
+            <surname>Geller</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>J.</surname>
+          </string-name>
+          (
+          <year>2006</year>
+          ).
+          <article-title>Semantic enrichment for medical ontologies</article-title>
+          .
+          <source>J. of Biomedical Informatics</source>
+          ,
+          <volume>39</volume>
+          (
+          <issue>2</issue>
+          ):
+          <fpage>209</fpage>
+          -
+          <lpage>226</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref36">
+        <mixed-citation>
+          [Lehnert et al.,
+          <year>1994</year>
+          ] Lehnert,
+          <string-name>
+            <given-names>W.</given-names>
+            ,
+            <surname>Cardie</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>C.</given-names>
+            ,
+            <surname>Fisher</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>D.</given-names>
+            ,
+            <surname>McCarthy</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J.</given-names>
+            ,
+            <surname>Riloff</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>E.</given-names>
+            , and
+            <surname>Soderland</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>S.</surname>
+          </string-name>
+          (
+          <year>1994</year>
+          ).
+          <article-title>Evaluating an information extraction system</article-title>
+          .
+          <source>Journal of Integrated ComputerAided Engineering</source>
+          ,
+          <volume>1</volume>
+          (
+          <issue>6</issue>
+          ):
+          <fpage>1</fpage>
+          -
+          <lpage>29</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref37">
+        <mixed-citation>
+          <source>[McCray</source>
+          ,
+          <year>1989</year>
+          ]
+          <string-name>
+            <surname>McCray</surname>
+            ,
+            <given-names>A. T.</given-names>
+          </string-name>
+          (
+          <year>1989</year>
+          ).
+          <article-title>UMLS Semantic Network</article-title>
+          .
+          <source>The 13th annual SCAMC</source>
+          , pages
+          <fpage>503</fpage>
+          -
+          <lpage>507</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref38">
+        <mixed-citation>
+          <source>[Meystre and Haug</source>
+          , 2005] Meystre,
+          <string-name>
+            <given-names>S.</given-names>
+            and
+            <surname>Haug</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>P. J.</surname>
+          </string-name>
+          (
+          <year>2005</year>
+          ).
+          <article-title>Automation of a problem list using natural language processing</article-title>
+          .
+          <source>BMC Medical Informatics and Decision Making</source>
+          ,
+          <volume>5</volume>
+          (
+          <issue>30</issue>
+          ).
+        </mixed-citation>
+      </ref>
+      <ref id="ref39">
+        <mixed-citation>
+          [Miaskkowski et al.,
+          <year>2005</year>
+          ] Miaskkowski,
+          <string-name>
+            <given-names>C.</given-names>
+            ,
+            <surname>Cleary</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J.</given-names>
+            ,
+            <surname>Burney</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>R.</given-names>
+            ,
+            <surname>Coyne</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>P. J.</given-names>
+            ,
+            <surname>Finley</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>R.</given-names>
+            ,
+            <surname>Foster</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>R.</given-names>
+            ,
+            <surname>Grossman</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>S.</given-names>
+            ,
+            <surname>Janjan</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>N. A.</given-names>
+            ,
+            <surname>Ray</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J.</given-names>
+            ,
+            <surname>Syrjala</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>K.</given-names>
+            ,
+            <surname>Weisman</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>S. J.</given-names>
+            ,
+            <surname>Pettit</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J. B.</given-names>
+            , and
+            <surname>Zahrbock</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>C.</surname>
+          </string-name>
+          (
+          <year>2005</year>
+          ).
+          <article-title>Guideline for the management of cancer pain in adults and children</article-title>
+          .
+          <source>Clinical practice guideline 3</source>
+          ,
+          <string-name>
+            <surname>American</surname>
+            <given-names>Pain Society</given-names>
+          </string-name>
+          (APS),
+          <source>Glenview (IL).</source>
+        </mixed-citation>
+      </ref>
+      <ref id="ref40">
+        <mixed-citation>
+          [Mitchell et al.,
+          <year>2004</year>
+          ] Mitchell,
+          <string-name>
+            <given-names>K. J.</given-names>
+            ,
+            <surname>Becich</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M. J.</given-names>
+            ,
+            <surname>Berman</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J. J.</given-names>
+            ,
+            <surname>Chapman</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>W. W.</given-names>
+            ,
+            <surname>Gilbertson</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J.</given-names>
+            ,
+            <surname>Gupta</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>D.</given-names>
+            ,
+            <surname>Harrison</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J.</given-names>
+            ,
+            <surname>Legowski</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>E.</given-names>
+            , and
+            <surname>Crowley</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>R. S.</surname>
+          </string-name>
+          (
+          <year>2004</year>
+          ).
+          <article-title>Implementation and evaluation of a negation tagger in a pipeline-based system for information extraction from pathology reports</article-title>
+          . pages
+          <fpage>663</fpage>
+          -
+          <lpage>667</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref41">
+        <mixed-citation>
+          [Mutalik et al.,
+          <year>2001</year>
+          ] Mutalik,
+          <string-name>
+            <given-names>P. G.</given-names>
+            ,
+            <surname>Deshpande</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>A.</given-names>
+            , and
+            <surname>Nadkarni</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>P. M.</surname>
+          </string-name>
+          (
+          <year>2001</year>
+          ).
+          <article-title>Use of general-purpose negation detection to augment concept indexing of medical documents: A quantitative study using the UMLS</article-title>
+          .
+          <source>Journal of the American Medical Informatics Association (JAMIA)</source>
+          ,
+          <volume>8</volume>
+          (
+          <issue>6</issue>
+          ):
+          <fpage>598</fpage>
+          -
+          <lpage>609</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref42">
+        <mixed-citation>
+          [Otchy et al.,
+          <year>2004</year>
+          ] Otchy,
+          <string-name>
+            <given-names>D.</given-names>
+            ,
+            <surname>Hyman</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>N.</given-names>
+            ,
+            <surname>Simmang</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>C.</given-names>
+            ,
+            <surname>Anthony</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>T.</given-names>
+            ,
+            <surname>Buie</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>W.</given-names>
+            ,
+            <surname>Cataldo</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>P.</given-names>
+            ,
+            <surname>Church</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J.</given-names>
+            ,
+            <surname>Cohen</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J.</given-names>
+            ,
+            <surname>Dentsman</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>F.</given-names>
+            ,
+            <surname>Ellis</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>C.</surname>
+          </string-name>
+          , 3rd,
+          <string-name>
+            <given-names>J. K.</given-names>
+            ,
+            <surname>Ko</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>C.</given-names>
+            ,
+            <surname>Moore</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>R.</surname>
+          </string-name>
+          , Orsay,
+          <string-name>
+            <given-names>C.</given-names>
+            ,
+            <surname>Place</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>R.</given-names>
+            ,
+            <surname>Rafferty</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J.</given-names>
+            ,
+            <surname>Rakinic</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J.</given-names>
+            ,
+            <surname>Savoca</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>P.</given-names>
+            ,
+            <surname>Tjandra</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J.</given-names>
+            , and
+            <surname>Whiteford</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>M.</surname>
+          </string-name>
+          (
+          <year>2004</year>
+          ).
+          <article-title>Practice parameters for colon cancer</article-title>
+          .
+          <source>Dis Colon Rectum</source>
+          ,
+          <volume>47</volume>
+          (
+          <issue>8</issue>
+          ):
+          <fpage>1269</fpage>
+          -
+          <lpage>1284</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref43">
+        <mixed-citation>
+          [Shekelle et al.,
+          <year>1999</year>
+          ] Shekelle,
+          <string-name>
+            <given-names>P. G.</given-names>
+            ,
+            <surname>Woolf</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>S. H.</given-names>
+            ,
+            <surname>Eccles</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M.</given-names>
+            , and
+            <surname>Grimshaw</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>J.</surname>
+          </string-name>
+          (
+          <year>1999</year>
+          ).
+          <article-title>Clinical guidelines: Developing guidelines</article-title>
+          .
+          <source>BMJ</source>
+          ,
+          <volume>318</volume>
+          :
+          <fpage>593</fpage>
+          -
+          <lpage>596</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref44">
+        <mixed-citation>
+          <source>[Simon and Wagner</source>
+          , 2003] Simon,
+          <string-name>
+            <given-names>G.</given-names>
+            and
+            <surname>Wagner</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>H.</surname>
+          </string-name>
+          (
+          <year>2003</year>
+          ).
+          <article-title>Small cell lung cancer</article-title>
+          .
+          <source>Chest</source>
+          ,
+          <volume>123</volume>
+          (
+          <issue>1</issue>
+          ):
+          <fpage>259</fpage>
+          -
+          <lpage>271</lpage>
+          .
+        </mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

@@ -1,0 +1,432 @@
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN" "JATS-archivearticle1.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+  <front>
+    <journal-meta />
+    <article-meta>
+      <title-group>
+        <article-title>Unsupervised Clustering of Social Events</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <string-name>Matthias Zeppelzauer</string-name>
+          <email>mzz@ims.tuwien.ac.at</email>
+          <xref ref-type="aff" rid="aff2">2</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Maia Zaharieva</string-name>
+          <email>zaharieva@cs.univie.ac.at</email>
+          <xref ref-type="aff" rid="aff1">1</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Manfred Del Fabro</string-name>
+          <email>manfred@itec.aau.at</email>
+          <xref ref-type="aff" rid="aff0">0</xref>
+        </contrib>
+        <aff id="aff0">
+          <label>0</label>
+          <institution>Klagenfurt University, Austria, Institute of Information</institution>
+          ,
+          <addr-line>Technology</addr-line>
+        </aff>
+        <aff id="aff1">
+          <label>1</label>
+          <institution>University of Vienna, Austria, Research Group Multimedia</institution>
+          ,
+          <addr-line>Information Systems</addr-line>
+        </aff>
+        <aff id="aff2">
+          <label>2</label>
+          <institution>Vienna University of</institution>
+          ,
+          <addr-line>Technology</addr-line>
+          ,
+          <country>Austria, Interactive Media Sys. Group</country>
+        </aff>
+      </contrib-group>
+      <pub-date>
+        <year>2013</year>
+      </pub-date>
+      <fpage>18</fpage>
+      <lpage>19</lpage>
+      <abstract>
+        <p>This paper describes our contribution to the social event detection (SED) task of the MediaEval Benchmark 2013. We present a robust unsupervised approach for the clustering of tagged photos and videos into social events. Results on the SED datasets show that the proposed approach yields an excellent generalization ability and state-of-the-art clustering performance.</p>
+      </abstract>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="sec-1">
+      <title>INTRODUCTION</title>
+      <p>
+        We participated in challenge 1 of the Social Event
+Detection (SED) task [
+        <xref ref-type="bibr" rid="ref4">4</xref>
+        ]. The goal of the task is to build
+photo clusters belonging to unique social events in a large
+collection of tagged flicker images. Thereby the total
+number of events is not provided. In an additional subtask we
+assign unlabeled videos to the previously discovered photo
+clusters. The development set comprises 300k images from
+14882 unique events. For the test set of 131k images no
+ground truth is available.
+      </p>
+      <p>We consider challenge 1 as an unsupervised data mining
+task. The basic idea is to rely on robust heuristics and
+to reduce the number of parameters of the approach to a
+minimum to obtain a good generalization ability between
+different datasets. Additionally, the proposed approach does
+not require any external (online) data sources.</p>
+      <p>In the course of the SED2013 task, we focus on the
+following research questions: (i) Which level of clustering
+performance can be obtained by relying on simple but robust
+heuristics for unsupervised clustering and how do the results
+compare to more complex clustering methods? (ii) How well
+does the proposed approach generalize to unknown data?</p>
+    </sec>
+    <sec id="sec-2">
+      <title>RELATED WORK</title>
+      <p>
+        Many existing approaches for event detection in image
+collections require a separate training [
+        <xref ref-type="bibr" rid="ref1 ref3">1, 3</xref>
+        ]. Becker et al.
+create separate clusters for each feature such as title,
+description, time, etc. The authors employ single-pass incremental
+clustering whereas the threshold for each cluster is tuned
+based on a set of training data [
+        <xref ref-type="bibr" rid="ref1">1</xref>
+        ]. Reuter and Cimiano
+employ machine learning techniques to detect events in social
+streams. The authors employ SVMs to classify Flickr images
+annotated by machine tags from last.fm into events [
+        <xref ref-type="bibr" rid="ref3">3</xref>
+        ].
+      </p>
+      <p>
+        Vavliakis et al. propose a social event detection approach
+based on topic detection [
+        <xref ref-type="bibr" rid="ref5">5</xref>
+        ]. The authors perform topic
+detection by Latent Dirichlet Allocation (LDA) for each city
+in the image collection. Additionally, the authors manually
+identify topics that are typical for a specific event cluster.
+      </p>
+      <p>From related approaches we observe that many
+assumptions are made on the training set and (partially manual)
+optimizations are required which limits general
+applicability. Our unsupervised approach minimizes the assumptions
+on the data and avoids manual intervention. The approach
+exhibits a strong generalization ability and results show that
+the sensitivity to the involved parameters is reasonably low.
+3.
+3.1</p>
+    </sec>
+    <sec id="sec-3">
+      <title>APPROACH</title>
+    </sec>
+    <sec id="sec-4">
+      <title>Full Clustering</title>
+      <p>The input to the approach are the available metadata of
+the SED dataset (capture data, location, title, tags,
+description) and a stopword list. No other data sources are
+required. In a first step, the metadata are preprocessed: Since
+a user cannot be at two locations at the same time, we
+assign locations of photos taken by the same user at the same
+time to the user’s non-geotagged photos. Additionally, the
+textual metadata are filtered by the stopword list.</p>
+      <p>In a next step, we perform three independent
+clusterings in parallel: temporal clustering, location clustering, and
+topic clustering. For temporal clustering we employ
+meanshift and set the bandwidth parameter βT in a way that
+the resulting clusters span between 2 and 6 hours, which is
+a reasonable temporal resolution for social events. For
+location clustering we observe that the performance gain of
+meanshift clustering does not justify the computational
+efforts. Hence, we skip meanshift clustering and assign each
+individual and unique location in the data a separate cluster
+ID. Topic clustering is based on topic extraction by LDA.
+We perform topic modeling on the textual descriptions of
+each photo (title, tags, description) using LDA and extract
+T topics for the employed dataset. For each photo i, we
+estimate the likelihoods li,1 and li,2 of the first- and
+secondbest matching topics. If the difference of the likelihoods is
+larger than a threshold τ (li,1 − li,2 &gt; τ ) the most likely
+topic is assigned to the photo otherwise no topic is assigned.
+Parameter τ is set to 0.3 for all experiments.</p>
+      <p>The three independent clusterings are the basis for the
+generation of initial event clusters. Photos which share the
+same temporal cluster, location cluster, and topic cluster
+are assigned the same unique event ID. The remaining
+photos are assigned to existing and new events in a number
+of matching steps. First, remaining photos which share
+metadata
+location
+description</p>
+      <p>time
+wsotordps preprocessing
+topic clustering location clustering temporal clustering</p>
+      <p>merge clusterings
+refined event clusters
+initial clusters
+t,rupdaeegem tupdae regemusemra+tcthime</p>
+      <p>unassigned fotos
+timmea+tctohpic la litcnooaonnew liit,tccnooaonnoop</p>
+      <p>non-geotagged event clusters
+merge events
+final event clusters
+the same user and capture time as photos in already
+existing events are assigned to the respective events. If
+several events share the same users and capture times, the
+events are merged. Second, remaining photos without
+location information are matched to existing events by time and
+topic. If no match to an existing event can be established, a
+new (non-geotagged event cluster) is generated. For photos
+where no location and no topic is available we generate new
+events by their capture time.</p>
+      <p>The resulting sets of events (refined event clusters and
+non-geotagged event clusters) may oversegment the true event
+distribution. Hence, we merge events that share similar
+time, location, and topic to obtain the final event clusters.
+3.2</p>
+    </sec>
+    <sec id="sec-5">
+      <title>Full Clustering of Media using Videos</title>
+      <p>For the video subtask, we apply the above described topic
+modeling to the stopword-filtered textual descriptions of the
+videos (title, description, keywords). Temporal clustering
+and location clustering are neglected, because most videos
+do not contain location information and a capturing date.
+As a consequence, parameter τ is set to 0.0 for all
+experiments to achieve a complete clustering of all videos.</p>
+      <p>We investigate three different approaches for generating
+the video clusters: (i) LDA is applied to train a topic model
+with 200 topics on the development data from which the
+topics of the test data are derived; (ii) each video constitutes
+a topic on its own; and (iii) an unsupervised LDA-based
+approach is used to detect 70 topics in the test data. After
+the video clusters are created, we link them to the previously
+generated photo clusters. The keywords of video clusters
+V are compared to the keywords of the photo clusters P
+using the Jaccard similarity coefficient. Each video cluster
+is linked to the photo cluster with the highest similarity.</p>
+    </sec>
+    <sec id="sec-6">
+      <title>EXPERIMENTS AND RESULTS</title>
+      <p>
+        We use the same parameters for experiments on the
+development and test set. To estimate the numbers of topics,
+we assume that each topic is constituted in average by
+100200 photos. Additionally, we evaluate different values of βT
+corresponding to an event duration of 2-6 hours. The results
+of the proposed approach for both sets demonstrate its
+excellent generalization ability (see Table 1). Results for the
+test set are even better than for the development set. The
+clustering performance is comparable to (more complex)
+supervised state-of-the-art methods. The approach by Petkos
+et al., for example, yields NMI values of 0.92 (average of best
+results) and 0.69 (average performance) on a portion of the
+SED2011 dataset (no F1 reported) [
+        <xref ref-type="bibr" rid="ref2">2</xref>
+        ]. Becker et al. [
+        <xref ref-type="bibr" rid="ref1">1</xref>
+        ] yield
+NMI values between 0.92 and 0.94 and F1 values from 0.77
+to 0.82 on a test set consisting of 270k photos (10 splits).
+Reuter and Cimiano report an F1 of 0.74 for a dataset of
+700k photos (7 splits, no NMI reported) [
+        <xref ref-type="bibr" rid="ref3">3</xref>
+        ].
+      </p>
+      <p>βT
+0.2
+0.2
+0.2
+0.1
+0.5</p>
+      <p>The three approaches submitted to the video subtask show
+different results. The supervised approach trained on the
+development data performs suboptimally (F1=0.42, NMI=0.68).
+The reason for this may be that the events of the test data
+are inferred from the events in the development data. If an
+event is not included in the development data, it cannot be
+inferred. The second approach shows that comparing the
+metadata of single videos with the accumulated LDA
+keywords from clusters is not well-suited to link single videos
+to clusters (F1=0.34, NMI=0.77). The unsupervised
+LDAbased approach performs best (F1=0.69, NMI=0.85) and
+builds a promising baseline for future improvements.
+5.</p>
+    </sec>
+    <sec id="sec-7">
+      <title>CONCLUSIONS AND OUTLOOK</title>
+      <p>In this paper we presented our contribution to the SED
+challenge of the MediaEval 2013 Benchmark. We proposed a
+robust unsupervised method for the clustering of photos and
+videos into social events. The method exhibits strong
+generalization ability, low sensitivity to parameters, and yields
+state-of-the-art performance. Future work focuses on more
+sophisticated event refinements and visual content analysis.</p>
+    </sec>
+    <sec id="sec-8">
+      <title>ACKNOWLEDGMENTS</title>
+      <p>This work has been partly funded by the Vienna Science
+and Technology Fund (WWTF) through project ICT12-010
+and the Carinthian Economic Promotion Fund (KWF)
+under grant KWF-20214 22573 33955.</p>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <ref id="ref1">
+        <mixed-citation>
+          [1]
+          <string-name>
+            <given-names>H.</given-names>
+            <surname>Becker</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Naaman</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>L.</given-names>
+            <surname>Gravano</surname>
+          </string-name>
+          .
+          <article-title>Learning similarity metrics for event identification in social media</article-title>
+          .
+          <source>In ACM WSDM</source>
+          , pp.
+          <fpage>291</fpage>
+          -
+          <lpage>300</lpage>
+          ,
+          <year>2010</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref2">
+        <mixed-citation>
+          [2]
+          <string-name>
+            <given-names>G.</given-names>
+            <surname>Petkos</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>S.</given-names>
+            <surname>Papadopoulos</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>Y.</given-names>
+            <surname>Kompatsiaris</surname>
+          </string-name>
+          .
+          <article-title>Social event detection using multimodal clustering and integrating supervisory signals</article-title>
+          .
+          <source>In ACM ICMR</source>
+          , pp.
+          <volume>23</volume>
+          :
+          <fpage>1</fpage>
+          -
+          <lpage>8</lpage>
+          ,
+          <year>2012</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref3">
+        <mixed-citation>
+          [3]
+          <string-name>
+            <given-names>T.</given-names>
+            <surname>Reuter</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>P.</given-names>
+            <surname>Cimiano</surname>
+          </string-name>
+          .
+          <article-title>Event-based classification of social media streams</article-title>
+          .
+          <source>In ACM ICMR</source>
+          , pp.
+          <volume>22</volume>
+          :
+          <fpage>1</fpage>
+          -
+          <lpage>8</lpage>
+          ,
+          <year>2012</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref4">
+        <mixed-citation>
+          [4]
+          <string-name>
+            <given-names>T.</given-names>
+            <surname>Reuter</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>S.</given-names>
+            <surname>Papadopoulos</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>V.</given-names>
+            <surname>Mezaris</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>P.</given-names>
+            <surname>Cimiano</surname>
+          </string-name>
+          , C. de Vries, and
+          <string-name>
+            <given-names>S.</given-names>
+            <surname>Geva</surname>
+          </string-name>
+          . Social Event Detection at MediaEval 2013:
+          <article-title>Challenges, datasets, and evaluation</article-title>
+          .
+          <source>In MediaEval 2013 Workshop</source>
+          ,
+          <year>2013</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref5">
+        <mixed-citation>
+          [5]
+          <string-name>
+            <given-names>K. N.</given-names>
+            <surname>Vavliakis</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>F. A.</given-names>
+            <surname>Tzima</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>P. A.</given-names>
+            <surname>Mitkas</surname>
+          </string-name>
+          .
+          <article-title>Event detection via LDA for the MediaEval2012 SED Task</article-title>
+          .
+          <source>In MediaEval 2012 Workshop</source>
+          ,
+          <year>2012</year>
+          .
+        </mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

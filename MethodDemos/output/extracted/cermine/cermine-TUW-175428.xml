@@ -1,0 +1,2060 @@
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN" "JATS-archivearticle1.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+  <front>
+    <journal-meta>
+      <journal-title-group>
+        <journal-title>N. Mladenovic. A variable neighborhood algorithm - a new metaheuristic for
+combinatorial optimization. Abstracts of papers presented at Optimization Days,
+page</journal-title>
+      </journal-title-group>
+    </journal-meta>
+    <article-meta>
+      <title-group>
+        <article-title>Ein hybrides Verfahren basierend auf Variabler Nachbarschaftssuche und Dynamischer Programmierung zur Touren ndung in einem Ersatzteillager mit domanenspezi schen Nebenbedingungen</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <string-name>Thomas Misar Matrikelnummer</string-name>
+          <xref ref-type="aff" rid="aff0">0</xref>
+        </contrib>
+        <aff id="aff0">
+          <label>0</label>
+          <institution>Technische Universitat Wien A-1040 Wien Karlsplatz 13 Tel</institution>
+        </aff>
+      </contrib-group>
+      <pub-date>
+        <year>1995</year>
+      </pub-date>
+      <volume>112</volume>
+      <issue>1995</issue>
+      <fpage>27</fpage>
+      <lpage>68</lpage>
+      <abstract>
+        <p>zur Erlangung des akademischen Grades Software Engineering &amp; Internet Computing eingereicht von</p>
+      </abstract>
+      <kwd-group>
+        <kwd>an der</kwd>
+        <kwd>Fakultat fur Informatik der Technischen Universitat Wien</kwd>
+      </kwd-group>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="sec-1">
+      <title>-</title>
+      <p>DIPLOMARBEIT</p>
+    </sec>
+    <sec id="sec-2">
+      <title>Diplom-Ingenieur</title>
+      <p>im Rahmen des Studiums</p>
+      <sec id="sec-2-1">
+        <title>Danksagung</title>
+        <p>Die vorliegende Arbeit durfte ich am Institut fur Computergraphik und Algorithmen
+der Technischen Universitat Wien erstellen und es freut mich diese nun fertig in
+Handen halten zu konnen.</p>
+        <p>Ich mochte mich fur die Geduld und Mithilfe von Seiten Gunther Raidls bedanken
+und ebenso Matthias Prandtstetter gro en Dank fur seine Betreuung aussprechen. In
+den vergangenen Monaten hat er einen besonders gro en Beitrag zur
+Vervollstandigung dieser Arbeit geleistet. Naturlich gilt meine Anerkennung auch allen anderen
+Personen, die von Seiten des Instituts ihren Anteil an der Entstehung dieser Arbeit
+hatten.</p>
+        <p>Es ist mir weiters ein Anliegen auch all jene zu erwahnen, die mich im Laufe des
+gesamten Studiums begleitet und unterstutzt haben. Dazu zahlen vor allem meine
+Studienkollegen Christian und Gerhard, sowie gleicherma en auch meine Eltern, die
+mir zu jedem Zeitpunkt eine gro e Hilfe waren und Linda, der ich an dieser Stelle
+fur ihre Ausdauer und Motivation danken will.
+Erklarung zur Verfassung der Arbeit
+Hiermit erklare ich, Thomas Misar, wohnhaft in 1070 Wien, Seidengasse 3/108, dass
+ich diese Arbeit selbstandig verfasst habe, dass ich die verwendeten Quellen und
+Hilfsmittel vollstandig angegeben habe und dass ich die Stellen der Arbeit (einschlie lich
+Tabellen, Karten und Abbildungen), die anderen Werken oder dem Internet im
+Wortlaut oder dem Sinn nach entnommen sind, auf jeden Fall unter Angabe der Quelle
+als Entlehnung kenntlich gemacht habe.
+(Unterschrift Verfasser)</p>
+      </sec>
+      <sec id="sec-2-2">
+        <title>Kurzfassung</title>
+        <p>Im Rahmen dieser Arbeit wird eine konkrete Problemstellung aus dem Bereich der
+Lagerverwaltung behandelt. Dabei soll die benotigte Zeit zum Ausfassen von Artikeln
+aus dem Lager unter Berucksichtigung von domanenspezi schen Nebenbedingungen
+minimiert werden. Ausgehend von durch Kunden laufend aufgegebenen Bestellungen
+sollen feste Lieferzeiten eingehalten werden und Einschrankungen wie etwa
+Kapazitatslimits oder das Vermeiden von Kollisionen zwischen Arbeitern beachtet werden.
+Die fur die gegebene Problemstellung zentrale Bestimmung e zienter Touren steht
+im Mittelpunkt der Arbeit, welche mit Ergebnissen aus einer konkreten
+Implementierung des vorgestellten Ansatzes abschlie t.</p>
+        <p>Es wird ein Algorithmus vorgestellt, der ein eigens entwickeltes Dynamisches
+Programm zur Berechnung optimaler Wege durch das Warenlager mit der Umsetzung
+einer Variablen Nachbarschaftssuche (engl.: Variable Neighborhood Search) (VNS)
+verbindet. In mehreren Phasen werden dabei die vorliegenden Bestellungen zerlegt
+und davon ausgehend Touren gebildet, welche zuletzt auf alle verfugbaren
+Lagerarbeiter verteilt werden. Innerhalb der VNS kommt eine Variante des Variable
+Neighborhood Descent (VND) als lokale Verbesserungskomponente zum Einsatz. Wahrend
+uber die de nierten Nachbarschaftsstrukturen unterschiedliche potentielle Losungen
+erzeugt werden, erfolgt deren Bewertung durch die Berechnung von konkreten Touren
+mittels eines fur diesen Zweck entwickelten Dynamischen Programms. Dabei werden
+spezielle Eigenschaften der zugrundeliegenden Lagerstruktur ausgenutzt, um so in
+polynomieller Zeit die bestmogliche Wegfuhrung durch das Lager berechnen zu konnen.
+Fur die Zuordnung von Arbeitern zu den auf diese Weise berechneten Touren wird
+schlie lich eine zusatzliche VNS verwendet, deren Aufgabe es ist, die notwendigen
+Touren derart zu verteilen, dass der letzte Artikel zum fruhest moglichen Zeitpunkt
+ausgefasst werden kann.</p>
+        <p>Die anhand des implementierten Programms durchgefuhrten Tests zeigen, dass die
+erfolgte Tourenplanung wertvolle Ergebnisse liefert und die notwendige Rechenzeit
+niedrig gehalten werden kann. Getestet wurde mit Bezug auf eine Referenzlosung,
+welche auf Basis eines aus der Literatur entnommenen Ansatzes erzeugt werden
+konnte. Eine ausfuhrliche Auswertung der Testergebnisse zeigte, dass die Anwendung des
+hier vorgestellten Ansatzes im Echtbetrieb als sehr vielversprechend gilt und
+erhebliche Einsparungen bezuglich der benotigten Arbeitszeit erreicht werden konnen.
+Insgesamt betrachtet wird ein e zientes und zielfuhrendes Verfahren zur Losung des
+vorliegenden Problems vorgestellt.
+Within this thesis a real-world problem related to a warehouse for spare parts is
+considered. Regarding several constraints typically stated by spare parts suppliers the
+time needed to collect articles should be minimized. Based on continuously arriving
+orders by customers prede ned delivery times and capacity constraints have to be
+met. To accomplish this task e cient pickup tours need to be determined which is
+the main issue covered by this work which comes to an end with experimental results
+of a concrete implementation of the proposed approach.</p>
+        <p>The algorithm presented embeds a speci cally developed dynamic program for
+computing optimal walks through the warehouse into a general variable neighborhood
+search (VNS) scheme. Several stages are used for rst splitting up all orders, then
+creating tours out of the results and nally assigning them to available workers. The
+VNS uses a variant of the variable neighborhood descent (VND) as local
+improvement procedure. While the neighborhood structures de ned are intended to produce
+candidate solutions, a dynamic program specially designed to compute optimal order
+picking tours is used to evaluate them. For this purpose properties speci c to
+warehouses are exploited such to compute optimal routes within polynomial time. The
+nal assignment of workers to tours is realized by another VNS. The task is then to
+nd an allocation such that the last article to be picked up will be collected as early
+as possible.</p>
+        <p>Evaluations of experimental results of a concrete implementation indicate that the
+presented approach provides valuable pickup plans and computation times can be
+kept low. Moreover the performed test runs have been compared to a reference
+solution which was computed based on an approach found in relevant literature. A
+detailed analysis of the obtained results showed that the application of the proposed
+approach to real-world instances is promising whereas the savings with respect to
+working time can be kept high. Overall an e cient as well as e ective approach is
+introduced to solve this real-world problem.
+1 Einleitung
+2 Problembeschreibung
+4 Dynamische Programmierung</p>
+        <sec id="sec-2-2-1">
+          <title>9 Fazit</title>
+        </sec>
+        <sec id="sec-2-2-2">
+          <title>Literaturverzeichnis 65 67</title>
+          <p>Die vorliegende Arbeit ist aus einer Zusammenarbeit des Instituts fur
+Computergraphik und Algorithmen der Technischen Universitat Wien mit der Firma Dataphone
+GmbH entstanden, welche sich mit Problemen der Lagerverwaltung auseinandersetzt
+und in diesem Fall Aufgaben innerhalb des Lagers eines Ersatzteillieferanten
+analysieren soll. Neben der Verwaltung samtlicher Stammdaten und Auftragsdaten des
+Lagers gilt es, die tatsachliche Anordnung von Artikeln im Lager zu erfassen und
+davon ausgehend die benotigte Zeit zum Ausfassen von bestellten Artikeln (im
+Weiteren wird dieser Vorgang auch Kommissionierung genannt) zu minimieren. Dadurch
+mussen auch die Arbeitsschritte des Lagerpersonals berucksichtigt und im System
+abgebildet werden.</p>
+          <p>Der Aufbau des Lagers gleicht im Wesentlichen dem, was man sich gemeinhin beim
+Gedanken an ein Warenlager vorstellt. Es sind parallel zueinander angeordnete
+Regale vorhanden, zwischen denen jeweils Gange verlaufen, um entsprechend lagernde
+Artikel ausfassen zu konnen. An den beiden Enden jedes dieser Regalgange verlaufen
+orthogonal dazu etwas breitere Hauptgange (siehe dazu Abb. 1.1). Innerhalb
+dieses Gangsystems bewegen sich dann meist mehrere Arbeiter gleichzeitig, die unter
+Zuhilfenahme von Kommissionierungswagen diverse Artikel einsammeln. Welche
+Artikel benotigt werden, ergibt sich aus den jeweils vorliegenden Bestellungen, welche
+im Laufe des Arbeitstages durch Kunden in Auftrag gegeben werden. Da der
+Ersatzteillieferant gewisse Lieferzeiten einhalten will und muss, ist eine entsprechend
+e ziente Bearbeitung der Auftrage notwendig. Sobald die verlangten Artikel
+eingesammelt wurden, werden sie zu einer zentralen Stelle im Lager, der Verdichtungszone,
+gebracht, wo sie verpackt und fur den Versand an die Kunden vorbereitet werden.
+Ohne Unterstutzung durch ein entsprechendes System obliegt es nun dem
+Lagerleiter die vorhandenen Auftrage auf seine Mitarbeiter derart aufzuteilen, dass in
+moglichst kurzer Zeit die gewunschten Artikel in der Verdichtungszone bereitstehen.
+Die Reihenfolge, in der Artikel ausgefasst werden, ist nicht weiter vorgegeben und
+so entscheidet jeder Lagerarbeiter selbst uber seinen Weg durch das Lager. Diese
+Wege oder Touren durch das Lager sind nun genau jener Teil innerhalb des gesamten
+Bestellablaufs, der gro es Optimierungspotential bietet.</p>
+          <p>Ziel der Arbeit ist es, das Ressourcenmanagement innerhalb des Lagers dahingehend
+zu optimieren, dass zunachst die Zusammenstellung von einzusammelnden Artikeln
+geschickt gewahlt wird und damit im Weiteren das Erstellen von dafur kurzest
+moglichen Touren einen erheblichen Vorteil in der Planung des Ablaufs bringt. Ein
+wesentRegal
+Regalgang</p>
+          <p>Hauptgang</p>
+          <p>VZ Verdichtungszone</p>
+          <p>VZ</p>
+          <p>Abbildung 1.1: Schematische Darstellung des Lagers
+licher Beitrag dazu ist ein von mir im Rahmen dieser Arbeit erstelltes Programm,
+das der Umsetzung samtlicher Uberlegungen innerhalb einer Heuristik dient. Dabei
+wird die vorhandene Problemstellung in vier algorithmischen Schritten bearbeitet.
+Es wird anhand bestimmter Kriterien, wie etwa Lieferzeit oder Platzbedarf eines
+Artikels, bestimmt, welche Artikel innerhalb einer Tour eines Arbeiters im Lager
+eingesammelt werden sollen. Der Schritt zur Berechnung von Touren ist dabei ein
+zentraler Bestandteil des Algorithmus und wurde mittels eines speziell entwickelten
+Dynamischen Programms umgesetzt. Sobald alle benotigten Touren berechnet
+wurden, konnen diese auf alle verfugbaren Lagermitarbeiter aufgeteilt werden, was im
+letzten Schritt erfolgt.</p>
+          <p>Im Anschluss an die Beschreibung des Algorithmus kann man anhand der
+Testergebnisse sehen, dass die E zienz des Programms einen durchwegs positiven Eindruck
+vermittelt. Gro e Probleminstanzen konnen zwar sehr lange Laufzeiten im Bereich
+von mehreren Stunden benotigen, bis der Algorithmus keine weitere Verbesserung
+bringt, allerdings werden schon innerhalb der ersten Minuten gute Losungen erzeugt
+und somit bleibt der Einsatz in der Praxis vielversprechend.</p>
+          <p>Zuerst werde ich nun eine detaillierte Problembeschreibung geben, die als Basis fur
+meine Untersuchungen gedient hat. Im Anschluss daran mochte ich anhand von
+verwandten Arbeiten aus der Literatur einen Uberblick uber den Rahmen geben, in dem
+sich diese Arbeit bewegt. Ich werde im Weiteren beschreiben, aus welchen Teilen der
+letztlich verwendete Algorithmus aufgebaut ist und mit welchen Methoden der zuvor
+beschriebenen Arbeiten hierbei vorgegangen wird, wobei auch diese, wo sinnvoll und
+passend, im Detail behandelt werden. Im Zuge der Erlauterungen zum
+algorithmischen Verlauf, werde ich auch auf einige spezielle Probleme eingehen, die in diesem
+Zusammenhang zu losen waren. Abschlie end werden dann die Ergebnisse, die mit
+dem vorhandenen Programm erzielt werden konnten und aufgrund statistischer
+Auswertungen mehrerer Testlaufe zustande gekommen sind, die Arbeit abschlie en.
+Die folgende Aufgabenstellung stammt in ihrer ursprunglichen Form von der Firma
+Dataphone GmbH und wurde in Zusammenarbeit mit Mitarbeitern des Instituts fur
+Computergraphik und Algorithmen der Technischen Universitat Wien angepasst, um
+innerhalb eines gemeinsamen Projekts einen Losungsansatz dafur zu entwerfen.
+Im Zuge der Reorganisation und Erweiterung des Lagers eines Ersatzteillieferanten
+soll eine automationstechnisch unterstutzte Lagerverwaltung eingefuhrt und
+ausgebaut werden, die unter anderem die Moglichkeit bieten soll, einzelne Prozessablaufe
+im Lageralltag zu rationalisieren. Zu diesem Zweck wurden samtliche Artikel
+beziehungsweise jene Ladungstrager, auf denen sich die Artikel be nden, mit
+maschinenlesbaren Kodierungen, konkret mit Barcodes, versehen und eine zentrale
+Lagerverwaltungssoftware eingefuhrt. Auf Basis einer im Hintergrund eingerichteten
+Datenbank erlaubt die gra sche Ober ache der Software die Erfassung und Verwaltung
+von Stammdaten und Bestelldaten sowie den Zugri auf den aktuellen Lagerstand.
+In einer ersten Ausbaustufe soll vor allem die Zusammenstellung der einzelnen von
+Kunden in Auftrag gegebenen Bestellungen moglichst e zient realisiert werden,
+wobei folgende Schritte zu berucksichtigen sind:
+1. Ein Kunde gibt eine Ersatzteillieferung in Auftrag.
+2. Fur jeden Auftrag fasst ein Lagerarbeiter die erforderliche Anzahl der bestellten</p>
+          <p>Artikel aus dem Lager aus und bringt sie in eine so genannte Verdichtungszone.
+3. Ein dieser Verdichtungszone zugeteilter Mitarbeiter packt alle zu den
+jeweiligen Bestellungen gehorenden Einzelteile in entsprechend dimensionierte Kisten,
+versieht diese mit Adresstickets und leitet sie an den Lieferanten (Paketdienst,
+Post, etc.) weiter.</p>
+          <p>Wahrend der erste und der dritte Punkt dieser Abarbeitungsreihenfolge derzeit schon
+verlasslich und ohne grobere Verzogerungen ablaufen, stellt der zweite Punkt den
+Flaschenhals in der Zusammenstellung der Auftrage dar, da hierbei die Mitarbeiter
+gro e Strecken im Lager zurucklegen mussen, um alle Einzelteile einzusammeln. Da
+im Normalfall bis zu sechs Mitarbeiter gleichzeitig an bis zu 1000 taglichen Auftragen
+bestehend aus je funf unterschiedlichen Artikeln arbeiten, gibt es durch geschickte
+Aufteilung der Auftrage ein gro es Einsparungspotential, sofern eine geschickte
+Einteilung von Artikeln zu Touren vorgenommen wird. Folgender neu gestalteter Ablauf
+soll daher realisiert werden:
+1. Mehrere Kunden geben (unabhangig voneinander) jeweils eine
+Ersatzteillieferung in Auftrag.
+2. Alle derzeit im Lager tatigen Mitarbeiter bekommen jeweils eine Liste von
+Artikeln, die sie entlang einer vorberechneten Tour im Lager auf
+Kommissionierungswagen laden sollen. Diese Artikel konnen im Allgemeinen auch zu
+unterschiedlichen Auftragen gehoren.
+3. Nach Abarbeitung dieser Liste stellt jeder Mitarbeiter den von ihm bedienten
+Kommissionierungswagen in der Verdichtungszone ab und entnimmt dort einen
+weiteren, allerdings leeren Kommissionierungswagen, um sich auf eine neue
+Tour zum Ausfassen weiterer Artikel zu machen.
+4. Der Mitarbeiter in der Verdichtungszone verfahrt weiterhin so, dass er alle
+Artikel eines Auftrags in entsprechende Schachteln verpackt und an den
+Botendienst ubergibt. Dabei muss er allerdings beachten, dass nun die Artikel, die
+einer Bestellung zugeordnet sind, auf unterschiedlichen
+Kommissionierungswagen zwischengelagert sein konnen.</p>
+          <p>Die Verdichtungszone selbst (siehe Abb. 2.1) ist in drei Zonen unterteilt, die als eine
+Art Zwischenlager verstanden werden konnen. Von dort holen die Lagermitarbeiter
+leere Kommissionierungswagen, um Artikel aus dem Lager auszufassen und stellen
+diese befullt wieder dort ab. Mitarbeiter, die fur Verpackung und Versand zustandig
+sind, konnen dann von dort die entsprechenden Waren abholen und die
+Bestellabwicklung fortsetzen. Da diese einzelnen Zonen entsprechend weitlau g sind, um genugend
+Platz zu bieten, ist vorgesehen, dass alle zu einer Bestellung gehorigen Artikel
+innerhalb derselben Zone abgeliefert werden sollen. Dies verringert den Zeitaufwand fur
+die Verpackung und macht die Arbeit in der Verdichtungszone wesentlich einfacher
+und e zienter.</p>
+          <p>Gegenstand dieser Arbeit ist nun die Entwicklung eines Losungsansatzes, mit dessen
+Hilfe es moglich wird, die Aufteilung der Bestellungen auf unterschiedliche
+Mitarbeiter derart zu optimieren, dass die Touren der Kommissionierer moglichst kurz
+werden, wodurch gleichzeitig der zeitliche Abstand zweier Entnahmen einzelner Artikel
+aus dem Lager minimiert wird. Ausschlaggebend hierfur ist, dass durch diese
+Aufteilung der Bestellungen auf mehrere gleichzeitig im Lager arbeitende Personen bei
+entsprechender Optimierung gro e Einsparungen erreicht werden konnen, da fur die
+Mitarbeiter besser organisierte Touren mit kurzeren Wegen moglich sind. Weiters soll
+erreicht werden, dass die jeweils zu einer gemeinsamen Bestellung gehorenden Artikel
+ungefahr zeitgleich in der Verdichtungszone bereitgestellt und im Weiteren verpackt
+werden, um mehrere Auftrage ohne den Einsatz gro erer Zwischenlager gleichzeitig
+bearbeiten zu konnen.</p>
+          <p>Neben dieser prinzipiellen Aufgabenstellung mussen jedoch noch mehrere
+Nebenbedingungen berucksichtigt werden, die einen entscheidenden Ein uss auf die
+tatsachliche Realisierung der einzelnen Kommissionierungstouren haben:</p>
+          <p>Verdichtungszone
+VZ1
+VZ2
+VZ3</p>
+          <p>W W W W W W W W
+W W W W W W W W
+W W W W W W W W
+W W W W W W W W
+W W W W W W W W
+W W W W W W W W</p>
+          <p>Verpackung
+&amp; Versand</p>
+          <p>W Stellplatz fu¨r Kommissionierungswagen</p>
+          <p>Abbildung 2.1: Schematische Darstellung der Verdichtungszone
+• Die Kommissionierungswagen konnen einerseits nur bis zu einer gewissen
+Kapazitat beladen werden und andererseits ist es aufgrund ihrer Bauweise nur
+vorgesehen, dass sie sich in eine Richtung bewegen. Wegen des schmalen
+Gangsystems ist ein Umkehren innerhalb eines Ganges nicht ohne Weiteres moglich.
+• Die Uberkreuzung zweier Kommissionierungstouren innerhalb eines
+Regalganges sollte moglichst vermieden werden, da aufgrund der Platzbeschrankung ein
+Uberholen oder aneinander Vorbeifahren nicht moglich ist.
+• Manche Artikel konnen an mehreren Positionen im Lager verfugbar sein.
+Abhangig von der bestellten Menge mussen oder konnen dann unter Umstanden
+auch mehrere solcher Lagerplatze fur einen Artikel angefahren werden.
+• Einen weiteren Aspekt birgt die Tatsache, dass nicht alle an einem Tag zu
+bearbeitenden Bestellungen zu Arbeitsbeginn bereits bekannt sind, da noch
+im Laufe des Tages weitere Bestellungen eintre en konnen. Dies entspricht
+sogar eher dem Normalfall, wodurch Anzahl und Struktur der zu bearbeitenden
+Auftrage im Laufe des Tages stark variieren. Ein Losungsansatz soll das insofern
+berucksichtigen, als die Berechnungen jederzeit mit angepassten Eingabewerten
+wieder gestartet werden konnen sollen. Das hei t, es wird immer mit den aktuell
+o enen Bestellungen neu gerechnet.
+• Die Bearbeitung von Bestellungen sollte nach Moglichkeit in der Reihenfolge
+ihres Eintre ens geschehen, um die Lieferzeiten moglichst sicher einhalten zu
+konnen.
+• Die zuvor beschriebene Einteilung der Verdichtungszone in drei Zonen muss
+derart berucksichtigt werden, dass von den Kommissionierern ausnahmslos alle
+zu einer Bestellung gehorigen Artikel in derselben dieser drei Zonen abgeliefert
+werden.</p>
+          <p>Durch mobile Datenerfassungsgerate soll der Optimierungsprozess unterstutzt
+werden, da der Einsatz dieser Gerate es ermoglicht, die Entnahme eines Artikels
+beziehungsweise Abgabe eines Kommissionierungswagens in der Verdichtungszone in
+Echtzeit nachzuvollziehen. Dieses neue Lagerverwaltungssystem soll das derzeitige
+Verfahren ablosen, bei dem alle Entscheidungen durch Mitarbeiter getro en werden.
+Unter Berucksichtigung dieser Einschrankungen gilt es nun vorrangig die Berechnung
+von kurzesten Touren fur die Mitarbeiter zu behandeln.</p>
+        </sec>
+      </sec>
+    </sec>
+    <sec id="sec-3">
+      <title>Mogliche Erweiterungen</title>
+      <p>Die folgende Au istung ero net mogliche Erweiterungen der gegebenen
+Problembeschreibung, wobei deren Umsetzung aufgrund von massivem Mehraufwand nicht
+erfolgte. Uberdies beein ussen diese Aspekte den Kern der Arbeit nicht, wodurch die
+zentralen Ergebnisse des vorgestellten Verfahrens ihre Aussagekraft behalten.
+Folgende Punkte sind als zusatzliche Funktionalitaten und Optionen denkbar:
+• Die im Lager verfugbaren Kommissionierungswagen haben durchaus
+unterschiedliche bauartliche Voraussetzungen, was sich auf damit verbundene
+Eigenschaften, wie Geschwindigkeit, Lade ache oder Manovrierfahigkeit, auswirkt.
+Ein entwickelter Losungsansatz dafur sollte dann genugend Flexibilitat
+aufweisen, um damit umgehen zu konnen. Die Palette an Transportmitteln reicht
+dabei von "einkaufswagenahnlichen\ Fahrzeugen bis hin zu Gabelstaplern.
+• Die eingeschrankte Bewegungsfreiheit aufgrund der sehr schmalen Gange im
+Lager verhindert es, dass zwei Kommissionierungswagen aneinander
+vorbeifahren konnen. Um Kollisionen auszuschlie en, ware es denkbar einen Algorithmus
+zu entwerfen, der entsprechende Zustande verbietet.
+• Ein weiterer Punkt in Zusammenhang mit den im Lager verwendeten
+Fahrzeugen bezieht sich auf die Sicherheitsbestimmungen in Bezug auf Gabelstapler.
+Diese schreiben es prinzipiell vor, dass sich in einem Gang kein anderer
+Mitarbeiter gleichzeitig mit einem Gabelstapler aufhalten darf. Die Sperrung von
+solchen Gangen muss dann naturlich berucksichtigt werden.
+• Es kann der Fall auftreten, dass der Lagerleiter be ndet, einen Lagerplatz
+mit einem anderen Artikel belegen zu wollen. In einem solchen Fall muss die
+Moglichkeit gegeben sein, dass der anderweitig benotigte Lagerplatz moglichst
+schnell (gleichzeitig aber kostene zient) leer geraumt wird.
+• Weiters liegt durch das standige Eintre en von Bestellungen im Laufe eines
+Arbeitstages der Anspruch an eine Online-Optimierungsaufgabe nahe. Das hei t,
+dass aktuell eintre ende Bestellungen jederzeit in den Optimierungsprozess
+aufgenommen werden konnen mussen. Im Unterschied zu einem kompletten
+Neustart der Berechnungen mussen in diesem Fall die bereits getatigten
+Optimierungen in den weiteren Verlauf des Programms ein ie en.
+• Au erdem kann es vorkommen, dass wahrend der Zusammenstellung der
+einzelnen Auftrage unvorhersehbare Vorkommnisse auftreten, auf die entsprechend
+reagiert werden muss. Artikel konnen beispielsweise fehlerhaft, kaputt oder gar
+nicht vorhanden sein. In einem solchen Fall muss der entsprechende Artikel
+von einer anderen Position im Lager entnommen werden oder moglicherweise
+sogar neu eingelagert werden. Wenn ein Lagerarbeiter mehr Zeit benotigt als
+angenommen, verzogert sich naturlich auch die Kommissionierung und
+entsprechende Anderungen mussen berucksichtigt werden
+• Eine zusatzliche Stra ung der Nebenbedingungen ist durch die Garantie des
+Ersatzteillieferanten gegeben, xe Lieferzeiten an seine Kunden einzuhalten.
+Diese sind auf alle Falle einzuhalten. Es muss daher sichergestellt sein, dass
+jeder Auftrag bis zu einem vorgegebenen Termin verpackt ist, um verschickt
+werden zu konnen.</p>
+      <p>7.4 Zuordnung von Arbeitern zu Touren
+Algorithmus 9 : Initiale Arbeiter-Zuordnung</p>
+      <p>Input : eine Menge T von Touren Ti, mit i = 1 : : : m; die Anzahl an Arbeitern
+w
+Data : Menge W von Mengen Wi, mit i = 1 : : : m, von abzuarbeitenden</p>
+      <p>Touren, Zahler l
+begin
+foreach Wi 2 W do</p>
+      <p>Wi ; ;
+j 1 ;
+foreach Ti 2 T do</p>
+      <p>Wj Wj [ fTig ;
+if l &lt; m then</p>
+      <p>l l + 1 ;
+else</p>
+      <p>l 1 ;
+end</p>
+      <p>return W ;
+Eine Zuordnung von Arbeitern zu Touren soll also genau dann gultig sein, wenn es
+zu keinem Zeitpunkt zu Kreuzungen der Touren zweier Arbeiter innerhalb von
+Regalgangen kommt. Des weiteren sind Uberholmanover in Gangen nicht zulassig. Um
+das berucksichtigen zu konnen, muss die Geschwindigkeit der
+Kommissionierungswagen genauso beachtet werden, wie auch die Zeit, die notwendig ist, um die jeweiligen
+Artikel auszufassen.</p>
+      <p>Trotz all dieser formalen Uberlegungen darf man nicht vergessen, dass immer noch
+Menschen in diesem Lager arbeiten, weshalb man entsprechende Zeitpu er einplanen
+muss. Die Arbeitsgeschwindigkeit ist eben abhangig von sehr vielen Faktoren, wie
+etwa Alter und Erfahrung der Arbeiter, oder au eren Ein ussen aus dem Umfeld des
+Lagers.
+7.4.1 Konstruktionsheuristik
+Zur Erzeugung einer Startlosung fur weitere Berechnungen muss zunachst eine
+initiale Zuordnung von Arbeitern zu Touren erfolgen, indem die vorhandenen Touren
+gleichma ig auf alle Arbeiter verteilt werden. Der einfache Ansatz einer First-Fit
+Heuristik wird zum Au nden einer solchen Initiallosung herangezogen (siehe Alg. 9).
+Jedenfalls stellt eine solche erste Losung keinerlei Anspruch auf Korrektheit. Zum
+einen konnen Kollisionen der Arbeiter innerhalb von Regalgangen auftreten, zum
+anderen kann nicht garantiert werden, dass alle angeforderten Artikel innerhalb des
+zulassigen Zeitrahmens zur Verdichtungszone gebracht werden. Es mussen also noch
+weitere Schritte folgen, um eine Zuordnung gultig zu machen. Auch hier hilft wieder
+die Umsetzung einer VNS weiter.
+7.4.2 Reparatur- und Verbesserungsheuristik
+Zusatzlich zur Entscheidung, ob eine Zuordnung von Arbeitern zu Touren gultig ist,
+wird versucht eine Aufteilung zu nden, bei der alle Arbeiter mit ihren
+Arbeitsschritten so fruh wie moglich fertig werden. Zu diesem Zweck bietet sich eine Zielfunktion
+an, die den letzten Endzeitpunkt aller Arbeiter auswertet.</p>
+      <p>Fur ein sinnvolles VNS Verfahren muss nun noch eine Anzahl an Nachbarschaften
+(hier anhand von Moves) de niert werden. Sei W = Siw=1fWig die Menge aller
+Zuordnungen Wi von Arbeitern zu Touren. Weiters nehme man an, dass T = Sm
+i=1fTig
+die Menge aller zuvor berechneter Touren beschreibt. Folgende Moves bilden die
+Basis fur die verwendeten Nachbarschaften:
+WorkerSwapMove(i; j; k; l) Dieser Schritt de niert einfach den Austausch von Tour
+k 2 Wi und l 2 Wj, mit 1 i &lt; j m und k 6= l. Das bedeutet schlicht, dass
+zwischen zwei Arbeitern je eine Tour ausgetauscht wird.</p>
+      <p>WorkerShiftMove(i; j; k) Hier wird lediglich eine Tour k 2 Wi aus Wi entfernt und
+in Wj an letzter Stelle angefugt, wobei 1 i; j m und i 6= j. Das kommt
+einem Verschieben einer Tour von einem Arbeiter zu einem anderen gleich.
+WorkerShiftTourMove(i; j; k) Bei diesem Schritt wird Tour j, mit j 2 Wi, um k
+Positionen verschoben, wobei jkj &lt; jWij und 1 j + k jWij. Eine solche
+Umreihung kann in Bezug auf die termingerechte Abwicklung hilfreich sein.
+WorkerSplitMove(i; R) Bei der Anwendung dieses Schrittes werden alle Elemente
+in R aus Wi entfernt und in eine neue Zuordnung Wi0 eingefugt, welche dann
+einem neuen Arbeiter zugewiesen werden kann. Dieser Schritt kann naturlich
+nur angewendet werden, solange noch freie Arbeiter zur Verfugung stehen.
+Aus diesen Moves ergeben sich die Nachbarschaftsstrukturen WorkerSwap,
+WorkerShift, WorkerShiftTour und WorkerSplit.</p>
+      <p>Nachdem das Hauptziel dieser VNS Prozedur das Au nden einer gultigen Zuordnung
+von Touren zu Arbeitern ist, werden nur Moves berucksichtigt, deren Resultat eine
+gultige Losung darstellt.</p>
+    </sec>
+    <sec id="sec-4">
+      <title>7.5 Erweiterter Algorithmus</title>
+      <p>Da die hier vorgeschlagenen Methoden insgesamt dafur ausgelegt sind in
+vergleichbar kurzer Zeit relativ gute Losungen zu erzeugen, ist es durchaus wahrscheinlich,
+dass die gefundenen Losungen noch weiter verbessert werden konnten. Zudem sind
+Algorithmus 10 : Erweiterter Algorithmus</p>
+      <p>Input : Bestellungen mit Listen aller einzusammelnder Artikel</p>
+      <p>Output : Eine Zuordnung von Arbeitern zu fertigen Touren
+(2)
+(3)
+begin
+repeat</p>
+      <p>Erstelle Partitionierung vorhandener Bestellungen ;
+repeat
+repeat</p>
+      <p>Berechne Zuordnung von Artikeln zu Touren ;</p>
+      <p>Berechne optimale Touren fur die oben erstellte Zuordnung ;
+until keine Verbesserung konnte erzielt werden ;
+Erstelle eine Zuordnung von Arbeitern zu Touren ;
+return die aktuelle Zuordnung von Arbeitern zu Touren ;
+until ein de niertes Abbruchkriterium ist erfullt ;
+until keine weiteren Bestellungen sind abzuarbeiten ;
+end
+zu dem Zeitpunkt, zu dem der Algorithmus zu arbeiten beginnt, noch nicht alle
+Bestellungen bekannt, die im Laufe des Tages zu bearbeiten sein werden. Deshalb
+emp ehlt es sich eine erweiterte Variante des Alg. 3 wie in Alg. 10 beschrieben zu
+verwenden. Anstelle eines Abbruchs, sobald eine Zuordnung von Touren zu Arbeitern
+gefunden wurde, soll der Algorithmus hier wieder von vorne beginnen, allerdings
+unter Berucksichtigung von bereits bearbeiteten Aufteilungen. Das bedeutet etwa, dass
+bereits eingesammelte Artikel naturlich nicht mehr vertauscht werden konnen, oder,
+dass Arbeiter, die bereits auf dem Weg zu einem Artikel sind nicht mehr anders
+geschickt werden konnen. Sonstige Anderungen konnen naturlich noch durchgefuhrt
+werden, solange sie eine Verbesserung der Gesamtlosung bringen. Der Algorithmus
+sollte dann arbeiten, bis alle Bestellungen anforderungsgema bearbeitet wurden.
+Um den Algorithmus moglichst e zient zu gestalten, mussen naturlich auch die
+darunterliegenden Datenstrukturen entsprechend gewahlt werden und
+Bewertungsfunktionen oder im Speziellen die Funktion zur Berechnung optimaler Touren moglichst
+schnell arbeiten.
+Um die Verwendbarkeit der vorgestellten Methode im industriellen Umfeld
+abschatzen zu konnen, wurden zahlreiche Testlaufe durchgefuhrt. Als Hardware wurde ein
+zur Zeit aktuelles Arbeitsplatzsystem gewahlt { konkret ein Dual Xeon mit 2.6 GHz
+und 8 GB RAM. Leider war es nicht moglich Echtdaten zu bekommen, da zum
+Zeitpunkt der Fertigstellung dieser Diplomarbeit noch keine hardwarema ige
+Realisierung im Ersatzteillager unseres Industriepartners vorgenommen wurde, weswegen
+auf statistische Parameter, die im Laufe des vergangenen Jahres gesammelt
+wurden, zuruckgegri en werden musste, um zufallige Testinstanzen zu generieren. Hierzu
+wurde das Lager modelliert und die einzusammelnden Artikel den Parametern
+entsprechend zufallig im Lager verteilt. Zusatzlich wurden typische Kundenbestellungen
+erzeugt. Variable Parameter waren dabei die Summe der insgesamt bestellten
+Artikel und die Anzahl der Kundenbestellungen. Nach Rucksprache mit den Lagerleitern
+wurde festgesetzt, dass Rechenzeiten bis 20 Minuten als akzeptabel gelten, weswegen
+die maximal verfugbare Rechenzeit auf diese 20 Minuten gesetzt wurde.</p>
+    </sec>
+    <sec id="sec-5">
+      <title>8.1 Wahl der Konstruktionsheuristik</title>
+      <p>In einem ersten Vortest wurde untersucht wie die beiden Konstruktionsheuristiken
+zur Findung einer Ausgangslosung den gesamten Algorithmus beein ussen. Die
+verwendeten Testinstanzen sind nicht ident mit jenen der spateren Testlaufe, da durch
+die im Laufe der Entwicklung entstandenen Erweiterungen des Programms auch die
+Testdaten uberarbeitet werden mussten. Deshalb sind die Ergebnisse dieses Vortests
+nicht direkt mit den spateren vergleichbar. In Tab. 8.1 sind die gesammelten
+Ergebnisse ersichtlich. Sie zeigen die absoluten Werte der Summe aller Tourlangen fur die
+in Kapitel 7.2.1 vorgestellten Konstruktionsheuristiken CAH und TSH.
+Naturlich sind diese Werte fur sich noch nicht sehr aussagekraftig, vergleicht man
+sie allerdings miteinander, so lassen sich gewisse Beobachtungen machen. Zunachst
+fallt auf, dass die errechneten Werte der Tourlangen nicht in unmittelbarem
+Zusammenhang mit der gewahlten Methode zur Erzeugung einer Startlosung gebracht
+werden konnen. Es gibt in beiden Fallen an manchen Stellen uberdurchschnittlich
+gro e Abweichungen. Abgesehen von wenigen Ausnahmen schwanken die Werte fur
+die Tourlangen im direkten Vergleich zwischen den beiden Konstruktionsheuristiken
+kaum. Das legt die Vermutung nahe, dass die Wahl der Konstruktionsheuristik, wenn
+uberhaupt, nur einen vernachlassigbaren Ein uss auf die endgultige Losung hat.
+Tabelle 8.1: Absolute Werte der Tourlangen (Spalten CAH und TSH). Alle Werte
+sind Durchschnittswerte uber 20 Durchlaufe (in Klammern sind jeweils die
+Standardabweichungen angefuhrt).</p>
+      <p>Vortest
+In Ar</p>
+      <p>TSH</p>
+      <p>CAH
+8.2</p>
+    </sec>
+    <sec id="sec-6">
+      <title>Wahl von Berechnungsparametern</title>
+      <p>Der erste durchgefuhrte Testlauf sollte nun zeigen, wie sich gewisse
+Berechnungsparameter auf den Algorithmus auswirken. Zwei wesentliche Steuerungsmoglichkeiten
+sind zum einen das Erlauben oder Verbieten des Umkehrens innerhalb von Gangen,
+was bedeutet, dass ein Gang komplett durchquert werden muss, falls er betreten
+wird. Zum anderen ist das die Verwendung von statischen oder dynamischen
+Reihenfolgen fur die Nachbarschaften der VNS. Wie bereits in Kapitel 7.2.4 beschrieben
+wurde, erfolgt bei dynamischer Nachbarschaftsreihenfolge laufend eine Umreihung
+dieser Strukturen, um Losungsverbesserungen durch normalerweise spater
+durchsuchte Nachbarschaften, die dann moglicherweise gar keine Verbesserungen erzielen,
+schon fruher zu ermoglichen. In Tab. 8.2 (ohne Artikel auf alternativen Lagerplatzen)
+und Tab. 8.3 (mit Artikeln auf alternativen Lagerplatzen) sind die gesammelten
+Ergebnisse des Testlaufs (Testlauf 1) zusammengefasst. Dabei wird die mittels
+SShape-Heuristik (siehe Kapitel 7.3.3) gefundene Losung als Referenz herangezogen.
+Die berechneten Werte werden dann prozentuell dazu angegeben, sodass ein
+direkter Vergleich moglich ist. Da alle Werte den Durchschnitt uber 20 Durchlaufe
+reprasentieren, wird auch die Standardabweichung angefuhrt. Zu beachten ist hierbei,
+dass die mittels S-Shape-Heuristik erzielten Werte nur als Anhaltspunkt dienen und
+keinerlei Nebenbedingungen berucksichtigt wurden. Zusatzlich sind noch die
+Durchschnittswerte fur Laufzeit und Kapazitatsauslastung der Kommissionierungswagen
+angegeben. Verwendet wurden die Nachbarschaften Split, Merge, Shift, Swap,
+SwapPosition, SwapPositionMerge, SplitPositionMerge und DoubleShift. Diese Au istung
+entspricht gleichzeitig der Anfangsreihenfolge der Nachbarschaften.</p>
+      <p>Man kann nun beim Untersuchen der Tabellen einige interessante Entdeckungen
+machen. Zunachst mochte ich auf den Vergleich von statischer und dynamischer
+Nachbarschaftsreihenfolge eingehen. Hier ist bei den kleinen Instanzen mit 25 Artikeln zu
+sehen, dass die Werte der Zielfunktionen sehr nahe beisammen liegen, bei
+dynamischer Nachbarschaftsreihenfolge dennoch leicht bessere Werte vorliegen. Die Laufzeit
+ist allerdings geringfugig langer, wenn auch nicht sehr viel. Interessant hingegen sind
+die Instanzen mit 50 Artikeln, bei denen sowohl ein besseres Laufzeitverhalten, als
+auch ein besserer Zielfunktionswert zu bemerken ist, wenn dynamische
+Nachbarschaftsreihenfolge verwendet wird. Auch bei jenen Instanzen mit 100 Artikeln bringt
+die Berechnung mittels dynamischer Nachbarschaftsreihenfolge stets ein besseres
+Ergebnis in beiden Bereichen. Fur die gro eren Instanzen mit 200 Artikeln wiederum
+muss man sagen, dass die dynamische Reihenfolge der Nachbarschaften keinen klaren
+Vorteil bringt. Das mag aber moglicherweise daran liegen, dass bei so vielen
+Artikeln gro e Teile des Lagers durchlaufen werden mussen, also kaum Wege eingespart
+werden konnen und somit die Optimierung weniger Optionen zur Verfugung hat.
+Au erdem werden nach der gegebenen zeitlichen Beschrankung die Berechnungen
+unterbrochen. Um die Auslastung der Kommissionierungswagen nicht au er Acht zu
+lassen, sei erwahnt, dass die Durchschnittswerte eine durchwegs hohe Belegung
+zeigen, was deutlich fur die E zienz der Berechnungen spricht. Gesamt betrachtet lasst</p>
+      <p>8
+) ) ) ) ) ) ) ) )
+) ) ) )
+( ( ( ( ( ( ( ( ( ( ( ( ( ( ( e
+.59160 .1225 .73278 .1037 .35103 .1468 .43449 .938 .32253 .1152 .33430 .997 .13036 .1153 .41225 .950 .07067 .1108 .2686 .772 .88970 .1791 .91103 .934 .96916 .1278 .41383 .952 .20453 .2106 .() e
+( ( ( ( i
+6 6 1 6 3 7 8 6 2 7 f h
+85 .34 .40 .08 .73 .20 .91 .47 .22 .26 ()x m n
+) ) ) ) )
+) ) ) ) ) ) ) ) )
+1 1 1 1 1
+&gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; 1 1 1 1 1 1 1 1 1 m</p>
+      <p>8 3 3 5 1 9 0 3 1 1
+m m m m m m m m m m 9 3 8 8 7 2 4 5 1 9 k
+ax ax ax ax ax ax ax ax ax ax .09 .87 .18 .00 .14 .97 .24 .41 .65 .63 t reh
+e
+n
+1
+0 9 9 9 9 9 9 9 9 9 9 9 9 9 9 8 7 8 8 8
+0 9 9 9 9 9 9 9 9 9 9 9 9 9 9 3 2 5 0 7
+.0 .7 .9 .5 .9 .8 .8 .8 .9 .1 .8 .2 .8 .3 .9 .7 .7 .6 .8 .1 C
+4
+)
+4
+)</p>
+      <p>2 6 5
+) ) ) ) )</p>
+      <p>( ( ( ( (
+.70396 .1160 .4692 .1099 .52176 .1251 .4518 .1497 .05753 .1034 .35126 .895 .946 .925 .583 .828 .783 .851 .1322 .756 .22624 .1354 .81351 .962 .52217 .1199 .51451 .981 .85940 .2009 .()
+( ( ( (
+3 6 3 6 0 7 1 6 1 7 f
+37 .62 .84 .38 .00 .92 .29 .67 .83 .48 ()x oh
+) ) ) ) ) n</p>
+      <p>e
+1
+1
+0 9 9 9 9 9 9 9 9 9 9 9 9 9 9 7 7 8 6 8
+0 9 9 9 9 9 9 9 9 9 9 9 9 9 9 8 2 5 9 0
+.0 .7 .9 .5 .9 .8 .8 .8 .9 .1 .8 .2 .8 .3 .9 .1 .7 .6 .9 .6 C
+1
+)
+8
+)
+3
+)</p>
+      <p>4
+6 ) ) ) )
+)
+( (5 (1 (1 (4 ( ( ( (1 (
+( ( ( ( (</p>
+      <p>2 6 (0 6 (1 7 (0 6 (1 7 f ieh
+.35840 .1000 .1196 .1522 .12893 .3357 .9260 .1039 .83038 .6994 .81702 .796 .03757 .1021 .71979 .821 .577 .816 .3184 .721 .82727 .1201 .32031 .1071 .41940 .1108 .21662 .874 .11044 .1890 .() m e
+56 .31 .66 .87 .91 .10 .46 .66 .72 .25 ()x it f</p>
+      <p>n
+) ) ) ) ) o
+) ) ) ) )
+1
+&gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; 0 9 8 9 9 1 1 1 1 1 k
+m m m m m m m m m m 26 47 94 57 85 46 29 48 52 56 eh
+ax ax ax ax ax ax ax ax ax ax .55 .45 .85 .56 .47 .03 .77 .48 .07 .23 t ren
+9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 8 7 8 7 8
+9 9 9 9 6 9 9 9 9 9 9 9 9 9 9 4 2 5 7 6
+.0 .7 .8 .5 .8 .8 .8 .8 .9 .1 .8 .2 .8 .3 .9 .0 .7 .6 .5 .1 C
+( (
+5 1 ( ( ( ( ( ( ( (
+3 9 ) ) ) ) ) ) ) )
+) )</p>
+      <p>( ( ( ( ( ( ( ( ( (
+.5805 .4712 .8897 .3010 .7466 .338 .1523 .830 .4595 .891 .6039 .771 .8658 .702 .0401 .783 .9476 .790 .1450 .777 .756 .694 .3140 .628 .3125 .666 .945 .719 .4168 .723 .036 .661 .000 .667 .000 .790 .065 .637 .088 .747 f() on
+x h
+) ) ) ) ) ) ) e
+) )
+)</p>
+      <p>U
+1 1 1 1 1
+&gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; 1 1 1 1 1 2 2 2 3 3</p>
+      <p>5 5 3 5 8 8 4 7 4 0
+m m m m m m m m m m 8 3 7 1 5 6 1 0 2 0
+a a a a a a a a a a .3 .6 .2 .0 .2 .9 .9 .2 .2 .9
+x x x x x x x x x x 0 5 3 7 3 6 6 7 9 0 t re
+m d
+k y
+e n
+h a
+m
+9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 8 7 8 7 8
+9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 5 4 6 4 6
+.8 .5 .6 .3 .7 .6 .6 .6 .6 .0 .6 .0 .6 .0 .6 .2 .2 .2 .4 .9 C
+c e
+h s
+e t
+l
+(4 (1 ( (5 (2 ( ( ( ( ( ( ( ( ( ( ( ( ( ( ( ieR fau
+.5708 .1116 .80159 .2246 .6510 .792 .5176 .1187 .53619 .3882 .2639 .647 .3446 .647 .0528 .618 .6481 .656 .1237 .678 .748 .647 .695 .647 .932 .612 .674 .681 .942 .689 .162 .630 .000 .667 .027 .659 .001 .656 .112 .726 f()x im e
+h 2
+n
+)3 )1 ) )8 )0 ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) tU lfo
+n is T
+m eg
+&gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; 3 2 3 4 4</p>
+      <p>9 9 8 2 0 k
+m m m m m m m m m m m m m m m 1 9 1 0 1 e
+a a a a a a a a a a a a a a a .5 .5 .2 .5 .1 rh
+x x x x x x x x x x x x x x x 0 3 4 6 2 t en
+i f</p>
+      <p>o
+t l
+U g</p>
+      <p>e
+n i
+s
+c
+h
+e</p>
+      <p>R
+U lg
+m e
+t
+i u e s tr
+s r i i
+T c d c n ik
+e h e h d e
+lts re n nu d ln
+a
+u d g e
+f u i r a</p>
+      <p>u
+1 n e in Z
+u K R 1 T
+n o e
+d m fe
+0
+0
+a
+b
+o m re u e
+h</p>
+      <p>n l
+n d l</p>
+      <p>e
+0 8
+n is</p>
+      <p>z
+e s l 2</p>
+      <p>i o
+U o
+e</p>
+      <p>A</p>
+      <p>P it
+i
+n r s</p>
+      <p>r a t t
+se zo b ik la
+G e s e u</p>
+      <p>n lo ln fe
+a t u</p>
+      <p>T
+e
+n [ t ( 1
+g % e A
+e
+s ]) S ) n
+r r u
+. d</p>
+      <p>2
+u . t
+n G a A
+d e n n</p>
+      <p>t d g o
+b e a e h
+e s r f
+i t d u n
+e</p>
+      <p>a h e
+s t
+t b r A
+a w w t
+d I i f</p>
+      <p>n K e a
+d s lf l
+y t l u te
+n a a</p>
+      <p>m n r
+a n</p>
+      <p>k n
+m z
+e
+m t a</p>
+      <p>i
+i n e o it
+s</p>
+      <p>r n v
+c (</p>
+      <p>n s e
+h I
+e n , w n
+r ) d e L</p>
+      <p>i r
+N o e t a</p>
+      <p>h
+a n L (</p>
+      <p>e
+c e a f( r
+h u x p</p>
+      <p>g
+b A f ) l
+a z a
+r e in t</p>
+      <p>z
+r</p>
+      <p>t i
+s i t
+c k
+h e (
+a l t r</p>
+      <p>n
+f
+t
+s a</p>
+      <p>P e</p>
+      <p>n
+o
+i
+n z</p>
+      <p>e D
+r u S n u
+ie f e t r
+h a k [ c
+e l u % h
+n te n ] s
+f d ) c
+o r h
+l n e r n
+g a n e
+e t la it
+. iv [s t t</p>
+      <p>s
+en ]) iv w</p>
+      <p>e
+L
+u z</p>
+      <p>r
+n u t
+a d r e
+g
+e d m u
+rp ie t
+i</p>
+      <p>e
+la K te r</p>
+      <p>b
+t a ls 2
+z</p>
+      <p>0
+e p
+n a</p>
+      <p>z
+b i</p>
+      <p>S
+- T</p>
+      <p>S e
+e t h s
+i a a t</p>
+      <p>t p la
+B s e u
+e a
+r u k fe
+e s o
+c l
+h a n m</p>
+      <p>s
+n ts t it
+u u r</p>
+      <p>u 2
+n n</p>
+      <p>i
+g g e 5</p>
+      <p>r ,
+i e e
+t r n 0</p>
+      <p>,
+C .2 .2 .2 .2 .5 .6 .0 .6 .0 .6 .0 .6 .6 .6 .6 .0 .3 .6 .5 .8
+90 78 86 74 84 99 99 99 99 99 99 99 99 99 99 00 99 99 99 99
+1
+n
+e t 8 7 2 0 3 x x x x x x x x x x x x x x x
+rh .1 .5 .8 .9 .6 a a a a a a a a a a a a a a a
+e 3 8 0 5 2 m m m m m m m m m m m m m m m
+k 25 94 63 23 74 &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt;
+T is</p>
+      <p>C .5 .8 .2 .2 .6 .6 .0 .6 .0 .6 .0 .6 .6 .6 .6 .7 .3 .6 .5 .8</p>
+      <p>38 47 68 47 18 99 99 99 99 99 99 99 99 99 99 99 99 99 99 99</p>
+      <p>)
+e ) ) ) ) ) )
+h x .447 .362 .736 .290 .097 .200 .676 .000 .656 .041 .277 .4108 .721 .868 .686 .0117 .730 .1141 .698 .2121 .714 .7373 .700 .5240 .715 .9588 .781 .3764 .722 .9332 .852 .5508 .891 .9602 .1491 .1204 .836 .0799 .943 .8244
+n )
+o (
+f
+( ( ( ( ( ( (
+) )
+) ) ) ) ) ) ) ) ) ) 2 ) 0
+( ( ( ( ( ( ( ( ( ( 6 ( 1
+( (
+e m
+g
+l U
+o
+f t
+n i
+e
+h
+i
+e
+R
+e
+h
+c
+s
+i
+e S z
+T</p>
+      <p>a n
+S</p>
+      <p>L
+e</p>
+      <p>v ]) n
+w i e
+s t s
+t a [ iv .
+t l t e
+i e n a lg
+n r e</p>
+      <p>n o
+h ) d r f
+c ] n e n
+s
+p (x h
+r f a it c
+e ( L a
+m N</p>
+      <p>n a
+lt l K n d
+a ie I</p>
+      <p>c T
+T</p>
+      <p>n
+m i b</p>
+      <p>l
+.3 0 u n m
+8 0 s o U</p>
+      <p>o i
+2 l s e
+C .5 .6 .6 .7 .4 .9 .3 .8 .2 .8 .1 .9 .8 .8 .8 .9 .5 .9 .9 .0
+en t 8 9 6 7 8 5 4 1 5 4 x x x x x x x x x x
+rekh .8471 .3141 .0871 .4231 .2201 .1119 .1909 .3379 .3479 .1880 a&gt;m a&gt;m a&gt;m a&gt;m a&gt;m a&gt;m a&gt;m a&gt;m a&gt;m a&gt;m
+1</p>
+      <p>)
+m x .21 .74 .62 .79 .01 .79 .87 .37 .35 .()88 .1191 .93605 .855 .43813 .1065 .31244 .895 .78111 .1281 .12022 .710 .2264 .85 .21 .80 .73 .94 .79 .70 .6041 .8712 .2534 .2827 .25558 .3116 .13200 .2082 .20751 .140 .429</p>
+      <p>) ) ) )
+)
+2 8
+8 5 4 0 4 1 8 3
+(
+f 7 1 6 0 7 0 6 0 6 3
+( ( ( (
+( ( ( ( (</p>
+      <p>( (2 (1 (1 ( (4 (1 ( (1 (4
+) ) ) )
+8 9 6
+)
+6
+) )
+1 ) 4
+)
+8
+C .0 .2 .6 .7 .1 .9 .3 .8 .2 .8 .1 .9 .8 .8 .8 .9 .5 .9 .7 .0</p>
+      <p>80 70 85 72 78 99 99 99 99 99 99 99 99 99 99 99 99 99 99 001
+n
+m e
+an rh t 5 0 0 1 8 5 8 6 8 7 6 2 x 9 x x x x x x
+y e .7 .7 .9 .7 .4 .5 .8 .4 .6 .9 .4 .8 a .4 a a a a a a
+d k 6 7 2 4 1 0 7 9 9 4 9 7 m 9 m m m m m m
+m 13 11 9 9 9 65 79 66 66 68 18 18 &gt; 19 &gt; &gt; &gt; &gt; &gt; &gt;
+U 1 1 1
+en ) ) ) ) ) ) ) ) ) ) )2 )2 )7 ) ) ) ) ) )
+o (x .44 .95 .75 .14 .30 .62 .18 .28 .7 ()8 .3248 .74700 .923 .08511 .1275 .61436 .950 .63611 .1380 .62392 .754 .0291 .89 .47 .89 .44 .94 .91 .86 .6412 .1101 .74420 .841 .60515 .1239 .03110 .888 .12521 .1065 .23089
+h )</p>
+      <p>6 .6 3 8 8 0 4 3 2 6
+f 7 0 6 1 7 1 6 1 6 2</p>
+      <p>( ( ( ( ( ( ( ( ( ( (1 (1 (1 ( ( ( ( ( (
+e m
+R</p>
+      <p>C .5 .3 .6 .7 .5 .9 .3 .8 .2 .8 .1 .9 .8 .8 .8 .9 .5 .9 .7 .0</p>
+      <p>80 73 85 72 82 99 99 99 99 99 99 99 99 99 99 99 99 99 99 001
+n
+re t 9 6 7 0 2 1 0 5 9 7 x x x x x x x x x x
+ekh .7401 .719 .9131 .7221 .802 .4690 .8811 .8221 .2351 .8061 a&gt;m a&gt;m a&gt;m a&gt;m a&gt;m a&gt;m a&gt;m a&gt;m a&gt;m a&gt;m</p>
+      <p>1 1 1 1 1
+lfgo itU ) ) ) ) ) ) ) ) ) ) )5 ) ) ) ) ) ) ) )
+ieeh m f(x .722 .(176 .668 .(628 .703 .(293 .697 .(099 .624 .()866 .0204 .(64158 .998 .(79014 .1238 .(82804 .1017 .(22683 .1669 .(86833 .717 .(5281 .952 .(3696 .993 .(51254 .1049 .(82607 .911 .(62527 .7110 .(93236 .860 .(96229 .1517 .(25873 .985 .(91123 .1244 .(93358
+n )
+e C .9 .7 .6 .7 .3 .9 .3 .8 .2 .8 .1 .9 .8 .8 .8 .9 .5 .9 .7 .0
+ittsscah reekhn t .30726 .76969 .35185 .92072 .82079 .93699 .04499 .81499 .89599 .52099 a99xm a99xm a99xm a99xm a99xm a99xm a99xm a99xm a99xm a100xm</p>
+      <p>Um 6 5 11 9 2 49 08 96 49 59 &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt;
+e ) ) ) ) )
+h x .48 .23 .81 .34 .29 .59 .83 .26 .8 ()9 .8186 .44850 .1074 .41159 .1350 .52948 .1068 .22823 .1776 .94761 .755 .3372 .94 .15 .81 .47 .93 .18 .85 .87 .698 .900 .986 .60276 .5139 .73462 .943 .08024 .1125 .13439
+n )
+o ( 7 .9 4 1 8 7 8 4 4 8
+f 7 5 6 7 7 0 6 4 6 9
+( ( ( ( ( ( ( ( ( ( (2 (1 (2 (1 (3 ( ( ( (
+) ) ) ) ) ) ) ) )
+4 0 2 2 8
+r 5 5 5 5 5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+A 2 2 2 2 2 5 5 5 5 5 01 01 01 01 01 02 02 02 02 02
+die Verwendung von dynamischen Nachbarschaftsreihenfolgen bessere Ergebnisse
+erwarten und sollte wohl im Echtbetrieb bevorzugt verwendet werden.
+Nun zum Unterschied zwischen den Werten mit und denen ohne Umkehren. Vor
+allem bei kleineren bis mittleren Instanzen sind klare Vorteile durch das Zulassen des
+Umkehrens auszumachen. Auch hier sind interessanter Weise die Laufzeiten leicht
+uber denen der Tests ohne Umkehren. Sobald die Instanzen eine Gro e erreichen, bei
+der der Algorithmus abgebrochen wird, lasst sich nur schwer eine Aussage daruber
+machen, wie reprasentativ die Werte sind. Aber wie auch beim Vergleich zwischen
+statischer und dynamischer Nachbarschaftsreihenfolge sind keine klaren Vorteile fur
+ein Verfahren auszumachen. Dennoch scheint man mit Umkehren eher bessere
+Ergebnisse erzielen zu konnen.</p>
+      <p>Weiters wurden die Instanzen hinsichtlich ihrer Losbarkeit bei Verwendung von
+alternativen Lagerplatzen fur bestimmte Artikel untersucht. Das hei t also, dass
+manche Artikel an mehreren Positionen im Lager verfugbar sind und damit zusatzliche
+Moglichkeiten zur Bildung von Touren vorliegen konnen. Wirklich klare Unterschiede
+sind hier nur schwer zu erkennen. Wenn uberhaupt, so sind am ehesten in
+Kombination mit dem Erlauben des Umkehrens leichte Vorteile auszumachen. Das liegt aber
+sicherlich auch daran, dass nicht alle Artikel an mehreren Positionen verfugbar sind.
+Somit kann es auch passieren, dass fur die angeforderten Artikel keine alternativen
+Lagerplatze existieren und somit dieselbe Problemstellung vorherrscht wie bei der
+Berechnung ohne alternative Lagerplatze.</p>
+      <p>Generell sind nach diesen Tests naturlich nur Tendenzen auszumachen, es ist aber
+zu beachten, dass durchaus die Werte fur kleinere Instanzen ausschlaggebend sind,
+da, wie auch schon in der Problembeschreibung erwahnt, nicht alle angeforderten
+Artikel auf einmal bekannt sind. Es kann also angenommen werden, dass im
+Verlauf eines Arbeitstages immer wieder kleinere Instanzen verarbeitet werden. Unter
+diesem Gesichtspunkt bieten die zuvor gefundenen Unterschiede durchaus eine
+Entscheidungsgrundlage zur Wahl entsprechender Berechnungsparameter.</p>
+    </sec>
+    <sec id="sec-7">
+      <title>8.3 E zienz einzelner Nachbarschaften</title>
+      <p>Neben den im vorigen Abschnitt erlauterten Ergebnissen, wurde auch das
+Verhalten der Nachbarschaften im Verlauf des Algorithmus ausgewertet. In Tab. 8.4 ist
+zu sehen wie hoch der Anteil an Verbesserungen gegenuber allen getesteten
+Schritten einer Nachbarschaft ist. Wurden also beispielsweise 100 Schritte innerhalb einer
+Nachbarschaft getestet und fuhrten 80 davon zu einer Verbesserung, so wurde in der
+Tabelle ein Wert von 80% vermerkt werden. Die ersten vier Nachbarschaften stellen
+grundlegende Operationen zur Losungsverbesserung dar, weshalb sie auch zu Beginn
+gereiht werden. SplitMove ist an erster Stelle, um aus anfanglich meist gro en Touren
+zunachst mehrere kleinere zu erzeugen. Die Laufzeiten der folgenden
+Nachbarschaften ShiftMove und SwapMove sind abhangig von der Anzahl der Touren insgesamt,
+weshalb vor diesen beiden noch Merge durchsucht wird. Das ermoglicht das
+Zusammenfuhren mancher Touren, falls dies eine Verbesserung bringt. Erst im Anschluss
+an diese vier Nachbarschaften folgen jene, deren Komplexitat gro er ist, wobei die
+Reihenfolge hier auf Basis von kleineren Vortests so gewahlt wurde. Es folgen also
+noch SwapPosition, SwapPositionMerge, SplitPositionMerge und DoubleShift.
+Selbstverstandlich wirkt sich diese Reihenfolge nur direkt bei Verwendung von statischer
+Nachbarschaftsreihenfolge aus. Das Durchsuchen der Nachbarschaften erfolgte au
+erdem unter Verwendung der Strategie Next Improvement (siehe dazu auch Kapitel 5).
+Sofort fallen viele Eintrage mit "0.0%\ auf. Vor allem Nachbarschaft N7 ist hier sehr
+dominant, was aber durchaus zu erklaren ist, da ein verteiltes Einsammeln eines
+Artikels von mehreren Positionen bedeutet, eine Position mehr im Lager anfahren zu
+mussen. Es ist zwar vorstellbar, dass in manchen Szenarien solch eine Aufteilung
+von Nutzen ist, die Tests haben allerdings gezeigt, dass damit nicht sehr viel
+verbessert werden kann. Das Verhalten im Echtbetrieb kann leider nur schwer eingeschatzt
+werden, denn hierzu musste man auf Basis von echten Daten entsprechende
+Auswertungen erstellen. Weiters sind die Nachbarschaften N5 und N6 nur dann sinnvoll,
+wenn auch alternative Positionen von Artikeln im Lager verwendet werden, deshalb
+dwiuerddyennadmieiscehnetsRpreeihchuenngddeenr ENiancthrabgaersmchiatft"e-n\ dmearernkieErt.zZieunszateznltiscchhediadzeundb,eweians sueshsrt
+deutlich bei N8 zu sehen ist. Da bei statischer Reihenfolge der Nachbarschaften schon
+N3 viele ShiftMoves durchfuhrt, so bleiben fur N8 naturlich kaum mehr
+Moglichkeiten zur Verbesserung. Anders bei dynamischer Reihenfolge, wo die Nachbarschaften
+einigerma en gleichma ig verteilt zum Einsatz kommen. Eine weitere Beobachtung
+kann hinsichtlich N2 gemacht werden. Der Prozentsatz ist hier vor allem bei gro eren
+Instanzen sehr klein, was darauf zuruckzufuhren ist, dass Merge nur dann sinnvoll
+verwendet werden kann, wenn Kommissionierungswagen weit unter ihrer Kapazitat
+ausgelastet sind, was lediglich zu Beginn des Algorithmus sehr wichtig ist, mit
+zunehmender Laufzeit aber kaum mehr vorkommen durfte. Besonders e zient
+hingegen verhalt sich N1, wo ein sehr hoher Prozentsatz an erzeugten SplitMoves auch
+tatsachlich zu einer Verbesserung der Gesamtlosung fuhrt. Dabei steht vor allem das
+Beseitigen von uberfullten Kommissionierungswagen und damit ungultigen Touren
+im Vordergrund.</p>
+    </sec>
+    <sec id="sec-8">
+      <title>8.4 Rechenzeit der Nachbarschaften</title>
+      <p>Reprasentativ fur das Laufzeitverhalten der einzelnen Nachbarschaften soll Tab. 8.5
+(Testlauf 1) zeigen, wie hoch der Rechenaufwand der einzelnen Nachbarschaften
+ausfallt.</p>
+      <p>Vor allem N8 schlagt hier mit besonders hohem Aufwand zu Buche, was durch die
+einigerma en hohe E zienz bei Verwendung dynamisch veranderbarer
+Nachbarschaftsmit alternativen Lagerplatzen</p>
+      <p>ohne alternative Lagerplatze
+X X X X X L L L L L MMMMM S S S S S X X X X X L L L L L MMMMM S S S S S I
+5 4 3 2 1 5 4 3 2 1 5 4 3 2 1 5 4 3 2 1 5 4 3 2 1 5 4 3 2 1 5 4 3 2 1 5 4 3 2 1 n
+2 2 2 2 2 1 1 1 1 1 2 2 2 2 2 1 1 1 1 1
+0 0 0 0 0 0 0 0 0 0 5 5 5 5 5 2 2 2 2 2 0 0 0 0 0 0 0 0 0 0 5 5 5 5 5 2 2 2 2 2 A
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 5 5 5 5 5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 5 5 5 5 5 r
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 8 0 0 4 5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 6 0 0 4 4
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 5 0 0 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 7 0 0 4 6 N</p>
+      <p>5 1 4 5 3 1 4 4
+1 1 0 0 1 2 2 3 2 2 1 2 2 2 2 7 4 8 7 3 1 1 0 0 1 3 2 2 2 2 2 2 2 2 2 8 5 6 6 9 N
+7 7 7 7 7 5 5 5 5 4 5 5 6 5 4 6 7 7 6 6 7 7 7 7 7 5 5 5 4 4 5 5 6 5 4 4 7 7 6 4
+4 6 0 6 5 4 0 2 3 7 7 0 5 3 4 6 1 7 8 2 3 6 4 8 4 3 0 4 7 8 7 7 2 4 7 4 1 7 0 9 N
+o
+.0 .8 .8 .4 .4 .4 .6 .8 .6 .8 .3 .2 .7 .7 .5 .4 .1 .9 .5 .9 .0 .2 .5 .4 .9 .1 .8 .6 .7 .7 .5 .1 .3 .5 .2 .3 .6 .3 .8 .4 3 h</p>
+      <p>1
+9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 7 5 6 3 3 9 9 9 9 0 9 9 9 9 9 9 9 9 9 9 5 5 6 3 4
+9 9 9 8 9 6 6 6 7 6 5 4 4 5 6 9 8 4 6 4 9 9 9 9 0 6 6 6 7 6 5 4 4 5 6 5 8 7 7 5 N U
+k
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 N e
+h
+.0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .7 .0 - - - - - - - - - - - - - - - - - - - - 5 r</p>
+      <p>1
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 2
+.0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .3 .8 - - - - - - - - - - - - - - - - - - - - 6
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+.0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 - - - - - - - - - - - - - - - - - - - - 7</p>
+      <p>6
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 4 0 6 3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 0 3 1 N
+.0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .7 .6 .0 .5 .9 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .0 .3 .0 8
+e
+n
+N eh
+N
+e
+n
+k
+N e
+N
+s
+t
+a
+t
+i
+s
+c
+h
+e
+e
+i
+h
+e
+n
+f
+o
+l
+g
+e
+d
+y
+n
+a
+m
+i
+s
+c
+h
+e
+R
+e
+i
+h
+e
+n
+f
+o
+l
+g
+e
+d o [ T T</p>
+      <p>%
+y h</p>
+      <p>e a
+n n ] s
+a e ) t b
+m a la e</p>
+      <p>b n u ll
+is z
+w e f e</p>
+      <p>e
+c</p>
+      <p>r
+h . f m8
+e o</p>
+      <p>.
+r m l i 4</p>
+      <p>g t
+N it r
+e 2</p>
+      <p>:
+5 E
+a A ic ,
+c</p>
+      <p>h
+h r</p>
+      <p>5
+b t en 0 z
+a ik , ie
+r e S 1 n
+s l
+c n c 0 z
+h h 0
+a a r</p>
+      <p>u e
+f u it</p>
+      <p>t n r
+ts f</p>
+      <p>e d
+r a n
+d</p>
+      <p>N
+ie l
+h te in 0 c</p>
+      <p>0 h
+e r</p>
+      <p>2 a
+n n R e b
+f a e i a
+o t l n r
+lg iv a z s</p>
+      <p>t u c
+e e i h
+. n o s</p>
+      <p>n a a
+(
+N L</p>
+      <p>m ft
+z
+1: a u m en
+S g
+p e d e
+li
+t rp en d
+;</p>
+      <p>ln in
+N la i e T
+2 t n n e</p>
+      <p>s
+: z s
+M e g</p>
+      <p>A t</p>
+      <p>l
+e n e r a
+r s t u
+g b a ik f
+e
+; e m</p>
+      <p>e 1
+N i</p>
+      <p>t l
+3 B n
+:</p>
+      <p>g o
+S e e ( h
+h r t A n
+i e e r e
+f
+t
+;
+N cnh tse .) b
+4: u t A z</p>
+      <p>e w
+S n n n
+w g</p>
+      <p>g .
+a S e m
+p m c f
+; h u i
+s h e ro ln
+it n r
+i
+o e je N a
+n</p>
+      <p>u</p>
+      <p>U
+N e c
+w a</p>
+      <p>f
+6 m i h a</p>
+      <p>l
+: b l
+S k ig t
+w e e a e
+a h n rs rn
+pP re</p>
+      <p>c</p>
+      <p>N h a
+o n
+s a a it
+it c f v
+io in h t e
+nM n b d n</p>
+      <p>e a e
+re r r r L
+eg h s p a
+; g
+a c</p>
+      <p>h r
+N lb a o e
+7 f z rp
+: e t e
+S i . n la
+lp n G t t
+it e u z
+P s e e e
+o t l n
+s G e l
+iito a ts eA
+n n e
+M g t n</p>
+      <p>D
+e e w t u
+rg s</p>
+      <p>e r
+u i c
+e
+; u r l h
+N n d ( s</p>
+      <p>a c
+8 d e
+: n ll h</p>
+      <p>e n
+D b d
+bu i e
+o e i Wit</p>
+      <p>t
+l e s
+e s In tre e</p>
+      <p>w
+S t
+h a
+i s
+f t t r
+.t i a i t
+) s n e
+c n
+h z P u
+e e
+r n r b</p>
+      <p>o e
+u ( z r</p>
+      <p>I e
+n n n 2
+d ) t 0
+T N i</p>
+      <p>h t
+e 5 t r
+lts :S u itt tr A
+a w n e i r
+u
+f
+a d n s t
+t i</p>
+      <p>k
+p
+1 P</p>
+      <p>o o d p e
+Tabelle 8.5: Rechenzeit - Durchschnittswerte uber 20 Testlaufe mit 25, 50, 100 und 200
+einzusammelnden Artikeln. Zu sehen ist der prozentuelle Anteil (alle Werte in Prozent [%]) an Rechenzeit
+der jeweiligen Nachbarschaft in Relation zur Rechenzeit fur alle Nachbarschaften fur Instanzen
+ohne bzw. mit Artikeln auf alternativen Lagerplatzen bei Berechnung mit Umkehren innerhalb eines
+Ganges und dynamischer Nachbarschaftsreihenfolge.
+(N1: Split; N2: Merge; N3: Shift; N4: Swap; N5: SwapPosition; N6: SwapPositionMerge; N7: SplitPositionMerge; N8: DoubleShift;
+N9: ShiftSplit; N10: SwapSplit; N11: MultipleSwap; N12: MultipleSplit; N13: SplitMerge.)</p>
+      <p>Testlauf 1</p>
+      <p>Testlauf 2
+In</p>
+      <p>Ar N1 N2</p>
+      <p>N3</p>
+      <p>N4 N5 N6</p>
+      <p>N7</p>
+      <p>N8</p>
+      <p>N1 N2 N3 N4 N6 N7</p>
+      <p>N8 N9 N10 N11 N12 N13
+S1 25 1.1 3.0 9.2 11.2 0.2 0.1
+S2 25 1.2 2.7 7.8 11.6 0.2 0.1
+S3 25 0.6 5.0 9.3 7.7 0.2 0.1
+S4 25 0.7 5.5 11.4 9.0 0.2 0.1
+S5 25 0.9 3.6 9.4 10.0 0.2 0.1
+e
+tzM1 50 0.4 3.9 16.1 9.6 0.1 0.0
+lapM2 50 0.4 4.1 16.1 8.8 0.1 0.0
+eM3 50 0.4 4.3 16.0 10.0 0.2 0.1
+r
+g
+aLM4 50 0.5 4.2 16.1 9.7 0.1 0.1
+evM5 50 0.5 4.1 16.7 9.3 0.2 0.1
+itaL1 100 0.6 6.3 24.6 20.7 0.1 0.0
+rnL2 100 0.5 3.9 22.3 23.7 0.1 0.1
+e
+ltL3 100 0.7 4.2 17.0 27.0 0.1 0.1
+a
+eL4 100 0.5 4.0 25.3 20.4 0.1 0.0
+n
+hL5 100 0.7 8.0 24.8 22.5 0.1 0.1
+o
+X1 200 2.1 6.8 27.2 39.1 0.1 0.1
+X2 200 1.9 7.2 25.5 35.1 0.1 0.1
+X3 200 1.9 7.6 30.7 41.7 0.1 0.1
+X4 200 1.4 6.2 36.5 28.1 0.1 0.1
+X5 200 1.8 6.8 31.8 28.9 0.1 0.1
+strukturen durchaus vertretbar ist. Bei statischer Nachbarschaftsreihenfolge hingegen
+macht die Verwendung dieser Nachbarschaft keinen Sinn und sollte ausgelassen
+werden. Wie intuitiv au erdem zu erwarten war, benotigen N3 und N4 deutlich mehr
+Aufwand zum Durchsuchen, als die ubrigen Nachbarschaften. Sind es bei kleinen
+Instanzen noch je etwa 10% der Rechenzeiten, so steigt der Anteil fur gro e Instanzen
+auf 30{40% an.</p>
+    </sec>
+    <sec id="sec-9">
+      <title>8.5 Laufzeit und Losungsverbesserung</title>
+      <p>Ein wesentlicher Aspekt des entwickelten Algorithmus ist das Au nden von guten
+Losungen innerhalb moglichst kurzer Zeit, da im Echtbetrieb nicht uneingeschrankt
+viel Zeit zur Verfugung stehen kann. Aus diesem Grund ist eine Visualisierung des
+Verlaufs der Losungsverbesserung durchaus interessant, was anhand von Instanz M3
+bei Berechnung mit alternativen Lagerplatzen und dynamischer
+Nachbarschaftsreihenfolge in Abb. 8.1 dargestellt wird. Es ist dabei eindeutig zu erkennen, dass
+innerhalb der ersten 100 Iterationen des VND bereits eine sehr gute Losung erreicht
+wird, welche im weiteren Verlauf zwar noch geringfugig verbessert wird, aber nicht
+mehr in so hohem Ma wie zu Beginn. Es sollte darauf hingewiesen werden, dass die
+Verbesserungen innerhalb der zweiten 100 Iterationen bei weitem nicht so gravierend
+sind, da hier die veranderte Skalierung der y-Achse fur die Tourlange zwischen 0 und
+50000 beachtet werden muss.</p>
+      <p>Dieses Verhalten ist au erst gunstig fur die Verwendung im realen Umfeld, wo vor
+allem schnelle Antwortzeiten von Bedeutung sind. In manchen Fallen wird es dort
+notig sein, schon nach kurzer Zeit den Algorithmus abzubrechen und die bis dahin
+vorliegende Losung zu verwenden.</p>
+    </sec>
+    <sec id="sec-10">
+      <title>8.6 Losungsqualitat bei Verwendung zusatzlicher</title>
+    </sec>
+    <sec id="sec-11">
+      <title>Nachbarschaften</title>
+      <p>Um das Verhalten des Algorithmus bei der Verwendung zusatzlicher Nachbarschaften
+beobachten zu konnen, wurde ein weiterer Testlauf durchgefuhrt, der unter den
+gleichen Voraussetzungen wie der in Kapitel 8.2 beschriebene durchgefuhrt wurde.
+Hierbei wurde allerdings nur mehr mit dynamischer Nachbarschaftsreihenfolge gerechnet,
+es kamen aber weitere Nachbarschaften zum Einsatz. Verwendet wurden hier neben
+Split, Merge, Shift, Swap, SwapPositionMerge, SplitPositionMerge und DoubleShift
+auch ShiftSplit, SwapSplit, MultipleSwap, MultipleSplit und SplitMerge. Diese
+Auflistung entspricht wieder gleichzeitig der Anfangsreihenfolge der Nachbarschaften.
+Weiters wurde SwapPosition ausgelassen, da diese bereits durch SwapPositionMerge
+abgedeckt ist.</p>
+      <p>Tourlänge
+Verbesserungen
+200
+180
+160
+140
+120
+100
+80
+60
+40
+20
+0
+n
+e
+g
+n
+u
+r
+e
+s
+s
+e
+b
+r
+e
+V
+r
+e
+d
+l
+h
+a
+z
+n
+A
+2000000
+1800000
+1600000
+1400000
+1200000
+1000000
+800000
+600000
+400000
+200000
+50000
+20000
+Abbildung 8.1: Verlauf der Zielfunktion im Vergleich zur Anzahl der gefundenen
+Verbesserungen (Achtung: Unterschiedliche Skalierung der y-Achse fur [0; 50000] und
+(50000; 2000000])
+In Tab. 8.2 und Tab. 8.3 sind die in diesem Test (Testlauf 2) erzielten Ergebnisse und
+Laufzeiten des Algorithmus zu sehen. Diese Tabellen enthalten auch die Ergebnisse
+aus Testlauf 1, was die Gegenuberstellung erleichtert. Es ist zu erkennen, dass von
+allen berechneten 80 Instanzen nur 11 nicht besser gelost werden konnten und die
+Summe aller Zielfunktionswerte bei Instanzen ohne Umkehren innerhalb von Gangen
+um rund 20% und bei Instanzen mit Umkehren sogar um etwa 22% verbessert
+werden konnte. Gleichzeitig muss aber auch gesagt werden, dass die Berechnungen zum
+Teil mehr als die doppelte Laufzeit bei kleineren Instanzen benotigten. Dennoch
+konnten auch die Zielfunktionswerte gro er Instanzen, deren Bearbeitung nach dem
+Grenzwert von 1200 Sekunden abgebrochen wurde, in derselben Zeit wie im vorigen
+Testlauf deutlich verbessert werden.</p>
+      <p>Die Auswertung der E zienz der Nachbarschaften in Tab. 8.6 zeigt ein ahnliches Bild,
+wie in Tab. 8.4. Zur besseren Ubersicht wurden nur die Werte fur Berechnungen mit
+Umkehren innerhalb eines Ganges herangezogen. Zusatzlich ist hier ersichtlich, dass
+die neu hinzugekommenen Nachbarschaften N9-N13 eine durchwegs hohe
+Verbesserungsquote aufweisen.</p>
+      <p>Die Rechenzeiten aus Testlauf 2, wie in Tab. 8.5 zu sehen ist, weisen Parallelen zu den
+in Testlauf 1 erhaltenen Werten auf. Im Wesentlichen bestatigt das Ergebnis die
+bereits zuvor ermittelten Zahlen, wobei es zu leichten Verschiebungen gekommen ist, da
+die neu hinzugefugten Strukturen mit Kombinationen aus zuvor einzeln angewandten
+arbeiten. Hier sind die Berechnungen fur kombinierte und damit komplexere
+Strukturen naturlich auch aufwandiger, aufgrund des Erfolgs ist deren Anwendung aber
+wunschenswert. Besonders au allig ist der hohe Rechenaufwand fur
+SplitMergeCombine, wo im Vergleich dazu im vorangegangenen Testlauf DoubleShift den gro ten
+Anteil an Rechenzeit benotigte.</p>
+      <p>Es hat sich also gezeigt, dass die neu eingebundenen Nachbarschaftsstrukturen ein
+durchwegs positives Resultat bringen und die Losung tatsachlich verbessern konnten.
+Teilweise konnten die Zielfunktionswerte sogar um 50% verringert werden und nur in
+wenigen Fallen wurden geringfugig schlechtere Ergebnisse erzielt, als beim vorherigen
+Testlauf.</p>
+      <p>Abschlie end ist zu den Testergebnissen zu sagen, dass durchwegs positive Resultate
+erzielt werden konnten. Auch im Vergleich zur Losung mittels S-Shape-Heuristik
+konnten mehrheitlich bessere Werte berechnet werden. Zusatzlich dazu sollte noch
+einmal darauf hingewiesen werden, dass unter der Verwendung der S-Shape-Heuristik
+keine Nebenbedingungen, wie etwa Kollisionen zwischen Arbeitern, gepruft werden
+konnten. Es wurde damit lediglich eine Referenzlosung erzeugt.</p>
+      <p>Es bleibt nun noch zu erwahnen, dass die hiermit geschilderten Beobachtungen darauf
+schlie en lassen, dass weitere Verbesserungen etwa in Zusammenhang mit
+Anpassungen der Nachbarschaftsstrukturen durchaus moglich sind. In jedem Fall bietet sich
+ein Einsatz im Echtbetrieb an, um die Leistungsfahigkeit des entwickelten Ansatzes
+unter realen Bedingungen zu ermitteln.
+Tabelle 8.6: E zienz der Nachbarschaften in Testlauf 2 ohne bzw. mit Artikeln auf alternativen
+Lagerplatzen - Durchschnittswerte uber 20 Testlaufe mit 25, 50, 100 und 200 einzusammelnden
+Artikeln (Ar). Angefuhrt ist pro Nachbarschaft der prozentuelle Anteil (alle Werte in Prozent [%])
+an erfolgreichen Schritten in Relation zu den insgesamt getesteten Schritten der jeweiligen
+Nachbarschaft. Getestet wurden die Instanzen (In) ohne bzw. mit Artikeln auf alternativen Lagerplatzen bei
+Berechnung mit Umkehren innerhalb eines Ganges und bei dynamischer
+Nachbarschaftsreihenfolge. (N1: Split; N2: Merge; N3: Shift; N4: Swap; N5: SwapPosition; N6: SwapPositionMerge; N7: SplitPositionMerge; N8: DoubleShift;
+N9: ShiftSplit; N10: SwapSplit; N11: MultipleSwap; N12: MultipleSplit; N13: SplitMerge.)</p>
+      <p>Testlauf 2 / dynamische Reihenfolge / mit Umkehren
+Ar</p>
+      <p>N1</p>
+      <p>N2</p>
+      <p>N3</p>
+      <p>N4</p>
+      <p>N6 N7</p>
+      <p>N8</p>
+      <p>N9 N10 N11 N12 N13
+In
+S1
+S2
+S3
+S4
+S5
+e
+tzM1
+laM2
+p
+eM3
+r
+g
+aM4
+L
+eM5
+v
+i
+taL1 100 100.0
+rnL2 100 100.0
+e
+ltaL3 100 100.0
+eL4 100 100.0
+n
+ohL5 100 100.0
+X1 200 100.0
+X2 200 100.0
+X3 200 100.0
+X4 200 100.0
+X5 200 100.0
+Inhalt dieser Arbeit war die Vorstellung eines hybriden Verfahrens, welches zum
+Losen von Problemen der Tourenplanung im Echtbetrieb eines Ersatzteillagers
+eingesetzt werden kann. Das Grundgerust bildet dabei eine Variable
+Nachbarschaftssuche mit integriertem Variable Neighborhood Descent (VND) als lokale
+Verbesserungsstrategie. Zum Losen von Teilproblemen innerhalb dieses Algorithmus wird ein
+eigens entwickeltes Dynamisches Programm verwendet, mit dessen Hilfe es moglich
+ist, konkrete Touren optimal in polynomieller Zeit abhangig von der Anzahl der
+bestellten Artikel zu berechnen. Um abschlie end eine Zuweisung von Lagerarbeitern
+zu den im vorhergehenden Schritt berechneten Touren zu berechnen, wird eine zweite
+VNS verwendet.</p>
+      <p>Aus den prasentierten Ergebnissen der Tests lasst sich ableiten, dass der
+gefundene Ansatz prinzipiell funktionstuchtig ist und schnell akzeptable Losungen erzeugt.
+Sind die Arbeiter des Lagers erst einmal damit beschaftigt den ersten ihnen
+zugewiesenen Artikel auszufassen, kann die Gesamtlosung weiter optimiert werden. Dies
+ist moglich, da zu jedem Zeitpunkt eine gultige Losung verfugbar ist. Von
+Bedeutung ist dies eventuell auch, wenn eine Erweiterung des Verfahrens zu einem
+OnlineAlgorithmus durchgefuhrt wird. Als solcher muss dieser auf laufend hinzukommende
+und im Vorhinein nicht bekannte Bestellungen reagieren konnen. Die Adaptierung
+von bereits ausgegebenen Touren wurde in so einem Algorithmus einen wesentlichen
+Beitrag zur Flexibilitat liefern. Dadurch, dass viele der zu liefernden Artikel erst im
+Laufe des Tages bestellt werden und zwischen den einzelnen
+Ausfassungsoperationen der Lagerarbeiter entsprechend viel Berechnungszeit zur Verfugung steht, wird
+die kontinuierliche Verbesserung einer anfangs schnell generierten Losung moglich.
+Weiters scheint eine Aufteilung des Lagers in ortlich voneinander getrennte
+Bereiche, basierend auf der Lage der Verpackungszone, sinnvoll, wodurch die Gro e der
+so entstehenden (Teil-)Instanzen entsprechend gering ist.</p>
+      <p>Obwohl die in dieser Arbeit prasentierten Testergebnisse implizieren, dass die Gro e
+der tatsachlichen Instanzen mit bis zu 5000 bestellten Artikeln pro Tag zu
+komplex ist, kann man vermuten, dass nach weiterer Uberarbeitung und Erweiterung der
+Nachbarschaftsstrukturen oder Anpassungen der Durchsuchungsstrategie die
+Ergebnisse weiter verbessert und selbst Instanzen von solcher Gro e qualitativ hochwertig
+gelost werden konnen.</p>
+      <p>Leider war es im Rahmen dieser Arbeit nicht moglich, die Auswirkungen von
+unvorhergesehenen Vorkommnissen (ein Artikel ist nicht in gewunschter Menge verfugbar,
+Verspatung eines Arbeiters auf seiner Tour, etc.) aussagekraftig zu testen, da
+aufgrund des erst neu eingefuhrten Verwaltungssystems die Testdaten nicht dem
+Echtbetrieb entnommen werden konnten. Daher musste versucht werden, beim
+Generieren der Testdaten alle bekannten Aspekte und Eigenschaften der Lagerstruktur
+bestmoglichst zu berucksichtigen.</p>
+      <p>Anzumerken ist noch, dass die Methode zum Berechnen von optimalen
+Kommissionierungstouren teilweise auf der Annahme basiert, dass ein Mitarbeiter in einem
+Gang jederzeit umdrehen kann. Je nach Bescha enheit des Lagers und der
+verwendeten Fahrzeuge kann es durchaus vorkommen, dass eine solche Richtungsanderung
+nicht, beziehungsweise nur schwer moglich ist. Sollte dies der Fall sein, kann das
+Dynamische Programm einfach angepasst werden. Die grundlegende Struktur des
+Ansatzes andert sich dadurch nicht.</p>
+      <p>Im Rahmen der Tests hat sich gezeigt, dass die gefundenen Losungen im Vergleich
+zu ebenfalls berechneten Referenzlosungen von guter Qualitat sind und zusatzlich
+dazu alle Nebenbedingungen erfullt werden konnten. Aber auch die Laufzeit des
+Verfahrens und vor allem die raschen Verbesserungen zu Beginn eines Durchlaufs
+vermitteln einen positiven Eindruck.</p>
+      <p>In Hinblick auf eine Beschleunigung des Algorithmus gabe es die Moglichkeit auf
+die Berechnung exakter Touren zu verzichten. Naturlich wurde man in diesem Fall
+zwar Geschwindigkeit gewinnen konnen, mu te aber bei der Losungsqualitat
+Einbuen hinnehmen. Auch ein nochmaliges Uberarbeiten der Nachbarschaftsstrukturen
+konnte die eine oder andere Verbesserung bringen. Es sollte aber erwahnt werden,
+dass der prasentierte Ansatz bereits mit stabilem Verhalten und vielversprechender
+Leistung uberzeugen kann.</p>
+      <p>
+        Als Fazit lasst sich sagen, dass der Einsatz eines computerunterstutzten
+Entscheidungssystems zur Planung von Kommissionierungstouren durchaus sinnvoll scheint,
+wenngleich aufgrund der Problemkomplexitat auf eine besonders e ziente
+Implementierung geachtet werden muss. Besonders berucksichtigt werden muss dabei die
+Tatsache, dass dies ein System sein soll, dass darauf abzielt Menschen in gewisser
+Hinsicht Befehle zu erteilen, was einerseits soziale Schwierigkeiten mit sich bringt
+und andererseits aber auch bedeutet, dass Zustande erreicht werden konnen, die im
+Vorhinein nur schwer vorherzusehen sind. Das System sollte also nur als
+Entscheidungsunterstutzung eingesetzt werden und kann die Kontrolle und Betreuung durch
+einen quali zierten Lagerarbeiter nicht ersetzen.
+[1] D. L. Applegate, R. E. Bixby, V. Chvatal, and W. J. Cook. The Traveling
+Salesman Problem: A Computational Study (Princeton Series in Applied
+Mathematics). Princeton University Press, January 2007.
+[2] C. Archetti, M. G. Speranza, and A. Hertz. A tabu search algorithm for the split
+delivery vehicle routing problem. Transportation Science, 40(1):64{73, 2006.
+[
+        <xref ref-type="bibr" rid="ref1">3</xref>
+        ] R. E. Bellman. Dynamic Programming. Dover Publications, Incorporated, 2003.
+[4] R. de Koster, T. Le-Duc, and K. J. Roodbergen. Design and control of warehouse
+order picking: A literature review. European Journal of Operational Research,
+182(2):481{501, 2007.
+[
+        <xref ref-type="bibr" rid="ref2">5</xref>
+        ] R. de Koster and E. Van Der Poort. Routing orderpickers in a warehouse: a
+comparison between optimal and heuristic solutions. IIE Transactions, 30(5):469{
+480, 1998.
+[
+        <xref ref-type="bibr" rid="ref3">6</xref>
+        ] E. W. Dijkstra. A note on two problems in connexion with graphs. Numerische
+      </p>
+      <p>
+        Mathematik, 1(1):269{271, Dezember 1959.
+[
+        <xref ref-type="bibr" rid="ref4 ref5">7</xref>
+        ] M. Dror and P. Trudeau. Savings by split delivery routing. Transportation
+      </p>
+      <p>
+        Science, 23:141{145, 1989.
+[
+        <xref ref-type="bibr" rid="ref6">8</xref>
+        ] M. Dror and P. Trudeau. Split delivery routing. Naval Research Logistics,
+37:383{402, 1990.
+[9] C. Feremans, M. Labbe, and G. Laporte. Generalized network design problems.
+      </p>
+      <p>European Journal of Operational Research, 148(1):1{13, 2003.
+[10] M. Fischetti, J. J. Salazar Gonzalez, and P. Toth. The symmetric generalized
+traveling salesman polytope. Networks, 26(2):113{123, 1995.
+[11] P. Hansen, N. Mladenovic, and L. C. D. Gerad. A tutorial on variable
+neighborhood search. Technical report, Les Cahiers du GERAD, HEC Montreal and
+GERAD, 2003.
+[12] P. Hansen and N. Mladenovic. Variable neighborhood search. In F. W. Glover
+and G. A. Kochenberger, editors, Handbook of Metaheuristics, pages 145{184.</p>
+      <p>Kluwer Academic Publisher, New York, 2003.
+[13] S. C. Ho and D. Haugland. A tabu search heuristic for the vehicle routing</p>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <ref id="ref1">
+        <mixed-citation>
+          <source>3 Verwandte Arbeiten 9 3</source>
+          .1
+          <string-name>
+            <given-names>Vehicle</given-names>
+            <surname>Routing</surname>
+          </string-name>
+          <string-name>
+            <surname>Problem . . . . . . . . . . . . . . . . . . . . . . . . . 10</surname>
+          </string-name>
+          <year>3</year>
+          .
+          <issue>1</issue>
+          .1
+          <string-name>
+            <given-names>Capacitated</given-names>
+            <surname>Vehicle</surname>
+          </string-name>
+          <string-name>
+            <surname>Routing Problem . . . . . . . . . . . . . . 10</surname>
+          </string-name>
+          <year>3</year>
+          .
+          <issue>1</issue>
+          .2
+          <string-name>
+            <given-names>Split</given-names>
+            <surname>Delivery</surname>
+          </string-name>
+          <string-name>
+            <surname>Vehicle Routing Problem . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>11 3.1.3 Vehicle Routing Problem with Time</article-title>
+          <string-name>
+            <surname>Windows . . . . . . . . . 11</surname>
+          </string-name>
+          <year>3</year>
+          .2 Generalisierte
+          <string-name>
+            <surname>Netzwerkprobleme . . . . . . . . . . . . . . . . . . . . 12</surname>
+          </string-name>
+          <year>3</year>
+          .3
+          <string-name>
+            <given-names>Traveling</given-names>
+            <surname>Salesman</surname>
+          </string-name>
+          <string-name>
+            <surname>Problem . . . . . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>12 3.4 Bekannte Losungsansatze</article-title>
+          <string-name>
+            <surname>. . . . . . . . . . . . . . . . . . . . . . . . . 13</surname>
+          </string-name>
+        </mixed-citation>
+      </ref>
+      <ref id="ref2">
+        <mixed-citation>
+          <source>5 Variable Nachbarschaftssuche 17 5</source>
+          .1 Lokale Suche und
+          <string-name>
+            <surname>Shaking . . . . . . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>18 5.2 Genereller Ansatz fur die Variable</article-title>
+          <string-name>
+            <surname>Nachbarschaftssuche . . . . . . . . 20</surname>
+          </string-name>
+        </mixed-citation>
+      </ref>
+      <ref id="ref3">
+        <mixed-citation>
+          <source>6 Ein hybrides Verfahren 23 6</source>
+          .
+          <article-title>1 Der grundsatzliche</article-title>
+          <string-name>
+            <surname>Ablauf . . . . . . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>23 6.2 Variable Nachbarschaftssuche und Dynamische Programmierung</article-title>
+          . . . 24
+        </mixed-citation>
+      </ref>
+      <ref id="ref4">
+        <mixed-citation>
+          <source>7 Der Algorithmus im Detail 27 7</source>
+          .1 Partitionierung
+          <string-name>
+            <surname>vorhandener Bestellungen . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>27 7.2 Zuordnung von Artikeln zu</article-title>
+          <string-name>
+            <surname>Touren . . . . . . . . . . . . . . . . . . . 27</surname>
+          </string-name>
+          <year>7</year>
+          .
+          <issue>2</issue>
+          .1
+          <string-name>
+            <surname>Konstruktionsheuristiken . . . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>28 7.2.2 Reparatur- und</article-title>
+          <string-name>
+            <surname>Verbesserungsheuristik . . . . . . . . . . . . . 30</surname>
+          </string-name>
+          <year>7</year>
+          .
+          <issue>2</issue>
+          .3 Durchsuchen der
+          <string-name>
+            <surname>Nachbarschaften . . . . . . . . . . . . . . . . 35</surname>
+          </string-name>
+          <year>7</year>
+          .
+          <issue>2</issue>
+          .4 Dynamische Reihenfolge der
+          <string-name>
+            <surname>Nachbarschaften . . . . . . . . . 36</surname>
+          </string-name>
+          <year>7</year>
+          .3 Berechnung
+          <string-name>
+            <surname>einzelner Touren . . . . . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>38 7.3.1 Reprasentation als</article-title>
+          <string-name>
+            <surname>Graph . . . . . . . . . . . . . . . . . . . . 38</surname>
+          </string-name>
+          <year>7</year>
+          .
+          <issue>3</issue>
+          .2
+          <string-name>
+            <given-names>Ein</given-names>
+            <surname>Dynamisches</surname>
+          </string-name>
+          <string-name>
+            <surname>Programm . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>39 7.3.3 S-Shape-</article-title>
+          <string-name>
+            <surname>Heuristik . . . . . . . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>45 7.4 Zuordnung von Arbeitern zu</article-title>
+          <string-name>
+            <surname>Touren . . . . . . . . . . . . . . . . . . 46</surname>
+          </string-name>
+          <year>7</year>
+          .
+          <issue>4</issue>
+          .1
+          <string-name>
+            <surname>Konstruktionsheuristik . . . . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>47 7.4.2 Reparatur- und</article-title>
+          <string-name>
+            <surname>Verbesserungsheuristik . . . . . . . . . . . . . 48</surname>
+          </string-name>
+        </mixed-citation>
+      </ref>
+      <ref id="ref5">
+        <mixed-citation>
+          7.5 Erweiterter
+          <string-name>
+            <surname>Algorithmus . . . . . . . . . . . . . . . . . . . . . . . . . 48</surname>
+          </string-name>
+        </mixed-citation>
+      </ref>
+      <ref id="ref6">
+        <mixed-citation>
+          <source>8 Testergebnisse 51 8</source>
+          .1 Wahl der
+          <string-name>
+            <surname>Konstruktionsheuristik . . . . . . . . . . . . . . . . . . . . 51</surname>
+          </string-name>
+          <year>8</year>
+          .2 Wahl
+          <string-name>
+            <surname>von Berechnungsparametern . . . . . . . . . . . . . . . . . . . . 53</surname>
+          </string-name>
+          <year>8</year>
+          .3 E
+          <string-name>
+            <surname>zienz einzelner</surname>
+            <given-names>Nachbarschaften . . . . . . . . . . . . . . . . . . . 56</given-names>
+          </string-name>
+          <year>8</year>
+          .4 Rechenzeit der
+          <string-name>
+            <surname>Nachbarschaften . . . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>57 8.5 Laufzeit und Losungsverbesserung</article-title>
+          <string-name>
+            <surname>. . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>60 8.6 Losungsqualitat bei Verwendung zusatzlicher</article-title>
+          <string-name>
+            <surname>Nachbarschaften . . . . 60</surname>
+          </string-name>
+        </mixed-citation>
+      </ref>
+      <ref id="ref7">
+        <mixed-citation>
+          <source>.25896 .1149 .71774 .933 .32134 .1291 .41648 .840 .85828 .1027 .25238 .874 .03367 .1048 .71425 .945 .566 .877 .7355 .775 .3313 .9816 .68222 .1036 .52828 .1383 .91257 .1011 .34336</source>
+          .
+          <fpage>2215</fpage>
+          .
+          <article-title>() ( ( ( ( 3 6</article-title>
+          <volume>7 6 1 7 8 6 4 7 f 53</volume>
+          .
+          <source>63 .20 .58 .92 .03 .72 .68 .47</source>
+          .52 () on x h ) ) ) ) e g
+        </mixed-citation>
+      </ref>
+      <ref id="ref8">
+        <mixed-citation>
+          <string-name>
+            <surname>Research</surname>
+          </string-name>
+          ,
+          <volume>31</volume>
+          :
+          <year>1947</year>
+          {
+          <year>1964</year>
+          ,
+          <year>2004</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref9">
+        <mixed-citation>
+          [14]
+          <string-name>
+            <given-names>B.</given-names>
+            <surname>Hu</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>G. R.</given-names>
+            <surname>Raidl</surname>
+          </string-name>
+          .
+          <article-title>Variable neighborhood descent with self-adaptive neighborhood-ordering</article-title>
+          . In C. Cotta,
+          <string-name>
+            <given-names>A. J.</given-names>
+            <surname>Fernandez</surname>
+          </string-name>
+          , and
+          <string-name>
+            <surname>J. E</surname>
+          </string-name>
+          . Gallardo, editors,
+          <source>Proceedings of the 7th EU/MEeting on Adaptive</source>
+          ,
+          <string-name>
+            <surname>Self-Adaptive</surname>
+          </string-name>
+          , and
+          <string-name>
+            <surname>Multi-Level Metaheuristics</surname>
+          </string-name>
+          ,
+          <year>2006</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref10">
+        <mixed-citation>
+          [15]
+          <string-name>
+            <given-names>J.</given-names>
+            <surname>Lysgaard</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>A. N.</given-names>
+            <surname>Letchford</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>R. W.</given-names>
+            <surname>Eglese</surname>
+          </string-name>
+          .
+          <article-title>A new branch-and-cut algorithm for the capacitated vehicle routing problem</article-title>
+          .
+          <source>Mathematical Programming</source>
+          ,
+          <volume>100</volume>
+          (
+          <issue>2</issue>
+          ):
+          <volume>423</volume>
+          {
+          <fpage>445</fpage>
+          ,
+          <year>2004</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref11">
+        <mixed-citation>
+          [17]
+          <string-name>
+            <given-names>T.</given-names>
+            <surname>Ralphs</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>L.</given-names>
+            <surname>Kopman</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>W.</given-names>
+            <surname>Pulleyblank</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>L. T.</given-names>
+            <surname>Jr</surname>
+          </string-name>
+          .
+          <article-title>On the capacitated vehicle routing problem</article-title>
+          .
+          <source>Mathematical Programming Series</source>
+          ,
+          <volume>94</volume>
+          (B):
+          <volume>1</volume>
+          {
+          <fpage>19</fpage>
+          ,
+          <year>2003</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref12">
+        <mixed-citation>
+          [18]
+          <string-name>
+            <given-names>P.</given-names>
+            <surname>Toth</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>D.</given-names>
+            <surname>Vigo</surname>
+          </string-name>
+          .
+          <source>The Vehicle Routing Problem. Monographs on Discrete Mathematics and Applications</source>
+          . SIAM, Philadelphia,
+          <year>2002</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref13">
+        <mixed-citation>
+          [19]
+          <string-name>
+            <given-names>K. Q.</given-names>
+            <surname>Zhu</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>K. C.</given-names>
+            <surname>Tan</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>L. H.</given-names>
+            <surname>Lee</surname>
+          </string-name>
+          .
+          <article-title>Heuristics for vehicle routing problem with time</article-title>
+          .
+          <source>In Windows, 6th AI and Math</source>
+          ,
+          <year>2000</year>
+          .
+        </mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

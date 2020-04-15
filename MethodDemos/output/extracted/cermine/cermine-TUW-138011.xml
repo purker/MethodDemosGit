@@ -1,0 +1,614 @@
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN" "JATS-archivearticle1.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+  <front>
+    <journal-meta />
+    <article-meta>
+      <title-group>
+        <article-title>Informal and formal medical guidelines: Bridging the gap</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <string-name>Marije Geldof</string-name>
+          <xref ref-type="aff" rid="aff2">2</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Annette ten Teije</string-name>
+          <email>annette@cs.vu.nl</email>
+          <xref ref-type="aff" rid="aff2">2</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Frank van Harmelen</string-name>
+          <email>frank.van.harmelen@cs.vu.nl</email>
+          <xref ref-type="aff" rid="aff2">2</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Mar Marcos</string-name>
+          <email>marcos@icc.uji.es</email>
+          <xref ref-type="aff" rid="aff1">1</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Peter Votruba</string-name>
+          <xref ref-type="aff" rid="aff0">0</xref>
+        </contrib>
+        <aff id="aff0">
+          <label>0</label>
+          <institution>Institute of Software Technology and Interactive Systems</institution>
+        </aff>
+        <aff id="aff1">
+          <label>1</label>
+          <institution>Universitat Jaume I, Dept. of Computer Science</institution>
+        </aff>
+        <aff id="aff2">
+          <label>2</label>
+          <institution>Vrije Universiteit Amsterdam, Dept. of Artificial Intelligence</institution>
+        </aff>
+      </contrib-group>
+      <abstract>
+        <p>The role of medical guidelines is becoming more and more important in the medical field. Within the Protocure project it has been shown that the quality of medical guidelines can be improved by formalisation. However formalisation turns out to be a very time-consuming task, resulting in a formal guideline that is much more complex than the original version and the relation with this original guideline is often unclear. This paper presents a case study where the relation between the informal medical guideline and its formal counterpart is investigated. This has been used to determine the gaps between the formal and informal guidelines and the cause of the size explosion of the formal guidelines.</p>
+      </abstract>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="sec-1">
+      <title>Introduction</title>
+      <p>
+        Medical practice guidelines are “systematically developed statements to assist
+practitioners and patient decisions about appropriate health care for specific circumstances”
+[
+        <xref ref-type="bibr" rid="ref2">2</xref>
+        ]. They contain more or less precise recommendations about the medical tests or
+interventions to perform, or about other aspects of clinical practice. These guidelines are
+used by a wide variety of medical professionals: medical specialists, family doctors,
+hospital nurses.
+      </p>
+      <p>
+        The interest in medical guidelines has resulted in the development of a number of
+special purpose knowledge representation languages intended for modelling guidelines
+[
+        <xref ref-type="bibr" rid="ref3 ref7 ref9">3, 7, 9</xref>
+        ]. They provide the opportunity to formalise informal guidelines into more
+formal objects. However formalisation of a guideline turns out to be a very time-consuming
+task, resulting in a formal guideline that is much more complex than the original
+version and even more importantly the relation between the informal (original) and formal
+guideline is not always clear: which parts of the informal guideline correspond to which
+parts of the formal model, are all parts of the informal guideline covered in the formal
+model, etc.
+      </p>
+      <p>
+        This paper presents the results of an analysis (more fully reported in [
+        <xref ref-type="bibr" rid="ref5">5</xref>
+        ])of two
+informal medical guidelines and their formalised counterparts. For this analysis the
+relation between the informal guideline and formal guideline was made explicit. The
+focus of the analysis was among others: (1) whether everything in the original guideline
+that should have been modelled has in practice been modelled; (2) whether elements in
+the formal guideline are explicitly stated, implicitly stated or completely missing in
+the original guideline; (3) why formal guidelines are so much bigger in size than their
+informal counterparts.
+      </p>
+      <p>The contribution of this analysis is the categorisation of the gaps between informal
+and formal versions of the guidelines, a clarification of the size explosion and last but
+not least the explicit representation of the relation between two selected informal
+guidelines and their formal counterparts. The latter among others resulted in the visualisation
+of anomalies already found during the formalisation.</p>
+      <p>The structure of the paper is as follows. Section 2 describes our case study. Section
+3 discusses the gaps between the informal and formal representations of guidelines and
+our observations in the process of making the relation between informal and formal
+models explicit. Section 4 indicates the causes of increased complexity in the formal
+models. Finally section 5 concludes and discusses some open issues and future work.
+2</p>
+    </sec>
+    <sec id="sec-2">
+      <title>The case study</title>
+      <p>
+        This study has been carried out within the Protocure project (www.protocure.org), a
+European project which aims to evaluate the use of formal methods for quality
+improvement of medical guidelines. The guidelines selected and formalised in Asbru [
+        <xref ref-type="bibr" rid="ref9">9</xref>
+        ]
+within the Protocure project have been used as a starting point. The definition of the
+relations between the original and formal guideline has been done with the Guideline
+Markup Tool [
+        <xref ref-type="bibr" rid="ref10">10</xref>
+        ].
+      </p>
+      <p>
+        The selected guidelines The guidelines that have been used in this study are the
+American Academy of Pediatrics practice guideline for the Management of
+Hyperbilirubinemia in the Healthy Term Newborn [
+        <xref ref-type="bibr" rid="ref1">1</xref>
+        ] and the Dutch College of General
+Practitioners (NHG) standard for Type 2 Diabetes Mellitus [
+        <xref ref-type="bibr" rid="ref8">8</xref>
+        ].
+      </p>
+      <p>
+        Asbru: a representation language for medical guidelines Asbru is a plan
+representation language to represent clinical guidelines as time-oriented, skeletal plans [
+        <xref ref-type="bibr" rid="ref9">9</xref>
+        ]. It
+can be used to express clinical guidelines as skeletal plans that can be instantiated for
+every patient. [
+        <xref ref-type="bibr" rid="ref4">4</xref>
+        ].
+      </p>
+      <p>In Asbru a clinical guideline consists of a name, a set of arguments, including a
+time annotation (representing the temporal scope of the plan) and five elementary
+components: preferences, intentions, conditions, effects and a plan body, which describes
+the actions to be executed. The plan name is compulsory and all the other components
+are optional. Each plan may contain an arbitrary number of subplans within its plan
+body, which may themselves be decomposed into sub-subplans. So a plan can include
+several potentially decomposable sequential, concurrent or cyclical plans.</p>
+      <p>
+        Guideline Markup Tool GMT is an editor that helps translating guidelines from free
+text into Asbru [
+        <xref ref-type="bibr" rid="ref10">10</xref>
+        ]. One of the functionalities of this tool that has been used in this
+case study is to define links between an original guideline (in the form of a natural
+text with tables and diagrams), and its Asbru model. To define a link the user selects a
+piece of the original guideline and a related piece of the formal guideline and inserts a
+link, which connects the two pieces. With this functionality all the relations between an
+original guideline and its formal model have been defined.
+      </p>
+    </sec>
+    <sec id="sec-3">
+      <title>Linking: the relation between a formal and informal guideline</title>
+      <p>Within this study we obtain insight in the relation between original and formalised
+guideline by defining a link for each relationship between the two versions of guidelines
+with the Guideline Markup Tool. These links between the original guideline and its
+formal model can serve different purposes: (i) to give insight in the relation between the
+original guideline and its formalisation. (ii) to enable discussion with domain experts.
+(iii) to reveal if everything in the original guideline that should have been modelled in
+the formal guidelines really has been modelled. (iv) in case the original guideline is
+updated, changes can much easier be made in the formal model, since the place where
+the adjustment should be made can easily be found with the link pointing there. (v) to
+help the modeller during the formalisation process.</p>
+      <p>
+        Types of links The links that have been defined within this study can roughly be
+distinguished in two ways. A link can be characterised as explicit or implicit.
+Furthermore the level (high or low) at which a link is defined can be different (see [
+        <xref ref-type="bibr" rid="ref5">5</xref>
+        ]). Below,
+we discuss the explicit and implicit links in more detail.
+      </p>
+      <p>Explicit links are links that show a very direct, obvious relation. For example the
+original diabetes guideline speaks about ”fat metabolism problems” and the formal
+diabetes guideline uses the condition ”fat-metabolism = true”. Implicit links on the other
+hand are much less apparent. They do relate two parts of the original and formalised
+guideline that belong together, but the relation is not completely fitting.</p>
+      <p>Several reasons for implicit links can be identified. For example domain experts may
+have clarified terms that are vague in the original guideline. This results in a detailed
+statement in the formalisation, which is related to a more vague statement in the original
+guideline. For example the original diabetes guidelines speaks about ”older age”, which
+with advice from domain experts has been translated with ”age &gt; 60”.</p>
+      <p>Another reason for an implicit link can be the need for a certain medical parameter.
+To be able to use this parameter its value first needs to be obtained. Original guidelines
+mostly consider it to be clear this value needs to be obtained and don’t mention it
+explicitly. In the formal guideline, on the other hand an explicit statement to obtain this
+value is needed.</p>
+      <p>Third of all, common knowledge in the original guideline can cause a different
+model in the formalisation. For example the diabetes guideline prescribes to check the
+blood pressure. It can be considered as a common fact that for checking blood
+pressure, both lower and higher blood pressure need to be measured. In this case the
+original guideline speaks about ”blood pressure”, while the formal guideline speaks about
+”higher blood pressure” and ”lower blood pressure”, which results in two implicit links.</p>
+      <p>Finally sometimes related aspects in the original guideline are put together in a
+”superplan”, which is subdivided in subplans that represent these different aspects.
+Besides explicit links to these subplans, also an implicit link from the ”superplan” to the
+collection of related aspects is desirable.</p>
+      <p>The distinction between explicit and implicit links shows that some of the relations
+between the original guideline and its formal guideline are very obvious, but others are
+much more indirect for various reasons.</p>
+      <p>
+        Analysis of defined links During the formalisation process of the two guidelines
+different anomalies have been identified and documented [
+        <xref ref-type="bibr" rid="ref6">6</xref>
+        ]. Some of these
+anomalies concerned information that was missing from the original guideline. The linking
+process makes these pieces of missing information visually apparent, because they are
+parts of the formal guideline that remain unrelated to any part of the informal guideline.
+      </p>
+      <p>One of the most surprising results was that new anomalies were uncovered. Some
+had not been identified during the formalisation process and others had even been
+introduced during the formalisation process.</p>
+      <p>Furthermore the links have visualised those parts of the original guideline that have
+not been translated in the formal guideline. These links give insight in the choices of
+the modeller of the formal guideline.</p>
+      <p>Not only are there parts of the original guideline that remain unlinked, there are even
+more parts of the formal model that remain unlinked, because there is no direct relation
+with the original guideline. Mostly this is caused by information that is not explicit in
+the original guideline but thought necessary in the formal guideline. These unlinked
+parts show that the formal guidelines are much more extensive compared to the original
+guideline, in this study considered as extra complexity. The next section will deal with
+all the different aspects causing this extra complexity that have been identified on the
+basis of the defined links.
+4</p>
+    </sec>
+    <sec id="sec-4">
+      <title>Where does the complexity come from?</title>
+      <p>Formal guidelines turn out to be much more extensive than their original versions.
+Considering the two guidelines used in this study, jaundice consisted originally of 8 pages
+and its formalisation in an intermediate representation form is 40 pages long. The
+diabetes model is even 56 pages long while its original covered only 4 pages.</p>
+      <p>We distinguish three main causes of this additional complexity: additional
+information, domain specification and nearly identical plans. In this section we focus on the
+first cause additional info, which is illustrated with six concrete reasons. During the
+formalisation of medical guidelines, additional information can be necessary for a proper
+formalisation. The additional information can appear in different forms:
+1. Background knowledge. First of all medical guidelines in general assume certain
+background knowledge to be common knowledge for medical practitioners.</p>
+      <p>2. Missing information about conditions. Conditions control the sequence of
+proposed actions in the guideline. Sometimes a condition is implicitly derived from the
+original guideline or derived from additional information that has been gained from
+domain experts.</p>
+      <p>3. The intentions of plans. When actions are performed with respect to medical
+diagnosis or treatment, it is often useful to realise why this action is being performed at
+all. This can be expressed by defining the intentions of a plan. In most cases intentions
+are not explicitly stated in the original guideline, but considered to be known by the
+medical practitioner.</p>
+      <p>4. Missing information about the repetition of actions. In a cyclical plan the
+definition of the time-interval on which the plan should be repeated, the so-called retry delay
+has to be specified. Sometimes this retry delay has to be gained from a medical expert.</p>
+      <p>5. An important aspect of medical guidelines is how all the different steps and
+actions within the guideline are managed. Should the specified plans and actions be
+performed in parallel, in sequence etc. ? To be able to represent these kind of control
+aspects a formal representation language should provide control structures to define how
+the plans of a guideline should be executed. Asbru contains many different kind of such
+control structures. Many times this control information is not explicitly stated in the
+original guideline. It can be either derived from the original guideline or obtained from
+domain experts.</p>
+      <p>6. A plan can be user-performed, which means this plan is executed through some
+action by the user. Mostly it is apparent which actions should be executed by the user
+so this is not explicitly stated in the original guideline.</p>
+      <p>We give some numbers for illustrating how the above different complexity aspects
+appear in the two selected guidelins. Conditions: 14 times in Jaundice, 24 times in
+Diabetes; Intentions: 18 times in Jaundice, 17 times in Diabetes; Retry delays: once
+in Jaundice, 5 times in Jaundice; Control structures: 28 times in Jaundice, 50 times in
+Diabetes; User-performed plans: 19 times in Jaundice, 20 times in Diabetes.</p>
+      <p>All the aspects of increasing complexity mentioned above appear in Asbru, but will
+also show up in any other formal representation language.
+5</p>
+    </sec>
+    <sec id="sec-5">
+      <title>Conclusions</title>
+      <p>We have presented an analysis of the relationship between an informal medical
+guideline and its formal counterpart. It turned out different sorts of relationships could be
+identified. Links can be either explicit or implicit and they can appear at high or low
+level. Furthermore some of the anomalies that had already been found during
+formalisation were nicely visualised and surprisingly also new anomalies were found.</p>
+      <p>Not all parts of both the original guidelines as well as the formal guideline could
+be related to their counterpart though. Some parts of the original guideline remained
+unlinked, but even a bigger amount of the formal guideline remained unlinked. All
+appearances of this last example indicate causes of the size explosion of formal guidelines.
+All these reasons of increased complexity have been categorised.</p>
+      <p>Challenges for the future can be found in developing medical guidelines hand in
+hand with their formal counterparts assisted by the definition of the links between them.
+The modeling choices are then explicit represented and formal and informal guidelines
+are no longer separated objects.</p>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <ref id="ref1">
+        <mixed-citation>
+          1. AAP.
+          <article-title>American Academy of Pediatrics, Provisional Committee for Quality Improvement and Subcommittee on Hyperbilirubinemia. Practice parameter: management of hyperbilirubinemia in the healthy term newborn</article-title>
+          .
+          <source>Pediatrics</source>
+          ,
+          <volume>94</volume>
+          :
+          <fpage>558</fpage>
+          -
+          <lpage>565</lpage>
+          ,
+          <year>1994</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref2">
+        <mixed-citation>
+          2.
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Field</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>K.</given-names>
+            <surname>Lohr</surname>
+          </string-name>
+          .
+          <article-title>Clinical Practice Guidelines: Directions for a New Program</article-title>
+          . Institute of Medicine, Washington D.C., National Academy Press,
+          <year>1990</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref3">
+        <mixed-citation>
+          3.
+          <string-name>
+            <given-names>J.</given-names>
+            <surname>Fox</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>N.</given-names>
+            <surname>Johns</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>C.</given-names>
+            <surname>Lyons</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Rahmanzadeh</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>R.</given-names>
+            <surname>Thomson</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>P.</given-names>
+            <surname>Wilson. PROforma:</surname>
+          </string-name>
+          <article-title>a general technology for clinical decision support systems</article-title>
+          .
+          <source>Computer Methods</source>
+          and Programs in Biomedicine,
+          <volume>54</volume>
+          :
+          <fpage>59</fpage>
+          -
+          <lpage>67</lpage>
+          ,
+          <year>1997</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref4">
+        <mixed-citation>
+          4.
+          <string-name>
+            <given-names>P.</given-names>
+            <surname>Friedland</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>Y.</given-names>
+            <surname>Iwasaki</surname>
+          </string-name>
+          .
+          <article-title>The concept and implementation of skeletal plans</article-title>
+          .
+          <source>Journal of automated reasoning</source>
+          ,
+          <volume>1</volume>
+          (
+          <issue>2</issue>
+          ):
+          <fpage>161</fpage>
+          -
+          <lpage>208</lpage>
+          ,
+          <year>1985</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref5">
+        <mixed-citation>
+          5.
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Geldof</surname>
+          </string-name>
+          .
+          <article-title>The formalisation of medical protocols: easier said than done</article-title>
+          .
+          <source>Master's thesis</source>
+          , Vrije Universiteit Amsterdam,
+          <year>2003</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref6">
+        <mixed-citation>
+          6.
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Marcos</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>H.</given-names>
+            <surname>Roomans</surname>
+          </string-name>
+          , A. ten
+          <string-name>
+            <surname>Teije</surname>
+            , and
+            <given-names>F. van Harmelen</given-names>
+          </string-name>
+          .
+          <article-title>Improving medical protocols through formalization: a case study</article-title>
+          .
+          <source>In Proc. of the 6th Int. Conf. on Integrated Design and Process Technology (IDPT-02)</source>
+          ,
+          <year>2002</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref7">
+        <mixed-citation>
+          7. L.
+          <string-name>
+            <surname>Ohno-Machado</surname>
+            ,
+            <given-names>J.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Gennari</surname>
+            ,
+            <given-names>S.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Murphy</surname>
+            ,
+            <given-names>N.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Jain</surname>
+            ,
+            <given-names>S.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Tu</surname>
+            ,
+            <given-names>D.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Oliver</surname>
+            ,
+            <given-names>E.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Pattison-Gordon</surname>
+            ,
+            <given-names>R.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Greenes</surname>
+            , E. Shortliffe, and
+            <given-names>G. Octo</given-names>
+          </string-name>
+          <string-name>
+            <surname>Barnett</surname>
+          </string-name>
+          .
+          <article-title>Guideline Interchange Format: a model for representing guidelines</article-title>
+          .
+          <source>J. of the American Medical Informatics Ass.</source>
+          ,
+          <volume>5</volume>
+          (
+          <issue>4</issue>
+          ):
+          <fpage>357</fpage>
+          -
+          <lpage>372</lpage>
+          ,
+          <year>1998</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref8">
+        <mixed-citation>
+          8.
+          <string-name>
+            <given-names>G.</given-names>
+            <surname>Rutten</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>S.</given-names>
+            <surname>Verhoeven</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>R.</given-names>
+            <surname>Heine</surname>
+          </string-name>
+          , W. de Grauw,
+          <string-name>
+            <given-names>P.</given-names>
+            <surname>Cromme</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>K.</given-names>
+            <surname>Reenders</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>E. van Ballegooie</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>T.</given-names>
+            <surname>Wiersma</surname>
+          </string-name>
+          .
+          <article-title>NHG-Standaard Diabetes Mellitus Type 2 (eerste herziening)</article-title>
+          .
+          <source>Huisarts en Wetenschap</source>
+          ,
+          <volume>42</volume>
+          (
+          <issue>2</issue>
+          ):
+          <fpage>67</fpage>
+          -
+          <lpage>84</lpage>
+          ,
+          <year>1999</year>
+          . First revision.
+        </mixed-citation>
+      </ref>
+      <ref id="ref9">
+        <mixed-citation>
+          9.
+          <string-name>
+            <given-names>Y.</given-names>
+            <surname>Shahar</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>S.</given-names>
+            <surname>Miksch</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>P.</given-names>
+            <surname>Johnson</surname>
+          </string-name>
+          .
+          <article-title>The asgaard project: a task-specific framework for the application and critiquing of time-oriented clinical guidelines</article-title>
+          .
+          <source>AIM</source>
+          ,
+          <volume>14</volume>
+          :
+          <fpage>29</fpage>
+          -
+          <lpage>51</lpage>
+          ,
+          <year>1998</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref10">
+        <mixed-citation>
+          10.
+          <string-name>
+            <given-names>P.</given-names>
+            <surname>Votruba</surname>
+          </string-name>
+          .
+          <article-title>Structured knowledge acquisition for asbru</article-title>
+          .
+          <source>Master's thesis</source>
+          ,
+          <source>Institute of Software Technology and Interactive Systems</source>
+          , Vienna University of Technology, Vienna, Austria,
+          <year>2003</year>
+          .
+        </mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

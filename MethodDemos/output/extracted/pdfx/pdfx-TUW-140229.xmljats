@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  SYSTEM "http://dtd.nlm.nih.gov/archiving/3.0/archivearticle3.dtd">
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:mml="http://www.w3.org/1998/Math/MathML"
+         xmlns:xlink="http://www.w3.org/1999/xlink">
+   <front>
+      <journal-meta>
+         <journal-id/>
+         <journal-title-group>
+            <journal-title/>
+         </journal-title-group>
+         <issn/>
+         <publisher>
+            <publisher-name/>
+         </publisher>
+      </journal-meta>
+      <article-meta>
+         <title-group>
+            <article-title>An Approach for Detecting Learning Styles in Learning Management Systems*</article-title>
+         </title-group>
+         <supplement>
+            <p>Sabine Graf Vienna University of Technology Women's Postgraduate College for Internet Technologies, Vienna, Austria <email>graf@wit.tuwien.ac.at</email>
+            </p>
+            <p>*</p>
+         </supplement>
+         <abstract>
+            <sec>
+               <p>Detecting the needs of learners is a challenging but essential task to be able to provide adaptivity. In this paper we present a tool that enables learning management systems (LMS) to detect learning styles based on the behavior of learners during an online course. By calculating the learning styles and filling the student model of LMS with such personal data, a basis for adaptivity is provided.</p>
+            </sec>
+         </abstract>
+      </article-meta>
+   </front>
+   <body>
+      <sec>
+         <title>1. Introduction</title>
+      </sec>
+      <sec>
+         <title>2. Patterns of behavior</title>
+      </sec>
+      <sec>
+         <title>3. Tool architecture</title>
+         <p>In this section we present a tool for detecting learning styles based on the behavior of learners in LMS. The architecture of the tool and its components can be seen in <xref id="XR22" ref-type="fig" rid="F1">Figure 1</xref> and are described in the following.</p>
+         <fig id="F1">
+            <caption>
+               <p>Figure 1. Tool architecture</p>
+            </caption>
+            <graphic xlink:href=""/>
+         </fig>
+         <sec>
+            <title>3.1 Data extraction</title>
+            <p>Because the tool is developed to detect learning styles in LMS in general rather than in one specific system, we have to incorporate that different LMS use different database schemata. Therefore, we need to build a global schema. This can be done by a bottom- up approach, using one LMS database schema as a basis, or by a top-down approach, where the required  information acts as a basis. Because LMS databases can include much more information than we need for detecting learning styles, and database schemata from different LMS have quite different structures, the top- down approach is applied. Therefore, each table of the global schema includes data representing one pattern. To keep the extraction process as simple as possible, the representation of the data in each table is based on the event-based way data are stored in LMS databases. For example, a table includes data about each visit of a learner in a forum. How often a learner actually visited the forum is then calculated automatically by the tool. For supporting the teacher in specifying the location of the required information for the global schema, an editor is provided. For each pattern, names for required tables and attributes, possible constraints, as well as necessary information for connecting tables are specified. Additionally, it is possible to write an SQL statement instead of using the question-based editor.</p>
+         </sec>
+         <sec>
+            <title>3.2 Calculation of learning styles</title>
+            <p>In the calculation component ordered data are calculated from the raw data delivered by the data extraction component. Subsequently, learning styles are calculated for each dimension based on the ordered data. Ordered data for each pattern can take the values +1, 0, and -1, indicating e.g. an active, balanced, or reflective preference. For building these data out of the raw data, thresholds for all patterns need to be determined. As is argued e.g. in [<xref id="XR30" ref-type="bibr" rid="R6">6</xref>] and [<xref id="XR31" ref-type="bibr" rid="R7">7</xref>], these thresholds can vary from course to course depending e.g. on the structure of the course and the subject. Therefore, the proposed tool recommends thresholds which can be changed by teachers if necessary. These thresholds are based on other research work dealing with the usage of the respective features [4][8][<xref id="XR32" ref-type="bibr" rid="R9">9</xref>]. The calculation of learning styles itself is based on the approach used in the Index of Learning Styles (ILS) [<xref id="XR33" ref-type="bibr" rid="R10">10</xref>], a questionnaire for identifying the learning style according to FSLSM. According to this approach, for each dimension the ordered data (+1, 0, or -1) which are relevant for the respective dimension are summed up. The result of each dimension is converted to a 3-item scale, indicating e.g. an active, balanced, or reflective learning style.</p>
+         </sec>
+      </sec>
+      <sec>
+         <title>4. Conclusion and future work</title>
+         <p>This paper presented a tool for detecting learning styles based on the behavior of learners in learning  management systems. Based on the Felder-Silverman learning style model, suitable patterns of behavior indicating specific learning styles in LMS were derived. Because the tool is designed for different LMS, data extraction issues are incorporated and teachers are supported in providing the location of required information. While the approach of detecting learning styles is based on literature, future work deals with an evaluation of the tool where results of the ILS questionnaire will be compared with the results of the proposed tool.</p>
+      </sec>
+      <sec>
+         <title>5. References</title>
+      </sec>
+   </body>
+   <back>
+      <ref-list>
+         <ref id="R1">
+            <mixed-citation>[1] S. Graf and B. List, An Evaluation of Open Source E- Learning Platforms Stressing Adaptation Issues. Proceedings of the International Conference on Advanced Learning Technologies , 2005, pp. 163-165.</mixed-citation>
+         </ref>
+         <ref id="R2">
+            <mixed-citation>[2] C. Peña, J. Narzo, and J. de la Rosa, Intelligent Agents in a Teaching and Learning Environment on the Web. Proceedings of the International Conference on Advanced Learning Technologies , 2002.</mixed-citation>
+         </ref>
+         <ref id="R3">
+            <mixed-citation>[3] C.A. Carver, R.A. Howard, and W.D. Lane, Addressing different learning styles through course hypermedia. IEEE Transactions on Education, 42 (1), 1999, pp.33-38.</mixed-citation>
+         </ref>
+         <ref id="R4">
+            <mixed-citation>[4] P. García, A. Amandi, S. Schiaffino, M. Campo, Evaluating Bayesian Networks' Precision for Detecting Students' Learning Styles. Computers &amp; Education , Elsevier, in press.</mixed-citation>
+         </ref>
+         <ref id="R5">
+            <mixed-citation>[5] R.M. Felder and L.K. Silverman, Learning and Teaching Styles in Engineering Education. Engineering Education , 78 (7), 1988, pp. 674–681. Preceded by a preface in 2002: <ext-link ext-link-type="uri" href="http://www.ncsu.edu/felderpublic/">http://www.ncsu.edu/felderpublic/</ext-link> Papers/LS-1988.pdf.</mixed-citation>
+         </ref>
+         <ref id="R6">
+            <mixed-citation>[6] G. Alberer, P. Alberer, T. Enzi, G. Ernst, K. Mayrhofer, G. Neumann, R. Rieder, and B. Simon, The <email>Learn@WU</email> Learning Environment. In W. Uhr, W. Esswein and E. Schoop (Eds.), Wirtschaftsinformatik , Dresden, Germany, Physica-Verlag, 2003,pp. 593-612.</mixed-citation>
+         </ref>
+         <ref id="R7">
+            <mixed-citation>[7] M.D. Roblyer and W. Wiencke, Design and Use of a Rubric to Assess and Encourage Interactive Qualities in Distance Courses. The American Journal of Distance Education , 17(2), 2003, pp. 77-98.</mixed-citation>
+         </ref>
+         <ref id="R8">
+            <mixed-citation>[8] A.P. Rovai and K.T. Barnum, On-line course effectiveness: an analysis of student interactions and perceptions of learning. Journal of Distance Education , 18 (1), 2003, pp. 57-73.</mixed-citation>
+         </ref>
+         <ref id="R9">
+            <mixed-citation>[9] M.J. Wang, Correlational analysis of student visibility and learning outcomes online. Journal of Asynchronous Learning Network , 8 (4), 2004, pp. 71- 82.</mixed-citation>
+         </ref>
+         <ref id="R10">
+            <mixed-citation>[10] R.M. Felder and B.A. Soloman. Index of Learning Styles Questionnaire. Retrieved 6 February, 2006, from <ext-link ext-link-type="uri" href="http://www.engr.ncsu.edu/learningstyles/">http://www.engr.ncsu.edu/learningstyles/</ext-link> ilsweb.html</mixed-citation>
+         </ref>
+      </ref-list>
+   </back>
+</article>

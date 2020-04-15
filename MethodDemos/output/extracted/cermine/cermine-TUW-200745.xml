@@ -1,0 +1,1188 @@
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN" "JATS-archivearticle1.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+  <front>
+    <journal-meta />
+    <article-meta>
+      <title-group>
+        <article-title>Ein Lösungsarchiv mit Branch-and-Bound-Erweiterung für das Generalized Minimum Spanning Tree Problem</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <string-name>zur Erlangung des akademischen Grades</string-name>
+          <xref ref-type="aff" rid="aff0">0</xref>
+          <xref ref-type="aff" rid="aff1">1</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Betreuung</string-name>
+          <xref ref-type="aff" rid="aff0">0</xref>
+          <xref ref-type="aff" rid="aff1">1</xref>
+        </contrib>
+        <aff id="aff0">
+          <label>0</label>
+          <institution>Betreuer: Univ.-Prof Dr.Günther Raidl Mitwirkung: Univ.-Ass. Dr. Bin Hu</institution>
+        </aff>
+        <aff id="aff1">
+          <label>1</label>
+          <institution>Technische Universität Wien A-1040 Wien Karlsplatz 13 Tel</institution>
+        </aff>
+      </contrib-group>
+      <pub-date>
+        <year>2002</year>
+      </pub-date>
+      <fpage>7</fpage>
+      <lpage>48</lpage>
+      <abstract>
+        <p>an der Fakultät für Informatik der Technischen Universität Wien</p>
+      </abstract>
+    </article-meta>
+  </front>
+  <body>
+    <fig>
+      <graphic xlink:href="D:\output\methods\cermine\cermine-TUW-200745.images\img_8_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="D:\output\methods\cermine\cermine-TUW-200745.images\img_11_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="D:\output\methods\cermine\cermine-TUW-200745.images\img_14_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="D:\output\methods\cermine\cermine-TUW-200745.images\img_16_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="D:\output\methods\cermine\cermine-TUW-200745.images\img_20_1.png" />
+    </fig>
+    <fig>
+      <graphic xlink:href="D:\output\methods\cermine\cermine-TUW-200745.images\img_34_1.png" />
+    </fig>
+    <sec id="sec-1">
+      <title>-</title>
+      <p>Diplom-Ingenieur
+im Rahmen des Studiums</p>
+    </sec>
+    <sec id="sec-2">
+      <title>Computational Intelligence</title>
+      <p>eingereicht von</p>
+    </sec>
+    <sec id="sec-3">
+      <title>Christian Gruber</title>
+      <p>Matrikelnummer 0625102
+(Unterschrift Betreuer)
+Christian Gruber
+Wachbergsraße 29
+3382 Schollach
+Hiermit erkläre ich, dass ich diese Arbeit selbständig verfasst habe, dass ich die
+verwendeten Quellen und Hilfsmittel vollständig angegeben habe und dass ich die
+Stellen der Arbeit – einschließlich Tabellen, Karten und Abbildungen –, die
+anderen Werken oder dem Internet im Wortlaut oder dem Sinn nach entnommen sind,
+auf jeden Fall unter Angabe der Quelle als Entlehnung kenntlich gemacht habe.</p>
+      <p>In dieser Arbeit wird ein Algorithmus für das Generalized Minimum
+Spanning Tree-Problem (GMST) entwickelt. Beim GMST-Problem ist ein vollständiger
+Graph gegeben, bei dem die Knoten in Cluster partitioniert sind. Als Lösung wird
+ein Spannbaum gesucht, der von jedem Cluster genau einen Knoten beinhaltet und
+dessen Kosten minimal sind. Dieses Problem ist NP-schwierig. In dieser Arbeit
+wird eine Heuristik für dieses Problem entwickelt.</p>
+      <p>Bei diesem Verfahren wird ein Evolutionärer Algorithmus (EA) mit zwei
+verschiedenen Lösungsarchiven verwendet. Die Lösungsarchive werden dazu benutzt
+Lösungen zu speichern, um Duplikate zu erkennen und diese in neue Lösungen
+umzuwandeln. Das eine Lösungsarchiv beruht auf einer Kodierung, bei der die
+ausgewählten Knoten der Cluster einer Lösung gespeichert werden, während das
+andere Archiv auf einer Kodierung beruht, bei der gespeichert wird, welche
+Cluster in der Lösung verbunden sind.</p>
+      <p>Diese Archive werden in dieser Arbeit durch eine Bounding-Strategie basierend
+auf dem Branch and Bound Verfahren erweitert. Dabei wird versucht im Archiv an
+günstigen Positionen geeignete Bounds zu berechnen, die Auskunft darüber geben,
+wie gut die Lösungen in diesem Bereich des Archivs höchstens sein können. Wird
+eine Bound gefunden, die schlechter als die beste gefunden Lösung ist, sind diese
+Lösungen im weiteren Verlauf des Algorithmus uninteressant und werden nicht
+mehr berücksichtigt. Das führt dazu, dass mehrere Lösungen von vornherein als
+schlecht erkannt werden können und somit nur Lösungen verfolgt werden, die auch
+Verbesserungen bringen können.</p>
+      <p>Zusätzlich zu der Bounding-Strategie wird auch noch ein Nearest Neighbour Ansatz
+verwendet, bei dem beim Anhängen eines Clusters an den Spannbaum die n
+nächsten Nachbarcluster bevorzugt werden.</p>
+      <p>Am Ende der Arbeit wurden Tests durchgeführt, bei denen die Bounding
+Strategie in den unterschiedlichen Archiven verwendet wurde. Diese Tests führten zu
+dem Ergebnis, dass die Bounding Strategie zu einer Verbesserung gegenüber den
+Archiven ohne Bounding Strategie führt. Der Vergleich zwischen den Archiven hat
+ergeben, dass die Pop-Variante bessere Ergebnisse liefert als die Gosh-Variante.
+Die Variante, in der beide Archive gleichzeitig verwendet werden, ist wiederum
+besser als die anderen beiden Varianten.</p>
+      <p>In this work, an algorithm for the generalized minimum spanning tree problem
+(GMST) is developed. Given is a complete graph where the nodes are partitioned
+into clusters. A solution is a spanning tree which contains exactly one node of
+each cluster and its costs are minimal. This problem is NP-hard. In this work, a
+heuristic is developed for this problem.</p>
+      <p>In this method, an evolutionary algorithm (EA) is used with two different
+solution archives. Using a solution archive, it is possible to store solutions generated
+by the EA in order to detect duplicates and converts duplicate solutions into new
+solutions. One solution archive based on an encoding in which the spanned nodes
+of each cluster in the solution are stored. The other archive is based on an encoding
+which characterizes the connections between the clusters.</p>
+      <p>These archives are extended by a bounding strategy based on the branch-and-bound
+technique. They try to calculate appropriate bounds at a convenient positions which
+give information about how good the solutions in the respective area of the archive
+can be in the best case. If a bound was found which is worse than the best known
+solution, the solutions are unattractive in the course of the algorithm and will not
+be considered. Therefore inferior solutions can be detected at an early stage and
+only promising solutions that can bring improvements will be pursued.
+In addition to the bounding strategy a nearest neighbor approach is implemented in
+which a cluster attached to the spanning tree is preferred among the the n nearest
+neighboring clusters.</p>
+      <p>Tests were carried out in which the bounding strategy was used in the different
+variants. These tests led to the conclusion that the bounding strategy leads to an
+improvement in comparison to the “normal” archives. The comparison between
+the archives shows that the pop version lead to better results than the gosh version.
+When both archives are used simultaneously, the results are better than the results
+of the other two variants.</p>
+      <sec id="sec-3-1">
+        <title>Erklärung</title>
+      </sec>
+      <sec id="sec-3-2">
+        <title>Kurzfassung</title>
+      </sec>
+      <sec id="sec-3-3">
+        <title>Abstract</title>
+        <p>Inhaltsverzeichnis
+iii
+iv
+v
+3.2 Tests mit fixer Laufzeit . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+3.2.1 Analyse der Cuts . . . . . . . . . . . . . . . . . . . . . . . . . 31
+3.2.2 Gosh-Archiv . . . . . . . . . . . . . . . . . . . . . . . . . . . 33
+3.2.3 Nearest Neighbours . . . . . . . . . . . . . . . . . . . . . . . . 34
+3.2.4 Pop-Archiv . . . . . . . . . . . . . . . . . . . . . . . . . . . . 36
+3.2.5 Beide Archive . . . . . . . . . . . . . . . . . . . . . . . . . . . 37
+3.3 Fixe Anzahl von Generationen . . . . . . . . . . . . . . . . . . . . . . 39
+3.4 State of the Art . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 43</p>
+      </sec>
+      <sec id="sec-3-4">
+        <title>4 Zusammenfassung</title>
+      </sec>
+      <sec id="sec-3-5">
+        <title>Literaturverzeichnis 45 47</title>
+        <sec id="sec-3-5-1">
+          <title>Einleitung</title>
+          <p>Generalized Minimum Spanning Tree-Problem
+Das Generalized Minimum Spanning Tree-Problem (GMST) ist ein kombinatorisches
+Optimierungsproblem, das eine Verallgemeinerung des Minimum Spanning Tree
+Problems (MST) ist. Für das MST-Problem ist ein vollständiger Graph G gegeben, bei
+dem jeder Kante Kosten zugeordnet sind. Eine Lösung des MST-Problems entspricht
+einer Teilmenge von Kanten, die einen minimalen Spannbaum bilden. Ein minimaler
+Spannbaum ist ein kreisfreier Teilgraph von G, der mit allen Knoten des Graphen
+verbunden ist und dessen Summe der Kantenkosten minimal ist. Beim GMST-Problem
+werden zusätzlich noch die Knoten des MST-Problems durch Cluster partitioniert.
+Die formale Definition des GMST-Problems sieht wie folgt aus [4]:
+Gegeben ist ein vollständiger gewichteter Graph G = (V; E; c), wobei V die
+Knotenmenge, E die Kantenmenge und c : E ! R+ die Kostenfunktion ist. Die Knotenmenge
+V ist partitioniert in m paarweise disjunkte Cluster V1; V2; : : : ; Vm, wobei Si=1;:::;m Vi =
+V , Vi \ Vj = ; 8i; j = 1; : : : ; m, i 6= j. di ist die Anzahl der Knoten in Cluster
+Vi, i = 1; : : : ; m. Eine Lösung für das GMST-Problem ist ein Graph S = (P; T ),
+wobei P = fp1; p2; : : : ; pmg V enthält genau einen Knoten von jedem Cluster
+(pi 2 Vi f or all i = 1; : : : ; m). T E ist ein Spannbaum auf die Knoten in P .
+Die Kosten von T ergeben sich aus den Kantenkosten, C(T ) = P(u;v)2T c(u; v). Die
+optimale Lösung ist dann ein Graph S = (P; T ) dessen Kosten C(T ) minimal sind. Ein
+Beispiel für eine solche Lösung ist in Abb. 1 zu finden.
+1.2. Evolutionäre Algorithmen</p>
+          <p>Abb. 1: Lösung für ein GMST-Problem
+1.2</p>
+          <p>Evolutionäre Algorithmen
+Ein Evolutionärer Algorithmus (EA) [9] ist eine Metaheuristik, mit deren Hilfe
+Optimierungsprobleme gelöst werden können. Der EA macht sich die Eigenschaften der
+natürlichen Evolution zunutze, um ausgehend von einer Anfangspopulation im Laufe
+der Zeit immer bessere Lösungen zu finden. Dazu werden drei Operationen
+angewendet: Selektion, Mutation und Rekombination.</p>
+          <p>Der EA arbeitet mit einer Population von Lösungen, wobei die einzelnen Lösungen
+in kodierter Form gespeichert werden. Diese kodierten Lösungen werden Genotyp
+genannt. Sie bestehen oft aus einem Bitstring. In dieser Arbeit werden die Lösungen
+aber als Integer-Vektor gespeichert. Auf die Kodierungsarten wird in Kapitel 1.4 noch
+genauer eingegangen. Um die Lösungen auswerten zu können ist es notwendig, die
+Lösungen auch wieder zu dekodieren. Die dekodierten Lösungen werden Phänotypen
+genannt.</p>
+          <p>Der Ablauf des EA ist wie folgt: Zunächst wird für jede Lösung der Population aus
+den dazugehörigen Phänotypen ein Fitnesswert berechnet. Dieser Fitnesswert ist ein
+Maß dafür wie gut die Lösung ist. Danach werden durch eine Selektionsfunktion mit
+Hilfe der Fitnesswerte, zwei Elternlösungen ausgewählt. Aus diesen beiden
+Elternlösungen wird dann durch eine Rekombination eine neue Lösung generiert. Die Idee
+dabei ist, dass die guten Teile der ausgewählten Lösungen zusammengesetzt werden
+und dadurch eine neue bessere Lösung entsteht. Danach wird eine Mutation
+angewendet, in der die Lösung zufällig an einer bestimmten Stelle verändert wird, um nicht so
+schnell in einem lokalen Optimum festzustecken. Die Mutation wird aber nur mit einer
+bestimmten Wahrscheinlichkeit ausgeführt, da sonst der Zufall einen zu großen Einfluss
+auf die Lösungsfindung hat.
+1.3. Lösungsarchive
+Wie bei den meisten Metaheuristiken, ist die Definition der einzelnen Methoden
+allgemein gehalten. Um den EA auf ein spezifisches Problem anzuwenden, müssen diese
+Methoden angepasst werden.</p>
+          <p>Es gibt zwei unterschiedliche Arten von EAs:</p>
+          <p>Steady-State-EA: Dabei wird in jedem Generationsschritt nur eine Lösung aus
+der Population ersetzt. Die restlichen Lösungen bleiben erhalten.
+generationalen-EA: Hier wird in jedem Generationsschritt die gesamte Population
+ersetzt.</p>
+          <p>In dieser Arbeit, genauso wie in den Arbeiten von Sonnleitner [13] und Wolf [15], auf
+denen diese Arbeit aufbaut, wurde ein Steady-State-EA verwendet.
+1.3</p>
+          <p>Lösungsarchive
+Bei einem EA werden neue Lösungen durch Kombination von alten Lösungen, die sich
+in der Population befinden, erzeugt. Das kann dazu führen, dass eine neu generierte
+Lösung sich schon in der Population befindet bzw. früher schon einmal untersucht wurde.
+Daraus können sich zwei Probleme ergeben. Zum einen führt es dazu, dass die
+selben Lösungen mehrmals evaluiert werden und somit unnötig Laufzeit verbraucht wird,
+da die erneute Evaluierung keinen Sinn macht. Zum anderen kann das mehrfache
+betrachten der selben Lösungen zu einem Diversitätsverlust führen, d.h. dass sich die
+Lösungen in der Population nach kurzer Zeit kaum mehr unterscheiden. Das führt dazu,
+dass der Lösungsraum nicht mehr so breit durchsucht wird und man so auch schneller
+in einem lokalen Optimum hängen bleibt.</p>
+          <p>
+            Um diesen Problemen entgegen zu wirken, sollte bei jeder generierten Lösung überprüft
+werden, ob diese in früheren Generationen schon einmal erzeugt worden ist. Dazu
+reicht es aber nicht die Lösungen mit der aktuellen Population zu vergleichen, da hier nur
+ein kleiner Ausschnitt der bisher untersuchten Lösungen enthalten ist. Daher wird eine
+Speicherstruktur verwendet, die Lösungsarchiv [
+            <xref ref-type="bibr" rid="ref4">12</xref>
+            ] genannt wird, in der jede generierte
+Lösung gespeichert wird und in angemessener Zeit danach gesucht werden kann.
+Das Lösungsarchiv muss drei Eigenschaften erfüllen. Es muss in angemessener Zeit
+überprüft werden können ob eine Lösung im Archiv vorhanden ist. Außerdem soll aus
+einer Lösung, die im Archiv enthalten ist, schnell eine neue Lösung generiert werden
+können, die der alten möglichst ähnlich ist. Zusätzlich sollen die beiden Aufgaben mit
+einem angemessenen Speicherverbrauch realisiert werden.
+1.4. Lösungsrepräsentationen
+Wie ein Lösungsarchiv in einem EA verwendet wird, ist in Algorithmus 1 dargestellt.
+Dieser Algorithmus wurde aus [13] übernommen.
+          </p>
+          <p>Die Frage, welche Datenstruktur sich am besten für ein Lösungsarchiv eignet, wurde
+in den Arbeiten von Zaubzer [16] und Šramko [14] untersucht. Sie haben drei
+Datenstrukturen miteinander verglichen: Hashtabellen, Binärbäume und Tries. Das
+Einfügen einer Lösung und auch das Prüfen, ob eine Lösung schon enthalten ist, kann mit
+einer Hashtabelle in O(l) (l entspricht der Länge des Strings) gemacht werden. Das
+Finden einer neuen Lösung kann hingegen im schlimmsten Fall O(2l) Schritte
+benötigen. Beim Binärbaum können alle drei Operationen in O(l log2(n)) durchgeführt
+werden. Der Nachteil dieser Datenstruktur ist, dass in jedem Knoten eine vollständige
+Lösung gespeichert wird, was zu einem hohen Speicherverbrauch führt. Bei einem Trie
+können alle Operationen in O(l) ausgeführt werden. Das führt zu dem Ergebnis, dass ein
+Trie die geeignetste Datenstruktur, für die vorhin erwähnten benötigten Eigenschaften,
+ist.</p>
+          <p>Algorithmus 1 EA mit Lösungsarchiv
+1: generate random population pop and insert into archiv
+2: while termination condition not satisfied do
+3: parent1 selection(pop)
+4: parent2 selection(pop)
+5: solnew recombination(parent1, parent2)
+6: mutation(solnew)
+7: lokaleImprovement(solnew)
+8:
+9: if solnew included in archiv then
+10: convert solnew to new solution
+11: end if
+12: insert solnew into archiv
+13: replace one solution in pop with solnew
+14: end while
+1.4</p>
+          <p>
+            Lösungsrepräsentationen
+In dieser Arbeit wurden zwei verschiedene Lösungsrepräsentationen verwendet: Die
+Kodierung von Gosh [
+            <xref ref-type="bibr" rid="ref2">2</xref>
+            ] und die von Pop [11]. Beide Lösungsrepräsentationen
+wurden auch in den Arbeiten von Wolf [15] und Sonnleitner [13], auf denen diese Arbeit
+aufbaut, verwendet.
+          </p>
+          <p>Abb. 2: Pop-Kodierung mit V1 als Wurzelknoten
+1.4.1</p>
+          <p>Gosh-Kodierung
+Bei der Gosh-Kodierung wird für jeden Cluster angegeben, welcher Knoten in diesem
+Cluster ausgewählt wurde. Die kodierte Lösung besteht somit aus einem Vektor P =
+fp1; p2; : : : ; pmg wobei pi 2 V für alle i = 1 : : : m. Um aus der kodierten Lösung den
+Phänotypen und den dazugehörigen Lösungswert zu bekommen, kann dazu ein
+MSTAlgorithmus angewendet werden (z.B. Kruskal).
+1.4.2</p>
+          <p>Pop-Kodierung
+Bei der Pop-Kodierung wird gespeichert, welche Cluster miteinander verbunden sind.
+Dazu wird ein globaler Graph definiert [7]: GG = (V G; EG), wobei V G den Clustern
+des ursprünglichen Graphen G entsprechen und EG den Kanten zwischen den Clustern,
+d.h. EG = V G V G. Auf diesen Graphen GG kann nun ein Spannbaum SG = (V G; T G)
+gebildet werden, wobei T G EG.</p>
+          <p>Die Pop-Kodierung wird nun mithilfe der Predecessor-Darstellung gemacht. Dazu wird
+ein Cluster als Wurzelcluster ausgewählt. In dem Spannbaum SG gibt es nun für jeden
+Cluster einen eindeutigen Pfad zum Wurzelcluster und somit auch einen eindeutigen
+Vorgänger. Für die Lösungsrepräsentation wird in einem Vektor oder Array für jeden
+Cluster (außer dem Wurzelcluster) der Vorgänger gespeichert. In Abb. 2 ist ein Beispiel
+dazu angegeben.</p>
+          <p>Ein Problem dieser Kodierung ist, dass nicht jede Kodierung eine gültige GMST-Lösung
+darstellt. Dieser Faktor muss bei den EA-Operationen berücksichtigt werden, damit
+dadurch keine ungültigen Lösungen erstellt werden. Sonnleitner [13] hat dazu in seiner
+1.5. Branch and Bound
+Arbeit einen Repair-Mechanismus entwickelt, mit dem ungültige Lösungen in gültige
+umgewandelt werden können. Mittels dynamischer Programmierung kann dann aus der
+kodierten Lösung die optimale Auswahl der Knoten innerhalb der Cluster erfolgen und
+somit der Phänotyp und den dazugehörigen Lösungswert ermittelt werden.
+1.5</p>
+          <p>Branch and Bound
+Branch and Bound ist ein Verfahren, mit deren Hilfe man beweisbar optimale Lösungen
+für kombinatorische Optimierungsprobleme finden kann. Das Verfahren beruht auf der
+Idee der beschränkten Enumeration und basiert auf dem Divide &amp; Conquer Prinzip.
+Branch and Bound-Algorithmen bestehen prinzipiell aus zwei Bereichen: Abgrenzung
+(Bound) und Verzweigung (Branch).</p>
+          <p>Verzweigung (Branch): Durch die Verzweigungsschritte wird das Problem in
+mehrere Teilprobleme zerlegt, die dann leichter zu lösen sind. Durch
+wiederholte Anwendung des Verzweigungsschritts auf die Teilprobleme entsteht ein
+sogenannter Entscheidungsbaum, der den Lösungsraum widerspiegelt.</p>
+          <p>Mit der Abgrenzung (Bound) wird versucht, Bereiche im Entscheidungsbaum
+schon früh als schlecht zu erkennen und diese Bereiche somit nicht weiter zu
+verfolgen, d.h. es werden schlechte Lösungen schon vorzeitig erkannt. Dazu
+werden zwei Schranken definiert. Eine untere und eine obere Schranke. Bei
+einem Minimierungsproblem entspricht die obere Schranke einer zulässigen
+Lösung während die untere Schranke dem Weg von der Wurzel des
+Entscheidungsbaums bis zum aktuellen Teilproblem entspricht. Ist nun die untere Schranke
+schlechter (größer) als die obere Schranke, wird dieser Teil des
+Entscheidungsbaums nicht weiter verfolgt. Falls sie kleiner als die obere Schranke ist, erfolgt
+ein weiterer Verzweigungsschritt. Ist die untere Schranke eine zulässige Lösung
+und ist sie besser als die aktuelle obere Schranke, so wird die untere Schranke die
+neue obere Schranke.</p>
+          <p>Wie das Branch and Bound Verfahren in dieser Arbeit verwendet wurde, wird in Kapitel
+2 näher erläutert.
+1.6. Bisherige Ansätze
+1.6</p>
+          <p>
+            Bisherige Ansätze
+Myung, Lee und Tcha [8] haben in ihrer Arbeit das erste Mal das GMST-Problem
+formal definiert und haben auch gezeigt dass das Problem NP-schwierig ist.
+Es gibt einige exakte Algorithmen, die aber nur Lösungen für relativ kleine Instanzen
+liefern. In [8] wurde ein exakter Algorithmus verwendet mit mehreren Integer Linear
+Programming-Formulierungen und Branch and Bound Verfahren. Pop hat in [11] eine
+etwas effizientere Mixed Integer Linear Programming-Formulierung verwendet. Damit
+konnten Instanzen mit bis zu 240 Knoten mit 30 Clustern oder 160 Knoten mit 40
+Clustern optimal gelöst werden. In [
+            <xref ref-type="bibr" rid="ref1">1</xref>
+            ] wurde ein Branch and Cut Algorithmus verwendet.
+Um größere Instanzen zu lösen, müssen Metaheuristiken verwendet werden. Eine
+Metaheuristik ist ein Algorithmus bei dem nicht garantiert werden kann, dass eine optimale
+Lösung gefunden wird. Man sucht vielmehr eine Lösung, die sich der optimalen Lösung
+so gut wie möglich annähert. Eine Methaheuristik wird so definiert, dass sie von den
+Optimierungsproblemen unabhängig sind. Eine auf ein bestimmtes
+Optimierungsproblem zugeschnittenes Verfahren wird dann Heuristik genannt.
+          </p>
+          <p>
+            Für das GMST-Problem wurden auch einige Metaheuristiken angewandt. Gosh [
+            <xref ref-type="bibr" rid="ref2">2</xref>
+            ] hat
+in seiner Arbeit einige Metaheuristik-Ansätze umgesetzt, die auf Tabusuche, Variable
+Neighborhood Descent und Variable Neighborhood Search basieren. Hu, Leitner und
+Raidl [
+            <xref ref-type="bibr" rid="ref3">3</xref>
+            ] haben in ihrer Arbeit einen Variable Neighborhood Search Ansatz
+entwickelt, der auf den Ansätzen von Gosh [
+            <xref ref-type="bibr" rid="ref2">2</xref>
+            ] und Pop [11] basieren. In [4] haben sie diesen
+Ansatz durch eine zusätzliche Nachbarschaft, die Teillösungen mittels Mixed Integer
+Programming optimiert, erweitert und damit recht gute Ergebnisse erzielt.
+Wolf [15] und Sonnleitner [13] haben in ihren Arbeiten einen EA mit Lösungsarchiv
+verwendet, wobei sie unterschiedliche Lösungsarchive angewendet haben. Wolf hat das
+Archiv auf Basis der Gosh-Kodierung erzeugt, während Sonnleitner ein Archiv auf
+Basis der Pop-Kodierung verwendet hat. Außerdem hat Sonnleitner in seiner Arbeit noch
+eine Variante entwickelt, die beide Archive gleichzeitig verwendet.
+          </p>
+          <p>Wolf und Sonnleitner haben mit ihren Ansätzen beide Verbesserungen im Vergleich
+zu einem normalen EA erreicht. Wobei Sonnleitner mit der Variante, in der er beide
+Archive gleichzeitig verwendet, die besten Ergebnisse erzielt hat. Die Ergebnisse dieser
+beiden Arbeiten wurden dann in der Arbeit [5] zusammengefasst und veröffentlicht.
+Da in dieser Arbeit die beiden Archive von Wolf und Sonnleitner als Ausgangspunkt
+genommen wurden und durch ein Bounding Strategie basierend auf einem Branch and
+Bound Verfahren erweitert wurden, wird in den nächsten beiden Kapiteln auf die beiden
+Ansätze nochmal genauer eingegangen.
+1.6. Bisherige Ansätze
+1.6.1</p>
+          <p>EA mit Gosh-Lösungsarchiv
+Wie vorher schon erwähnt, hat Wolf [15] in seiner Arbeit das Lösungsarchiv auf Basis
+der Gosh-Kodierung aufgebaut. Bei der Gosh-Kodierung wird, wie in Kapitel 1.4.1
+bereits beschrieben, eine Lösung durch einen Vektor repräsentiert, bei dem jedes Element
+einem Cluster entspricht, in dem gespeichert ist, welcher Knoten im Cluster ausgewählt
+wurde.</p>
+          <p>Abb. 3: Lösung &lt;321112&gt; im Gosh-Lösungsarchiv eingefügt
+Das Gosh-Lösungsarchiv ist ein Trie, bei dem jede Ebene einem Cluster Vi entspricht.
+Jeder Trie-Knoten enthält di Pointer, d.h. für jeden Knoten im Cluster gibt es einen
+Pointer. Die Pointer können folgende Zustände annehmen:
+null: Dieser Pointerwert gibt an, dass hier noch keine Lösung eingefügt wurde.
+complete (c): Dieser Wert tritt auf, wenn das Ende einer Lösung erreicht wurde
+oder alle Lösungen in den darunter liegenden Subtrie bereits complete sind.
+normaler Pointer: Pointer zum nächsten Trie-Knoten.</p>
+          <p>Abb. 3 zeigt ein Beispiel wie ein Lösungsarchiv nach dem Einfügen einer Lösung
+aussieht. In diesem Beispiel sind zwei Lösungen in dem Archiv bereits enthalten. Die
+Lösung &lt;321112&gt; wurde dem Archiv neu hinzugefügt. Wie in Kapitel 1.3 beschrieben
+werden für ein Lösungsarchiv zwei Funktionen benötigt. Eine Konvertierungs- und eine
+Einfüge-Methode.
+1.6. Bisherige Ansätze</p>
+        </sec>
+      </sec>
+      <sec id="sec-3-6">
+        <title>Einfügen einer Lösung</title>
+        <p>Beim Einfügen einer Lösung wird, beginnend beim Wurzelknoten, immer dem Pointer
+des Trie-Knoten gefolgt, der dem Knoten aus dem jeweiligen Cluster in der Lösung
+entspricht. Ist der Pointer null, wird ein neuer Trie-Knoten erzeugt und der Pointer wird
+auf diesen neuen Knoten gesetzt. Wenn er complete ist, wurde die Lösung früher schon
+einmal eingefügt und es kann abgebrochen werden. In diesem Fall wird im
+nächsten Schritt die Konvertierungs-Methode aufgerufen. Bei einer erfolgreichen
+EinfügeOperation, wird im untersten Trie-Knoten der jeweilige Pointer complete gesetzt.
+Danach wird untersucht, ob es entlang der Lösung Teilbäume im Archiv gibt, die
+vollständig untersucht wurden. Dazu wird beginnend in der untersten Ebene geprüft, ob
+alle Pointer im Trie-Knoten complete sind. Wenn das der Fall ist, kann der Trie-Knoten
+gelöscht werden und der dazugehörige Pointer im Eltern-Knoten auf complete gesetzt
+werden. Diese Überprüfung erfolgt, beginnend bei dem untersten Trie-Knoten bis zur
+Wurzel, für alle Trie-Konten entlang der Lösung.</p>
+      </sec>
+      <sec id="sec-3-7">
+        <title>Konvertieren einer Lösung</title>
+        <p>Um aus einer Lösung im Trie eine neue Lösung zu generieren, werden zunächst jene
+Trie-Knoten ermittelt, die für eine Änderung in Frage kommen. Das sind jene
+TrieKnoten entlang der Lösung im Archiv, die nicht in einem als complete markierten
+Bereich liegen. Danach wird aus diesen Trie-Knoten einer zufällig ausgewählt, indem
+dann die Änderungen gemacht werden sollen. In diesem Trie-Knoten wird nach einem
+null-Pointer gesucht. Wenn ein solcher null-Pointer vorhanden ist, wird die Lösung
+dementsprechend abgeändert. Gibt es keinen, geht man im Trie entlang der Lösung
+zum nächsten Trie-Knoten und wiederholt die Suche. Ist der Pointer der Lösung aber
+complete wird ein anderer Pointer ausgewählt und zu diesem Trie-Knoten weiter
+gegangen.</p>
+        <p>Die Frage welche Ebene im Archiv welchem Cluster zugeordnet wird, wurde in [15]
+näher betrachtet. Wenn die Trie-Knoten der i-ten Ebene im Archiv dem Cluster Vi
+zugeordnet werden, kommt es zu einem Problem. Es entsteht ein so genanntes Bias im
+Trie, d.h. die Wahrscheinlichkeit einer Lösungsänderung in einem Cluster ist nicht für
+alle Cluster gleich groß. Die Knoten in den unteren Ebenen des Archivs haben eine
+größere Chance verändert zu werden. Um dieses Problem zu umgehen, hat Wolf [15]
+in seiner Arbeit eine zufällige Zuteilung der Cluster zu den Trie-Knoten verwendet,
+d.h. beim Erstellen eines neuen Trie-Knoten, wird diesem zufällig ein Cluster
+zugeordnet. Das hat zur Folge, dass nicht mehr einige Cluster bei der Veränderung der Lösung
+bevorzugt werden.
+1.6.2</p>
+        <p>EA mit Pop-Lösungsarchiv</p>
+        <p>Abb. 4: Lösung &lt;-65611&gt; im Pop-Lösungsarchiv eingefügt, V1 ist Wurzelcluster
+Wie vorher schon erwähnt, hat Sonnleitner [13] in seiner Arbeit das Lösungsarchiv auf
+Basis der Pop-Kodierung aufgebaut. Bei der Pop-Kodierung werden, wie in Kapitel
+1.4.2 bereits beschrieben, die globalen Kanten zwischen den Clustern berücksichtigt.
+Dabei werden die Vorgänger der Cluster in dem Spannbaum des globalen Graphen, in
+einem Vektor gespeichert.</p>
+        <p>Das Pop-Lösungsarchiv ist ein Trie, der aus m 1 Ebenen besteht, wobei jede
+TrieEbene für ein Cluster steht. Außer für den Wurzelknoten, da dieser keinen Vorgänger
+hat. In jedem Trie Knoten gibt es m 1 Pointer, da ein Cluster in einem Baum nicht
+sein eigener Vorgänger sein kann. In Abb. 4 ist ein Beispiel zu sehen, wie eine Lösung
+in einem Pop-Lösungsarchiv gespeichert wird. In diesem Beispiel sind zwei Lösungen
+in dem Archiv schon enthalten. Die Lösung &lt;-65611&gt; wurde dem Archiv neu
+hinzugefügt. Da in dieser Kodierung auch Lösungen dargestellt werden können, die keinen
+Baum darstellen, gibt es in dem Pop-Lösungsarchiv, anders als im Gosh-Archiv, noch
+einen zusätzlichen Pointerzustand, der eine ungültige Lösung markiert.
+Die Pointer können daher folgende Zustände annehmen:
+null: Dieser Pointerwert gibt an, dass hier noch keine Lösung eingefügt wurde.
+complete (c): Dieser Wert tritt auf, wenn das Ende einer Lösung erreicht wurde
+oder alle Lösungen in dem darunter liegenden Subtrie bereits complete sind.
+forbidden (f): Dieser Wert gibt an, dass diese Kodierung zu einer ungültigen
+Lösung führt, d.h. zu keinem Baum.
+normaler Pointer: Pointer zum nächsten Trie-Knoten.
+1.6. Bisherige Ansätze</p>
+      </sec>
+      <sec id="sec-3-8">
+        <title>Einfüge- und Konvertierungs-Funktionen</title>
+        <p>Die Einfüge-Funktion läuft im Prinzip genauso ab wie im Gosh-Lösungsarchiv. Der
+einzige Unterschied ist, dass beim Einfügen von neuen Trie-Knoten in den Trie die
+verbotenen Felder im Trie berechnet werden. Dazu werden in dem aktuellen Trie-Knoten
+alle Cluster mit einem kleineren Index als dem aktuellen Cluster geprüft. Bei diesen
+Clustern wird nun überprüft, ob diese Cluster den aktuellen Cluster als Vorgänger haben.
+Ist das der Fall so kann dieser als forbidden markiert werden. Danach wird rekursiv
+überprüft, ob es bereits hinzugefügte Cluster gibt, dessen Vorgänger der nun verbotene
+Cluster ist. Diese werden ebenfalls als forbidden markiert.</p>
+        <p>Die Konvertierungs-Funktion arbeitet im Prinzip genauso wie im Gosh-Lösungsarchiv.
+Der Unterschied ist, dass hier bei jeder neu generierten Lösung nochmal geprüft werden
+muss, ob es einen Zyklus gibt und sie somit keine gültige Lösung ist. Das muss gemacht
+werden, da in der Einfüge-Funktion nicht alle möglichen Zyklen markiert werden
+können.</p>
+        <sec id="sec-3-8-1">
+          <title>Algorithmus</title>
+          <p>Zur Implementierung des Algorithmus wird ein Steady State EA gemeinsam mit einem
+Gosh- und einem Pop-Lösungsarchiv verwendet. Die beiden Archive wurden in den
+Arbeiten von Wolf [15] und Sonnleitner [13] bereits implementiert. Diese Archive
+werden als Ausgangsposition genommen und durch eine Bounding Strategie basierend auf
+einem Branch and Bound Verfahren erweitert.</p>
+          <p>Wie in Kapitel 1.5 bereits beschrieben, besteht das Branch and Bound Verfahren aus
+zwei Schritten, dem Verzweigen (Branch) und dem Abgrenzen (Bound). Der
+BranchSchritt ergibt sich aus dem Lösungsarchiv. Das Archiv kann im Prinzip als
+Entscheidungsbaum angesehen werden. In jedem Trie Knoten wird für einen bestimmten
+Cluster eine Entscheidung getroffen und somit entstehen dadurch die verschiedenen
+Teilprobleme. Im Gosh-Archiv bestehen die Entscheidungen in den Trie-Knoten aus der
+Auswahl eines Knoten innerhalb eines Clusters, während im Pop-Archiv entschieden
+wird, welchen Vorgänger der Cluster in dem Spannbaum hat. Für den Bound-Schritt
+muss eine untere und eine obere Schranke definiert werden. Als obere Schranke wird
+immer die bisher beste Lösung, die vom Evolutionären Algorithmus gefunden wurde,
+genommen. Die untere Schranke wird in den einzelnen Trie-Knoten berechnet. Wie die
+Berechnung genau erfolgt, wird in den Kapiteln 2.1 und 2.2 erläutert. Falls hier eine
+untere Schranke gefunden wird, die größer als die beste bisher gefundene Lösung ist,
+kann dieser Teil des Lösungsarchivs als complete markiert werden. Im weiteren Verlauf
+des Algorithmus werden diese Lösungen schon als besucht erkannt und somit im EA
+nicht mehr berücksichtigt.</p>
+          <p>Es gibt prinzipiell zwei Möglichkeiten wann eine Bound berechnet wird. Zum einen
+beim Einfügen der Lösung im Lösungsarchiv und zum anderen beim Konvertieren einer
+schon eingefügten Lösung zu einer neuen. In dieser Arbeit werden beide Varianten
+untersucht und auch miteinander kombiniert.
+2.1</p>
+          <p>Boundberechnung im Gosh-Archiv
+Die Boundberechnung erfolgt immer für einen bestimmten Pointer in einem Trie-Knoten.
+Bei der Gosh-Kodierung wird, wie in Kapitel 1.4.1 bereits erläutert, für jeden Cluster
+gespeichert, welcher Knoten in dem Cluster ausgewählt wurde. Soll in einem
+bestimmten Trie-Knoten die Bound berechnet werden, bedeutet das, dass für alle Cluster vom
+aktuellen Trie-Knoten bis hin zur Wurzel schon eine Auswahl der Knoten in den
+Clustern getroffen wurde. Für alle Cluster in den darunterliegenden Trie-Ebenen wurde noch
+keine Auswahl getroffen.</p>
+          <p>Es ergeben sich also zwei Arten von Clustern. V 1 ist die Menge der Cluster für die
+bereits eine Knotenauswahl getroffen wurde und V 0 ist die Menge der Cluster für die
+noch keine Auswahl getroffen wurde.</p>
+          <p>Um in einem bestimmten Trie-Knoten eine Bound zu berechnen, wird zunächst der
+Graph G0 = (V 0; E0) definiert, wobei V 0 = V 1 [ V 0. Die Menge E0 setzt sich aus 3
+verschiedenen Arten von Kanten zusammen:</p>
+          <p>E11 = V 1 V 1 sind die Kanten zwischen allen Paaren von Clustern, für die
+bereits eine Auswahl getroffen wurde. Die Kantenkosten ergeben sich aus der
+Distanz zwischen den ausgewählten Knoten der Cluster.</p>
+          <p>E10 = V 1 V 0 sind die Kanten zwischen allen Paaren von Clustern, bei
+denen schon eine Auswahl getroffen wurde und denen für die noch keine gemacht
+wurde. Die Kantenkosten zwischen den Clustern Vi 2 V 1 und Vj 2 V 0 lauten
+c(pi; Vj) = minfc(pi; pj)jpj 2 Vjg, wobei pi 2 Vi ist.</p>
+          <p>E00 = V 0 V 0 sind die Kanten zwischen allen Paaren von Clustern, für die
+noch keine Auswahl getroffen wurde. Die Kantenkosten zwischen den Clustern
+Vi 2 V 0 und Vj 2 V 0 lauten c(Vi; Vj) = minfc(pi; pj)jpi 2 Vi; pj 2 Vjg.
+Die Definition der Kantenmenge lautet also E0 = E11 [ E10 [ E00. Die Berechnung
+der Kantenkosten wird in einem Preprocessing-Schritt durchgeführt, d.h. sie erfolgt
+einmal zu Beginn des Algorithmus und ist somit für die Laufzeit des Algorithmus
+nicht mehr relevant. Um die Bound zu berechnen, wird für den Graphen G0 ein
+minimaler Spannbaum S0 = (V 0; T 0) ermittelt, wobei T 0 E0. Die Bound entspricht
+dabei den Kosten des Spannbaums T 0, C(T 0) = P(u;v)2T 0 c(u; v). Die Berechnung
+des Spannbaums erfolgt mit einem Kruskal Algorithmus mit Union-Find. Die Laufzeit
+dieses Algorithmus wird durch das Sortieren der Kanten bestimmt. Da der Graph G0 ein
+vollständiger Graph ist, entspricht die Anzahl der Kanten jEj = m (m 1). Dadurch
+ergibt sich eine Laufzeit von O(m2log(m2)) für die Berechnung der Bound.</p>
+          <p>Abb. 5: Boundberechnung im Cluster V3 beim Einfügen der Lösung &lt;321112&gt;
+In Abb. 5 wird illustriert wie eine Boundberechnung im Gosh-Lösungsarchiv
+funktioniert. In diesem Beispiel wird im Trie-Knoten des Cluster V3 die Bound berechnet.
+An dieser Position wurden die Cluster V1, V2 und V3 schon in den oberen Ebenen
+eingefügt und somit eine Knotenauswahl für die Cluster getroffen. In den darunter liegenden
+Clustern (V4, V5 und V6) wurde noch keine Auswahl getroffen. Für die
+Boundberechnung bedeutet das, dass hier zwischen den Clustern V1, V2 und V3 als Kantenkosten
+der Abstand der ausgewählten Knoten genommen wird. Zwischen dem Cluster V3 und
+V4 wird als Kosten der Distanzen zwischen dem ausgewählten Knoten 1 (V3) und dem
+Knoten 3 (V4) genommen, da dieser die geringste Distanz zum Knoten 1 (V3) hat.
+Zwischen den Clustern V4, V5 und V6 werden die minimalen Distanzen zwischen den
+Clustern verwendet. D.h. zwischen Cluster V6 und V4 wird die Kante zwischen Knoten 2
+(V6) und Knoten 1 (V4) genommen und zwischen V5 und V4 wird die Kante zwischen
+Knoten 1 (V5) und Knoten 4 (V4) genommen.</p>
+          <p>Ist die berechnete Bound schlechter als die beste bisher gefundene Lösung, kann der
+Pointer 1 des Clusters V3 als complete markiert werden. Das kann gemacht werden,
+da zwischen den Clustern V4, V5 und V6 immer der minimale Abstand genommen
+wurde. Wenn nun Knoten in den Clustern ausgewählt werden, bleiben die Kosten des
+Spannbaums gleich oder werden größer aber sie werden sicher nicht kleiner. Das führt
+dazu, dass alle Lösungen in diesem Subtrie mindestens so groß sind als die berechnete
+Bound und somit in diesem Fall auch größer sind als die beste bisher gefundene Lösung.
+Pointer noch null, wird ein Trie-Knoten erzeugt und an dieser Stelle in den Trie
+eingefügt. Beim ersten Aufruf der Methode calcBoundByDynP rog wird die Bound mithilfe
+der “normalen” dynamischen Programmierung ermittelt. Für alle weiteren Aufrufe
+der Methode calcBoundByDynP rog innerhalb derselben Einfügeoperation wird die
+inkrementelle Boundberechnung, die in Kapitel 2.2.1 beschrieben wird, verwendet.
+Dazu müssen vorher alle Cluster, für die sich die Kosten der Knoten ändern, markiert
+werden. Deshalb wird vor der Boundberechnung die Methode invalidate aufgerufen.
+In dieser Methode werden alle Cluster, vom aktuellen Cluster bis hin zur Wurzel im
+Spannbaum der Lösung, markiert.
+2.2.4</p>
+          <p>Konvertierungs-Methode
+In der Konvertierungs-Methode des Pop-Archivs wird die Bounding Strategie ebenfalls
+angewendet. Die Konvertierungs-Methode mit Bounds funktioniert dabei ähnlich wie
+die des Gosh-Archivs. Bei jeder Änderung der Lösung wird die Bound berechnet und
+überprüft, ob diese besser als die beste bisher gefundene Lösung ist. Ist das nicht der
+Fall, wird die Änderung rückgängig gemacht und eine andere Lösung gesucht.
+Zusätzlich zur Bounding Strategie wurde die Konvertierungs-Methode durch den Nearest
+Neighbour Ansatz erweitert.</p>
+          <p>In Algorithmus 11 wird der Ablauf der Konvertierungs-Methode gezeigt. Dabei wird
+zunächst zufällig ein Trie-Knoten curr aus den möglichen Startknoten entlang der
+Lösung ausgewählt. Im nächsten Schritt wird zuerst zufällig aus den Nearest Neighbours
+von curr ein null-Pointer ausgewählt. Ist keiner vorhanden wird aus den restlichen
+Pointern zufällig ein null-Pointer ausgewählt. Wurde ein null-Pointer gefunden, kann
+eine neue Lösung generiert werden. Bei dieser neuen Lösung erfolgt dann eine
+Boundüberprüfung. Die Boundberechnung wird mit Methode calcBoundByDynP rog
+durchgeführt. Ist die Bound schlechter als die beste bisher gefundene Lösung, wird die
+Änderung der Lösung wieder rückgängig gemacht, der vorher ausgewählte Pointer auf
+complete gesetzt und mit der Suche fortgesetzt. Ist die Bound nicht schlechter, kann
+abgebrochen werden. Wurde kein null-Pointer gefunden, wird zunächst versucht,
+entlang der Lösung im Archiv eine Ebene nach unten zu gehen. Hierbei wird wieder eine
+Boundüberprüfung durchgeführt. Kann entlang der Lösung nicht weiter nach unten
+gegangen werden, wird im aktuellen Trie-Knoten zufällig ein Pointer aus den Nearest
+Neighbours von curr ausgewählt, der nicht complete ist. Wird so ein Pointer nicht
+gefunden, wird aus den restlichen Pointern zufällig ein Pointer ausgewählt, der nicht
+complete ist. Die Lösung wird dementsprechend geändert und es erfolgt wieder eine
+Boundüberprüfung.
+Genauso wie bei der Insert-Methode in Kapitel 2.2.3, wird in dieser Methode beim
+ersten Aufruf von calcBoundByDynP rog die Bound mittels “normalen” dynamischen
+Programmierung ermittelt. Bei allen weiteren Boundberechnungen innerhalb
+derselben Konvertierungsoperation, wird die inkrementelle dynamische
+ProgrammierungsMethode verwendet. Dazu wird vor jeder Boundberechnung die Methode invalidate
+aufgerufen, die alle Cluster markiert, für die die Kosten neu berechnet werden müssen.
+Algorithmus 11 PopTrie convert with Bound
+Eingabe: solution to convert sol; best solution bestsol
+Ausgabe: convertion successfull (true/false)
+Variablen: nn[i]... Nearest Neighbours of Cluster i
+1: curr random trie-node of the possible startpoints from sol
+2: while curr! = null &amp;&amp; curr! = complete do
+3: pnull random null-pointer from nn[curr], if none exist, random null-pointern
+from all pointer in curr
+4: if pnullexists then
+5: change solution and check if cycle exist
+6: invalidate(curr:cluster; sol)
+7: if bestsol &lt; calcBoundByDynP rog(root:cluster; sol; curr:cluster) then
+8: curr:next[sol[curr:cluster]] complete
+9: undo changes of sol
+10: else
+11: return true
+12: end if
+13: else
+14: if curr:next[sol[curr:cluster]]! = complete] then
+15: invalidate(curr:cluster; sol)
+16: if bestsol &lt; calcBoundByDynP rog(root:cluster; sol; curr:cluster) then
+17: delete curr:next[sol[curr:cluster]] and set it complete
+18: else
+19: curr curr:next[sol[curr:cluster]]
+20: end if
+21: else
+22: sol[curr:cluster] random not-complete-pointer from nn[curr], if none
+exist, random not-complete-pointer from all pointer in curr
+23: invalidate(curr:cluster; sol)
+24: if bestsol &lt; calcBoundByDynP rog(root:cluster; sol; curr:cluster) then
+25: delete curr:next[sol[curr:cluster]] and set it complete
+26: undo changes of sol
+27: else
+28: curr curr:next[sol[cur:cluster]]
+29: end if
+30: end if
+31: end if
+32: end while</p>
+        </sec>
+        <sec id="sec-3-8-2">
+          <title>Ergebnisse</title>
+          <p>3.1</p>
+          <p>Vorgehensweise
+Die folgenden Tests wurden mit 14 TSPLib-Instanzen1 durchgeführt. Diese Instanzen
+sind ursprünglich für das Traveling Salesman Problem erzeugt worden und wurden für
+das GMST-Problem angepasst. Dazu wurden Cluster der Instanz hinzugefügt und die
+einzelnen Knoten mittels geografischem Clustering zugeordnet. Die verwendeten
+Instanzen bestehen aus 150-442 Knoten und 30-89 Clustern. Im Schnitt hat also jedes
+Cluster 5 Knoten. Die erweiterten TSPLib-Instanzen wurden auch von Wolf [15] und
+Sonnleitner [13] verwendet, was einen Vergleich der Ergebnisse erleichtert.
+Da der EA ein randomisierter Algorithmus ist, wurden für alle Tests 30 Runs gemacht
+und für die Auswertung der Mittelwert Cavg(T ) = 1=n Pn
+i=1 C(Ti) und die
+Standardabweichung S = p1=(n 1) Pin=1(C(Ti) Cavg)2 genommen. Die Tests wurden auf
+dem Cluster des Institut für Computergraphik und Algorithmen der TU-Wien
+durchgeführt, welcher aus 14 Maschinen mit jeweils zwei QuadCore-CPUs und 24 GB
+Arbeitsspeicher besteht.</p>
+          <p>Grundsätzlich wurden zwei Arten von Tests durchgeführt. Zum einen sind Testläufe
+gemacht worden, bei denen der EA nach einer fixen Laufzeit terminiert und zum
+anderen Testläufe bei denen nach einer bestimmten Anzahl von Generationen der EA
+terminiert. Letztere wurden unter anderem dazu verwendet, um den Speicherverbrauch
+des Archivs genauer zu untersuchen.
+3.2</p>
+          <p>Tests mit fixer Laufzeit
+Die folgenden Tests wurden mit einer fixen Laufzeit durchgeführt. Die Daten der
+verwendeten Testinstanzen und die Laufzeit werden in Tabelle 1 dargestellt.</p>
+          <p>Tabelle 1: Testinstanzen und die verwendete Laufzeit
+Zum Beginn der Tests sollte die Frage geklärt werden, ob und wie viele Teilbereiche des
+Archivs abgeschnitten (als complete markiert) werden können. Außerdem sollte geklärt
+werden, in welchen Bereichen des Archivs Teilbereiche abgeschnitten werden, also Cuts
+gemacht werden. Cuts in den oberen Ebenen sind besser, da dadurch mehr Lösungen
+im vorhinein ausgeschlossen werden können als bei Cuts in den unteren Ebenen. Dieser
+Test wurde für beide Archive (Pop- und Gosh-Archiv) und für alle 14 Test-Instanzen
+durchgeführt. Dabei wurde der EA nach einer konstanten Zeit terminiert.
+In Tabelle 2 werden die Ergebnisse dieses Tests dargestellt. In dieser Tabelle wird
+gezeigt in welchem Teil des Archivs wie viele Cuts durchgeführt wurden. Die Spalte
+0 25% gibt an, wie viele Cuts in den oberen 25% der Ebenen im Archiv durchgeführt
+wurden, in der Spalte 25 50% für die nächsten 25%, usw.
+Tabelle 2: Anzahl der Cuts in den unterschiedlichen Bereichen des Archivs
+Hier ist zu sehen, dass im Gosh-Archiv in den ersten 50% keine Bound gefunden wird,
+die schlechter ist als die beste bisher gefunden Lösung, und somit auch kein Cut gemacht
+werden kann. Da in den ersten 50% keine Cuts gemacht werden, ist es auch nicht nötig
+die Bound in diesem Bereich zu berechnen, da das nur unnötig Laufzeit verbraucht.
+Deshalb wurde der Parameter skip_bound eingeführt, mit dem angegeben werden kann, in
+wie viel Prozent der oberen Ebenen die Bound nicht berechnet werden soll. Aufgrund
+der erhaltenen Ergebnisse, wurde für die folgenden Tests der Parameter skip_bound für
+das Gosh-Archiv auf 0; 5 gesetzt. Das bedeutet, dass für die oberen 50% des Archivs
+wird die Bound nicht berechnet.</p>
+          <p>Im Pop-Archiv sieht es hingegen anders aus. Hier kommt es auch in den oberen Ebenen
+zu Cuts. Die Frage, die sich jetzt stellt, ist: Wieso werden im Pop-Archiv in den oberen
+Ebenen Cuts gemacht aber im Gosh-Archiv nicht? Die Antwort auf die Frage findet
+sich in den unterschiedlichen Kodierungen der Lösung, die in den Archiven verwendet
+werden. Bei der Gosh-Kodierung wird für jeden Cluster gespeichert, welcher Knoten
+in dem Cluster ausgewählt wird. Wird ein Eintrag für einen Cluster geändert, d.h. ein
+anderer Knoten in dem Cluster ausgewählt, werden die Kosten der Gesamtlösung nicht
+stark ansteigen, da die Knoten innerhalb eines Clusters relativ nahe zusammen liegen.
+Bei der Pop-Kodierung wird für jeden Cluster der Vorgänger im Spannbaum des
+globalen Graphen gespeichert. Kommt es hier zu einer Änderung für einen Cluster, können
+die Kosten der Gesamtlösung stark ansteigen, falls die Cluster im Graphen weit
+auseinander liegen. D.h. wenn in den oberen Ebenen schon ein Vorgänger für einen
+Cluster ausgewählt wird, der weiter entfernt liegt, kann das schon zu einer schlechten Bound
+führen. Die unterschiedliche Kodierung ist auch der Grund, warum im Pop-Archiv mehr
+Cuts gemacht werden als im Gosh-Archiv.
+3.2.2</p>
+          <p>Gosh-Archiv
+In den nächsten Tests wurde untersucht, wie sich die Bounding-Strategie auf das
+GoshArchiv auswirkt. Dabei wurden drei Varianten betrachtet: Bounding-Strategie innerhalb
+der Einfüge-Methode, Bounding-Strategie innerhalb der Konvertierungs-Methode und
+die Variante, in der sie in beiden Methoden gleichzeitig verwendet wird. Dabei wurde
+der Parameter skip_bound auf 0; 5 gesetzt. Für den Parameter branch_and_bound_prob
+wurden Tests gemacht, bei denen der Wert dieses Parameters variiert wurde, um
+festzustellen, welcher Wert die besten Ergebnisse liefert. Dabei hat sich heraus gestellt,
+dass bei branch_and_bound_prob &gt; 0; 1 die Anzahl der erzeugten Generationen zu
+stark abnimmt und somit schlechtere Ergebnisse geliefert werden. Auf die Ergebnisse
+der Tests mit den Werten 0; 1 und 0; 05 wurde ein
+Wilcoxon-RangsummenstatistikTest durchgeführt mit dem Resultat, dass beide Werte ähnliche Ergebnisse liefern, die
+sich statistisch nicht signifikant unterscheiden. Da mit einem Wert von 0; 05 aber in
+mehr Fällen bessere Resultate erzielt wurden, wurde für die folgenden Tests dieser Wert
+genommen.</p>
+          <p>Die Ergebnisse dieses Tests sind in Tabelle 3 zu sehen. In der Tabelle werden in der
+Spalte T rie die Ergebnisse des “normalen” Gosh-Archivs ohne Bounding-Strategie,
+unter T rie+insert Bound die Variante mit Bounding-Strategie innerhalb der
+EinfügeMethode, im Bereich T rie + convert Bound die Bounding-Strategie innerhalb der
+Konvertierungs-Methode und unter T rie + ins&amp;conv Bound bei der die
+BoundingStrategie in beiden Methoden gleichzeitig verwendet wird dargestellt. Cavg entspricht
+dem durchschnittlichen Lösungswert über alle Runs, darunter in Klammern steht die
+Standardabweichung und Gen ist die durchschnittliche Anzahl der erzeugten
+Generationen.</p>
+          <p>In den Ergebnissen ist zu sehen, dass alle drei Bounding Varianten gegenüber des
+“normalen” Archivs bessere Ergebnisse liefern. Die Variante, in der die Bounding
+Strategie in beiden Methoden verwendet wurde, liefert jedoch gegenüber der beiden anderen
+Varianten schlechtere Ergebnisse. Dieses Resultat ist auf die geringere Anzahl von
+erzeugten Generationen zurück zu führen. In einigen Instanzen wurden nur halb so
+viele Generationen erzeugt als in den anderen Varianten.
+Tabelle 3: Vergleich der verschiedenen Bounding-Varianten im Gosh-Archiv
+Trie+insert-Bound Trie+convert-Bound Trie+ins&amp;conv-Bound</p>
+          <p>Gen Gen Gen
+52.511 29.509 26.609
+Als nächstes wurde versucht herauszufinden, wie sich der Nearest-Neighbours-Ansatz,
+der in Kapitel 2.2.2 erläutert wurde, auf den Evolutionären Algorithmus auswirkt. Bei
+diesen Tests wurde der EA ohne Archiv verwendet. Dabei wurde der EA einmal mit und
+einmal ohne dem Nearest-Neighbours-Ansatz verwendet und miteinander verglichen.
+Bei diesem Test wurde der Parameter num_nearest_neighbour, der angibt, wie viele
+Nachbarn in der Nearest-Neighbour-List eines Clusters enthalten sind, auf 5 gesetzt.
+D.h. es werden für jeden Cluster die 5 nächsten Nachbarn bevorzugt. In Tabelle 4 sind
+die Ergebnisse dieses Tests dargestellt. Hier ist zu sehen, dass der EA mit dem
+NearestNeighbours-Ansatz für alle Instanzen eine Verbesserung liefert. Für die nachfolgenden
+Tests wurde daher der Nearest-Neighbours-Ansatz auch verwendet.</p>
+          <p>Tabelle 4: Vergleich von “normalen” EA mit einem EA mit Nearest Neighbours
+EA</p>
+          <p>EA+NN
+Instanz
+kroa150
+rat195
+d198
+krob200
+ts225
+pr226
+gil262
+pr264
+pr299
+lin318
+rd400
+fl417
+pr439
+pcb442
+Tabelle 5: Vergleich der verschiedenen Bounding-Varianten im Pop-Archiv
+Trie</p>
+          <p>Trie+insert-Bound Trie+convert-Bound Trie+ins&amp;conv-Bound</p>
+          <p>Pop-Archiv
+In diesem Kapitel wurde der Vergleich der verschiedenen Bounding-Strategien auch für
+das Pop-Archiv durchgeführt. In Kapitel 3.2.1 wurde in dem Test herausgefunden, dass
+Cuts in allen Ebenen des Tries vorkommen können. Deshalb wurde für den Vergleich
+der Bounding-Strategien der Parameter skip_bound hier nicht verwendet, d.h. die
+Bound wurde in jeder Ebene berechnet. Für den Parameter branch_and_bound_prob
+wurden für das Pop-Archiv, genau wie im Kapitel 3.2.2 für das Gosh-Archiv, Tests mit
+unterschiedlichen Werten für diesen Parameter gemacht. Mit dem Resultat, dass auch
+hier der Wert 0; 05 die besseren Ergebnisse liefert.</p>
+          <p>Tabelle 5 zeigt die Ergebnisse für diesen Test. Hier ist zu sehen, dass die Varianten mit
+den Bounding-Strategien meistens besser sind als die Variante mit “normalem” Archiv.
+Außer für die Instanzen kroa150, pr226, pr264 und f l417 für die auch mit dem Archiv
+ohne Bounding-Strategie das Optimum erreicht wurde.
+3.2.5
+In [13] wurde eine Variante getestet, bei der beide Archive gleichzeitig verwendet
+wurden. In dieser Arbeit soll auch getestet werden, wie sich die Bounding-Strategie in den
+verschiedenen Varianten auswirkt, wenn beide Archive gleichzeitig verwendet werden.
+Der Parameter skip_bound wird auf 0; 5 gesetzt. Dieser hat aber nur Auswirkungen
+auf das Gosh-Archiv, d.h. im Pop-Archiv werden in allen Ebenen Bounds berechnet.
+Der Parameter branch_and_bound_prob wurde, genau wie bei den vorherigen beiden
+Tests, auf 0; 05 gesetzt.</p>
+          <p>In Tabelle 6 sind die Ergebnisse dieses Tests zu sehen. Dabei wurden wieder 4 Varianten
+miteinander verglichen: “normalen” Gosh und Pop Archive ohne Bounding-Strategie
+(T rie), die Variante mit Bounding-Strategie innerhalb der Einfüge-Methode (T rie +
+insert Bound), die Bounding-Strategie innerhalb der Konvertierungs-Methode (T rie+
+convert Bound) und die Bounding-Strategie in beiden Methoden gleichzeitig (T rie+
+ins&amp;conv Bound). Hier ist zu sehen, dass bessere Ergebnisse bei den Varianten mit
+Bounding-Strategie erzielt werden, außer bei den Instanzen bei denen das Optimum
+schon mit den “normalen” Archiven erreicht wird. Außerdem ist zu sehen, dass in der
+Variante, in der in beiden Methoden die Bounding-Strategie verwendet wird, schlechtere
+Ergebnisse erreicht werden, als in den Varianten, wo die Bounding-Strategie nur bei der
+Einfüge- oder Konvertierungs-Methode verwendet wird. Das ist auf die geringere
+Anzahl von Generationen zurück zu führen, die oft nur halb so groß ist als bei den beiden
+anderen Varianten.
+Tabelle 6: Vergleich der verschiedenen Bounding-Varianten bei der Kombination von
+Gosh- und Pop Archiv</p>
+          <p>Trie</p>
+          <p>Trie+insert-Bound Trie+convert-Bound Trie+ins&amp;conv-Bound
+3.3</p>
+          <p>Fixe Anzahl von Generationen
+In den bisherigen Tests ist zu sehen, dass durch die Verwendung der Bounding-Strategie
+die Anzahl der erzeugten Generationen geringer sind. Dadurch ist ein Vergleich des
+Speicherverbrauchs der beiden Varianten nicht möglich, da bei dem Archiv ohne
+Bounding mehr Lösungen in das Archiv eingefügt werden als beim Archiv mit Bounding.
+Um jetzt den Speicherverbrauch der unterschiedlichen Varianten miteinander zu
+vergleichen, wird als Abbruchbedingung für den EA eine fixe Anzahl von Generationen
+genommen. So werden bei allen Varianten gleich viele Generationen erzeugt.
+Für diese Tests wurde die Abbruchbedingung des EAs auf 10.000 Generationen gesetzt.
+In den Tabellen 7 und 8 sind die Ergebnisse für diese Tests zu sehen. In der Tabelle
+7 wurde das Gosh-Archiv untersucht, während in Tabelle 8 die Ergebnisse für das
+Pop-Archiv zu sehen sind. Es wurden jeweils das “normale” Archiv ohne
+BoundingStrategie, das mit Bounding-Strategie in der Einfüge-Methode und das mit
+BoundingStrategie in der Konvertierungs-Methode miteinander verglichen. Die Spalte Cavg
+entspricht dabei wieder dem Durchschnitt der Lösungswerte über alle Runs, unter diesem
+Wert steht in Klammern die Standardabweichung, Zeit entspricht der durchschnittlich
+benötigten Zeit und M em den benötigten Speicher für das Archiv.</p>
+          <p>In diesen Ergebnissen ist zu sehen, dass die Varianten mit Bound immer mehr
+Speicher benötigen als die ohne Bound. Das kommt zunächst überraschend, da man zuerst
+annehmen würde, dass durch die Bounding-Strategie auch weniger Speicher verbraucht
+würde. Der Grund für den erhöhten Speicherverbrauch bei der Einfüge-Methode ist
+in Abb. 8 zu sehen. In diesem Beispiel wird zunächst versucht, im Gosh-Archiv die
+Lösung &lt;321112&gt; (in der Grafik rot dargestellt) einzufügen. In Knoten V 5 wird eine
+Bound festgestellt, die schlechter ist als die beste bisher gefundene Lösung, und somit
+der Pointer 1 als complete markiert. Danach wird die Einfügeoperation abgebrochen
+und f alse zurück geben. Für den EA sieht es daher so aus, als wäre die Lösung im
+Archiv schon enthalten. Im nächsten Schritt wird mit der Konvertierungsmethode eine
+neue Lösung &lt;341112&gt; erzeugt. Diese wird nun erfolgreich in das Archiv eingefügt.
+Würde die Bounding-Strategie nicht verwendet werden, wäre die Lösung &lt;321112&gt;
+beim ersten Mal eingefügt worden. Da die Bounding-Strategie verwendet wurde, ist nun
+die Lösung &lt;321112&gt; bis zum Knoten V 5 und die Lösung &lt;341112&gt; ganz eingefügt
+worden. D.h. beim Erzeugen einer neuen Lösung für die neue Generation wurden die
+drei Knoten V 3, V 4 und V 5 des ersten Einfügeversuchs zusätzlich eingefügt. Deshalb
+kommt es bei der Verwendung der Bounding-Strategie zu einem höheren
+Speicherverbrauch.</p>
+          <p>Um zu belegen, dass das der Grund für den erhöhten Speicherverbrauch ist, wurden
+weitere Tests durchgeführt. Bei diesen Tests wurden Lösungen, bei denen eine Bound</p>
+          <p>Abb. 8: Grund für erhöhten Speicherverbrauch
+gefunden wurde, die schlechter ist als die beste bisher gefundene Lösung, trotzdem in
+der neuen Generation akzeptiert. D.h. wenn beim Einfügen einer Lösung eine schlechte
+Bound gefunden wird, wird der jeweilige Pointer als complete markiert und dann true
+zurück gegeben. Das hat zur Folge, dass der EA die Lösung als neu akzeptiert.
+Die Ergebnisse dieser Variante werden in Tabelle 9 gezeigt. Hier ist zu sehen, dass
+für die meisten Instanzen bei dieser Variante weniger Speicher für das Archiv gebraucht
+wurde.</p>
+          <p>Bei der Bounding-Strategie in der Konvertierungs-Methode ist der Grund für den
+erhöhten Speicherverbrauch ähnlich wie bei der Einfüge-Methode. Wenn bei der
+Konvertierungs-Methode in einem zufällig ausgewählten Startknoten der Lösung keine
+nullPointer gefunden werden, wird versucht, entlang der Lösung im Trie eine Ebene nach
+unten zu gehen. Wenn das nicht möglich ist, wird versucht bei einem anderen nicht
+complete-Pointer eine Ebene nach unten zu gehen. Wenn jetzt aufgrund von Bounds,
+die schlechter als die beste bisher gefunden Lösung sind, in diesem neuen Knoten alle
+Pointer complete werden, wird die Konvertierung abgebrochen und an einer anderen
+Stelle nochmal versucht. Da der Pointer der Lösung in dem Startknoten in diesem Fall
+auf complete gesetzt wurde, wird beim nächsten Konvertierungsversuch der Startknoten
+aus den darüber liegenden Ebenen ausgewählt. D.h. bei der Verwendung der
+BoundingStrategie ist die Wahrscheinlichkeit höher, dass in den oberen Ebenen die Konvertierung
+durchgeführt wird. Das führt dazu, dass beim anschließenden Einfügen einer Lösung
+der neu einzufügende Subtrie größer ist. Deshalb werden mehr Trie-Knoten mit der
+Bounding-Strategie erzeugt und somit kommt es auch zu einem erhöhten
+Speicherverbrauch.</p>
+          <p>Tabelle 7: Vergleich von Gosh-Trie mit 10000 Generationen
+Tabelle 8: Vergleich von Pop-Trie mit 10000 Generationen
+Tabelle 9: Vergleich von Pop-Tries mit 10000 Generationen ohne return</p>
+          <p>
+            State of the Art
+In Tabelle 10 wurden die Ergebnisse dieser Arbeit mit den Ergebnissen anderer Arbeiten
+verglichen, um zu sehen, wie der EA Ansatz mit Lösungsarchiv und Bounding-Strategie
+im Vergleich abschneidet. Die Ergebnisse wurden aus der Arbeit [5] übernommen. In
+71,9
+377,9
+54,6
+44,4
+58,3
+82,8
+75,8
+111,9
+101,8
+130,9
+156,8
+259,6
+239,5
+299,2
+355,2
+Tabelle 10 werden vier Verfahren miteinander verglichen: ein Tabu Search Verfahren
+(TS) von [
+            <xref ref-type="bibr" rid="ref2">2</xref>
+            ], ein Variable Neighborhood Search Verfahren (VNS) von [4], ein
+Verfahren basierend auf Dynamic Candidates Sets (DCS) von [6] und einem EA mit einem
+Archiv in Kombination mit einer Bounding-Strategie. Bei dem Verfahren mit
+BoundigStrategie wurden die Ergebnisse genommen, bei denen beide Archive kombiniert
+wurden und die Bound nur in der Konvertierungs-Methode verwendet wurde. Hier ist zu
+sehen, dass das Verfahren mit Bounding-Strategie durchaus mit den anderen Verfahren
+mithalten kann und in einigen Instanzen auch bessere Ergebnisse liefert.
+          </p>
+          <p>Tabelle 10: Vergleich mit anderen State of the Art Verfahren
+Instanz
+kroa150
+d198</p>
+          <p>TS
+Cavg(T )
+9.815,0</p>
+          <p>DCS</p>
+          <p>EA+Archiv+Bound</p>
+        </sec>
+        <sec id="sec-3-8-3">
+          <title>Zusammenfassung</title>
+          <p>In dieser Arbeit wurde ein Evolutionärer Algorithmus mit zwei verschiedenen Varianten
+von Lösungsarchiven (Gosh-Archiv und Pop-Archiv) durch eine Bounding-Strategie
+basierend auf dem Branch and Bound Verfahren erweitert. Zusätzlich wurde auch ein
+Nearest Neighbour Ansatz angewendet, bei dem beim Anhängen eines Clusters an den
+Spannbaum die n nächsten Nachbarcluster bevorzugt werden.</p>
+          <p>Bei der Bounding-Strategie werden in den einzelnen Trie-Knoten geeignete Bounds
+berechnet, die eine Aussage darüber machen können, wie gut die Lösungen im darunter
+liegenden Subtrie bestenfalls sein können. Mit diesen Bounds können viele Lösungen
+von vornherein als schlecht markiert werden. Die Boundberechnung erfolgt in 3
+verschiedenen Varianten: Boundberechnung in der Einfüge-Methode des Archivs, in der
+Konvertierungs-Methode und in beiden Methoden gleichzeitig.</p>
+          <p>Diese Varianten wurden in den beiden Archiven getestet und verglichen. Im
+GoshArchiv haben die Bounding Varianten in allen Instanzen bessere Ergebnisse erzielt, als
+bei der “normalen” Variante. Die Variante, in der in beiden Methoden die
+BoundingStrategie verwendet wird, hat jedoch schlechtere Ergebnisse gebracht als in den anderen
+beiden Bounding-Varianten. Das ist auf die geringere Anzahl von erzeugten
+Generationen zurück zu führen. Im Pop-Archiv waren die Ergebnisse der Bounding
+Varianten ebenfalls besser als die der “normalen” Variante. Bei der Variante, in der beide
+Archive gemeinsam verwendet wurden, haben die Bounding-Varianten ebenfalls eine
+Verbesserung erzielt. Beim Vergleich zwischen den Archiven kann man sagen, dass
+die Pop-Variante bessere Ergebnisse liefert als die Gosh-Variante. Die Variante, in der
+beide Archive gleichzeitig verwendet werden, ist wiederum besser als die anderen
+beiden Varianten.
+Die Tests haben ebenfalls ergeben, dass der Speicherverbrauch der Archive durch die
+Verwendung der Bounds erhöht wird. Das ist darauf zurück zu führen, dass wenn beim
+Einfügen einer Lösung eine Bound gefunden wird, die schlechter ist als die beste bisher
+gefundene Lösung, diese Lösung teilweise eingefügt wird und zusätzlich noch eine neue
+konvertierte Lösung.</p>
+          <p>Die Ergebnisse dieser Arbeit wurden auch mit den Ergebnissen anderer Arbeiten
+verglichen, um zu sehen wie das Verfahren im Vergleich zu anderen abschneidet. Dabei
+hat sich gezeigt dass die Bounding-Strategie mit anderen Verfahren mithalten kann und
+in einigen Instanzen bessere Ergebnisse liefert.</p>
+          <p>
+            Die Ergebnisse dieser Arbeit haben gezeigt, dass die Bounding-Strategie eine Verbesserung
+gegenüber dem Lösungsarchiv ohne Bounding-Strategie bringt. Ein wichtiger Punkt
+bei der Bounding-Strategie ist es, eine effiziente Methode für die Boundberechung zu
+finden, damit die Anzahl der erzeugten Generationen nicht zu stark abnimmt. Für
+andere Problemstellungen könnte dieses Verfahren auch Verbesserungen bringen, wenn
+eine effiziente Methode zur Boundberechnung gefunden wird.
+[
+            <xref ref-type="bibr" rid="ref1">1</xref>
+            ] FEREMANS, C.: Generalized Spanning Trees and Extensions, Universite Libre de
+          </p>
+          <p>
+            Bruxelles, Diss., 2001
+[
+            <xref ref-type="bibr" rid="ref2">2</xref>
+            ] GHOSH, D.: Solving medium to large sized Euclidean generalized minimum
+spanning tree problems / Indian Institute of Management, Research and Publication
+Department. 2003. – Forschungsbericht
+[
+            <xref ref-type="bibr" rid="ref3">3</xref>
+            ] HU, B. ; LEITNER, M. ; RAIDL, G. R.: Computing Generalized Minimum
+Spanning Trees with Variable Neighborhood Search. In: HANSEN, P. (Hrsg.) ;
+MLADENOVI C´, N. (Hrsg.) ; PÉREZ, J. A. M. (Hrsg.) ; BATISTA, B. M. (Hrsg.) ;
+MORENOVEGA, J. M. (Hrsg.): Proceedings of the 18th Mini Euro Conference on Variable
+Neighborhood Search. Teneriffa, Spanien, 2005
+[4] HU, B. ; LEITNER, M. ; RAIDL, G. R.: Combining Variable Neighborhood Search
+with Integer Linear Programming for the Generalized Minimum Spanning Tree
+Problem. In: Journal of Heuristics 14 (2008), Nr. 5, S. 473–499
+[5] HU, B. ; RAIDL, G. R.: An Evolutionary Algorithm with Solution Archive for the
+Generalized Minimum Spanning Tree Problem. In: QUESADA-ARENCIBIA, A.
+(Hrsg.) u. a.: Proceedings of EUROCAST 2011 – 13th International Conference on
+Computer Aided Systems Theory, Las Palmas de Gran Canaria, Spain, February
+6–11, 2011, 2011, S. 256–259
+[6] JIANG, H. ; CHEN, Y.: An efficient algorithm for generalized minimum spanning
+tree problem. In: GECCO ’10: Proceedings of the 12th annual conference on
+Genetic and evolutionary computation. New York, NY, USA : ACM, 2010. –
+ISBN 978–1–4503–0072–8, S. 217–224
+[7] LEITNER, M.: Solving Two Generalized Network Design Problems with Exact
+and Heuristic Methods, Technische Universität Wien, Diplomarbeit, 2006. –
+supervised by G. Raidl and B. Hu
+[8]
+          </p>
+          <p>MYUNG, Y. S. ; LEE, C. H. ; TCHA, D. W.: On the Generalized Minimum
+Spanning Tree Problem. In: Networks 26 (1995), S. 231–241</p>
+          <p>NISSEN, V.: Einführung in Evolutionäre Algorithmen.: Optimierung nach dem
+Vorbild der Evolution. Vieweg, 1997</p>
+        </sec>
+      </sec>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <ref id="ref1">
+        <mixed-citation>
+          <source>1 Einleitung 1 1</source>
+          .1
+          <string-name>
+            <given-names>Generalized</given-names>
+            <surname>Minimum Spanning</surname>
+          </string-name>
+          <string-name>
+            <surname>Tree-Problem . . . . . . . . . . . . . 1</surname>
+          </string-name>
+          <year>1</year>
+          .2 Evolutionäre
+          <string-name>
+            <surname>Algorithmen . . . . . . . . . . . . . . . . . . . . . . . . . 2</surname>
+          </string-name>
+          <year>1</year>
+          .3
+          <string-name>
+            <surname>Lösungsarchive . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3</surname>
+          </string-name>
+          <year>1</year>
+          .4
+          <string-name>
+            <surname>Lösungsrepräsentationen . . . . . . . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>4 1.4.1 Gosh-Kodierung</article-title>
+          <string-name>
+            <surname>. . . . . . . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>5 1.4.2 Pop-Kodierung</article-title>
+          <string-name>
+            <surname>. . . . . . . . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>5 1.5 Branch and</article-title>
+          <string-name>
+            <surname>Bound . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6</surname>
+          </string-name>
+          <year>1</year>
+          .6 Bisherige
+          <string-name>
+            <surname>Ansätze . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>7 1.6.1 EA mit Gosh-Lösungsarchiv</article-title>
+          <string-name>
+            <surname>. . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>8 1.6.2 EA mit Pop-Lösungsarchiv</article-title>
+          <string-name>
+            <surname>. . . . . . . . . . . . . . . . . . . . 10</surname>
+          </string-name>
+        </mixed-citation>
+      </ref>
+      <ref id="ref2">
+        <mixed-citation>
+          <source>2 Algorithmus 12 2</source>
+          .1 Boundberechnung
+          <string-name>
+            <surname>im</surname>
+            <given-names>Gosh-Archiv . . . . . . . . . . . . . . . . . . . .</given-names>
+          </string-name>
+          <article-title>13 2.1.1 Einfüge-Methode</article-title>
+          <string-name>
+            <surname>. . . . . . . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>15 2.1.2 Konvertierungs-Methode</article-title>
+          <string-name>
+            <surname>. . . . . . . . . . . . . . . . . . . . . 17</surname>
+          </string-name>
+          <year>2</year>
+          .2 Boundberechnung
+          <string-name>
+            <surname>im</surname>
+            <given-names>Pop-Archiv . . . . . . . . . . . . . . . . . . . . . 19</given-names>
+          </string-name>
+          <year>2</year>
+          .
+          <issue>2</issue>
+          .1 Inkrementelle
+          <string-name>
+            <surname>Boundberechnung . . . . . . . . . . . . . . . . . 23</surname>
+          </string-name>
+          <year>2</year>
+          .
+          <issue>2</issue>
+          .2 Pop mit
+          <string-name>
+            <surname>Nearest Neighbours Reduktion . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>24 2.2.3 Einfüge-Methode</article-title>
+          <string-name>
+            <surname>. . . . . . . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>26 2.2.4 Konvertierungs-Methode</article-title>
+          <string-name>
+            <surname>. . . . . . . . . . . . . . . . . . . . . 27</surname>
+          </string-name>
+        </mixed-citation>
+      </ref>
+      <ref id="ref3">
+        <mixed-citation>
+          <source>3 Ergebnisse 30 3</source>
+          .1
+          <string-name>
+            <surname>Vorgehensweise . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 30</surname>
+          </string-name>
+          <year>3</year>
+          .
+          <issue>2</issue>
+          .4 [10]
+          <string-name>
+            <surname>POP</surname>
+            ,
+            <given-names>P. C.</given-names>
+          </string-name>
+          ;
+          <string-name>
+            <surname>IORDACHE</surname>
+            ,
+            <given-names>S.:</given-names>
+          </string-name>
+          <article-title>A hybrid heuristic approach for solving the generalized traveling salesman problem</article-title>
+          .
+          <source>In: KRASNOGOR</source>
+          ,
+          <string-name>
+            <surname>Natalio</surname>
+          </string-name>
+          (Hrsg.) ; LANZI,
+          <string-name>
+            <surname>Pier</surname>
+            <given-names>L.</given-names>
+          </string-name>
+          (Hrsg.): GECCO, ACM,
+          <year>2011</year>
+          , S.
+          <fpage>481</fpage>
+          -
+          <lpage>488</lpage>
+        </mixed-citation>
+      </ref>
+      <ref id="ref4">
+        <mixed-citation>
+          [12]
+          <string-name>
+            <surname>RAIDL</surname>
+            ,
+            <given-names>G. R.</given-names>
+          </string-name>
+          ; HU,
+          <string-name>
+            <surname>B.</surname>
+          </string-name>
+          :
+          <article-title>Enhancing Genetic Algorithms by a Trie-Based Complete Solution Archive</article-title>
+          . In: Evolutionary Computation in Combinatorial Optimisation - EvoCOP
+          <source>2010 Bd. 6022</source>
+          , Springer,
+          <year>2010</year>
+          (LNCS), S.
+          <fpage>239</fpage>
+          -
+          <lpage>251</lpage>
+        </mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

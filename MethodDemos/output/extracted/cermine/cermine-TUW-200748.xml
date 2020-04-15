@@ -1,0 +1,1393 @@
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN" "JATS-archivearticle1.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+  <front>
+    <journal-meta>
+      <journal-title-group>
+        <journal-title>R =</journal-title>
+      </journal-title-group>
+    </journal-meta>
+    <article-meta>
+      <title-group>
+        <article-title>A Multilevel Refinement Approach to the Rooted Delay-Constrained Steiner Tree Problem</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <string-name>zur Erlangung des akademischen Grades</string-name>
+          <xref ref-type="aff" rid="aff0">0</xref>
+        </contrib>
+        <aff id="aff0">
+          <label>0</label>
+          <institution>Technische Universität Wien A-1040 Wien Karlsplatz 13 Tel</institution>
+        </aff>
+      </contrib-group>
+      <pub-date>
+        <year>2011</year>
+      </pub-date>
+      <volume>0</volume>
+      <issue>1</issue>
+      <fpage>19</fpage>
+      <lpage>60</lpage>
+      <abstract>
+        <p>an der Fakultät für Informatik der Technischen Universität Wien</p>
+      </abstract>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="sec-1">
+      <title>-</title>
+      <p>Diplom-Ingenieur
+im Rahmen des Studiums
+eingereicht von</p>
+      <p>Thomas Seidl</p>
+      <p>Matrikelnummer 0525225</p>
+      <p>(Unterschrift Betreuung)</p>
+      <p>Erklärung zur Verfassung der Arbeit</p>
+      <p>Hiermit erkläre ich, dass ich diese Arbeit selbstständig verfasst habe, dass ich die
+verwendeten Quellen und Hilfsmittel vollständig angegeben habe und dass ich die Stellen der Arbeit
+– einschließlich Tabellen, Karten und Abbildungen –, die anderen Werken oder dem Internet
+im Wortlaut oder dem Sinn nach entnommen sind, auf jeden Fall unter Angabe der Quelle als
+Entlehnung kenntlich gemacht habe.</p>
+    </sec>
+    <sec id="sec-2">
+      <title>Acknowledgements</title>
+      <p>I would like to thank my advisor, Prof. Dr. Günther Raidl, for letting me work on this thesis and
+for his help and suggestions with creating it.</p>
+      <p>I also thank the Vienna University of Technology for the years of education I received there,
+and for the prolific scientific environment it provided.</p>
+      <p>My special thanks go to my mentor for this thesis, Dipl.-Ing. Mario Ruthmair. Without his
+countless suggestions, our numerous discussions, his help and his thorough reviews, this thesis
+would never have been completed.</p>
+      <p>Lastly, I want to sincerely thank my parents, who supported me in every possible way
+throughout my education and without whom none of this would have been possible.</p>
+    </sec>
+    <sec id="sec-3">
+      <title>Abstract</title>
+      <p>The Rooted Delay-Constrained Steiner Tree Problem (RDCSTP) is a variant of the well-known
+Steiner Tree Problem on a graph in which the paths to all terminal nodes are restricted by a
+certain maximum delay. The problem mostly appears in the context of network routing for
+multicasts, i.e., sending packages from a fixed source to a subset of other participants in the
+network. Since the RDCSTP belongs to the class of N P-hard problems it is in general not
+possible to solve large instances exactly in a reasonable amount of time. Therefore, the focus
+mostly lies on developing good heuristics that can still solve large instances comparatively fast
+to near optimality.</p>
+      <p>In this thesis a Multilevel Refinement heuristic – which has already been successfully
+applied to other problems like the Graph Partitioning Problem – is implemented as an improvement
+heuristic for the RDCSTP. In the general approach of this metaheuristic the problem’s
+complexity is first iteratively reduced while still maintaining its general characteristics. The problem is
+thereby simplified and can at the top level finally easily be solved. Then, the solution on this
+highest level is refined until a solution for the original problem is obtained.</p>
+      <p>The algorithm introduced here implements the Multilevel Refinement approach as an
+improvement heuristic, iteratively changing an existing solution. However, it is designed in a way
+that also allows it to be used to construct an initial solution. Another distinctiveness is that,
+due to the additional delay constraints, supplementary data structures have to be used to avoid
+creating invalid solutions on higher levels as much as possible. In the refinement phase an
+additional improvement algorithm, the Key Path Improvement, is executed on each level, drastically
+increasing result quality.</p>
+      <p>Experimental tests are carried out, evaluating the performance of the algorithm on large
+instances and comparing it to other algorithms in the literature. The obtained results are promising
+and indicate that the Multilevel Refinement metaheuristic is indeed a competitive approach for
+the RDCSTP.</p>
+    </sec>
+    <sec id="sec-4">
+      <title>Kurzfassung</title>
+      <p>Das Rooted Delay-Constrained Steiner Tree Problem (RDCSTP) ist eine Variante des bekannten
+Steinerbaum-Problems auf einem Graphen in welcher die Pfade zu allen Zielknoten durch eine
+bestimmte maximale Verzögerung beschränkt sind. Das Problem tritt hauptsächlich im Bereich
+des Netzwerk-Routings beim Multicast auf, das heißt wenn Pakete von einer einzelnen Quelle
+zu einer bestimmten Untermenge der anderen Netzwerk-Teilnehmer gesendet werden sollen. Da
+das RDCSTP, wie das ursprüngliche Steiner-Problem, zur Klasse der N P-schwierigen Probleme
+gehört, ist es allgemein nicht möglich die exakte Lösung einer großen Probleminstanz in
+vertretbarer Zeit zu finden. Der Fokus der Forschung liegt daher großteils auf der Entwicklung guter
+Heuristiken, die auch bei großen Probleminstanzen in der Lage sind in vergleichbar kurzer Zeit
+zu möglichst guten Lösungen zu kommen.</p>
+      <p>In dieser Arbeit wird hierfür die Multilevel-Refinement-Heuristik – die bereits erfolgreich
+auf etliche andere Probleme, wie das Graph Partitioning Problem, angewandt wurde – als
+Verbesserungsheuristik für das RDCSTP entwickelt. Grundsätzlich werden bei dieser Metaheuristik
+in einem ersten Schritt Knoten sukzessive zusammengefasst um den Graphen auf höheren
+“Levels”, mit weniger Knoten, darzustellen. Das so vereinfachte Problem kann dann auf der höchsten
+Abstraktionsebene in simpler Weise gelöst werden. Dann wird diese Lösung schrittweise wieder
+soweit verfeinert, bis eine Lösung für das ursprüngliche Problem erreicht wird.</p>
+      <p>Der hier vorgestellte Algorithmus für das RDCSTP implementiert diesen Multilevel-Ansatz
+als Verbesserungsheuristik, die eine existierende Lösung iterativ verändert. Er wurde allerdings
+in einer Weise entworfen, die es ihm ebenso erlaubt eine Anfangslösung selbst zu generieren.
+Eine weitere Besonderheit ist, dass wegen der zusätzlichen Verzögerungs-Einschränkung
+weitere Datenstrukturen benötigt werden, um auf höheren Levels möglichst gültige Lösungen zu
+erzeugen. Außerdem wird während der Verfeinerung der Lösung auf jedem Level eine
+weitere Verbesserungsheuristik angewandt, das Key Path Improvement, welches die Lösungsqualität
+drastisch verbessert.</p>
+      <p>Umfangreiche experimentelle Tests wurden durchgeführt um die Leistungsfähigkeit des
+Algorithmus bei großen Instanzen zu messen, und ihn mit anderen Algorithmen aus der Literatur
+zu vergleichen. Die hierbei erhaltenen Ergebnisse sind durchwegs sehr positiv und weisen somit
+darauf hin, dass der verfolgte Multilevel-Ansatz tatsächlich eine konkurrenzfähige Heuristik für
+das RDCSTP darstellt.
+Contents
+1 Introduction 1
+1.1 The Rooted Delay-Constrained Steiner Tree Problem . . . . . . . . . . . . . . 1
+1.2 The Multilevel Refinement heuristic . . . . . . . . . . . . . . . . . . . . . . . 2
+4 Implementation 25
+4.1 Additional data structures . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 25
+4.2 A detailed merge example . . . . . . . . . . . . . . . . . . . . . . . . . . . . 29
+4.3 Parameters . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+4.4 Shortest Constrained Path algorithms . . . . . . . . . . . . . . . . . . . . . . . 32
+5 Benchmarks and comparison 37
+5.1 Evaluating parameters . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 37
+5.2 Automatic parameters . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 43
+5.3 100 node instances . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 47
+5.4 5000 node instances . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 51
+5.5 Comparison to other heuristics . . . . . . . . . . . . . . . . . . . . . . . . . . 51</p>
+      <sec id="sec-4-1">
+        <title>6 Conclusions and Future Work 55</title>
+      </sec>
+      <sec id="sec-4-2">
+        <title>Bibliography</title>
+        <p>x</p>
+      </sec>
+    </sec>
+    <sec id="sec-5">
+      <title>Introduction</title>
+      <p>1.1</p>
+      <sec id="sec-5-1">
+        <title>The Rooted Delay-Constrained Steiner Tree Problem</title>
+        <p>One of the most frequent algorithmic problems encountered in network routing is to connect
+participants with each other as efficiently as possible (for some definition of “efficient”) and a
+large multitude of literature is available for these problems. However, such simplicistic views
+often fail to take other concerns into account which might still be of great significance for the
+practical problem.</p>
+        <p>For example, consider the repeated multicast of information from a fixed source to a
+subset of the participants in a network. Fixed connections should be established to faciliate such
+transmissions, which should of course be done with as little cost as possible.</p>
+        <p>To represent this problem in an abstract way, we model the network as a connected graph,
+with nodes representing all network participants and the edges representing the possible
+connections between these participants. Costs are defined on all edges to provide a measure of how
+efficiently these connections can be used, or of how desirable it is to use them. The problem then
+consists of creating a tree of minimum cost in this graph which contains all of the destinations
+of the multicast, and of course the source.</p>
+        <p>
+          This problem is already well-known as the Steiner Tree Problem in literature [
+          <xref ref-type="bibr" rid="ref1">1, 2</xref>
+          ]. There,
+the nodes that have to be included in the tree are called terminals, while all other nodes are called
+Steiner nodes. The problem was proven to be N P-hard in [
+          <xref ref-type="bibr" rid="ref2">3</xref>
+          ].
+        </p>
+        <p>However, as a representation of the original problem this comes short of grasping a vital
+aspect of some multicasts, namely network delays. Especially when streaming audio or video,
+maybe even in the context of video conferencing, being able to cheaply enable a connection is
+often only important as long as the delay between the source and the destinations stays within
+certain acceptable boundaries. The problem model therefore has to be expanded to takes this
+additional criterion into account.</p>
+        <p>In addition to the previous definitions, we now define network delays for all possible
+connections, i.e., all edges of the graph. Also, a certain threshold is given, a maximum delay bound
+which no delay between the source node and a terminal may exceed in a valid solution. This
+(3, 1)</p>
+        <p>(cost, delay)
+The Multilevel Refinement heuristic is a meta-heuristic that has already been applied successfully
+to other graph problems, like the graph partitioning problem [5, 6]. Its basic idea is to reduce
+the problem complexity by successively reducing the size of the graph while still maintaining
+enough information about the original graph for the constructed solution to be useful for the
+original problem.</p>
+        <p>An application of the Multilevel Refinement heuristic on a problem consists of three phases:
+coarsening, solving the coarsened problem and refinement. In the coarsening phase the problem
+is successively simplified to create new “levels” of it. This has to be done in a way that ensures
+the higher levels of the problem still represent the original problem in most characteristics. In
+the case of Multilevel Refinement on graphs the operation usually chosen here is to merge edges
+or nodes to form the higher levels, thus still preserving the rough structure of the graph, with
+node clusters on lower levels being represented by single nodes on higher ones. There are lots
+of variants here, though, and completely other strategies for coarsening a graph could also be
+employed.</p>
+        <p>The coarsening is executed until a certain abort criterion is met. For instance the condition
+could be that no more coarsening is possible, or that the problem complexity is below a certain
+threshold at which it can easily be solved exactly. At this point, the second phase of the algorithm
+is executed: the problem on the highest level is solved, which should now be easily possible.</p>
+        <p>In the concluding third phase, the refinement phase, this solution for the highest level is then
+iteratively extended to provide solutions for lower levels of the problem. The way this is
+accomplished is highly problem-specific, and the suitability of the Multilevel Refinement heuristic
+for a given problem largely depends on whether this step can be easily executed. Usually the
+changes between levels of the problem can analogously be applied to the solution, thus yielding
+solutions for lower levels. In graph problems when merging nodes or edges during coarsening,
+refinement is usually possible by replacing the merged nodes or edges in the solution by the
+corresponding nodes and edges from the next-lower level of the graph.</p>
+        <p>The refinement is executed until a solution for the original problem is obtained. In addition
+to the basic refinement, one or more extra improvement heuristics can be applied to the solution
+as well on each level (or only on certain ones) to further improve the final solution quality.</p>
+        <p>Figure 1.2 illustrates how an application of the Multilevel Refinement metaheuristic on a
+graph problem might look. In this example the graph is coarsened by merging nodes to form
+higher levels.</p>
+        <p>A good summary of the metaheuristic can be found in [7]. Section 2 contains examples of
+previous successful applications of the approach in the literature.</p>
+        <p>Since the Multilevel Refinement metaheuristic has already proven successful for several
+graph problems, but has not yet been applied to the RDCSTP, we were interested in evaluating
+its appropriateness for this problem, too. One of our specific hopes was that using the
+Multilevel Refinement approach would bring more impact on the global scale to local improvement
+heuristics for larger problem instances.</p>
+        <p>Structure of the thesis
+The remainder of this thesis is structured as follows: Section 2 contains an overview of
+existing work in the literature which is relevant to this thesis. Section 3 then explains the general
+algorithm we designed in this paper and what specific problems had to be solved. This is then
+elaborated on in Section 4 where we more closely discuss some details of the implementation
+of our algorithm. In Section 5 we list the results of several benchmarks and comparisons we
+executed on the final program. We conclude with a short summary of the thesis and an outlook
+on possible future work in this area in Section 6.</p>
+      </sec>
+    </sec>
+    <sec id="sec-6">
+      <title>Related work</title>
+      <p>The RDCSTP (mostly under aliases such as Delay-Constrained Multicast Routing) is already
+well-known and has been the focus of research numerous times.
+2.1</p>
+      <sec id="sec-6-1">
+        <title>Preprocessing</title>
+        <p>Preprocessing techniques are an important part of the research for the RDCSTP as they allow to
+significantly reduce the problem size in a manner that is in no way dependent on the concrete
+algorithm used to solve the problem. The algorithms mentioned here were therefore also used
+in the final program evaluated in this thesis.</p>
+        <p>In [8], some simple cases are described in which edges can safely be removed from the graph.
+This includes edges that can never be part of a valid solution (due to their delay being too high)
+or that cannot be part of an optimal solution (e.g., when simple triangle inequalities do not hold
+on costs and delays for some circle of three edges). Although the paper discusses the Rooted
+Delay-Constrained Minimum Spanning Tree Problem – a specialized variant of the RDCSTP in
+which all nodes are terminals –, these techniques can equally be used for the RDCSTP itself.</p>
+        <p>Preprocessing techniques that also take the special properties of Steiner nodes into account
+are described in [9], for the original Steiner Tree Problem. This includes simple measures, like
+removing Steiner nodes that are leaves, but also some more complex checks. For inclusion in
+our program, these had to be extended to take the edge delays into account.
+2.2</p>
+      </sec>
+      <sec id="sec-6-2">
+        <title>Heuristic algorithms</title>
+        <p>Due to the N P-hardness of the problem, heuristic algorithms have been very popular for the
+RDCSTP and there are already numerous existing algorithms for it.
+Construction heuristics
+The first mention of the problem in literature was in [4], where an adapted version of the
+algorithm in [10] for the Steiner tree problem without delays was applied to the problem.</p>
+        <p>In [11], a minimum-delay tree is constructed as a first step. Then, the delay-bounded tree is
+iteratively improved to minimize costs. Paper [12] proposes an adapted version of an algorithm
+from [13], for the unicast routing problem. A solution is constructed by iteratively adding
+terminals to the tree until the whole set of terminals is included. However, this paper also takes into
+account asymmetric costs and delays, which are not considered here.</p>
+        <p>Improvement and meta-heuristics
+A genetic algorithm is considered in [14] for a slight variant of the problem, which adds a
+constraint on a third edge property, the bandwidth, and allows different delay bounds per terminal.</p>
+        <p>More recently, in [15] a path-relinking approach was applied to the problem. This is a
+genetic algorithm in which new solutions are constructed by conceptually connecting two existing
+solutions in the solution space and examining all solutions along this path.</p>
+        <p>The well-known Greedy Randomized Adaptive Search Procedure (GRASP) heuristic was
+also employed several times for the RDCSTP [16, 17], generally leading to promising results.
+The latter of those uses a Variable Neighborhood Descent (VND) algorithm as the local search
+heuristic, which was first introduced as a stand-alone heuristic in [18].</p>
+        <p>One of the most recent works regarding the RDCSTP can be found in [19]. There, a
+combination of the path-relinking approach with a scatter search heuristic was developed, also showing
+very good results. The experimental data from this paper will therefore later be used for
+comparison with the algorithm developed here.
+2.3</p>
+      </sec>
+      <sec id="sec-6-3">
+        <title>Exact algorithms</title>
+        <p>Even though it is hard to design efficient exact algorithms for the RDCSTP and their use in
+practice is limited due to the quickly increasing complexity for larger instances there are already
+several approaches in this category. The first Integer Linear Programming formulation of the
+problem can be found in [20], with the addition of bandwidth to the problem.</p>
+        <p>More recently, [21, 22] investigated some other (also Mixed Integer Programming)
+formulations and additional restrictions. In [23], these were then combined with a Branch-and-Cut
+approach.</p>
+        <p>A Mixed Integer Programming formulation using layered graphs is discussed in [24]. The
+paper also introduces a technique called “adaptive layers”, in which new layers are iteratively
+added to an initially smaller problem formulation to tighten lower and upper bounds.</p>
+        <p>In [25], the stabilized column generation algorithm from [26] is expanded with a
+branchand-bound approach and an additional pricing strategy to form a stabilized branch-and-price
+algorithm.</p>
+        <p>Although experimental results for the newer exact algorithms proved very promising, all of
+these exact approaches quickly reach their limits for complete graphs with more than about 100
+nodes. They are therefore no viable option for large problem instances.
+2.4</p>
+      </sec>
+      <sec id="sec-6-4">
+        <title>Multilevel Refinement heuristic</title>
+        <p>As already mentioned, the Multilevel Refinement approach has successfully been applied to
+the Graph Partitioning Problem in [5, 6]. Earlier applications of the Multilevel approach are
+discussed in [27], mentioning applications like Multilevel Annealing, Multilevel Monte-Carlo,
+and other heuristics.</p>
+        <p>In [28], the Multilevel Refinement heuristic is used with great success on the Travelling
+Salesman Problem, considerably improving the results of the traditional Chained Lin-Kernighan
+algorithm, which is used as the improvement heuristic on each level. Such an algorithm is also
+discussed, amongst many others, in [29].</p>
+        <p>The Graph Coloring Problem has also been tackled with the Multilevel Refinement heuristic
+[30]. There, both an iterated greedy algorithm and tabu search are tested as improvement
+heuristics for the refinement, in both cases improving the results obtained by using the algorithms
+without the Multilevel addition.
+2.5</p>
+      </sec>
+      <sec id="sec-6-5">
+        <title>Other related work</title>
+        <p>The Multilevel Refinement heuristic has not yet been applied to the RDCSTP. However, in
+[31, 32] it is applied to the Rooted Delay-Constrained Minimum Spanning Tree Problem
+(RDCMSTP).</p>
+        <p>In the algorithm presented there, however, nodes are not explicitly merged together. Instead,
+on each level first a number of so-called “supervertices” are selected according to their “ranking
+score” (a value computed by the number and cost/delay values of their adjacent edges). Each of
+the remaining nodes has then to be connected to one of these supervertices by a direct edge. The
+supervertices and all edges between them then become the problem graph on the next level.</p>
+        <p>This process is continued until only the source node remains, which then contains a valid
+solution for the original problem. The algorithm therefore does not include an explicit refinement
+phase, thus also precluding the use of an improvement heuristic on each separate level. An
+improvement heuristic (a VND described in [33]) is only applied to the final solution.
+B
+6
+16
+32
+50
+B
+6
+16
+32
+*</p>
+        <p>imp.</p>
+        <p>n
+n
+ter. As can be seen, a small random factor generally improves the algorithm’s results, the benefit
+of exploring more possible solutions seems to easily outweigh the benefit of reliably finding a
+local optimum (in which a deterministic algorithm will then of course be stuck).</p>
+        <p>The table shows also that the best results are obtained by higher random factors for smaller
+instances than for larger ones. This, however, can be explained with the much larger number of
+iterations that could be executed on these instances, which would naturally favor higher
+randomness. A general principle for more randomness in smaller instances does not seem to hold when
+examining the differences between different terminal node ratios at the same instance size.
+treeBoost
+In Table 5.3 and Table 5.4, the results for different values of the treeBoost parameter are listed.
+Contrary to our expectations, the highest value for the parameter (equivalent to the edges of the
+0.47
+0.42
+0.43
+0.42
+0.92
+0.90
+0.82
+0.84
+1.05
+0.87
+0.94
+0.83
+0.99
+0.85
+0.88
+0.83
+B
+6
+16
+32
+50
+B
+6
+16
+32
+*</p>
+        <p>n</p>
+        <p>n</p>
+        <p>n
+previous solution being always merged first) leads to the best results in almost all cases. For
+this parameter, the additional diversity introduced by lower parameter values does not seem to
+outweigh the benefits of exploring solutions “near” the current one.
+twoTermBoost
+The results for the twoTermBoost parameter can be seen in Table 5.5. While it shows a
+significant influence of the parameter on the solution quality, the concrete influence does not seem
+to follow any kind of pattern, with negative values, positive values and 0 resulting in the best
+results for several test groups each.
+mixedEdgeBoost
+Listed in Table 5.6 are the results for different values of the mixedEdgeBoost parameter. The
+outcome was similar to that for twoTermBoost – while the setting clearly had some level of
+impact on solution quality, the concrete influence was as unpredictable as before, making
+optimization rather difficult.
+B
+6
+16
+32
+50
+B
+6
+16
+32
+*</p>
+        <p>imp.</p>
+        <p>n</p>
+        <p>n</p>
+        <p>n</p>
+        <p>n
+eter – exact or heuristic. While we expected the runtime cost for the exact solution to explode
+for larger instances, leading to the heuristic variant delivering better results for those, this could
+not even be observed for 1000 node instances. While these large instances showed an increase
+in the number of iterations of up to 40% for the heuristic variant, this was clearly predominated
+by the better results obtained with the exact algorithm. Overall, there were no instances where
+the heuristic variant led to even slightly better results than the exact one.</p>
+        <p>Of course, as discussed in Section 3.6, this result is also dependent on the delays being
+relatively small integers. By distributing the delays over a much larger range, or by allowing
+real values for delays, the relative performance of both settings could probably be changed.
+However, for real-world applications it is rarely the case that delays have to be allowed to be so
+fine-grained as to make such a wide range of possible delay values necessary.
+B
+6
+16
+32
+50
+B
+6
+16
+32
+B
+6
+16
+32
+50
+B
+6
+16
+32
+*
+exact
+heuristic</p>
+        <p>exact
+heuristic</p>
+        <p>exact
+heuristic</p>
+        <p>exact
+heuristic
+*
+exact
+heuristic</p>
+        <p>exact
+heuristic</p>
+        <p>exact
+heuristic
+imp.
+imp.
+*
+*
+imp.
+imp.</p>
+        <p>n
+imp.
+imp.
+n
+imp.
+imp.
+n
+n
+imp.
+imp.</p>
+        <p>n</p>
+        <p>n
+n</p>
+        <p>n
+n
+n
+n
+n
+B
+6
+16
+32
+50</p>
+        <p>MLR
+Statistics for the last tested parameter, minKPCost, are listed in Table 5.8. Similar to the results
+for the scpMode parameter, the conceived performance improvements for higher values (i.e.,
+inspecting less key paths) in no case outweighed the smaller improvements in solution quality.
+Moreover, the difference was even more pronounced for this parameter, with higher settings
+being faster by more than 1000% in some instances, but making the algorithm almost useless in
+improving the initial solution. This also illustrates the importance of the improvement heuristic
+for the overall solution quality.</p>
+        <p>Due to the impressive performance of the KPI heuristic, it was also tested how it would
+perform alone, without the Multilevel framework, as a simple local search heuristic. The results
+are listed in Table 5.9 (for 500 node instances). As can be seen, while the complete Multilevel
+algorithm is obviously superior, the KPI heuristic itself already leads to significant improvements
+to the originally created solution, and in much shorter time. It might therefore be a good option
+when a solution has to be found too quickly to use the whole Multilevel algorithm. As the KPI
+heuristic is deterministic, a longer runtime will not improve the solution quality, though.
+5.2</p>
+      </sec>
+      <sec id="sec-6-6">
+        <title>Automatic parameters</title>
+        <p>Based on the tests in Section 5.1, the parameters for final benchmarks and comparisons were
+determined. Due to the unequivocal results, scpMode was fixed to “exact”, and minKPCost to
+0.</p>
+        <p>For twoTermBoost and mixedEdgeBoost, the results were not meaningful enough to
+determine their best settings. Furthermore, it could be assumed that these two parameters would
+be especially closely coupled with each other. Therefore, additional benchmarks were executed
+for the 500 and 1000 node instances, varying both parameters at the same time. The results are
+illustrated in Table 5.10. As can be seen, the results were not as random as previously suspected.
+An area of better results is clearly visible, with a difference of almost half a percentage point in
+the relative improvement to the initially constructed solution. It can also be seen that the “off”
+setting 0 for both parameters results in rather good solutions, but not the best. The parameters
+were therefore fixed to twoTermBoost = 3 and mixedEdgeBoost = 2 for all further tests.
+-10
+-5
+-3
+-2
+0
+2
+3
+5
+10</p>
+        <p>For the last two parameters, a different solution was sought, which would both ensure that
+local optima were reliably found and that the algorithm would still explore other areas of the
+solution space afterwards. Therefore, varying parameters, which would automatically adapt to
+the current situation, were implemented. This approach was partly influenced by the work in
+[41], which describes a way to use such dynamic variations in algorithmic parameters to support
+both diversification and intensification when searching for solutions.</p>
+        <p>Algorithm 5.1 gives an overview of how this approach was implemented. After a certain
+number of consecutive iterations in which no new best solution was found, a variation of the
+parameters is started. When a new best solution is then reached, the parameters are again reset
+to their initial values and the limit for unsuccessful iterations is increased by 1 (to automatically
+adapt to larger time limits).</p>
+        <p>The exact way in which parameters are varied is illustrated in Figure 5.1. Three automatic
+modes were designed for the randBoost parameter and four for the treeBoost parameter, each
+of them testing a different balance between intensification and diversification. Keep in mind,
+though, that these automatic parameters are only used as long as several consecutive iterations
+do not find a new best solution.</p>
+        <p>In the auto1 mode for the randBoost parameter, the parameter is first uniformly raised to 0.5
+over the course of the first ten iterations. It is then further raised at twice the slope to 1.5 over
+the next ten iterations. In the following 20 iterations, this is mirrored to again reach a setting of
+0 and start the cycle over from the beginning.</p>
+        <p>The auto3 setting does the same in principle, but uses maxNoGain steps (instead of ten) for
+each phase. This results in faster variation at the beginning of the program runtime, and slower
+variation later on, helping to adapt to longer runtimes. Shown in the figure is the variation
+function when maxNoGain would have a value of 5 (i.e., the fifth time parameter variation is
+Algorithm 5.1: runWithAutoParameters()</p>
+        <p>Purpose: Runs the Multilevel algorithm on G, adapting the parameters randBoost and
+treeBoost between iterations.</p>
+        <p>randBoost = 2 GetRandom(0:5) 1</p>
+        <p>Here, GetRandom( ) is the same function as in Section 3.3 – i.e., it returns a random
+number, following a normal distribution with mean 0 and variance 2. The result is a randBoost
+parameter roughly following the distribution shown in Figure 5.2, with values of about 0.5 being
+most common.</p>
+        <p>The auto1 setting for the treeBoost parameter starts off at 5 in the first iteration with varied
+parameters (coming from 1 before). It then steadily drops by 0.2 for each further iteration,
+therefore reaching 0 (or, rather, a minimal value slightly above 0) in the 26th iteration and then
+remaining at that level, completely banning edges contained in the previous solution from
+coarsening.
+10</p>
+        <p>50 iterations
+10
+20
+30
+40 iterations
+treeBoost
+1.5
+5
+4
+3
+2
+1</p>
+        <p>f (x)
+2.0
+1.0
+1.0
+1.5
+x</p>
+        <p>The auto2 setting, on the other hand, varies the parameter continously between 0 and 3, by
+alternately dropping to 0 and then rising to 3, always at a rate of 0.2 per iteration. It starts off at
+a value of 2.8.</p>
+        <p>With the auto3 setting for the treeBoost parameter, it is not varied in linear, but exponential
+segments. Starting at a value of 4, the parameter is first halved at each iteration until it reaches the
+value 0.03125 ( 312 ), and then doubled again at each iteration until it reaches 8. This is repeated
+periodically.</p>
+        <p>Finally, there was also a probabilistic setting for the treeBoost parameter, namely auto4 (not
+shown in the figure). This setting sets the parameter to 1 with a probability of 50%, or to 1 or
+0 with a probability of 25% each.</p>
+        <p>Results with automatic parameters</p>
+        <p>100 node instances
+Even though instances with only 100 nodes can usually too easily be solved exactly to be a useful
+benchmark for heuristic algorithms, we were still curious how the algorithm would perform for
+such small instances. Especially, we here had the unique chance to also compare our algorithm
+to the exact solutions and thus see how much worse our solutions were, on average.</p>
+        <p>In the tests we used 30 different instances of the size. The delay bound and ratio of terminals
+were again varied, and 30 test runs executed for each instance and each delay bound and terminal
+B
+6
+16
+32
+50</p>
+        <p>*
+B
+6
+16
+32</p>
+        <p>*
+auto1
+auto2
+auto3
+0.2
+0.5
+auto1
+auto2
+auto3
+0.2
+0.5
+auto1
+auto2
+auto3
+0.2
+0.5
+imp.
+imp.
+imp.
+imp.
+imp.
+imp.
+imp.
+imp.
+N = 1000</p>
+        <p>R = 0:1</p>
+        <p>R = 0:3</p>
+        <p>R = 0:5</p>
+        <p>R = 0:7</p>
+        <p>R = 0:9</p>
+        <p>n
+imp.
+imp.
+n
+imp.
+imp.
+imp.
+imp.
+imp.
+imp.
+n
+auto1
+auto2
+auto3
+auto4</p>
+        <p>1
+auto1
+auto2
+auto3
+auto4</p>
+        <p>1
+auto1
+auto2
+auto3
+auto4
+1
+imp.
+imp.
+imp.
+imp.</p>
+        <p>Construction
+B
+16
+30
+50
+100</p>
+        <p>R</p>
+        <p>5
+0
+0
+0
+0
+0
+2
+0
+0
+0
+0
+0
+2
+0
+0
+0
+0
+0
+2
+0
+0
+0
+0
+0
+11.1%
+20.11%
+21.82%
+22.16%
+23.47%
+24.31%
+19.3%
+26.57%
+26.95%
+27.55%
+29.08%
+28.97%
+14.68%
+23.55%
+28.95%
+30.31%
+30.83%
+31.28%
+18.36%
+27.11%
+29.59%
+31.04%</p>
+        <p>31%
+31.75%</p>
+        <p>12
+3
+0
+0
+0
+0
+15
+3
+2
+0
+0
+0
+11
+3
+0
+0
+0
+0
+13
+1
+0
+0
+0
+0</p>
+        <p>Mean
+1.89%
+4.37%
+5.94%
+5.04%
+5.14%
+5.56%
+3.1%
+4.37%
+4.07%
+5.12%
+4.98%
+5.1%
+2.27%
+3.43%
+4.54%
+4.22%
+5.06%
+6.08%
+2.53%
+3.17%
+4.32%
+5.62%
+6.46%
+6.81%</p>
+        <p>Best
+23
+8
+1
+0
+0
+0
+23
+8
+8
+1
+0
+0
+21
+7
+3
+1
+0
+0
+24
+11
+1
+0
+1
+0
+1.59%
+3.28%
+4.53%
+3.82%
+4.04%
+4.38%
+1.1%
+3.18%
+2.99%
+4.09%
+3.74%
+3.94%
+0.78%
+2.64%
+3.54%
+3.04%
+3.53%
+4.95%
+0.8%
+1.6%
+3.29%
+4.32%
+5.25%
+5.93%
+ratio setting. The time limit for each run was set to 8 seconds, which sufficed for several hundred
+iterations. A summary of the results is shown in Table 5.13.</p>
+        <p>As can be seen, even the greedy initial construction heuristic accomplished to find the
+optimal solution for a number of problem instances, especially for low delay bounds and low number
+of terminals. (Remember that, since the construction heuristic is deterministic, it always yielded
+the same result for a given problem instance, so listing mean and best result separately would
+not be meaningful here.)</p>
+        <p>For the most interesting results, the mean values of the Multilevel Refinement heuristic, the
+results are also rather promising. On average, the solutions obtained tend to be worse than the
+optimal solutions by about two to seven percent. A clear trend is that the solutions tend to get
+relatively worse for higher delay bounds and higher number of terminals.</p>
+        <p>The last columns, listing the comparison of the best results obtained for each instance, are
+also interesting. It shows that for about half of the instances in which a solution was reached, the
+solution was not reached reliably. It can therefore be concluded that executing the algorithm on
+a problem multiple times has generally a good chance of finding better values than just running
+the algorithm once, but with a higher time limit. This means that, e.g., wrapping the algorithm
+in a GRASP heuristic might be a promising area of further research.
+5.4</p>
+        <p>5000 node instances
+To test how well the algorithm can deal with very large instances, it was also used (with the
+aforementioned parameter settings) on 30 instances with 5000 nodes. In these tests it really
+showed that the program reached its limits, needing several hours to more than a day for the
+desired 100 iterations per test run and also almost completely using up the available RAM.</p>
+        <p>Due to these long runtimes and our limited resources we were not able to run tests in the
+required quantity to arrive at statistically sound results. A detailed listing of the results is therefore
+omitted here. They were however also very promising for these large instances, with the
+algorithm still achieving average improvements of ten to 15 percent compared to the construction
+heuristic.
+5.5</p>
+      </sec>
+      <sec id="sec-6-7">
+        <title>Comparison to other heuristics</title>
+        <p>After optimizing the parameters, the algorithm was compared to competing algorithms for this
+problem. The choice for the competitor fell on the Scatter Search and Path Relinking algorithm
+with Variable Neighborhood Descent improvement (SSPR-VND), discussed in [19]. This
+algorithm was selected since it is not only one of the most recent and most successful algorithms for
+the RDCSTP, but has also benchmark data with well-documented instances publicly available.</p>
+        <p>As in the original paper, the time limit was set to 60 seconds CPU time for all test runs
+(although this was far more than needed for these small instances). To obtain meaningful results,
+30 test runs were executed for each instance and delay bound. As solving the Steiner Problem
+without delays is a different problem, with its own well-suited algorithms, the tests for the delay
+bound 1 were dropped and therefore only those for 1 = 1:1 Delay(TOPT) and 2 =
+0:9 Delay(TOPT) executed. As used in the source, Delay(TOPT) here stands for the maximum
+delay of a path to the source in the solution to the problem without delay bound.</p>
+        <p>Table 5.14 shows the results of this comparison. “Mean” is the arithmetic mean of the
+solution tree costs of all 30 runs for the given test instance and delay bound, “Best” is the best
+result obtained for it. denotes the standard deviation of the solution tree cost. “Nr.” marks the
+instances, as used in the referenced paper. “Opt.” lists the costs of the optimal solutions for each
+problem instance. The best mean costs for each instance are marked in bold, results marked with
+an asterisk signify the optimal solution for an instance.</p>
+        <p>Before reviewing the results it should be noted that the appropriateness of these test instances
+as benchmarks for RDCSTP heuristics can be disputed. As the instances are all very small –
+varying between 50 and 100 nodes –, all these problem instances could as well be solved with
+exact algorithms, especially in the 60 seconds used for testing. Benchmarks with much larger
+instances would be considerably better suited for comparing these heuristics, but no existing
+benchmark data for such instances could be found. Choosing a delay bound that is large enough
+to not constrain the optimal solution at all (like done with the 1 delay bounds) could also be
+considered a distortion of the core problem.</p>
+        <p>It has also to be noted that several of the retrieved test instances seemed faulty, or maybe the
+listed delay bound wrong. Instance B02 seemed completely defective, while the optimal results
+for the 2 instances were in several cases worse than the ones obtained by the SSPR-VND
+algorithm according to the paper. These tests were therefore excluded from the comparison and
+the SSPR-VND column marked with dashes. The unavailable result for instance B14 with the
+2 delay bound, however, is due to the SSPR-VND algorithm not finding any valid solution.</p>
+        <p>The optimal solutions for the 1 delay bounds were taken from the reference paper, while
+the optima for the 2 delay bounds were computed with the Layered Graph algorithm in [24].
+A further demonstration of the inappropriateness of these benchmark instances was that this
+computation was possible in a few seconds in nearly all cases, with only one instance taking
+more than the one minute allowed for the tested heuristics.</p>
+        <p>The results themselves look very promising for the Multilevel Refinement heuristic. While
+the easiness of the problems lead to results being tied (with both algorithms reliably finding the
+global optimum) in the majority of cases, the algorithm described in this paper showed slightly
+better results on the whole, even though both algorithms “won” in several instances. A short
+summary of the results is given in Table 5.15.</p>
+        <p>Concretely, when summing up the relative advantage or disadvantage of the Multilevel
+Refinement heuristic in each test instance, the summed advantage is 2.62% across all instances
+(2.22% in the 1 instances and an almost-tie in the others). Additionally, the Multilevel
+Refinement heuristic reliably finds a solution if one exists (even when disregarding the initial solution),
+while the SSPR-VND heuristic failed to do so in one tested problem instance.</p>
+        <p>On the whole, these test results indicate that the Multilevel Refinement approach followed in
+this paper is not only a competitive, but even slightly superior alternative to existing techniques
+for the RDCSTP. However, as indicated above, further tests have to assess the relative advantage
+of either algorithm in larger test instances, as these are the main targets of heuristic algorithms.</p>
+        <p>B01
+B02
+B03
+B04
+B05
+B06
+B07
+B08
+B09
+B10
+B11
+B12
+B13
+B14
+B15
+B16
+B17
+B18
+Nr.</p>
+        <p>B01
+B02
+B03
+B04
+B05
+B06
+B07
+B08
+B09
+B10
+B11
+B12
+B13
+B14
+B15
+B16
+B17
+B18
+B
+145
+228
+248
+173
+125
+281
+212
+209
+280
+262
+235
+225
+190
+221
+308
+291
+219
+425</p>
+        <p>1
+B
+118
+187
+203
+142
+102
+199
+173
+171
+229
+215
+180
+184
+139
+180
+194
+238
+180
+348</p>
+        <p>82
+92
+138
+59
+61
+122
+111
+104
+220
+86
+88
+174
+165
+235
+318
+127
+131
+218
+83
+93
+141
+62
+62
+124
+112
+107
+221
+88
+89
+175
+169
+237
+324
+129
+133
+219</p>
+        <p>Mean
+Mean
+82*
+92*
+138*
+59*
+61*
+122*
+111*
+104*
+220*
+86*
+88
+174*
+165*
+235*
+319.8
+127*
+131.6
+218*
+83*
+93*
+141*</p>
+        <p>64
+62.9
+125
+112*
+107*
+221*
+88*
+89*
+177
+169*
+237*
+324*
+129*
+133*
+219*</p>
+        <p>SSPR-VND</p>
+        <p>MLR
+17/17
+14/15
+17/17
+15/15
+14 (17)
+10 (11)
+13 (17)
+12 (13)
+sum
+-2.2%
+-0.4%</p>
+      </sec>
+    </sec>
+    <sec id="sec-7">
+      <title>Conclusions and Future Work</title>
+      <p>In this thesis we implemented an algorithm based on the Multilevel Refinement meta-heuristic
+for the Rooted Delay-Constrained Steiner Tree Problem. This problem, which is also known as
+the Multicast Routing Problem With Delays, has been proven to be N P-hard. Our algorithm
+was developed in the form of an Iterated Multilevel Refinement heuristic to be used as an
+improvement heuristic for an existing solution. Since the previous solution was only used in a
+single spot in each iteration without checking its validity, the algorithm could also be used as the
+initial construction heuristic, with additional improvement afterwards.</p>
+      <p>In the algorithm, we first merged nodes based on the cost and delay of their connecting
+edges, preferring ones with lower cost and delay. Thus, we iteratively created smaller graphs
+representing higher levels of abstraction of the original problem. In doing so we also saved the
+additional delays hidden in these merged nodes when connecting other nodes to them. This was
+done to make the creation of mostly valid solutions on higher levels possible without restricting
+the solution space too much. A solution tree was then created for the trivial problem on the
+highest level. Finally, the combined nodes were separated again in reverse order, stepping down
+again in the multilevel hierarchy. On each level we also executed an improvement heuristic on
+the solution in this phase. The Key Path Improvement heuristic was chosen for this, leading to
+considerably improved results. For the N P-hard problem of finding the shortest constrained
+path between two tree components, which is encountered in that improvement heuristic, we
+employed a well-known exact pseudo-polynomial dynamic programming approach.</p>
+      <p>Since initial test results were promising, we introduced additional parameters for the
+algorithm to further improve its performance. These showed to have a significant impact on the
+constructed solutions, and meaningful settings resulted in a further increase of solution quality,
+as benchmarks demonstrated. We also showed that the algorithm has an asymptotic runtime of
+T = O BN 3 , which roughly corresponded to the benchmark results.</p>
+      <p>Finally, we demonstrated in a test against another algorithm, which used a Scatter Search
+and Path Relinking approach, that our algorithm can compete well with comparable algorithms,
+showing on the whole slightly better results for the tested instances. In contrast to the other
+algorithm used in the comparison the Multilevel algorithm also reliably found a solution to all
+tested problems.</p>
+      <p>For lack of benchmarks for larger instances, however, this comparison was not as meaningful
+as would be desired. Still, we also demonstrated, without comparison to another algorithm,
+that our algorithm is capable of successfully handling even large instances of 5000 nodes with
+moderate resources, considerably improving the initially constructed solutions.</p>
+      <p>In future work, some of the underlying design decisions might be questioned and put to the
+test. For instance, we currently only merge each node once at each level, and never merge the
+source node. These restrictions were incorporated to simplify the algorithm, but better results
+might be possible when working around these limitations. Also, the explicit and implicit
+parameters might be inspected more closely. For instance, a parameter restricting the number of
+merges on each level could be introduced and used to further improve solution quality. Also,
+an attempt could be made to examine the correlation between problem characteristics (instance
+size, delay bound, number of terminals) and the best algorithm parameters to produce more
+intelligent automatic parameters. Finally, improvement heuristics other than the Key Path
+Improvement heuristic currently used could be tested in the refinement phase. The use of the Key
+Path Improvement heuristic in other meta-heuristics could also yield good results.</p>
+    </sec>
+    <sec id="sec-8">
+      <title>Bibliography</title>
+      <p>GILBERT, E. N., AND POLLAK, H. O. Steiner minimal trees. SIAM Journal on Applied
+Mathematics 16, 1 (1968), 1–29.</p>
+      <p>HAKIMI, S. L. Steiner’s problem in graphs and its implications. Networks 1, 2 (1971),
+113–133.</p>
+      <p>KARP, R. Reducibility among combinatorial problems. In Complexity of Computer
+Computations, R. Miller and J. Thatcher, Eds. Plenum Press, 1972, pp. 85–103.
+KOMPELLA, V. P., PASQUALE, J. C., AND POLYZOS, G. C. Multicasting for
+multimedia applications. In INFOCOM ’92. Eleventh Annual Joint Conference of the
+IEEE Computer and Communications Societies, IEEE (May 1992), pp. 2078–2085.
+KARYPIS, G., AND KUMAR, V. A fast and high quality multilevel scheme for
+partitioning irregular graphs. SIAM J. Sci. Comput. 20 (December 1998), 359–392.
+HENDRICKSON, B., AND LELAND, R. A multi-level algorithm for partitioning graphs.</p>
+      <p>SC Conference 0 (1995), 28.
+[7] TENG, S. Coarsening, sampling, and smoothing: Elements of the multilevel method.</p>
+      <p>Algorithms for Parallel Processing 105 (1999), 247–276.</p>
+      <p>RUTHMAIR, M., AND RAIDL, G. R. Variable Neighborhood Search and Ant Colony
+Optimization for the Rooted Delay-Constrained Minimum Spanning Tree Problem. In
+Proceedings of the 11th International Conference on Parallel Problem Solving from
+Nature: Part II (2010), R. Schaefer et al., Eds., vol. 6239 of LNCS, Springer, pp. 391–400.
+KOCH, T., AND MARTIN, A. Solving Steiner tree problems in graphs to optimality.</p>
+      <p>Networks 32, 3 (1998), 207–232.
+[10] KOU, L., MARKOWSKY, G., AND BERMAN, L. A fast algorithm for Steiner trees. Acta</p>
+      <p>Informatica 15, 2 (1981), 141–145.
+[11] ZHU, Q., AND PARSA, M. A source-based algorithm for delay-constrained
+minimum-cost multicasting. In INFOCOM’95. Fourteenth Annual Joint Conference of
+the IEEE Computer and Communications Societies. Bringing Information to People.
+Proceedings. IEEE (1995), IEEE, pp. 377–385.
+[12] ZHENGYING, W., BINGXIN, S., AND LING, Z. A delay-constrained least-cost multicast
+routing heuristic for dynamic multicast groups. Electronic Commerce Research 2, 4
+(2002), 323–335.
+[13] ZHENGYING, W., BINGXIN, S., AND TAO, M. Dclc routing algorithm based on
+selective function. Mini-Micro Computer Systems 21, 12 (2000), 1267–1269.
+[14] ZHENGYING, W., BINGXIN, S., AND ERDUN, Z. Bandwidth-delay-constrained
+least-cost multicast routing based on heuristic genetic algorithm. Computer
+communications 24, 7-8 (2001), 685–692.
+[16] SKORIN-KAPOV, N., AND KOS, M. A grasp heuristic for the delay-constrained multicast
+routing problem. Telecommunication Systems 32, 1 (2006), 55–69.
+[17] XU, Y., AND QU, R. A GRASP approach for the Delay-constrained Multicast routing
+problem. In Proceedings of the 4th Multidisplinary International Scheduling Conference
+(MISTA4) (Dublin, Ireland, 2009), pp. 93–104.
+[18] QU, R., XU, Y., AND KENDALL, G. A Variable Neighborhood Descent Search
+Algorithm for Delay-Constrained Least-Cost Multicast Routing. In Proceedings of
+Learning and Intelligent OptimizatioN (LION3) (2009), Springer, pp. 15–29.
+[19] XU, Y., AND QU, R. A hybrid scatter search meta-heuristic for delay-constrained
+multicast routing problems. Applied Intelligence (2010), 1–13.
+[20] NORONHA JR, C., AND TOBAGI, F. Optimum routing of multicast streams. In
+INFOCOM’94. Networking for Global Communications., 13th Proceedings IEEE (1994),
+IEEE, pp. 865–873.
+[21] LEGGIERI, V. Multicast problems in telecommunication networks. PhD thesis, Università
+del Salento, Lecce, Italy, 2007.
+[22] LEGGIERI, V., HAOUARI, M., AND TRIKI, C. The steiner tree problem with delays: a
+tight compact formulation and reduction procedures. Tech. rep., Technical report,
+Universita del Salento, Lecce, Italy, 2010.
+[23] LEGGIERI, V., HAOUARI, M., AND TRIKI, C. An Exact Algorithm for the Steiner Tree</p>
+      <p>Problem with Delays. Electronic Notes in Discrete Mathematics 36 (2010), 223–230.
+[24] RUTHMAIR, M., AND RAIDL, G. R. A Layered Graph Model and an Adaptive Layers
+Framework to Solve Delay-Constrained Minimum Tree Problems. In Proceedings of the
+15th Conference on Integer Programming and Combinatorial Optimization (IPCO XV)
+(2011), O. Günlük and G. Woeginger, Eds., vol. 6655 of LNCS, Springer, pp. 376–388.
+[25] LEITNER, M., RUTHMAIR, M., AND RAIDL, G. R. Stabilized Branch-and-Price for the
+Rooted Delay-Constrained Steiner Tree Problem. In Network Optimization: 5th
+International Conference, INOC 2011 (Hamburg, Germany, June 2011), J. Pahl,
+T. Reiners, and S. Voß, Eds., vol. 6701 of LNCS, Springer, pp. 124–138.
+[26] LEITNER, M., RUTHMAIR, M., AND RAIDL, G. R. Stabilized Column Generation for
+the Rooted Delay-Constrained Steiner Tree Problem. In Proceedings of the VII
+ALIO/EURO – Workshop on Applied Combinatorial Optimization (Porto, Portugal, May
+2011), pp. 250–253.
+[27] BRANDT, A. Multilevel computations: Review and recent developments. In Multigrid
+methods: theory, applications, and supercomputing;[papers from the 3. Copper Mountain
+Conference on Multigrid Methods, held at Copper Mountain, Colo., April 5-10, 1987]
+(1988), vol. 110, Dekker, p. 35.
+[28] WALSHAW, C. A multilevel approach to the travelling salesman problem. Operations</p>
+      <p>Research (2002), 862–877.
+[29] JOHNSON, D., AND MCGEOCH, L. Experimental analysis of heuristics for the stsp. The</p>
+      <p>Traveling Salesman Problem and its Variations (2004), 369–443.
+[30] WALSHAW, C. A multilevel approach to the graph colouring problem. In SE10 9LS
+(2001), Citeseer.
+[31] BERLAKOVICH, M. Multilevel Heuristiken für das Rooted Delay-Constrained Minimum
+Spanning Tree Problem. Master’s thesis, Vienna University of Technology, Institute of
+Computer Graphics and Algorithms, Vienna, Austria, July 2010. supervised by G. Raidl
+and M. Ruthmair.
+[32] BERLAKOVICH, M., RUTHMAIR, M., AND RAIDL, G. R. A Multilevel Heuristic for the
+Rooted Delay-Constrained Minimum Spanning Tree Problem. In Extended Abstracts of
+the 13th International Conference on Computer Aided Systems Theory (2011),
+A. Quesada-Arencibia et al., Eds., pp. 247–249.
+[33] RUTHMAIR, M., AND RAIDL, G. R. A Kruskal-Based Heuristic for the Rooted
+Delay-Constrained Minimum Spanning Tree Problem. In Proceedings of the 12th
+International Conference on Computer Aided Systems Theory (2009), R. Moreno-Díaz,
+F. Pichler, and A. Quesada-Arencibia, Eds., vol. 5717 of LNCS, Springer, pp. 713–720.
+[34] VOSS, S. Steiner’s problem in graphs: heuristic methods. Discrete Applied Mathematics
+40, 1 (1992), 45–72.
+[35] LEITNER, M. Solving Two Network Design Problems by Mixed Integer Programming
+and Hybrid Optimization Methods. PhD thesis, Vienna University of Technology,
+Institute of Computer Graphics and Algorithms, Vienna, Austria, 2010.</p>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <ref id="ref1">
+        <mixed-citation>
+          <source>2 Related work 5 2</source>
+          .1
+          <string-name>
+            <surname>Preprocessing . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5</surname>
+          </string-name>
+          <year>2</year>
+          .2 Heuristic
+          <string-name>
+            <surname>algorithms . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5</surname>
+          </string-name>
+          <year>2</year>
+          .3 Exact
+          <string-name>
+            <surname>algorithms . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6</surname>
+          </string-name>
+          <year>2</year>
+          .4 Multilevel
+          <string-name>
+            <surname>Refinement</surname>
+            <given-names>heuristic . . . . . . . . . . . . . . . . . . . . . . . . . .</given-names>
+          </string-name>
+          <article-title>7 2.5 Other related work</article-title>
+          <string-name>
+            <surname>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7</surname>
+          </string-name>
+        </mixed-citation>
+      </ref>
+      <ref id="ref2">
+        <mixed-citation>
+          <article-title>3 Algorithm 9 3.1 Problem formulation and</article-title>
+          <string-name>
+            <surname>definitions . . . . . . . . . . . . . . . . . . . . . . . 9</surname>
+          </string-name>
+          <year>3</year>
+          .2 General
+          <string-name>
+            <surname>approach . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10</surname>
+          </string-name>
+          <year>3</year>
+          .3 Coarsening
+          <string-name>
+            <surname>phase . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <article-title>10 3.4 Solving the highest level</article-title>
+          <string-name>
+            <surname>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15</surname>
+          </string-name>
+          <year>3</year>
+          .5 Refinement
+          <string-name>
+            <surname>phase . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17</surname>
+          </string-name>
+          <year>3</year>
+          .6 Asymptotic
+          <string-name>
+            <surname>runtime . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</surname>
+          </string-name>
+          <source>22 [1] [2] [3] [4] [5] [6] [8] [9]</source>
+        </mixed-citation>
+      </ref>
+      <ref id="ref3">
+        <mixed-citation>
+          [36]
+          <string-name>
+            <surname>GOUVEIA</surname>
+            ,
+            <given-names>L.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>PAIAS</surname>
+            ,
+            <given-names>A.</given-names>
+          </string-name>
+          , AND SHARMA,
+          <string-name>
+            <surname>D.</surname>
+          </string-name>
+          <article-title>Modeling and Solving the Rooted Distance-Constrained Minimum Spanning Tree Problem</article-title>
+          .
+          <source>Computers and Operations Research</source>
+          <volume>35</volume>
+          ,
+          <issue>2</issue>
+          (
+          <year>2008</year>
+          ),
+          <fpage>600</fpage>
+          -
+          <lpage>613</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref4">
+        <mixed-citation>
+          [37]
+          <string-name>
+            <surname>DIJKSTRA</surname>
+            ,
+            <given-names>E.</given-names>
+          </string-name>
+          <article-title>A note on two problems in connexion with graphs</article-title>
+          .
+          <source>Numerische mathematik 1</source>
+          ,
+          <issue>1</issue>
+          (
+          <year>1959</year>
+          ),
+          <fpage>269</fpage>
+          -
+          <lpage>271</lpage>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref5">
+        <mixed-citation>
+          [38]
+          <string-name>
+            <surname>AHUJA</surname>
+            ,
+            <given-names>R.</given-names>
+          </string-name>
+          , MAGNANTI,
+          <string-name>
+            <surname>T.</surname>
+          </string-name>
+          , AND ORLIN,
+          <string-name>
+            <surname>J.</surname>
+          </string-name>
+          <article-title>Network flows: theory, algorithms</article-title>
+          , and applications. Ed. Prentice Hall. New York,
+          <year>1993</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref6">
+        <mixed-citation>
+          [39]
+          <string-name>
+            <surname>RUTHMAIR</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>M. C+</surname>
+          </string-name>
+          <article-title>+-Framework for Solving Delay-Constrained Tree Problems</article-title>
+          ,
+          <year>2011</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref7">
+        <mixed-citation>
+          [40]
+          <string-name>
+            <surname>RUTHMAIR</surname>
+            ,
+            <given-names>M.</given-names>
+          </string-name>
+          <article-title>Test instances for the RDCMSTP</article-title>
+          . https://www.ads.tuwien.ac.at/~marior/instances/random/,
+          <year>2011</year>
+          .
+        </mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

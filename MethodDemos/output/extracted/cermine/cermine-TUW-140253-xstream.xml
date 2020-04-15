@@ -1,0 +1,919 @@
+<Publication>
+  <id>TUW-140253</id>
+  <title>FROM STATIC TO DYNAMIC PROCESS TYPES</title>
+  <abstractText>Process types - a kind of behavioral types - specify constraints on message acceptance for the purpose of synchronization and to determine object usage and component behavior in object-oriented languages. So far process types have been regarded as a purely static concept for Actor languages incompatible with inherently dynamic programming techniques. We propose solutions of related problems causing the approach to become useable in more conventional dynamic and concurrent languagues. The proposed approach can ensure message acceptability and support local and static checking of race-free programs.</abstractText>
+  <maxSectionLayer>1</maxSectionLayer>
+  <keywords>
+    <string>Process types</string>
+    <string>synchronization</string>
+    <string>type systems</string>
+    <string>race-free programs</string>
+  </keywords>
+  <authors>
+    <Author>
+      <name>Franz Puntigam</name>
+      <firstNames/>
+      <email>franz@complang.tuwien.ac.at</email>
+      <affiliations>
+        <Affiliation>
+          <id>aff0</id>
+          <institution>Technische Universita ̈t Wien Argentinierstr.</institution>
+          <country>Austria</country>
+          <countryCode>AT</countryCode>
+        </Affiliation>
+      </affiliations>
+    </Author>
+  </authors>
+  <affiliations>
+    <Affiliation reference="/Publication[1]/authors[1]/Author[1]/affiliations[1]/Affiliation[1]"/>
+  </affiliations>
+  <sections>
+    <Section>
+      <id>sec-1</id>
+      <level>1</level>
+      <layer>1</layer>
+      <title>INTRODUCTION</title>
+      <referenceIds>
+        <string>ref28</string>
+        <string>ref1</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <id>sec-2</id>
+      <title>STATIC PROCESS TYPES</title>
+      <referenceIds>
+        <string>ref28</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <id>sec-3</id>
+      <level>3</level>
+      <layer>1</layer>
+      <title>DYNAMIC TOKENS</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <id>sec-4</id>
+      <level>4</level>
+      <layer>1</layer>
+      <title>DYNAMIC TYPING</title>
+      <referenceIds/>
+      <referenceCitations/>
+    </Section>
+    <Section>
+      <id>sec-5</id>
+      <title>CONCLUSION</title>
+      <referenceIds>
+        <string>ref33</string>
+        <string>ref34</string>
+        <string>ref4</string>
+        <string>ref7</string>
+        <string>ref9</string>
+      </referenceIds>
+      <referenceCitations/>
+    </Section>
+  </sections>
+  <citationContexts/>
+  <references>
+    <Reference>
+      <id>ref1</id>
+      <referenceIdString>ref1</referenceIdString>
+      <title>Towards a theory of actor computation</title>
+      <source>In Proceedings CONCUR&apos;92, number 630 in Lecture Notes in Computer Science</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>G.</string>
+          </firstNames>
+          <lastName>Agha</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>I. A.</string>
+          </firstNames>
+          <lastName>Mason</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>S.</string>
+          </firstNames>
+          <lastName>Smith</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>C.</string>
+          </firstNames>
+          <lastName>Talcott</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>565</pageFrom>
+      <pageTo>579</pageTo>
+      <publicationYear>1992</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref2</id>
+      <referenceIdString>ref2</referenceIdString>
+      <title>Abstract behavior types: A foundation model for components and their composition</title>
+      <source>Science of Computer Programming</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>F.</string>
+          </firstNames>
+          <lastName>Arbab</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>55</volume>
+      <issue>1-3</issue>
+      <pageFrom>3</pageFrom>
+      <pageTo>52</pageTo>
+      <publicationYear>2005</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref3</id>
+      <referenceIdString>ref3</referenceIdString>
+      <title>Guava: A dialect of Java without data races</title>
+      <source>In OOPSLA</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>D. F.</string>
+          </firstNames>
+          <lastName>Bacon</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>R. E.</string>
+          </firstNames>
+          <lastName>Strom</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A.</string>
+          </firstNames>
+          <lastName>Tarafdar</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationYear>2000</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref4</id>
+      <referenceIdString>ref4</referenceIdString>
+      <title>A parameterized type system for race-free Java programs</title>
+      <source>In OOPSLA 2001</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>C.</string>
+          </firstNames>
+          <lastName>Boyapati</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M.</string>
+          </firstNames>
+          <lastName>Rinard</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationYear>2001</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref5</id>
+      <referenceIdString>ref5</referenceIdString>
+      <title>The programming language Concurrent Pascal</title>
+      <source>IEEE Transactions on Software Engineering</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>P.</string>
+          </firstNames>
+          <lastName>Brinch-Hansen</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>1</volume>
+      <issue>2</issue>
+      <pageFrom>199</pageFrom>
+      <pageTo>207</pageTo>
+      <publicationYear>1975</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref6</id>
+      <referenceIdString>ref6</referenceIdString>
+      <title>Toward a method of object-oriented concurrent programming</title>
+      <source>Communications of the ACM</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>D.</string>
+          </firstNames>
+          <lastName>Caromel</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>36</volume>
+      <issue>9</issue>
+      <pageFrom>90</pageFrom>
+      <pageTo>101</pageTo>
+      <publicationYear>1993</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref7</id>
+      <referenceIdString>ref7</referenceIdString>
+      <title>Escape analysis for Java</title>
+      <source>In OOPSLA&apos;99</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Choi</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>J.-D.</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M.</string>
+          </firstNames>
+          <lastName>Gupta</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M.</string>
+          </firstNames>
+          <lastName>Serrano</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>V. C.</string>
+          </firstNames>
+          <lastName>Sreedhar</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>S.</string>
+          </firstNames>
+          <lastName>Midkiff</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationYear>1999</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref8</id>
+      <referenceIdString>ref8</referenceIdString>
+      <title>A setconstraint-based analysis of actors</title>
+      <source>In Proceedings FMOODS&apos;97</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>J.-L.</string>
+          </firstNames>
+          <lastName>Colaco</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M.</string>
+          </firstNames>
+          <lastName>Pantel</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>P.</string>
+          </firstNames>
+          <lastName>Salle</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>United</string>
+          </firstNames>
+          <lastName>Canterbury</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Kingdom</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationYear>1997</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref9</id>
+      <referenceIdString>ref9</referenceIdString>
+      <title>Interface automata</title>
+      <source>In Proceedings of the Ninth Annual Symposium on Foundations of Software Engineering (FSE)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>L.</string>
+          </firstNames>
+          <lastName>de Alfaro</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>T. A.</string>
+          </firstNames>
+          <lastName>Henzinger</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>109</pageFrom>
+      <pageTo>120</pageTo>
+      <publicationYear>2001</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref10</id>
+      <referenceIdString>ref10</referenceIdString>
+      <title>Types for safe locking</title>
+      <source>In Proceedings ESOP&apos;99</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>F.</string>
+          </firstNames>
+          <lastName>Flanagan</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M.</string>
+          </firstNames>
+          <lastName>Abadi</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationYear>1999</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref11</id>
+      <referenceIdString>ref11</referenceIdString>
+      <title>Meta-protocol and type system for the dynamic coupling of binary components</title>
+      <source>In OORASE&apos;99: OOSPLA&apos;99 Workshop on Reflection and Software Engineering</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>D.</string>
+          </firstNames>
+          <lastName>Heuzeroth</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>R.</string>
+          </firstNames>
+          <lastName>Reussner</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationYear>1999</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref12</id>
+      <referenceIdString>ref12</referenceIdString>
+      <title>A design pattern based approach to generating synchronization adaptors from annotated IDL</title>
+      <source>In IEEE International Conference on Automated Software Engineering (ASE&apos;98)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>B. J.</string>
+          </firstNames>
+          <lastName>Jacobsen</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>63</pageFrom>
+      <pageTo>72</pageTo>
+      <publicationYear>1998</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref13</id>
+      <referenceIdString>ref13</referenceIdString>
+      <title>Linearity and the pi-calculus</title>
+      <source>ACM Transactions on Programming Languages and Systems</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>N.</string>
+          </firstNames>
+          <lastName>Kobayashi</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>B.</string>
+          </firstNames>
+          <lastName>Pierce</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>D.</string>
+          </firstNames>
+          <lastName>Turner</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>21</volume>
+      <issue>5</issue>
+      <pageFrom>914</pageFrom>
+      <pageTo>947</pageTo>
+      <publicationYear>1999</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref14</id>
+      <referenceIdString>ref14</referenceIdString>
+      <title>Type-theoretic foundations for concurrent object-oriented programming</title>
+      <source>ACM SIGPLAN Notices</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>N.</string>
+          </firstNames>
+          <lastName>Kobayashi</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A.</string>
+          </firstNames>
+          <lastName>Yonezawa</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>29</volume>
+      <issue>10</issue>
+      <pageFrom>94</pageFrom>
+      <pageTo>45</pageTo>
+      <publicationYear>1994</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref15</id>
+      <referenceIdString>ref15</referenceIdString>
+      <title>A behavioral type system and its application in Ptolemy II</title>
+      <source>Formal Aspects of Computing</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>E. A.</string>
+          </firstNames>
+          <lastName>Lee</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>Y.</string>
+          </firstNames>
+          <lastName>Xiong</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>16</volume>
+      <issue>3</issue>
+      <pageFrom>210</pageFrom>
+      <pageTo>237</pageTo>
+      <publicationYear>2004</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref16</id>
+      <referenceIdString>ref16</referenceIdString>
+      <title>Specifications and their use in defining subtypes</title>
+      <source>ACM SIGPLAN Notices</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>B.</string>
+          </firstNames>
+          <lastName>Liskov</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>J. M.</string>
+          </firstNames>
+          <lastName>Wing</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>28</volume>
+      <issue>10</issue>
+      <pageFrom>93</pageFrom>
+      <pageTo>28</pageTo>
+      <publicationYear>1993</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref17</id>
+      <referenceIdString>ref17</referenceIdString>
+      <title>Analysis of inheritance anomaly in object-oriented concurrent programming languages</title>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>S.</string>
+          </firstNames>
+          <lastName>Matsuoka</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A.</string>
+          </firstNames>
+          <lastName>Yonezawa</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Programming</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationYear>1993</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref18</id>
+      <referenceIdString>ref18</referenceIdString>
+      <title>Systematic concurrent objectoriented programming</title>
+      <source>Communications of the ACM</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>B.</string>
+          </firstNames>
+          <lastName>Meyer</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>36</volume>
+      <issue>9</issue>
+      <pageFrom>56</pageFrom>
+      <pageTo>80</pageTo>
+      <publicationYear>1993</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref19</id>
+      <referenceIdString>ref19</referenceIdString>
+      <title>Object-Oriented Software Construction. Prentice Hall, second edition edition</title>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>B.</string>
+          </firstNames>
+          <lastName>Meyer</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationYear>1997</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref20</id>
+      <referenceIdString>ref20</referenceIdString>
+      <title>The grand challenge of trusted components</title>
+      <source>In ICSE-25 (International Conference on Software Engineering)</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>B.</string>
+          </firstNames>
+          <lastName>Meyer</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationYear>2003</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref21</id>
+      <referenceIdString>ref21</referenceIdString>
+      <title>Integrating independent components with on-demand remodularization</title>
+      <source>In OOPSLA 2002 Conference Proceedings</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M.</string>
+          </firstNames>
+          <lastName>Mezini</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>K.</string>
+          </firstNames>
+          <lastName>Ostermann</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>52</pageFrom>
+      <pageTo>67</pageTo>
+      <publicationYear>2002</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref22</id>
+      <referenceIdString>ref22</referenceIdString>
+      <title>A calculus of mobile processes (parts I and II)</title>
+      <source>Information and Computation</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>R.</string>
+          </firstNames>
+          <lastName>Milner</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>J.</string>
+          </firstNames>
+          <lastName>Parrow</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>D.</string>
+          </firstNames>
+          <lastName>Walker</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>100</volume>
+      <pageFrom>1</pageFrom>
+      <pageTo>77</pageTo>
+      <publicationYear>1992</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref23</id>
+      <referenceIdString>ref23</referenceIdString>
+      <title>A calculus of object bindings</title>
+      <source>In Proceedings FMOODS&apos;97</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>E.</string>
+          </firstNames>
+          <lastName>Najm</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A.</string>
+          </firstNames>
+          <lastName>Nimour</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>United</string>
+          </firstNames>
+          <lastName>Canterbury</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Kingdom</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationYear>1997</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref24</id>
+      <referenceIdString>ref24</referenceIdString>
+      <title>From CML to process algebras</title>
+      <source>In Proceedings CONCUR&apos;93, number 715 in Lecture Notes in Computer Science</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>F.</string>
+          </firstNames>
+          <lastName>Nielson</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>H. R.</string>
+          </firstNames>
+          <lastName>Nielson</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>493</pageFrom>
+      <pageTo>508</pageTo>
+      <publicationYear>1993</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref25</id>
+      <referenceIdString>ref25</referenceIdString>
+      <title>Regular types for active objects</title>
+      <source>ACM SIGPLAN Notices</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>O.</string>
+          </firstNames>
+          <lastName>Nierstrasz</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>28</volume>
+      <issue>10</issue>
+      <pageFrom>93</pageFrom>
+      <pageTo>15</pageTo>
+      <publicationYear>1993</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref26</id>
+      <referenceIdString>ref26</referenceIdString>
+      <title>Behavioral protocols for software components</title>
+      <source>IEEE Transactions on Software Engineering</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>F.</string>
+          </firstNames>
+          <lastName>Plasil</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>S.</string>
+          </firstNames>
+          <lastName>Visnovsky</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>28</volume>
+      <issue>11</issue>
+      <pageFrom>1056</pageFrom>
+      <pageTo>1076</pageTo>
+      <publicationYear>2002</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref27</id>
+      <referenceIdString>ref27</referenceIdString>
+      <title>Flexible types for a concurrent model</title>
+      <source>In Proceedings of the Workshop on Object-Oriented Programming and Models of Concurrency</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>F.</string>
+          </firstNames>
+          <lastName>Puntigam</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationYear>1995</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref28</id>
+      <referenceIdString>ref28</referenceIdString>
+      <title>Coordination requirements expressed in types for active objects</title>
+      <source>Finland</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>F.</string>
+          </firstNames>
+          <lastName>Puntigam</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Matsuoka</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>367</pageFrom>
+      <pageTo>388</pageTo>
+      <publicationYear>1997</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref29</id>
+      <referenceIdString>ref29</referenceIdString>
+      <title>Concurrent Object-Oriented Programming with Process Types</title>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>F.</string>
+          </firstNames>
+          <lastName>Puntigam</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationYear>2000</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref30</id>
+      <referenceIdString>ref30</referenceIdString>
+      <title>State information in statically checked interfaces</title>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>F.</string>
+          </firstNames>
+          <lastName>Puntigam</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>Programming</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationYear>2003</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref31</id>
+      <referenceIdString>ref31</referenceIdString>
+      <title>Behavioural types for a calculus of concurrent objects</title>
+      <source>In Proceedings Euro-Par&apos;97, number 1300 in Lecture Notes in Computer Science</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>A.</string>
+          </firstNames>
+          <lastName>Ravara</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>V. T.</string>
+          </firstNames>
+          <lastName>Vasconcelos</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>554</pageFrom>
+      <pageTo>561</pageTo>
+      <publicationYear>1997</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref32</id>
+      <referenceIdString>ref32</referenceIdString>
+      <title>A model of components with nonregular protocols</title>
+      <source>In Software Composition (SC</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames/>
+          <lastName>M.</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationYear>2005</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref33</id>
+      <referenceIdString>ref33</referenceIdString>
+      <title>Incrementalized pointer and escape analysis</title>
+      <source>In PLDI &apos;01</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>F.</string>
+          </firstNames>
+          <lastName>Vivien</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>M.</string>
+          </firstNames>
+          <lastName>Rinard</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <publicationYear>2001</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref34</id>
+      <referenceIdString>ref34</referenceIdString>
+      <title>Static conflict analysis for multi-threaded object-oriented programs</title>
+      <source>In PLDI &apos;03</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>C.</string>
+          </firstNames>
+          <lastName>von Praun</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>T. R.</string>
+          </firstNames>
+          <lastName>Gross</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <pageFrom>115</pageFrom>
+      <pageTo>128</pageTo>
+      <publicationYear>2003</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+    <Reference>
+      <id>ref35</id>
+      <referenceIdString>ref35</referenceIdString>
+      <title>Protocol specifications and component adaptors</title>
+      <source>ACM Transactions on Programming Languages and Systems</source>
+      <authors>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>D. M.</string>
+          </firstNames>
+          <lastName>Yellin</lastName>
+        </ReferenceAuthor>
+        <ReferenceAuthor>
+          <firstNames>
+            <string>R. E.</string>
+          </firstNames>
+          <lastName>Strom</lastName>
+        </ReferenceAuthor>
+      </authors>
+      <volume>19</volume>
+      <issue>2</issue>
+      <pageFrom>292</pageFrom>
+      <pageTo>333</pageTo>
+      <publicationYear>1997</publicationYear>
+      <publication reference="/Publication[1]"/>
+    </Reference>
+  </references>
+</Publication>

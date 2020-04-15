@@ -1,0 +1,861 @@
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN" "JATS-archivearticle1.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+  <front>
+    <journal-meta />
+    <article-meta>
+      <title-group>
+        <article-title>Retrieving Diverse Social Images at MediaEval 2016: Challenge, Dataset and Evaluation</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <string-name>Bogdan Ionescu</string-name>
+          <email>bionescu@alpha.imag.pub.ro</email>
+          <xref ref-type="aff" rid="aff2">2</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Bogdan Boteanu</string-name>
+          <email>bboteanu@alpha.imag.pub.ro</email>
+          <xref ref-type="aff" rid="aff2">2</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Alexandru Lucian Gînsca˘</string-name>
+          <email>alexandru.ginsca@cea.fr</email>
+          <xref ref-type="aff" rid="aff0">0</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Mihai Lupu</string-name>
+          <email>lupu@ifs.tuwien.ac.at</email>
+          <xref ref-type="aff" rid="aff4">4</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Maia Zaharieva</string-name>
+          <email>maia.zaharieva@univie.ac.at</email>
+          <xref ref-type="aff" rid="aff3">3</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Henning Müller</string-name>
+          <email>henning.mueller@hevs.ch</email>
+          <xref ref-type="aff" rid="aff1">1</xref>
+        </contrib>
+        <aff id="aff0">
+          <label>0</label>
+          <institution>CEA</institution>
+          ,
+          <addr-line>LIST</addr-line>
+          ,
+          <country country="FR">France</country>
+        </aff>
+        <aff id="aff1">
+          <label>1</label>
+          <institution>HES-SO, University of Applied, Sciences Western</institution>
+          <country country="CH">Switzerland</country>
+        </aff>
+        <aff id="aff2">
+          <label>2</label>
+          <institution>LAPI, University Politehnica of</institution>
+          ,
+          <addr-line>Bucharest</addr-line>
+          ,
+          <country country="RO">Romania</country>
+        </aff>
+        <aff id="aff3">
+          <label>3</label>
+          <institution>University of Vienna &amp; Vienna, University of Technology</institution>
+          ,
+          <country country="AT">Austria</country>
+        </aff>
+        <aff id="aff4">
+          <label>4</label>
+          <institution>Vienna University of</institution>
+          ,
+          <addr-line>Technology</addr-line>
+          ,
+          <country country="AT">Austria</country>
+        </aff>
+      </contrib-group>
+      <pub-date>
+        <year>2016</year>
+      </pub-date>
+      <fpage>20</fpage>
+      <lpage>21</lpage>
+      <abstract>
+        <p>This paper provides an overview of the Retrieving Diverse Social Images task that is organized as part of the MediaEval 2016 Benchmarking Initiative for Multimedia Evaluation. The task addresses the problem of result diversi cation in the context of social photo retrieval where images, metadata, text information, user tagging pro les and content and text models are available for processing. We present the task challenges, the proposed data set and ground truth, the required participant runs and the evaluation metrics.</p>
+      </abstract>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="sec-1">
+      <title>1. INTRODUCTION</title>
+      <p>
+        An efficient image retrieval system should be able to present
+results that are both relevant and that are covering different
+aspects, i.e., diversity, of the query. By diversifying the
+pool of possible results, one can increase the likelihood of
+providing the user with the information needed. Relevance
+was more thoroughly studied in existing literature than
+diversi cation [
+        <xref ref-type="bibr" rid="ref1 ref2 ref3">1, 2, 3</xref>
+        ], especially within the text community.
+Even though a considerable amount of diversi cation
+literature exists [
+        <xref ref-type="bibr" rid="ref10 ref8 ref9">8, 9, 10</xref>
+        ], the topic remains important, especially
+in the emerging elds of social multimedia [
+        <xref ref-type="bibr" rid="ref11 ref4 ref5 ref6 ref7">4, 5, 6, 7, 11</xref>
+        ].
+      </p>
+      <p>
+        The 2016 Retrieving Diverse Social Images task is a
+followup of the 2015 edition [
+        <xref ref-type="bibr" rid="ref12 ref13 ref14 ref15">14, 13, 12, 15</xref>
+        ] and aims to foster
+new technology to improve both relevance and diversi
+cation of search results with explicit emphasis on the actual
+social media context. The task was designed to support
+evaluation of techniques emerging from a wide range of research
+elds, such as image retrieval (text, vision, multimedia
+communities), machine learning, relevance feedback and natural
+language processing, but not limited to these.
+      </p>
+    </sec>
+    <sec id="sec-2">
+      <title>TASK DESCRIPTION</title>
+      <p>The task is built around the use case of a general ad-hoc
+image retrieval system, which provides the user with diverse
+representations of the queries (see for instance Google Image
+This task is partly supported by the Vienna Science and
+Technology Fund (WWTF) through project ICT12-010.</p>
+      <p>Search1). Participants are required, given a ranked list of
+query-related photos retrieved from Flickr2, to re ne the
+results by providing a set of images that are at the same time
+relevant to the query and to provide a diversi ed summary
+of it. Compared to the previous editions, this year's task
+includes complex and general-purpose multi-concept queries.</p>
+      <p>The requirements of the task are to re ne these results
+by providing a ranked list of up to 50 photos that are both
+relevant and diverse representations of the query, according
+to the following de nitions:
+Relevance: a photo is considered to be relevant for the
+query if it is a common photo representation of the query
+topics (all at once). Bad quality photos (e.g., severely blurred,
+out of focus, etc.) are not considered relevant in this
+scenario;
+Diversity: a set of photos is considered to be diverse if
+it depicts different visual characteristics of the query topics
+and subtopics with a certain degree of complementarity, i.e.,
+most of the perceived visual information is different from one
+photo to another.</p>
+      <p>To carry out the re nement and diversi cation tasks,
+participants may use the social metadata associated with the
+images, the visual characteristics of the images,
+information related to user tagging credibility (an estimation of the
+global quality of tag-image content relationships for a user's
+contributions) or external resources (e.g., the Internet).
+3.</p>
+    </sec>
+    <sec id="sec-3">
+      <title>DATASET</title>
+      <p>
+        The 2016 data consists of a development set (devset )
+containing 70 queries (20,757 Flickr photos | including 35
+multi-topic queries related to events and states associated
+with locations from the 2015 dataset [
+        <xref ref-type="bibr" rid="ref14">14</xref>
+        ]), a user annotation
+credibility set (credibilityset ) containing information for ca.
+300 location-based queries and 685 users (different than the
+ones in devset and testset | updated version of the 2015
+dataset [
+        <xref ref-type="bibr" rid="ref14">14</xref>
+        ]), a set providing semantic vectors for general
+English terms computed on top of the English Wikipedia3
+(wikiset ), which could help the participants in developing
+advanced text models, and a test set (testset ) containing 65
+      </p>
+      <sec id="sec-3-1">
+        <title>1https://images.google.com/. 2https://www.flickr.com/. 3https://en.wikipedia.org/.</title>
+        <p>queries (19,017 Flickr photos).</p>
+        <p>Each query is provided with the following information:
+query text formulation (the actual query formulation used
+on Flickr to retrieve all the data), a ranked list of up to 300
+photos in jpeg format retrieved from Flickr using Flickr's
+default \relevance" algorithm (all photos are Creative
+Commons licensed allowing redistribution4), an xml le
+containing metadata from Flickr for all the retrieved photos (e.g.,
+photo title, photo description, photo id, tags, Creative
+Common license type, the url link of the photo location from
+Flickr, the photo owner's name, user id, the number of times
+the photo has been displayed, etc), and ground truth for
+both relevance and diversity.</p>
+        <p>
+          Apart from the metadata, to facilitate participation from
+various communities, we also provide the following content
+descriptors:
+- convolutional neural network based descriptors | generic
+CNN based on the reference convolutional neural network
+(CNN) model provided along with the Caffe framework5
+(this model is learned with the 1,000 ImageNet classes used
+during the ImageNet challenge); and an adapted CNN based
+on a CNN model obtained with an identical architecture to
+that of the Caffe reference model. Adaptation is done only
+for the 2015 location-based multi-topic queries (35 queries
+from the devset), i.e., the model is learned with 1,000 tourist
+points of interest classes of which the images were
+automatically collected from the Web [
+          <xref ref-type="bibr" rid="ref16">16</xref>
+          ]. For the other queries, the
+descriptor is computed as the generic one, because queries
+are diverse enough and do not require any adaptation;
+- text information that consists as in the previous edition of
+term frequency information, document frequency
+information and their ratio, i.e., TF-IDF, which is computed on per
+image basis, per query basis and per user basis (see [
+          <xref ref-type="bibr" rid="ref17">17</xref>
+          ]);
+- user annotation credibility descriptors that give an
+automatic estimation of the quality of the users' tag-image
+content relationships. These descriptors are extracted by
+visual or textual content mining: visualScore (measure of
+user image relevance), faceProportion (the percentage of
+images with faces), tagSpeci city (average speci city of a user's
+tags, where tag speci city is the percentage of users
+having annotated with that tag in a large Flickr corpus),
+locationSimilarity (average similarity between a user's
+geotagged photos and a probabilistic model of a surrounding
+cell), photoCount (total number of images a user shared),
+uniqueTags (proportion of unique tags), uploadFrequency
+(average time between two consecutive uploads),
+bulkProportion (the proportion of bulk taggings in a user's stream,
+i.e., of tag sets that appear identical for at least two
+distinct photos), meanPhotoViews (mean value of the number
+of times a user's image has been seen by other members of
+the community), meanTitleWordCounts (mean value of the
+number of words found in the titles associated with users'
+photos), meanTagsPerPhoto (mean value of the number of
+tags users put for their images), meanTagRank (mean rank
+of a user's tags in a list in which the tags are sorted in
+descending order according the the number of appearances in a
+large subsample of Flickr images), and
+meanImageTagClarity (adaptation of the Image Tag Clarity from [
+          <xref ref-type="bibr" rid="ref18">18</xref>
+          ] using as
+individual tag language model a tf/idf language model).
+        </p>
+      </sec>
+      <sec id="sec-3-2">
+        <title>4http://creativecommons.org/. 5http://caffe.berkeleyvision.org/.</title>
+        <p>4.</p>
+      </sec>
+    </sec>
+    <sec id="sec-4">
+      <title>GROUND TRUTH</title>
+      <p>Both relevance and diversity annotations were carried out
+by expert annotators. For relevance, annotators were asked
+to label each photo (one at a time) as being relevant (value
+1), non-relevant (0) or with \don't know" (-1). For devset, 9
+annotators were involved, for credibilityset 9 and for testset
+8. The data was partitioned among annotators such that
+in the end each image has been marked by 3 different
+annotators. The nal relevance ground truth was determined
+after a lenient majority voting scheme. For diversity, only
+the photos that were judged as relevant in the previous step
+were considered. For each query, annotators were provided
+with a thumbnail list of all relevant photos. After getting
+familiar with their contents, they were asked to re-group the
+photos into clusters with similar visual appearance (up to
+25). Devset and testset were annotated by 5 persons, each
+of them annotating distinct parts of the data (leading to only
+one annotation). An additional annotator acted as a master
+annotator and reviewed once more the nal annotations.
+5.</p>
+    </sec>
+    <sec id="sec-5">
+      <title>RUN DESCRIPTION</title>
+      <p>Participants were allowed to submit up to 5 runs. The
+rst 3 are required runs: run1 | automated using visual
+information only; run2 | automated using text
+information only; and run3 | automated using text-visual fused
+without other resources than provided by the organizers.
+The last 2 runs are general runs: run4 and run5 |
+everything allowed, e.g., human-based or hybrid human-machine
+approaches, including using data from external sources (e.g.,
+Internet). For generating run1 to run3 participants are
+allowed to use only information that can be extracted from
+the provided data (e.g., provided descriptors, descriptors of
+their own, etc).
+6.</p>
+    </sec>
+    <sec id="sec-6">
+      <title>EVALUATION</title>
+      <p>Performance is assessed for both diversity and relevance.
+The following metrics are computed: Cluster Recall at X
+(CR@X) | a measure that assesses how many different
+clusters from the ground truth are represented among the top
+X results (only relevant images are considered), Precision at
+X (P@X) | measures the number of relevant photos among
+the top X results and F1-measure at X (F1@X) | the
+harmonic mean of the previous two. Various cut off points are
+to be considered, i.e., X=5, 10, 20, 30, 40, 50. Official
+ranking metric is the F1@20 which gives equal importance to
+diversity (via CR@20) and relevance (via P@20). This
+metric simulates the content of a single page of a typical Web
+image search engine and re ects user behavior, i.e.,
+inspecting the rst page of results with priority.
+7.</p>
+    </sec>
+    <sec id="sec-7">
+      <title>CONCLUSIONS</title>
+      <p>The 2016 Retrieving Diverse Social Images task provides
+participants with a comparative and collaborative
+evaluation framework for social image retrieval techniques with
+explicit focus on result diversi cation. This year in
+particular, the task explores the diversi cation in the context of a
+challenging, ad-hoc image retrieval system, which should be
+able to tackle complex and general-purpose multi-concept
+queries. Details on the methods and results of each
+individual participant team can be found in the working note
+papers of the MediaEval 2016 workshop proceedings.</p>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <ref id="ref1">
+        <mixed-citation>
+          [1]
+          <string-name>
+            <given-names>A.W.M.</given-names>
+            <surname>Smeulders</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Worring</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>S.</given-names>
+            <surname>Santini</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Gupta</surname>
+          </string-name>
+          , R. Jain, \
+          <article-title>Content-based Image Retrieval at the End of the Early Years"</article-title>
+          ,
+          <source>IEEE Transactions on Pattern Analysis and Machine Intelligence</source>
+          ,
+          <volume>22</volume>
+          (
+          <issue>12</issue>
+          ), pp.
+          <fpage>1349</fpage>
+          -
+          <lpage>1380</lpage>
+          ,
+          <year>2000</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref2">
+        <mixed-citation>
+          [2]
+          <string-name>
+            <given-names>R.</given-names>
+            <surname>Datta</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>D.</given-names>
+            <surname>Joshi</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J.</given-names>
+            <surname>Li</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J.Z.</given-names>
+            <surname>Wang</surname>
+          </string-name>
+          , \
+          <article-title>Image Retrieval: Ideas, In uences, and Trends of the New Age"</article-title>
+          ,
+          <source>ACM Computing Surveys</source>
+          ,
+          <volume>40</volume>
+          (
+          <issue>2</issue>
+          ), pp.
+          <fpage>1</fpage>
+          -
+          <lpage>60</lpage>
+          ,
+          <year>2008</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref3">
+        <mixed-citation>
+          [3]
+          <string-name>
+            <given-names>R.</given-names>
+            <surname>Priyatharshini</surname>
+          </string-name>
+          , S. Chitrakala, \
+          <article-title>Association Based Image Retrieval: A Survey"</article-title>
+          ,
+          <source>Mobile Communication and Power Engineering</source>
+          , Springer Communications in Computer and Information Science,
+          <volume>296</volume>
+          , pp.
+          <fpage>17</fpage>
+          -
+          <lpage>26</lpage>
+          ,
+          <year>2013</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref4">
+        <mixed-citation>
+          [4]
+          <string-name>
+            <surname>R.H. van Leuken</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>L.</given-names>
+            <surname>Garcia</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>X.</given-names>
+            <surname>Olivares</surname>
+          </string-name>
+          , R. van Zwol, \
+          <article-title>Visual Diversi cation of Image Search Results"</article-title>
+          , ACM World Wide Web, pp.
+          <fpage>341</fpage>
+          -
+          <lpage>350</lpage>
+          ,
+          <year>2009</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref5">
+        <mixed-citation>
+          [5]
+          <string-name>
+            <given-names>M.L.</given-names>
+            <surname>Paramita</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Sanderson</surname>
+          </string-name>
+          , P. Clough, \
+          <article-title>Diversity in Photo Retrieval: Overview of the ImageCLEF Photo Task 2009"</article-title>
+          ,
+          <string-name>
+            <surname>ImageCLEF</surname>
+          </string-name>
+          <year>2009</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref6">
+        <mixed-citation>
+          [6]
+          <string-name>
+            <given-names>B.</given-names>
+            <surname>Taneva</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Kacimi</surname>
+          </string-name>
+          , G. Weikum, \
+          <article-title>Gathering and Ranking Photos of Named Entities with High Precision, High Recall, and Diversity"</article-title>
+          ,
+          <source>ACM Web Search and Data Mining</source>
+          , pp.
+          <fpage>431</fpage>
+          -
+          <lpage>440</lpage>
+          ,
+          <year>2010</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref7">
+        <mixed-citation>
+          [7]
+          <string-name>
+            <given-names>S.</given-names>
+            <surname>Rudinac</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Hanjalic</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M.A.</given-names>
+            <surname>Larson</surname>
+          </string-name>
+          , \
+          <article-title>Generating Visual Summaries of Geographic Areas Using Community-Contributed Images"</article-title>
+          ,
+          <source>IEEE Transactions on Multimedia</source>
+          ,
+          <volume>15</volume>
+          (
+          <issue>4</issue>
+          ), pp.
+          <fpage>921</fpage>
+          -
+          <lpage>932</lpage>
+          ,
+          <year>2013</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref8">
+        <mixed-citation>
+          [8]
+          <string-name>
+            <given-names>R.</given-names>
+            <surname>Agrawal</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>S.</given-names>
+            <surname>Gollapudi</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Halverson</surname>
+          </string-name>
+          , S. Ieong, \
+          <article-title>Diversifying Search Results"</article-title>
+          ,
+          <source>ACM International Conference on Web Search and Data Mining</source>
+          , pp.
+          <fpage>5</fpage>
+          -
+          <lpage>14</lpage>
+          ,
+          <year>2009</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref9">
+        <mixed-citation>
+          [9]
+          <string-name>
+            <given-names>Y.</given-names>
+            <surname>Zhu</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>Y.</given-names>
+            <surname>Lan</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J.</given-names>
+            <surname>Guo</surname>
+          </string-name>
+          , X. Cheng, S. Niu, \
+          <article-title>Learning for Search Result Diversi cation"</article-title>
+          ,
+          <source>ACM SIGIR Conference on Research and Development in Information Retrieval</source>
+          , pp.
+          <fpage>293</fpage>
+          -
+          <lpage>302</lpage>
+          ,
+          <year>2014</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref10">
+        <mixed-citation>
+          [10]
+          <string-name>
+            <surname>H.-T. Yu</surname>
+            ,
+            <given-names>F.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Ren</surname>
+          </string-name>
+          , \
+          <article-title>Search Result Diversi cation via Filling up Multiple Knapsacks"</article-title>
+          ,
+          <source>ACM International Conference on Conference on Information and Knowledge Management</source>
+          , pp.
+          <fpage>609</fpage>
+          -
+          <lpage>618</lpage>
+          ,
+          <year>2014</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref11">
+        <mixed-citation>
+          [11]
+          <string-name>
+            <surname>D.-T.</surname>
+            Dang-Nguyen,
+            <given-names>L.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Piras</surname>
+            ,
+            <given-names>G.</given-names>
+            Giacinto, G.
+          </string-name>
+          <string-name>
+            <surname>Boato</surname>
+            ,
+            <given-names>F.</given-names>
+          </string-name>
+          <string-name>
+            <surname>G.B. De Natale</surname>
+          </string-name>
+          , \
+          <article-title>A Hybrid Approach for Retrieving Diverse Social Images of Landmarks"</article-title>
+          ,
+          <source>IEEE International Conference on Multimedia and Expo</source>
+          , pp.
+          <fpage>1</fpage>
+          -
+          <lpage>6</lpage>
+          ,
+          <year>2015</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref12">
+        <mixed-citation>
+          [12]
+          <string-name>
+            <given-names>B.</given-names>
+            <surname>Ionescu</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>A.-L.</given-names>
+            <surname>Radu</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Menendez</surname>
+          </string-name>
+          , H. Muller,
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Popescu</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>B.</given-names>
+            <surname>Loni</surname>
+          </string-name>
+          , \
+          <article-title>Div400: A Social Image Retrieval Result Diversi cation Dataset"</article-title>
+          , ACM MMSys, Singapore,
+          <year>2014</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref13">
+        <mixed-citation>
+          [13]
+          <string-name>
+            <given-names>B.</given-names>
+            <surname>Ionescu</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Popescu</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Lupu</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>A.L. G</surname>
+          </string-name>
+          ^nsca,
+          <string-name>
+            <given-names>B.</given-names>
+            <surname>Boteanu</surname>
+          </string-name>
+          , H. Muller, \
+          <article-title>Div150Cred: A Social Image Retrieval Result Diversi cation with User Tagging Credibility Dataset"</article-title>
+          , ACM MMSys, Portland, Oregon, USA,
+          <year>2015</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref14">
+        <mixed-citation>
+          [14]
+          <string-name>
+            <given-names>B.</given-names>
+            <surname>Ionescu</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>A.L. G</surname>
+          </string-name>
+          ^nsca,
+          <string-name>
+            <given-names>B.</given-names>
+            <surname>Boteanu</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Lupu</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Popescu</surname>
+          </string-name>
+          , H. Muller, \
+          <article-title>Div150Multi: A Social Image Retrieval Result Diversi cation Dataset with Multi-topic Queries"</article-title>
+          , ACM MMSys, Klagenfurt, Austria,
+          <year>2016</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref15">
+        <mixed-citation>
+          [15]
+          <string-name>
+            <given-names>B.</given-names>
+            <surname>Ionescu</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Popescu</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>A.-L.</given-names>
+            <surname>Radu</surname>
+          </string-name>
+          , H. Muller, \
+          <article-title>Result Diversi cation in Social Image Retrieval: A Benchmarking Framework"</article-title>
+          ,
+          <source>Multimedia Tools and Applications</source>
+          ,
+          <year>2014</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref16">
+        <mixed-citation>
+          [16]
+          <string-name>
+            <given-names>E.</given-names>
+            <surname>Spyromitros-Xiou s</surname>
+          </string-name>
+          , S. Papadopoulos, A. G^nsca,
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Popescu</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>I. Kompatsiaris</surname>
+          </string-name>
+          , I. Vlahavas, \
+          <article-title>Improving Diversity in Image Search via Supervised Relevance Scoring"</article-title>
+          ,
+          <source>ACM International Conference on Multimedia Retrieval</source>
+          ,
+          <string-name>
+            <surname>ACM</surname>
+          </string-name>
+          , Shanghai, China,
+          <year>2015</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref17">
+        <mixed-citation>
+          [17]
+          <string-name>
+            <given-names>B.</given-names>
+            <surname>Ionescu</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Popescu</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>M.</given-names>
+            <surname>Lupu</surname>
+          </string-name>
+          ,
+          <string-name>
+            <surname>A.L. G</surname>
+          </string-name>
+          ^nsca, H. Muller, \Retrieving Diverse Social Images at MediaEval 2014:
+          <article-title>Challenge, Dataset and Evaluation"</article-title>
+          ,
+          <source>CEUR-WS</source>
+          , Vol.
+          <volume>1263</volume>
+          , http://ceur-ws.
+          <source>org/</source>
+          Vol-
+          <volume>1263</volume>
+          /mediaeval2014_submission_1.pdf, Spain,
+          <year>2014</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref18">
+        <mixed-citation>
+          [18]
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Sun</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>S.S.</given-names>
+            <surname>Bhowmick</surname>
+          </string-name>
+          , \
+          <article-title>Image Tag Clarity: in Search of Visual-Representative Tags for Social Images"</article-title>
+          , SIGMM workshop on Social media,
+          <year>2009</year>
+          .
+        </mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<algorithms version="110505">
+<algorithm name="SectLabel" version="110505">
+<variant no="0" confidence="0.002498">
+<title confidence="0.964756">
+Extensions for Interaction Nets
+</title>
+<author confidence="0.986261">
+Eugen Jiresch and Bernhard Gramlich (Faculty Mentor)
+</author>
+<affiliation confidence="0.999014">
+Institute of Computer Languages
+Vienna University of Technology
+</affiliation>
+<address confidence="0.495068">
+Vienna, Austria
+</address>
+<email confidence="0.989989">
+Email: {jiresch,gramlich}@logic.at
+</email>
+<bodyText confidence="0.914360333333333">
+Abstract — Interaction Nets are a novel model of computa-
+tion based on graph rewriting. Their main properties are par-
+allel evaluation and sharing of computation, which leads to ef-
+ficient programs.
+However, Interaction Nets lack several features that allow for
+their convenient use as a programming language. In this pa-
+per, we describe the implementation of an extension for pattern
+matching of interaction rules. Furthermore, we show the cor-
+rectness of the implementation and discuss its complexity.
+</bodyText>
+<sectionHeader confidence="0.947433" genericHeader="method">
+I. INTRODUCTION
+A. OVERVIEW
+</sectionHeader>
+<bodyText confidence="0.999903789473684">
+Models of computation are the basis for many program-
+ming languages. They allow for reasoning on formal
+properties of programs such as their correctness and ter-
+mination (i.e., whether a program eventually halts). An
+example is the λ-calculus, which is the basis for func-
+tional programming languages such as Haskell.
+Interaction Nets are a relatively new model of com-
+putation based on graph rewriting. They enjoy several
+useful properties that give them great potential for a fu-
+ture programming language. In this paper, we introduce
+a method for extended pattern matching which allows for
+the formulation of more powerful interaction rules. We
+describe our recent contribution, an implementation of
+the extended pattern matching, and discuss its properties.
+This paper is organised as follows: The next subsec-
+tion gives a short introduction to Interaction Nets. In
+Section II., we introduce extended pattern matching and
+outline its implementation. Finally, we present a conclu-
+sion and give an outlook on further research.
+</bodyText>
+<sectionHeader confidence="0.918041" genericHeader="method">
+B. INTERACTION NETS
+</sectionHeader>
+<bodyText confidence="0.9985645">
+Interaction Nets were first introduced in [1]. A net is a
+graph consisting of agents (nodes) and ports (edges).
+</bodyText>
+<equation confidence="0.812113">
+x1 xn
+❅ · · · ✓✏
+α
+✒✑
+❄
+</equation>
+<bodyText confidence="0.923224357142857">
+Computation is modeled by rewriting the graph, which
+is based on interaction rules. These rules apply to two
+nodes which are connected by their principal ports (de-
+noted by the arrow). For example, the following two
+rules model the addition of natural numbers (encoded by
+0 and a successor function S):
+✻
+This simple system allows for parallel evaluation of pro-
+grams: If more than one interaction rule is applicable
+at the same time, they can be applied in parallel with-
+out interfering with each other. In addition, nets share
+computation: If an expression appears multiple times in
+a program, it is evaluated only once.
+II. NESTED PATTERN MATCHING AND ITS
+</bodyText>
+<sectionHeader confidence="0.90461" genericHeader="method">
+IMPLEMENTATION
+</sectionHeader>
+<bodyText confidence="0.971832857142857">
+The simplicity of interaction rules brings a disadvantage:
+Only the two nodes that are connected via their princi-
+pal ports are relevant to the rule. This makes it hard
+to express functions that depend on more than two non-
+variable symbols, or in other words, have a more compli-
+cated pattern. Consider a function that finds and returns
+the last element of a list:
+last Cons ( x , Nil) = x
+last Cons ( x , xs ) = last xs
+The first rule pattern includes three function symbols:
+last, Cons and Nil. Since interaction rules are restricted
+to two function symbols per rule pattern (the names of the
+agents), one has to introduce an auxiliary rule to model
+this function:
+</bodyText>
+<equation confidence="0.492330333333333">
+last Cons ( x , xs ) = aux x xs
+aux x Nil = x
+aux x Cons ( y , ys ) = last Cons ( y , ys )
+</equation>
+<bodyText confidence="0.999882625">
+To counter this problem, Interaction Nets with nested
+patterns were introduced [2]. Nested rules allow for pat-
+tern matching of more complicated functions. The bene-
+ficial properties of Interaction Nets are preserved if the
+nested rules are of a specific form (i.e., well-formed).
+Moreover, it is possible to transform nested rules into or-
+dinary ones by introducing auxiliary rules, much like in
+the example above.
+</bodyText>
+<figure confidence="0.995625444444444">
+✓✏
++
+✒✑
+✓✏ ✠ ❅
+✒ =⇒
+S ✒✑
+✓✏
+S ✒✑
+✓✏
++
+✒✑
+✠ ❅
+✓✏
++
+❅
+✠✒✑
+✓✏✒ =⇒
+0✒✑
+</figure>
+<page confidence="0.993172">
+295
+</page>
+<bodyText confidence="0.9996365">
+The first author contributed to this research by imple-
+menting nested pattern matching in the Interaction Nets
+based prototype programming language inets [3]. The
+corresponding theoretical description of this work was
+presented at the workshop RULE’09 [4]. In the remain-
+der of this section, we outline the main ingredients of the
+implementation.
+The implementation consists of two parts:
+</bodyText>
+<listItem confidence="0.999231">
+1. Verification of the well-formedness of interaction
+rules
+2. Translation of nested rules into ordinary rules
+</listItem>
+<bodyText confidence="0.993838090909091">
+Verification of well-formedness The well-formedness
+property of a set of interaction rules ensures that there is
+no overlap between rules: A given pair of agents (with
+nested arguments) must not match more than one rule.
+Otherwise, the rules cannot be applied in a determinis-
+tic fashion which leads to inconsistent results. The algo-
+rithm in inets tries to falsify this condition of the rule set:
+It searches (exhaustively) for two nested patterns that can
+match the same net. The condition is falsified if and only
+if the set of rules is not well-formed. A formal proof can
+be found in [4, 5].
+Rule translation We now give an overview of the ac-
+tual translation of nested rules. This is done as follows:
+The inets compiler reads source code and builds an ab-
+stract syntax tree (AST) which is further compiled into
+byte code and later C source code. Our translation func-
+tion rewrites ASTs that represent nested rules into ASTs
+that represent ordinary interaction rules. The back end of
+the compiler remains unaffected by the translation. Over-
+all, our translation function is similar to the compilation
+schemes defined in the original paper [2]. We summarise
+the translation algorithm in the following steps:
+</bodyText>
+<listItem confidence="0.996412272727273">
+1. A rule is found in the AST. If the rule has a nested
+pattern, its well-formedness is verified.
+2. If the rule is well-formed, it is translated: The first
+nested argument is removed from the rule and an
+auxiliary rule is generated. This rule is appended to
+the AST.
+3. The remaining nested agents are not (yet) trans-
+lated. They are resolved by translating the auxiliary
+rule.
+4. The AST is traversed until the next (unprocessed)
+rule is found.
+</listItem>
+<bodyText confidence="0.997269894736842">
+This algorithm allows for an arbitrary number of nested
+patterns (i.e., the number of nested agents in a nested
+rule) and an arbitrary pattern depth.
+Properties of the translation We show that the algo-
+rithm is terminating: The translation function either fails
+(due to a non well-formed rule) or yields a set of ordi-
+nary interaction rules. The idea behind the formal proof
+is to show that the number of rules and nested patterns
+decreases with each call of the translation function.
+The time and space complexity of the algorithm can be
+described as follows: The time complexity of the transla-
+tion is O(n2) where n is the sum of the number of rules
+and nested patterns in the input rule set. This is due to
+(one part of) the well-formedness check that compares
+each rule with every other rule (n(n−1)
+2 checks are per-
+formed). Space complexity is linear with the number of
+input rules. For a more detailed complexity discussion,
+the reader is referred to [5].
+</bodyText>
+<sectionHeader confidence="0.802034" genericHeader="method">
+III. CONCLUSION AND OUTLOOK
+</sectionHeader>
+<bodyText confidence="0.999954666666667">
+In this paper, we have given a short introduction to In-
+teraction Nets and their extension through nested pat-
+terns. We have contributed to this field of research
+by implementing a translation algorithm for nested pat-
+terns in the Interaction Nets based programming lan-
+guage inets. This algorithm includes verification of the
+well-formedness of rules. Moreover, the translation han-
+dles programming language features that are not part of
+the original definition of the translation. Some impor-
+tant examples are data values of agents (integers, floats,
+strings,... ), side effects (declaration and manipulation of
+variables, I/O) and conditions.
+Nested pattern matching can serve as a basis for fur-
+ther language extensions for Interaction Nets. These ex-
+tensions are pursued in the context of the PhD project of
+the first author which is funded by the Austrian Academy
+of Sciences ( ÖAW) and the Vienna PhD School of Infor-
+matics.
+</bodyText>
+<sectionHeader confidence="0.999001" genericHeader="references">
+REFERENCES
+</sectionHeader>
+<reference confidence="0.9999726875">
+[1] Y. Lafont. Interaction nets. In Proceedings of the
+17th ACM symposium on Principles ofprogramming
+languages (POPL), pages 95–108, 1990.
+[2] A. Hassan and S. Sato. Interaction nets with nested
+pattern matching. Electr. Notes Theor. Comput. Sci.,
+203(1):79–92, 2008.
+[3] The inets project. http://www.interaction-nets.org/.
+[4] A. Hassan, E. Jiresch, and S. Sato. Interaction nets
+with nested patterns: An implementation. Prelim.
+Proceedings: 10th Int. Workshop on Rule-Based Pro-
+gramming (RULE’09), pp. 14-25, Bras´ılia, Brazil,
+June 2009.
+[5] A. Hassan, E. Jiresch, and S. Sato. Interaction nets
+with nested patterns: An implementation. Full ver-
+sion of [4]. In Proceedings of RULE’09: Electr. Pro-
+ceed. in Theor. Comp. Sci. (EPTCS), 2010, to appear.
+</reference>
+<page confidence="0.982957">
+296
+</page>
+</variant>
+</algorithm>
+<algorithm name="ParsHed" version="110505">
+<variant no="0" confidence="0.376709">
+<title confidence="0.999403">Extensions for Interaction Nets</title>
+<author confidence="0.996548">Eugen Jiresch</author>
+<author confidence="0.996548">Bernhard Gramlich</author>
+<affiliation confidence="0.84504">Institute of Computer Vienna University of Vienna,</affiliation>
+<abstract confidence="0.998410333333333">Interaction Nets a novel model of computation based on graph rewriting. Their main properties are parallel evaluation and sharing of computation, which leads to efficient programs. Nets several features that allow for their convenient use as a programming language. In this paper, we describe the implementation of an extension for pattern matching of interaction rules. Furthermore, we show the correctness of the implementation and discuss its complexity. A. Models of computation are the basis for many programming languages. They allow for reasoning on formal properties of programs such as their correctness and termination (i.e., whether a program eventually halts). An is the which is the basis for funcprogramming languages such as Nets a relatively new model of computation based on graph rewriting. They enjoy several useful properties that give them great potential for a future programming language. In this paper, we introduce a method for extended pattern matching which allows for the formulation of more powerful interaction rules. We describe our recent contribution, an implementation of the extended pattern matching, and discuss its properties.</abstract>
+<note confidence="0.749733">This paper is organised as follows: The next subsec-</note>
+</variant>
+</algorithm>
+<algorithm name="ParsCit" version="110505">
+<citationList>
+<citation valid="true">
+<authors>
+<author>Y Lafont</author>
+</authors>
+<title>Interaction nets.</title>
+<date>1990</date>
+<booktitle>In Proceedings of the 17th ACM symposium on Principles ofprogramming languages (POPL),</booktitle>
+<pages>95--108</pages>
+<contexts>
+<context position="1813" citStr="[1]" startWordPosition="273" endWordPosition="273">oduce extended pattern matching and outline its implementation. Finally, we present a conclusion and give an outlook on further research. B. INTERACTION NETS Interaction Nets were first introduced in [1]. A net is a graph consisting of agents (nodes) and ports (edges). x1 xn ❅ · · · ✓✏ α ✒✑ ❄ Computation is modeled by rewriting the graph, which is based on interaction rules. These rules apply to two </context>
+</contexts>
+<marker>[1]</marker>
+<rawString>Y. Lafont. Interaction nets. In Proceedings of the 17th ACM symposium on Principles ofprogramming languages (POPL), pages 95–108, 1990.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>A Hassan</author>
+<author>S Sato</author>
+</authors>
+<title>Interaction nets with nested pattern matching.</title>
+<date>2008</date>
+<journal>Electr. Notes Theor. Comput. Sci.,</journal>
+<volume>203</volume>
+<issue>1</issue>
+<contexts>
+<context position="3412" citStr="[2]" startWordPosition="573" endWordPosition="573"> rule to model this function: last Cons ( x , xs ) = aux x xs aux x Nil = x aux x Cons ( y , ys ) = last Cons ( y , ys ) To counter this problem, Interaction Nets with nested patterns were introduced [2]. Nested rules allow for pattern matching of more complicated functions. The beneficial properties of Interaction Nets are preserved if the nested rules are of a specific form (i.e., well-formed). Mor</context>
+<context position="5452" citStr="[2]" startWordPosition="919" endWordPosition="919">t ordinary interaction rules. The back end of the compiler remains unaffected by the translation. Overall, our translation function is similar to the compilation schemes defined in the original paper [2]. We summarise the translation algorithm in the following steps: 1. A rule is found in the AST. If the rule has a nested pattern, its well-formedness is verified. 2. If the rule is well-formed, it is </context>
+</contexts>
+<marker>[2]</marker>
+<rawString>A. Hassan and S. Sato. Interaction nets with nested pattern matching. Electr. Notes Theor. Comput. Sci., 203(1):79–92, 2008.</rawString>
+</citation>
+<citation valid="false">
+<title>The inets project.</title>
+<note>http://www.interaction-nets.org/.</note>
+<contexts>
+<context position="3970" citStr="[3]" startWordPosition="675" endWordPosition="675"> ✓✏ S ✒✑ ✓✏ + ✒✑ ✠ ❅ ✓✏ + ❅ ✠✒✑ ✓✏✒ =⇒ 0✒✑ 295 The first author contributed to this research by implementing nested pattern matching in the Interaction Nets based prototype programming language inets [3]. The corresponding theoretical description of this work was presented at the workshop RULE’09 [4]. In the remainder of this section, we outline the main ingredients of the implementation. The impleme</context>
+</contexts>
+<marker>[3]</marker>
+<rawString>The inets project. http://www.interaction-nets.org/.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>A Hassan</author>
+<author>E Jiresch</author>
+<author>S Sato</author>
+</authors>
+<title>Interaction nets with nested patterns: An implementation.</title>
+<date>2009</date>
+<booktitle>Prelim. Proceedings: 10th Int. Workshop on Rule-Based Programming (RULE’09),</booktitle>
+<pages>14--25</pages>
+<location>Bras´ılia, Brazil,</location>
+<contexts>
+<context position="4068" citStr="[4]" startWordPosition="689" endWordPosition="689">plementing nested pattern matching in the Interaction Nets based prototype programming language inets [3]. The corresponding theoretical description of this work was presented at the workshop RULE’09 [4]. In the remainder of this section, we outline the main ingredients of the implementation. The implementation consists of two parts: 1. Verification of the well-formedness of interaction rules 2. Tran</context>
+<context position="4904" citStr="[4, 5]" startWordPosition="827" endWordPosition="828">rule set: It searches (exhaustively) for two nested patterns that can match the same net. The condition is falsified if and only if the set of rules is not well-formed. A formal proof can be found in [4, 5]. Rule translation We now give an overview of the actual translation of nested rules. This is done as follows: The inets compiler reads source code and builds an abstract syntax tree (AST) which is fu</context>
+</contexts>
+<marker>[4]</marker>
+<rawString>A. Hassan, E. Jiresch, and S. Sato. Interaction nets with nested patterns: An implementation. Prelim. Proceedings: 10th Int. Workshop on Rule-Based Programming (RULE’09), pp. 14-25, Bras´ılia, Brazil, June 2009.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>A Hassan</author>
+<author>E Jiresch</author>
+<author>S Sato</author>
+</authors>
+<title>Interaction nets with nested patterns: An implementation. Full version of [4].</title>
+<date>2010</date>
+<booktitle>In Proceedings of RULE’09: Electr. Proceed. in Theor. Comp. Sci. (EPTCS),</booktitle>
+<note>to appear.</note>
+<contexts>
+<context position="4904" citStr="[4, 5]" startWordPosition="827" endWordPosition="828">rule set: It searches (exhaustively) for two nested patterns that can match the same net. The condition is falsified if and only if the set of rules is not well-formed. A formal proof can be found in [4, 5]. Rule translation We now give an overview of the actual translation of nested rules. This is done as follows: The inets compiler reads source code and builds an abstract syntax tree (AST) which is fu</context>
+<context position="6920" citStr="[5]" startWordPosition="1176" endWordPosition="1176">mpares each rule with every other rule (n(n−1) 2 checks are performed). Space complexity is linear with the number of input rules. For a more detailed complexity discussion, the reader is referred to [5]. III. CONCLUSION AND OUTLOOK In this paper, we have given a short introduction to Interaction Nets and their extension through nested patterns. We have contributed to this field of research by implem</context>
+</contexts>
+<marker>[5]</marker>
+<rawString>A. Hassan, E. Jiresch, and S. Sato. Interaction nets with nested patterns: An implementation. Full version of [4]. In Proceedings of RULE’09: Electr. Proceed. in Theor. Comp. Sci. (EPTCS), 2010, to appear.</rawString>
+</citation>
+</citationList>
+</algorithm>
+</algorithms>

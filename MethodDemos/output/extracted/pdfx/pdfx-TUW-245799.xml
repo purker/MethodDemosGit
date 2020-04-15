@@ -1,0 +1,147 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pdfx xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://pdfx.cs.man.ac.uk/static/article-schema.xsd">
+  <meta>
+    <job>6f7948102982f911dc0962e493b5c97307f30bb9fa404c7b51e37a6ed239b7da</job>
+    <base_name>l4o</base_name>
+    <doi>http://dx.doi.org/10.1002/9781118029145.ch14</doi>
+    <warning>Name identification was not possible. </warning>
+  </meta>
+  <article>
+    <front class="DoCO:FrontMatter">
+      <region class="DoCO:FigureBox" id="Fx1">
+        <image class="DoCO:Figure" src="l4o.page_001.image_01.png" thmb="l4o.page_001.image_01-thumb.png"/>
+      </region>
+      <region class="unknown" id="2">ANALELE UNIVERSIT ĂŢ II “EFTIMIE MURGU” RE Ş I Ţ A ANUL XXII, NR. 2, 2015, ISSN 1453 - 7397</region>
+      <region class="DoCO:TextChunk" id="3" confidence="possible">Elisabeta Spunei, Ion Piroi, Florina Piroi</region>
+      <title-group>
+        <article-title class="DoCO:Title" id="4">Basic Concepts in the Diagnosis of Traffic Safety Installations Using Fuzzy Logic Based Models</article-title>
+      </title-group>
+      <abstract class="DoCO:Abstract" id="5" confidence="possible">The diagnosis of failures in train traffic installations can be done in sev- eral ways: direct observations and measurements, software assisted diagnosis using specific software packages, process variable monitoring for electronically centralized installations. This work presents basic concepts for Model Based Diagnosis (MBD) that uses fuzzy logic to analyse the integrity of Centralized Traffic Control Installations (CTC) in train traffic. We define the diagnosis relations to be used and show how to apply them to train traffic security installations. Implementing these concepts into an expert system assists maintenance operators in quick failure diagnosis of the train traffic security installations. Keywords : (CTC), Model Based Diagnosis, logic relations, fuzzy logic</abstract>
+    </front>
+    <body class="DoCO:BodyMatter">
+      <section class="deo:Introduction">
+        <h1 class="DoCO:SectionTitle" id="6" page="1" column="1">1. Introduction</h1>
+      </section>
+      <region class="DoCO:TextChunk" id="13" page="1" column="1">Railroad Centralized Traffic Control installations are very complex systems that command and control train traffic, being essential in train traffic security. Train stations where the CTC installation is electro-dynamically realised (ED-CTC) have more complex subsystems, each of them, again, having subcomponents that inter- act with each other. Each subsystem interacts with other subsystems, therefore the safety of the traffic passing an ED-CTC station is ensured when all subsystems function within normal parameter values. <xref ref-type="fig" rid="F1" id="7" class="deo:Reference">Fig. 1</xref> shows the interconnection block schema for a railway station with CTC and ABS (Automatic Block Signalling) installations. All subsystems are controlled through the command console, any failure of the one or more subsystem causing an irregular behaviour of the whole system, behaviour which is usually signalled. Diagnosing the system or the subsystem is necessary in order to detect the failing component(s) that are the cause of the faulty behaviour. Currently, for these types of installations, the failure diagnosis is done by direct observations of the various signals and measurements of equipment states.<marker type="page" number="2"/><marker type="block"/> The diagnosis time strongly depends on the maintenance staff’s detailed knowledge on the whole system and subsystems internals.<marker type="block"/> This work proposes to develop an expert system (ES) that uses fuzzy logic to diagnose CTC stations. ESs are used also in power electric systems [<xref ref-type="bibr" rid="R1" id="12" class="deo:Reference">1</xref>]. The expert system will receive information from various subsystem components and will process and compare them with the ES model. The ES output will be a minimal set of causes for the signalled system misbehaviour, corresponding to the signals displayed.</region>
+      <outsider class="DoCO:TextBox" type="page_nr" id="9" page="1" column="1">327</outsider>
+      <region class="DoCO:FigureBox" id="F1">
+        <caption class="deo:Caption" id="11" page="2" column="1">Figure 1. Subsystems interconnection block scheme</caption>
+      </region>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="14" page="2" column="1">2. Principles of the Model Based Diagnosis</h1>
+        <region class="DoCO:TextChunk" id="17" page="2" column="1">To better understand the basic principles in the model based diagnosis we will use the word system to refer to both systems and subsystems. To use the model based diagnosis it is necessary to completely describe each system component. This step is called system description, SD [<xref ref-type="bibr" rid="R1" id="15" class="deo:Reference">1</xref>, <xref ref-type="bibr" rid="R2" id="16" class="deo:Reference">2</xref>]. Logical relations that describe how the components work, the links between components, and the workings of the whole system are established. These relations are, in fact, propositional logic sentences that form the system’s propositional logic, SPL . A logical consequence of the detailed and correct system description is the correct operation of the system. Any discrepancy between the system’s punctual behaviour (pointwise) and its description is caused by a faulty component. Thus the system description is based on the logical propositions that describe the components, their operation and the links between them. To diagnose a system we must identify all the discrepancies between the system description and its running behaviour. Each discrepancy (or symptom) is de- termined by a set of concurrent components, CC, which are candidate components for the respective symptom. We can write:</region>
+        <outsider class="DoCO:TextBox" type="page_nr" id="18" page="2" column="1">328</outsider>
+        <region class="DoCO:TextChunk" id="19" confidence="possible" page="3" column="1">(1)</region>
+        <region class="unknown" id="20" page="3" column="1">CC ⊃ CD</region>
+        <region class="DoCO:TextChunk" id="22" page="3" column="1">An example of a defect, in our case, is the fact that an entry signal cannot be commanded on the ‘free’ position. The concurrent components of this symptom are: damaged track circuit, damaged track point, faulty power feed installation, line occupied by rolling stock, previously executed movement on the same line, damaged command apparatus. Based on observations it is noted that the system failure is caused by the track circuit which does not function properly. In this case the main candidate components are: safeties, transformers, IMVS, BDF, TR relays, the track relay, the filter, the railway tracks, connections, ropes (<xref ref-type="fig" rid="F2" id="21" class="deo:Reference">Fig. 2</xref>).</region>
+        <region class="unknown" id="23" page="3" column="1">CD CC Feed Command instalation apparatus CD CD CD Switch Signal CD point ABS CD Track circuits Ropes Rails Relays Safeties Transformers</region>
+        <region class="DoCO:FigureBox" id="F2">
+          <caption class="deo:Caption" id="24" page="3" column="1">Figure 2. Concurrent and candidate components</caption>
+        </region>
+        <disp-formula class="DoCO:FormulaBox" id="F2">
+          <label class="DoCO:Label" id="25">2</label>
+          <content class="DoCO:Formula" id="26" confidence="possible" page="3" column="1">In our example, then, we have: CC = { Switch po int, Signal , ABS ,... Track circuit } CD = { Transformers , Safeties , Rail track ,..., relay IMVS }</content>
+        </disp-formula>
+        <region class="DoCO:TextChunk" id="28" page="3" column="1">The faults in the track circuit operations are caused by the breakdown of one or more candidate components in the CD set. We continue with some further basic definitions and relations in the model based diagnosis systems. The CD’s operation state is described by a predicate, AB, which indicates the abnormal operation (faulty state). The normal operation state is given by ¬AB [<xref ref-type="bibr" rid="R2" id="27" class="deo:Reference">2</xref>]. Definition 1: System description A functional system, FS, is described by the pair (SD, CD):</region>
+        <outsider class="DoCO:TextBox" type="page_nr" id="29" page="3" column="1">329</outsider>
+        <region class="DoCO:TextChunk" id="30" confidence="possible" page="4" column="1">FS ⊃ SD ∪ CD (3) where: - CD is a finite candidate system components set; - SD is a finite subset of system’s propositional logic, SPL. The system diagnosis, ∆ , is applied when the following holds: SD ∪ CD ≠ FS (4)</region>
+        <region class="DoCO:TextChunk" id="32" page="4" column="1">Using the AB predicate we can describe the components’ functional proper- ties. Suppose we want to express the following sentence: “Normally, the NF1-800 operating voltage is between 8 V and 12 V” [<xref ref-type="bibr" rid="R3" id="31" class="deo:Reference">3</xref>]. Then, the corresponding relation is:</region>
+        <disp-formula class="DoCO:FormulaBox" id="F5">
+          <label class="DoCO:Label" id="33">5</label>
+          <content class="DoCO:Formula" id="34" page="4" column="1">NF 1 − 800 ( CD ) ∧ voltage ( CD , u ) ∧ ¬ AB ( u ) ⊃ rate ( u ≥ 8 ) ∧ rate ( u ≤ 14 )</content>
+        </disp-formula>
+        <region class="DoCO:TextChunk" id="35" page="4" column="1">With the same predicate we can describe the possible effects of the components with the relation:</region>
+        <disp-formula class="DoCO:FormulaBox" id="F6">
+          <label class="DoCO:Label" id="36">6</label>
+          <content class="DoCO:Formula" id="37" confidence="possible" page="4" column="1">type ( CD ) ∧ AB ( CD ) ⊃ fault 1 ( CD ) ∨ fault 2 ( CD ) ∨ ... ∨ fault n ( CD )</content>
+        </disp-formula>
+        <region class="DoCO:TextChunk" id="38" page="4" column="1">where type can be: relays, safeties, transformers, etc. Definition 2: Observing the system Observing the system, OBS, is a finite set of first order logic sentences that are used to diagnose the system. Therefore, the functional system can be described by the relation:</region>
+        <region class="unknown" id="39" page="4" column="1">FS ⊃ SD ∪ CD ∪ OBS</region>
+        <region class="DoCO:TextChunk" id="40" confidence="possible" page="4" column="1">(7)</region>
+        <region class="DoCO:TextChunk" id="41" page="4" column="1">These observations belong to the system’s propositional logic and their role is to signal the system’s faulty behaviour. Definition 3: System diagnosis The system diagnosis is a minimal set ∆ ⊆ CD , such that:</region>
+        <disp-formula class="DoCO:FormulaBox" id="F8">
+          <label class="DoCO:Label" id="42">8</label>
+          <content class="DoCO:Formula" id="43" page="4" column="1">SD ∪ OBS ∪ { AB ( c ) c ∈ ∆ } ∪ { ¬ AB ( c ) c ∈ CD − ∆ } ∃</content>
+        </disp-formula>
+        <region class="DoCO:TextChunk" id="44" page="4" column="1">The diagnosis aims to discover the faulty component that causes the whole system to misbehave. The conditions to apply the diagnosis are: a) We use the diagnosis for the system (SD, CD, OBS) if:</region>
+        <outsider class="DoCO:TextBox" type="page_nr" id="45" page="4" column="1">330</outsider>
+        <disp-formula class="DoCO:FormulaBox" id="F9">
+          <label class="DoCO:Label" id="46">9</label>
+          <content class="DoCO:Formula" id="47" page="5" column="1">∃ ( SD ∪ OBS )</content>
+        </disp-formula>
+        <region class="DoCO:TextChunk" id="48" confidence="possible" page="5" column="1">b) { } is a diagnosis for the (SD, CD, OBS) system if:</region>
+        <disp-formula class="DoCO:FormulaBox" id="F10">
+          <label class="DoCO:Label" id="49">10</label>
+          <content class="DoCO:Formula" id="50" page="5" column="1">SD ∪ OBS ∪ { ¬ AB ( c ) c ∈ CD } ∃ c) ∆ = { AB ( c i ) } is a diagnosis for the (SD, CD, OBS) system if:</content>
+        </disp-formula>
+        <disp-formula class="DoCO:FormulaBox" id="F11">
+          <label class="DoCO:Label" id="51">11</label>
+          <content class="DoCO:Formula" id="52" page="5" column="1">SD ∪ OBS ∪ { ¬ AB ( c ) c ∈ CD − ∆ } = AB ( c i )</content>
+        </disp-formula>
+        <region class="DoCO:TextChunk" id="53" confidence="possible" page="5" column="1">d) ∆ ⊆ CD is a diagnosis for the (SD, CD, OBS) system if ∆ is a minimal set such that:</region>
+        <disp-formula class="DoCO:FormulaBox" id="F12">
+          <label class="DoCO:Label" id="54">12</label>
+          <content class="DoCO:Formula" id="55" page="5" column="1">SD ∪ OBS ∪ { ¬ AB ( c ) c ∈ CD − ∆ } ∃</content>
+        </disp-formula>
+        <region class="DoCO:TextChunk" id="56" confidence="possible" page="5" column="1">Definition 4: System’s conflicts A set of conflicts of the (SD, CD, OBS) system is a set F = { c 1 , c 2 ,..., c n } , with F ⊆ CD , such that:</region>
+        <disp-formula class="DoCO:FormulaBox" id="F13">
+          <label class="DoCO:Label" id="57">13</label>
+          <content class="DoCO:Formula" id="58" page="5" column="1">SD ∪ OBS ∪ { ¬ AB ( c 1 ) , ¬ AB ( c 1 ) ,..., ¬ AB ( c 1 ) } does not exist</content>
+        </disp-formula>
+        <region class="DoCO:TextChunk" id="61" page="5" column="1">Relation (12) can be redefined using the conflict set terms: ∆ ⊆ CD is a diagnosis for the (SD, CD, OBS) system if ∆ is a minimal set such that CD − ∆ is not a conflict set for (SD, CD, OBS). <marker type="block"/> Definition 5: The goal set: Let C be a collection of sets. A goal set for C is a set H ⊆ ∪ S ∈ C S , such that H ∩ S ≠ { ∅ } for any S ∈ C . O goal set for C is minimal if none of its subsets is a goal set for C.<marker type="block"/> To compute the diagnosis set we give the following: Theorem 1: ∆ ⊆ CD is a diagnosis for system (SD, CD, OBS) if ∆ is a minimal goal set for the conflict set collection of the (SD, CD, OBS) system.</region>
+      </section>
+      <section class="deo:Methods">
+        <h1 class="DoCO:SectionTitle" id="62" page="5" column="1">3. The Expert System to Diagnose the CTC Installations using the Model Based Diagnosis Method</h1>
+        <region class="DoCO:TextChunk" id="66" page="5" column="1">The block schema for the connection with the expert system is shown in <xref ref-type="fig" rid="F3" id="63" class="deo:Reference">Fig. 3</xref> [<xref ref-type="bibr" rid="R4" id="64" class="deo:Reference">4</xref>, <xref ref-type="bibr" rid="R5" id="65" class="deo:Reference">5</xref>].</region>
+        <outsider class="DoCO:TextBox" type="page_nr" id="67" page="5" column="1">331</outsider>
+        <region class="unknown" id="68" page="6" column="1">CTC Installation Measure convertor Inference Knowledge Database of Engine Base system elements Expert System User Interface</region>
+        <region class="DoCO:FigureBox" id="F3">
+          <caption class="deo:Caption" id="69" page="6" column="1">Figure 3. The SE interconnection block schema</caption>
+        </region>
+        <region class="DoCO:TextChunk" id="71" confidence="possible" page="6" column="1">This diagram contain: - The CTC installation that is to be monitored at various points and diag- nosed; - The Expert System that loads into the knowledge base the set of rules for the normal operation state of the installation. The knowledge base is loaded from the database of system elements. These rules are processed by the inference engine that uses fuzzy logic operators [<xref ref-type="bibr" rid="R6" id="70" class="deo:Reference">6</xref>]. - The user interface where the conflict sets are displayed.</region>
+        <region class="DoCO:TextChunk" id="73" page="6" column="1">In this work we show an expert system designed to diagnose a CTC type CR4 installation, on a track section with ABS installations. <xref ref-type="fig" rid="F4" id="72" class="deo:Reference">Fig. 4</xref> shows the diagram of a railway station with 2 traffic lines.</region>
+        <region class="DoCO:FigureBox" id="F4">
+          <caption class="deo:Caption" id="74" page="6" column="1">Figure 4. Railway station diagram for which an expert system is proposed</caption>
+        </region>
+        <region class="DoCO:TextChunk" id="75" confidence="possible" page="6" column="1">In this figure we identify the following installations: - Switch points (no. 1 and no. 2), which allow the train passage from one line to the other; - Track circuits (023 C, 024 C, 1C, II C) and isolated sections (1 S i , 2 S i ) which control the ‘open’ or ‘occupied’ track states and integrity;</region>
+        <outsider class="DoCO:TextBox" type="page_nr" id="76" page="6" column="1">332</outsider>
+        <region class="DoCO:TextChunk" id="78" confidence="possible" page="7" column="1">- Light signals (X, X 1, X II, Y, Y 1, Y II) which signal whether the train en- try/exit into/out of the railway station is allowed; - The central post, PC, where the command and control panel is located, as well as the relay room. The command and control apparatus and commands the train traffic and monitors the installation’s conflictual state; - The ABS installation at the X and Y station ends. This installation commands the traffic reversion [<xref ref-type="bibr" rid="R7" id="77" class="deo:Reference">7</xref>]. This installation contains light signals and track circuits with specific characteristics.</region>
+        <region class="DoCO:TextChunk" id="80" page="7" column="1">According to this scheme we created the block diagram for the installations that deliver state information to the expert system (<xref ref-type="fig" rid="F5" id="79" class="deo:Reference">Fig. 5</xref>).</region>
+        <region class="unknown" id="81" page="7" column="1">Centralized Traffic Control Installations Power feed AR Y ABS AM AA S 2 S 1 X ABS Y OL Y KL SR A 1 A 2 Y 1AD Y 2AD Y D X OL X KL Switch Point Signals X 1AD X 2AD X D Track circuits Point Point Signal Signal Signal Signal Signal Signal 023 C 024 C 1 C II C 1 S i 1 2 X Y X 1 X II Y 1 Y II</region>
+        <outsider class="DoCO:TextBox" type="sidenote" id="82" page="7" column="1">2 S i</outsider>
+        <region class="DoCO:FigureBox" id="F5">
+          <caption class="deo:Caption" id="83" page="7" column="1">Figure 5. Installation block schema monitored by the proposed Expert System</caption>
+        </region>
+        <region class="DoCO:TextChunk" id="84" confidence="possible" page="7" column="1">The DS system description contains: - The system’s topology; - Locations of the measurement sensors for each mentioned installation; - Nominal operation parameters for the main installation components; - Limit parameter values for the operation of the main components in all the mentioned installations; - The fuzzy rules used to determine the fuzzy indicators.</region>
+        <region class="DoCO:TextChunk" id="87" page="7" column="1">The CD set, described by ¬ AB ( c ) contains sentences of the form: - The correct operation of the switch point (Mac)i is controlled by the point control relays (KM) states, by the point position plus and minus control relays (KMP, KMM) states, where i = 1, ..., M and M is the number of point control relays in the station; - The correct operation of the signal (Sign)j is controlled by the fire relay FRA (fire red, white) states, by the fire relay FV1G (fire green, yellow 1) state, by <marker type="page" number="8"/><marker type="block"/> the fire relay FRA2G (fire red, white, yellow 2); where j = 1, ..., S and S is the number of fire relays in the station; - The correct operation of the (CDC)k track circuits is controlled by the C track relays and S i isolated section relays, where k = 1, ..., CC where CC is the number of circuit control and section control relays in the station; - The correct operation of the (ABS)l is controlled by the OL (occupied line) relay, KL (control line) relay, D (direction control) relay, where l = 1, ..., L and L is the number of ABS installations neighbouring the CTC station; - The correct operation of the power feed installation (ALIM) is controlled by voltage monitoring relays: AM (switch point failure), AA (d.c. power feed), SR (rectifier monitor), etc., where k = 1, ..., AL where AL is the number of voltage monitoring relays in the station.</region>
+        <outsider class="DoCO:TextBox" type="page_nr" id="86" page="7" column="1">333</outsider>
+        <region class="DoCO:TextChunk" id="88" confidence="possible" page="8" column="1">The union operator, SD ∪ CD , gives the following sentences: - The operation of all switch points is correct; - The operation of all track circuits and section circuits is correct - The operation of all signals is correct; - The operation of all ABS installations is correct; - The electric power feed installation is correct; The OBS observations set contains sentences of the following form: - The switch point is positioned A; - The point states is A; - The track circuits state is A; - The signals state is A; - The ABS installation state is A; - The electric power feed installation state is A, where</region>
+        <disp-formula class="DoCO:FormulaBox" id="F14">
+          <label class="DoCO:Label" id="89">14</label>
+          <content class="DoCO:Formula" id="90" page="8" column="1">A ∈ { optim , favorable , admissible , inadmissible }</content>
+        </disp-formula>
+        <region class="DoCO:TextChunk" id="91" page="8" column="1">The diagnosis solution using the MBD system is the goal set ∆ that contains subsets of the CD set defined like: - The KMP voltage value is not optimal; - The FRAG2 relay state is inadmissible, etc.</region>
+      </section>
+      <section class="deo:Conclusion">
+        <h1 class="DoCO:SectionTitle" id="92" page="8" column="1">4. Conclusion</h1>
+        <region class="DoCO:TextChunk" id="93" page="8" column="1">In this work we presented the basic concepts needed to apply the model based diagnosis with an example of concept instantiation for CTC installations. We proposed an expert system applicable to a train station with two traffic lines. The authors’ contributions are: - Designing the basic block schema for the proposed expert system;</region>
+        <outsider class="DoCO:TextBox" type="page_nr" id="94" page="8" column="1">334</outsider>
+        <region class="DoCO:TextChunk" id="95" confidence="possible" page="9" column="1">- Identifying the elements that need to be monitored and establishing how they should be controlled; - Shortly describing the components that are part of the CD set; - Shortly describing the DS system and the corresponding operations; - Establishing a minimal set of observations.</region>
+        <region class="DoCO:TextChunk" id="96" page="9" column="1">As future work we plan to further develop and implement this model for the respective installations.</region>
+      </section>
+      <section class="DoCO:Bibliography">
+        <h1 class="DoCO:SectionTitle" id="97" page="9" column="1">References</h1>
+        <ref-list class="DoCO:BiblioGraphicReferenceList">
+          <ref rid="R1" class="deo:BibliographicReference" id="98" page="9" column="1">[1] Luştrea B., Borlea I., Application of model based diagnosis for steady state power systems operation. Theory and basic concepts . Proceedings of the Fifth International Power Conference, Timişoara, 2003.</ref>
+          <ref rid="R2" class="deo:BibliographicReference" id="99" page="9" column="1">[2] Reiter R., A theory of diagnosis from first principles. Journal Artificial Inteligence, Volume 32, Issue 1, 1987, 57 – 95.</ref>
+          <ref rid="R3" class="deo:BibliographicReference" id="100" page="9" column="1">[3] Stan A.I., David S., Electrodynamic centralization and automatic line block , vol 1, E.D.P București 1983.</ref>
+          <ref rid="R4" class="deo:BibliographicReference" id="101" page="9" column="1">[4] Elasaadawi A.M., a.o., Development of an Expert System to fault diagnosis of three phase induction motor drive system. Power System Conference, 2008. MEPCON 2008. 12th International Middle-East.</ref>
+          <ref rid="R5" class="deo:BibliographicReference" id="102" page="9" column="1">[5] Angeli C., Diagnostic Expert Systems: From Expert ' s Knowledge to Real-Time Systems. TMRF e-Book Advanced Knowledge Based Systems: Model, Applications &amp; Research (Eds. Sajja &amp; Akerkar), Vol. 1, pp 50 – 73, 2010.</ref>
+          <ref rid="R6" class="deo:BibliographicReference" id="103" page="9" column="1">[6] Voloşencu C., Fuzzy systems and neural. Publishing house Polytech- nica, Timişoara 2007.</ref>
+          <ref rid="R7" class="deo:BibliographicReference" id="107" page="9" column="1">[7] Spunei E., a.o., Diagnosis Charts for Regular Inversion Failures of an Automatic Block Signal Installation , International Conference on Applied and Theoretical Electricity ICATE, 23-25 October 2014, Craiova. Addresses: • Lect. Dr. Eng. Elisabeta Spunei, “Eftimie Murgu” University of Reşiţa, Piaţa Traian Vuia, no. 1-4, 320085, Reşiţa, <email id="104">e.spunei@uem.ro</email> • Prof. Dr. Eng. Ec. Ion Piroi, “Eftimie Murgu” University of Reşiţa, Piaţa Traian Vuia, no. 1-4, 320085, Reşiţa, <email id="105">i.piroi@uem.ro</email> • Dr. Techn. Florina Piroi, Institute of Software Technology and Interac- tive Systems, Vienna University of Technology, Austria, <email id="106">piroi@ifs.tuwien.ac.at</email></ref>
+        </ref-list>
+        <outsider class="DoCO:TextBox" type="page_nr" id="108" page="9" column="1">335</outsider>
+      </section>
+    </body>
+  </article>
+</pdfx>

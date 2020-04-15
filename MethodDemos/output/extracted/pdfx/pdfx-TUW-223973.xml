@@ -1,0 +1,375 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pdfx xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://pdfx.cs.man.ac.uk/static/article-schema.xsd">
+  <meta>
+    <job>e571a813723e1d90a07f362a566cec4efda24c18b25afbcdc8892ad71d68c45c</job>
+    <base_name>l4c</base_name>
+    <doi>http://dx.doi.org/10.1007/978-3-319-03916-9_3</doi>
+    <warning>Name identification was not possible. </warning>
+  </meta>
+  <article>
+    <front class="DoCO:FrontMatter">
+      <title-group>
+        <article-title class="DoCO:Title" id="1">Identifying Condition-Action Sentences Using a Heuristic-based Information Extraction Method</article-title>
+      </title-group>
+      <region class="DoCO:TextChunk" id="2" confidence="possible">Reinhardt Wenzina and Katharina Kaiser Institute of Software Technology and Interactive Systems Vienna University of Technology Favoritenstrasse 9-11, 1040 Vienna, Austria</region>
+      <abstract class="DoCO:Abstract" id="3">Translating clinical practice guidelines into a computer-interpretable format is a challenging and laborious task. In this project we focus on supporting the early steps of the modeling process by automatically identifying conditional activities in guideline documents in order to model them automatically in further consequence. Therefore, we developed a rule-based, heuristic method that combines domain-independent information extraction rules and semantic pattern rules. The classification also uses a weighting coefficient to verify the relevance of the sentence in the context of other information aspects, such as effects, intentions, etc. Our evaluation results show that even with a small set of training data, we achieved a recall of 75 % and a precision of 88 %. This outcome shows that this method supports the modeling task and eases the translation of CPGs into a semi-formal model. Keywords: computer-interpretable clinical guidelines; medical guideline formalization; Many-Headed Bridge (MHB); UMLS; Information Extraction (IE)</abstract>
+    </front>
+    <body class="DoCO:BodyMatter">
+      <section class="deo:Introduction">
+        <h1 class="DoCO:SectionTitle" id="4" page="1" column="1">1 Introduction</h1>
+      </section>
+      <region class="DoCO:TextChunk" id="18" page="1" column="1">Clinical Practice Guidelines (CPGs) are defined as “systematically developed statements to assist practitioners and patient decisions about appropriate health- care for specific circumstances” [ <xref ref-type="bibr" rid="R6" id="5" class="deo:Reference">6</xref>]. They include recommendations describing appropriate care for the management of patients with a specific clinical condition. An important part of CPG contents refers to the procedures to perform, often formulated together with specific conditions that have to hold in order to execute an activity. CPGs are published as textual guidelines, but in order to deploy them in some kind of computerized tool (e.g., a reminder system or a more complex decision- support system) they have to be represented in specialized languages (see [<xref ref-type="bibr" rid="R15" id="6" class="deo:Reference">15</xref>, <xref ref-type="bibr" rid="R7" id="7" class="deo:Reference">7</xref>] for a comparison and overview). Although different authoring/editing tools are often associated with these languages, authoring is a labor-intensive task that requires comprehensive knowledge in medical as well as computer science. There have been several approaches to ease the modeling process, amongst others by introducing intermediate representations that provide more semi-structured and less formal formats. One of them is MHB, the Many-Headed Bridge<marker type="page" number="2"/><marker type="block"/>  [<xref ref-type="bibr" rid="R21" id="10" class="deo:Reference">21</xref>], that tries to bridge the gap between the guideline text and its corresponding formalized model. It falls in the category of document-centric approaches [<xref ref-type="bibr" rid="R22" id="11" class="deo:Reference">22</xref>] and is devised to produce a non-executable XML document with the relevant CPG fragments, starting from the original text. The knowledge of a CPG is thereby represented in a series of chunks that correspond to a certain bit of information in the CPG (e.g., a sentence, part of a sentence, more than one sentence). The information in a chunk is structured in various dimensions, e.g., control flow, data flow. To additionally support the modeling task for non-IT experts, MHB was further developed and split into MHB-F (free-text version) and MHB-S (semantically enriched version) [<xref ref-type="bibr" rid="R19" id="12" class="deo:Reference">19</xref>]. MHB-F now provides a very simplified structure to make the modeling even for non-IT experts feasible and to leave modeling details to knowledge engineers in a later step. In order to ease the laborious modeling, parts of the task should be automated by applying information extraction methods. In this work we will focus on the identification of condition-action sentences that form a prominent aspect of the process flow in CPGs. The discovery of such combinations is not a trivial one. On the one hand, condition-action sentences are rarely of the form ‘ if condition then action’, but require more sophisticated identification methods. On the other hand, conditions may refer to effects, intentions, or events and not activities, and these combinations have to be sorted out by our method. <xref ref-type="table" rid="T1" id="13" class="deo:Reference">Table 1</xref> shows a few example sentences in regard to their MHB-F aspects.<marker type="page" number="3"/><marker type="block"/> In order to identify condition-action sentences we propose a rule-based method using a combination of linguistic and semantic information. Furthermore, we in- troduce a weighting coefficient called relevance rate (rr) that shows whether a sentence is relevant for modeling. The following section gives a short overview on the usage of information extraction methods as well as knowledge-based approaches for guideline modeling. Our method is explained in Section 3 and subsequently evaluated and discussed in Sections 4 and 5.</region>
+      <outsider class="DoCO:TextBox" type="page_nr" id="9" page="2" column="1">2</outsider>
+      <region class="DoCO:TableBox" id="T1">
+        <caption class="deo:Caption" id="15" page="2" column="1">Table 1. Examples of sentences and their categorization in MHB-F</caption>
+      </region>
+      <region class="unknown" id="16" page="2" column="1">sentence MHB-F aspect An episiotomy should be performed if there is a clin- decision based activity ical need such as instrumental birth or suspected fetal compromise. Women with pain but no cervical changes should decision based activity be re-examined after two hours. Women should be informed that in the second stage clinical activity they should be guided by their own urge to push. The partogram should be used once labour is estab- background information lished. Administration of inhaled steroids at or above 400 effect mcg a day of BDP or equivalent may be associated with systemic side-effects . Legend: activity , condition , effect , explanation</region>
+      <outsider class="DoCO:TextBox" type="page_nr" id="17" page="3" column="1">3</outsider>
+      <section class="DoCO:Section">
+        <h1 class="DoCO:SectionTitle" id="19" page="3" column="1">2 Background and Related Work</h1>
+        <region class="DoCO:TextChunk" id="29" page="3" column="1">Guideline developers edit CPGs in a free-text format. In order to transform the medical knowledge described in a guideline into execution models a translation process is required. Moser and Miksch [<xref ref-type="bibr" rid="R14" id="20" class="deo:Reference">14</xref>] detected prototypical patterns in free- text guidelines to bridge this gap. Serban et al. [<xref ref-type="bibr" rid="R18" id="21" class="deo:Reference">18</xref>] proposed an ontology-driven extraction of linguistic patterns to pre-process a CPG in order to retrieve control knowledge. The evaluation showed that the modeling as well as the authoring process of guidelines was supported. Language engineering methods were used in SeReMed [<xref ref-type="bibr" rid="R5" id="22" class="deo:Reference">5</xref>] to detect diagnoses or procedures in medical documents. The method was successfully applied to X-ray reports. These documents however, show a standardized structure and therefore are easier to handle by knowledge engineering methods than CPGs. Taboada et al. [<xref ref-type="bibr" rid="R23" id="23" class="deo:Reference">23</xref>] identified relationships between diagnoses and therapy entities in free-text documents by matching the core information units of a sentence with a collection of predefined relationships but the quality of this matching was not rated. To implement a rule based approach to recognize medical entities the MeTAE (Medical Texts Annotation and Exploration) platform was used by Abacha and Zweigenbaum [<xref ref-type="bibr" rid="R1" id="24" class="deo:Reference">1</xref>]. Additionally, semantic relations between each pair of these entities were identified by means of MetaMap [<xref ref-type="bibr" rid="R2" id="25" class="deo:Reference">2</xref>]. Consequently, relations between a problem (e.g., disease) and a corresponding treatment were found. The method was applied to selected arti- cles and abstracts of PubMed but not to CPGs. In [<xref ref-type="bibr" rid="R8" id="26" class="deo:Reference">8</xref>] a heuristic-based approach using information extraction methods independent of the final guideline repre- sentation language was defined. This method was implemented and applied to several guidelines containing a high amount of semi-structured text. The adop- tion of this methodology on ’living-guidelines’ [<xref ref-type="bibr" rid="R9" id="27" class="deo:Reference">9</xref>] showed promising results. A set of semantic patterns representing activities based on semantic relations was generated by Kaiser et al. [<xref ref-type="bibr" rid="R10" id="28" class="deo:Reference">10</xref>] to identify medical activities in CPGs. Its effectiveness was proved by a study which showed that a large part of control flow related aspects could be identified. The relation between the activity and a corresponding condition, however, was not part of the method but is an important requirement for the future automatic translation of a guideline.</region>
+        <outsider class="DoCO:TextBox" type="page_nr" id="30" page="4" column="1">4</outsider>
+      </section>
+      <section class="deo:Methods">
+        <h1 class="DoCO:SectionTitle" id="31" page="4" column="1">3 Methods</h1>
+        <region class="DoCO:TextChunk" id="32" page="4" column="1">Condition-based medical activities are expressed in clinical practice guidelines in various ways and mostly found in single sentences. These sentences affect the clinical pathway and therefore are relevant to the computer-interpretable model of the guideline. In order to classify such a sentence as relevant, we based our approach on the following hypothesis:</region>
+        <region class="DoCO:TextChunk" id="33" confidence="possible" page="4" column="1">1. A sentence owns a certain domain independent linguistic structure, and 2. contains recurrent domain dependent semantic key patterns.</region>
+        <region class="DoCO:TextChunk" id="35" page="4" column="1">We propose a rule-based, heuristic method using linguistic and semantic patterns to classify sentences in CPGs as relevant for describing conditional activities in order to move towards an automatic translation of such sentences into MHB in a following future step (an example is shown in <xref ref-type="fig" rid="F1" id="34" class="deo:Reference">Figure 1</xref>). Therefore, we analyzed a CPG document to develop a general linguistic pattern set and a semantic pattern set based on UMLS Semantic Types. These pattern sets then form the basis for the subsequent classification by calculating the relevance rate (rr) .</region>
+        <region class="unknown" id="36" page="4" column="1">example sentence corresponding MHB chunk (XML) &lt;control&gt; "If the patient does not fit &lt;if-then the criteria for admission an condition="NOT (admission criteria)" assessment of fetal wellbeing degree-of-certainty="Should" including appropriate use of result="Assessment of fetal wellbeing including monitoring"&gt; electronic fetal monitoring ................... should be performed." &lt;/control&gt;</region>
+        <region class="DoCO:FigureBox" id="F1">
+          <caption class="deo:Caption" id="37" page="4" column="1">Fig. 1. A condition-action sentence represented as MHB-chunk</caption>
+        </region>
+        <section class="DoCO:Section">
+          <h2 class="DoCO:SectionTitle" id="38" page="4" column="1">3.1 Knowledge Sources and Tools</h2>
+          <region class="DoCO:TextChunk" id="45" page="4" column="1">The Unified Medical Language System (UMLS) [ <xref ref-type="bibr" rid="R11" id="39" class="deo:Reference">11</xref>] combines selected health and biomedical vocabularies to facilitate the standardized exchange of medical data between computer systems. It offers three different components: 1. The Metathesaurus which is an aggregation of medical terms and codes of different vocabularies (e.g., MeSH, SNOMED CT, etc.). 2. The Semantic Network which reduces the complexity of the Metathesaurus by assigning semantic types to the concepts of the Metathesaurus in order to group and define relationships among them. 3. The SPECIALIST Lexicon and Lexical Tools which provide natural language processing tools.<marker type="page" number="5"/><marker type="block"/> The open source framework for text engineering GATE (Version 6) [<xref ref-type="bibr" rid="R4" id="42" class="deo:Reference">4</xref>] allows the combination of different text engineering components to develop reusable applications. The following components were used in our method: – ANNIE: A set of information extraction (IE) components, distributed within the GATE system and relying on finite state algorithms and the JAPE language [<xref ref-type="bibr" rid="R3" id="43" class="deo:Reference">3</xref>]. – OpenNLPChunker supports the detection of phrases within a parsed text. – MetaMap Annotator: A tagger that maps biomedical texts to the UMLS Metathesaurus and discovers Metathesaurus concepts and their semantic types [<xref ref-type="bibr" rid="R2" id="44" class="deo:Reference">2</xref>].</region>
+          <outsider class="DoCO:TextBox" type="page_nr" id="41" page="5" column="1">5</outsider>
+        </section>
+        <section class="DoCO:Section">
+          <h2 class="DoCO:SectionTitle" id="46" page="5" column="1">3.2 Manual Development of the General Linguistic Pattern Set</h2>
+          <region class="DoCO:TextChunk" id="54" page="5" column="1">For the development of the general linguistic pattern set we used a chapter from an Asthma guideline developed by SIGN [ <xref ref-type="bibr" rid="R17" id="47" class="deo:Reference">17</xref>], where chapter 4: pharmacological management had been modeled in the semi-structured modeling language MHB- F [<xref ref-type="bibr" rid="R21" id="48" class="deo:Reference">21</xref>] by a guideline modeling expert. We analyzed this chapter with regard to the control flow aspects and started generating an initial linguistic pattern set based on trigger words (12 occurrences for ’if’ and 4 occurrences for ’should’).<marker type="block"/> In order to identify the semantic clauses of a sentence (these are the parts describing the condition and the consequence ), the patterns had to be grouped into 6 different patterns for ’if’ and 4 different patterns for ’should’ (some straightfor- ward patterns are listed in <xref ref-type="table" rid="T2" id="52" class="deo:Reference">Table 2</xref>). Condition and consequence are distinguished according to the sentence’s syntax, punctuation and its sequence of phrases. Two complex examples including conditions spread over multiple phrases are shown in <xref ref-type="fig" rid="F2" id="53" class="deo:Reference">Figure 2</xref>. We assigned a weighting factor to every pattern of the set - the value 0.5 to show that only a trigger word was found and 1.0 to express that also the semantic clauses were identified. These constants can be adapted for new rule types in the future.</region>
+          <region class="DoCO:TableBox" id="T2">
+            <caption class="deo:Caption" id="50" page="5" column="1">Table 2. Selected general linguistic patterns</caption>
+            <content>
+              <table class="DoCO:Table" number="2" page="5">
+                <thead class="table">
+                  <tr class="table">
+                    <th class="table"> #</th>
+                    <th class="table"> rule type</th>
+                    <th class="table"> pattern</th>
+                    <th class="table"> weight( w )</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="table.strange">
+                    <td class="table.strange"> 1</td>
+                    <td class="table.strange"> IF</td>
+                    <td class="table.strange"> * [Ii]f *</td>
+                    <td class="table.strange"> 0.5</td>
+                  </tr>
+                  <tr class="table">
+                    <td class="table"> 2</td>
+                    <td class="table"> IF</td>
+                    <td class="table"> If { condition } { consequence } .</td>
+                    <td class="table"> 1.0</td>
+                  </tr>
+                  <tr class="table">
+                    <td class="table"> 3</td>
+                    <td class="table"> IF</td>
+                    <td class="table"> If { condition } , { consequence } .</td>
+                    <td class="table"> 1.0</td>
+                  </tr>
+                  <tr class="table">
+                    <td class="table"> 4</td>
+                    <td class="table"> IF</td>
+                    <td class="table"> { consequence } if { condition } .</td>
+                    <td class="table"> 1.0</td>
+                  </tr>
+                  <tr class="table">
+                    <td class="table"> 5</td>
+                    <td class="table"> IF</td>
+                    <td class="table"> If { condition } then { consequence } .</td>
+                    <td class="table"> 1.0</td>
+                  </tr>
+                  <tr class="table">
+                    <td class="table"> 6</td>
+                    <td class="table"> SHOULD</td>
+                    <td class="table"> * should have *</td>
+                    <td class="table"> 0.5</td>
+                  </tr>
+                  <tr class="table">
+                    <td class="table"> 7</td>
+                    <td class="table"> SHOULD</td>
+                    <td class="table"> * should be *</td>
+                    <td class="table"> 0.5</td>
+                  </tr>
+                  <tr class="table.strange">
+                    <td class="table.strange"> ...</td>
+                    <td class="table.strange"> ..</td>
+                    <td class="table.strange"> ...</td>
+                    <td class="table.strange"> ...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </content>
+            <region class="TableInfo" id="51" confidence="possible" page="5" column="1"># rule type pattern weight( w ) 1 IF * [Ii]f * 0.5 2 IF If { condition } { consequence } . 1.0 3 IF If { condition } , { consequence } . 1.0 4 IF { consequence } if { condition } . 1.0 5 IF If { condition } then { consequence } . 1.0 6 SHOULD * should have * 0.5 7 SHOULD * should be * 0.5 ... .. ... ...</region>
+          </region>
+          <outsider class="DoCO:TextBox" type="page_nr" id="55" page="6" column="1">6</outsider>
+          <region class="unknown" id="56" page="6" column="1">If there is a response to LABA , but control remains poor , continue with the LABA and increase the dose of inhaled steroid to ... In children under five years , higher doses may be required if there are problems in obtaining consistent drug delivery. Legend: condition , consequence</region>
+          <region class="DoCO:FigureBox" id="F2">
+            <caption class="deo:Caption" id="57" page="6" column="1">Fig. 2. Sentences with multi-part conditions</caption>
+          </region>
+        </section>
+        <section class="DoCO:Section">
+          <h2 class="DoCO:SectionTitle" id="58" page="6" column="1">3.3 Generation of the Domain-Dependent Semantic Pattern Set</h2>
+          <region class="DoCO:TextChunk" id="64" page="6" column="1">Amongst the general syntactic patterns we also used semantic patterns based on the UMLS Semantic Network. Therefore, we used the MetaMap plugin within the GATE framework to automatically identify medical concepts in our text and assign them to their corresponding UMLS concepts and semantic types (represented by four-letter abbreviations - e.g., ’popg’ stands for ’Population Group’). By this way it was possible to find out the sequence of semantic types in the clauses of the sentences (see <xref ref-type="fig" rid="F3" id="59" class="deo:Reference">Figure 3</xref>).<marker type="block"/> Finally, the complete semantic abstraction of a sentence including rule type, semantic clause type and sequence of semantic types was added to the semantic pattern pool (see <xref ref-type="table" rid="T3" id="63" class="deo:Reference">Table 3</xref>). A total of 32 entries was automatically generated.</region>
+          <region class="unknown" id="61" page="6" column="1">sentence rule type semantic clause types "IF" "condition" "consequence" If there is no response to treatment the drug should be discontinued. semantic types from UMLS SN "fndg" "cnce" "phsu" "fndg" delivered by the MetaMap-Application "fndg": Finding; "cnce": Conceptual Entity; "phsu": Pharmacological Substance</region>
+          <region class="DoCO:FigureBox" id="F3">
+            <caption class="deo:Caption" id="62" page="6" column="1">Fig. 3. Semantic abstraction of a sentence</caption>
+          </region>
+          <outsider class="DoCO:TextBox" type="page_nr" id="65" page="7" column="1">7</outsider>
+          <region class="DoCO:TableBox" id="T3">
+            <caption class="deo:Caption" id="66" page="7" column="1">Table 3. Structure of the semantic pattern pool (selected samples)</caption>
+            <content>
+              <table class="DoCO:Table" number="3" page="7">
+                <thead class="table">
+                  <tr class="table">
+                    <th class="table"> rule type</th>
+                    <th class="table"> semantic clause type</th>
+                    <th class="table"> sequence of semantic types</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="table.strange">
+                    <td class="table.strange"> IF</td>
+                    <td class="table.strange"> condition</td>
+                    <td class="table.strange"> [fndg][cnce]</td>
+                  </tr>
+                  <tr class="table">
+                    <td class="table"> IF</td>
+                    <td class="table"> consequence</td>
+                    <td class="table"> [phsu][fndg]</td>
+                  </tr>
+                  <tr class="table">
+                    <td class="table"> IF</td>
+                    <td class="table"> consequence</td>
+                    <td class="table"> [idcn][qlco][resa][ftcn][ftcn]</td>
+                  </tr>
+                  <tr class="table">
+                    <td class="table"> SHOULD</td>
+                    <td class="table"> condition</td>
+                    <td class="table"> [aggp][podg][dsyn]</td>
+                  </tr>
+                  <tr class="table">
+                    <td class="table"> SHOULD</td>
+                    <td class="table"> consequence</td>
+                    <td class="table"> [qnco][tmco][resa][orch, phsu][idcn]</td>
+                  </tr>
+                  <tr class="table">
+                    <td class="table"> SHOULD</td>
+                    <td class="table"> condition</td>
+                    <td class="table"> [podg][qlco][ftcn][orgf][qlco][gngm][phsu]</td>
+                  </tr>
+                </tbody>
+              </table>
+            </content>
+            <region class="TableInfo" id="67" confidence="possible" page="7" column="1">rule type semantic clause type sequence of semantic types IF condition [fndg][cnce] IF consequence [phsu][fndg] IF consequence [idcn][qlco][resa][ftcn][ftcn] SHOULD condition [aggp][podg][dsyn] SHOULD consequence [qnco][tmco][resa][orch, phsu][idcn] SHOULD condition [podg][qlco][ftcn][orgf][qlco][gngm][phsu]</region>
+          </region>
+        </section>
+        <section class="DoCO:Section">
+          <h2 class="DoCO:SectionTitle" id="68" page="7" column="1">3.4 Calculation of the Relevance Rate</h2>
+          <region class="DoCO:TextChunk" id="71" page="7" column="1">The relevance rate rr is a measure to find out whether a sentence contains a condition-action combination. Furthermore, it shall classify a sentence as crucial for the clinical pathway in contrast to other information aspects like intentions or explanations which are modeled in MHB-F in a different way. To find this semantic difference the syntax of the sentences as well as their containing medical semantic types must be respected. In order to calculate the relevance rate for a selected sentence its semantic abstraction has to be generated and compared with every entry in the semantic pattern pool. If the rule type and the semantic clause type are matching, the similarity of the sequences of the semantic types is calculated by using the Dice coefficient [ <xref ref-type="bibr" rid="R12" id="69" class="deo:Reference">12</xref>]. The highest value is selected for further calculation.<marker type="block"/> In general, the value of the relevance rate rr is the sum of – the weight( w ) of the applied general IE rule, and – the sum of the maximum similarity value ( s i ) for each semantic clause of the sentence divided by the number of semantic clauses ( n ) identified by the general IE rules.</region>
+          <disp-formula class="DoCO:FormulaBox" id="F1">
+            <label class="DoCO:Label" id="72">1</label>
+            <content class="DoCO:Formula" id="73" page="7" column="1">n rr = w + i =1 max { s i } n</content>
+          </disp-formula>
+          <region class="DoCO:TextChunk" id="76" page="7" column="1">The weight of the IE rule and the arithmetic average of the similarity values both in the range between 0 and 1 - have the same influence on the rr . The similarity value s i of the semantic clause of a sentence and a matching entry in the semantic pattern pool were calculated as follows: – If the semantic clause contains only one semantic type it is compared to those entries of the semantic pattern pool that also show only one semantic type (to receive a better accuracy). In the case that both types are equal the value for s i is set to 1.0, otherwise – both sequences of semantic types are interpreted as a string each and two sets of 4-letter string bigrams are composed out of them. Subsequently, these two sets are used for the calculation of the Dice coefficient. <marker type="page" number="8"/><marker type="block"/> Example : Given are the sequence of semantic types of a new semantic clause S and the sequence of semantic types of a matching entry of the semantic pattern pool P .</region>
+          <outsider class="DoCO:TextBox" type="page_nr" id="75" page="8" column="1">8</outsider>
+          <region class="DoCO:TextChunk" id="77" confidence="possible" page="8" column="1">S : [fndg] [orgf] [qlco] [gngm] [phsu] and P : [strd] [gngm] [phsu] [ortf]. The resulting 4-letter string bigrams are: S = { “ f ndgorgf ′′ , “ orgf qlco ′′ , “ qlcogngm ′′ , “ gngmphsu ′′ } P = { “ strdgngm ′′ , “ gngmphsu ′′ , “ phsuortf ′′ } .</region>
+          <region class="DoCO:TextChunk" id="78" page="8" column="1">The Dice coefficent is defined as twice the shared information over the sum</region>
+          <disp-formula class="DoCO:FormulaBox" id="F2">
+            <label class="DoCO:Label" id="79">2</label>
+            <content class="DoCO:Formula" id="80" page="8" column="1">of cardinalities: 2 n t s i = n s + n p</content>
+          </disp-formula>
+          <region class="DoCO:TextChunk" id="81" page="8" column="1">where n t corresponds to the number of bigrams found in both sets, n s is the number of bigrams in S , and n p the number of bigrams in P . So the result of this example is s = 2 ∗ 1 = 2 . 4+3 7</region>
+          <region class="DoCO:TextChunk" id="83" confidence="possible" page="8" column="1">The general interpretation of the rr is shown in <xref ref-type="table" rid="T4" id="82" class="deo:Reference">Table 4</xref>.</region>
+          <region class="DoCO:TableBox" id="T4">
+            <caption class="deo:Caption" id="84" page="8" column="1">Table 4. Interpretation of the relevance rate</caption>
+            <content>
+              <table class="DoCO:Table" number="4" page="8">
+                <thead class="table">
+                  <tr class="table">
+                    <th class="table"> value</th>
+                    <th class="table"> interpretation</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="table.strange">
+                    <td class="table.strange"> rr = 0 . 5</td>
+                    <td class="table.strange"> only a trigger word or word combination were found; no semantic clause could be identified</td>
+                  </tr>
+                  <tr class="table">
+                    <td class="table"> rr = 1 . 0</td>
+                    <td class="table"> an appropriate general IE pattern was found and seman- tic clauses could be identified</td>
+                  </tr>
+                  <tr class="table">
+                    <td class="table"> 1 . 0 &lt; rr &lt; = 2 . 0</td>
+                    <td class="table"> additionally, a semantic similarity between the sequences of the semantic types was detected</td>
+                  </tr>
+                </tbody>
+              </table>
+            </content>
+            <region class="TableInfo" id="85" confidence="possible" page="8" column="1">value interpretation rr = 0 . 5 only a trigger word or word combination were found; no semantic clause could be identified rr = 1 . 0 an appropriate general IE pattern was found and semantic clauses could be identified 1 . 0 &lt; rr &lt; = 2 . 0 additionally, a semantic similarity between the sequences of the semantic types was detected</region>
+          </region>
+        </section>
+      </section>
+      <section class="deo:Evaluation">
+        <h1 class="DoCO:SectionTitle" id="86" page="8" column="1">4 Evaluation</h1>
+        <region class="DoCO:TextChunk" id="100" page="8" column="1">The guidelines Management of active low-risk labour - Admission for Birth [ <xref ref-type="bibr" rid="R16" id="87" class="deo:Reference">16</xref>] (chapters 1, 2.1, 2.2, and 2.3) and CBO Treatment of Breast Cancer (chapter 3) were applied to evaluate the method. These guidelines were intentionally selected, because they cover a completely different medical application area in contrast to the Asthma guideline and furthermore an MHB 1 [<xref ref-type="bibr" rid="R21" id="88" class="deo:Reference">21</xref>] model already existed, used as a “golden standard”. The IE rules for the domain independent patterns and the generation of the semantic patterns were implemented with GATE - the processing resources for 1 MHB is the former version of MHB-F<marker type="page" number="9"/><marker type="block"/> the calculation of the relevance rate are shown in <xref ref-type="fig" rid="F4" id="91" class="deo:Reference">Figure 4</xref>. The IE rules were<marker type="block"/> applied to the guidelines and the identified sentences were annotated with the semantic types retrieved from the UMLS via the MetaMap plugin. 50 sentences were found which complied to the IE rules. Twenty out of the 50 sentences had been modeled in MHB as control flow related aspects (activities based on special medical conditions) and therefore their rr was expected to be higher than 1. The other 30 sentences represented information about intentions and explanations in MHB with an expected rr lower or equal 1. The evaluation results are shown in <xref ref-type="table" rid="T5" id="95" class="deo:Reference">Table 5</xref> differentiated by the rule types.<marker type="block"/> With the described method it was possible to identify 15 sentences which correctly contained control flow related aspects. Only two sentences got an in- correct rr higher than 1. They were not correctly rated, because they did not describe condition-based activities. Other 5 sentences got an rr lower than 1 although their rr should have been higher as they contained condition-based activities. Thus, the method had a recall of 75% and a precision of 88% (see <xref ref-type="table" rid="T6" id="99" class="deo:Reference">Table 6</xref>). The negative predictive value of 79% was higher than the recall value and showed that 28 sentences had been correctly classified.</region>
+        <outsider class="DoCO:TextBox" type="page_nr" id="90" page="9" column="1">9</outsider>
+        <region class="unknown" id="93" page="9" column="1">Linguistic MetaMap Classification Analysis Annotator ANNIE Tokenizer Tagger MetaMap RR Calculation ANNIE Sentence Splitter ANNIE POS-Tagger OpenNLP Chunker JAPE rules - based on trigger- words, syntax and phrases</region>
+        <region class="DoCO:FigureBox" id="F4">
+          <caption class="deo:Caption" id="94" page="9" column="1">Fig. 4. Processing resources used in GATE</caption>
+        </region>
+        <region class="DoCO:TableBox" id="T5">
+          <caption class="deo:Caption" id="97" page="9" column="1">Table 5. Evaluation results I ( rr &gt; 1: tp and fp; rr ≤ 1: fn and tn)</caption>
+        </region>
+        <region class="unknown" id="98" page="9" column="1">type: IF type: SHOULD total tp fn 14 3 1 2 15 5 Gold Standard fp tn 1 2 1 26 2 28 tp = true positive; fn = false negative; fp = false positive; tn = true negative</region>
+        <outsider class="DoCO:TextBox" type="page_nr" id="101" page="10" column="1">10</outsider>
+        <region class="DoCO:TableBox" id="T6">
+          <caption class="deo:Caption" id="102" page="10" column="1">Table 6. Evaluation results II</caption>
+        </region>
+        <region class="DoCO:TextChunk" id="103" confidence="possible" page="10" column="1">type: IF type: SHOULD total Guideline REC PRE NPV REC PRE NPV REC PRE NPV Breast Cancer 100% 67% 100% - - 100% 100% 67% 100% Adm. for Birth 80% 100% 0% 33% 50% 88% 72% 93% 75% total 82% 93% 40% 33% 50% 93% 75% 88% 85% REC the number of correctly identified sentences over the number of the modeled sentences in the golden standard (=recall) PRE the number of correctly identified sentences over the entire number of identified sentences (=precision) NPV the number of correctly not identified sentences over the number of not modeled sentences in the golden standard (=negative predictive value)</region>
+        <region class="DoCO:TableBox" id="T7">
+          <caption class="deo:Caption" id="104" page="10" column="1">Table 7. Selected sentences with an rr ≤ 1 . 0</caption>
+          <content>
+            <table class="DoCO:Table" number="7" page="10">
+              <thead class="table">
+                <tr class="table">
+                  <th class="table"> sentence</th>
+                  <th class="table"> rr</th>
+                  <th class="table"> reason</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table.strange">
+                  <td class="table.strange"> If, notwithstanding these procedures cer-</td>
+                  <td class="table.strange"> 0.5</td>
+                  <td class="table.strange"> Sentences with such a linguistic</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> vical dilatation doesn’t progress, consider</td>
+                  <td class="table"></td>
+                  <td class="table"> structure did not exist in the</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> cesarean section after 2-3 hours of regu-</td>
+                  <td class="table"></td>
+                  <td class="table"> Asthma guideline → no IE rule was</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> lar and painful contraction with no cervical</td>
+                  <td class="table"></td>
+                  <td class="table"> implemented to identify semantic</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> changes.</td>
+                  <td class="table"></td>
+                  <td class="table"> clauses</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> If dilatation progress is not regular ( &lt; 1</td>
+                  <td class="table"> 0.5</td>
+                  <td class="table"> A list of resulting activities was not</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> cm/hour in nulliparous, &lt; 1,5 cm/hours in</td>
+                  <td class="table"></td>
+                  <td class="table"> found in the Asthma guideline →</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> parous) consider: - amniotomy;</td>
+                  <td class="table"></td>
+                  <td class="table"> no IE rule was implemented to iden-</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> - oxytocin administration.</td>
+                  <td class="table"></td>
+                  <td class="table"> tify semantic clauses</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> In case of abnormal FHR, monitoring</td>
+                  <td class="table"> 1.0</td>
+                  <td class="table"> The sentence was wrongly catego-</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> should be continuous.</td>
+                  <td class="table"></td>
+                  <td class="table"> rized with a rule for ’should’ be- cause no rules for “in case of” were implemented → no semantic simi- larity within the semantic pool pat- tern was found</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> After umbilical cord clamping, if the sec-</td>
+                  <td class="table"> 1.0</td>
+                  <td class="table"> The semantic clauses were found,</td>
+                </tr>
+                <tr class="table">
+                  <td class="table"> ond stage of labour has been physiological,</td>
+                  <td class="table"></td>
+                  <td class="table"> but no semantic similarity occured</td>
+                </tr>
+                <tr class="table.strange">
+                  <td class="table.strange"> the baby is given to the mother and cov-</td>
+                  <td class="table.strange"></td>
+                  <td class="table.strange"></td>
+                </tr>
+                <tr class="table.strange">
+                  <td class="table.strange"> ered.</td>
+                  <td class="table.strange"></td>
+                  <td class="table.strange"></td>
+                </tr>
+              </tbody>
+            </table>
+          </content>
+          <region class="TableInfo" id="105" confidence="possible" page="10" column="1">sentence rr reason If, notwithstanding these procedures cer- 0.5 Sentences with such a linguistic vical dilatation doesn’t progress, consider structure did not exist in the cesarean section after 2-3 hours of regu- Asthma guideline → no IE rule was lar and painful contraction with no cervical implemented to identify semantic changes. clauses If dilatation progress is not regular ( &lt; 1 0.5 A list of resulting activities was not cm/hour in nulliparous, &lt; 1,5 cm/hours in found in the Asthma guideline → parous) consider: - amniotomy; no IE rule was implemented to iden- oxytocin administration. tify semantic clauses In case of abnormal FHR, monitoring 1.0 The sentence was wrongly catego- should be continuous. rized with a rule for ’should’ because no rules for “in case of” were implemented → no semantic similarity within the semantic pool pattern was found After umbilical cord clamping, if the sec- 1.0 The semantic clauses were found, ond stage of labour has been physiological, but no semantic similarity occured the baby is given to the mother and cov- ered.</region>
+        </region>
+        <outsider class="DoCO:TextBox" type="page_nr" id="106" page="11" column="1">11</outsider>
+        <region class="DoCO:TextChunk" id="108" page="11" column="1">Generally, the results proved that the rules of type “if” showed much better results for the precision (93%) and the recall (82%) than the ones of type “should”. Nevertheless, the negative predictive value for the latter type showed a rate of 93%. The analyzed guidelines contained 7 sentences with control flow related information but they were not classified because their patterns did not exist in the Asthma guideline. Consequently, no corresponding general linguistic IE rule existed in the pattern pool. An extension of the general linguistic pattern set with rules for the trigger words “when”, “could” and “in case of” should be taken into consideration. Additionally, 1 condition based activity could not be found, because the semantic information was distributed over more than one sentence. In <xref ref-type="table" rid="T7" id="107" class="deo:Reference">Table 7</xref> selected examples are shown with a relevance rate lower or equal than 1.0 together with the corresponding reasons. Even though only a small amount of training data (16 sentences) was avail- able from the Asthma guideline, our method identified condition-based activities for control flow related aspects in a guideline document. Furthermore, it showed that the combination of domain independent information extraction rules and an automatically created semantic pattern pool leads to valuable results.</region>
+      </section>
+      <section class="deo:Conclusion">
+        <h1 class="DoCO:SectionTitle" id="109" page="11" column="1">5 Conclusions and Further Work</h1>
+        <region class="DoCO:TextChunk" id="111" page="11" column="1">The aim of this paper was to develop a method to identify condition-action sentences. By defining a set of linguistic patterns we split up sentences semantically - from one selected training guideline - into their clauses showing the condition and the consequence. We used the UMLS Semantic Network [<xref ref-type="bibr" rid="R13" id="110" class="deo:Reference">13</xref>] to find out which types of medical concepts were applied in these clauses. The outcome was a semantic abstraction of every training sentence which then was stored in a semantic pattern pool. This pool facilitated the classification of new sentences regarding to their relevance to the corresponding MHB-F model expressed by the measure relevance rate ( rr ).</region>
+        <region class="DoCO:TextChunk" id="112" confidence="possible" page="11" column="1">Modeling experts benefit from the method in two ways:</region>
+        <region class="DoCO:TextChunk" id="118" page="11" column="1">1. Condition-based activities in free-text guidelines, which must be modeled in MHB-F, are identified and rated. 2. These sentences are automatically split into the condition and the resulting activity. <marker type="block"/> An integration of the presented method into modeling tools will ease the work of all parties involved. Ongoing steps will be (1) the implementation of additional information extraction rules to expand the general linguistic pattern set in order to improve the hit rate; (2) the extension of the semantic pattern pool with additional training data in order to increase the significance of the relevance rate; (3) the application of the method in the context of ’living-guidelines’ [<xref ref-type="bibr" rid="R20" id="114" class="deo:Reference">20</xref>]; (4) an investigation,<marker type="page" number="12"/><marker type="block"/> whether this method can support the modeling of processes also in other application areas by substituting the UMLS SN by other domain dependent thesauri; (5) the refinement of information extraction rules to make a step towards an automatic translation of condition-based activities of free-text guidelines into the modeling language MHB-F; and (6) the development of case studies to evidence the effectiveness of the method in real-world scenarios. If it is possible to tap the full potential of the presented method, the implementation of CPGs will be fostered tremendously.<marker type="block"/> Acknowledgement. This research was carried out as part of project no. TRP71- N23 funded by the Austrian Science Fund (FWF).</region>
+        <outsider class="DoCO:TextBox" type="page_nr" id="116" page="12" column="1">12</outsider>
+      </section>
+      <section class="DoCO:Bibliography">
+        <h1 class="DoCO:SectionTitle" id="119" page="12" column="1">References</h1>
+        <ref-list class="DoCO:BiblioGraphicReferenceList">
+          <ref rid="R1" class="deo:BibliographicReference" id="120" page="12" column="1">1. Abacha, A.B., Zweigenbaum, P.: Automatic extraction of semantic relations between medical entities: a rule based approach. Journal of Biomedical Semantics 2(Suppl 5), S4+ (2011)</ref>
+          <ref rid="R2" class="deo:BibliographicReference" id="121" page="12" column="1">2. Aronson, A.R., Lang, F.M.M.: An overview of MetaMap: historical perspective and recent advances. Journal of the American Medical Informatics Association : JAMIA 17(3), 229–236 (May 2010)</ref>
+          <ref rid="R3" class="deo:BibliographicReference" id="122" page="12" column="1">3. Cunningham, H., Maynard, D., Bontcheva, K., Tablan, V.: GATE: A framework and graphical development environment for robust NLP tools and applications. In: Proceedings of the 40th Anniversary Meeting of the Association for Computational Linguistics (2002)</ref>
+          <ref rid="R4" class="deo:BibliographicReference" id="124" page="12" column="1">4. Cunningham, H., Maynard, D., Bontcheva, K., Tablan, V., Aswani, N., Roberts, I., Gorrell, G., Funk, A., Roberts, A., Damljanovic, D., Heitz, T., Greenwood, M.A., Saggion, H., Petrak, J., Li, Y., Peters, W.: Text Processing with GATE (Version 6). University of Sheffield Department of Computer Science (2011), <ext-link ext-link-type="uri" href="http://tinyurl.com/gatebook" id="123">http://tinyurl.com/gatebook</ext-link></ref>
+          <ref rid="R5" class="deo:BibliographicReference" id="125" page="12" column="1">5. Denecke, K.: Semantic structuring of and information extraction from medical documents using the UMLS. Methods of Information in Medicine 47(5), 425–434 (2008)</ref>
+          <ref rid="R6" class="deo:BibliographicReference" id="126" page="12" column="1">6. Field, M.J., Lohr, K.N. (eds.): Clinical Practice Guidelines: Directions for a New Program. National Academies Press, Institute of Medicine, Washington DC (1990)</ref>
+          <ref rid="R7" class="deo:BibliographicReference" id="127" page="12" column="1">7. Isern, D., Moreno, A.: Computer-based execution of clinical guidelines: A review. International Journal of Medical Informatics 77(12), 787 – 808 (2008)</ref>
+          <ref rid="R8" class="deo:BibliographicReference" id="128" page="12" column="1">8. Kaiser, K., Akkaya, C., Miksch, S.: How can information extraction ease formalizing treatment processes in clinical practice guidelines? A method and its evaluation. Artificial Intelligence in Medicine 39(2), 151–163 (2007)</ref>
+          <ref rid="R9" class="deo:BibliographicReference" id="129" page="12" column="1">9. Kaiser, K., Miksch, S.: Versioning computer-interpretable guidelines: Semi- automatic modeling of ’Living Guidelines’ using an information extraction method. Artificial Intelligence in Medicine 46(1), 55–66 (2009)</ref>
+          <ref rid="R10" class="deo:BibliographicReference" id="130" page="12" column="1">10. Kaiser, K., Seyfang, A., Miksch, S.: Identifying treatment activities for modelling computer-interpretable clinical practice guidelines. In: Riao, D., Teije, A., Miksch, S., Peleg, M. (eds.) Knowledge Representation for Health-Care, Lecture Notes in Computer Science, vol. 6512, pp. 114–125. Springer Berlin Heidelberg (2011)</ref>
+          <ref rid="R11" class="deo:BibliographicReference" id="131" page="12" column="1">11. Lindberg, D., Humphreys, B., McCray, A.: The Unified Medical Language System. Methods of Information in Medicine 32(4), 281–291 (1993)</ref>
+          <ref rid="R12" class="deo:BibliographicReference" id="133" page="13" column="1">12. Manning, C.D., Schütze, H.: Foundations of statistical natural language processing. MIT Press, Cambridge, MA, USA (1999)</ref>
+          <ref rid="R13" class="deo:BibliographicReference" id="134" page="13" column="1">13. McCray, A.: UMLS Semantic Network. In: Proc. of the 13th Annual Symposium on Computer Applications in Medical Care(SCAMC). pp. 503–507 (1989)</ref>
+          <ref rid="R14" class="deo:BibliographicReference" id="135" page="13" column="1">14. Moser, M., Miksch, S.: Improving clinical guideline implementation through prototypical design patterns. In: Miksch, S., Hunter, J., Keravnou, E. (eds.) Artificial Intelligence in Medicine, Lecture Notes in Computer Science, vol. 3581, pp. 126– 130. Springer Berlin Heidelberg (2005)</ref>
+          <ref rid="R15" class="deo:BibliographicReference" id="136" page="13" column="1">15. Peleg, M., Tu, S., Bury, J., Ciccarese, P., Fox, J., Greenes, R., Hall, R., John- son, P.D., Jones, N., Kumar, A., Miksch, S., Quaglini, S., Seyfang, A., Short- liffe, E.H., Stefanelli, M.: Comparing Computer-Interpretable Guideline Models: A Case-Study Approach, . The Journal of the American Medical Informatics Association (JAMIA) 10(1), 52–68 (Jan - Feb 2003)</ref>
+          <ref rid="R16" class="deo:BibliographicReference" id="138" page="13" column="1">16. Remine: Documentation of formalized guidelines (2010), <ext-link ext-link-type="uri" href="http://www.remine" id="137">http://www.remine</ext-link>- project.eu/</ref>
+          <ref rid="R17" class="deo:BibliographicReference" id="139" page="13" column="1">17. Scottish Intercollegiate Guidelines Network (SIGN): British Guideline on the Management of Asthma. A national clinical guideline. Scottish Intercollegiate Guidelines Network (SIGN) (May 2011)</ref>
+          <ref rid="R18" class="deo:BibliographicReference" id="140" page="13" column="1">18. Serban, R., ten Teije, A., van Harmelen, F., Marcos, M., Polo-Conde, C.: Extraction and use of linguistic patterns for modelling medical guidelines. Artif. Intell. Med. 39(2), 137–149 (Feb 2007)</ref>
+          <ref rid="R19" class="deo:BibliographicReference" id="141" page="13" column="1">19. Seyfang, A., Kaiser, K.: MHB-F Specification (2011)</ref>
+          <ref rid="R20" class="deo:BibliographicReference" id="142" page="13" column="1">20. Seyfang, A., Martnez-Salvador, B., Serban, R., Wittenberg, A., Miksch, S., Marcos, M., Teije, A.T., Rosenbrand, K.: Maintaining formal models of living guidelines efficiently. In: Proc. of the 11th Conference on Artificial Intelligence in Medicine (AIME07). Springer Verlag (2007)</ref>
+          <ref rid="R21" class="deo:BibliographicReference" id="143" page="13" column="1">21. Seyfang, A., Miksch, S., Marcos, M., Wittenberg, J., Polo-Conde, C., Rosenbrand, K.: Bridging the gap between informal and formal guideline representations. In: Brewka, G., Coradeschi, S., Perini, A., Traverso, P. (eds.) European Conference on Artificial Intelligence (ECAI-2006). vol. 141, pp. 447–451. IOS Press, Riva del Garda, Italy (2006)</ref>
+          <ref rid="R22" class="deo:BibliographicReference" id="144" page="13" column="1">22. Sonnenberg, F.A., Hagerty, C.G.: Computer-interpretable clinical practice guidelines. where are we and where are we going ? Yearb Med Inform pp. 145–58+ (2006)</ref>
+          <ref rid="R23" class="deo:BibliographicReference" id="145" page="13" column="1">23. Taboada, M., Meizoso, M., Ria no, D., Alonso, A., Mart ́ ınez, D.: From natural language descriptions in clinical guidelines to relationships in an ontology. In: Proceedings of the 2009 AIME international conference on Knowledge Representation for Health-Care: data, Processes and Guidelines. pp. 26–37. KR4HC’09, Springer- Verlag, Berlin, Heidelberg (2010)</ref>
+        </ref-list>
+        <outsider class="DoCO:TextBox" type="page_nr" id="132" page="13" column="1">13</outsider>
+      </section>
+    </body>
+  </article>
+</pdfx>

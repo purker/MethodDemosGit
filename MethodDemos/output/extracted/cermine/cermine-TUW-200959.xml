@@ -1,0 +1,1295 @@
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN" "JATS-archivearticle1.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+  <front>
+    <journal-meta />
+    <article-meta>
+      <contrib-group>
+        <aff id="aff0">
+          <label>0</label>
+          <institution>, Oxford University Computing Laboratory, University of Oxford</institution>
+        </aff>
+      </contrib-group>
+      <abstract>
+        <p>We consider monotonicity problems for graph searching games. Variants of these games defined by the type of moves allowed for the players - have been found to be closely connected to graph decompositions and associated width measures such as path- or tree-width. Of particular interest is the question whether these games are monotone, i.e. whether the cops can catch a robber without ever allowing the robber to reach positions that have been cleared before. The monotonicity problem for graph searching games has intensely been studied in the literature, but for two types of games the problem was left unresolved. These are the games on digraphs where the robber is invisible and lazy or visible and fast. In this paper, we solve the problems by giving examples showing that both types of games are non-monotone. Graph searching games on digraphs are closely related to recent proposals for digraph decompositions generalising tree-width to directed graphs. These proposals have partly been motivated by attempts to develop a structure theory for digraphs similar to the graph minor theory developed by Robertson and Seymour for undirected graphs, and partly by the immense number of algorithmic results using tree-width of undirected graphs and the hope that part of this success might be reproducible on digraphs using a “directed tree-width”. For problems such as disjoint paths and Hamiltonicity, it has indeed been shown that they are tractable on graphs of small directed tree-width. However, the number of such examples is still small. We therefore explore the limits of the algorithmic applicability of digraph decompositions. In particular, we show that various natural candidates for problems that might benefit from digraphs having small “directed tree-width” remain NP-complete even on almost acyclic graphs.</p>
+      </abstract>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="sec-1">
+      <title>-</title>
+      <p>X
+r
+a</p>
+      <p>D I G R A P H D E C O M P O SI TIO N S A N D</p>
+    </sec>
+    <sec id="sec-2">
+      <title>Introduction</title>
+      <p>
+        The seminal work of Robertson and Seymour in their graph minor project has focused much attention
+on graph decompositions and associated measures of graph connectivity such as tree- or path- width.
+Aside from the interest in graph structure theory, these notions have also proved fruitful in the
+development of algorithms. The tree-width of a graph is a measure of how tree-like the graph is and small
+tree-width allows for graph decompositions along which recursive algorithms can work. Many
+problems that are intractable in general can be solved efficiently on graphs of bounded tree-width. These
+include such classical NP-complete problems as finding a Hamiltonian-cycle in a graph or detecting
+if a graph is three-colourable. See [
+        <xref ref-type="bibr" rid="ref10 ref9">9, 8</xref>
+        ] and references therein for an introduction to tree-width.
+      </p>
+      <p>
+        Closely related to the theory of graph decompositions is the theory of graph searching games. In
+a graph searching game a number of searchers, or cops, tries to catch a fugitive, or robber, hiding in
+the graph. There are many variants of these games. The robber can hide on edges or vertices, he can
+be fast or lazy, he can be visible or not, the game can be played on undirected or directed graphs, and
+many more. Graph searching games are particularly interesting in relation to graph decompositions,
+as many width measures for graphs based on decompositions can also be described in terms of variants
+of Cops and Robber games. For instance, in 1993, Seymour and Thomas [
+        <xref ref-type="bibr" rid="ref13">12</xref>
+        ] showed that the
+treewidth of a graph equals the minimal number of cops required to catch a visible and fast robber (minus
+one). Dendris, Kirousis, and Thilikos [
+        <xref ref-type="bibr" rid="ref11">10</xref>
+        ] gave an analogous characterisation in terms of an invisible,
+lazy robber game. Other variants of Cops and Robber games have also been used to characterise the
+path-width of graphs and similar connectivity measures.
+      </p>
+      <p>
+        An important concept in the theory of graph searching games is monotonicity. A game is
+monotone, if whenever k cops can catch a robber on a graph they can do so without allowing the robber
+to re-occupy vertices. In general, restricting the cops to monotone strategies may require additional
+cops to catch a robber. LaPaugh [
+        <xref ref-type="bibr" rid="ref21">20</xref>
+        ] gave a first proof of monotonicity for a Cops and Robber game.
+Since then, monotonicity has been intensely studied and a large number of monotonicity results have
+been established. See e.g. [
+        <xref ref-type="bibr" rid="ref11 ref14 ref15 ref21 ref22 ref5 ref8">20, 7, 10, 4, 13, 14, 21, 27</xref>
+        ] or the survey [
+        <xref ref-type="bibr" rid="ref1 ref3">2</xref>
+        ] and references therein.
+      </p>
+      <p>Despite the considerable interest and the large number of results in this field, two cases have so far
+resisted any attempts to solve the monotonicity problem – the Cops and Robber game with a visible,
+fast robber and the game with an invisible, lazy robber, both played on digraphs. In this paper,we
+solve the problems by showing that both games are non-monotone.</p>
+      <p>
+        Digraph decompositions. In recent years, attempts have been made to generalise the notion of
+tree-decompositions and their algorithmic applications to directed graphs. Clearly, we can define
+the tree-width of a directed graph as the tree-width of the undirected graph we get by forgetting the
+direction of edges, a process which leads to some loss of information. This loss may be significant, if
+the algorithmic problems we are interested in are inherently directed. A good example is the problem
+of detecting Hamiltonian cycles. While we know that this can be solved easily on graphs with small
+tree-width, there are directed graphs with very simple connectivity structure which have large
+treewidth. Therefore, several proposals have been made to extend the notions of tree-decompositions
+and tree-width to directed graphs (see [
+        <xref ref-type="bibr" rid="ref17 ref18 ref25 ref26 ref5 ref7">24, 17, 4, 6, 25, 16</xref>
+        ]). In particular, Reed [
+        <xref ref-type="bibr" rid="ref25">24</xref>
+        ] and Johnson,
+Robertson, Seymour, and Thomas [
+        <xref ref-type="bibr" rid="ref18">17</xref>
+        ] introduce the notion of directed tree-width and they show that
+Hamiltonicity can be solved for graphs of bounded directed tree-width in polynomial time.
+      </p>
+      <p>
+        Following this initial paper, several alternative definitions of directed graph decompositions have
+been proposed, with the aim of overcoming some shortcomings of the original definition. Obdrzˇa`lek
+[
+        <xref ref-type="bibr" rid="ref24">23</xref>
+        ] and Berwanger, Dawar, Hunter, and Kreutzer [
+        <xref ref-type="bibr" rid="ref6">5</xref>
+        ] introduce the notion of DAG-width and Hunter
+and Kreutzer [
+        <xref ref-type="bibr" rid="ref17">16</xref>
+        ] introduce the notion of Kelly-width. All three proposals are supported by
+algorithmic applications and various equivalent characterisations in terms of obstructions, elimination
+orderings, and, in particular, variants of Cops and Robber games on directed graphs. However, so
+far the algorithmic applications are restricted to few classes of problems, in particular the problem
+of finding disjoint paths, Hamiltonian-cycles, and similar linkage problems and certain problems in
+relation to combinatorial games (parity games) played on graphs that are motivated by the theory of
+computer-aided verification. Whereas the tree-width of undirected graphs has been employed to solve
+a huge number of problems on graphs of small tree-width, the algorithmic theory of directed graph
+decompositions is not nearly as rich.
+      </p>
+      <p>
+        It is an obvious question whether this is due to the fact that digraph decompositions are a
+relatively new field of research, where the fundamental machinery first needs to be developed, or whether
+this is due to a general limitation of this approach to algorithms on digraphs. In this paper we
+systematically explore the range of algorithmic applicability of digraph decompositions. For this, we
+look at typical NP-complete problems on graphs – as they can be found in [
+        <xref ref-type="bibr" rid="ref16">15</xref>
+        ] for instance – and
+identify those that are “suitable”for this approach, where by “suitable” we mean that the problems
+should be NP-complete in general but be tractable on acyclic graphs. The reason for the latter is that
+all digraph decompositions proposed so far measure in some way the similarity of a graph to being
+acyclic. In particular, acyclic graphs have small width in all of these measures. Hence, if a problem
+is already hard on acyclic digraphs, there is no point in studying the effect of digraph decompositions
+on this problem. We then identify representatives for the various types of “suitable” problems and
+ask whether they can be solved in polynomial time on graphs of small directed tree-width, Kelly- or
+DAG-width, or directed path-width.
+      </p>
+      <p>The results we present in Section 4 show that the border for algorithmic applicability of digraph
+decompositions is rather tight. Essentially, as far as classical graph theoretical problems are
+concerned, disjoint paths and Hamiltonian-cycles can be detected efficiently on graphs of small directed
+tree-width, but all other problems we considered such as Minimum Equivalent Subgraph, Feedback
+Vertex Set (FVS), Feedback Arc Set, Graph Grundy Numbering, and several others are NP-complete
+even on graphs with a very low global connectivity and thus very low directed path or tree-width.
+Organisation. The paper is organised as follows. In Section 2 we briefly recall basic notions from
+graph and game theory needed in the sequel. In Section 3 we give a formal description of Cops
+and Robber games and present the first main result of this paper, the non-monotonicity of the two
+types of games mentioned above. In Section 4 we explore the algorithmic boundaries of the digraph
+decompositions obtained so far by showing NP-completeness for a number of problems on digraphs
+with bounded “width”. We conclude and state some open problems in Section 5.
+2</p>
+    </sec>
+    <sec id="sec-3">
+      <title>Preliminaries</title>
+      <p>
+        We use standard notation from graph theory as can be found in, e.g., [
+        <xref ref-type="bibr" rid="ref12">11</xref>
+        ]. All graphs and directed
+graphs in this work are finite and simple.
+      </p>
+      <p>Let G be a (directed) graph. We denote the vertexset of G by V (G) and the edgeset of G by E(G).
+For X ⊆ V (G) we denote by G[X] the subgraph of G induced by X and by G \ X the subgraph of G
+induced by V (G) \ X. Similarly for Y ⊆ E(G) we set G \ Y to be the subgraph of G after deleting
+all edges in Y . A path in G from a vertex v1 to a vertex vn is a subgraph of G with vertices v1, · · · , vn
+and edges {{vi, vi+1} | 1 ≤ i &lt; n} if G is undirected, respectively {(vi, vi+1) | 1 ≤ i &lt; n} if G
+is directed. For convenience we write v → u in G if G contains a path from v to u. A cycle in G is
+a path from v1 to vn together with an edge {vn, v1} if G is undirected, and (vn, v1) if G is directed.
+We say X ⊆ V (G) is connected, if for all pairs x, y ∈ X there is a path from x to y in G[X]. A
+component in G is a maximal connected vertexset in G.</p>
+      <p>Finally, for a set X and k ∈ N, we denote by [X]≤k the set of all subsets of X of cardinality ≤ k.</p>
+    </sec>
+    <sec id="sec-4">
+      <title>Cops and robber games</title>
+      <p>Cops and Robber games are played by two players, that alternately place tokens on the vertices of
+a graph. Whereas the robber player has only one token and is merely able to move his token in a
+restricted way (depending on the variant of the game), the cop player can use an arbitrary amount of
+tokens and is free to move them anywhere on the graph. As the name suggests the objective of the
+cop player is to capture the token of the robber, i.e. to force the robber into a position where he is
+not able to move any more. Depending on the variant of the game – the variants differ in the abilities
+of both players – the minimum number of tokens needed by the cop to capture the robber defines a
+graph invariant.</p>
+      <p>More formally, let D be a graph – either directed or undirected. A position in the game is a pair
+(X, r), with X ⊆ V (D) and r ∈ V (D), and a play is a sequence of positions ((X1, r1), · · · , (Xn, rn)),
+such that X1 = ∅ and a move from one position to another is only allowed if the robber player is
+allowed to move from ri to ri+1 with respect to D \ (Xi ∩ Xi+1), Xi+1, and the variant of the game. For
+a play ((X1, r1), · · · , (Xn, rn)) we define the robber-space as a sequence of vertexsets (R1, · · · , Rn),
+with R1 = V (D) and Ri = {r | the robber can move from ri−1 to r}, for i &gt; 1. The cop player
+wins, if there is a position satisfying ri ∈ Xi, otherwise the robber player wins.</p>
+      <p>We are mainly interested in the type of strategies the players can employ. One can easily verify
+that strategies in these games only depend on the current position of the game, i.e. are deterministic
+and positional. Hence, strategies are functions assigning a new position for a player depending on the
+current position in the game. A strategy is winning for a player, if he wins all plays consistent with it,
+i.e. where all transitions from one position to another are consistent with it.</p>
+      <p>Let D be a digraph, and f a strategy for the cop. We define the cop-width of f , in terms cw(f ),
+to be cw(f ) = max{|f (X, r)| | X ⊆ V (D), r ∈ V (D)}, and the cop-width of D to be cw(D) =
+min{cw(f ) | f is winning on D }. So the cop-width of a graph defines the graph invariant that we are
+interested in.</p>
+      <p>Before explaining the different variants of the game we introduce the concept of monotonicity. We
+say a play ((X1, r1), · · · , (Xn, rn)) is cop-monotone, if the cop player never reoccupies a previously
+vacated vertex, i.e. there are no indices 1 ≤ i &lt; j ≤ n, such that (Xi \ Xi+1) ∩ (Xj \ Xj−1) 6= ∅.
+We say a play is robber-monotone, if the corresponding robber-space never increases. A play is
+monotone, if it is both robber- and cop-monotone.</p>
+      <p>The notion of monotonicity directly applies to cop-strategies, so we say that a cop-strategy is
+robber-monotone, cop-monotone or just monotone, if all plays consistent with this strategy are. We
+denote by mon-cw(D) = min{cw(f ) | f is monotone and winning on D } and say that a game is
+monotone if mon-cw(D) = cw(D) for all graphs D, and non-monotone otherwise.</p>
+      <p>We are now ready to introduce the variants of the game. On undirected graphs a move from (X, r)
+to (X′, r′) is legal, if there exists a path from r to r′ in D \ (X ∩ X′), i.e. the robber is allowed to
+move along cop free paths. The variant of the game that places no other restriction on the robber
+is called dynamic as the robber is allowed to move in every move of the game, except when he is
+captured. Contrary to that is the so called inert variant, where the robber is only able to move when
+the cop player is going to occupy his current position, i.e. a move from (X, r) to (X′, r′) is legal if
+r ∈ X′. Furthermore there is also a variant of the game where the cops are unable to see the robber,
+which is called invisible. The normal version, i.e. where the cops can see the robber is called visible.</p>
+      <p>
+        Combining these, one obtains four variants of the game, of which only three are considered in
+literature, namely: visible and dynamic (vis), invisible and dynamic (invis), and invisible and inert
+(inert). On undirected graphs all these variants are monotone and satisfy:
+1. vis-cw(D) = inert-cw(D) = tw(D) + 1, for every graph D, where tw(D) denotes the
+treewidth of D ( see [
+        <xref ref-type="bibr" rid="ref13">12</xref>
+        ] and [
+        <xref ref-type="bibr" rid="ref11">10</xref>
+        ] ).
+2. invis-cw(D) = pw(D) + 1, for every graph D, where pw(D) denotes the path-width of D (
+see [
+        <xref ref-type="bibr" rid="ref8">7</xref>
+        ] ).
+      </p>
+      <p>Depending on how one translates the notion of an undirected path to the directed setting, i.e.
+whether one regards it as one directed path from source to destination or as two directed paths ,one
+in each direction, there are two natural variants of this game on directed graphs. We refer to the
+first variant, i.e. where the robber is allowed to move along (cop-free) directed paths, as reachability
+variant (reach), and to the second one, i.e. where the robber is only allowed to move when there exist
+a path in each direction, as strong connected component (scc) variant, since in this case the robber is
+only allowed to move in strongly connected components.</p>
+      <p>
+        Combining these two main versions of the game with the variants discussed for the undirected
+setting one retrieves a number of interesting games on directed graphs of which the following have
+been discussed in literature so far: strong connected component, visible and dynamic (scc-vis);
+reachability, visible and dynamic (reach-vis); reachability, invisible and dynamic (reach-invis); and
+reachability, invisible and inert (reach-inert). We briefly relate these games to the corresponding digraph
+decompositions and recall what is known about monotonicity.
+scc, visible, and dynamic: This variant is closely related to directed tree-width as it is known that
+scc-vis-cw(D) − 1 ≤ dtw(D) ≤ 3 · scc-vis-cw(D) + 5, for every digraph D with directed
+treewidth dtw(D) (see [
+        <xref ref-type="bibr" rid="ref19">18</xref>
+        ]). It has been shown to be neither robber- nor cop-monotone [
+        <xref ref-type="bibr" rid="ref18 ref2">1, 17</xref>
+        ].
+However, although not explicitly stated, [
+        <xref ref-type="bibr" rid="ref18">17</xref>
+        ] gives an upper bound for the monotonicity costs
+with respect to robber-monotonicity. It remains an interesting open question whether this holds
+for the cop-monotone variant as well.
+reachability, invisible and dynamic: This variant defines directed path-width and has been shown
+to be monotone in [
+        <xref ref-type="bibr" rid="ref5">4</xref>
+        ].
+reachability, visible and dynamic: The monotone version of this variant defines DAG-width [
+        <xref ref-type="bibr" rid="ref6">5</xref>
+        ].
+      </p>
+      <p>
+        We therefore refer to these games as DAG-games.
+reachability, invisible and inert: The monotone version of this variant defines Kelly-width [
+        <xref ref-type="bibr" rid="ref17">16</xref>
+        ].
+      </p>
+      <p>We therefore refer to these games as Kelly-games.</p>
+      <p>We are now ready to state our main results of this section, proving that DAG- and Kelly-Games
+are non-monotone.
+3.1</p>
+      <p>Non-Monotonicity of DAG-Games
+Theorem 3.1. For every p ≥ 2 there exists a digraph Dp with mon-dag-cw(Dp) = 4p − 2 and
+dag-cw(Dp) = 3p − 1.</p>
+      <p>Proof. A schematic overview of Dp is given in Figure 1. The graph consists of three main parts with
+2p − 1 vertices each. C0 and C2 are cliques on 2p − 1 vertices, C12 is a clique on p − 1 vertices and
+C11 forms an independent set having p vertices. A directed edge between two parts A and B means
+that there are edges from every vertex in A to every vertex in B. Undirected edges mean that there
+are edges between A and B in both direction.</p>
+      <p>It is easy to see that dag-cw(Dp) ≥ 3p − 1 since the vertices in C0 ∪ C12 together with a vertex of
+C11 form a clique of size 3p − 1. To show that dag-cw(Dp) ≤ 3p − 1 consider the following strategy
+for 3p − 1 cops on Dp. In the first move the cops occupy C0 ∪ C11. If the robber plays to C2 the cops
+capture him by playing on C11 ∪ C2. Otherwise, if the robber plays to C12 the cops move to C0 ∪ C2.
+1</p>
+      <p>C0
+C
+1 1</p>
+      <p>Now the robber has to be on a vertex v ∈ C1. Since the vertices in C11 form an independent set the
+1
+robber is now captured by playing to {v} ∪ C12 ∪ C0.</p>
+      <p>It remains to show that mon-dag-cw(Dp) = 4p − 2. It is easy to see that 4p − 2 cops can capture
+the robber on Dp by playing C0 ∪ C2 and then C0 ∪ C1. To show that mon-dag-cw(Dp) ≥ 4p − 2 we
+give a strategy for the robber against 4p − 3 cops playing monotonously on Dp.</p>
+      <p>First the robber stays in C0 until the cops occupy all vertices of C0. There are two cases to
+consider.</p>
+      <p>1. The cops occupy ( at least ) C0 ∪ C11. In this case there is a vertex v ∈ C12 which is not occupied
+by a cop and which the robber can reach from his current position in C0. Since every v ∈ C2
+1
+has an edge to every other vertex in C0 ∪ C1 the cop cannot capture the robber monotonously
+with less than 4p − 2 cops.
+2. The cops occupy ( at least ) C0 and there is at least one vertex in C11 which is not occupied by
+a cop. Then there exists a vertex v ∈ C2 which is not occupied by a cop and which the robber
+can reach from his current position in C0. Since from every vertex in C2 there is a path to every
+other vertex in the graph (as long as there is at least one vertex in C11 not occupied by a cop)
+the robber can stay in C2 until the cops occupy all vertices in C11. And if they do the robber can
+move to a vertex in C12 and play as in the first case.
+3.2</p>
+      <p>Non-Monotonicity of Kelly-Games
+We now consider Kelly-games. Recall that in a Kelly-game, the robber is invisible. Hence, a strategy
+for the cop must be independent of the current position of the robber. We can therefor represent a
+cop-strategy in a digraph D by a sequence (v1, . . . , v|D|) of vertices in the order in which they are
+visited by the cops.</p>
+      <p>Theorem 3.2. For every p ≥ 2 there exists a digraph Dp with mon-kelly-cw(Dp) = 7p and
+kelly-cw(Dp) = 6p.</p>
+      <p>Proof. A schematic overview of Dp is given in Figure 2. The graph consists of five cliques with
+|C0| = p, |C2| = |C1| = |X1| = 2p, |X2| = 3p. An edge between two parts A and B means that
+there are edges from every vertex in A to every vertex in B, where again an undirected edge between
+A and B means that there are edges in Dp in both directions.</p>
+      <p>The following strategies for the cop show that mon-kelly-cw(Dp) ≤ 7p and kelly-cw(Dp) ≤ 6p.
+For the monotone game we use the strategy (X ∪ C0, X2 ∪ C0 ∪ C1, X1 ∪ C), i.e. the cops first occupy
+all of X and C0, then proceed to X2 ∪ C0 ∪ C1, and finally move to X1 ∪ C. For the non-monotone
+case we use (X ∪ C0, X2 ∪ C0 ∪ C1, X1 ∪ C1, X1 ∪ C1 ∪ C2, X, X ∪ C0).</p>
+      <p>To see that kelly-cw(Dp) ≥ 6p note that C0 ∪ X is a clique of size 6p. It remains to show that
+mon-kelly-cw(Dp) ≥ 7p. Suppose mon-kelly-cw(Dp) &lt; 7p and let S = (v1, · · · , v|V (Dp)|) be a
+cop-strategy witnessing this. For each part Y ∈ {C0, C1, C2, X1, X2, C, X} of Dp let I(Y ) be the
+greatest index of a vertex in Y , i.e. vI(Y ) is the last vertex of Y which is searched by S. Then the
+following statements hold:
+1. I(X) &lt; I(C1) and I(X) &lt; I(C2). For the sake of contradiction, suppose I(X) &gt; I(C1) and
+let v = vI(X). Hence, when the cops clear v, they have already cleared all vertices in X other
+than v and all vertices in C1. As v has edges to every other vertex in C1 ∪ X, the cops need to
+occupy all of (C1 ∪ X) \ {v} before they can place a token on v. But this requires 7p cops.</p>
+      <p>The case of I(X) &lt; I(C2) is analogous.
+2. I(C0) &lt; I(C1). Again, assume the contrary, i.e. I(C0) &gt; I(C1). Hence, when clearing vI(C1)
+there is a free vertex v ∈ C0 through which the robber can reach all of X. As I(X) &lt; I(C1),
+the cops needs to occupy at least (X ∪ C1) \ {vI(C1)} before clearing vI(C1), which yields the
+contradiction.
+3. I(C1) &lt; I(C2). With a similar reasoning as before we obtain that otherwise the cops have to
+occupy X ∪ C2 when searching vI(C2), using 7p cops.</p>
+      <p>The statements (1)-(3) imply I(X) &lt; I(C0) &lt; I(C1) &lt; I(C2) but now the cop needs to occupy
+|C2 ∪ C1 ∪ C0 ∪ X1| = 7p vertices in order to search vI(C2). So S uses at least 7p cops.
+4</p>
+    </sec>
+    <sec id="sec-5">
+      <title>Limits of Algorithmic Applications</title>
+      <p>
+        In [
+        <xref ref-type="bibr" rid="ref18">17</xref>
+        ] it has been shown that the k-disjoint path problem and related problems are solvable in
+polynomial time on graphs of bounded directed tree-width. However, up to now only few other problems are
+known to be solvable with the help of digraph decompositions, a further example being parity games,
+which are tractable on graphs of bounded DAG- and Kelly-width [
+        <xref ref-type="bibr" rid="ref17 ref6">5, 16</xref>
+        ]. As directed tree-width is
+the most general of these width-measures, tractability results for directed tree-width directly extend
+to all other measures. The converse is not true, for example it is not known whether parity games are
+tractable on graphs of bounded directed tree-width.
+      </p>
+      <p>In this section we explore the algorithmic boundaries of the digraph measures introduced so far.
+In our analysis we focus on NP-complete problems that are explicitly directed. All analysed
+problems are solvable in polynomial time on digraphs whose underlying undirected graph has bounded
+tree-width – but as mentioned in the introduction, tree-width is not a good measure for the global
+connectivity of a digraph. Furthermore, we discard problems that are not tractable on acyclic graphs, as
+all measures defined so far are bounded on acyclic graphs. As representatives for various types of the
+remaining problems, we have considered the following problems: Minimum Equivalent Subgraph,
+Directed Feedback Vertex / Arc Set, Graph Grundy Numbering, and Kernel.</p>
+      <p>It turned out that all of these problems remain NP-complete even on digraphs that have very low
+global connectivity, i.e. digraphs that can be decomposed into strong components of constant size
+just by removing a small number of vertices. In particular, these graphs have low width with respect
+to all digraph decompositions defined so far, i.e. small directed path width, small DAG-, Kelly-, and
+directed tree-width, small Entanglement and D-width. For notational convenience, we state the proofs
+in terms of DAG-width, which as already stated in Section 3 is equal to the number of cops needed to
+catch the robber in the reachibility, monotone, visible and dynamic cops and robber game.
+4.1</p>
+      <p>Minimum Equivalent Subgraph
+The Minimum Equivalent Subgraph (MES)-problem is the problem to compute in a given digraph D
+an edge-minimal subgraph D′ ⊆ D that preserves reachability in D.</p>
+      <p>Definition 4.1. Let D be a digraph and k ∈ N. MES is the problem to decide, if there is a set
+E′ ⊆ E(D) with |E′| ≤ k, such that the digraph D′ = (V (D), E′) contains a path between two
+vertices if, and only if, such a path exists in D, i.e. D and D′ have the same transitive closure.</p>
+      <p>
+        MES is NP-complete for arbitrary digraphs (see [
+        <xref ref-type="bibr" rid="ref16">15</xref>
+        ]), but is known to be solvable in polynomial
+time for acyclic and undirected graphs. In [
+        <xref ref-type="bibr" rid="ref23">22</xref>
+        ] it is also shown that it suffices to consider MES
+on connected digraphs. There MES is equivalent to a generalisation of the directed hamilton cycle
+problem, the so-called round-trip-problem, in which vertices can be used more than ones. This is
+particularly interesting because the directed hamilton cycle problem is a special case of the k-linkage
+problem, which can be solved in polynomial time on digraphs of bounded DAG-width.
+Definition 4.2. Let D be a connected digraph. A round-trip R = (v1, · · · , vk, v1) is a sequence of
+k + 1 vertices of D, such that (vi, vi+1) ∈ E(D) and R visits every vertex of D at least once. The
+size of R equals k + 1.
+      </p>
+      <p>
+        Lemma 4.3. [
+        <xref ref-type="bibr" rid="ref23">22</xref>
+        ] Let D be a connected digraph and k a natural number. Then D has a MES of size
+less than k if, and only if, D has a round-trip of size less than k.
+      </p>
+      <p>The NP-completeness of MES for digraphs of DAG-width less than four follows from a reduction
+of 3-SAT to the problem of finding a minimum round-trip in a connected digraph of DAG-width less
+than four as follows:
+Theorem 4.4. The MES-problem is NP-complete on directed graphs of DAG-width less than four.
+Proof. The proof reduces 3-SAT to round-trip. Let F be a 3-SAT-Formula with variables x1, · · · , xn
+and clauses C1, · · · , Cm. From F we construct a digraph D satisfying:
+(A) F is satisfiable if, and only if, D has a round-trip of size |V (D)| + m.
+bi,2∗ki−1 jHHHHHei,H2∗kHi−H1 HHHj</p>
+      <p>j
+H2
+j
+?
+j
+j
+?
+c
+c
+c
+d1
+a2
+d2
+?
+j an
+Hn
+j
+?
+j
+dn
+d
+between the graphs H1, · · · , Hn and the vertex d.
+b
+e
+d
+AUA ?
+positive in Cj1, Cj2 and negative in Cj3.
+(B) D is constructable in polynomial time, given F .
+(C) D has DAG-width less than four.</p>
+      <p>We construct D as follows:
+• Add a vertex d to D.
+• For each variable xi in F add the digraph Hi, which is shown in Figure 3 a), to D.
+• Connect d and the graphs Hi as illustrated in Figure 3 b), i.e. add the edges (di, ai+1), (dn, d)
+and (d, a1) to D.
+• For each clause Cj add the vertices Cj1 and Cj2 together with the edges (Cj1, d) and (d, Cj2) to</p>
+      <p>D.
+• For each occurrence of xi, respectively xi in a clause Cj add the edges (bi,2∗l−1, Cj1) and
+(Cj2, ci,2∗l), respectively (ci,2∗l−1, Cj1) and (Cj2, bi,2∗l) to D, where l is the smallest integer,
+such that neither bi,2∗l−1 nor ci,2∗l−1 have been used by a clause before.</p>
+      <p>An example for D is shown in Figure 4. It remains to show that D actually satisfies (A)-(C).
+(A) =⇒ Let β be a satisfying assignment for F . We have to show that D contains a round-trip R of
+size |V (D)| + m. R uses the following edges:
+• (di, ai+1), (dn, d) and (d, a1).
+• For each Hi, such that β(xi) = true, respectively β(xi) = false, R uses the edges
+(ai, bi,1), (bi,1, ei,1) and (ei,1, ci,1), respectively (ai, ci,1), (ci,1, ei,1) and (ei,1, bi,1).
+• If β(xi) = true, respectively β(xi) = false and ci,l, respectively bi,l has an edge to
+a clause Cj , such that neither Cj1 nor Cj2 are already contained in R, use the edges
+(ci,l, Cj1), (Cj1, d), (d, Cj2) and (Cj2, bi,l+1), respectively (bi,l, Cj1), (Cj1, d), (d, Cj2)
+and (Cj2, ci,l+1). If not R uses the edge (ci,l, bi,l+1), respectively (bi,l, ci,l+1).</p>
+      <p>It is easy to see that R is a round-trip for D, using every vertex except d at most once and
+every vertex in H1, · · · , Hn exactly once. As β is a satisfying assignment for F every
+vertex C1, Cj2 is used at least once and d is used exactly m + 1-times. So R has size
+j
+|V (D)| + m.
+⇐= Now suppose we are given a round-trip R on D of size |V (D)| + m. We have to show
+that there exist a satisfying assignment for F . We show this by a series of claims:
+a) In every round-trip d has exactly m + 1 predecessors.
+b) In every round-trip d has exactly m + 1 successors.
+c) All vertices in R except d have in- and out-degree one and d has in- and out-degree
+m + 1.
+d) R contains exactly one of (bi,j , ei,j) and (ei,j , bi,j). The same holds for (ci,j , ei,j )
+and (ei,j , ci,j ).
+e) R contains either (bi,j, ei,j ) and (ei,j , ci,j ) or (ci,j , ei,j ) and (ei,j , bi,j ) for every i and
+j.
+f) R contains either all edges (bi,j , ei,j ) and (ei,j , ci,j ) or all edges (ci,j, ei,j ) and (ei,j, bi,j ),
+for every i.
+g) If R contains an edge (bi,j1 , Cl11 ), than R does not contain an edge (ci,j2 , Cl12 ), for
+every i.
+h) The assignment β, with β(xi) = true, if R contains edges of the form (bi,j, Cl1) and
+β(xi) = false otherwise is a satisfying assignment for F .</p>
+      <p>Proof of (a)-(h):
+a) This follows from the fact that d is the only successor of it’s m + 1 predecessors in</p>
+      <p>D.
+b) This follows from the fact that d is the only predecessor of it’s m + 1 successors in</p>
+      <p>D.
+c) This follows from (a) and (b) together with the fact that the size of R is |V (D)| + m.
+d) Suppose R contains concurrently (bi,j, ei,j ) and (ei,j , bi,j). Then it follows from (c)
+that bi,j and ei,j are isolated in R, a contradiction.
+e) This follows from (d) and the fact that bi,j and ci,j are the only neighbours of ei,j .
+f) We show this by induction on j. For j = 1 this follows from (e). W.l.o.g. we
+can assume that R contains (bi,j , ei,j) and (ei,j , ci,j ). We have to show that R also
+contains (bi,j+1, ei,j+1) and (ei,j+1, ci,j+1). As (ei,j , ci,j ) is contained in R, ci,j has
+either Cl1 or bi,j+1 as successor in R. We therefore distinguish two cases:
+(a) R contains (ci,j , Cl1). Then the only predecessors of ci,j+1 in D are bi,j and
+ei,j+1. As bi,j already has a successor in R, R has to contain (ei,j+1, ci,j+1).
+(b) R contains (ci,j, bi,j+1). In this case bi,j+1 cannot have another predecessor in</p>
+      <p>R, thus R cannot contain (ei,j+1, bi,j+1).
+g) Because of (f) for every i either all vertices bi,j are succeeded by ei,j or all vertices
+ci,j are succeeded by ei,j in R. So R contains either only edges of the form (ci,j , Cl1)
+or only edges of the form (bi,j, Cl1).
+h) This follows from (g) and the fact that R has to contain all vertices of D, in particular
+Cl .</p>
+      <p>j
+(B) This follows from the construction of D.
+(C) The following defines a monotone winning strategy f for the cop-player on D using less than 4
+cops:
+1) f (∅, r) = {d, C12}
+2) f ({d, Ci2}, r) = {d, Ci2+1} where 1 ≤ i &lt; m.
+3) f ({d, Cm2}, r) = {d, a1}
+4) f ({d, ai}, r) = {d, bi,1, ei,1} where 1 ≤ i ≤ n.
+5) f ({d, bi,j , ei,j }, r) = {d, ei,j , ci,j } where 1 ≤ i ≤ n and 1 ≤ j ≤ 2 · ki.
+6) f ({d, ei,j , ci,j}, r) = {d, ai,j+1, ei,j+1} where 1 ≤ i ≤ n and 1 ≤ j ≤ 2 · ki.
+7) f ({d, ei,2·ki , ci,2·ki }, r) = {d, di} where 1 ≤ i ≤ n.
+8) f ({d, di}, r) = {d, ai+1} where 1 ≤ i &lt; n.</p>
+      <p>9) f ({d, dn}, r) = {d, C11}.
+10) f ({d, Ci1}r) = {d, Ci1+1} where 1 ≤ i &lt; m.
+4.2</p>
+      <p>
+        Feedback Vertex Set / Feedback Arc Set
+The Feedback Vertex/Arc Set (FVS/FAS)-problem is the problem to find a minimum set of vertices
+(edges) in a digraph D, whose removal leaves D acyclic. Both problems are known to be
+NPcomplete on arbitrary digraphs (see [
+        <xref ref-type="bibr" rid="ref20">19</xref>
+        ]). Trivially both problems become efficiently solvable on
+acyclic graphs. FVS is the only problem we present here that is NP-complete on undirected graphs as
+well.
+      </p>
+      <p>We prove the NP-completeness of FVS/FAS on digraphs of DAG-width four by reducing it to a
+special variant of 3-SAT namely 3-SAT-2, which we introduce now.</p>
+      <p>Definition 4.5. 3-SAT-2 is the variant of 3-SAT, so that every literal is used in at most two clauses.</p>
+      <p>3-SAT-2 is NP-complete. Next we need a simple lemma that helps us with the actual reduction.
+Lemma 4.6. Let D be the complete bipartite graph with two vertices in each part. Then every FVS
+of D contains all vertices of one part. Furthermore the vertices of one part form a FVS.
+Proof. Suppose for a contradiction that V ′ is a FVS of D and a, b ∈/ V ′ are two vertices in V ′ not in
+the same part of D. Then (a, b), (b, a) is a circle in D which is not covered by V ′. Now suppose V ′
+is a part of D. Then D − V ′ is an independent set and acyclic.</p>
+      <sec id="sec-5-1">
+        <title>We are now ready to prove the main theorem of this section.</title>
+        <p>Theorem 4.7. FVS is NP-complete on graphs of DAG-width at most four.</p>
+        <p>Proof. We reduce 3-SAT-2 to FVS on graphs of DAG-width at most 4. For every 3-SAT-2 formula F
+with variables x1, · · · , xn and clauses C1, · · · , Cm we construct a graph D satisfying:
+(A) D has a FVS of size 2n if, and only if F is satisfiable.
+(B) D is constructable in polynomial time given F .
+(C) D has DAG-width at most four.</p>
+        <p>D is constructed by the following steps:
+• Add a vertex v to D.
+• For each variable xi add to D the complete bipartite graph Hi with partitions {xi1, xi2} and
+{xi1, xi2}.
+• For each clause Cj with literals l1, · · · , lk, which are ordered corresponding to the index of
+their variables, add a circle c1, · · · , ck , v, c1 to D, such that :
+a) If lh equals xi, respectively xi, then ch is one of xi1, xi2, respectively xi1, xi2.
+b) The vertex used by lh is not used by any other clause. This is always possible as each
+literal is contained in at most two clauses.</p>
+        <p>We now show that D satisfies (A)-(C).
+(A) =⇒ Let β be a satisfying assignment for F . Now define V ′ ⊆ V (D), such that xi1, xi2 ∈ V ′,
+if β(xi) = true and xi1, xi2 ∈ V ′ otherwise. So |V ′| ≤ 2n it remains to show that V ′ is
+a Feedback Vertex Set for D. As Hi \ V ′ is an independent set, no circle can contain an
+edge of an Hi. It follows from the construction of D that every such circle corresponds to
+a unique clause. As β is a satisfying assignment for F , V ′ contains at least one vertex for
+each such a clause. So V ′ is a FVS for D.
+⇐= Let V ′ be a FVS for D of size 2n. Because of Lemma 4.6 V ′ contains either xi1, xi2 or
+xi1, xi2 for each 1 ≤ i ≤ n. As |V ′| ≤ 2n V ′ contains no other vertices. Now define
+β(xi) = true if xi1, xi2 ∈ V ′ and β(xi) = false otherwise. As V ′ is a FVS and v ∈/ V ′,
+V ′ contains at least one vertex of every clause. So β is a satisfying assignment for F .</p>
+      </sec>
+      <sec id="sec-5-2">
+        <title>This follows easily from the construction.</title>
+        <p>To show that D has DAG-width at most four, we give a monotone winning strategy for four cops on
+D:
+1. f (∅, r) = {v, x11, x21, x11}
+2. f ({v, xi1, xi2, xi1}, r) = {v, xi1, xi2, xi2} where 1 ≤ i ≤ n
+3. f ({v, xi1, xi2, xi2}, r) = {v, xi1+1, xi2+1, xi1+1} where 1 ≤ i &lt; n</p>
+        <p>To show that FAS is NP-complete on digraphs of bounded DAG-width as well, we use a simple
+reduction to FVS, as follows:
+Definition 4.8. Let D be a digraph. Then K(D) is the digraph obtained from D after replacing every
+vertex v ∈ V (D) with two vertices v1, v2 and an edge (v1, v2) and every edge (v, w) ∈ D with an
+edge (v2, w1).</p>
+        <p>
+          In [
+          <xref ref-type="bibr" rid="ref4">3</xref>
+          ] it is shown that D has a FVS of size k if, and only if K(D) has a FAS of size k. Thus using
+Lemma 4.7, it only remains to show that the DAG-width of D equals the DAG-width of K(D), for
+every digraph D.
+        </p>
+        <p>Lemma 4.9. Let k ≥ 2 and D be a digraph. Then the DAG-width of K(D) is at most the DAG-width
+of D.</p>
+        <p>Proof. Let f be a monotone winning strategy for k cops on D and let r ∈ V (D), X ⊆ V (D).
+W.l.o.g. we can assume that f either places or removes one cop at a time. If f places a cop on a
+vertex v then f ′ copies this move by placing a cop on v2. If f removes a cop from a vertex v and the
+robber does not occupy v1, f ′ just removes a cop from v2. If the robber occupies v1, when f is to
+remove a cop from v then f ′ first removes all cops currently occupied except v2 and after that, places
+a cop on v1. Now the robber is captured on v2. It is easy to see that f ′ is a monotone winning strategy
+for max{2, k} = k cops on K(D).</p>
+      </sec>
+      <sec id="sec-5-3">
+        <title>Combining the previous lemma with theorem 4.7 we get:</title>
+        <p>Theorem 4.10. FAS is NP-complete on graphs of DAG-width at most four.
+4.3</p>
+        <p>Graph Grundy Numbering and Kernel
+Definition 4.11. Graph Grundy Numbering is the problem to decide for a digraph D if there exists
+a function f : V (D) → N, such that for all v ∈ V (D), f (v) is the smallest natural number not
+contained in {f (u) : u ∈ V (D), (v, u) ∈ E(D)}.</p>
+        <p>Definition 4.12. Kernel is the problem to decide in a digraph D if there exists V ′ ⊆ V (D), such that
+1. there is no edge between two vertices in V ′, i.e. V ′ is an independent set.
+h
+yi</p>
+        <p>xi
+- h
+6
+h
+yi</p>
+        <p>
+          Observe, that on undirected graphs the maximisation version of Kernel is the Independent
+Setproblem, whereas the minimisation version of Graph Grundy Numbering equals Vertex-Colouring.
+On digraphs however even the existential versions of both problems are known to be NP-complete
+[
+          <xref ref-type="bibr" rid="ref27">26</xref>
+          ], but are trivially solvable on acyclic graphs. A simple example of a digraph that neither has a
+Graph Grundy Numbering nor a Kernel is the directed cycle with three vertices. We are now ready to
+prove the NP-completeness for Graph Grundy Numbering on digraphs of DAG-width two.
+        </p>
+        <p>
+          Theorem 4.13. Graph Grundy Numbering is NP-complete for digraphs of DAG-Width at most two.
+Proof. As the proof uses the reduction of 3-SAT to Graph Grundy Numbering given in [
+          <xref ref-type="bibr" rid="ref27">26</xref>
+          ], we only
+show that the graph used in [
+          <xref ref-type="bibr" rid="ref27">26</xref>
+          ] has DAG-width at most two. To do this we first take a look at what
+the graph looks like.
+        </p>
+        <p>Let F be a 3-SAT-Formula with variables x1, · · · , xn and clauses C1, · · · , Cm, then the digraph
+D used in the reduction from 3-SAT to Graph Grundy Numbering is constructed as follows:
+• For each variable xi we add the graph Hi, which is given in Figure 5, to D.
+• For each clause Cj we add the vertices Aj , Bj , Cj and edges (Aj , Bj ), (Bj , Cj ), (Cj , Aj ) to</p>
+        <p>D.
+• For each occurrence of a variable xi, respectively xi in a clause Cj we add to D the edges
+(Cj , yi), respectively (Cj , yi).</p>
+        <p>We now show that D has DAG-width at most two. This is done by giving a description of a
+monotone winning strategy for two cops on D:
+1. The robber starts on a vertex of Hi. In this case the robber cannot leave Hi as there is no edge
+from a vertex in Hi to a vertex in D \ Hi. As Hi can be made acyclic by removing one vertex,
+Hi can be searched monotonously by two cops.</p>
+        <p>Theorem 4.14. Kernel is NP-complete for digraphs of DAG-width two.</p>
+        <p>
+          Proof. Since the prove uses the same graph as in theorem 4.13 and the reduction is given in [
+          <xref ref-type="bibr" rid="ref27">26</xref>
+          ] the
+result follows.
+5
+        </p>
+      </sec>
+    </sec>
+    <sec id="sec-6">
+      <title>Conclusion and Open Problems</title>
+      <p>In this paper we considered graph searching games on directed graphs and established non-monotonicity
+for two important types of games. Our examples show that the monotonicity costs for these games
+can not be bound by an additive term, i.e. for any k there are digraphs where at least k additional cops
+are required to catch a robber with a monotone strategy. However, so far there is no upper bound for
+the monotonicity costs involved. It is conceivable that there is a constant c ∈ N such that whenever n
+cops suffice to catch a robber on a digraph D in any of the two variants, than c · n cops suffice for a
+monotone strategy. This, however, is left as an open problem.</p>
+      <p>A different trait we explored in this paper are the limits of an algorithm theory based on directed
+graph decompositions. We showed that while there are interesting and important examples for natural
+problems that become tractable on digraphs of small width, many other natural problems remain
+NPcomplete even if the digraphs have very low global connectivity.</p>
+    </sec>
+    <sec id="sec-7">
+      <title>References</title>
+      <p>[27] B. Yang and Y. Cao. Digraph strong searching: Monotonicity and complexity. In AAIM, pages
+37–46, 2007.</p>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <ref id="ref1">
+        <mixed-citation>
+          <article-title>2. The robber starts on one of the vertices Aj , Bj , Cj</article-title>
+          . As D[{Aj , Bj , Cj }]
+          <article-title>is a circle and the robber is not able to reach a vertex Ap, Bp, Cp for p 6= j the two cops can push the robber to a Hi, where he can be captured as shown in case one</article-title>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref2">
+        <mixed-citation>
+          [1]
+          <string-name>
+            <surname>I. Adler.</surname>
+          </string-name>
+          <article-title>Directed tree-width examples</article-title>
+          .
+          <source>J. Combin. Theory Ser. B</source>
+          ,
+          <volume>97</volume>
+          (
+          <issue>5</issue>
+          ):
+          <fpage>718</fpage>
+          -
+          <lpage>725</lpage>
+          ,
+          <year>2007</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref3">
+        <mixed-citation>
+          [2]
+          <string-name>
+            <given-names>B.</given-names>
+            <surname>Alspach</surname>
+          </string-name>
+          .
+          <article-title>Searching and sweeping graphs: A brief survey</article-title>
+          .
+          <source>In COMBINATORICS 04</source>
+          ,
+          <year>2004</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref4">
+        <mixed-citation>
+          [3]
+          <string-name>
+            <given-names>J.</given-names>
+            <surname>Bang-Jensen</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>G.</given-names>
+            <surname>Gutin. Digraphs - Theory</surname>
+          </string-name>
+          , Algorithms and Applications. Springer,
+          <year>2001</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref5">
+        <mixed-citation>
+          [4]
+          <string-name>
+            <given-names>J.</given-names>
+            <surname>Bara</surname>
+          </string-name>
+          <article-title>´t. Directed path-width and monotonicity in digraph searching</article-title>
+          .
+          <volume>22</volume>
+          (
+          <issue>2</issue>
+          ):
+          <fpage>161</fpage>
+          -
+          <lpage>172</lpage>
+          ,
+          <year>2006</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref6">
+        <mixed-citation>
+          [5]
+          <string-name>
+            <given-names>D.</given-names>
+            <surname>Berwanger</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>A.</given-names>
+            <surname>Dawar</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>P.</given-names>
+            <surname>Hunter</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>S.</given-names>
+            <surname>Kreutzer</surname>
+          </string-name>
+          .
+          <article-title>DAG-width and parity games</article-title>
+          .
+          <source>In STACS 2006, volume 3884 of Lecture Notes in Comput. Sci.</source>
+          , pages
+          <fpage>524</fpage>
+          -
+          <lpage>536</lpage>
+          . Springer, Berlin,
+          <year>2006</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref7">
+        <mixed-citation>
+          [6]
+          <string-name>
+            <given-names>D.</given-names>
+            <surname>Berwanger</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>E.</given-names>
+            <surname>Gra</surname>
+          </string-name>
+          <article-title>¨del. Entanglement - A measure for the complexity of directed graphs with applications to logic and games</article-title>
+          .
+          <source>In LPAR</source>
+          , pages
+          <fpage>209</fpage>
+          -
+          <lpage>223</lpage>
+          ,
+          <year>2004</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref8">
+        <mixed-citation>
+          [7]
+          <string-name>
+            <given-names>D.</given-names>
+            <surname>Bienstock</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>P.</given-names>
+            <surname>Seymour</surname>
+          </string-name>
+          .
+          <article-title>Monotonicity in graph searching</article-title>
+          .
+          <source>Journal of Algorithms</source>
+          ,
+          <volume>12</volume>
+          :
+          <fpage>239</fpage>
+          -
+          <lpage>245</lpage>
+          ,
+          <year>1991</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref9">
+        <mixed-citation>
+          [8]
+          <string-name>
+            <given-names>H. L.</given-names>
+            <surname>Bodlaender</surname>
+          </string-name>
+          . Treewidth:
+          <article-title>Algorithmic techniques and results</article-title>
+          .
+          <source>In MFCS'97</source>
+          , volume
+          <volume>1295</volume>
+          , pages
+          <fpage>19</fpage>
+          -
+          <lpage>36</lpage>
+          ,
+          <year>1997</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref10">
+        <mixed-citation>
+          [9]
+          <string-name>
+            <given-names>H. L.</given-names>
+            <surname>Bodlaender</surname>
+          </string-name>
+          .
+          <article-title>A partial k-arboretum of graphs with bounded treewidth</article-title>
+          .
+          <source>Theoretical Computer Science</source>
+          ,
+          <volume>209</volume>
+          :
+          <fpage>1</fpage>
+          -
+          <lpage>45</lpage>
+          ,
+          <year>1998</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref11">
+        <mixed-citation>
+          [10]
+          <string-name>
+            <given-names>N. D.</given-names>
+            <surname>Dendris</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>L. M.</given-names>
+            <surname>Kirousis</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>D. M.</given-names>
+            <surname>Thilikos</surname>
+          </string-name>
+          .
+          <article-title>Fugitive-search games on graphs and related parameters</article-title>
+          .
+          <source>TCS</source>
+          ,
+          <volume>172</volume>
+          (
+          <issue>1-2</issue>
+          ):
+          <fpage>233</fpage>
+          -
+          <lpage>254</lpage>
+          ,
+          <year>1997</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref12">
+        <mixed-citation>
+          [11]
+          <string-name>
+            <given-names>R.</given-names>
+            <surname>Diestel</surname>
+          </string-name>
+          .
+          <source>Graph theory</source>
+          , volume
+          <volume>173</volume>
+          of Graduate Texts in Mathematics. Springer-Verlag, Berlin, third edition,
+          <year>2005</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref13">
+        <mixed-citation>
+          [12]
+          <string-name>
+            <given-names>P. D.</given-names>
+            <surname>Seymour</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>R.</given-names>
+            <surname>Thomas</surname>
+          </string-name>
+          .
+          <article-title>Graph searching, and a min-max theorem for tree-width</article-title>
+          .
+          <source>Journal of Combinatorial Theory</source>
+          ,
+          <string-name>
+            <surname>Series</surname>
+            <given-names>B</given-names>
+          </string-name>
+          ,
+          <volume>58</volume>
+          :
+          <fpage>22</fpage>
+          -
+          <lpage>33</lpage>
+          ,
+          <year>1993</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref14">
+        <mixed-citation>
+          [13]
+          <string-name>
+            <given-names>D.</given-names>
+            <surname>Dyer</surname>
+          </string-name>
+          .
+          <article-title>Sweeping Graphs and Digraphs</article-title>
+          .
+          <source>PhD thesis</source>
+          , Simon Fraser University,
+          <year>2004</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref15">
+        <mixed-citation>
+          [14]
+          <string-name>
+            <given-names>F. V.</given-names>
+            <surname>Fomin</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>D. M.</given-names>
+            <surname>Thilikos</surname>
+          </string-name>
+          .
+          <article-title>On the monotonicity of games generated by symmetric submodular functions</article-title>
+          .
+          <source>Lecture Notes in Computer Science</source>
+          ,
+          <volume>2204</volume>
+          :
+          <fpage>177</fpage>
+          +,
+          <year>2001</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref16">
+        <mixed-citation>
+          [15]
+          <string-name>
+            <given-names>M. R.</given-names>
+            <surname>Garey</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>D. S.</given-names>
+            <surname>Johnson</surname>
+          </string-name>
+          . Computers and
+          <string-name>
+            <given-names>Intractibility. W. H.</given-names>
+            <surname>Freeman</surname>
+          </string-name>
+          and Company,
+          <year>1979</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref17">
+        <mixed-citation>
+          [16]
+          <string-name>
+            <given-names>P.</given-names>
+            <surname>Hunter</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>S.</given-names>
+            <surname>Kreutzer</surname>
+          </string-name>
+          .
+          <article-title>Digraph measures: Kelly decompositions, games, and orderings</article-title>
+          .
+          <source>In Proc. of the 18th ACM-SIAM Symp. on Discrete Algorithms (SODA)</source>
+          , pages
+          <fpage>637</fpage>
+          -
+          <lpage>644</lpage>
+          ,
+          <year>2007</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref18">
+        <mixed-citation>
+          [17]
+          <string-name>
+            <given-names>T.</given-names>
+            <surname>Johnson</surname>
+          </string-name>
+          , N. Robertson,
+          <string-name>
+            <given-names>P. D.</given-names>
+            <surname>Seymour</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>R.</given-names>
+            <surname>Thomas</surname>
+          </string-name>
+          .
+          <article-title>Directed tree-width</article-title>
+          .
+          <source>J. Combin. Theory Ser. B</source>
+          ,
+          <volume>82</volume>
+          (
+          <issue>1</issue>
+          ):
+          <fpage>138</fpage>
+          -
+          <lpage>154</lpage>
+          ,
+          <year>2001</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref19">
+        <mixed-citation>
+          [18]
+          <string-name>
+            <given-names>T.</given-names>
+            <surname>Johnson</surname>
+          </string-name>
+          , N. Robertson,
+          <string-name>
+            <given-names>P. D.</given-names>
+            <surname>Seymour</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>R.</given-names>
+            <surname>Thomas</surname>
+          </string-name>
+          .
+          <article-title>Directed tree-width</article-title>
+          .
+          <source>Journal of Combinatorial Theory</source>
+          ,
+          <string-name>
+            <surname>Series</surname>
+            <given-names>B</given-names>
+          </string-name>
+          ,
+          <volume>82</volume>
+          (
+          <issue>1</issue>
+          ):
+          <fpage>138</fpage>
+          -
+          <lpage>154</lpage>
+          ,
+          <year>2001</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref20">
+        <mixed-citation>
+          [19]
+          <string-name>
+            <surname>Rm</surname>
+            <given-names>M.</given-names>
+          </string-name>
+          <string-name>
+            <surname>Karp</surname>
+          </string-name>
+          . Complexity of Computer Science. Plenum Press New York,
+          <year>1972</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref21">
+        <mixed-citation>
+          [20]
+          <string-name>
+            <given-names>A. S.</given-names>
+            <surname>LaPaugh</surname>
+          </string-name>
+          .
+          <article-title>Recontamination does not help to search a graph</article-title>
+          .
+          <source>Journal of the ACM</source>
+          ,
+          <volume>40</volume>
+          :
+          <fpage>224</fpage>
+          -
+          <lpage>254</lpage>
+          ,
+          <year>1993</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref22">
+        <mixed-citation>
+          [21]
+          <string-name>
+            <given-names>F.</given-names>
+            <surname>Mazoit</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>N.</given-names>
+            <surname>Nisse</surname>
+          </string-name>
+          .
+          <article-title>Monotonicity property of non-deterministic graph searching</article-title>
+          .
+          <source>In In Proceedings of the 33rd International Workshop on Graph-Theoretic Concepts in Computer Science (WG</source>
+          <year>2007</year>
+          ),
+          <year>2007</year>
+          . to appear.
+        </mixed-citation>
+      </ref>
+      <ref id="ref23">
+        <mixed-citation>
+          [22]
+          <string-name>
+            <given-names>D. M.</given-names>
+            <surname>Moyles</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>G. L.</given-names>
+            <surname>Thompson</surname>
+          </string-name>
+          .
+          <article-title>An algorithm for finding a minimum equivalent graph of a digraph</article-title>
+          .
+          <source>J. ACM</source>
+          ,
+          <volume>16</volume>
+          (
+          <issue>3</issue>
+          ):
+          <fpage>455</fpage>
+          -
+          <lpage>460</lpage>
+          ,
+          <year>1969</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref24">
+        <mixed-citation>
+          [23]
+          <string-name>
+            <given-names>J.</given-names>
+            <surname>Obdrz</surname>
+          </string-name>
+          <article-title>˘a´lek. DAG-width: connectivity measure for directed graphs</article-title>
+          .
+          <source>In Proceedings of the 17th Annual ACM-SIAM Symposium on Discrete Algorithms (SODA)</source>
+          , pages
+          <fpage>814</fpage>
+          -
+          <lpage>821</lpage>
+          ,
+          <year>2006</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref25">
+        <mixed-citation>
+          [24]
+          <string-name>
+            <given-names>B.</given-names>
+            <surname>Reed</surname>
+          </string-name>
+          .
+          <article-title>Introducing directed tree width</article-title>
+          .
+          <source>In 6th Twente Workshop on Graphs and Combinatorial Optimization (Enschede</source>
+          ,
+          <year>1999</year>
+          ), volume
+          <volume>3</volume>
+          of Electron. Notes Discrete Math., page 8 pp.
+          <article-title>(electronic)</article-title>
+          .
+          <source>Elsevier</source>
+          , Amsterdam,
+          <year>1999</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref26">
+        <mixed-citation>
+          [25]
+          <string-name>
+            <given-names>M. A.</given-names>
+            <surname>Safari.</surname>
+          </string-name>
+          d
+          <article-title>-width: a more natural measure for directed tree width</article-title>
+          .
+          <source>In Mathematical foundations of computer science</source>
+          <year>2005</year>
+          , volume
+          <volume>3618</volume>
+          <source>of Lecture Notes in Comput. Sci.</source>
+          , pages
+          <fpage>745</fpage>
+          -
+          <lpage>756</lpage>
+          . Springer, Berlin,
+          <year>2005</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref27">
+        <mixed-citation>
+          [26]
+          <string-name>
+            <surname>J. van Leeuwen. Having</surname>
+          </string-name>
+          <article-title>a grundy-numbering is np-complete</article-title>
+          .
+          <source>Technical report</source>
+          , Pennsylvania State University,
+          <year>1976</year>
+          .
+        </mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

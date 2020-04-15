@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<algorithms version="110505">
+<algorithm name="SectLabel" version="110505">
+<variant no="0" confidence="0.000378">
+<title confidence="0.597394">
+Sections
+</title>
+<author confidence="0.261014">
+M. Anton Ertl∗
+TU Wien
+</author>
+<sectionHeader confidence="0.914132" genericHeader="abstract">
+Abstract
+</sectionHeader>
+<bodyText confidence="0.999764428571429">
+A section is a contiguous region of memory, to which
+data or code can be appended (like the Forth dic-
+tionary). Assembly languages and linkers have sup-
+ported multiple sections for a long time. This paper
+describes the benefits of supporting multiple sec-
+tions in Forth, interfaces and implementation tech-
+niques.
+</bodyText>
+<sectionHeader confidence="0.998982" genericHeader="keywords">
+1 Introduction
+</sectionHeader>
+<bodyText confidence="0.999829888888889">
+A section is a contiguous memory area, to which
+new data can be appended at the end; the Forth
+dictionary is a section. Assemblers and linkers
+have supported multiple sections or segments for
+many decades [Lev00]. In contrast, Forth tradition-
+ally has had only one section; some systems have
+had separated headers (another section), and cross-
+compilers have uninitialized memory for buffer:,
+but by and large, Forth systems have made do
+with just one section: the dictionary. With mul-
+tiple sections, each section has it’s own start, dic-
+tionary pointer (what here reads), and end (used
+in unused, but otherwise not used much).
+This paper presents various uses of sections and
+why they are better than the current workarounds
+(Section 2), presents a programming interface (Sec-
+tion 3), and discusses various implementation ap-
+proaches (Section 4).
+</bodyText>
+<sectionHeader confidence="0.998698" genericHeader="introduction">
+2 Uses
+</sectionHeader>
+<subsectionHeader confidence="0.991922">
+2.1 Nested structures
+</subsectionHeader>
+<bodyText confidence="0.999818833333333">
+You often build one structure A in memory, and in
+the middle of that, have to build some out-of-line
+part B, and afterwards continue building A. If you
+have two sections, that is easy: you put A in one
+section, and B in the other section. In Forth, you
+traditionally use one of the workarounds:
+</bodyText>
+<listItem confidence="0.98595">
+• You select a representation for A that does not
+require contiguity.
+∗Correspondence Address: Institut für Computer-
+sprachen, Technische Universität Wien, Argentinierstraße 8,
+A-1040 Wien, Austria; anton@mips.complang.tuwien.ac.at
+• You put B in allocated memory. Unfortu-
+</listItem>
+<bodyText confidence="0.899191902439024">
+nately, that usually means that B does not sur-
+vive a savesystem, and it’s also cumbersome
+if B is a growable structure.
+A particular instance of this problem is when A
+is a colon definition under construction, and B is
+the data for a string or floating-point literal. Forth
+compilers traditionally work around this by not re-
+quiring contiguity.
+A typical solution is to call a word such as (s&quot;)
+or flit, and follow that with the inline data. These
+words get the return address from the return stack,
+use that to push the relevant data on the data/FP
+stack, then increment the return address to skip
+over the data, and then either return to the changed
+return address or jump to it. Both ways are very ex-
+pensive on modern CPUs, because they cause mis-
+predictions from the hardware return stack1: If the
+changed address is returned from, the return incurs
+a branch misprediction (about 20 cycles on a mod-
+ern Intel or AMD CPU); if the changed address is
+jumped to, the jump has a chance to predict cor-
+rectly, but all outer returns will mispredict once (at
+about 20 cycles per misprediction).
+A faster approach is to jump across the data, and
+then let some code push the data on the data/FP
+stack. This does not cause significant mispredic-
+tions, but the code is bigger (jump plus inlined lit-
+eral code).
+Finally, if you put the data elsewhere (i.e., a dif-
+ferent section), you get fewer mispredictions, and
+you save the space for the jump around the data.
+As an example of the benefit of putting the
+data out-of-line, consider the following micro-
+benchmark:
+\ inline variant
+: foo1 123e f+ ;
+\ out-of-line simulation
+123e fconstant x
+: foo2 x f+ ;
+defer foo
+: bench 0e 100000000 0 do foo loop f. cr ;
+</bodyText>
+<footnote confidence="0.948665">
+1The hardware return stack is not the Forth return stack;
+it is a hardware branch predictor that predicts that returns
+will return right behind the corresponding calls).
+</footnote>
+<subsectionHeader confidence="0.920531">
+Ertl Sections
+</subsectionHeader>
+<bodyText confidence="0.999969694444444">
+With VFX2 4.71 on a Core i3-3227U (Ivy Bridge),
+the foo1 version takes 48 cycles, 11 instructions
+and 1 branch misprediction per iteration, while the
+foo2 version takes 6.5 cycles, 7 instructions, and 0
+branch mispredictions per iteration. If VFX would
+put the floating-point number in foo1 in a separate
+section instead of inline, it could achieve the same
+performance as foo2.
+Quotations are another case of having to build
+something else in the middle of a colon definition;
+in this case the “something else” is a colon defini-
+tion itself. Again, the usual implementation is to
+jump around it (used in, e.g., Gforth), and putting
+the quotation in a separate section can save that
+overhead. In this case, however, two sections are
+not sufficient, as quotations can be nested arbitrar-
+ily deeply, so you need a whole stack of sections.
+Locals are another case where you have to build
+some additional stuff (in this case, headers) in the
+middle of a colon definition; the headers are no
+longer needed at the end of the colon definition and
+their space can be reclaimed, so the usual inline-
+and-skip approach is particularly inefficient here.
+Locals in Gforth were developed before sections,
+and the code for dealing with that problem is com-
+plicated; we foresee it becoming much simpler once
+we take advantage of sections, but we have not made
+these changes yet.
+One way of implementing recognizers is to create
+a temporary word for each recognized string, then
+treat the temporary word like an ordinary word
+(i.e., execute or compile, it), and finally, delete
+the temporary if no longer needed [Ert16]. With
+sections, this is relatively straightforward to imple-
+ment (especially the case when you cannot delete
+the “temporary” and have to make it permanent).
+</bodyText>
+<subsectionHeader confidence="0.999876">
+2.2 Separate code and data
+</subsectionHeader>
+<bodyText confidence="0.999747230769231">
+Most Forth systems still put code and data in the
+dictionary in an interleaved way. Since the Pen-
+tium (1993) and its separate instruction and data
+caches, this interleaving has been a performance
+problem on Intel and AMD CPUs (e.g., ). Forth
+systems have tried to mitigate this problem by at
+least not putting code and data in the same cache
+line (by inserting appropriate padding); e.g., VFX
+aligns data to 32-byte boundaries, but apparently
+64-byte alignment is necessary on recent Intel CPUs
+to achieve the desired effect. And in some cases an
+important padding is missing, resulting in 350–500
+cycles per iteration in VFX and SwiftForth:
+</bodyText>
+<footnote confidence="0.8970636">
+0 value x
+2I use VFX for the performance results in this paper,
+because it is a high-performance system, where one would
+expect good performance also for the micro-benchmarks I
+present.
+</footnote>
+<bodyText confidence="0.995031333333333">
+: foo 10000000 0 do 1 x +! loop ;
+here to x 0 ,
+foo
+With sections, the data can just stay in the or-
+dinary dictionary section, and the code can have a
+separate section (or a stack of them, for quotations),
+thus separating code and data for good. Moreover,
+systems can get rid of all the padding they insert at
+the moment to work around this problem.
+</bodyText>
+<subsectionHeader confidence="0.998096">
+2.3 Further uses
+</subsectionHeader>
+<bodyText confidence="0.9999004">
+The uses above are not an exhaustive list. When I
+presented sections to other Gforth developers, they
+came up with uses I had not thought of during de-
+velopment (e.g., simplifying the locals implementa-
+tion).
+</bodyText>
+<sectionHeader confidence="0.99062" genericHeader="method">
+3 Progamming interface
+</sectionHeader>
+<bodyText confidence="0.8707326">
+In the following, “switching a section” means that
+the dictionary pointer (what here reports, and
+where allot allocates) is now the dictionary pointer
+of the switched-to section.
+The words for working with sections are:
+.sections ( -- )
+display all sections
+next-section ( -- )
+switch the current section to the next section
+in the stack, creating it if necessary
+</bodyText>
+<equation confidence="0.495558">
+previous-section ( -- )
+</equation>
+<bodyText confidence="0.933417">
+switch the current section to previous section
+(the next section still exists afterwards).
+extra-section ( size &quot;name&quot; -- )
+</bodyText>
+<subsectionHeader confidence="0.325391">
+create a named section stack name.
+</subsectionHeader>
+<bodyText confidence="0.951149916666667">
+name execution: ( xt -- )
+switch the current section to the first section of
+name if there is no outer call to name, or the
+next section if there is; execute xt, and switch
+the current section back on leaving name.
+For multi-tasking, the dictionary and the named
+section stacks should have per-task instances that
+are instantiated on-demand.
+Currently the section implementation in Gforth
+only supports the dictionary as a section stack,
+named sections without stack, and no proper han-
+dling of per-task section stacks, yet.
+</bodyText>
+<sectionHeader confidence="0.996773" genericHeader="method">
+4 Implementation
+</sectionHeader>
+<bodyText confidence="0.995810666666667">
+The implementation of sections for use within a ses-
+sion is pretty straightforward: Just a data struc-
+ture with start, end, and section-dp per section,
+</bodyText>
+<subsectionHeader confidence="0.9466">
+Ertl Sections
+</subsectionHeader>
+<bodyText confidence="0.9996684">
+and ways to manage named sections and a stack
+of sections.
+Things get more interesting when it comes to im-
+plementing savesystem. There are two basic op-
+tions:
+</bodyText>
+<listItem confidence="0.995215">
+• Keep all the sections, and preserve them into
+the next session.
+• Collapse all the sections into one (the dictio-
+</listItem>
+<bodyText confidence="0.982259052631579">
+nary), and start the next session with just the
+dictionary, and with empty named sections.
+The current implementation in Gforth takes the
+collapsing approach. One advantage is that the
+loader (which does not know about sections) does
+not need to be changed.
+Traditionally, Gforth creates a relocatable image
+by running Gforth twice and doing the same things,
+and finally saving one non-relocatable image per
+run; the non-relocatable images are for different ad-
+dresses, and by comparing them, we can tell if a
+cell is an address (then they differ by the difference
+in image start addresses), or something else (then
+they do not differ); if they differ, but by a different
+amount (e.g., because the cell contains the address
+of an allocated piece of memory), the process out-
+puts a warning.
+With sections, this process had to be enhanced
+as follows: When saving an image, first the dictio-
+nary is written, then the other sections, and sec-
+tions meta-data last. The sections meta-data con-
+tains the length and the original start address of
+each section, and also allows us to determine where
+in the non-relocatable image the sections are. If two
+cells differ, the comparison program looks for each
+image, whether the value of the cell, interpreted as
+address points into one of the sections, and com-
+putes the offset into the collapsed image from that;
+if, for both images, this gives the same offset o, then
+the cell is a relocatable address, with value image-
+start+o, and that’s what the comparator stores in
+the relocatable image. I.e., in the relocatable image,
+the original section structure is no longer present.
+Of course, that is not the only option. E.g., a
+system without relocatable images could just save
+each section as ELF or COFF section with a fixed
+virtual start address. The OS loader would then
+load all the sections where they belong (untested).
+</bodyText>
+<sectionHeader confidence="0.999363" genericHeader="conclusions">
+5 Conclusion
+</sectionHeader>
+<bodyText confidence="0.999729545454545">
+Supporting multiple sections in a Forth system pro-
+vides a number of benefits. Forth systems have used
+workarounds to deal with the absence of sections,
+but these workarounds have a cost both in complex-
+ity and sometimes also in performance that can be
+eliminated by adding sections.
+The interface for working with sections is simple,
+consisting of just a few words.
+The implementation is not that complex, either.
+Dealing with sections across savesystem does take
+some additional effort, however.
+</bodyText>
+<sectionHeader confidence="0.999232" genericHeader="references">
+References
+</sectionHeader>
+<reference confidence="0.999635">
+[Ert16] M. Anton Ertl. Recognizers: Arguments
+and design decisions. In 32nd EuroForth
+Conference, 2016.
+[Lev00] Levine. Linkers and Loaders. Morgan
+Kaufmann, San Francisco, 2000.
+</reference>
+</variant>
+</algorithm>
+<algorithm name="ParsHed" version="110505">
+<variant no="0" confidence="0.699711">
+<title confidence="0.999153">Sections</title>
+<author confidence="0.9108755">Anton TU Wien</author>
+<abstract confidence="0.980987625">A section is a contiguous region of memory, to which data or code can be appended (like the Forth dictionary). Assembly languages and linkers have supported multiple sections for a long time. This paper describes the benefits of supporting multiple sections in Forth, interfaces and implementation techniques.</abstract>
+</variant>
+</algorithm>
+<algorithm name="ParsCit" version="110505">
+<citationList>
+<citation valid="true">
+<authors>
+<author>M Anton Ertl</author>
+</authors>
+<title>Recognizers: Arguments and design decisions.</title>
+<date>2016</date>
+<booktitle>In 32nd EuroForth Conference,</booktitle>
+<contexts>
+<context position="5277" citStr="[Ert16]" startWordPosition="898" endWordPosition="898">ers is to create a temporary word for each recognized string, then treat the temporary word like an ordinary word (i.e., execute or compile, it), and finally, delete the temporary if no longer needed [Ert16]. With sections, this is relatively straightforward to implement (especially the case when you cannot delete the “temporary” and have to make it permanent). 2.2 Separate code and data Most Forth syste</context>
+</contexts>
+<marker>[Ert16]</marker>
+<rawString>M. Anton Ertl. Recognizers: Arguments and design decisions. In 32nd EuroForth Conference, 2016.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>Linkers</author>
+<author>Loaders</author>
+</authors>
+<date>2000</date>
+<publisher>Morgan Kaufmann,</publisher>
+<location>San Francisco,</location>
+<contexts>
+<context position="578" citStr="[Lev00]" startWordPosition="95" endWordPosition="95">tion is a contiguous memory area, to which new data can be appended at the end; the Forth dictionary is a section. Assemblers and linkers have supported multiple sections or segments for many decades [Lev00]. In contrast, Forth traditionally has had only one section; some systems have had separated headers (another section), and crosscompilers have uninitialized memory for buffer:, but by and large, Fort</context>
+</contexts>
+<marker>[Lev00]</marker>
+<rawString>Levine. Linkers and Loaders. Morgan Kaufmann, San Francisco, 2000.</rawString>
+</citation>
+</citationList>
+</algorithm>
+</algorithms>

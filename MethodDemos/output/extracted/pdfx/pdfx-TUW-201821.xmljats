@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  SYSTEM "http://dtd.nlm.nih.gov/archiving/3.0/archivearticle3.dtd">
+<article xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:mml="http://www.w3.org/1998/Math/MathML"
+         xmlns:xlink="http://www.w3.org/1999/xlink">
+   <front>
+      <journal-meta>
+         <journal-id/>
+         <journal-title-group>
+            <journal-title/>
+         </journal-title-group>
+         <issn/>
+         <publisher>
+            <publisher-name/>
+         </publisher>
+      </journal-meta>
+      <article-meta>
+         <title-group>
+            <article-title>Advancing Multi-Context Systems by Inconsistency Management ⋆</article-title>
+         </title-group>
+         <supplement>
+            <p>Antonius Weinzierl Institute of Information Systems Vienna University of Technology Favoritenstraße 9-11, A-1040 Vienna, Austria <email>weinzierl@kr.tuwien.ac.at</email>
+            </p>
+         </supplement>
+         <abstract>
+            <sec>
+               <p>Multi-Context Systems are an expressive formalism to model (possibly) non-monotonic information exchange between heterogeneous knowledge bases. Such information exchange, however, often comes with unforseen side-effects leading to violation of constraints, making the system inconsistent, and thus unusable. Although there are many approaches to assess and repair a single inconsistent knowledge base, the heterogeneous nature of Multi-Context Systems poses problems which have not yet been addressed in a satisfying way: How to identify and explain a inconsistency that spreads over multiple knowledge bases with different logical formalisms (e.g., logic programs and ontologies)? What are the causes of inconsistency if inference/information exchange is nonmonotonic (e.g., absent information as cause)? How to deal with inconsistency if access to knowledge bases is restricted (e.g., companies exchange information, but do not allow arbitrary modifications to their knowledge bases)? Many traditional approaches solely aim for a consistent system, but automatic removal of inconsistency is not always desireable. Therefore a human operator has to be supported in finding the erroneous parts contributing to the inconsistency. In my thesis those issues will be adressed mainly from a foundational perspective, while our research project also provides algorithms and prototype implementations.</p>
+            </sec>
+         </abstract>
+      </article-meta>
+   </front>
+   <body>
+      <sec>
+         <title>1 Introduction</title>
+      </sec>
+      <sec>
+         <title>2 Related Work</title>
+         <p>With the seminal work of [<xref id="XR19" ref-type="bibr" rid="R19">19</xref>] and [<xref id="XR20" ref-type="bibr" rid="R16">16</xref>] the notion of context has been introduced to artificial intelligence and logic. In these works, a context is a regarded as a certain point of view in which formal reasoning takes place. The Trento school (cf. [<xref id="XR21" ref-type="bibr" rid="R17">17</xref>, <xref id="XR22" ref-type="bibr" rid="R22">22</xref>]) formalized and improved this understanding of context. It is notable, however, that those first frameworks consider homogeneous, monotonic logics for representing a context. With [<xref id="XR23" ref-type="bibr" rid="R9">9</xref>, <xref id="XR24" ref-type="bibr" rid="R21">21</xref>] non-monotonicity was introduced to Multi-Context Systems. Although default negation is added to bridge rules, contexts still are homogeneous or monotonic. Only with [<xref id="XR25" ref-type="bibr" rid="R7">7</xref>] the framework has been generalized for non-monotonic bridge rules and heterogeneous contexts. This finally allows to use arbitrary knowledge sources that are connected by (possibly) non-monotonic bridge rules. Our research is based on this notion of MCSs. To deal with inconsistency, in [<xref id="XR26" ref-type="bibr" rid="R5">5</xref>] defeasible rules are introduced as a way of establishing information exchange in MCS. Defeasible rules are similar to bridge rules, but their semantics differs as a defeasible rule does not fire if it would cause an inconsistency by doing so. Several algorithms based on preference orders (or argumentation frameworks [<xref id="XR27" ref-type="bibr" rid="R4">4</xref>]) have been proposed. Inconsistency is resolved inherently, but no deeper inconsistency analysis is possible. For our hospital example this would mean that some information simply would not be passed along, e.g., forgetting the illness of Sue . Most of the proposed algorithms are based on provenance, which means that context internals have to be exhibited to other contexts. A company making profit by allowing third parties to use its knowledge base, however, will not risk its business by providing such information. Aside from MCS, other areas deal with knowledge integration and its issues. Peer-to-Peer (p2p) systems [24,<xref id="XR28" ref-type="bibr" rid="R10">10</xref>, <xref id="XR29" ref-type="bibr" rid="R24">24</xref>,10] are similar as knowledge sources interchange pieces of information. Although the notion of a peer is very similar to a context in MCS, the essential feature of p2p systems is that peers may leave and join the system arbitrarily. Therefore research seeks to cope with inconsistency by isolating faulty contexts and simply ignore their information instead of analysing the inconsistency and aiming for a consistent system. Information integration on the other hand deals extensively with issues like constraint violations that stem from the integration of several databases into a single one (cf. [<xref id="XR30" ref-type="bibr" rid="R6">6</xref>] for a survey on data fusion). Its main differences to MCS are that the result of data fusion is one single database which usually uses relational algebra for knowledge representation. MCSs, however, require inconsistency management for multiple, heterogeneous knowledge bases which are not restricted to a relational setting. For many formalisms, methods of inconsistency handling have been invented, e.g., belief revision or possibilistic reasoning (e.g. [<xref id="XR31" ref-type="bibr" rid="R3">3</xref>]) for classical logic, paracoherent semantics for logic programs, etc. These methods can resolve inconsistency locally at a context (cf. Section 4), but they can not guarantee a consistent system. Also, most of those methods are only applicable to a specific formalism instead of a heterogeneous non-monotonic system.</p>
+      </sec>
+      <sec>
+         <title>3 MCS Preliminaries</title>
+         <p>Each context of an MCS is seen as a knowledge base built on an underlying logic. To capture different kinds of logics, this notion is general and not defined in the bottom-up style of inductive definitions for syntax and semantics. Instead, its approach is top-down, directly working with sets of well-formed formulas (wffs) and models (called belief sets). The semantics of a logic then only maps each set of wffs to a set of belief sets, i.e., the models of the wffs. Formally, a logic L = ( KB L , BS L , ACC L ) consists, of the following compo- nents: 1) KB L is the set of well-formed knowledge bases of L where each element of KB L is a set (of formulas). 2) BS L is the set of possible belief sets where we assume that each element of BS L is a set (i.e.,a model containing all formulas that are considered true). 3) ACC L : KB L → 2 BS L is a function describing the semantics of L by assigning each knowledge base a set of acceptable belief sets. This concept of a logic captures many monotonic and non-monotonic logics, e.g., classical logic, description logics, modal, default, and autoepistemic logics, circumscription, and logic programs under the answer set semantics. A Multi-Context System M = ( C 1 , . . . , C n ) is a collection of contexts C i = ( L i , kb i , br i ), 1 ≤ i ≤ n , where L i = ( KB i , BS i , ACC i ) is a logic, kb i ∈ KB i a knowledge base, and br i is a set of bridge rules of form (1) over logics ( L 1 , . . . , L n ). Furthermore, for each bridge rule r ∈ br i its head formula s is compatible with C i , i.e., for each H ⊆ { s | r ∈ br and ( i : s ) is the head of r } holds kb ∪ H ∈ KB L i . A belief state S = ( S 1 , . . . , S n ) of an MCS M = ( C 1 , . . . , C n ) is a belief set for every context, i.e., S i ∈ BS i for all 1 ≤ i ≤ n . The semantics of MCS is defined in terms of equilibria, i.e., belief states that reproduce themselves under the application of bridge rules. Formally, let M be an MCS, C i a context of M and S = ( S 1 , . . . , S n ) a belief state of M , then an bridge rule r of form (1) is applicable wrt. S , denoted by S | = body ( r ), iff p l ∈ S c l for 1 ≤ l ≤ j and p l ∈ / S c l for j &lt; l ≤ m . Let app i ( S ) = { hd ( r ) | r ∈ br i ∧ S | = body ( r ) } denote the heads of all applicable bridge rules of context C i under S , then S = ( S 1 , . . . , S n ) is an equilibrium of M if and only if S i ∈ ACC i ( app i ( S )) for 1 ≤ i ≤ n .  Basic Notions for Inconsistency Analysis (cf. [<xref id="XR36" ref-type="bibr" rid="R12">12</xref>]): We call an MCS M inconsistent iff no belief state of M is an equilibrium. To analyse and explain the inconsistency in an MCS, two notions have been developed: consistency- based diagnosis and entailment-based inconsistency explanation. Both notions use bridge rules to characterize ‘faulty’ information exchange. Intuitively, a diagnosis states how an inconsistent MCS can be changed to get a consistent system and an explanation shows what parts of the system create the inconsistency. For an MCS M , br M denotes the set of all bridge rules occuring in M , M [ R ] denotes a modified MCS where all bridge rules of M are replaced by those of R , and M | = ⊥ denotes that M is inconsistent. Given an MCS M , a diagnosis of M is a pair ( D 1 , D 2 ), D 1 , D 2 ⊆ br M , s.t. M [ br M \ D 1 ∪ heads ( D 2 )] | = ⊥ . An explanation of M is a pair ( E 1 , E 2 ) of sets E 1 , E 2 ⊆ br M of bridge rules s.t. for all ( R 1 , R 2 ) where E 1 ⊆ R 1 ⊆ br M and R 2 ⊆ br M \ E 2 , it holds that M [ R 1 ∪ heads ( R 2 )] | = ⊥ . For a concise characterization, one usually focuses on subset-minimal diagnoses and explanations. The basic ideas behind both notions appear also in Reiter’s seminal work on diagnosis [<xref id="XR39" ref-type="bibr" rid="R20">20</xref>]. Our diagnosis is similar to his notion and our explanation is similar to (minimal) inconsistent sets. For differences, we assume the source of inconsistency to be some faulty information exchange, so we only consider bridge rules, and because of the non-monotonic nature of MCSs, a bridge rule can be faulty by firing when it should not and also by not firing when it should. In classical diagnosis, only the former is relevant as monotonic logics only become inconsistent by that. The set of minimal diagnoses can also be seen as describing all minimal repairs, while the set of minimal explanations show hows inconsistency is caused in the system. The set E 2 in an explanation also shares some ideas with consistency restoring rules (cf. [<xref id="XR40" ref-type="bibr" rid="R2">2</xref>]) of logic programs.</p>
+      </sec>
+      <sec>
+         <title>4 Contributions: Methods of Inconsistency Management</title>
+         <p>This section presents contributions and answers the motivational questions raised in the introduction. These are the major published results of my graduate research. Note that authors are listed alphabetically for the respective publications.  Inconsistency Assessment: Having jointly developed and investigated, the basic notions for inconsistency analysis, the next step was developing methods to assess inconsistency qualitatively, i.e., filter diagnoses with undesired prop- erties and select most preferred ones. In the spirit of MCS, we do not apply a specific formalism for preference or filters on diagnoses, but rather show how a transformation of the MCS and slight adaption of the notion of diagnosis is sufficient to achieve the desired effects in [<xref id="XR44" ref-type="bibr" rid="R13">13</xref>]. As one of the strengths of MCS is the ability to allow arbitrary formalisms for knowledge representation inside contexts, we do not want to restrict the users to a specific kind of representation of filters (or preferences). We therefore devised a meta-reasoning transformation which allows certain contexts to observe which diagnosis is applied to the MCS. The desired filter then is realized inside such an observer context (in a formalisms which is best suited for this task). So an MCS M is transformed into an MCS M f where an additional observer context ob is added together with some additional bridge rules (details cf. [<xref id="XR45" ref-type="bibr" rid="R13">13</xref>]). As M f contains all contexts and bridge rules of M , every diagnosis of M can also be applied to M f . If ob detects an undesired diagnosis D ′ , then ob simply becomes inconsistent, i.e., having no acceptable belief set. Therefore D ′ is no diagnosis of M f , but all other diagnoses of M are diagnoses of M f . This allows to compute all filtered diagnoses with the same algorithm as for computing subset-minimal diagnoses and it also allows to specify the filter in any desired formalism. The meta-reasoning transformation also can be applied for multiple observa- tion contexts where each observer only sees some bridge rules instead of all, thus preserving information hiding. As a similar meta-reasoning transformation can be used for comparison of diagnoses, it is possible to realize any given preference order on diagnoses and select the most preferred one. In general, however, this requires exponentially many more bridge rules in the transformed system, but for restricted classes of preference orders it is feasible. Inconsistency management at the level of contexts: For many specific logics and knowledge formalisms, solutions to deal with inconsistency have been developed in the past, e.g., belief revision and paraconsistency for logics, paracoherent logic programming for logic programs, etc. For contexts using the underlying formalism it is desireable that MCSs also offer the same methods of inconsistency handling. Those methods, however, require to modify a knowledge base in more ways, than just the addition of formulas as bridge rules can do. We therefore propose managed Multi-Context Systems (mMCS) in [<xref id="XR49" ref-type="bibr" rid="R8">8</xref>] where each context is equiped with a manager that can apply arbitrary changes to the context’s knowledge base. Bridge rules in an mMCS are like those of MCS, but their head contains a unary command op , e.g., revise ( s ), delete ( s ), add ( s ), to apply the resp. operation on the formula s and the knowledge base of the context. Managed MCS are a significant generalization of MCS as management functions can be used to realize a multitude of tasks: belief revision, view updates, updates of logic programs. To us, the most interesting is to ensure that contexts have a ‘model’ for any input. Such contexts are called totally coherent . Most notably even mMCS with totally coherent contexts cannot guarantee that the overall system has an equilibrium, but they ensure that inconsistency is only caused by odd-cyclic information flow. It directly follows that any acyclic mMCS with totally coherent contexts is consistent, thus proving local inconsistency management sufficient for acyclic MCS. Beyond bridge rules: In [<xref id="XR51" ref-type="bibr" rid="R23">23</xref>] we introduce MCS where knowledge exchange is realised using SPARQL construct-queries. This is surprisingly simple and again shows the versatility of MCS. The resulting SPARQL-MCS framework is related to the MWeb approach [<xref id="XR52" ref-type="bibr" rid="R1">1</xref>], but our treatment of variables is different.</p>
+      </sec>
+      <sec>
+         <title>5 Future Work</title>
+         <p>As shown above, we were able to answer several foundational questions, give a uniform representation of inconsistency in heterogeneous MCSs, an open integration of preference-based inconsistency assessment, investigating the impact of local inconsistency handling, and making the MCS formalism capable of dealing with arbitrary changes to the knowledge bases of an MCS. To evaluate the feasibility of the developed methods, we also aim for a refer- ence application which is currently in the making: querying of a DNA database posing questions in (almost) natural language using an ontology and answer- set programs. Intital steps towards exchanging large amounts of information (cf. [ <xref id="XR55" ref-type="bibr" rid="R14">14</xref>]) also showed that more specialised algorithms are needed. Investigations whether approximation operators of [<xref id="XR58" ref-type="bibr" rid="R11">11</xref>] for logic programs can be translated to MCSs and transferring optimisations for abductive diagnosis (e.g.,[<xref id="XR59" ref-type="bibr" rid="R18">18</xref>]) to MCSs are also open tasks.</p>
+      </sec>
+      <sec>
+         <title>6 Acknowledgements</title>
+         <p>I am very grateful to my advisor Thomas Eiter, the principal investigator of our research project Michael Fink, and my colleague Peter Schüller who provided guidance, and helped with many fruitful discussions. Thank you.</p>
+      </sec>
+      <sec>
+         <title>References</title>
+      </sec>
+   </body>
+   <back>
+      <ref-list>
+         <ref id="R1">
+            <mixed-citation>1. Analyti, A., Antoniou, G., Damasio, C.V.: MWeb: A principled framework for modular web rule bases and its semantics. ACM Trans. Comput. Logic 12(2) (2011)</mixed-citation>
+         </ref>
+         <ref id="R2">
+            <mixed-citation>2. Balduccini, M., Gelfond, M.: Logic programs with consistency-restoring rules. In: International Symposium on Logical Formalization of Commonsense Reasoning, AAAI 2003 Spring Symposium Series. pp. 9–18 (2003)</mixed-citation>
+         </ref>
+         <ref id="R3">
+            <mixed-citation>3. Benferhat, S., Lagrue, S., Yahi, S.: Bridging possibilistic conditional knowledge bases and partially ordered bases. In: JELIA. pp. 38–50 (2010)</mixed-citation>
+         </ref>
+         <ref id="R4">
+            <mixed-citation>4. Bikakis, A., Antoniou, G.: Contextual argumentation in ambient intelligence. In: LPNMR. pp. 30–43 (2009)</mixed-citation>
+         </ref>
+         <ref id="R5">
+            <mixed-citation>5. Bikakis, A., Antoniou, G., Hassapis, P.: Alternative strategies for conflict resolution in multi-context systems. In: AIAI. pp. 31–40 (2009)</mixed-citation>
+         </ref>
+         <ref id="R6">
+            <mixed-citation>6. Bleiholder, J., Naumann, F.: Data fusion. ACM Comput. Surv. 41(1), 1–41 (2008)</mixed-citation>
+         </ref>
+         <ref id="R7">
+            <mixed-citation>7. Brewka, G., Eiter, T.: Equilibria in heterogeneous nonmonotonic multi-context systems. In: AAAI. pp. 385–390 (2007)</mixed-citation>
+         </ref>
+         <ref id="R8">
+            <mixed-citation>8. Brewka, G., Eiter, T., Fink, M., Weinzierl, A.: Managed multi-context systems. In: IJCAI (2011), to appear.</mixed-citation>
+         </ref>
+         <ref id="R9">
+            <mixed-citation>9. Brewka, G., Roelofsen, F., Serafini, L.: Contextual default reasoning. In: IJCAI. pp. 268–273 (2007)</mixed-citation>
+         </ref>
+         <ref id="R10">
+            <mixed-citation>10. Calvanese, D., Giacomo, G.D., Lembo, D., Lenzerini, M., Rosati, R.: Inconsistency tolerance in p2p data integration: An epistemic logic approach. Inf. Syst. 33(4-5), 360–384 (2008)</mixed-citation>
+         </ref>
+         <ref id="R11">
+            <mixed-citation>11. Denecker, M., Marek, V.W., Truszczynski, M.: Ultimate approximation and its application in nonmonotonic knowledge representation systems. Inf. Comput. 192(1), 84–121 (2004)</mixed-citation>
+         </ref>
+         <ref id="R12">
+            <mixed-citation>12. Eiter, T., Fink, M., Schüller, P., Weinzierl, A.: Finding explanations of inconsistency in multi-context systems. In: KR (2010)</mixed-citation>
+         </ref>
+         <ref id="R13">
+            <mixed-citation>13. Eiter, T., Fink, M., Weinzierl, A.: Preference-based inconsistency assessment in multi-context systems. In: JELIA. pp. 143–155 (2010)</mixed-citation>
+         </ref>
+         <ref id="R14">
+            <mixed-citation>14. Fink, M., Ghionna, L., Weinzierl, A.: Relational information exchange and aggre- gation in multi-context systems. In: LPNMR. pp. 120–133 (2011)</mixed-citation>
+         </ref>
+         <ref id="R15">
+            <mixed-citation>15. Gelfond, M., Lifschitz, V.: Classical negation in logic programs and disjunctive databases. New Generation Comput. 9(3/4), 365–386 (1991)</mixed-citation>
+         </ref>
+         <ref id="R16">
+            <mixed-citation>16. Giunchiglia, F.: Abstract contextual reasoning (1993)</mixed-citation>
+         </ref>
+         <ref id="R17">
+            <mixed-citation>17. Giunchiglia, F., Serafini, L.: Multilanguage hierarchical logics or: How we can do without modal logics. Artif. Intell. 65(1), 29–70 (1994)</mixed-citation>
+         </ref>
+         <ref id="R18">
+            <mixed-citation>18. de Kleer, J.: Focusing on probable diagnoses. In: AAAI. pp. 842–848 (1991)</mixed-citation>
+         </ref>
+         <ref id="R19">
+            <mixed-citation>19. McCarthy, J.: Notes on formalizing context. In: IJCAI. pp. 555–562 (1993)</mixed-citation>
+         </ref>
+         <ref id="R20">
+            <mixed-citation>20. Reiter, R.: A theory of diagnosis from first principles. Artif. Intell. 32(1), 57–95 (1987)</mixed-citation>
+         </ref>
+         <ref id="R21">
+            <mixed-citation>21. Roelofsen, F., Serafini, L.: Minimal and absent information in contexts. In: IJCAI. pp. 558–563 (2005)</mixed-citation>
+         </ref>
+         <ref id="R22">
+            <mixed-citation>22. Roelofsen, F., Serafini, L.: Minimality and non-determinism in multi-context systems. In: CONTEXT. pp. 424–435 (2005)</mixed-citation>
+         </ref>
+         <ref id="R23">
+            <mixed-citation>23. Schüller, P., Weinzierl, A.: Semantic reasoning with sparql in heterogeneous multi- context systems. In: Semantic Search over the Web (2011), to appear</mixed-citation>
+         </ref>
+         <ref id="R24">
+            <mixed-citation>24. Serafini, L., Giunchiglia, F., Mylopoulos, J., Bernstein, P.: Local relational model: A logical formalization of database coordination. In: CONTEXT. pp. 286–299 (2003)</mixed-citation>
+         </ref>
+      </ref-list>
+   </back>
+</article>

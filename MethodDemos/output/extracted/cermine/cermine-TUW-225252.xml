@@ -1,0 +1,302 @@
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN" "JATS-archivearticle1.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+  <front>
+    <journal-meta />
+    <article-meta>
+      <title-group>
+        <article-title>Reconstructing Cross Cut Shredded Documents with a Genetic Algorithm with Solution Archive?</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <string-name>Benjamin Biesinger</string-name>
+          <xref ref-type="aff" rid="aff0">0</xref>
+          <xref ref-type="aff" rid="aff1">1</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Christian Schauer</string-name>
+          <xref ref-type="aff" rid="aff0">0</xref>
+          <xref ref-type="aff" rid="aff1">1</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Bin Hu</string-name>
+          <xref ref-type="aff" rid="aff0">0</xref>
+          <xref ref-type="aff" rid="aff1">1</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Gunther R. Raidl</string-name>
+          <email>raidlg@ads.tuwien.ac.at</email>
+          <xref ref-type="aff" rid="aff0">0</xref>
+          <xref ref-type="aff" rid="aff1">1</xref>
+        </contrib>
+        <aff id="aff0">
+          <label>0</label>
+          <institution>A Genetic Algorithm with Solution Archive</institution>
+        </aff>
+        <aff id="aff1">
+          <label>1</label>
+          <institution>Institute of Computer Graphics and Algorithms Vienna University of Technology Favoritenstrae 911/1861</institution>
+          ,
+          <addr-line>1040 Vienna</addr-line>
+          ,
+          <country country="AT">Austria</country>
+        </aff>
+      </contrib-group>
+      <abstract>
+        <p>The reconstruction of shredded documents is of high interest not only in forensic science but also when documents are destroyed unintentionally. Reconstructing cross-cut shredded documents (RCCSTD) is particularly difcult since the documents are cut into rectangular pieces of equal size. Since shape information along the edges|in contrast to hand torn pieces|cannot be exploited, the reconstruction solely depends on the information written on the shreds. Therefore, we use a metric for calculating the number of gray value mismatches along the edges of two shreds put next to each other either horizontally or vertically. Consequentially, we model the document reconstruction as a combinatorial optimization problem minimizing the overall mismatch of the reconstructed document. Since we focus in this work on the combinatorial aspect of the problem we use this simple metric which can be replaced in future work by more advanced pattern recognition techniques, see [2] for a sample method. In previous work, Prandtstetter and Raidl [3] developed an Ant Colony Optimization and a Variable Neighborhood Search (VNS) for the RCCSTD, while Schauer et al. [5] proposed a Memetic Algorithm (MA). Sleit et al. [6] proposed a di erent approach by iteratively merging two clusters that t together well and repairing possibly occurring con icts. In this work the MA from [5] is adapted and extended by a complete solution archive in order to avoid duplicate solutions by e ciently storing all visited solutions in a special data structure. If a duplicate solution is detected it is converted into a similar yet unconsidered one. This is done to preserve the diversity of the population and to avoid unnecessary re-evaluations of already visited solutions. This approach is a rather new method for duplicate detection and conversion which was successfully applied on several binary problems (e.g., MAX-SAT) in [4] as well as on the generalized minimum spanning tree problem [1].</p>
+      </abstract>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="sec-1">
+      <title>Introduction</title>
+      <p>
+        For a detailed description of the GA and its operators, which is extended by our
+solution archive, see [
+        <xref ref-type="bibr" rid="ref5">5</xref>
+        ]. To encode solutions the authors used an n n array that
+? This work is supported by the Austrian Science Fund (FWF) under grant P24660.
+represents the absolute position of each shred. In the current work we propose a
+more compact solution representation using an 1-dimensional array that does not
+store blank shreds at the end of a row. Therefore, a special character for a line
+break is introduced. Theoretically this solution representation is not necessarily
+more compact than the original one, but in practice we are able to reduce the
+average length of a solution signi cantly.
+      </p>
+      <p>The underlying data structure of the solution archive is a trie, a tree data
+structure commonly used for dictionaries. Each node of the trie has n
+children representing the possible alleles. The height of the trie is the length of
+the genome. In the commonly used indexed trie the children of each trie node
+are stored in an array. Preliminary tests showed that using an indexed trie needs
+a huge amount of memory. Therefore, several modi cations are made to save
+memory. The most memory saving change was to use a linked trie, in which the
+children of the nodes are stored as linear lists.</p>
+      <p>The solution conversion that is performed after detecting a duplicate is
+entirely carried out in the trie. A conversion level l, which corresponds to the l-th
+gene in the solution array, is chosen randomly. On this level another valid child
+that has not been visited yet, which is represented as a null pointer, is chosen
+and the solution array is altered accordingly. If there is no null pointer in the
+current node, we follow the old solution one level down and the procedure is
+repeated. Since subtries where all children are complete are pruned, we know that
+there must be a node with at least one null child. Hence, this method guarantees
+that the generated solution has not been visited yet.
+3</p>
+    </sec>
+    <sec id="sec-2">
+      <title>Results and Conclusions</title>
+      <p>We tested the proposed algorithm on several benchmark instances using di erent
+cutting patterns and compared the GA with and without the solution archive.
+By using the indexed trie as data structure, the memory consumption increased
+clearly too strongly after a relatively small number of iterations. Therefore the
+GA had to stop when it ran out of memory instead of when it converged, which
+produced worse results than the GA without archive. The linked trie variant,
+without causing additional run-time, consumed only one fourth of the memory.
+Unfortunately, even with this improvement the preliminary results were only
+on par with those generated by the GA without archive when using the same
+amount of time as stopping criterion. The reason is that the solution archive
+in this case is not able to fully compensate its overhead by saving the e ort
+for re-evaluating duplicate solutions. However, when using a xed number of
+iterations, the results of the GA with archive were better by far.</p>
+      <p>We conclude that on combinatorial optimization problems where the solution
+representation is not compact, using a solution archive with linked trie results
+in a substantial memory advantage over the indexed trie variant.</p>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <ref id="ref1">
+        <mixed-citation>
+          1.
+          <string-name>
+            <surname>Hu</surname>
+            ,
+            <given-names>B.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Raidl</surname>
+            ,
+            <given-names>G.R.:</given-names>
+          </string-name>
+          <article-title>An evolutionary algorithm with solution archives and bounding extension for the generalized minimum spanning tree problem</article-title>
+          .
+          <source>In: Proceedings of the 14th Annual Conference on Genetic and Evolutionary Computation (GECCO)</source>
+          . pp.
+          <volume>393</volume>
+          {
+          <fpage>400</fpage>
+          . ACM Press, Philadelphia, PA, USA (
+          <year>2012</year>
+          )
+        </mixed-citation>
+      </ref>
+      <ref id="ref2">
+        <mixed-citation>
+          2.
+          <string-name>
+            <surname>Perl</surname>
+            ,
+            <given-names>J.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Diem</surname>
+            ,
+            <given-names>M.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Kleber</surname>
+            ,
+            <given-names>F.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Sablatnig</surname>
+          </string-name>
+          , R.:
+          <article-title>Strip shredded document reconstruction using optical character recognition</article-title>
+          .
+          <source>In: 4th International Conference on Imaging for Crime Detection and Prevention</source>
+          <year>2011</year>
+          (
+          <article-title>ICDP 2011)</article-title>
+          . pp.
+          <volume>1</volume>
+          {
+          <issue>6</issue>
+          (
+          <year>2011</year>
+          )
+        </mixed-citation>
+      </ref>
+      <ref id="ref3">
+        <mixed-citation>
+          3.
+          <string-name>
+            <surname>Prandtstetter</surname>
+            ,
+            <given-names>M.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Raidl</surname>
+            ,
+            <given-names>G.R.</given-names>
+          </string-name>
+          :
+          <article-title>Meta-Heuristics for Reconstructing Cross Cut Shredded Text Documents</article-title>
+          .
+          <source>In: Proceedings of the 11th Annual Conference on Genetic and Evolutionary Computation (GECCO)</source>
+          . pp.
+          <volume>349</volume>
+          {
+          <fpage>356</fpage>
+          . ACM Press (
+          <year>2009</year>
+          )
+        </mixed-citation>
+      </ref>
+      <ref id="ref4">
+        <mixed-citation>
+          4.
+          <string-name>
+            <surname>Raidl</surname>
+            ,
+            <given-names>G.R.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Hu</surname>
+            ,
+            <given-names>B.</given-names>
+          </string-name>
+          :
+          <article-title>Enhancing genetic algorithms by a trie-based complete solution archive</article-title>
+          . In: Cowling,
+          <string-name>
+            <given-names>P.</given-names>
+            ,
+            <surname>Merz</surname>
+          </string-name>
+          , P. (eds.)
+          <article-title>Evolutionary Computation in Combinatorial Optimization</article-title>
+          .
+          <source>LNCS</source>
+          , vol.
+          <volume>6022</volume>
+          , pp.
+          <volume>239</volume>
+          {
+          <fpage>251</fpage>
+          . Springer Berlin Heidelberg (
+          <year>2010</year>
+          )
+        </mixed-citation>
+      </ref>
+      <ref id="ref5">
+        <mixed-citation>
+          5.
+          <string-name>
+            <surname>Schauer</surname>
+            ,
+            <given-names>C.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Prandtstetter</surname>
+            ,
+            <given-names>M.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Raidl</surname>
+            ,
+            <given-names>G.R.:</given-names>
+          </string-name>
+          <article-title>A memetic algorithm for reconstructing cross-cut shredded text documents</article-title>
+          .
+          <source>In: Proceedings of the 7th international conference on Hybrid metaheuristics</source>
+          . pp.
+          <volume>103</volume>
+          {
+          <fpage>117</fpage>
+          . HM2010, Springer-Verlag (
+          <year>2010</year>
+          )
+        </mixed-citation>
+      </ref>
+      <ref id="ref6">
+        <mixed-citation>
+          6.
+          <string-name>
+            <surname>Sleit</surname>
+            ,
+            <given-names>A.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Massad</surname>
+            ,
+            <given-names>Y.</given-names>
+          </string-name>
+          ,
+          <string-name>
+            <surname>Musaddaq</surname>
+            ,
+            <given-names>M.:</given-names>
+          </string-name>
+          <article-title>An alternative clustering approach for reconstructing cross cut shredded text documents</article-title>
+          .
+          <source>Telecommunication Systems</source>
+          pp.
+          <volume>1</volume>
+          {
+          <issue>11</issue>
+          (
+          <year>2011</year>
+          )
+        </mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

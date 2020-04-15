@@ -1,0 +1,91 @@
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN" "JATS-archivearticle1.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+  <front>
+    <journal-meta />
+    <article-meta>
+      <title-group>
+        <article-title>An Evaluation of WCET Analysis using Symbolic Loop Bounds?</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <string-name>Jens Knoop</string-name>
+          <xref ref-type="aff" rid="aff0">0</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Laura Kova´cs</string-name>
+          <xref ref-type="aff" rid="aff0">0</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>Jakob Zwirchmayr??</string-name>
+          <xref ref-type="aff" rid="aff0">0</xref>
+        </contrib>
+        <aff id="aff0">
+          <label>0</label>
+          <institution>Vienna University of Technology</institution>
+        </aff>
+      </contrib-group>
+      <abstract>
+        <p>Extended Abstract. The spread of safety critical real time systems results in an increased necessity for worst case execution time (WCET) analysis of these systems: finding the time limit within which the software system responds in all possible scenarios. Computing the WCET for programs with loops or recursion is, in general, undecidable. We present an automatic method for computing tight upper bounds on the iteration number of special classes of program loops. These upper bounds are further used in the WCET analysis of programs. The technique deploys pattern-based recurrence solving in conjunction with program flow refinement using SMT reasoning. To do so, we refine program flows using SMT reasoning and rewrite certain multi-path loops into single-path ones, possibly over-approximating the loop-bound. The multipath loops we consider are I) abruptly-terminating loops that might terminate early due to break statements and II) loops with additional monotonic updates, that conditionally modify the loop counter. For those, the minimum increase of the loop counter is computed and used as loop step expression. Single-path loops are further translated into a set of recurrence relations over program variables. For solving recurrences we deploy a pattern-based recurrence solving algorithm, computing closed forms for a restricted class of recurrence equations. Finally, iteration bounds are derived for program loops from the computed closed forms. We only compute closed forms for a restricted class of loops, however, in practice, these recurrences describe the behavior of a large set of program loops that are relevant to WCET analysis. Our technique is implemented in the r-TuBound tool and was successfully tried out on a number of challenging WCET benchmarks: we evaluate the symbolic loop bound generation technique and present an experimental evaluation of the method carried out with the r-TuBound software tool. We evaluate our method against various academic and industrial WCET benchmarks, and compare the results to the original TuBound tool. ? This work is based on material that was presented at the 8th Ershov Informatics Conference 2011 [2] and the Workshop on Worst Case Execution Time [1]. ?? This research is supported by the CeTAT project of TU Vienna. The second author is supported by an FWF Hertha Firnberg Research grant (T425-N23).</p>
+      </abstract>
+    </article-meta>
+  </front>
+  <body />
+  <back>
+    <ref-list>
+      <ref id="ref1">
+        <mixed-citation>
+          1.
+          <string-name>
+            <given-names>J.</given-names>
+            <surname>Knoop</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>L.</given-names>
+            <surname>Kovacs</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>J.</given-names>
+            <surname>Zwirchmayr</surname>
+          </string-name>
+          .
+          <article-title>An Evaluation of WCET Analysis using Symbolic Loop Bounds</article-title>
+          .
+          <source>In Pre-Proceedings of the 11th International Workshop on Worst-Case Execution Time Analysis (WCET</source>
+          <year>2011</year>
+          ), Porto, Portugal,
+          <year>2011</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref2">
+        <mixed-citation>
+          2.
+          <string-name>
+            <given-names>J.</given-names>
+            <surname>Knoop</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>L.</given-names>
+            <surname>Kovacs</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>J.</given-names>
+            <surname>Zwirchmayr</surname>
+          </string-name>
+          .
+          <article-title>Symbolic Loop Bound Computation for WCET Analysis</article-title>
+          .
+          <source>In Proceedings of the 8th International Andrei Ershov Memorial Conference - Perspectives of System Informatics (PSI</source>
+          <year>2011</year>
+          ), Akademgorodok/Novosibirsk, Russia, June 27 - July 1,
+          <year>2011</year>
+          . (to appear).
+        </mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

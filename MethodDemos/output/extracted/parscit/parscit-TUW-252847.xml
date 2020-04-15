@@ -1,0 +1,729 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<algorithms version="110505">
+<algorithm name="SectLabel" version="110505">
+<variant no="0" confidence="0.001258">
+<title confidence="0.997261">
+Retrieving Diverse Social Images at MediaEval 2016:
+Challenge, Dataset and Evaluation
+</title>
+<author confidence="0.999489">
+Bogdan Ionescu
+</author>
+<affiliation confidence="0.8105595">
+LAPI, University Politehnica of
+Bucharest, Romania
+</affiliation>
+<email confidence="0.993215">
+bionescu@alpha.imag.pub.ro
+</email>
+<author confidence="0.996566">
+Bogdan Boteanu
+</author>
+<affiliation confidence="0.814877">
+LAPI, University Politehnica of
+Bucharest, Romania
+</affiliation>
+<email confidence="0.956488">
+bboteanu@alpha.imag.pub.ro
+</email>
+<author confidence="0.795739">
+Alexandru Lucian Gînscä CEA, LIST, France
+</author>
+<email confidence="0.955808">
+alexandru.ginsca@cea.fr
+</email>
+<author confidence="0.997635">
+Mihai Lupu
+</author>
+<affiliation confidence="0.999888">
+Vienna University of
+</affiliation>
+<address confidence="0.481177">
+Technology, Austria
+</address>
+<email confidence="0.979574">
+lupu@ifs.tuwien.ac.at
+</email>
+<author confidence="0.996949">
+Maia Zaharieva*
+</author>
+<affiliation confidence="0.999747">
+University of Vienna &amp; Vienna
+University of Technology,
+</affiliation>
+<address confidence="0.480221">
+Austria
+</address>
+<email confidence="0.996544">
+maia.zaharieva@univie.ac.at
+</email>
+<author confidence="0.998307">
+Henning Müller
+</author>
+<affiliation confidence="0.99907">
+HES-SO, University of Applied
+</affiliation>
+<address confidence="0.955727">
+Sciences Western Switzerland
+</address>
+<email confidence="0.993344">
+henning.mueller@hevs.ch
+</email>
+<sectionHeader confidence="0.969888" genericHeader="abstract">
+ABSTRACT
+</sectionHeader>
+<bodyText confidence="0.999880222222222">
+This paper provides an overview of the Retrieving Diverse
+Social Images task that is organized as part of the Media-
+Eval 2016 Benchmarking Initiative for Multimedia Evalua-
+tion. The task addresses the problem of result diversification
+in the context of social photo retrieval where images, meta-
+data, text information, user tagging profiles and content and
+text models are available for processing. We present the task
+challenges, the proposed data set and ground truth, the re-
+quired participant runs and the evaluation metrics.
+</bodyText>
+<sectionHeader confidence="0.988362" genericHeader="introduction">
+1. INTRODUCTION
+</sectionHeader>
+<bodyText confidence="0.999976263157895">
+An efficient image retrieval system should be able to present
+results that are both relevant and that are covering different
+aspects, i.e., diversity, of the query. By diversifying the
+pool of possible results, one can increase the likelihood of
+providing the user with the information needed. Relevance
+was more thoroughly studied in existing literature than di-
+versification [1, 2, 3], especially within the text community.
+Even though a considerable amount of diversification litera-
+ture exists [8, 9, 10], the topic remains important, especially
+in the emerging fields of social multimedia [4, 5, 6, 7, 11].
+The 2016 Retrieving Diverse Social Images task is a fo-
+llowup of the 2015 edition [14, 13, 12, 15] and aims to foster
+new technology to improve both relevance and diversifica-
+tion of search results with explicit emphasis on the actual
+social media context. The task was designed to support eval-
+uation of techniques emerging from a wide range of research
+fields, such as image retrieval (text, vision, multimedia com-
+munities), machine learning, relevance feedback and natural
+language processing, but not limited to these.
+</bodyText>
+<sectionHeader confidence="0.994859" genericHeader="method">
+2. TASK DESCRIPTION
+</sectionHeader>
+<bodyText confidence="0.891125411764706">
+The task is built around the use case of a general ad-hoc
+image retrieval system, which provides the user with diverse
+representations of the queries (see for instance Google Image
+*This task is partly supported by the Vienna Science and
+Technology Fund (WWTF) through project ICT12-010.
+Copyright is held by the author/owner(s).
+MediaEval 2016 Workshop, October 20-21, 2016, Hilversum,
+Netherlands.
+Search1). Participants are required, given a ranked list of
+query-related photos retrieved from Flickre, to refine the
+results by providing a set of images that are at the same time
+relevant to the query and to provide a diversified summary
+of it. Compared to the previous editions, this year’s task
+includes complex and general-purpose multi-concept queries.
+The requirements of the task are to refine these results
+by providing a ranked list of up to 50 photos that are both
+relevant and diverse representations of the query, according
+to the following definitions:
+Relevance: a photo is considered to be relevant for the
+query if it is a common photo representation of the query
+topics (all at once). Bad quality photos (e.g., severely blurred,
+out of focus, etc.) are not considered relevant in this sce-
+nario;
+Diversity: a set of photos is considered to be diverse if
+it depicts different visual characteristics of the query topics
+and subtopics with a certain degree of complementarity, i.e.,
+most of the perceived visual information is different from one
+photo to another.
+To carry out the refinement and diversification tasks, par-
+ticipants may use the social metadata associated with the
+images, the visual characteristics of the images, informa-
+tion related to user tagging credibility (an estimation of the
+global quality of tag-image content relationships for a user’s
+contributions) or external resources (e.g., the Internet).
+</bodyText>
+<sectionHeader confidence="0.943403" genericHeader="method">
+3. DATASET
+</sectionHeader>
+<bodyText confidence="0.999964">
+The 2016 data consists of a development set (devset) con-
+taining 70 queries (20,757 Flickr photos — including 35
+multi-topic queries related to events and states associated
+with locations from the 2015 dataset [14]), a user annotation
+credibility set (credibilityset) containing information for ca.
+300 location-based queries and 685 users (different than the
+ones in devset and testset — updated version of the 2015
+dataset [14]), a set providing semantic vectors for general
+English terms computed on top of the English Wikipedia3
+(wikiset), which could help the participants in developing
+advanced text models, and a test set (testset) containing 65
+</bodyText>
+<footnote confidence="0.997464666666667">
+1https://images.google.com/.
+ehttps://www.flickr.com/.
+3https://en.wikipedia.org/.
+</footnote>
+<bodyText confidence="0.998656016949153">
+queries (19,017 Flickr photos).
+Each query is provided with the following information:
+query text formulation (the actual query formulation used
+on Flickr to retrieve all the data), a ranked list of up to 300
+photos in jpeg format retrieved from Flickr using Flickr’s
+default “relevance” algorithm (all photos are Creative Com-
+mons licensed allowing redistribution4), an xml file contain-
+ing metadata from Flickr for all the retrieved photos (e.g.,
+photo title, photo description, photo id, tags, Creative Com-
+mon license type, the url link of the photo location from
+Flickr, the photo owner’s name, user id, the number of times
+the photo has been displayed, etc), and ground truth for
+both relevance and diversity.
+Apart from the metadata, to facilitate participation from
+various communities, we also provide the following content
+descriptors:
+- convolutional neural network based descriptors — generic
+CNN based on the reference convolutional neural network
+(CNN) model provided along with the Caffe framework5
+(this model is learned with the 1,000 ImageNet classes used
+during the ImageNet challenge); and an adapted CNN based
+on a CNN model obtained with an identical architecture to
+that of the Caffe reference model. Adaptation is done only
+for the 2015 location-based multi-topic queries (35 queries
+from the devset), i.e., the model is learned with 1,000 tourist
+points of interest classes of which the images were automati-
+cally collected from the Web [16]. For the other queries, the
+descriptor is computed as the generic one, because queries
+are diverse enough and do not require any adaptation;
+- text information that consists as in the previous edition of
+term frequency information, document frequency informa-
+tion and their ratio, i.e., TF-IDF, which is computed on per
+image basis, per query basis and per user basis (see [17]);
+- user annotation credibility descriptors that give an au-
+tomatic estimation of the quality of the users’ tag-image
+content relationships. These descriptors are extracted by
+visual or textual content mining: visualScore (measure of
+user image relevance), faceProportion (the percentage of im-
+ages with faces), tagSpecificity (average specificity of a user’s
+tags, where tag specificity is the percentage of users hav-
+ing annotated with that tag in a large Flickr corpus), lo-
+cationSimilarity (average similarity between a user’s geo-
+tagged photos and a probabilistic model of a surrounding
+cell), photoCount (total number of images a user shared),
+uniqueTags (proportion of unique tags), uploadFrequency
+(average time between two consecutive uploads), bulkPro-
+portion (the proportion of bulk taggings in a user’s stream,
+i.e., of tag sets that appear identical for at least two dis-
+tinct photos), meanPhotoViews (mean value of the number
+of times a user’s image has been seen by other members of
+the community), meanTitleWordCounts (mean value of the
+number of words found in the titles associated with users’
+photos), meanTagsPerPhoto (mean value of the number of
+tags users put for their images), meanTagRank (mean rank
+of a user’s tags in a list in which the tags are sorted in de-
+scending order according the the number of appearances in a
+large subsample of Flickr images), and meanImageTagClar-
+ity (adaptation of the Image Tag Clarity from [18] using as
+individual tag language model a tf/idf language model).
+</bodyText>
+<footnote confidence="0.9987405">
+4http://creativecommons.org/.
+5http://caffe.berkeleyvision.org/.
+</footnote>
+<sectionHeader confidence="0.799797" genericHeader="method">
+4. GROUND TRUTH
+</sectionHeader>
+<bodyText confidence="0.938009944444444">
+Both relevance and diversity annotations were carried out
+by expert annotators. For relevance, annotators were asked
+to label each photo (one at a time) as being relevant (value
+1), non-relevant (0) or with “don’t know” (-1). For devset, 9
+annotators were involved, for credibilityset 9 and for testset
+8. The data was partitioned among annotators such that
+in the end each image has been marked by 3 different an-
+notators. The final relevance ground truth was determined
+after a lenient majority voting scheme. For diversity, only
+the photos that were judged as relevant in the previous step
+were considered. For each query, annotators were provided
+with a thumbnail list of all relevant photos. After getting fa-
+miliar with their contents, they were asked to re-group the
+photos into clusters with similar visual appearance (up to
+25). Devset and testset were annotated by 5 persons, each
+of them annotating distinct parts of the data (leading to only
+one annotation). An additional annotator acted as a master
+annotator and reviewed once more the final annotations.
+</bodyText>
+<sectionHeader confidence="0.915467" genericHeader="method">
+5. RUN DESCRIPTION
+</sectionHeader>
+<bodyText confidence="0.9999245">
+Participants were allowed to submit up to 5 runs. The
+first 3 are required runs: run1 — automated using visual
+information only; run2 — automated using text informa-
+tion only; and run3 — automated using text-visual fused
+without other resources than provided by the organizers.
+The last 2 runs are general runs: run4 and run5 — every-
+thing allowed, e.g., human-based or hybrid human-machine
+approaches, including using data from external sources (e.g.,
+Internet). For generating run1 to run3 participants are al-
+lowed to use only information that can be extracted from
+the provided data (e.g., provided descriptors, descriptors of
+their own, etc).
+</bodyText>
+<sectionHeader confidence="0.995112" genericHeader="evaluation">
+6. EVALUATION
+</sectionHeader>
+<bodyText confidence="0.999943714285714">
+Performance is assessed for both diversity and relevance.
+The following metrics are computed: Cluster Recall at X
+(CR@X) — a measure that assesses how many different clus-
+ters from the ground truth are represented among the top
+X results (only relevant images are considered), Precision at
+X (P@X) — measures the number of relevant photos among
+the top X results and F1-measure at X (F1@X) — the har-
+monic mean of the previous two. Various cut off points are
+to be considered, i.e., X=5, 10, 20, 30, 40, 50. Official rank-
+ing metric is the F1@20 which gives equal importance to
+diversity (via CR@20) and relevance (via P@20). This met-
+ric simulates the content of a single page of a typical Web
+image search engine and reflects user behavior, i.e., inspect-
+ing the first page of results with priority.
+</bodyText>
+<sectionHeader confidence="0.988018" genericHeader="conclusions">
+7. CONCLUSIONS
+</sectionHeader>
+<bodyText confidence="0.962150727272727">
+The 2016 Retrieving Diverse Social Images task provides
+participants with a comparative and collaborative evalua-
+tion framework for social image retrieval techniques with
+explicit focus on result diversification. This year in particu-
+lar, the task explores the diversification in the context of a
+challenging, ad-hoc image retrieval system, which should be
+able to tackle complex and general-purpose multi-concept
+queries. Details on the methods and results of each indi-
+vidual participant team can be found in the working note
+papers of the MediaEval 2016 workshop proceedings.
+8. REFERENCES
+</bodyText>
+<reference confidence="0.999869592105263">
+[1] A.W.M. Smeulders, M. Worring, S. Santini, A. Gupta,
+R. Jain, “Content-based Image Retrieval at the End of
+the Early Years”, IEEE Transactions on Pattern
+Analysis and Machine Intelligence, 22(12), pp. 1349 -
+1380, 2000.
+[2] R. Datta, D. Joshi, J. Li, J.Z. Wang, “Image Retrieval:
+Ideas, Influences, and Trends of the New Age”, ACM
+Computing Surveys, 40(2), pp. 1-60, 2008.
+[3] R. Priyatharshini, S. Chitrakala, “Association Based
+Image Retrieval: A Survey”, Mobile Communication
+and Power Engineering, Springer Communications in
+Computer and Information Science, 296, pp. 17-26,
+2013.
+[4] R.H. van Leuken, L. Garcia, X. Olivares, R. van Zwol,
+“Visual Diversification of Image Search Results”, ACM
+World Wide Web, pp. 341-350, 2009.
+[5] M.L. Paramita, M. Sanderson, P. Clough, “Diversity
+in Photo Retrieval: Overview of the ImageCLEF
+Photo Task 2009”, ImageCLEF 2009.
+[6] B. Taneva, M. Kacimi, G. Weikum, “Gathering and
+Ranking Photos of Named Entities with High
+Precision, High Recall, and Diversity”, ACM Web
+Search and Data Mining, pp. 431-440, 2010.
+[7] S. Rudinac, A. Hanjalic, M.A. Larson, “Generating
+Visual Summaries of Geographic Areas Using
+Community-Contributed Images”, IEEE Transactions
+on Multimedia, 15(4), pp. 921-932, 2013.
+[8] R. Agrawal, S. Gollapudi, A. Halverson, S. Ieong,
+“Diversifying Search Results”, ACM International
+Conference on Web Search and Data Mining, pp. 5-14,
+2009.
+[9] Y. Zhu, Y. Lan, J. Guo, X. Cheng, S. Niu, “Learning
+for Search Result Diversification”, ACM SIGIR
+Conference on Research and Development in
+Information Retrieval, pp. 293-302, 2014.
+[10] H.-T. Yu, F. Ren, “Search Result Diversification via
+Filling up Multiple Knapsacks”, ACM International
+Conference on Conference on Information and
+Knowledge Management, pp. 609-618, 2014.
+[11] D.-T. Dang-Nguyen, L. Piras, G. Giacinto, G. Boato,
+F.G.B. De Natale, “A Hybrid Approach for Retrieving
+Diverse Social Images of Landmarks”, IEEE
+International Conference on Multimedia and Expo,
+pp. 1-6, 2015.
+[12] B. Ionescu, A.-L. Radu, M. Men´endez, H. Müller, A.
+Popescu, B. Loni, “Div400: A Social Image Retrieval
+Result Diversification Dataset”, ACM MMSys,
+Singapore, 2014.
+[13] B. Ionescu, A. Popescu, M. Lupu, A.L. Gˆınscä, B.
+Boteanu, H. Müller, “Div150Cred: A Social Image
+Retrieval Result Diversification with User Tagging
+Credibility Dataset”, ACM MMSys, Portland, Oregon,
+USA, 2015.
+[14] B. Ionescu, A.L. Gˆınscä, B. Boteanu, M. Lupu, A.
+Popescu, H. Müller, “Div150Multi: A Social Image
+Retrieval Result Diversification Dataset with
+Multi-topic Queries”, ACM MMSys, Klagenfurt,
+Austria, 2016.
+[15] B. Ionescu, A. Popescu, A.-L. Radu, H. Müller,
+“Result Diversification in Social Image Retrieval: A
+Benchmarking Framework”, Multimedia Tools and
+Applications, 2014.
+[16] E. Spyromitros-Xioufis, S. Papadopoulos, A. Gˆınscä,
+A. Popescu, I. Kompatsiaris, I. Vlahavas, “Improving
+Diversity in Image Search via Supervised Relevance
+Scoring”, ACM International Conference on
+Multimedia Retrieval, ACM, Shanghai, China, 2015.
+[17] B. Ionescu, A. Popescu, M. Lupu, A.L. Gˆınscä, H.
+Müller, “Retrieving Diverse Social Images at
+MediaEval 2014: Challenge, Dataset and Evaluation”,
+CEUR-WS, Vol. 1263, http://ceur-ws.org/
+Vol-1263/mediaeval2014_submission_1.pdf, Spain,
+2014.
+[18] A. Sun, S.S. Bhowmick, “Image Tag Clarity: in Search
+of Visual-Representative Tags for Social Images”,
+SIGMM workshop on Social media, 2009.
+</reference>
+</variant>
+</algorithm>
+<algorithm name="ParsHed" version="110505">
+<variant no="0" confidence="0.180878">
+<title confidence="0.9787775">Retrieving Diverse Social Images at MediaEval 2016: Challenge, Dataset and Evaluation</title>
+<author confidence="0.999718">Bogdan Ionescu</author>
+<affiliation confidence="0.999898">LAPI, University Politehnica</affiliation>
+<address confidence="0.999107">Bucharest, Romania</address>
+<email confidence="0.970411">bionescu@alpha.imag.pub.ro</email>
+<author confidence="0.993911">Bogdan Boteanu</author>
+<affiliation confidence="0.999727">LAPI, University Politehnica</affiliation>
+<address confidence="0.99913">Bucharest, Romania</address>
+<email confidence="0.989722">bboteanu@alpha.imag.pub.ro</email>
+<author confidence="0.972431">Lucian Gînscä LIST</author>
+<author confidence="0.972431">France</author>
+<email confidence="0.990556">alexandru.ginsca@cea.fr</email>
+<author confidence="0.993722">Mihai Lupu</author>
+<affiliation confidence="0.999996">Vienna University</affiliation>
+<address confidence="0.998724">Technology, Austria</address>
+<email confidence="0.986409">lupu@ifs.tuwien.ac.at</email>
+<affiliation confidence="0.994614">of Vienna University of</affiliation>
+<address confidence="0.656616">Austria</address>
+<email confidence="0.929799">maia.zaharieva@univie.ac.at</email>
+<author confidence="0.561273">Henning Müller</author>
+<affiliation confidence="0.7341565">HES-SO, University of Sciences Western Switzerland</affiliation>
+<email confidence="0.89318">henning.mueller@hevs.ch</email>
+<abstract confidence="0.9880503">This paper provides an overview of the Retrieving Diverse Social Images task that is organized as part of the Media- Eval 2016 Benchmarking Initiative for Multimedia Evaluation. The task addresses the problem of result diversification in the context of social photo retrieval where images, metadata, text information, user tagging profiles and content and text models are available for processing. We present the task challenges, the proposed data set and ground truth, the required participant runs and the evaluation metrics.</abstract>
+</variant>
+</algorithm>
+<algorithm name="ParsCit" version="110505">
+<citationList>
+<citation valid="true">
+<authors>
+<author>A W M Smeulders</author>
+<author>M Worring</author>
+<author>S Santini</author>
+<author>A Gupta</author>
+<author>R Jain</author>
+</authors>
+<title>Content-based Image Retrieval at the End of the Early Years”,</title>
+<date>2000</date>
+<journal>IEEE Transactions on Pattern Analysis and Machine Intelligence,</journal>
+<volume>22</volume>
+<issue>12</issue>
+<pages>1349--1380</pages>
+<contexts>
+<context position="1554" citStr="[1, 2, 3]" startWordPosition="208" endWordPosition="210">ying the pool of possible results, one can increase the likelihood of providing the user with the information needed. Relevance was more thoroughly studied in existing literature than diversification [1, 2, 3], especially within the text community. Even though a considerable amount of diversification literature exists [8, 9, 10], the topic remains important, especially in the emerging fields of social mult</context>
+</contexts>
+<marker>[1]</marker>
+<rawString>A.W.M. Smeulders, M. Worring, S. Santini, A. Gupta, R. Jain, “Content-based Image Retrieval at the End of the Early Years”, IEEE Transactions on Pattern Analysis and Machine Intelligence, 22(12), pp. 1349 -1380, 2000.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>R Datta</author>
+<author>D Joshi</author>
+<author>J Li</author>
+<author>J Z Wang</author>
+</authors>
+<title>Image Retrieval: Ideas, Influences,</title>
+<date>2008</date>
+<journal>and Trends of the New Age”, ACM Computing Surveys,</journal>
+<volume>40</volume>
+<issue>2</issue>
+<pages>1--60</pages>
+<contexts>
+<context position="1554" citStr="[1, 2, 3]" startWordPosition="208" endWordPosition="210">ying the pool of possible results, one can increase the likelihood of providing the user with the information needed. Relevance was more thoroughly studied in existing literature than diversification [1, 2, 3], especially within the text community. Even though a considerable amount of diversification literature exists [8, 9, 10], the topic remains important, especially in the emerging fields of social mult</context>
+</contexts>
+<marker>[2]</marker>
+<rawString>R. Datta, D. Joshi, J. Li, J.Z. Wang, “Image Retrieval: Ideas, Influences, and Trends of the New Age”, ACM Computing Surveys, 40(2), pp. 1-60, 2008.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>R Priyatharshini</author>
+<author>S Chitrakala</author>
+</authors>
+<title>Association Based Image Retrieval: A Survey”, Mobile Communication and Power Engineering,</title>
+<date>2013</date>
+<journal>Springer Communications in Computer and Information Science,</journal>
+<volume>296</volume>
+<pages>17--26</pages>
+<contexts>
+<context position="1554" citStr="[1, 2, 3]" startWordPosition="208" endWordPosition="210">ying the pool of possible results, one can increase the likelihood of providing the user with the information needed. Relevance was more thoroughly studied in existing literature than diversification [1, 2, 3], especially within the text community. Even though a considerable amount of diversification literature exists [8, 9, 10], the topic remains important, especially in the emerging fields of social mult</context>
+</contexts>
+<marker>[3]</marker>
+<rawString>R. Priyatharshini, S. Chitrakala, “Association Based Image Retrieval: A Survey”, Mobile Communication and Power Engineering, Springer Communications in Computer and Information Science, 296, pp. 17-26, 2013.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>R H van Leuken</author>
+<author>L Garcia</author>
+<author>X Olivares</author>
+<author>R van Zwol</author>
+</authors>
+<date>2009</date>
+<journal>Visual Diversification of Image Search Results”, ACM World Wide Web,</journal>
+<pages>341--350</pages>
+<contexts>
+<context position="1777" citStr="[4, 5, 6, 7, 11]" startWordPosition="241" endWordPosition="245">ially within the text community. Even though a considerable amount of diversification literature exists [8, 9, 10], the topic remains important, especially in the emerging fields of social multimedia [4, 5, 6, 7, 11]. The 2016 Retrieving Diverse Social Images task is a followup of the 2015 edition [14, 13, 12, 15] and aims to foster new technology to improve both relevance and diversification of search results wi</context>
+</contexts>
+<marker>[4]</marker>
+<rawString>R.H. van Leuken, L. Garcia, X. Olivares, R. van Zwol, “Visual Diversification of Image Search Results”, ACM World Wide Web, pp. 341-350, 2009.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>M L Paramita</author>
+<author>M Sanderson</author>
+<author>P Clough</author>
+</authors>
+<date>2009</date>
+<booktitle>Diversity in Photo Retrieval: Overview of the ImageCLEF Photo Task</booktitle>
+<contexts>
+<context position="1777" citStr="[4, 5, 6, 7, 11]" startWordPosition="241" endWordPosition="245">ially within the text community. Even though a considerable amount of diversification literature exists [8, 9, 10], the topic remains important, especially in the emerging fields of social multimedia [4, 5, 6, 7, 11]. The 2016 Retrieving Diverse Social Images task is a followup of the 2015 edition [14, 13, 12, 15] and aims to foster new technology to improve both relevance and diversification of search results wi</context>
+</contexts>
+<marker>[5]</marker>
+<rawString>M.L. Paramita, M. Sanderson, P. Clough, “Diversity in Photo Retrieval: Overview of the ImageCLEF Photo Task 2009”, ImageCLEF 2009.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>B Taneva</author>
+<author>M Kacimi</author>
+<author>G Weikum</author>
+</authors>
+<title>Gathering and Ranking Photos of Named Entities with High Precision, High Recall, and Diversity”,</title>
+<date>2010</date>
+<journal>ACM Web Search and Data Mining,</journal>
+<pages>431--440</pages>
+<contexts>
+<context position="1777" citStr="[4, 5, 6, 7, 11]" startWordPosition="241" endWordPosition="245">ially within the text community. Even though a considerable amount of diversification literature exists [8, 9, 10], the topic remains important, especially in the emerging fields of social multimedia [4, 5, 6, 7, 11]. The 2016 Retrieving Diverse Social Images task is a followup of the 2015 edition [14, 13, 12, 15] and aims to foster new technology to improve both relevance and diversification of search results wi</context>
+</contexts>
+<marker>[6]</marker>
+<rawString>B. Taneva, M. Kacimi, G. Weikum, “Gathering and Ranking Photos of Named Entities with High Precision, High Recall, and Diversity”, ACM Web Search and Data Mining, pp. 431-440, 2010.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>S Rudinac</author>
+<author>A Hanjalic</author>
+<author>M A Larson</author>
+</authors>
+<title>Generating Visual Summaries of Geographic Areas Using Community-Contributed Images”,</title>
+<date>2013</date>
+<journal>IEEE Transactions on Multimedia,</journal>
+<volume>15</volume>
+<issue>4</issue>
+<pages>921--932</pages>
+<contexts>
+<context position="1777" citStr="[4, 5, 6, 7, 11]" startWordPosition="241" endWordPosition="245">ially within the text community. Even though a considerable amount of diversification literature exists [8, 9, 10], the topic remains important, especially in the emerging fields of social multimedia [4, 5, 6, 7, 11]. The 2016 Retrieving Diverse Social Images task is a followup of the 2015 edition [14, 13, 12, 15] and aims to foster new technology to improve both relevance and diversification of search results wi</context>
+</contexts>
+<marker>[7]</marker>
+<rawString>S. Rudinac, A. Hanjalic, M.A. Larson, “Generating Visual Summaries of Geographic Areas Using Community-Contributed Images”, IEEE Transactions on Multimedia, 15(4), pp. 921-932, 2013.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>R Agrawal</author>
+<author>S Gollapudi</author>
+<author>A Halverson</author>
+<author>S Ieong</author>
+</authors>
+<title>Diversifying Search Results”,</title>
+<date>2009</date>
+<booktitle>ACM International Conference on Web Search and Data Mining,</booktitle>
+<pages>5--14</pages>
+<contexts>
+<context position="1675" citStr="[8, 9, 10]" startWordPosition="226" endWordPosition="228">levance was more thoroughly studied in existing literature than diversification [1, 2, 3], especially within the text community. Even though a considerable amount of diversification literature exists [8, 9, 10], the topic remains important, especially in the emerging fields of social multimedia [4, 5, 6, 7, 11]. The 2016 Retrieving Diverse Social Images task is a followup of the 2015 edition [14, 13, 12, 15</context>
+</contexts>
+<marker>[8]</marker>
+<rawString>R. Agrawal, S. Gollapudi, A. Halverson, S. Ieong, “Diversifying Search Results”, ACM International Conference on Web Search and Data Mining, pp. 5-14, 2009.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>Y Zhu</author>
+<author>Y Lan</author>
+<author>J Guo</author>
+<author>X Cheng</author>
+<author>S Niu</author>
+</authors>
+<title>Learning for Search Result Diversification”,</title>
+<date>2014</date>
+<booktitle>ACM SIGIR Conference on Research and Development in Information Retrieval,</booktitle>
+<pages>293--302</pages>
+<contexts>
+<context position="1675" citStr="[8, 9, 10]" startWordPosition="226" endWordPosition="228">levance was more thoroughly studied in existing literature than diversification [1, 2, 3], especially within the text community. Even though a considerable amount of diversification literature exists [8, 9, 10], the topic remains important, especially in the emerging fields of social multimedia [4, 5, 6, 7, 11]. The 2016 Retrieving Diverse Social Images task is a followup of the 2015 edition [14, 13, 12, 15</context>
+</contexts>
+<marker>[9]</marker>
+<rawString>Y. Zhu, Y. Lan, J. Guo, X. Cheng, S. Niu, “Learning for Search Result Diversification”, ACM SIGIR Conference on Research and Development in Information Retrieval, pp. 293-302, 2014.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>H-T Yu</author>
+<author>F Ren</author>
+</authors>
+<title>Search Result Diversification via Filling up Multiple Knapsacks”,</title>
+<date>2014</date>
+<booktitle>ACM International Conference on Conference on Information and Knowledge Management,</booktitle>
+<pages>609--618</pages>
+<contexts>
+<context position="1675" citStr="[8, 9, 10]" startWordPosition="226" endWordPosition="228">levance was more thoroughly studied in existing literature than diversification [1, 2, 3], especially within the text community. Even though a considerable amount of diversification literature exists [8, 9, 10], the topic remains important, especially in the emerging fields of social multimedia [4, 5, 6, 7, 11]. The 2016 Retrieving Diverse Social Images task is a followup of the 2015 edition [14, 13, 12, 15</context>
+</contexts>
+<marker>[10]</marker>
+<rawString>H.-T. Yu, F. Ren, “Search Result Diversification via Filling up Multiple Knapsacks”, ACM International Conference on Conference on Information and Knowledge Management, pp. 609-618, 2014.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>D-T Dang-Nguyen</author>
+<author>L Piras</author>
+<author>G Giacinto</author>
+<author>G Boato</author>
+<author>F G B De Natale</author>
+</authors>
+<title>A Hybrid Approach for Retrieving Diverse Social Images of Landmarks”,</title>
+<date>2015</date>
+<booktitle>IEEE International Conference on Multimedia and Expo,</booktitle>
+<pages>1--6</pages>
+<contexts>
+<context position="1777" citStr="[4, 5, 6, 7, 11]" startWordPosition="241" endWordPosition="245">ially within the text community. Even though a considerable amount of diversification literature exists [8, 9, 10], the topic remains important, especially in the emerging fields of social multimedia [4, 5, 6, 7, 11]. The 2016 Retrieving Diverse Social Images task is a followup of the 2015 edition [14, 13, 12, 15] and aims to foster new technology to improve both relevance and diversification of search results wi</context>
+</contexts>
+<marker>[11]</marker>
+<rawString>D.-T. Dang-Nguyen, L. Piras, G. Giacinto, G. Boato, F.G.B. De Natale, “A Hybrid Approach for Retrieving Diverse Social Images of Landmarks”, IEEE International Conference on Multimedia and Expo, pp. 1-6, 2015.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>B Ionescu</author>
+<author>A-L Radu</author>
+<author>M Men´endez</author>
+<author>H Müller</author>
+<author>A Popescu</author>
+<author>B Loni</author>
+</authors>
+<title>Div400: A Social Image Retrieval Result Diversification Dataset”, ACM MMSys,</title>
+<date>2014</date>
+<location>Singapore,</location>
+<contexts>
+<context position="1876" citStr="[14, 13, 12, 15]" startWordPosition="261" endWordPosition="264">ists [8, 9, 10], the topic remains important, especially in the emerging fields of social multimedia [4, 5, 6, 7, 11]. The 2016 Retrieving Diverse Social Images task is a followup of the 2015 edition [14, 13, 12, 15] and aims to foster new technology to improve both relevance and diversification of search results with explicit emphasis on the actual social media context. The task was designed to support evaluatio</context>
+</contexts>
+<marker>[12]</marker>
+<rawString>B. Ionescu, A.-L. Radu, M. Men´endez, H. Müller, A. Popescu, B. Loni, “Div400: A Social Image Retrieval Result Diversification Dataset”, ACM MMSys, Singapore, 2014.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>B Ionescu</author>
+<author>A Popescu</author>
+<author>M Lupu</author>
+<author>A L Gˆınscä</author>
+<author>B Boteanu</author>
+<author>H Müller</author>
+</authors>
+<title>Div150Cred: A Social Image Retrieval Result Diversification with User Tagging Credibility Dataset”, ACM MMSys,</title>
+<date>2015</date>
+<location>Portland, Oregon, USA,</location>
+<contexts>
+<context position="1876" citStr="[14, 13, 12, 15]" startWordPosition="261" endWordPosition="264">ists [8, 9, 10], the topic remains important, especially in the emerging fields of social multimedia [4, 5, 6, 7, 11]. The 2016 Retrieving Diverse Social Images task is a followup of the 2015 edition [14, 13, 12, 15] and aims to foster new technology to improve both relevance and diversification of search results with explicit emphasis on the actual social media context. The task was designed to support evaluatio</context>
+</contexts>
+<marker>[13]</marker>
+<rawString>B. Ionescu, A. Popescu, M. Lupu, A.L. Gˆınscä, B. Boteanu, H. Müller, “Div150Cred: A Social Image Retrieval Result Diversification with User Tagging Credibility Dataset”, ACM MMSys, Portland, Oregon, USA, 2015.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>B Ionescu</author>
+<author>A L Gˆınscä</author>
+<author>B Boteanu</author>
+<author>M Lupu</author>
+<author>A Popescu</author>
+<author>H Müller</author>
+</authors>
+<title>Div150Multi: A Social Image Retrieval Result Diversification Dataset with Multi-topic Queries”,</title>
+<date>2016</date>
+<booktitle>ACM MMSys,</booktitle>
+<location>Klagenfurt, Austria,</location>
+<contexts>
+<context position="1876" citStr="[14, 13, 12, 15]" startWordPosition="261" endWordPosition="264">ists [8, 9, 10], the topic remains important, especially in the emerging fields of social multimedia [4, 5, 6, 7, 11]. The 2016 Retrieving Diverse Social Images task is a followup of the 2015 edition [14, 13, 12, 15] and aims to foster new technology to improve both relevance and diversification of search results with explicit emphasis on the actual social media context. The task was designed to support evaluatio</context>
+<context position="4380" citStr="[14]" startWordPosition="656" endWordPosition="656">data consists of a development set (devset) containing 70 queries (20,757 Flickr photos — including 35 multi-topic queries related to events and states associated with locations from the 2015 dataset [14]), a user annotation credibility set (credibilityset) containing information for ca. 300 location-based queries and 685 users (different than the ones in devset and testset — updated version of the 20</context>
+</contexts>
+<marker>[14]</marker>
+<rawString>B. Ionescu, A.L. Gˆınscä, B. Boteanu, M. Lupu, A. Popescu, H. Müller, “Div150Multi: A Social Image Retrieval Result Diversification Dataset with Multi-topic Queries”, ACM MMSys, Klagenfurt, Austria, 2016.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>B Ionescu</author>
+<author>A Popescu</author>
+<author>A-L Radu</author>
+<author>H Müller</author>
+</authors>
+<title>Result Diversification in Social Image Retrieval: A Benchmarking Framework”, Multimedia Tools and Applications,</title>
+<date>2014</date>
+<contexts>
+<context position="1876" citStr="[14, 13, 12, 15]" startWordPosition="261" endWordPosition="264">ists [8, 9, 10], the topic remains important, especially in the emerging fields of social multimedia [4, 5, 6, 7, 11]. The 2016 Retrieving Diverse Social Images task is a followup of the 2015 edition [14, 13, 12, 15] and aims to foster new technology to improve both relevance and diversification of search results with explicit emphasis on the actual social media context. The task was designed to support evaluatio</context>
+</contexts>
+<marker>[15]</marker>
+<rawString>B. Ionescu, A. Popescu, A.-L. Radu, H. Müller, “Result Diversification in Social Image Retrieval: A Benchmarking Framework”, Multimedia Tools and Applications, 2014.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>E Spyromitros-Xioufis</author>
+<author>S Papadopoulos</author>
+<author>A Gˆınscä</author>
+<author>A Popescu</author>
+<author>I Kompatsiaris</author>
+<author>I Vlahavas</author>
+</authors>
+<title>Improving Diversity in Image Search via Supervised Relevance Scoring”,</title>
+<date>2015</date>
+<booktitle>ACM International Conference on Multimedia Retrieval, ACM,</booktitle>
+<location>Shanghai, China,</location>
+<contexts>
+<context position="6364" citStr="[16]" startWordPosition="954" endWordPosition="954">location-based multi-topic queries (35 queries from the devset), i.e., the model is learned with 1,000 tourist points of interest classes of which the images were automatically collected from the Web [16]. For the other queries, the descriptor is computed as the generic one, because queries are diverse enough and do not require any adaptation; - text information that consists as in the previous editio</context>
+</contexts>
+<marker>[16]</marker>
+<rawString>E. Spyromitros-Xioufis, S. Papadopoulos, A. Gˆınscä, A. Popescu, I. Kompatsiaris, I. Vlahavas, “Improving Diversity in Image Search via Supervised Relevance Scoring”, ACM International Conference on Multimedia Retrieval, ACM, Shanghai, China, 2015.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>B Ionescu</author>
+<author>A Popescu</author>
+<author>M Lupu</author>
+<author>A L Gˆınscä</author>
+<author>H Müller</author>
+</authors>
+<date>2014</date>
+<booktitle>Retrieving Diverse Social Images at MediaEval 2014: Challenge, Dataset and Evaluation”, CEUR-WS, Vol. 1263, http://ceur-ws.org/ Vol-1263/mediaeval2014_submission_1.pdf,</booktitle>
+<location>Spain,</location>
+<contexts>
+<context position="6741" citStr="[17]" startWordPosition="1016" endWordPosition="1016">s as in the previous edition of term frequency information, document frequency information and their ratio, i.e., TF-IDF, which is computed on per image basis, per query basis and per user basis (see [17]); - user annotation credibility descriptors that give an automatic estimation of the quality of the users’ tag-image content relationships. These descriptors are extracted by visual or textual conten</context>
+</contexts>
+<marker>[17]</marker>
+<rawString>B. Ionescu, A. Popescu, M. Lupu, A.L. Gˆınscä, H. Müller, “Retrieving Diverse Social Images at MediaEval 2014: Challenge, Dataset and Evaluation”, CEUR-WS, Vol. 1263, http://ceur-ws.org/ Vol-1263/mediaeval2014_submission_1.pdf, Spain, 2014.</rawString>
+</citation>
+<citation valid="true">
+<authors>
+<author>A Sun</author>
+<author>S S Bhowmick</author>
+</authors>
+<title>Image Tag Clarity:</title>
+<date>2009</date>
+<booktitle>in Search of Visual-Representative Tags for Social Images”, SIGMM workshop on Social media,</booktitle>
+<contexts>
+<context position="8185" citStr="[18]" startWordPosition="1242" endWordPosition="1242">list in which the tags are sorted in descending order according the the number of appearances in a large subsample of Flickr images), and meanImageTagClarity (adaptation of the Image Tag Clarity from [18] using as individual tag language model a tf/idf language model). 4http://creativecommons.org/. 5http://caffe.berkeleyvision.org/. 4. GROUND TRUTH Both relevance and diversity annotations were carried</context>
+</contexts>
+<marker>[18]</marker>
+<rawString>A. Sun, S.S. Bhowmick, “Image Tag Clarity: in Search of Visual-Representative Tags for Social Images”, SIGMM workshop on Social media, 2009.</rawString>
+</citation>
+</citationList>
+</algorithm>
+</algorithms>

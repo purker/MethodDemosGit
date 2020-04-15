@@ -1,0 +1,1749 @@
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving and Interchange DTD v1.0 20120330//EN" "JATS-archivearticle1.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink">
+  <front>
+    <journal-meta />
+    <article-meta>
+      <title-group>
+        <article-title>Clustering Heuristics for the Hierarchical Ring Network Problem</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <string-name>DIPLOMARBEIT</string-name>
+          <xref ref-type="aff" rid="aff0">0</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <string-name>an der</string-name>
+          <xref ref-type="aff" rid="aff0">0</xref>
+        </contrib>
+        <aff id="aff0">
+          <label>0</label>
+          <institution>Fakultät für Informatik der Technischen Universität Wien</institution>
+        </aff>
+      </contrib-group>
+      <pub-date>
+        <year>2011</year>
+      </pub-date>
+      <fpage>18</fpage>
+      <lpage>59</lpage>
+      <abstract>
+        <p>zur Erlangung des akademischen Grades Technische Universität Wien A-1040 Wien Karlsplatz 13 Tel. +43-1-58801-0 www.tuwien.ac.at</p>
+      </abstract>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="sec-1">
+      <title>-</title>
+      <p>Diplom-Ingenieur
+im Rahmen des Studiums</p>
+      <p>eingereicht von
+Hierarchical Ring Network</p>
+      <p>Problem</p>
+      <p>MASTER’S THESIS
+submitted in partial fulfillment of the requirements for the degree of
+Diplom-Ingenieur
+in
+by
+Computational Intelligence</p>
+      <p>Rainer Schuster</p>
+      <p>Registration Number 0425205
+to the Faculty of Informatics
+at the Vienna University of Technology
+Advisor: ao.Univ.-Prof. Dipl.-Ing. Dr. techn. Günther Raidl
+Assistance: Univ.-Ass. Dipl.-Ing. Christian Schauer
+(Signature of Author)
+(Signature of Advisor)
+A-1040 Wien</p>
+      <p>Technische Universität Wien
+Karlsplatz 13 Tel. +43-1-58801-0
+www.tuwien.ac.at</p>
+      <p>Erklärung zur Verfassung der Arbeit</p>
+    </sec>
+    <sec id="sec-2">
+      <title>Rainer Schuster</title>
+    </sec>
+    <sec id="sec-3">
+      <title>Zubergasse 147, 2020 Sonnberg</title>
+      <p>Hiermit erkläre ich, dass ich diese Arbeit selbständig verfasst habe, dass ich die
+verwendeten Quellen und Hilfsmittel vollständig angegeben habe und dass ich die Stellen der Arbeit
+– einschließlich Tabellen, Karten und Abbildungen –, die anderen Werken oder dem Internet
+im Wortlaut oder dem Sinn nach entnommen sind, auf jeden Fall unter Angabe der Quelle als</p>
+    </sec>
+    <sec id="sec-4">
+      <title>Entlehnung kenntlich gemacht habe.</title>
+      <p>(Ort, Datum)
+(Unterschrift Verfasser)
+Acknowledgements
+I want to thank my advisors ao.Univ.-Prof. Dipl.-Ing. Dr. techn. Günther Raidl and Univ.-Ass.
+Dipl.-Ing. Christian Schauer. Their constructive feedback and their experience was a big help
+for writing and improving this thesis.</p>
+      <p>Special thanks goes to my family and my friends. Studying can be quite time-consuming
+and stressful sometimes and their support is invaluable.
+Abstract
+In this thesis the application of clustering algorithms for solving the Hierarchical Ring Network</p>
+    </sec>
+    <sec id="sec-5">
+      <title>Problem (HRNP) is investigated.</title>
+      <p>When the network is represented as a graph, an informal problem definition for this
+NPcomplete problem is: Given a set of network sites (nodes) assigned to one of three layers and
+the costs for establishing connections between sites (i.e., edge costs) the objective is to find a
+minimum cost connected network under certain constraints that are explained in detail in the
+thesis. The most important constraint is that the nodes have to be assigned to rings of bounded
+size that connect the layers hierarchically.</p>
+      <p>The ring structure is a good compromise between the robustness of a network and the cost
+for establishing it. It is guaranteed, that the network can continue to provide its service if one
+network node per ring fails.</p>
+      <p>The basic idea in this thesis for solving this network design problem was to cluster the sites
+with hierarchical clustering heuristics and to use the resulting hierarchy as support for the
+ringfinding heuristics. Previous apporaches for related network design problems did not use the
+inherent network structure in such a way. Usual approaches are based on greedy heuristics.</p>
+      <p>Three clustering heuristics were implemented: Girvan-Newman, K-means and
+KernighanLin. Especially the first algorithm is interesting, because it was successfully applied analyzing
+large network structures, also in the context of internet communities.</p>
+      <p>For finding rings three heuristics were implemented too. Strategic variation of the maximum
+allowed ring size helps the first heuristic to find rings using the cluster hierarchy. The second
+heuristic finds rings by searching for paths that are connected to previously found rings. Third a
+repair heuristic was implemented that tries to add remaining nodes to existing rings.</p>
+      <p>Local search heuristics are applied last to improve the solution quality.</p>
+      <p>To check how the clustering approach performs for solving the problem of this thesis two
+test instance generators were implemented. One generates instances randomly and the second
+generates instances based on the popular TSPLIB archive.</p>
+      <p>The evaluation of the random test instances has shown, that all three clustering heuristics
+were able to solve those test instances, while Girvan-Newman and Kernighan-Lin found valid
+solutions in each test run this was not possible for K-means. When Kernighan-Lin was used as
+clustering algorithm solutions could be found faster on average, but the resulting costs where
+slightly higher. For the TSPLIB based instances the clustering algorithms had more problems to
+find valid solutions, but for each test instance at least one type of clustering was successful.
+Kurzfassung
+In dieser Diplomarbeit wird die Anwendung von Clusteringalgorithmen untersucht, um das</p>
+    </sec>
+    <sec id="sec-6">
+      <title>Hierarchical Ring Network Problem (HRNP) zu lösen.</title>
+      <p>Wenn das Netzwerk als Graph repräsentiert ist, ist dieses NP-vollständige Problem wie folgt
+definiert: Gegeben ist Menge von Knoten welche jeweils einer von drei Schichten zugewiesen
+sind, und eine Kostenfunktion, welche die Verbindungskosten zwischen zwei Knoten
+(d.h. Kantenkosten) zuweist. Gesucht ist ein zusammenhängendes Netzwerk mit minimalen
+Gesamtkosten, wobei dieses bestimmte Struktureigenschaften zu erfüllen hat, welche im Detail
+in der Diplomarbeit beschrieben werden. Die wichtigste dieser Eigenschaften ist, dass Knoten
+gemäß einer hierarchischen Struktur zu größenbeschränkten Ringen verbunden werden.</p>
+      <p>Ringstrukturen sind ein guter Kompromiss zwischen der Verfügbarkeit von Netzwerken und
+deren Herstellungskosten. Die Verfügbarkeit ist gewährleistet, solange maximal ein Knoten pro</p>
+    </sec>
+    <sec id="sec-7">
+      <title>Ring ausfällt.</title>
+      <p>Die grundlegende Idee dieser Diplomarbeit um dieses Netzwerkdesign-Problem zu lösen,
+ist die Knoten mit Hilfe von hierarchischen Clusteringalgorithmen anzuordnen und die
+resultierende Hierarchie für nachfolgende Heuristiken zu verwenden, welche die Ringe finden.
+Vorhergehende Ansätze für vergleichbare Netzwerkdesign-Probleme haben die inhärente
+Netzwerkstruktur nicht auf solche Weise genützt und eher Greedy-Heuristiken eingesetzt.</p>
+      <p>Um gültige Ringe zu finden, wurden drei Heuristiken implementiert. Strategisches Variieren
+der erlaubten Ringgröße hilft der ersten Heuristik Ringe unter Benützung der Cluster-Hierarchie
+zu finden. Die zweite Heuristik baut auf den in der vorherigen Schicht gefundenen Ringen auf,
+indem sie nach gültigen Pfaden sucht, die an diese Ringe angeschlossen werden können. Drittens
+wird eine Reparaturheuristik angewendet, welche versucht verbleibende Knoten zu bestehenden</p>
+    </sec>
+    <sec id="sec-8">
+      <title>Ringen zuzuweisen.</title>
+      <p>Zuletzt werden lokale Suchverfahren eingesetzt, um die Gesamtkosten zu verbessern.</p>
+      <p>Um zu überprüfen, wie gut dieser Lösungsansatz funktioniert, wurden zwei
+TestinstanzGeneratoren implementiert. Der Erste generiert Instanzen zufallsbasiert, der Zweite baut auf
+dem bekannten TSPLIB-Archiv auf.</p>
+      <p>Die Evaluierung der zufallsbasierten Testinstanzen hat gezeigt, dass alle drei Heuristiken
+sämtliche Instanzen lösen konnten, wobei Girvan-Newman und Kernighan-Lin in jedem Testlauf
+Lösungen gefunden haben, war dies bei K-means nicht der Fall. Mit Kernighan-Lin
+konnte im Durchschnitt schneller eine Lösung gefunden werden, aber die Gesamtkosten waren
+bei den beiden anderen Algorithmen etwas besser. Mit den TSPLIB-basierten Testinstanzen
+konnte nicht mit allen Clusteringalgorithmen eine Lösung erzielt werden, aber zumindest war
+für jede Testinstanz mindestens ein Clustering-Verfahren erfolgreich.
+Contents
+1 Introduction 1
+1.1 Problem Definition . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2
+Notation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2
+Definitions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2
+Input . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+Objective Function . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+Instance Constraints . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+1.2 About the Complexity . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9</p>
+      <sec id="sec-8-1">
+        <title>2 Related Work</title>
+        <p>Heuristic2: Subtour Heuristic . . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+Heuristic3: Node Insertion Heuristic . . . . . . . . . . . . . . . . . . . . . . . 32
+5 Test Results and Critical Reflection 34
+5.1 Test Instance Generation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 34
+Random Instance Generator . . . . . . . . . . . . . . . . . . . . . . . . . . . 34
+TSPLIB Instances . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 35
+5.2 Random Test Instances . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 37
+5.3 TSPLIB-based Test Instances . . . . . . . . . . . . . . . . . . . . . . . . . . . 40
+6 Summary and Future Work
+Introduction
+The design of networks (e.g., telecommunication, transportation etc.) is undoubtedly an
+important task in today’s world. As networks grow larger a need for algorithms that can handle
+big instances emerges. Traditionally Integer Linear Programming (ILP) Techniques are used
+for solving network design problems because it is able to find optimal solutions. Unfortunately
+they are often incapable of solving big instances. Heuristics have shown that they can produce
+very good results in far less time. Therefore, various heuristic algorithms are investigated in this
+work.</p>
+        <p>A special focus lies on reliability. Reliable networks often have a ring structure in common
+that helps building so called self healing networks. If one hub node fails the traffic can be
+rerouted so that the other nodes are not affected. It is even possible to keep the network alive
+and continue providing services if one node per ring fails. Other network structures would ensure
+high availability and robustness features too, but ring structures have the important benefit that
+they can be built at relatively cheap costs.</p>
+        <p>Nevertheless, heuristics are often not applied for rinding ring structures in networks, because
+it is usually difficult to find appropriate methods for establishing those structures. In this thesis
+clustering heuristics are taken as an approach to tackle this challenge. Moreover the input graph
+is in general not complete, which is closer to natural input instances.</p>
+        <p>As an example telecommunication networks should be mentioned. Typically they are built
+on existing infrastructure, for example beside roads or railways. This implies restrictions on
+the design of networks. A natural approach for the design would be to use data about existing
+infrastructure as an input model on which the network is built. The challenge would be to select
+appropriate parts and to extend the model where necessary. This could mean choosing the roads
+where new network cables should be laid. In some situations connections are required where no
+appropriate infrastructure exists. Then additional connections have to be inserted in the model,
+usually with relatively high costs.
+1.1</p>
+        <p>Problem Definition
+This section explains the formal specification of the problem. A convention for the symbolic
+notation is introduced first. An example input instance is illustrated in Figure 1.1 and one possible
+solution is shown in Figure 1.2.</p>
+        <sec id="sec-8-1-1">
+          <title>Notation</title>
+          <p>V . . .</p>
+          <p>E . . .</p>
+          <p>G = (V; E) . . .
+Vk
+Ek
+K . . .
+k . . .</p>
+          <p>. . .
+. . .</p>
+          <p>. . .</p>
+          <p>E0</p>
+          <p>k
+Rk;i . . .</p>
+          <p>blk
+bku
+. . .</p>
+          <p>. . .
+cij . . .</p>
+          <p>xij . . .
+l : V ! N
+. . .</p>
+        </sec>
+        <sec id="sec-8-1-2">
+          <title>Definitions</title>
+          <p>A chain Ck is a node disjoint path, i.e., a sequence of disjoint edges. All nodes that are part of
+the chain must be on the same level: 8e 2 Ck : e 2 Ek.</p>
+          <p>A ring R is a node disjoint cycle, i.e., a sequence of disjoint edges e 2 E, that start and end
+in the same node. It can be seen as a closed path. Ring is a figurative expression that symbolizes
+the intended structure. A ring Rk consists of two chains, the upper chain and the lower chain
+and two connection-edges (uplinks) u1; u2 2 Ek0. The upper chain consists of the nodes that are
+part of the connected ring (a path between the hub nodes). The lower chain is a path between
+the hub nodes that essentially consists of the nodes to be connected to the upper layer. For a ring
+Rk the upper chain is in layer k 1 and the lower chain is in layer k.
+Partition Types / Cluster Types
+Each edge e = (i; j) has an assigned weight: cij
+Each node v has an assigned layer (level): l(v)
+The number of layers K equals 3
+The graph is preprocessed so that it contains no edge connecting nodes in V1 and V3 is
+contained
+(1.1)
+(1.2)
+(1.3)
+(1.4)
+The formal problem description is split into two cases: The definition for the backbone ring V1,
+which can be treated as a separate problem, and the definition for the other layers.
+(i;j)2E1ji2S;j2=S
+xij
+xij
+xij
+=
+2
+2; i 2 V1
+2;
+8S</p>
+          <p>V1; S 6= ;; V1
+f0; 1g;
+8(i; j) 2 V1
+Objective Function
+Instance Constraints
+Formulation for k = 1:
+min X cij xij</p>
+          <p>i;j2V</p>
+        </sec>
+      </sec>
+    </sec>
+    <sec id="sec-9">
+      <title>Minimize the sum of edge weights of the solution.</title>
+      <p>The constraints for the case k = 1 ensure that the nodes in the first layer build a Hamiltonian
+cycle. It is a classical TSP formulation [3].</p>
+      <p>Formulation for 1 &lt; k</p>
+      <p>K:
+For each layer k a set of rings fRk;1; : : : Rk;mk g has to be found with the following constraints:
+Rk;i
+jV (G[Rk;i]) \ Vkj
+jV (G[Rk;i]) \ Vkj</p>
+      <p>Constraints 1.6 and 1.7 restrict the chain size to the lower and upper bound. Each chain has
+to be homed to two hubs in the upper chain 1.8. The lower chains (of the same level) must be
+node disjoint 1.9. Each node has to be contained in one ring 1.10. All levels must consist of at
+least one node 1.11 e.g., it is not possible that there is no ring in level 2. Constraint 1.12 connects
+these constraints with the objective function 1.1 which means that for all edges contained in rings
+the objective variable x has to be set to 1 (true).</p>
+      <p>Informal constraints for the heuristics:
+In the following constraints are rewritten informally for a better understanding.</p>
+      <p>The level difference of the endpoints of each edge e = (v1; v2) in a ring solution must be
+1. For example an edge between a level 1 node and a level 3 node must not exist.
+Each ring with k &gt; 1 has to be connected to 2 hub nodes (2-connectivity). This is also
+called dual-homing. For a violation see Figure 1.4b and Figure 1.4d.</p>
+      <p>Exactly three layers are used, i.e., K = 3.</p>
+      <p>The hubs a ring is connected to must be on the same ring. For a violation see Figure 1.3a.
+The hubs a ring is connected to must be distinct (see Figure 1.3b).</p>
+    </sec>
+    <sec id="sec-10">
+      <title>All nodes must be connected to form a single component. Level of hub = level of connected node + 1 (see Figure 1.4a). 6</title>
+      <p>(a) Violation 1: The layer 3 ring is homed to
+two different layer 2 rings.
+(b) Violation 2: The layer 2 ring is homed to
+the same layer 1 node twice.</p>
+      <p>The ringsize is bounded by bku (see Figure 1.4c). This avoids degenerate solutions where
+too long rings are built, similar to the TSP.</p>
+      <p>If blk = 1 it is allowed that a lower chain consists of only one node. This helps finding
+solutions in layer k, but avoids homing subrings of layer k + 1 to this ring because it
+prohibits dual-homing.
+18</p>
+      <p>17
+14
+13
+13
+3
+12
+19
+14
+12
+4
+16
+2
+4</p>
+      <p>15
+11
+1
+11
+10
+1
+3
+10
+2
+5
+9
+6
+7
+8
+5
+9
+6
+8
+7
+(a) Violation 3: The layer three ring is connected to a layer 1 ring
+(but it must be connected to a layer 2 ring).
+(b) Violation 4: The layer 2 ring is only
+connected once (no dual homing).
+(c) Violation 5: The layer 2 ring is too long (it
+exceeds the bound u = 5).
+(d) Violation 6: The solution rings are not
+connected.
+1.2</p>
+      <p>About the Complexity
+To get a better understanding how difficult it is to solve a combinatorial problem is, it can
+be investigated by means of complexity analysis, which is a major topic in computer science.
+One of the most interesting questions is, if the considered problem belongs to the set of N
+Pcomplete problems, which means that no algorithm with polynomial time complexity can exist
+to solve this problem, as long as we can assume that P 6= N P. If one could find an algorithm
+of polynomial time complexity that can solve at least one of the N P-complete problems, this
+would mean that all problems in this complexity class could be solved with a polynomial time
+algorithm. This would also have the impact that the assumption that P 6= N P holds could be
+rejected.</p>
+      <p>
+        In the case of the HRNP the first layer can be treated independently as a Traveling Salesman
+Problem (TSP), see [
+        <xref ref-type="bibr" rid="ref3">14</xref>
+        ], which is N P-complete. The optimal ring connection of all nodes of
+V1 resembles an optimal TSP tour for these nodes.
+      </p>
+      <p>
+        The problem to find appropriate rings for the other layers can be reduced from the Traveling
+Salesman Problem with Precedence Constraints (TSPPC), see [
+        <xref ref-type="bibr" rid="ref2">13</xref>
+        ], which was shown to be
+N P-hard.
+      </p>
+      <p>For layer 2 (layer 3) this means that if exactly two uplinks are contained that determine the
+precedence and b2u = jV2j (b3u = jV3j), the single ring connecting all nodes of V2 (V3) resembles
+a TSPPC tour.</p>
+      <p>To know that there is no polynomial algorithm that solves the Hierarchical Ring Network
+Problem motivates the use of heuristics to tackle larger instances, as it was done in this thesis.
+Related Work
+Hierarchical Network Design Problem
+Current introduces the basic Hierarchical Network Design Problem (HNDP) in [5]. It consists of
+primary nodes building a primary path that from a start- to an end-node. The other nodes are the
+secondary nodes that have to be connected to the primary nodes via secondary paths. The total
+cost is the cost of the primary path plus the sum of costs of all secondary paths. The objective is
+to minimize the total cost. The paper contains an ILP formulation and a heuristic approach. The
+heuristic calculates the M shortest paths between the start- and the end-node and then calculates
+an MST for each of them and takes the minimum of the M solutions.</p>
+      <p>Multi-level Network Design Problem
+In [1] the Multi-level Network Design (MLND) problem is introduced. It is a generalization
+of the Hierarchical Network Design (HNDP) problem, where K levels are used to describe the
+importance of nodes. If two levels are used then this is called the Two-level Network Design
+(TLND) problem. The generalization of the HNDP is that the primary layer can consist of more
+than exactly two designated nodes. An ILP formulation based on steiner trees and one based on
+multicommodity flow are provided.</p>
+      <p>Aspects of Network Design
+Klincewicz [12] investigates various aspects of network design, like the cost, capacity, reliability,
+performance and demand pattern of networks. The cost can be important for hubs (nodes) and
+links either for creating or for using them. Also for both of them capacity constraints can apply.
+Reliability can be improved by multi-homing or by the more general approach that multiple
+paths between nodes are available for rerouting. The performance measures if enough networks
+resources are available for a given demand, e.g., if enough capacity is available along some path.
+Demand patterns describe the needed communication between the nodes, for example
+many-tomany or many-to-one node relations. The paper also gives a good survey about combinations of
+network structures between backbone (primary) and tributionary (secondary) topologies.
+Survivable Networks with Bounded Rings
+Fortz uses in this phd thesis [8] bounded rings for the reliability of networks. The resulting
+network has to be connected. A branch-and-cut approach and various heuristics are used to find
+the rings.</p>
+      <p>Some of the heuristics are shortly explained below (the names of the heuristics are from the
+original thesis):
+Ear-inserting method</p>
+      <p>Cutting cycles into two equal parts
+A solution should be found where the bound constraint is relaxed. This may lead to a
+Hamiltonian cycle. Later a cycle, where the bound is violated, is split into two parts and edges are added
+at the splitting points to get two cycles. This procedure is repeated recursively, until the bound
+constraints are fulfilled.</p>
+      <p>Path following method
+At first a Hamiltonian cycle is created. Next the algorithm follows this tour (starting at some
+arbitrary point in some arbitrary direction) as long as the bound constraint is satisfied. Then an
+edge back to the starting point is added to close the cycle and the next point (following the tour)
+becomes the new starting point. This procedure is repeated until the first starting point is reached
+again.</p>
+      <sec id="sec-10-1">
+        <title>Stringy method</title>
+        <p>
+          The noticeable feature of this method is that it starts with all edges and removes edges
+systematically. The crucial criterion for removing an edge is that the graph stays 2-connected after the
+removal.
+Hierarchical Network Topologies
+Thomadsen’s phd thesis [
+          <xref ref-type="bibr" rid="ref7">18</xref>
+          ] focuses on hierarchical network topologies. Many properties are
+described as ILP formulations. A chapter about ring structures is provided. The thesis contains a
+formulation of the Fixed Charge Network Design (FCND) problem. It involves demand between
+nodes, edge costs and the cost to use edges (satisfy demand).
+        </p>
+        <p>
+          Ring-chain Dual Homing
+Lee [
+          <xref ref-type="bibr" rid="ref4">15</xref>
+          ] describes Self Healing Rings (SHR) in the context of the Ring-chain Dual Homing
+(RCDH) problem. An SHR is a cycle of network nodes that can reroute the traffic in case of a
+node failure. A chain is a path of nodes that is linked (homed) to distinct hub nodes on the SHR
+at each chain end.
+25000
+20000
+s
+s 15000
+t
+o
+c
+10000
+5000
+        </p>
+        <p>0
+)
+s
+d
+n
+o
+c
+e
+s
+(
+g
+o
+l
+10000
+1000
+100
+10
+1
+0.1</p>
+        <p>Girvan-Newman</p>
+        <p>Kernighan-Lin
+t
+e
+s
+t
+_
+3
+4
+_
+4
+_
+1
+0
+_
+2
+0
+t
+e
+s
+t
+_
+3
+4
+_
+4
+_
+1
+0
+_
+2
+0
+t
+e
+s
+t
+_
+3
+8
+_
+5
+_
+1
+0
+_
+2
+3
+t
+e
+s
+t
+_
+3
+8
+_
+5
+_
+1
+0
+_
+2
+3
+t
+e
+s
+t
+_
+4
+3
+_
+5
+_
+1
+2
+_
+2
+6
+t
+e
+s
+t
+_
+4
+3
+_
+5
+_
+1
+2
+_
+2
+6
+t
+e
+s
+t
+_
+4
+5
+_
+3
+_
+1
+4
+_
+2
+8
+t
+e
+s
+t
+_
+4
+5
+_
+3
+_
+1
+4
+_
+2
+8
+t
+e
+s
+t
+_
+4
+9
+_
+4
+_
+1
+2
+_
+3
+3
+t
+e
+s
+t
+_
+4
+9
+_
+4
+_
+1
+2
+_
+3
+3
+t
+e
+s
+t
+_
+7
+2
+_
+6
+_
+2
+2
+_
+4
+4
+t
+e
+s
+t
+_
+7
+2
+_
+6
+_
+2
+2
+_
+4
+4
+t
+e
+s
+t
+_
+8
+8
+_
+6
+_
+2
+0
+_
+6
+2
+t
+e
+s
+t
+_
+8
+8
+_
+6
+_
+2
+0
+_
+6
+2
+t
+e
+s
+t
+_
+9
+1
+_
+6
+_
+2
+0
+_
+6
+5
+t
+e
+s
+t
+_
+9
+1
+_
+6
+_
+2
+0
+_
+6
+5
+t
+e
+s
+t
+_
+9
+5
+_
+5
+_
+3
+0
+_
+6
+0
+t
+e
+s
+t
+_
+9
+5
+_
+5
+_
+3
+0
+_
+6
+0
+t
+e
+s
+t
+_
+9
+6
+_
+7
+_
+2
+1
+_
+6
+8
+t
+e
+s
+t
+_
+9
+6
+_
+7
+_
+2
+1
+_
+6
+8
+t
+e
+s
+t
+_
+1
+5
+1
+_
+1
+0
+_
+4
+2
+_
+9
+9
+t
+e
+s
+t
+_
+1
+5
+1
+_
+1
+0
+_
+4
+2
+_
+9
+9
+t
+e
+s
+t
+_
+1
+6
+2
+_
+8
+_
+4
+0
+_
+1
+1
+4
+t
+e
+s
+t
+_
+1
+6
+2
+_
+8
+_
+4
+0
+_
+1
+1
+4
+t
+e
+s
+t
+_
+4
+7
+2
+_
+1
+2
+_
+8
+4
+_
+3
+7
+6
+t
+e
+s
+t
+_
+4
+7
+2
+_
+1
+2
+_
+8
+4
+_
+3
+7
+6
+t
+e
+s
+t
+_
+4
+9
+3
+_
+1
+3
+_
+8
+6
+_
+3
+9
+4
+t
+e
+s
+t
+_
+4
+9
+3
+_
+1
+3
+_
+8
+6
+_
+3
+9
+4
+t
+e
+s
+t
+_
+4
+9
+4
+_
+1
+6
+_
+8
+9
+_
+3
+8
+9
+t
+e
+s
+t
+_
+4
+9
+4
+_
+1
+6
+_
+8
+9
+_
+3
+8
+9
+t
+e
+s
+t
+_
+1
+6
+6
+_
+1
+0
+_
+4
+2
+_
+1
+1
+4
+t
+e
+s
+t
+_
+1
+6
+6
+_
+1
+0
+_
+4
+2
+_
+1
+1
+4
+t
+e
+s
+t
+_
+1
+7
+0
+_
+9
+_
+3
+8
+_
+1
+2
+3
+t
+e
+s
+t
+_
+1
+7
+0
+_
+9
+_
+3
+8
+_
+1
+2
+3
+t
+e
+s
+t
+_
+1
+8
+2
+_
+8
+_
+4
+5
+_
+1
+2
+9
+t
+e
+s
+t
+_
+1
+8
+2
+_
+8
+_
+4
+5
+_
+1
+2
+9
+t
+e
+s
+t
+_
+4
+0
+7
+_
+1
+4
+_
+9
+5
+_
+2
+9
+8
+t
+e
+s
+t
+_
+4
+0
+7
+_
+1
+4
+_
+9
+5
+_
+2
+9
+8
+t
+e
+s
+t
+_
+4
+4
+1
+_
+1
+7
+_
+8
+9
+_
+3
+3
+5
+t
+e
+s
+t
+_
+4
+4
+1
+_
+1
+7
+_
+8
+9
+_
+3
+3
+5</p>
+        <p>Average Time per Input Instance (logarithmic scale)
+0.04
+0.02</p>
+        <p>Girvan-Newman</p>
+        <p>Kernighan-Lin
+much the optimization step could improve the solution.</p>
+        <p>The cost reduction that could be achieved by the improvement heuristics is shown in
+proved most, altough the total cost was higher than the total cost of other algorithms. The costs
+before and after the optimization were tested with the student t-test at a significance level of
+5% (see Table 6.3 and Table 6.4). The relative performance of the clustering techniques is the
+same before and after the optimization. But it can also be seen from the statistical tests, that the
+difference between Girvan-Newman and Kernighan-Lin is smaller after the optimization so that
+the total costs are more similar.</p>
+        <p>Girvan-Newman</p>
+        <p>Kernighan-Lin</p>
+        <p>K-means</p>
+        <p>Average Invalid Nodes per Input Instance
+5.3 TSPLIB-based Test Instances
+A valid solution for the TSPLIB-based test instances could not be found in all cases. Here the
+student t-tests were omitted, because for some instances too few valid solutions were available to
+compare all the clustering heuristics. For each instance at least one of the clustering techniques
+lead to a valid solution. In Figure 5.5 the average number of nodes that could not be assigned to
+rings can be seen. For most test instances only few nodes could not be assigned to rings.</p>
+      </sec>
+    </sec>
+    <sec id="sec-11">
+      <title>The average cost per instance can be seen in Figure 5.6.</title>
+    </sec>
+    <sec id="sec-12">
+      <title>Missing bars indicate that the</title>
+      <p>corresponding clustering algorithm could not even find a valid solution in 1 of the 30 test runs
+performed. Since some instances have very low total costs, an appropriate scaled view of those
+instances can be seen in Figure 5.7.</p>
+      <p>Average Cost per Input Instance</p>
+      <p>Girvan-Newman</p>
+      <p>Kernighan-Lin
+300000 K-means
+s
+t
+s
+o
+c
+250000
+200000
+150000
+100000
+50000</p>
+      <p>0</p>
+      <p>Average Cost per Input Instance
+0.1</p>
+      <p>Girvan-Newman</p>
+      <p>The time overview (see Figure 5.3) shows that the instances, where valid solutions were
+found, could be solved fast. Most of the smaller instances could be solved in less than 1 second.</p>
+      <p>The improvement gained by the local search (see Figure 5.9) is for most instances higher
+than the gain achieved for the random instances. In this case Kernighan-Lin cannot benefit as
+much from the improvement as it is the case with the random instances.
+0.2</p>
+      <p>Girvan-Newman
+0.18 Kernighan-Lin</p>
+      <p>K-means
+0.16
+d 0.14
+e
+n
+i
+0
+much the optimization step could improve the solution.</p>
+      <p>Summary and Future Work
+Using heuristics for finding hierarchical ring structures on non-complete graphs is a difficult
+task. In this thesis heuristic approaches for solving the Hierarchical Ring Network Problem
+were investigated. A formal definition for this problem was given. Some related work was
+explained too.</p>
+      <p>Clustering heuristics were implemented to get a hierachical structure of the input instances.
+This hierarchy was an important basis for the subsequent solution heuristics.</p>
+      <p>For clustering three algorithms were implemented, the Girvan-Newman algorithm, K-means
+and Kernighan-Lin clustering. K-means and Kernighan-Lin had to be adopted to get a
+hierarchical structure, because the original algorithms would have created only a single clustering layer.</p>
+    </sec>
+    <sec id="sec-13">
+      <title>The result of this process was represented as a dendrogram.</title>
+      <p>Next three heuristics were implemented to form rings out of the nodes, according to the
+constraints. The Variate Ringsize Heuristic uses the hierarchy (from the previous clustering
+step) to find find rings within clusters. The clusters are chosen to match a variating ringsize
+constraint. More precisely, the variation takes place between 2 and the maximum bound bku.
+The second heuristic uses depth first search (DFS) to find chains that can be attached to existing
+rings. This heuristic has shown to be inefficient in some cases in terms of performance. This
+gives room for improvements in future work. A third heuristic was implemented that tries to add
+single remaining nodes to rings, that could not be used in the first two heuristics. That heuristic
+is simple, but also necessary, because some instances could only be completely solved with the
+help of this heuristic.</p>
+      <p>As a last step local improvement heuristics were applied. 2-Opt was worth applying, altough
+not all instances could be improved by this post optimization. Merging rings was an important
+improvement, since many rings of small size were found. Accepting small rings was crucial to
+find solutions at all, but reduced the probability to find valid rings in the third layer. By merging
+rings this disadvantage could be lifted.</p>
+      <p>Using hierarchical clustering for network design is a noteworthy approach. Considering it
+for more applications would be worth the effort. Moreover, it would be interesting to adopt and
+apply the algorithms designed for this thesis to related problems.</p>
+      <p>In the case of the Hierarchical Ring Network Problem more clustering heuristics could be
+investigated. For some clustering candidates see [21]. There is still room for improvements
+for finding rings with support of cluster hierarchies. One could consider centrality measures
+like modularity to find good subclusters. Metaheuristics like the Variable Neighborhood Search
+(VNS) or Greedy Randomized Adaptive Search Procedures (GRASP) may enhance the generic
+solution algorithm. Clever use of clustering techniques can speed up heuristics for finding rings
+and improve the solutions.
+Appendix
+Input Data Format Description
+As an input format the Graph Modelling Language (GML) is used. A detailed description of the
+format can be found at the website 1.</p>
+      <p>The format is text based and has a tree structure. It is recursively defined as a list of key/value
+pairs where the key is an identifier and the value can be of type integer, real, string or list(!),
+where a list has to be enclosed in square brackets.</p>
+      <p>A graph starts with the key graph and a list as value. This value (i.e. the list) contains
+node properties which must have an id property of type integer. A graph might also contain
+edges, that can have an id property and additionally a source and a target property that
+reference the id-values of previously defined nodes.</p>
+      <p>In this thesis nodes will have two additional properties. First the coordinates have to be
+specified with x and y properties within a graphics and a center property. The graphics
+property is often found in GML files as an information for the graphical representation. Here
+it is also needed to calculate distances. The center property is a way of expressing that the
+coordinate stands for the center of the node (and not for example for the upper left corner). The
+second additonal property layer specifies the layer every node belongs to. It can have a value
+between 0 and 2 which stands for the layer 1 to 3, resp. The edges do not require any additional
+properties.</p>
+      <p>Example file:
+graph [
+node [
+id 0
+graphics [</p>
+      <p>center [
+]
+layer 0
+1http://www.fim.uni-passau.de/fileadmin/files/lehrstuhl/brandenburg/
+projekte/gml/gml-technical-report.pdf
+edge [
+id 1
+graphics [</p>
+      <p>center [
+]
+layer 1
+id 1
+source 0
+target 1
+Additional Techniques
+Loop Transformation
+In imperative programming languages loops are usually written in iterative form, with the
+statements the language provides, like while, do while or for. Due to the fact that the
+algorithms used for this thesis use backtracking, this approach is often problematic, because one
+usually has to provide methods to undo the operations done so far.</p>
+      <p>Therefore, it is proposed to use recursive variants of loops. In each step only one iteration is
+done, so that the backtracking can be implemented much easier.</p>
+      <p>In the following a typical while-loop is considered to be implemented recursively:</p>
+    </sec>
+    <sec id="sec-14">
+      <title>The while statement has the form</title>
+      <p>while ( Expression ) Statement</p>
+      <p>Unwinding it one time would lead to the following structure:
+if ( Expression ) {</p>
+      <p>Statement
+while ( Expression ) Statement</p>
+      <p>To get recursion, some function is needed. Therefore, the loop is (without restriction)
+contained in a method:
+function iterative() {
+while ( Expression ) Statement</p>
+    </sec>
+    <sec id="sec-15">
+      <title>This can now be written as a recursive function:</title>
+      <p>In practice additional context has to be provided by method parameters and also additional
+statements occur. Both should not impose problems on this transformation.</p>
+      <p>Distinct Pairs Iterator
+Combinatorial enumeration of distinct pairs over a set or sequence is a task that is often needed.
+To avoid mistakes a simple skeleton code is provided in Algorithm 6.1.</p>
+      <p>Algorithm 6.1: Iterating over all distinct pairs of nodes in the list.</p>
+      <p>input : The list of input elements list.
+1 for i 1 to jlistj 1 do
+2 for j i + 1 to jlistj do
+3 do something with distinct index pair (i; j), where the pair of elements is
+(list[i]; list[j]);
+4
+5 end
+end
+Test Result Tables
+(a) Generated random test instances.
+Results from the Random Instances
+Table 6.2: The average number of invalid nodes per instance and their standard deviation are
+shown in this table. For Girvan-Newman and Kernighan-Lin all instances could be solved.</p>
+      <p>Girvan-Newman
+mean dev</p>
+      <p>Kernighan-Lin
+mean dev
+instance
+jV j
+jEj</p>
+      <p>Girvan-Newman
+mean dev
+jV j
+jEj
+pA
+&lt;
+&lt;
+&lt;
+&lt;
+&gt;
+&lt;
+&lt;
+&lt;
+&lt;
+&lt;
+&lt;
+&lt;
+&lt;
+&lt;
+&lt;
+&lt;
+&lt;
+pB
+&gt;
+&gt;
+&gt;
+&gt;
+&gt;
+&gt;
+&gt;
+&gt;
+&gt;
+&gt;
+&gt;
+&gt;
+mean
+dev
+pC
+&gt;
+&lt;
+&lt;
+&gt;
+&gt;
+&lt;
+&gt;
+&gt;
+&gt;
+&lt;
+&lt;
+&gt;
+&lt;
+&lt;
+&lt;</p>
+      <p>Girvan-Newman
+mean dev</p>
+      <p>Kernighan-Lin
+mean dev
+jV j
+jEj
+pA
+&lt;
+&gt;
+&gt;
+&lt;
+&lt;
+&lt;
+&lt;
+&lt;
+&gt;
+&lt;
+&lt;
+&lt;
+&lt;
+&lt;
+&lt;
+pB
+&gt;
+&gt;
+&gt;
+&gt;
+&gt;
+&gt;
+&gt;
+&gt;
+&gt;
+&gt;
+&gt;
+&gt;
+mean
+dev
+pC
+&gt;
+&lt;
+&gt;
+&lt;
+&gt;
+&gt;
+&lt;
+&gt;
+&gt;
+&gt;
+&lt;
+&lt;
+&gt;
+&lt;
+&lt;
+&lt;
+jV j
+jEj
+mean
+dev
+Results from the TSPLIB-based Instances
+Table 6.6: The average number of invalid nodes per instance and their standard deviation are
+shown in this table.</p>
+      <p>Girvan-Newman
+mean dev</p>
+      <p>Kernighan-Lin
+mean dev
+instance
+jV j
+jEj
+instance
+jV j
+jEj</p>
+      <p>Girvan-Newman
+mean dev</p>
+      <p>Kernighan-Lin
+mean dev
+mean
+dev
+instance
+jV j
+jEj</p>
+      <p>Girvan-Newman
+mean dev</p>
+      <p>Kernighan-Lin
+mean dev
+mean
+dev
+instance
+jV j
+jEj</p>
+      <p>Girvan-Newman
+mean dev</p>
+      <p>Kernighan-Lin
+mean dev
+mean
+dev
+[1]</p>
+      <p>A. Balakrishnan, T. L. Magnanti, and P. Mirchandani. The multi-level network design
+problem. Working papers 3366-91., Massachusetts Institute of Technology (MIT), Sloan</p>
+    </sec>
+    <sec id="sec-16">
+      <title>School of Management, 1991.</title>
+      <p>[2] J. Bentley and B. Floyd. Programming pearls: a sample of brilliance. Communications
+ACM, 30:754–757, 1987.</p>
+      <p>D. Bertsimas and R. Weismantel. Optimization over Integers. Dynamic Ideas, 1st edition,
+2005.</p>
+      <p>U. Brandes. A faster algorithm for betweenness centrality. Journal of Mathematical
+Sociology, 25:163–177, 2001.
+[5] J. R. Current, C. S. ReVelle, and J. L. Cohon. The hierarchical network design problem.</p>
+      <p>European Journal of Operational Research, 27(1):57–66, 1986.</p>
+      <p>D. Easley and J. Kleinberg. Networks, Crowds, and Markets: Reasoning About a Highly</p>
+    </sec>
+    <sec id="sec-17">
+      <title>Connected World. Cambridge University Press, 2010.</title>
+      <p>[3]
+[7] C. T. Fan, M. E. Muller, and I. Rezucha. Development of sampling plans by using
+sequential (item by item) selection techniques and digital computers. Journal of the American
+Statistical Association, 57:387–402, 1962.
+[8] B. Fortz. Design of Survivable Networks with Bounded Rings. PhD thesis, Universite libre
+de Bruxelles, 2000.
+[9]</p>
+      <p>M. Girvan and M. E. J. Newman. Community structure in social and biological networks.</p>
+      <p>Proceedings of the National Academy of Science, 99:7821–7826, 2002.
+[10] T. G. Jones. A note on sampling a tape-file. Communications ACM, 5:343, 1962.
+[11] B. W. Kernighan and S. Lin. An Efficient Heuristic Procedure for Partitioning Graphs. The</p>
+      <p>Bell system technical journal, 49(1):291–307, 1970.
+[12] J. G. Klincewicz. Hub location in backbone/tributary network design: a review. Location
+Science, 6(1-4):307 – 335, 1998.</p>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <ref id="ref1">
+        <mixed-citation>
+          44 58 l.t.-sssys22p3eu10 .tt.
+          <source>t-s41p084a li..t-s41p015e li..t-s5p5115e ilt..-rsp241en5b0 lit.</source>
+          .
+          <article-title>-rsp251ne5b5 il</article-title>
+          ..
+          <source>t-s52p067e li..t-s72p567e ..t-rs52p069g ..t-rs72p569g ..t-rs83p069g t..-rsk0p052o10A .t.-rsk0p027o15A .t.-rsk0p038o10A .t.-rsk0p025o10B .t.-rsk00p27o15B .t.-rsk00p38o10B it.</source>
+          .
+          <article-title>-rsp7835e12b it</article-title>
+          ..-rsp7041e12b0 .t.-scp835h150
+          <string-name>
+            <surname>t.</surname>
+          </string-name>
+          .-scp140h1500
+          <string-name>
+            <surname>t.</surname>
+          </string-name>
+          .
+          <source>-scp142h1505 .t.-rsk00p8o235A .t.r-sk00p01o24A .t.r-sk00p21o24A .t.-rsk00p8o253B .t.r-sk00p1o204B .t.r-sk002p1o24B .t</source>
+          .-rsp198229p0
+          <string-name>
+            <surname>t.</surname>
+          </string-name>
+          .-rsp118243g0
+          <string-name>
+            <surname>t.</surname>
+          </string-name>
+          .
+          <source>-rsp918243p0 0 5 0 5</source>
+        </mixed-citation>
+      </ref>
+      <ref id="ref2">
+        <mixed-citation>
+          [13]
+          <string-name>
+            <given-names>G.</given-names>
+            <surname>Laporte</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>I. R.</given-names>
+            <surname>Martín</surname>
+          </string-name>
+          .
+          <article-title>Locating a cycle in a transportation or a telecommunications network</article-title>
+          .
+          <source>Networks</source>
+          ,
+          <volume>50</volume>
+          :
+          <fpage>92</fpage>
+          -
+          <lpage>108</lpage>
+          ,
+          <year>2007</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref3">
+        <mixed-citation>
+          [14]
+          <string-name>
+            <given-names>E. L.</given-names>
+            <surname>Lawler</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>J. K.</given-names>
+            <surname>Lenstra</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>A. H. G. R.</given-names>
+            <surname>Kan</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>D. B.</given-names>
+            <surname>Shmoys</surname>
+          </string-name>
+          .
+          <article-title>The Traveling Salesman Problem: A Guided Tour of Combinatorial Optimization</article-title>
+          . Wiley, New York,
+          <year>1985</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref4">
+        <mixed-citation>
+          [15]
+          <string-name>
+            <given-names>C. Y.</given-names>
+            <surname>Lee</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>S. J.</given-names>
+            <surname>Koh</surname>
+          </string-name>
+          .
+          <article-title>A design of the minimum cost ring-chain network with dualhoming survivability: A tabu search approach</article-title>
+          .
+          <source>Computers &amp; Operations Research</source>
+          ,
+          <volume>24</volume>
+          (
+          <issue>9</issue>
+          ):
+          <fpage>883</fpage>
+          -
+          <lpage>897</lpage>
+          ,
+          <year>1997</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref5">
+        <mixed-citation>
+          [16]
+          <string-name>
+            <given-names>S.</given-names>
+            <surname>Lin</surname>
+          </string-name>
+          and
+          <string-name>
+            <given-names>B. W.</given-names>
+            <surname>Kernighan</surname>
+          </string-name>
+          .
+          <article-title>An effective heuristic algorithm for the travelling-salesman problem</article-title>
+          .
+          <source>Operations Research</source>
+          ,
+          <volume>21</volume>
+          :
+          <fpage>498</fpage>
+          -
+          <lpage>516</lpage>
+          ,
+          <year>1973</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref6">
+        <mixed-citation>
+          [17]
+          <string-name>
+            <given-names>R.</given-names>
+            <surname>Salman</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>V.</given-names>
+            <surname>Kecman</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>Q.</given-names>
+            <surname>Li</surname>
+          </string-name>
+          ,
+          <string-name>
+            <given-names>R.</given-names>
+            <surname>Strack</surname>
+          </string-name>
+          , and
+          <string-name>
+            <given-names>E.</given-names>
+            <surname>Test</surname>
+          </string-name>
+          .
+          <article-title>Fast k-means algorithm clustering</article-title>
+          .
+          <source>CoRR, abs/1108.1351</source>
+          ,
+          <year>2011</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref7">
+        <mixed-citation>
+          [18]
+          <string-name>
+            <given-names>T.</given-names>
+            <surname>Thomadsen</surname>
+          </string-name>
+          . Hierarchical Network Design.
+          <source>PhD thesis</source>
+          , Technical University of Denmark,
+          <year>2005</year>
+          .
+        </mixed-citation>
+      </ref>
+      <ref id="ref8">
+        <mixed-citation>
+          [19]
+          <string-name>
+            <given-names>J. S.</given-names>
+            <surname>Vitter</surname>
+          </string-name>
+          .
+          <article-title>An efficient algorithm for sequential random sampling</article-title>
+          .
+          <source>In ACM Transactions Mathematical Software</source>
+          , volume
+          <volume>13</volume>
+          , pages
+          <fpage>58</fpage>
+          -
+          <lpage>67</lpage>
+          , New York, NY, USA,
+          <year>1987</year>
+          . ACM.
+        </mixed-citation>
+      </ref>
+      <ref id="ref9">
+        <mixed-citation>
+          [20]
+          <string-name>
+            <given-names>C.</given-names>
+            <surname>Walshaw</surname>
+          </string-name>
+          .
+          <article-title>Multilevel refinement for combinatorial optimisation problems</article-title>
+          .
+          <source>Annals of Operations Research</source>
+          ,
+          <volume>131</volume>
+          :
+          <fpage>325</fpage>
+          -
+          <lpage>372</lpage>
+          ,
+          <year>2004</year>
+          .
+        </mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>
