@@ -342,7 +342,7 @@ public abstract class SystemEvaluator
 				return new SimpleInformationResult(type, origPub, testPub, Publication::getDoi);
 
 			case SECTIONS:
-				//Sections which are Acknowledgements are ignored
+				// Sections which are Acknowledgements are ignored
 				return new ListInformationResult(type, origPub, testPub, Publication::getSections, Section::getTitle, s -> !s.getTitle().matches(Section.acknowledgementRegex));
 
 			case SECTION_LEVELS:
