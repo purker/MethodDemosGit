@@ -1,67 +1,19 @@
 headertokens not synchronized
 
-Idee: Evaluierung Properties eingeteilt nach endmodel von grobid
-Idee: tei files aus groundtruth erstellen -> nur andere richtung
 Warum in referencesegmenterparser einmal labels in extractwithgiven und in createtraining??
 Algorithmus der checkt ob durch figure getrennte sections zusammengefügt werden müssen, durch rechten textrand
 
-Year bei Grobid richten
-
-training daten erstellen readthedocs
 grobid thesis 4.2 weiterlesen
 Suffixe überprüfen und in grobid binding 
-Wapiti lernen und irgendwelche neuen Features hinzufügen bzw. verbessern
-
-
-\TODO{checken unterschied discriminative vs generative, see http://www.erdogan.org/publications/erdogan_icmla2010_tutorial_new.pdf}
 ------------------------------------
 Must:
+Year bei Grobid richten
 new features
-
-
+klassendiagram: weiter ab demos, static componenten checken
+\TODO{checken unterschied discriminative vs generative, see http://www.erdogan.org/publications/erdogan_icmla2010_tutorial_new.pdf}
+Wapiti lernen
+-----------------------------------------
 nice:
 crossfold
----------------------------------
-
-überprüfen warum MethodDemos/output/statistics/singlevalues/parscit-REFERENCE_PAGETO-reference-statistics.csv Werte dazugekommen sind
---------------------------------
-low bzw. kommt sowieso noch:
-klassendiagram weiter ab demos
-static check klassendiagramm
 micro und macro average berechnen
 -----------------------------------------------------------
-irgendwo aufschreiben:
-"," in affiliation müssen im <affiliation>-tag sein
-Acknowledgement wird ignoriert, bei extraktion und evaluierung 
-- in result files richtig als section aufgenommen
-- in worker aussortiert
-- in grobid.xml wird als eig <div type="acknowledgement"> extrahiert, aber nicht in grobid-xstream.xml übernommen
--------------------------------------------
-merken:
-tokenizations: alle tokens von doc.blocks gesammelt sind gleich wie doc.tokenizations, nur dass in doc.tokenizations keine doppelte \n\n nicht drin sind
-
-
-Done:
-- references evaluation wenn als passend erkannt
-- singleinforesult .evaluates implementieren, fehlermeldung wenn zugriff auf precision recall und noch uninitialisiert
-- Writer so machen, dass erst in konstruktor die fileextension ersetzt wird
-- Alle PDFs überprüfen ob Source, ... vollständig/angegeben
-- Alle sysouts auskommentieren in excel format, nur mit komma formatieren wenn komma enthalten
-- alles gemeinsame KeyStringInterface
-- Ids in ID ändern
-- (?) sonst überall integer mit methoden direkt auf publication und reference
-- sorter für SetResult (ws nur references?!)
-- überlegen welche Statistikfiles ich will, eins für publication eins für references oder einfach untereinander??? -> eins pro
-- falscher pfad in csv mit TUW-TUW-
-- formating in csv/excel ,00 fehlt
-- null checken und nix reinschreiben in all statistics
-- Überschriften vereinheitlichen einfach von einem File mit Verlinkung
-- 139761 wenn letzter et al author dann + in marker
-- Abgleich Markerstyles (liegt am Desktop): schauen welche ohne markerstyle sind, die ersetzen
-- marker vollständig setzen in groundtruth results
-- (von selbst behoben, vll durch version?) grobid refs: fast immer leer -> stark beheben
-- (von selbst behoben, vll durch version?) Segmentation von GrobId anhand von parscit anpassen
-- GrobidProperties.java: dort richtige version setzen bzw. was schreiben, dass es richtig setzt
-- herausfinden warum so viele res nicht gefüllt: BasicStructureBuilder.generalResultSegmentation verstehen was da passiert -> grobid Version in config und grodid Version vom eingestellten Projekt haben nicht übereingestimmt
-- Paper CRF/wapiti durchlesen (bis 2.2 verstanden)
-- f1 überprüfen (passt net bei allen) -> ist so weil nicht der berechnete F1 sondern der Average F1 aus F1-Werten
