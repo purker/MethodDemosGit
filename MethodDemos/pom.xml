@@ -21,8 +21,11 @@
 	<dependencies>
 		<!-- in Mavenordner von http://maven.icm.edu.pl/artifactory/repo/pl/edu/icm/cermine/cermine-tools/1.13-SNAPSHOT/ 
 			kopiert -->
-		<!-- <dependency> <groupId>pl.edu.icm.cermine</groupId> <artifactId>cermine-impl</artifactId> 
-			<version>1.13</version> </dependency> -->
+		<dependency>
+			<groupId>pl.edu.icm.cermine</groupId>
+			<artifactId>cermine-impl</artifactId>
+			<version>1.13</version>
+		</dependency>
 
 		<!-- <dependency> <groupId>org.grobid</groupId> <artifactId>grobid-core</artifactId>
 			<version>0.5.1</version> </dependency> -->
@@ -59,12 +62,13 @@
 			<version>8.7</version>
 		</dependency>
 
-		<!-- uses jitpack.io to use git repo of cermine -->
+		<!-- uses jitpack.io to use git repo of cermine ->
 		<dependency>
-			<groupId>pl.edu.icm.cermine</groupId>
+			<groupId>com.github.CeON.CERMINE</groupId>
 			<artifactId>cermine-impl</artifactId>
 			<version>1.13</version>
 		</dependency>
+		-->
 
 		<!-- https://mvnrepository.com/artifact/org.eclipse.persistence/org.eclipse.persistence.moxy -->
 		<dependency>
@@ -122,8 +126,8 @@
 			<version>5.0.8.RELEASE</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/com.google.guava/guava
-		for class ClassPath -->
+		<!-- https://mvnrepository.com/artifact/com.google.guava/guava for class 
+			ClassPath -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
@@ -137,12 +141,21 @@
 			<version>1.0.3</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/com.itextpdf/itextpdf -->
+		<!-- should be in cermine? -->
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.5.13</version>
+		</dependency>
+
+
 	</dependencies>
 	<repositories>
-		<repository>
+		<!-- <repository>
 			<id>jitpack.io</id>
 			<url>https://jitpack.io</url>
-		</repository>
+		</repository> -->
 
 		<!-- for grobid (http://grobid.readthedocs.io/en/latest/Grobid-java-library) -->
 		<repository>
@@ -152,6 +165,13 @@
 			<id>bintray-rookies-maven</id>
 			<name>bintray</name>
 			<url>https://dl.bintray.com/rookies/maven</url>
+		</repository>
+
+		<!-- for cermine (https://github.com/CeON/CERMINE) -->
+		<repository>
+			<id>icm</id>
+			<name>ICM repository</name>
+			<url>http://maven.icm.edu.pl/artifactory/repo</url>
 		</repository>
 	</repositories>
 	<!-- <scm> <connection>scm:git:git@github.com:CeON/CERMINE.git</connection> 

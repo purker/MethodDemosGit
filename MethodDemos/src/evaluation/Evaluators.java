@@ -28,6 +28,10 @@ import misc.DurationEnum;
 import misc.ExcelRefreshFormulas;
 import misc.XlsxToCsv;
 
+/**
+ * @author Martin
+ *
+ */
 public class Evaluators
 {
 	private static final boolean printCermineResults = false;
