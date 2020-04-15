@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import javax.xml.bind.JAXBException;
 
 import org.apache.commons.io.FileUtils;
+import org.grobid.core.utilities.StringUtil;
 
 import config.Config;
 import evaluation.Evaluators;
@@ -19,6 +20,7 @@ import mapping.pdfx.PDFXMapper;
 import misc.Duration;
 import misc.DurationEnum;
 import misc.SetDateAndGrobidVersion;
+import train.Training;
 import utils.FileCollectionUtil;
 
 /**
@@ -52,19 +54,20 @@ public class Demos
 		Duration.addStart(DurationEnum.ALL);
 
 		List<String> idList = Config.groundTruthIds;
-		// List<String> idList = Arrays.asList("139761");
+		// List<String> idList = Arrays.asList("228620");
 
 		boolean runDemos = true;
 		boolean runCermineDemo = false;
 		boolean runGrobidDemo = true;
 		boolean runParsCitDemo = false;
 		boolean runPdfxDemo = false;
-		boolean runCermineMapper = true;
+		boolean runCermineMapper = false;
 		boolean runGrobidMapper = true;
-		boolean runParsCitMapper = true;
-		boolean runPdfxMapper = true;
+		boolean runParsCitMapper = false;
+		boolean runPdfxMapper = false;
 
 		boolean startEvaluation = true;
+		String archiveDirName = "with heuristic"; // if not null -> directory with this name will be created in output/archive
 
 		// List<File> groundTruthFiles = FileCollectionUtil.getExtractedFilesByMethod(method)
 		List<File> groundTruthFiles = FileCollectionUtil.getAllGroundTruthFilesByIds(idList);
@@ -124,6 +127,8 @@ public class Demos
 		if(startEvaluation) Evaluators.main(null);
 
 		Duration.addEnd(DurationEnum.ALL);
+
+		if(StringUtil.isNotEmpty(archiveDirName)) Training.copyExtractedAndStatisticsToArchive(archiveDirName);
 	}
 
 	private static void cleanOrCreateDirectory(File outputDir) throws IOException

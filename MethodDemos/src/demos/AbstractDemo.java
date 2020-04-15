@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import config.Config;
 import method.Method;
@@ -52,7 +53,6 @@ public abstract class AbstractDemo
 				// Lambda Runnable
 				// Runnable task = () ->
 				{
-					String errorString;
 					try
 					{
 						if(!OVERRIDE_EXISTING && outputFile.exists())
@@ -60,9 +60,9 @@ public abstract class AbstractDemo
 							System.out.println("already exists: " + outputFile);
 							continue;
 						}
-						errorString = runDemoSingleFile(inputFile, outputFile);
-						// write result xml to outputfolder
-						if(errorString != null && !errorString.isEmpty())
+						// write extracted data to outputfolder
+						String errorString = runDemoSingleFile(inputFile, outputFile);
+						if(StringUtils.isNotEmpty(errorString))
 						{
 							FileUtils.writeStringToFile(errorFile, errorString, StandardCharsets.UTF_8);
 						}
@@ -143,8 +143,9 @@ public abstract class AbstractDemo
 	 * @param outputFile
 	 * @return null or error text if an exception occurs
 	 * @throws IOException
+	 * @throws Exception
 	 */
-	abstract String runDemoSingleFile(File inputFile, File outputFile) throws IOException;
+	abstract String runDemoSingleFile(File inputFile, File outputFile) throws Exception;
 
 	public void runDemoListWithinIdList(List<File> groundTruthFiles, File outputDir, List<String> idList) throws IOException
 	{

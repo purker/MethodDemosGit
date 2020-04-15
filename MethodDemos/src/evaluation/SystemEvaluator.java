@@ -98,7 +98,10 @@ public abstract class SystemEvaluator
 
 	public void evaluate(boolean printResults) throws IOException
 	{
+		System.out.println("Collecing Files Evaluation: " + getMethod());
 		this.iter = new PublicationIterator(getOriginalFiles(), getExtractedFiles());
+
+		System.out.println("Starting Evaluation: " + getMethod() + " (" + iter.size() + " files)");
 		evaluate(iter, printResults);
 	}
 
@@ -122,8 +125,6 @@ public abstract class SystemEvaluator
 	 */
 	public AbstractCollectionResult<?> evaluate(PublicationIterator files, boolean printResults) throws IOException
 	{
-		System.out.println("Starting Evaluation: " + getMethod() + " (" + iter.size() + " files)");
-
 		int i = 0;
 		for(PublicationPair pair : iter)
 		{
@@ -202,7 +203,8 @@ public abstract class SystemEvaluator
 
 	private AbstractSingleInformationResult<?> getResultFromReferenceType(EvalInformationType type, Reference reference, Reference reference2)
 	{
-		switch (type) {
+		switch(type)
+		{
 			case REFERENCE_ID:
 				return new SimpleInformationResult(type, reference, reference2, Reference::getIdString);
 			case REFERENCE_MARKER:
@@ -340,8 +342,8 @@ public abstract class SystemEvaluator
 				return new SimpleInformationResult(type, origPub, testPub, Publication::getDoi);
 
 			case SECTIONS:
-				//Sections which are Acknowledgements are ignored
-			return new ListInformationResult(type, origPub, testPub, Publication::getSections, Section::getTitle, s -> !s.getTitle().matches(Section.acknowledgementRegex));
+				// Sections which are Acknowledgements are ignored
+				return new ListInformationResult(type, origPub, testPub, Publication::getSections, Section::getTitle, s -> !s.getTitle().matches(Section.acknowledgementRegex));
 
 			case SECTION_LEVELS:
 				Set<StringRelation> headersOrig = new HashSet<>();
