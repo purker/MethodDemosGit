@@ -174,7 +174,7 @@ public class FileCollectionUtil
 		}
 		if(directory.list().length == 0)
 		{
-			throw new IllegalArgumentException("provided directory can't be empty: " + directory);
+			throw new IllegalArgumentException("provided directory contains no data: " + directory);
 		}
 
 	}

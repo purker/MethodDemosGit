@@ -98,7 +98,10 @@ public abstract class SystemEvaluator
 
 	public void evaluate(boolean printResults) throws IOException
 	{
+		System.out.println("Collecing Files Evaluation: " + getMethod());
 		this.iter = new PublicationIterator(getOriginalFiles(), getExtractedFiles());
+
+		System.out.println("Starting Evaluation: " + getMethod() + " (" + iter.size() + " files)");
 		evaluate(iter, printResults);
 	}
 

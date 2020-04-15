@@ -30,7 +30,7 @@ public class ParscitDemo extends AbstractDemo
 	}
 
 	@Override
-	String runDemoSingleFile(File inputFile, File outputFile) throws IOException
+	String runDemoSingleFile(File inputFile, File outputFile) throws Exception
 	{
 		// TODO if(outputFile.exists()) return null;
 		// execute cileExtract.pl command

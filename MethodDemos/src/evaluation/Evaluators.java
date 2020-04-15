@@ -28,6 +28,10 @@ import misc.DurationEnum;
 import misc.ExcelRefreshFormulas;
 import misc.XlsxToCsv;
 
+/**
+ * @author Martin
+ *
+ */
 public class Evaluators
 {
 	private static final boolean printCermineResults = false;
@@ -71,7 +75,7 @@ public class Evaluators
 		parscit.evaluate(printParscitResults);
 		pdfx.evaluate(printPdfxResults);
 
-		SystemEvaluator.printOverallStatistics(modes, cermine, grobid, parscit, pdfx);
+		// SystemEvaluator.printOverallStatistics(modes, cermine, grobid, parscit, pdfx);
 		System.out.println("Evaluation finished");
 
 		ExcelRefreshFormulas.refreshReferences();
