@@ -1,10 +1,7 @@
 package train;
 
-import java.awt.Toolkit;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -20,15 +17,12 @@ import org.grobid.core.IGrobidModel;
 import org.grobid.core.engines.Duration;
 import org.grobid.core.engines.DurationEnum;
 import org.grobid.core.engines.Engine;
-import org.grobid.core.engines.training.TrainingSteps;
 import org.grobid.core.jni.WapitiModel;
 import org.grobid.core.mock.MockContext;
 import org.grobid.core.utilities.GrobidProperties;
 import org.grobid.trainer.AbstractTrainer;
-import org.grobid.trainer.NameCitationTrainer;
 
 import config.Config;
-import demos.Demos;
 import demos.GrobidDemo;
 
 /**
@@ -129,6 +123,7 @@ public class Training
 		System.out.println(archiveStatistics);
 	}
 
+
 	/**
 	 * deletes all corpus/[tei|raw] directories
 	 */
@@ -190,7 +185,7 @@ public class Training
 		// DONE REFERENCES
 		// DONE trainers.add(new ReferenceSegmenterTrainer());
 		// DONE trainers.add(new CitationTrainer());
-		trainers.add(new NameCitationTrainer());
+		// DONE trainers.add(new NameCitationTrainer());
 
 		// models.add(new EbookTrainer());
 		// models.add(new ChemicalEntityTrainer());
@@ -349,6 +344,8 @@ public class Training
 	 */
 	public static void renameModels(String beforeString, String renameTo, boolean move) throws Exception
 	{
+		GrobidDemo.init(); //TODO necessary?
+
 		File directory = new File(GrobidProperties.get_GROBID_HOME_PATH(), GrobidProperties.FOLDER_NAME_MODELS);
 		Collection<File> files = FileUtils.listFiles(directory, new IOFileFilter()
 		{
@@ -356,11 +353,11 @@ public class Training
 			@Override
 			public boolean accept(File dir, String name)
 			{
-				// if(dir.getName().equals("table"))
-				// {
-				// return true;
-				// }
-				// else
+				//				if(dir.getName().equals("table"))
+				//				{
+				//					return true;
+				//				}
+				//				else
 				if(dir.getName().equals("all")) // folder in patent dir
 				{
 					return false;

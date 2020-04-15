@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 import javax.xml.bind.JAXBException;
 
 import org.apache.commons.io.FileUtils;
-import org.grobid.core.utilities.StringUtil;
 
 import config.Config;
 import evaluation.Evaluators;
@@ -20,7 +19,6 @@ import mapping.pdfx.PDFXMapper;
 import misc.Duration;
 import misc.DurationEnum;
 import misc.SetDateAndGrobidVersion;
-import train.Training;
 import utils.FileCollectionUtil;
 
 /**

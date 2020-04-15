@@ -1,13 +1,13 @@
 package utils;
 
+import org.apache.commons.io.IOUtils;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-
-import org.apache.commons.io.IOUtils;
 
 public class ExecUtil
 {
@@ -25,9 +25,38 @@ public class ExecUtil
 
 		ProcessBuilder pb = new ProcessBuilder(command);
 		if(workingDirectory != null) pb.directory(workingDirectory);
+		System.out.println(getRunnableCommand(pb));
 		p = pb.start();
 
 		return IOUtils.toString(p.getErrorStream(), StandardCharsets.UTF_8);
+	}
+
+	private static String getRunnableCommand(ProcessBuilder processBuilder)
+	{
+		List<String> commandsList = processBuilder.command();
+		StringBuilder runnableCommandBuilder = new StringBuilder();
+		int commandIndex = 0;
+		for (String command : commandsList)
+		{
+			if (command.contains(" "))
+			{
+				runnableCommandBuilder.append("\"");
+			}
+			runnableCommandBuilder.append(command);
+
+			if (command.contains(" "))
+			{
+				runnableCommandBuilder.append("\"");
+			}
+
+			if (commandIndex != commandsList.size() - 1)
+			{
+				runnableCommandBuilder.append(" ");
+			}
+
+			commandIndex++;
+		}
+		return runnableCommandBuilder.toString();
 	}
 
 	private void worksbutnotwitherroroutput(File workingDirectory, String command, String... addArguments)

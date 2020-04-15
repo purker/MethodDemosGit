@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
@@ -147,7 +148,8 @@ public class StepsHistory
 
 	public static void main(String[] args) throws Exception
 	{
-		printEncoding(FileCollectionUtil.getStatisticsCSVFiles());
+		//printMarkersOfReferences();
+		//printEncoding(FileCollectionUtil.getStatisticsCSVFiles());
 		// GrobidDemo.init();
 		// File file = new File("D:\\Java\\git\\grobid-0.4.4\\grobid-home\\models\\name\\citation\\model.wapiti");
 		// WapitiModel.dump(file);
@@ -360,7 +362,6 @@ public class StepsHistory
 			// (5)
 			detector.reset();
 		}
-
 	}
 
 	private static void setMarkersByReferenceStyleForAll() throws IOException
@@ -403,7 +404,63 @@ public class StepsHistory
 		{
 			System.out.println(markerStyle.getMarkerString(ref));
 		}
+	}
 
+	private static void printMarkersOfReferences() throws IOException {
+		for (File file : FileCollectionUtil.getResultFiles()) {
+			Publication publication = PublicationUtil.getPublicationFromFile(file);
+
+			AbstractMarkerStyle style = markerStyleMap.get(publication.getIdString());
+			if (style != null)
+				System.out.println(publication.getIdString() + "\t" + style.getClass().getSimpleName());
+			else
+				System.out.println(publication.getIdString());
+			for (Reference ref : publication.getReferences()) {
+
+				boolean result = false;
+				String resultPattern = null;
+				for (String pattern : getPatterns()) {
+					Pattern p = Pattern.compile(pattern);
+					Matcher matcher = p.matcher(ref.getMarker());
+					result = matcher.matches();
+					if (result) {
+						resultPattern = pattern;
+						break;
+					}
+				}
+				if (!result)
+					System.out.println("\t" + ref.getMarker() + "\t" + resultPattern);
+			}
+		}
+	}
+
+	private static List<String> getPatterns() {
+		List<String> pattern = new ArrayList<>();
+		pattern.add("[a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+[\\s][\\(][0-9]{4}[\\)][\\s]and[\\s][a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+[\\s][\\(][0-9]{4}[\\)]");
+		pattern.add("\\([a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+ & [a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+, [0-9]{4}[a-zA-Z]?\\)");
+		pattern.add("\\([a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+, [a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+, & [a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+, [0-9]{4}[a-zA-Z]?\\)");
+		pattern.add("\\([a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+, [a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+, [a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+, & [a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+, [0-9]{4}[a-zA-Z]?\\)");
+		pattern.add("0");
+		pattern.add("[0-9]+.");
+		pattern.add("[a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+ \\([0-9]{4}[a-zA-Z]?\\)");
+		pattern.add("[a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+, and [a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+ \\([0-9]{4}[a-zA-Z]?\\)");
+		pattern.add("[a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+, [a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+, and [a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+ \\([0-9]{4}[a-zA-Z]?\\)");
+		pattern.add("[a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+ \\[[0-9]{4}[a-zA-Z]?\\]");
+		pattern.add("[a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+ and [a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+ \\[[0-9]{4}[a-zA-Z]?\\]");
+		pattern.add("[a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+ et al. \\[[0-9]{4}[a-zA-Z]?\\]");
+		pattern.add("[0-9]");
+		pattern.add("\\[[0-9]+\\]");
+		pattern.add("\\[[a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+[\\+]?[0-9]*[a-zA-Z]?\\]");
+		pattern.add("\\[[a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+[0-9]{4}[a-zA-Z]?\\]");
+		pattern.add("\\([a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+[,]? [0-9]{4}[a-zA-Z]?\\)");
+		pattern.add("\\([a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+ and [a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+[,]? [0-9]{4}[a-zA-Z]?\\)");
+		pattern.add("\\([a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+[,]? [a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+[,]? and [a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+ [0-9]{4}[a-zA-Z]?\\)");
+		pattern.add("\\([a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+ et al.[,]? [0-9]{4}[a-zA-Z]?\\)");
+		pattern.add("\\[[a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+[,]? [0-9]{4}[a-zA-Z]?\\]");
+		pattern.add("\\[[a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+ and [a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+[,]? [0-9]{4}[a-zA-Z]?\\]");
+		pattern.add("\\[[a-zA-Z0-9\\p{L}- \\.\\(\\)\\/]+ et al.[,]? [0-9]{4}[a-zA-Z]?\\]");
+
+		return pattern;
 	}
 
 	private static void printEmptyMarkerPublications()
@@ -469,7 +526,6 @@ public class StepsHistory
 				break;
 			}
 		}
-
 	}
 
 	private static void searchNotEmpty(List<File> files, EvalInformationType source)
@@ -486,7 +542,6 @@ public class StepsHistory
 			{
 				System.out.println(publication.getId());
 			}
-
 		}
 	}
 
@@ -507,7 +562,6 @@ public class StepsHistory
 
 			XStreamUtil.convertToXml(publication, file, System.out, true);
 		}
-
 	}
 
 	private static void printNotes()
@@ -558,7 +612,6 @@ public class StepsHistory
 					}
 				}
 			}
-
 		}
 	}
 
@@ -578,7 +631,6 @@ public class StepsHistory
 					System.out.println(reference.getPublicationYearSuffix());
 				}
 			}
-
 		}
 	}
 
@@ -615,7 +667,6 @@ public class StepsHistory
 			file = new File(Config.groundTruth, FileNameUtil.getPublicationDbFileNameFromID(pubId));
 			if(!file.exists()) System.out.println("Exists: " + file.exists() + " " + file);
 		}
-
 	}
 
 	private static void checkAllGroundTruthAreInIdList()
@@ -633,7 +684,6 @@ public class StepsHistory
 
 			System.out.println(pubId + ": " + idList.contains(pubId));
 		}
-
 	}
 
 	private static void findNotProcessedPDFXFiles(File pdfxOutputDir) throws IOException
@@ -646,7 +696,6 @@ public class StepsHistory
 				System.out.println(PublicationUtil.getIdFromFile(file));
 			}
 		}
-
 	}
 
 	private static Collection<File> getNotAlreadyDone(File file)
@@ -674,13 +723,11 @@ public class StepsHistory
 			String group = m.group(1);
 			// System.out.println(group);
 			refs.addAll(Arrays.asList(group.split("; ")));
-
 		}
 		for(String string2 : refs)
 		{
 			System.out.println(string2);
 		}
-
 	}
 
 	private static void setAffiliationId(File directory, int i)
@@ -725,7 +772,6 @@ public class StepsHistory
 				break;
 			}
 		}
-
 	}
 
 	private static void checkAuthorAffiliationsEqualPublicationAffiliations(File directory)
@@ -885,9 +931,7 @@ public class StepsHistory
 						Desktop.getDesktop().open(file);
 						return;
 					}
-
 				}
-
 			}
 			catch(Exception e)
 			{
@@ -896,7 +940,6 @@ public class StepsHistory
 				break;
 			}
 		}
-
 	}
 
 	/**
@@ -932,7 +975,6 @@ public class StepsHistory
 				break;
 			}
 		}
-
 	}
 
 	private static void checkDateStrings(File directory)
@@ -1042,7 +1084,6 @@ public class StepsHistory
 			}
 		}
 		return sb.toString();
-
 	}
 
 	private static void changeSourceToTitle(File file)
@@ -1140,7 +1181,6 @@ public class StepsHistory
 		}
 
 		XStreamUtil.convertToXml(publication, file, System.out, true);
-
 	}
 
 	private static void setReferenceAuthorToCamelcase(File file)
@@ -1154,12 +1194,10 @@ public class StepsHistory
 				String lastName = CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, author.getLastName());
 				author.setLastName(lastName);
 				System.out.println(lastName);
-
 			}
 		}
 
 		XStreamUtil.convertToXml(publication, file, System.out, true);
-
 	}
 
 	private static void setRefId(File file)
@@ -1173,7 +1211,6 @@ public class StepsHistory
 		}
 
 		XStreamUtil.convertToXml(publication, file, System.out, true);
-
 	}
 
 	/*
@@ -1215,7 +1252,6 @@ public class StepsHistory
 			e.printStackTrace();
 			return;
 		}
-
 	}
 
 	private static void setSectionReferenceIdsFromReferenceIdsAsMarkers(File file)
@@ -1244,7 +1280,6 @@ public class StepsHistory
 		}
 
 		XStreamUtil.convertToXml(publication, file, System.err, true);
-
 	}
 
 	private static Map<String, Reference> getReferenceMap(Publication publication)
@@ -1327,7 +1362,6 @@ public class StepsHistory
 		}
 
 		XStreamUtil.convertToXml(publication, file, System.err, true);
-
 	}
 
 	/**
@@ -1352,9 +1386,7 @@ public class StepsHistory
 						author.getFirstNames().clear();
 						author.getFirstNames().addAll(Arrays.asList(s.split(" ")));
 					}
-
 				}
-
 			}
 		}
 		XStreamUtil.convertToXml(publication, file, System.err, true);
@@ -1392,9 +1424,7 @@ public class StepsHistory
 							}
 						}
 					}
-
 				}
-
 			}
 		}
 		XStreamUtil.convertToXml(publication, file, System.err, true);
@@ -1569,12 +1599,10 @@ public class StepsHistory
 						reference.getAuthors().remove(authorCount - 1);
 					}
 				}
-
 			}
 		}
 
 		XStreamUtil.convertToXml(publication, file, System.out, true);
-
 	}
 
 	/**
@@ -1653,12 +1681,10 @@ public class StepsHistory
 						reference.getAuthors().remove(authorCount - 1);
 					}
 				}
-
 			}
 		}
 
 		XStreamUtil.convertToXml(publication, file, System.out, true);
-
 	}
 
 	private static void setSectionReferenceIdsFromReferenceCitationKeys(File file)
@@ -1675,7 +1701,6 @@ public class StepsHistory
 		}
 
 		XStreamUtil.convertToXml(publication, file, System.out, true);
-
 	}
 
 	private static void changeSectionReferenceIdsToReferenceCitationsFileWithMarker(File file)
@@ -1728,7 +1753,6 @@ public class StepsHistory
 			e.printStackTrace();
 			return;
 		}
-
 	}
 
 	private static void changeSectionReferenceIdsToIdsWithMarker(File file)
@@ -1787,7 +1811,6 @@ public class StepsHistory
 			e.printStackTrace();
 			return;
 		}
-
 	}
 
 	private static void printResultFiles(File directory)
@@ -1796,7 +1819,6 @@ public class StepsHistory
 		{
 			System.out.println(file);
 		}
-
 	}
 
 	private static void printReferencesAuthorCount(Publication publication)
@@ -1834,9 +1856,7 @@ public class StepsHistory
 		for(File file : directory.listFiles())
 		{
 			changeSectionReferenceIdsToReferenceCitationsFileWithMarker(file);
-
 		}
-
 	}
 
 	private static void doGrobIdAndMoveToResults() throws IOException, JAXBException
@@ -1856,7 +1876,6 @@ public class StepsHistory
 				System.out.println(newFile + " " + new Boolean(file.renameTo(newFile)).toString());
 			}
 		}
-
 	}
 
 	private static void checkGet()
@@ -1875,7 +1894,6 @@ public class StepsHistory
 		System.out.println(affiliation2);
 
 		System.out.println(list.indexOf(affiliation2));
-
 	}
 
 	private static void useWorker(File directory, Worker worker)
@@ -2146,7 +2164,6 @@ public class StepsHistory
 			System.out.println(entry.getValue() + " " + entry.getKey());
 			// System.out.println(entry.getKey() + " " + entry.getValue());
 		}
-
 	}
 
 	/**
@@ -2163,7 +2180,6 @@ public class StepsHistory
 
 			x++;
 		}
-
 	}
 
 	/**
@@ -2187,7 +2203,6 @@ public class StepsHistory
 				System.out.println("\t" + refString);
 			}
 		}
-
 	}
 
 	private static void printPageCountForPdfs(Collection<File> collection) throws IOException
@@ -2202,7 +2217,6 @@ public class StepsHistory
 
 			map.put(file.getName(), pages);
 			pagesCount += pages;
-
 		}
 		for(Entry<String, Integer> entry : map.entrySet())
 		{
@@ -2230,7 +2244,6 @@ public class StepsHistory
 		{
 			e.printStackTrace();
 		}
-
 	}
 
 	private static void concatNames(File file)
@@ -2241,7 +2254,6 @@ public class StepsHistory
 		new ReferenceAuthorNameConcatenationWorker().doWork(publication);
 
 		XStreamUtil.convertToXml(publication, file, System.out, true);
-
 	}
 
 	private static void setReferenceMarkerByPdfxFile(File pdfxFileWithMarkers, File resultFile) throws Exception
@@ -2281,7 +2293,6 @@ public class StepsHistory
 		}
 
 		XStreamUtil.convertToXml(publication, resultFile, System.out, true);
-
 	}
 
 	private static Id setId(Integer id, Integer i, Integer fromIndex)
@@ -2353,7 +2364,6 @@ public class StepsHistory
 			}
 			FileUtils.writeLines(file, stringsNew, false);
 		}
-
 	}
 
 	private static void publicationToFile()
@@ -2361,13 +2371,11 @@ public class StepsHistory
 		AbstractMetaPublication p2 = PublicationFactory.createPublication();
 
 		XStreamUtil.convertToXml(p2, file2, System.out, true);
-
 	}
 
 	private static void getPublicationFromFile2()
 	{
 		AbstractMetaPublication p = XStreamUtil.convertFromXML(file2, Publication.class);
-
 	}
 
 	static Map<String, AbstractMarkerStyle> markerStyleMap = new HashMap<>();
@@ -2473,6 +2481,5 @@ public class StepsHistory
 		markerStyleMap.put("247741", new SquareBracketNumberedMarkerStyle());
 		markerStyleMap.put("252847", new SquareBracketNumberedMarkerStyle());
 		markerStyleMap.put("138447", new SuperscriptNumberedMarkerStyle());
-
 	}
 }
