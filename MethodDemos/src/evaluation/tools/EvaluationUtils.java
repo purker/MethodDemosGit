@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.collect.Lists;
 import com.rockymadden.stringmetric.similarity.RatcliffObershelpMetric;

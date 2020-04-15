@@ -6,7 +6,7 @@ import java.util.List;
 public class Section extends BaseEntity
 {
 	private static final long serialVersionUID = 9061069036137135298L;
-	public static final String acknowledgementRegex = "Acknowledg(e)?ment(s)?";
+	public static final String acknowledgementRegex = "(?i)Acknowledg(e)?ment(s)?"; // (?i) = case insensitive
 
 	private String id;
 	private String level;
@@ -107,5 +107,11 @@ public class Section extends BaseEntity
 	// {
 	// this.references = references;
 	// }
+
+	@Override
+	public String toString()
+	{
+		return title;
+	}
 
 }

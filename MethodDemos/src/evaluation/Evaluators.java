@@ -71,7 +71,7 @@ public class Evaluators
 		parscit.evaluate(printParscitResults);
 		pdfx.evaluate(printPdfxResults);
 
-		SystemEvaluator.printOverallStatistics(modes, cermine, grobid, parscit, pdfx);
+		// SystemEvaluator.printOverallStatistics(modes, cermine, grobid, parscit, pdfx);
 		System.out.println("Evaluation finished");
 
 		ExcelRefreshFormulas.refreshReferences();
