@@ -53,7 +53,6 @@ import mapping.result.Reference;
 import mapping.result.ReferenceAuthor;
 import mapping.result.Section;
 import method.Method;
-import pl.edu.icm.cermine.evaluation.exception.EvaluationException;
 import utils.CollectionUtil;
 import utils.FailureUtil;
 import utils.FileCollectionUtil;
@@ -74,7 +73,6 @@ public abstract class SystemEvaluator
 	public SystemEvaluator(Collection<EvalInformationType> types, Collection<EvalInformationType> referenceTypes, List<EvaluationMode> modes)
 	{
 		System.out.println("Initialize Evaluation: " + getMethod());
-		this.iter = new PublicationIterator(getOriginalFiles(), getExtractedFiles());
 
 		this.results = new PublicationCollectionResult(modes, getMethod(), types);
 		this.refResults = new ReferenceCollectionResult(modes, getMethod(), referenceTypes);
@@ -91,13 +89,20 @@ public abstract class SystemEvaluator
 		return FileCollectionUtil.getResultFiles();
 	}
 
-	protected abstract List<File> getExtractedFiles();
+	protected List<File> getExtractedFiles()
+	{
+		return FileCollectionUtil.getResultFilesByMethod(getMethod());
+	}
 
 	protected abstract Method getMethod();
 
-	public void evaluate() throws EvaluationException, IOException
+	public void evaluate(boolean printResults) throws IOException
 	{
-		evaluate(iter);
+		System.out.println("Collecing Files Evaluation: " + getMethod());
+		this.iter = new PublicationIterator(getOriginalFiles(), getExtractedFiles());
+
+		System.out.println("Starting Evaluation: " + getMethod() + " (" + iter.size() + " files)");
+		evaluate(iter, printResults);
 	}
 
 	protected Collection<EvalInformationType> getTypes()
@@ -114,16 +119,14 @@ public abstract class SystemEvaluator
 	 * @param modes
 	 *            which outputs should be generated, if empty -> no output (for test purposes)
 	 * @param files
+	 * @param printResults
 	 * @return
-	 * @throws EvaluationException
 	 * @throws IOException
 	 */
-	public AbstractCollectionResult<?> evaluate(PublicationIterator files) throws EvaluationException, IOException
+	public AbstractCollectionResult<?> evaluate(PublicationIterator files, boolean printResults) throws IOException
 	{
-		System.out.println("Starting Evaluation: " + getMethod());
-
 		int i = 0;
-		for(PublicationPair pair : files)
+		for(PublicationPair pair : iter)
 		{
 			i++;
 
@@ -187,21 +190,23 @@ public abstract class SystemEvaluator
 			}
 		}
 
-		System.out.println("Evaluation of PUBLICATIONS");
+		System.out.println("\tEvaluation of PUBLICATIONS");
 		results.evaluate();
-		results.printResults();
+		if(printResults) results.printResults();
 
-		System.out.println("Evaluation of REFERENCES");
+		System.out.println("\tEvaluation of REFERENCES");
 		refResults.evaluate();
-		refResults.printResults();
+		if(printResults) refResults.printResults();
 
 		return results;
 	}
 
-	private AbstractSingleInformationResult<?> getResultFromReferenceType(EvalInformationType type, Reference reference, Reference reference2) throws EvaluationException
+	private AbstractSingleInformationResult<?> getResultFromReferenceType(EvalInformationType type, Reference reference, Reference reference2)
 	{
 		switch(type)
 		{
+			case REFERENCE_ID:
+				return new SimpleInformationResult(type, reference, reference2, Reference::getIdString);
 			case REFERENCE_MARKER:
 				return new SimpleInformationResult(type, reference, reference2, Reference::getMarker);
 
@@ -245,11 +250,12 @@ public abstract class SystemEvaluator
 				return new SimpleInformationResult(type, reference, reference2, Reference::getUrl);
 
 			default:
-				throw new EvaluationException("referencetype " + type + " not known");
+				FailureUtil.exit("referencetype " + type + " not known");
+				return null;
 		}
 	}
 
-	private AbstractSingleInformationResult<?> getResultFromType(EvalInformationType type, Publication origPub, Publication testPub) throws EvaluationException
+	private AbstractSingleInformationResult<?> getResultFromType(EvalInformationType type, Publication origPub, Publication testPub)
 	{
 		switch(type)
 		{
@@ -336,7 +342,8 @@ public abstract class SystemEvaluator
 				return new SimpleInformationResult(type, origPub, testPub, Publication::getDoi);
 
 			case SECTIONS:
-				return new ListInformationResult(type, origPub, testPub, Publication::getSections, Section::getTitle);
+				// Sections which are Acknowledgements are ignored
+				return new ListInformationResult(type, origPub, testPub, Publication::getSections, Section::getTitle, s -> !s.getTitle().matches(Section.acknowledgementRegex));
 
 			case SECTION_LEVELS:
 				Set<StringRelation> headersOrig = new HashSet<>();
@@ -382,13 +389,14 @@ public abstract class SystemEvaluator
 				return new ReferenceInformationResult(type, origPub.getReferences(), testPub.getReferences(), origPub);
 
 			default:
-				throw new EvaluationException("type not known");
+				FailureUtil.exit("type not known");
+				return null;
 		}
 	}
 
 	public static void printOverallStatistics(List<EvaluationMode> modes, SystemEvaluator... evaluators) throws IOException
 	{
-		for(EvaluationMode mode : Arrays.asList(EvaluationMode.CSV_PER_EVALUTATIONTYPE, EvaluationMode.CSV_PER_FILE, EvaluationMode.CSV_PER_PUBLICATIONTYPE))
+		for(EvaluationMode mode : Arrays.asList(EvaluationMode.CSV_PER_EVALUTATIONTYPE, EvaluationMode.CSV_PER_ID, EvaluationMode.CSV_PER_PUBLICATIONTYPE))
 		{
 			if(modes.contains(mode))
 			{
@@ -402,7 +410,7 @@ public abstract class SystemEvaluator
 
 	private static void printOverallStatisticsForElements(SystemEvaluator[] evaluators, EvaluationMode mode, CollectionEnum setResultEnum) throws IOException
 	{
-		if(!Arrays.asList(EvaluationMode.CSV_PER_EVALUTATIONTYPE, EvaluationMode.CSV_PER_FILE, EvaluationMode.CSV_PER_PUBLICATIONTYPE).contains(mode))
+		if(!Arrays.asList(EvaluationMode.CSV_PER_EVALUTATIONTYPE, EvaluationMode.CSV_PER_ID, EvaluationMode.CSV_PER_PUBLICATIONTYPE).contains(mode))
 		{
 			FailureUtil.exit("mode " + mode + " not supported");
 		}
@@ -429,7 +437,7 @@ public abstract class SystemEvaluator
 
 		List<String> valueNames = Arrays.asList("Precision", "Recall", "F1");
 		headers = new ArrayList<>();
-		headers.add("Id");
+		headers.add("");
 		headers.addAll(valueNames);
 		headers.addAll(valueNames);
 		headers.addAll(valueNames);
@@ -438,7 +446,7 @@ public abstract class SystemEvaluator
 
 		Collection<?> elements;
 		AbstractCollectionResult<?> firstCollectionResult = evaluators[0].getCollectionResultByCollectionEnum(setResultEnum);
-		if(mode.equals(EvaluationMode.CSV_PER_FILE))
+		if(mode.equals(EvaluationMode.CSV_PER_ID))
 		{
 			elements = firstCollectionResult.getAllElements().keySet();
 		}

@@ -49,6 +49,7 @@ public enum EvalInformationType implements Label
 	SECTION_LEVELS("Section-Levels"),
 	SECTION_REFERENCES("Section-References"),
 	REFERENCES("References"),
+	REFERENCE_ID(REFERENCES, "Id"),
 	REFERENCE_MARKER(REFERENCES, "Marker"),
 	REFERENCE_TITLE(REFERENCES, "Title"),
 	REFERENCE_PUBLICATIONTYPE(REFERENCES, "PublicationType"),
@@ -139,6 +140,7 @@ public enum EvalInformationType implements Label
 	public static List<EvalInformationType> getTypesForReferences()
 	{
 		List<EvalInformationType> types = new ArrayList<>();
+		types.add(EvalInformationType.REFERENCE_ID);
 		types.add(EvalInformationType.REFERENCE_MARKER);
 		types.add(EvalInformationType.REFERENCE_TITLE);
 		// TODO ?types.add(EvalInformationType.REFERENCE_PUBLICATIONTYPE);

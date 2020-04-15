@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import org.grobid.core.utilities.Triple;
 
 import mapping.result.Label;
 
@@ -21,7 +24,7 @@ public class StringUtil
 		return !isEmpty(s);
 	}
 
-	public static String objectListToString(List<Object> objectList, String separator)
+	public static String objectListToString(List<?> objectList, String separator)
 	{
 		List<String> stringList = objectListToStringList(objectList, separator);
 
@@ -67,6 +70,18 @@ public class StringUtil
 			return ((Label)key).getLabel();
 		else
 			return key.toString();
+	}
+
+	/**
+	 * as substring but taking into account the length of the string to avoid IndexOutOfBoundsException
+	 * 
+	 * @param string
+	 * @param length
+	 * @return
+	 */
+	public static String substringMaxLength(String string, int length)
+	{
+		return string.substring(0, Integer.min(length, string.length()));
 	}
 
 }

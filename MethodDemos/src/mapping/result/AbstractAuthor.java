@@ -1,9 +1,12 @@
 package mapping.result;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import utils.CollectionUtil;
 import utils.PublicationUtil;
+import utils.StringUtil;
 
 public class AbstractAuthor extends BaseEntity
 {
@@ -52,5 +55,25 @@ public class AbstractAuthor extends BaseEntity
 	public String toString()
 	{
 		return getFullName();
+	}
+
+	public String getFirstNamesAsString()
+	{
+
+		StringBuffer sb = new StringBuffer();
+		if(CollectionUtil.isNotEmpty(getFirstNames()))
+		{
+			for(Iterator<String> iterator = getFirstNames().iterator(); iterator.hasNext();)
+			{
+				String firstName = iterator.next();
+
+				if(StringUtil.isNotEmpty(firstName))
+				{
+					sb.append(firstName);
+					if(iterator.hasNext()) sb.append(" ");
+				}
+			}
+		}
+		return sb.toString();
 	}
 }

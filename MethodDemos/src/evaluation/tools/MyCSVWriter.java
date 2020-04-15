@@ -15,7 +15,7 @@ public class MyCSVWriter extends AbstractWriter
 	{
 		csvFile = getWriterType().replace(csvFile);
 		FileWriter fileWriter = new FileWriter(csvFile);
-		csvWriter = new CSVWriter(fileWriter, ';', CSVWriter.DEFAULT_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
+		csvWriter = new CSVWriter(fileWriter, ';', CSVWriter.DEFAULT_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.RFC4180_LINE_END);
 	}
 
 	@Override

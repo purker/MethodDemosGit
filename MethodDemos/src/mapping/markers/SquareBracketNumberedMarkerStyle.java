@@ -13,7 +13,7 @@ public class SquareBracketNumberedMarkerStyle extends AbstractMarkerStyle
 	{
 		StringBuffer sb = new StringBuffer();
 		sb.append("[");
-		sb.append(reference.getId());
+		sb.append(reference.getIdString());
 		sb.append("]");
 		return sb.toString();
 	}

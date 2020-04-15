@@ -16,7 +16,7 @@ public class GROBIDMapper extends Mapper
 {
 	private static final Method METHOD = Method.GROBID;
 	private static final File DIRECTORY_NAME = Demos.grobIdOutputDir;
-	public static final String BINDINGFILE = "bindingfiles/binding_grobid.xml";
+	private static final String BINDINGFILE = "bindingfiles/binding_grobid.xml";
 
 	@Override
 	protected String getBindingFile()
@@ -34,7 +34,7 @@ public class GROBIDMapper extends Mapper
 
 		// grobidMapper.marshall(PublicationFactory.createPublication(), System.out);
 
-		XStreamUtil.convertToXmL(PublicationFactory.createPublication(), System.out, System.out, true);
+		XStreamUtil.convertToXml(PublicationFactory.createPublication(), System.out, System.out, true);
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class GROBIDMapper extends Mapper
 		/* TODO dort auch wieder einkommentieren new AuthorNameConcatenationWorker(), */
 		workers.add(new ReferenceIdReplaceWorkerGrobid());
 		workers.add(new ReferenceEditionWorker());
-		workers.add(new ReferenceDateWorker());
+		workers.add(new DateWorkerGrobid());
 
 		return workers;
 	}

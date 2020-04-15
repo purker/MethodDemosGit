@@ -1,17 +1,27 @@
 package utils;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FilenameFilter;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.io.FileUtils;
+
 import config.Config;
+import demos.Demos;
 import evaluation.tools.CollectionEnum;
 import evaluation.tools.EvalInformationType;
 import evaluation.tools.WriterType;
 import method.Method;
 
+/**
+ * getResultFiles(): xstream.xml in output/result/ </br>
+ * getResultFilesByMethod(Method method): xstream.xml in output/extracted/<method>/
+ */
 public class FileCollectionUtil
 {
 
@@ -24,6 +34,10 @@ public class FileCollectionUtil
 		return Arrays.asList(directory.listFiles());
 	}
 
+	/**
+	 * @param method
+	 * @return xstream file for method
+	 */
 	public static List<File> getResultFilesByMethod(Method method)
 	{
 		File directory = method.getResultDirectory();
@@ -41,21 +55,33 @@ public class FileCollectionUtil
 		return files;
 	}
 
+	/**
+	 * @return xstream file for method
+	 */
 	public static List<File> getCermineResultFiles()
 	{
 		return getResultFilesByMethod(Method.CERMINE);
 	}
 
+	/**
+	 * @return xstream file for method
+	 */
 	public static List<File> getGrobidResultFiles()
 	{
 		return getResultFilesByMethod(Method.GROBID);
 	}
 
+	/**
+	 * @return xstream file for method
+	 */
 	public static List<File> getParscitResultFiles()
 	{
 		return getResultFilesByMethod(Method.PARSCIT);
 	}
 
+	/**
+	 * @return xstream file for method
+	 */
 	public static List<File> getPdfxResultFiles()
 	{
 		return getResultFilesByMethod(Method.PDFX);
@@ -96,15 +122,6 @@ public class FileCollectionUtil
 			}
 		}));
 		return files;
-	}
-
-	public static List<File> getResultFilesById(String pubId)
-	{
-		File directory = Config.groundTruthResults;
-
-		checkIfContainsFiles(directory);
-
-		return Arrays.asList(directory.listFiles());
 	}
 
 	public static File getCermineResultFileById(String pubId)
@@ -157,7 +174,7 @@ public class FileCollectionUtil
 		}
 		if(directory.list().length == 0)
 		{
-			throw new IllegalArgumentException("provided directory can't be empty: " + directory);
+			throw new IllegalArgumentException("provided directory contains no data: " + directory);
 		}
 
 	}
@@ -211,5 +228,60 @@ public class FileCollectionUtil
 		file = setResultType.replace(file);
 
 		return file;
+	}
+
+	public static Collection<File> getStatisticsCSVFiles()
+	{
+		Collection<File> list = FileUtils.listFiles(new File(Config.statisticsFolder), new String[]{"csv"}, true);
+
+		return list;
+	}
+
+	public static List<File> getExtractedFiles(Method method, List<String> idList)
+	{
+		File directory = method.getResultDirectory();
+
+		checkIfContainsFiles(directory);
+
+		List<File> files = Arrays.asList(directory.listFiles(new FileFilter()
+		{
+			@Override
+			public boolean accept(File file)
+			{
+				String id = PublicationUtil.getIdFromFileWithoutPrefix(file);
+				return idList.contains(id) && file.getName().endsWith(Config.extractedFileExtension) && !file.getName().endsWith(Config.xStreamFileExtension);
+			}
+		}));
+		return files;
+	}
+
+	public static List<File> getAllGroundTruthFilesByIds(List<String> idList)
+	{
+		List<File> list = new ArrayList<>();
+
+		for(String pubId : idList)
+		{
+			String fileName = FileNameUtil.getPdfFileNameFromID(pubId);
+			File file = new File(Demos.inputDir, fileName);
+
+			list.add(file);
+		}
+
+		return list;
+	}
+
+	public static List<File> getAllGroundTruthFilesOmnipageById(List<String> idList)
+	{
+		List<File> list = new ArrayList<>();
+
+		for(String pubId : idList)
+		{
+			String fileName = FileNameUtil.getOmnipageFileNameFromID(pubId);
+			File file = new File(Demos.inputDir, fileName);
+
+			list.add(file);
+		}
+
+		return list;
 	}
 }

@@ -27,11 +27,10 @@ xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobi
 							<affiliation key="aff0">
 								<orgName type="department" key="dep1">im Rahmen des Studiums</orgName>
 								<orgName type="department" key="dep2">Fakultät für Informatik</orgName>
-								<orgName type="department" key="dep3">Faculty of Informatics</orgName>
+								<orgName type="department" key="dep3">Faculty of Informatics at the Vienna</orgName>
 								<orgName type="institution" key="instit1">Technischen Universität Wien</orgName>
 								<orgName type="institution" key="instit2">Technische Universität Wien</orgName>
-								<orgName type="institution" key="instit3">Vienna University of Technology</orgName>
-								<orgName type="institution" key="instit4">Technische Universität Wien</orgName>
+								<orgName type="institution" key="instit3">Technische Universität Wien</orgName>
 								<address>
 									<postCode>2020</postCode>
 									<settlement>Sonnberg</settlement>
@@ -43,11 +42,10 @@ xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobi
 							<affiliation key="aff0">
 								<orgName type="department" key="dep1">im Rahmen des Studiums</orgName>
 								<orgName type="department" key="dep2">Fakultät für Informatik</orgName>
-								<orgName type="department" key="dep3">Faculty of Informatics</orgName>
+								<orgName type="department" key="dep3">Faculty of Informatics at the Vienna</orgName>
 								<orgName type="institution" key="instit1">Technischen Universität Wien</orgName>
 								<orgName type="institution" key="instit2">Technische Universität Wien</orgName>
-								<orgName type="institution" key="instit3">Vienna University of Technology</orgName>
-								<orgName type="institution" key="instit4">Technische Universität Wien</orgName>
+								<orgName type="institution" key="instit3">Technische Universität Wien</orgName>
 								<address>
 									<postCode>2020</postCode>
 									<settlement>Sonnberg</settlement>
@@ -59,11 +57,10 @@ xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobi
 							<affiliation key="aff0">
 								<orgName type="department" key="dep1">im Rahmen des Studiums</orgName>
 								<orgName type="department" key="dep2">Fakultät für Informatik</orgName>
-								<orgName type="department" key="dep3">Faculty of Informatics</orgName>
+								<orgName type="department" key="dep3">Faculty of Informatics at the Vienna</orgName>
 								<orgName type="institution" key="instit1">Technischen Universität Wien</orgName>
 								<orgName type="institution" key="instit2">Technische Universität Wien</orgName>
-								<orgName type="institution" key="instit3">Vienna University of Technology</orgName>
-								<orgName type="institution" key="instit4">Technische Universität Wien</orgName>
+								<orgName type="institution" key="instit3">Technische Universität Wien</orgName>
 								<address>
 									<postCode>2020</postCode>
 									<settlement>Sonnberg</settlement>
@@ -75,11 +72,10 @@ xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobi
 							<affiliation key="aff0">
 								<orgName type="department" key="dep1">im Rahmen des Studiums</orgName>
 								<orgName type="department" key="dep2">Fakultät für Informatik</orgName>
-								<orgName type="department" key="dep3">Faculty of Informatics</orgName>
+								<orgName type="department" key="dep3">Faculty of Informatics at the Vienna</orgName>
 								<orgName type="institution" key="instit1">Technischen Universität Wien</orgName>
 								<orgName type="institution" key="instit2">Technische Universität Wien</orgName>
-								<orgName type="institution" key="instit3">Vienna University of Technology</orgName>
-								<orgName type="institution" key="instit4">Technische Universität Wien</orgName>
+								<orgName type="institution" key="instit3">Technische Universität Wien</orgName>
 								<address>
 									<postCode>2020</postCode>
 									<settlement>Sonnberg</settlement>
@@ -98,7 +94,7 @@ xsi:schemaLocation="http://www.tei-c.org/ns/1.0 C:\Users\Angela\git\grobid\grobi
 			</sourceDesc>
 		</fileDesc>
 		<profileDesc>
-			<abstract xml:lang="en">
+			<abstract>
 				<p>Hiermit erkläre ich, dass ich diese Arbeit selbständig verfasst habe, dass ich die verwen-deten Quellen und Hilfsmittel vollständig angegeben habe und dass ich die Stellen der Arbeit-einschließlich Tabellen, Karten und Abbildungen-, die anderen Werken oder dem Internet im Wortlaut oder dem Sinn nach entnommen sind, auf jeden Fall unter Angabe der Quelle als Entlehnung kenntlich gemacht habe. (Ort, Datum) (Unterschrift Verfasser) i Acknowledgements I want to thank my advisors ao.Univ.-Prof. Dipl.-Ing. Dr. techn. Günther Raidl and Univ.-Ass. Dipl.-Ing. Christian Schauer. Their constructive feedback and their experience was a big help for writing and improving this thesis. Special thanks goes to my family and my friends. Studying can be quite time-consuming and stressful sometimes and their support is invaluable. ii Abstract In this thesis the application of clustering algorithms for solving the Hierarchical Ring Network Problem (HRNP) is investigated. When the network is represented as a graph, an informal problem definition for this NP-complete problem is: Given a set of network sites (nodes) assigned to one of three layers and the costs for establishing connections between sites (i.e., edge costs) the objective is to find a minimum cost connected network under certain constraints that are explained in detail in the thesis. The most important constraint is that the nodes have to be assigned to rings of bounded size that connect the layers hierarchically. The ring structure is a good compromise between the robustness of a network and the cost for establishing it. It is guaranteed, that the network can continue to provide its service if one network node per ring fails. The basic idea in this thesis for solving this network design problem was to cluster the sites with hierarchical clustering heuristics and to use the resulting hierarchy as support for the ring-finding heuristics. Previous apporaches for related network design problems did not use the inherent network structure in such a way. Usual approaches are based on greedy heuristics. Three clustering heuristics were implemented: Girvan-Newman, K-means and Kernighan-Lin. Especially the first algorithm is interesting, because it was successfully applied analyzing large network structures, also in the context of internet communities. For finding rings three heuristics were implemented too. Strategic variation of the maximum allowed ring size helps the first heuristic to find rings using the cluster hierarchy. The second heuristic finds rings by searching for paths that are connected to previously found rings. Third a repair heuristic was implemented that tries to add remaining nodes to existing rings. Local search heuristics are applied last to improve the solution quality. To check how the clustering approach performs for solving the problem of this thesis two test instance generators were implemented. One generates instances randomly and the second generates instances based on the popular TSPLIB archive. The evaluation of the random test instances has shown, that all three clustering heuristics were able to solve those test instances, while Girvan-Newman and Kernighan-Lin found valid solutions in each test run this was not possible for K-means. When Kernighan-Lin was used as clustering algorithm solutions could be found faster on average, but the resulting costs where slightly higher. For the TSPLIB based instances the clustering algorithms had more problems to find valid solutions, but for each test instance at least one type of clustering was successful. iii Kurzfassung In dieser Diplomarbeit wird die Anwendung von Clusteringalgorithmen untersucht, um das Hierarchical Ring Network Problem (HRNP) zu lösen. Wenn das Netzwerk als Graph repräsentiert ist, ist dieses NP-vollständige Problem wie folgt definiert: Gegeben ist Menge von Knoten welche jeweils einer von drei Schichten zugewiesen sind, und eine Kostenfunktion, welche die Verbindungskosten zwischen zwei Knoten (d.h. Kantenkosten) zuweist. Gesucht ist ein zusammenhängendes Netzwerk mit minimalen Gesamtkosten, wobei dieses bestimmte Struktureigenschaften zu erfüllen hat, welche im Detail in der Diplomarbeit beschrieben werden. Die wichtigste dieser Eigenschaften ist, dass Knoten gemäß einer hierarchischen Struktur zu größenbeschränkten Ringen verbunden werden. Ringstrukturen sind ein guter Kompromiss zwischen der Verfügbarkeit von Netzwerken und deren Herstellungskosten. Die Verfügbarkeit ist gewährleistet, solange maximal ein Knoten pro Ring ausfällt. Die grundlegende Idee dieser Diplomarbeit um dieses Netzwerkdesign-Problem zu lösen, ist die Knoten mit Hilfe von hierarchischen Clusteringalgorithmen anzuordnen und die resul-tierende Hierarchie für nachfolgende Heuristiken zu verwenden, welche die Ringe finden. Vorhergehende Ansätze für vergleichbare Netzwerkdesign-Probleme haben die inhärente Netzwerkstruktur nicht auf solche Weise genützt und eher Greedy-Heuristiken eingesetzt. Um gültige Ringe zu finden, wurden drei Heuristiken implementiert. Strategisches Variieren der erlaubten Ringgröße hilft der ersten Heuristik Ringe unter Benützung der Cluster-Hierarchie zu finden. Die zweite Heuristik baut auf den in der vorherigen Schicht gefundenen Ringen auf, indem sie nach gültigen Pfaden sucht, die an diese Ringe angeschlossen werden können. Drittens wird eine Reparaturheuristik angewendet, welche versucht verbleibende Knoten zu bestehenden Ringen zuzuweisen. Zuletzt werden lokale Suchverfahren eingesetzt, um die Gesamtkosten zu verbessern. Um zu überprüfen, wie gut dieser Lösungsansatz funktioniert, wurden zwei Testinstanz-Generatoren implementiert. Der Erste generiert Instanzen zufallsbasiert, der Zweite baut auf dem bekannten TSPLIB-Archiv auf. Die Evaluierung der zufallsbasierten Testinstanzen hat gezeigt, dass alle drei Heuristiken sämtliche Instanzen lösen konnten, wobei Girvan-Newman und Kernighan-Lin in jedem Testlauf Lösungen gefunden haben, war dies bei K-means nicht der Fall. Mit Kernighan-Lin konnte im Durchschnitt schneller eine Lösung gefunden werden, aber die Gesamtkosten waren bei den beiden anderen Algorithmen etwas besser. Mit den TSPLIB-basierten Testinstanzen konnte nicht mit allen Clusteringalgorithmen eine Lösung erzielt werden, aber zumindest war für jede Testinstanz mindestens ein Clustering-Verfahren erfolgreich. iv</p>
 			</abstract>
 		</profileDesc>
@@ -2082,6 +2078,9 @@ kroB100.tsp.8-30
 		<imprint>
 			<date type="published" when="1991" />
 		</imprint>
+		<respStmt>
+			<orgName>Sloan School of Management</orgName>
+		</respStmt>
 	</monogr>
 </biblStruct>
 
@@ -2106,21 +2105,19 @@ kroB100.tsp.8-30
 </biblStruct>
 
 <biblStruct xml:id="b2">
-	<analytic>
-		<title/>
-		<author>
+	<monogr>
+				<author>
 			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Bertsimas</surname></persName>
 		</author>
 		<author>
 			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">R</forename><surname>Weismantel</surname></persName>
 		</author>
-	</analytic>
-	<monogr>
 		<title level="m">Optimization over Integers. Dynamic Ideas</title>
 		<imprint>
 			<date type="published" when="2005" />
 		</imprint>
 	</monogr>
+	<note>1st edition</note>
 </biblStruct>
 
 <biblStruct xml:id="b3">
@@ -2165,16 +2162,13 @@ kroB100.tsp.8-30
 </biblStruct>
 
 <biblStruct xml:id="b5">
-	<analytic>
-		<title/>
-		<author>
+	<monogr>
+				<author>
 			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">D</forename><surname>Easley</surname></persName>
 		</author>
 		<author>
 			<persName xmlns="http://www.tei-c.org/ns/1.0"><forename type="first">J</forename><surname>Kleinberg</surname></persName>
 		</author>
-	</analytic>
-	<monogr>
 		<title level="m">Networks, Crowds, and Markets: Reasoning About a Highly Connected World</title>
 		<imprint>
 			<publisher>Cambridge University Press</publisher>
@@ -2215,7 +2209,11 @@ kroB100.tsp.8-30
 		<imprint>
 			<date type="published" when="2000" />
 		</imprint>
+		<respStmt>
+			<orgName>Universite libre de Bruxelles</orgName>
+		</respStmt>
 	</monogr>
+<note type="report_type">PhD thesis</note>
 </biblStruct>
 
 <biblStruct xml:id="b8">
@@ -2266,6 +2264,7 @@ kroB100.tsp.8-30
 		</author>
 		<imprint>
 			<date type="published" when="1970" />
+			<biblScope unit="volume">49</biblScope>
 			<biblScope unit="page" from="291" to="307" />
 		</imprint>
 	</monogr>
@@ -2408,7 +2407,11 @@ kroB100.tsp.8-30
 		<imprint>
 			<date type="published" when="2005" />
 		</imprint>
+		<respStmt>
+			<orgName>Technical University of Denmark</orgName>
+		</respStmt>
 	</monogr>
+<note type="report_type">PhD thesis</note>
 </biblStruct>
 
 <biblStruct xml:id="b18">
@@ -2424,6 +2427,7 @@ kroB100.tsp.8-30
 		<imprint>
 			<publisher>ACM</publisher>
 			<date type="published" when="1987" />
+			<biblScope unit="volume">13</biblScope>
 			<biblScope unit="page" from="58" to="67" />
 		</imprint>
 	</monogr>

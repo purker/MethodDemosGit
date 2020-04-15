@@ -17,6 +17,7 @@ import com.thoughtworks.xstream.converters.reflection.FieldDictionary;
 import com.thoughtworks.xstream.converters.reflection.SortableFieldKeySorter;
 import com.thoughtworks.xstream.converters.reflection.SunUnsafeReflectionProvider;
 import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.thoughtworks.xstream.security.TypePermission;
 
 import mapping.IdConverter;
 import mapping.result.Affiliation;
@@ -29,13 +30,13 @@ import mapping.result.Section;
 
 public class XStreamUtil
 {
-	private static final String[] referenceFieldOrder = new String[]{"serialVersionUID", "id", "referenceIdString", "marker", "title", "publicationType", "source", "publisher", "editors", "authors", "edition", "location", "volume", "issue", "chapter", "note", "pageFrom", "pageTo", "publicationDateString", "publicationYear", "publicationMonth", "publicationDay", "publicationDate", "doi", "url", "type", "referenceText", "publication"};
+	private static final String[] referenceFieldOrder = new String[]{"serialVersionUID", "id", "referenceIdString", "marker", "title", "publicationType", "source", "publisher", "editors", "authors", "edition", "location", "volume", "issue", "chapter", "note", "pageFrom", "pageTo", "publicationDateString", "publicationYear", "publicationYearSuffix", "publicationMonth", "publicationDay", "publicationDate", "doi", "url", "type", "referenceText", "publication"};
 
-	public static void convertToXmL(Object object, File file, PrintStream out, boolean exitOnError)
+	public static void convertToXml(Object object, File file, PrintStream out, boolean exitOnError)
 	{
 		try
 		{
-			convertToXmL(object, new FileOutputStream(file), out, exitOnError);
+			convertToXml(object, new FileOutputStream(file), out, exitOnError);
 		}
 		catch(FileNotFoundException e)
 		{
@@ -44,7 +45,7 @@ public class XStreamUtil
 
 	}
 
-	public static void convertToXmL(Object object, OutputStream stream, PrintStream out, boolean exitOnError)
+	public static void convertToXml(Object object, OutputStream stream, PrintStream out, boolean exitOnError)
 	{
 		try
 		{
@@ -67,7 +68,6 @@ public class XStreamUtil
 		sorter.registerFieldOrder(Reference.class, referenceFieldOrder);
 
 		checkAllFieldsMapped();
-
 		XStream xStream = new XStream(new SunUnsafeReflectionProvider(new FieldDictionary(sorter)), new DomDriver(StandardCharsets.UTF_8.name()));
 
 		xStream.setMode(XStream.SINGLE_NODE_XPATH_ABSOLUTE_REFERENCES);
@@ -81,6 +81,17 @@ public class XStreamUtil
 		xStream.alias("ReferenceAuthor", ReferenceAuthor.class);
 
 		xStream.registerConverter(new IdConverter());
+
+		// allowed classes, otherwise com.thoughtworks.xstream.security.ForbiddenClassException
+		XStream.setupDefaultSecurity(xStream);
+		xStream.addPermission(new TypePermission()
+		{
+			@Override
+			public boolean allows(Class type)
+			{
+				return type.getPackage().getName().startsWith("mapping.result");
+			}
+		});
 
 		return xStream;
 	}

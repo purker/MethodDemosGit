@@ -67,7 +67,7 @@
         </java-type>
         <java-type name="Reference">
             <xml-root-element name="ref"/>
-            <xml-type prop-order="id referenceIdString marker title publicationType source publisher editors authors edition location volume issue chapter note pageFrom pageTo publicationDateString publicationYear publicationMonth publicationDay publicationDate doi url type referenceText publication"/>
+            <xml-type prop-order="id referenceIdString marker title publicationType source publisher editors authors edition location volume issue chapter note pageFrom pageTo publicationDateString publicationYear publicationYearSuffix publicationMonth publicationDay publicationDate doi url type referenceText publication"/>
             <java-attributes>
                 <xml-attribute java-attribute="referenceIdString" name="id"/>
             	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="marker"/>
@@ -88,6 +88,7 @@
                 <xml-element java-attribute="pageTo" xml-path="mixed-citation/lpage/text()"/>
             	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="publicationDateString"/>
                 <xml-element java-attribute="publicationYear" xml-path="mixed-citation/year/text()"/>
+                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="publicationYearSuffix"/>
             	<xml-element java-attribute="publicationMonth" xml-path="mixed-citation/month/text()"/>
                 <xml-element java-attribute="publicationDay" xml-path="mixed-citation/day/text()"/>
             	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="publicationDate"/>

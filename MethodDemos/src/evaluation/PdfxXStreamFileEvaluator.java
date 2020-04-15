@@ -18,14 +18,12 @@
 
 package evaluation;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
 import evaluation.tools.EvalInformationType;
 import method.Method;
-import utils.FileCollectionUtil;
 
 public class PdfxXStreamFileEvaluator extends SystemEvaluator
 {
@@ -39,12 +37,6 @@ public class PdfxXStreamFileEvaluator extends SystemEvaluator
 	public PdfxXStreamFileEvaluator(Collection<EvalInformationType> types, Collection<EvalInformationType> referenceTypes, List<EvaluationMode> modes) throws IOException
 	{
 		super(types, referenceTypes, modes);
-	}
-
-	@Override
-	protected List<File> getExtractedFiles()
-	{
-		return FileCollectionUtil.getPdfxResultFiles();
 	}
 
 	@Override

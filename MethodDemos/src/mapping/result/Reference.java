@@ -23,6 +23,8 @@ public class Reference extends AbstractMetaPublication
 
 	private Publication publication; // enclosing publication
 
+	private String publicationYearSuffix; // a-z if more than one similar references with same year
+
 	public String getReferenceIdString()
 	{
 		return referenceIdString;
@@ -118,6 +120,30 @@ public class Reference extends AbstractMetaPublication
 	public Integer getPublicationId()
 	{
 		return getPublication().getPublicationId();
+	}
+
+	public String getPublicationYearSuffix()
+	{
+		return publicationYearSuffix;
+	}
+
+	public void setPublicationYearSuffix(String publicationYearSuffix)
+	{
+		this.publicationYearSuffix = publicationYearSuffix;
+	}
+
+	public String getPublicationYearWithSuffix()
+	{
+		StringBuffer sb = new StringBuffer();
+		if(StringUtil.isNotEmpty(getPublicationYear()))
+		{
+			sb.append(getPublicationYear());
+		}
+		if(StringUtil.isNotEmpty(getPublicationYearSuffix()))
+		{
+			sb.append(getPublicationYearSuffix());
+		}
+		return sb.toString();
 	}
 
 }

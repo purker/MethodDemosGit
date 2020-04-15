@@ -1,0 +1,63 @@
+SEGMENTATION
+http://grobid.readthedocs.io/en/latest/training/segmentation/
+<front>
+<body>
+<listBibl> for the bibliographical section
+<div type="acknowledgement">
+<page> contains page number, should be outside of <note>
+
+front: as <front> many tags as necessary to contain all
+- title
+- authors
+- affiliations
+- abstract
+- keywords
+- footnotes (affiliations/addresses)
+- footer (including first page #)
+
+- no <title> and <author> tags
+
+Any footnotes referenced from within the <body> should remain there.
+
+notes that belongs to body -> <note>
+notes that belong to the front -> <front>
+
+Figures and tables (including their potential titles, captions and notes) -> in body
+
+hidden characters: ignore
+
+header first page -> <front>
+header other pages -> <note place="headnote">
+
+---------------------------------------
+FULLTEXT (Body sementation)
+http://grobid.readthedocs.io/en/latest/training/fulltext/
+<head> Section titles
+<p> Parapgraphs
+<formula> -> not inside <p>
+<formula/label> -> Formula label (usually its number)
+<list>: on same level as <p>
+<list/item> should contain bullet points
+
+<list>
+  <item>• updating the assets and liabilities model points;<lb/></item>
+</list>
+
+<figure>: photo, picture, table, box, contains caption and legend
+<figure type="table">
+<figure type="box"> additional content outside the flow of the general content
+
+Refs: inside <p>, <item>, others
+<ref type="biblio"> a link to a bibliographical reference (of the type *see Austin 1982/b * )
+<ref type="figure"> a pointer to a figure elsewhere in the document (Fig 5b, left)
+<ref type="table"> a link to a table in the document
+<ref type="box"> a link to some boxed content (a box with additional content, outside the flow of the general content)
+<ref type="formula"> a link to a formula
+----------------------------------------------
+Reference (one reference)
+http://grobid.readthedocs.io/en/latest/training/Bibliographical-references/
+
+<date> without (parenthesis), also with special character ("	2006c")
+<note type="report">: technical report, thesis
+
+

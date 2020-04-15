@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>MethodDemos</groupId>
@@ -9,25 +10,26 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-			 	<version>3.7.0</version>
-        		<configuration>
-          		<source>1.7</source>
-          	<target>1.7</target>
-        	</configuration>
+				<version>3.8.0</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
 	<dependencies>
 		<!-- in Mavenordner von http://maven.icm.edu.pl/artifactory/repo/pl/edu/icm/cermine/cermine-tools/1.13-SNAPSHOT/ 
 			kopiert -->
-		<!-- <dependency> <groupId>pl.edu.icm.cermine</groupId> <artifactId>cermine-impl</artifactId> 
-			<version>1.13</version> </dependency> -->
 		<dependency>
-			<groupId>org.grobid</groupId>
-			<artifactId>grobid-core</artifactId>
-			<version>0.4.3-SNAPSHOT</version>
-			<scope>compile</scope>
+			<groupId>pl.edu.icm.cermine</groupId>
+			<artifactId>cermine-impl</artifactId>
+			<version>1.13</version>
 		</dependency>
+
+		<!-- <dependency> <groupId>org.grobid</groupId> <artifactId>grobid-core</artifactId>
+			<version>0.5.1</version> </dependency> -->
+
 		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
 		<!-- Cermine uses 2.3 commons-io, Grobid 2.5 -->
 		<dependency>
@@ -59,13 +61,15 @@
 			<artifactId>saxon-dom</artifactId>
 			<version>8.7</version>
 		</dependency>
-		
-		<!-- uses jitpack.io to use git repo of cermine -->
+
+		<!-- uses jitpack.io to use git repo of cermine ->
 		<dependency>
-			<groupId>com.github.CeON</groupId>
-			<artifactId>CERMINE</artifactId>
-			<version>cermine-parent-1.13</version>
+			<groupId>com.github.CeON.CERMINE</groupId>
+			<artifactId>cermine-impl</artifactId>
+			<version>1.13</version>
 		</dependency>
+		-->
+
 		<!-- https://mvnrepository.com/artifact/org.eclipse.persistence/org.eclipse.persistence.moxy -->
 		<dependency>
 			<groupId>org.eclipse.persistence</groupId>
@@ -75,48 +79,99 @@
 		<dependency>
 			<groupId>com.thoughtworks.xstream</groupId>
 			<artifactId>xstream</artifactId>
-			<version>1.4.9</version>
+			<version>1.4.11.1</version>
 		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/commons-beanutils/commons-beanutils -->
 		<dependency>
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils</artifactId>
 			<version>1.9.3</version>
 		</dependency>
-		
+
 		<!-- for RatcliffObershelpMetric -->
-        <dependency>
-            <groupId>com.rockymadden.stringmetric</groupId>
-            <artifactId>stringmetric-core_2.10</artifactId>
-            <version>0.27.3</version>
-        </dependency>
-        
-        <!-- CSV -->
 		<dependency>
-		    <groupId>com.opencsv</groupId>
-		    <artifactId>opencsv</artifactId>
-		    <version>4.1</version>
+			<groupId>com.rockymadden.stringmetric</groupId>
+			<artifactId>stringmetric-core_2.10</artifactId>
+			<version>0.27.3</version>
 		</dependency>
-        
-        <!-- EXCEL -->
-        <dependency>
+
+		<!-- CSV -->
+		<dependency>
+			<groupId>com.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>4.1</version>
+		</dependency>
+
+		<!-- EXCEL -->
+		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
-			<version>3.15</version>
+			<version>3.17</version>
 		</dependency>
-        
-        <dependency>
-		    <groupId>pl.pragmatists</groupId>
-		    <artifactId>JUnitParams</artifactId>
-		    <version>1.1.1</version>
-		    <scope>test</scope>
+
+		<!-- https://mvnrepository.com/artifact/pl.pragmatists/JUnitParams -->
+		<dependency>
+			<groupId>pl.pragmatists</groupId>
+			<artifactId>JUnitParams</artifactId>
+			<version>1.1.1</version>
+			<scope>test</scope>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-core -->
+		<!-- for ReflectionUtil -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>5.0.8.RELEASE</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.google.guava/guava for class 
+			ClassPath -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>26.0-jre</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.googlecode.juniversalchardet/juniversalchardet -->
+		<dependency>
+			<groupId>com.googlecode.juniversalchardet</groupId>
+			<artifactId>juniversalchardet</artifactId>
+			<version>1.0.3</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.itextpdf/itextpdf -->
+		<!-- should be in cermine? -->
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.5.13</version>
+		</dependency>
+
 
 	</dependencies>
 	<repositories>
-		<repository>
+		<!-- <repository>
 			<id>jitpack.io</id>
 			<url>https://jitpack.io</url>
+		</repository> -->
+
+		<!-- for grobid (http://grobid.readthedocs.io/en/latest/Grobid-java-library) -->
+		<repository>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>bintray-rookies-maven</id>
+			<name>bintray</name>
+			<url>https://dl.bintray.com/rookies/maven</url>
+		</repository>
+
+		<!-- for cermine (https://github.com/CeON/CERMINE) -->
+		<repository>
+			<id>icm</id>
+			<name>ICM repository</name>
+			<url>http://maven.icm.edu.pl/artifactory/repo</url>
 		</repository>
 	</repositories>
 	<!-- <scm> <connection>scm:git:git@github.com:CeON/CERMINE.git</connection> 

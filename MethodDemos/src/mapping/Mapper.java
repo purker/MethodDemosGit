@@ -1,6 +1,7 @@
 package mapping;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -23,6 +24,7 @@ import org.eclipse.persistence.jaxb.JAXBUnmarshaller;
 
 import mapping.result.Publication;
 import method.Method;
+import misc.Duration;
 import utils.FailureUtil;
 import utils.FileCollectionUtil;
 import utils.PublicationUtil;
@@ -77,7 +79,7 @@ public abstract class Mapper
 		return new File(getDirectory(), getMethod().getName() + "-" + id + "-xstream.xml");
 	}
 
-	protected void unmarshallToXmlFile(File inputFileXML, File outputFileObjectAsXML) throws JAXBException, XMLStreamException
+	protected void unmarshallToXmlFile(File inputFileXML, File outputFileObjectAsXML) throws JAXBException, XMLStreamException, FileNotFoundException
 	{
 		if(!OVERRIDE_EXISTING && outputFileObjectAsXML.exists())
 		{
@@ -86,18 +88,18 @@ public abstract class Mapper
 		}
 		Publication publication = unmarshallFile(inputFileXML);
 
-		XStreamUtil.convertToXmL(publication, outputFileObjectAsXML, System.out, true);
+		XStreamUtil.convertToXml(publication, outputFileObjectAsXML, System.out, true);
 
 		// System.out.println(publication);
 	}
 
-	public Publication unmarshallFile(File inputFileXML) throws JAXBException, XMLStreamException
+	public Publication unmarshallFile(File inputFileXML) throws JAXBException, XMLStreamException, FileNotFoundException
 	{
 		JAXBUnmarshaller unmarshaller = jc.createUnmarshaller();
 		Publication publication;
 		if(getIgnoreDTD())
 		{
-			XMLInputFactory xif = XMLInputFactory.newFactory();
+			XMLInputFactory xif = XMLInputFactory.newInstance();
 			xif.setProperty(XMLInputFactory.SUPPORT_DTD, false);
 			XMLStreamReader xsr = xif.createXMLStreamReader(new StreamSource(inputFileXML));
 			publication = (Publication)unmarshaller.unmarshal(xsr);
@@ -121,8 +123,14 @@ public abstract class Mapper
 		unmarshallFiles(FileCollectionUtil.getExtractedFiles(getMethod()));
 	}
 
+	public void unmarshallFilesWithId(List<String> idList)
+	{
+		unmarshallFiles(FileCollectionUtil.getExtractedFiles(getMethod(), idList));
+	}
+
 	public void unmarshallFiles(List<File> extractedFiles)
 	{
+		Duration.addStart(getMethod() + "_MAPPING");
 		for(File inputFile : extractedFiles)
 		{
 			// id="TUW-000000"
@@ -148,7 +156,7 @@ public abstract class Mapper
 				}
 			}
 		}
-
+		Duration.addEnd(getMethod() + "_MAPPING");
 	}
 
 	/**

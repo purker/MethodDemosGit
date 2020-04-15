@@ -7,13 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactoryConfigurationError;
-import javax.xml.xpath.XPathExpressionException;
-
 import org.apache.commons.io.FileUtils;
-import org.xml.sax.SAXException;
 
 import utils.FileCollectionUtil;
 
@@ -21,17 +15,20 @@ public class SetDateAndGrobidVersion
 {
 	// private static final String dateReplace = new Date().toString();
 	// private static final String versionReplace = getPropertyFromFile("version");
+	// private static final String gradleProperties = "D:\\Java\\git\\grobid-gradle\\gradle.properties";
 
-	private static final String gradleProperties = "D:\\Java\\git\\grobid-gradle\\gradle.properties";
+	public static void main(String[] args) throws Exception
+	{
+		replaceDateAndGrobidVersion();
+	}
 
-	public static void main(String[] args) throws SAXException, IOException, ParserConfigurationException, XPathExpressionException, TransformerFactoryConfigurationError, TransformerException
+	public static void replaceDateAndGrobidVersion() throws IOException
 	{
 		List<File> files = FileCollectionUtil.getGrobidExtractedFiles();
 
+		String grobidHomeReplace = "C:\\Users\\Angela\\git\\grobid\\grobid-home/schemas/xsd/Grobid.xsd\"";
+		String versionReplace = "0.4.5-dummy";
 		String dateReplace = "2017-12-29T00:16+0000";
-		// String dateReplace = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ").format(new Date());
-
-		System.out.println(dateReplace);
 
 		for(File file : files)
 		{
@@ -42,13 +39,13 @@ public class SetDateAndGrobidVersion
 			{
 				if(string.startsWith("xsi:schemaLocation="))
 				{
-					newLines.add("xsi:schemaLocation=\"http://www.tei-c.org/ns/1.0 C:\\Users\\Angela\\git\\grobid\\grobid-home/schemas/xsd/Grobid.xsd\"");
+					newLines.add("xsi:schemaLocation=\"http://www.tei-c.org/ns/1.0 " + grobidHomeReplace);
 				}
 				else
 					if(string.trim().startsWith("<application "))
 					{
 
-						newLines.add(String.format("\t\t\t\t<application version=\"%s\" ident=\"GROBID\" when=\"%s\">", "0.4.5-dummy", dateReplace));
+						newLines.add(String.format("\t\t\t\t<application version=\"%s\" ident=\"GROBID\" when=\"%s\">", versionReplace, dateReplace));
 					}
 					else
 					{
@@ -57,6 +54,8 @@ public class SetDateAndGrobidVersion
 			}
 			FileUtils.writeLines(file, StandardCharsets.UTF_8.name(), newLines);
 		}
+
+		System.out.println("Done");
 	}
 
 	// private static String getPropertyFromFile(String propertyName)

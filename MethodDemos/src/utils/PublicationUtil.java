@@ -78,18 +78,13 @@ public class PublicationUtil
 	{
 		StringBuffer sb = new StringBuffer();
 
-		if(CollectionUtil.isNotEmpty(author.getFirstNames()))
+		String firstNames = author.getFirstNamesAsString();
+		if(StringUtil.isNotEmpty(firstNames))
 		{
-			for(String firstName : author.getFirstNames())
-			{
-				if(firstName != null)
-				{
-					sb.append(firstName);
-					sb.append(" ");
-				}
-			}
+			sb.append(firstNames);
+			sb.append(" ");
 		}
-		if(author.getLastName() != null)
+		if(StringUtil.isNotEmpty(author.getLastName()))
 		{
 			sb.append(author.getLastName());
 		}
@@ -121,28 +116,24 @@ public class PublicationUtil
 	 *            if 1 author: name<br>
 	 *            if 2 authors: name and name<br>
 	 *            if >2 authors: name et al.
+	 * @param joinedBy
 	 * @return
 	 */
-	public static String getConcatinatedLastNamesOfAuthors(List<? extends AbstractAuthor> authors)
+	public static String getConcatinatedLastNamesOfAuthors(List<? extends AbstractAuthor> authors, String joinedBy)
 	{
 		if(CollectionUtil.isNotEmpty(authors))
 		{
-			if(authors.size() == 1)
+			if(authors.size() < 3)
 			{
-				return authors.get(0).getLastName();
+				return ReferenceUtil.getConcatinatedLastNamesOfAuthors(authors, joinedBy);
 			}
 			else
-				if(authors.size() == 2)
-				{
-					return authors.get(0).getLastName() + " and " + authors.get(1).getLastName();
-				}
-				else
-				{
-					return authors.get(0).getLastName() + " et al.";
-				}
+			{
+				return getLastNameOfFirstAuthorEtAl(authors);
+			}
 		}
 
-		return null;
+		return "";
 	}
 
 	/**
@@ -213,9 +204,9 @@ public class PublicationUtil
 		return sb.toString();
 	}
 
-	public static String getConcatinatedLastNamesOfAuthors(Reference reference)
+	public static String getConcatinatedLastNamesOfAuthors(Reference reference, String joinedBy)
 	{
-		return getConcatinatedLastNamesOfAuthors(reference.getAuthors());
+		return getConcatinatedLastNamesOfAuthors(reference.getAuthors(), joinedBy);
 	}
 
 	public static Collection<Affiliation> getDistinctAffiliations(Publication publication)
@@ -252,5 +243,68 @@ public class PublicationUtil
 	public static String getPublicationIdFromKeyStringToString(String keyString)
 	{
 		return keyString.substring(4, 10);
+	}
+
+	public static Publication getPublicationFromFile(File file)
+	{
+		return XStreamUtil.convertFromXML(file, Publication.class);
+	}
+
+	/**
+	 * @param pubId
+	 *            without prefix "TUW-"
+	 * @return
+	 */
+	public static Publication getPublicationFromId(String pubId)
+	{
+		return getPublicationFromFile(FileCollectionUtil.getGroundTruthResultFileById(pubId));
+	}
+
+	/**
+	 * There has to be at least one author
+	 * 
+	 * @param reference
+	 * @return
+	 */
+	public static String getLastNameOfFirstAuthorEtAl(Reference reference)
+	{
+		return getLastNameOfFirstAuthorEtAl(reference.getAuthors());
+	}
+
+	/**
+	 * There has to be at least one author
+	 * 
+	 * @param authors
+	 * @return
+	 */
+	public static String getLastNameOfFirstAuthorEtAl(List<? extends AbstractAuthor> authors)
+	{
+		return getLastNameOfFirstAuthor(authors) + " et al.";
+	}
+
+	/**
+	 * There has to be at least one author
+	 * 
+	 * @param list
+	 * @return
+	 */
+	public static String getLastNameOfFirstAuthor(List<? extends AbstractAuthor> list)
+	{
+		String lastNameofFirstAuthor = list.get(0).getLastName();
+		if(StringUtil.isNotEmpty(lastNameofFirstAuthor))
+			return lastNameofFirstAuthor.replaceAll("-", "");
+		else
+			return "";
+	}
+
+	/**
+	 * requires authors.size>1
+	 * 
+	 * @param reference
+	 * @return
+	 */
+	public static boolean lastAuthorIsEtAl(Reference reference)
+	{
+		return reference.getAuthors().get(reference.getAuthors().size() - 1).isEtAlAuthor();
 	}
 }

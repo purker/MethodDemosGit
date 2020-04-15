@@ -11,7 +11,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.runner.RunWith;
 
-import evaluation.Evaluators;
 import evaluation.tools.AbstractCollectionResult;
 import evaluation.tools.EvalInformationType;
 import evaluation.tools.EvaluationResult;
@@ -19,24 +18,25 @@ import evaluation.tools.PublicationIterator;
 import factory.PublicationFactory;
 import junitparams.JUnitParamsRunner;
 import mapping.result.Publication;
-import pl.edu.icm.cermine.evaluation.exception.EvaluationException;
 import utils.FileCollectionUtil;
 import utils.XStreamUtil;
 
 @RunWith(JUnitParamsRunner.class)
 public abstract class AbstractFileEvaluatorTest extends AbstractTest
 {
+	private static boolean DEFAULT_PRINT_RESULTS = false;
+
 	protected static List<EvalInformationType> types = EvalInformationType.getTypesForPublications();
 	protected static List<EvalInformationType> referenceTypes = EvalInformationType.getTypesForReferences();
 
 	@Test
-	void testDocumentResult100() throws EvaluationException, IOException
+	void testDocumentResult100() throws IOException
 	{
 		Publication originalPub = PublicationFactory.createPublication("1");
 		Publication extractedPub = PublicationFactory.createPublication("1");
 
 		PublicationIterator iter = new PublicationIterator(originalPub, extractedPub);
-		AbstractCollectionResult<?> result = getEvalutator().evaluate(iter);
+		AbstractCollectionResult<?> result = getEvalutator().evaluate(iter, DEFAULT_PRINT_RESULTS);
 
 		assertEquals(new Double(100.), result.getDocumentResult().getAveragePrecision(), "average precsision");
 		assertEquals(new Double(100.), result.getDocumentResult().getAverageRecall(), "average recall");
@@ -44,13 +44,13 @@ public abstract class AbstractFileEvaluatorTest extends AbstractTest
 	}
 
 	@Test
-	void testDocumentResult0() throws EvaluationException, IOException
+	void testDocumentResult0() throws IOException
 	{
 		Publication originalPub = PublicationFactory.createPublication("1");
 		Publication extractedPub = new Publication();
 
 		PublicationIterator iter = new PublicationIterator(originalPub, extractedPub);
-		AbstractCollectionResult<?> result = getEvalutator().evaluate(iter);
+		AbstractCollectionResult<?> result = getEvalutator().evaluate(iter, DEFAULT_PRINT_RESULTS);
 
 		EvaluationResult evaluationResult = result.getDocumentResult();
 		assertEquals(new Double(Double.NaN), evaluationResult.getAveragePrecision(), "average precsision");
@@ -64,13 +64,13 @@ public abstract class AbstractFileEvaluatorTest extends AbstractTest
 	@ParameterizedTest
 	@MethodSource(value = "evalInformationTypeValues")
 	// @ValueSource(strings = {"TITLE"}) also works
-	void testTitle100(EvalInformationType evalInfoType) throws EvaluationException, IOException
+	void testTitle100(EvalInformationType evalInfoType) throws IOException
 	{
 		Publication originalPub = PublicationFactory.createPublication("1");
 		Publication extractedPub = PublicationFactory.createPublication("1");
 
 		PublicationIterator iter = new PublicationIterator(originalPub, extractedPub);
-		AbstractCollectionResult<?> result = getEvalutator().evaluate(iter);
+		AbstractCollectionResult<?> result = getEvalutator().evaluate(iter, DEFAULT_PRINT_RESULTS);
 
 		// EvalInformationType evalInfoType = EvalInformationType.TITLE;
 		EvaluationResult evaluationResult = result.getPerType().getResultForKey(evalInfoType);
@@ -86,7 +86,7 @@ public abstract class AbstractFileEvaluatorTest extends AbstractTest
 	}
 
 	@Test
-	void testPublicationSetOnReferences() throws EvaluationException, IOException
+	void testPublicationSetOnReferences() throws IOException
 	{
 		File file = FileCollectionUtil.getCermineResultFiles().get(0);
 		Publication publication = XStreamUtil.convertFromXML(file, Publication.class);

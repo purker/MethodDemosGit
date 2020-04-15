@@ -12,6 +12,7 @@
         <java-type name="AbstractMetaPublication" xml-transient="true"/>
     	<java-type name="Publication">
             <xml-root-element name="TEI" />
+            <!-- publicationyearsuffix fehlt -->
             <xml-type prop-order="id title publicationType abstractText abstractTextGerman editors source edition publisher location volume issue chapter note pageFrom pageTo publicationDateString publicationYear publicationMonth publicationDay publicationDate doi url maxSectionLayer keywords authors affiliations sections citationContexts references"/>
             <java-attributes>
                 <!-- TODO <xml-element java-attribute="id" xml-transient="true"/> -->
@@ -30,7 +31,7 @@
                 <xml-element java-attribute="note" xml-path="teiHeader/fileDesc/sourceDesc/biblStruct/note/text()"/>
             	<xml-element java-attribute="pageFrom" xml-path="teiHeader/fileDesc/sourceDesc/biblStruct/monogr/imprint/biblScope[@unit='page']/@from"/>
                 <xml-element java-attribute="pageTo" xml-path="teiHeader/fileDesc/sourceDesc/biblStruct/monogr/imprint/biblScope[@unit='page']/@to"/>
-                <!-- TODO -->               <xml-element xml-transient="true" java-attribute="publicationDateString"/>
+                <xml-element java-attribute="publicationDateString" xml-path="teiHeader/fileDesc/publicationStmt/date[@type'published']/@when"/>
                 <!-- TODO -->               <xml-element xml-transient="true" java-attribute="publicationYear"/>
                 <!-- TODO -->               <xml-element xml-transient="true" java-attribute="publicationMonth"/>
                 <!-- TODO -->               <xml-element xml-transient="true" java-attribute="publicationDay"/>
@@ -80,7 +81,7 @@
         </java-type>
         <java-type name="Reference">
             <xml-root-element name="biblStruct" />
-            <xml-type prop-order="id referenceIdString marker title publicationType source publisher editors authors edition location volume issue chapter note pageFrom pageTo publicationDateString publicationYear publicationMonth publicationDay publicationDate doi url type referenceText publication"/>
+            <xml-type prop-order="id referenceIdString marker title publicationType source publisher editors authors edition location volume issue chapter note pageFrom pageTo publicationDateString publicationYear publicationYearSuffix publicationMonth publicationDay publicationDate doi url type referenceText publication"/>
             <java-attributes>
                 <!-- TODO                <xml-attribute xml-transient="true" java-attribute="id"/>-->
                 <xml-attribute java-attribute="referenceIdString"  name="xml:id"/>
@@ -107,6 +108,7 @@
                 <xml-attribute java-attribute="pageTo" xml-path="monogr/imprint/biblScope[@unit='page']/@to" />
                 <xml-element java-attribute="publicationDateString" name="/monogr/imprint/date[@type='published']/@when" />
                 <xml-element java-attribute="publicationYear" />
+            	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="publicationYearSuffix" />
             	<xml-element java-attribute="publicationMonth" />
                 <xml-element java-attribute="publicationDay" />
             	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="publicationDate" />

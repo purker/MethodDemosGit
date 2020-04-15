@@ -28,7 +28,6 @@ import java.util.stream.Collectors;
 
 import mapping.result.Publication;
 import utils.PublicationUtil;
-import utils.XStreamUtil;
 
 /**
  * Adapted from NlmIterator
@@ -59,18 +58,19 @@ public class PublicationIterator implements Iterable<PublicationPair>
 			{
 				try
 				{
-					Publication originalPub = getPublicationFromFile(originalFile);
-					Publication extractedPub = getPublicationFromFile(extractedFile);
+					Publication originalPub = PublicationUtil.getPublicationFromFile(originalFile);
+					Publication extractedPub = PublicationUtil.getPublicationFromFile(extractedFile);
 					entries.add(new PublicationPair(originalFile, extractedFile, originalPub, extractedPub));
 				}
 				catch(Exception e)
 				{
+					e.printStackTrace();
 					System.out.println(originalFile);
 				}
 			}
 			else
 			{
-				throw new IllegalArgumentException("No extracted version of file " + originalFile + " found!");
+				throw new IllegalArgumentException("No extracted version of file " + originalFile.getAbsolutePath() + " found!");
 			}
 
 		}
@@ -85,11 +85,6 @@ public class PublicationIterator implements Iterable<PublicationPair>
 	public Iterator<PublicationPair> iterator()
 	{
 		return entries.iterator();
-	}
-
-	protected Publication getPublicationFromFile(File file)
-	{
-		return XStreamUtil.convertFromXML(file, Publication.class);
 	}
 
 }

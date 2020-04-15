@@ -20,17 +20,30 @@ import utils.FormatingUtil;
 
 public class XlsxToCsv
 {
-	public static void convertToCsv() throws Exception
+	public static void main(String[] args) throws Exception
+	{
+		convertToCsv();
+	}
+
+	public static void convertToCsv()
 	{
 		List<File> files = new ArrayList<>();
 		files.add(new File(Config.statisticsFolder + "all-best-method-per-evaltype-publication-statistics.xlsx"));
 		files.add(new File(Config.statisticsFolder + "all-best-method-per-evaltype-reference-statistics.xlsx"));
 		files.add(new File(Config.statisticsFolder + "all-delta-precision-recall-publication-statistics.xlsx"));
 		files.add(new File(Config.statisticsFolder + "all-delta-precision-recall-reference-statistics.xlsx"));
+		files.add(new File(Config.statisticsFolder + "grobid-overview.xlsx"));
 
 		for(File file : files)
 		{
-			writeAsCsv(file);
+			try
+			{
+				writeAsCsv(file);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -75,7 +88,7 @@ public class XlsxToCsv
 						{
 							cellValue = ((XSSFCell)cell).getRawValue();
 
-							if(cellValue.contains("."))
+							if(cellValue.contains(".") && cellValue.replace("-", "").replace(".", "").replace(",", "").matches("\\d*"))
 							{
 								cellValue = FormatingUtil.formatDouble(new Double(cellValue));
 							}

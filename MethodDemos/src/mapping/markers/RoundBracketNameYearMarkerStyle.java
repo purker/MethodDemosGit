@@ -1,10 +1,14 @@
 package mapping.markers;
 
 import mapping.result.Reference;
+import utils.CollectionUtil;
+import utils.PublicationUtil;
 import utils.ReferenceUtil;
 
 /**
- * (Gent & Walsh, 1999; Chen & Interian, 2005)
+ * 1: (Puntigam, 1997)<br>
+ * 2: (Boyapati and Rinard, 2001)<br>
+ * >2: (Milner et al., 1992)
  */
 public class RoundBracketNameYearMarkerStyle extends AbstractMarkerStyle
 {
@@ -14,10 +18,17 @@ public class RoundBracketNameYearMarkerStyle extends AbstractMarkerStyle
 	{
 		StringBuffer sb = new StringBuffer();
 		sb.append("(");
-		String names = ReferenceUtil.getConcatinatedLastNamesOfAuthors(reference);
-		if(names != null)
+		if(CollectionUtil.isNotEmpty(reference.getAuthors()))
 		{
-			sb.append(names);
+			if(reference.getAuthors().size() <= 2)
+			{
+				sb.append(ReferenceUtil.getConcatinatedLastNamesOfAuthors(reference, " and "));
+
+			}
+			else
+			{
+				sb.append(PublicationUtil.getLastNameOfFirstAuthorEtAl(reference));
+			}
 			sb.append(", ");
 		}
 		else

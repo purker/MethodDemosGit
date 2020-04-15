@@ -1,5 +1,6 @@
 import java.awt.Desktop;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.StringReader;
@@ -37,6 +38,7 @@ import org.eclipse.persistence.jaxb.JAXBContext;
 import org.eclipse.persistence.jaxb.JAXBContextFactory;
 import org.eclipse.persistence.jaxb.JAXBContextProperties;
 import org.eclipse.persistence.jaxb.JAXBUnmarshaller;
+import org.mozilla.universalchardet.UniversalDetector;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -49,17 +51,20 @@ import config.Config;
 import demos.Demos;
 import evaluation.tools.EvalInformationType;
 import factory.PublicationFactory;
-import mapping.ReferenceSetPublicationWorker;
 import mapping.Worker;
 import mapping.cermine.ReferenceAuthorNameConcatenationWorker;
 import mapping.grobid.AuthorNameConcatenationWorker;
 import mapping.markers.AbstractMarkerStyle;
+import mapping.markers.NameRoundBracketYearMarkerStyle;
 import mapping.markers.NameSquareBracketYearMarkerStyle;
+import mapping.markers.NumberedMarkerStyle;
+import mapping.markers.RoundBracketNameAmpYearMarkerStyle;
 import mapping.markers.RoundBracketNameYearMarkerStyle;
 import mapping.markers.RoundBracketNameYearMarkerWithoutComaStyle;
 import mapping.markers.RoundBracketShortNameYearMarkerWithoutComaStyle2;
-import mapping.markers.SquareBracketNameYearMarkerStyle;
-import mapping.markers.SquareBracketNameYearShortMarkerStyle;
+import mapping.markers.SquareBracketNameComaYearMarkerStyle;
+import mapping.markers.SquareBracketNameShortYearShortMarkerStyle;
+import mapping.markers.SquareBracketNameYearMarkerWithoutWhitespaceStyle;
 import mapping.markers.SquareBracketNumberedMarkerStyle;
 import mapping.markers.SuperscriptNumberedMarkerStyle;
 import mapping.result.AbstractAuthor;
@@ -73,22 +78,19 @@ import mapping.result.Reference;
 import mapping.result.ReferenceAuthor;
 import mapping.result.ReferenceCitation;
 import mapping.result.Section;
+import misc.ReplaceNewlines;
 import utils.CollectionUtil;
 import utils.FileCollectionUtil;
 import utils.FileNameUtil;
 import utils.PublicationUtil;
+import utils.StringUtil;
 import utils.XStreamUtil;
-
-/**
- * @author Angela
- *
- */
 
 @SuppressWarnings("unused")
 public class StepsHistory
 {
 	static File file1 = new File("D:/Java/git/MethodDemosGit/MethodDemos/output/result/result-TUW-137078-xstream.xml");
-	static File file2 = new File("D:/Java/git/MethodDemosGit/MethodDemos/output/result/result-TUW-137078-xstream2.xml");
+	static File file2 = new File("D:/Java/git/MethodDemosGit/MethodDemos/output/result/result-TUW--xstream2.xml");
 	static File file3 = new File(Demos.grobIdOutputDir, "grobid-TUW-137078-xstream.xml");
 	static File file4 = new File("D:/Java/git/MethodDemosGit/MethodDemos/output/result/result-TUW-139761-xstream.xml");
 	static File file5 = new File(Demos.pdfxOutputDir, "pdfx-TUW-139761.xml");
@@ -145,7 +147,18 @@ public class StepsHistory
 
 	public static void main(String[] args) throws Exception
 	{
-		useWorkerFiles(FileCollectionUtil.getResultFiles(), new ReferenceSetPublicationWorker());
+		printEncoding(FileCollectionUtil.getStatisticsCSVFiles());
+		// GrobidDemo.init();
+		// File file = new File("D:\\Java\\git\\grobid-0.4.4\\grobid-home\\models\\name\\citation\\model.wapiti");
+		// WapitiModel.dump(file);
+
+		// ReplaceNewlines.replaceNewlines(FileCollectionUtil.getStatisticsCSVFiles());
+		// printYearSuffixes();
+		// setMarkersByReferenceStyleForAllInMap();
+		// printReferencesAuthorCount(PublicationUtil.getPublicationFromId("194085"));
+		// printEmptyMarkerPublications();
+		// printMarkerStylesForReference(PublicationFactory.createReference());
+		// useWorkerFiles(FileCollectionUtil.getResultFiles(), new ReferenceSetPublicationWorker());
 		// useWorkerFiles(FileCollectionUtil.getResultFiles(), new SectionLayerWorker());
 		// setPublicationTypeFromMap(FileCollectionUtil.getResultFiles());
 		// rewriteXStreamFiles(FileCollectionUtil.getResultFiles());
@@ -160,7 +173,7 @@ public class StepsHistory
 		// checkXStreamFiles(resultFileDirectory);
 		// findNotProcessedPDFXFiles(Demos.pdfxOutputDir);
 		// printPageCountForPdfs(getNotAlreadyDone(new File("D:\\output\\old\\Ground Truth old\\Publikationsart Beiträge aus Tagungsbänden")));
-		// setRefCounter(file42, -1, null, true, false);
+		// setRefCounter(file42, -1, ;, true, false);
 		// replaceReferenceMarkersWithIdsInSections(file40);
 		// setReferenceMarkerByPdfxFile(file40pdfx, file40);
 		// setMarkersByReferenceStyle(file39);
@@ -312,6 +325,118 @@ public class StepsHistory
 		// removeMarkersFromIds(result15_182899);
 	}
 
+	private static void printEncoding(Collection<File> files) throws IOException
+	{
+		for(File file : files)
+		{
+			byte[] buf = new byte[4096];
+			FileInputStream fis = new FileInputStream(file);
+
+			// (1)
+			UniversalDetector detector = new UniversalDetector(null);
+
+			// (2)
+			int nread;
+			while((nread = fis.read(buf)) > 0 && !detector.isDone())
+			{
+				detector.handleData(buf, 0, nread);
+			}
+			// (3)
+			detector.dataEnd();
+
+			// (4)
+			String encoding = detector.getDetectedCharset();
+			if(encoding != null)
+			{
+				System.out.printf("%-35s", "Detected encoding = " + encoding);
+			}
+			else
+			{
+				System.out.printf("%-35s", "No encoding detected.");
+			}
+
+			System.out.println(file.getName());
+
+			// (5)
+			detector.reset();
+		}
+
+	}
+
+	private static void setMarkersByReferenceStyleForAll() throws IOException
+	{
+		for(File file : FileCollectionUtil.getResultFiles())
+		{
+			setMarkersByReferenceStyle(file);
+			ReplaceNewlines.replaceNewlines(file);
+		}
+	}
+
+	private static void setMarkersByReferenceStyleForAllInMap() throws IOException
+	{
+		for(Entry<String, AbstractMarkerStyle> entry : markerStyleMap.entrySet())
+		{
+			if(entry.getValue() != null)
+			{
+				Publication publication = PublicationUtil.getPublicationFromId(entry.getKey());
+				setMarkerStyleForPublicationAndMarkerStyle(publication, entry.getValue());
+			}
+		}
+	}
+
+	private static void printMarkerStylesForReference(Reference ref) throws IOException
+	{
+		List<AbstractMarkerStyle> list = new ArrayList<>();
+		// TODO specific markers
+		// list.add(new NameRoundBracketYearMarkerStyle());
+		// list.add(new NameSquareBracketYearMarkerStyle());
+		// list.add(new NameYearMarkerStyle());
+		// list.add(new NumberedMarkerStyle());
+		// list.add(new RoundBracketNameAmpYearMarkerStyle());
+		// list.add(new RoundBracketNameYearMarkerWithoutComaStyle());
+		// list.add(new RoundBracketShortNameYearMarkerWithoutComaStyle2());
+		// list.add(new SquareBracketNameComaYearMarkerStyle());
+		// list.add(new SquareBracketNameYearShortMarkerStyle());
+		// list.add(new SquareBracketNumberedMarkerStyle());
+		// list.add(new SuperscriptNumberedMarkerStyle());
+		for(AbstractMarkerStyle markerStyle : list)
+		{
+			System.out.println(markerStyle.getMarkerString(ref));
+		}
+
+	}
+
+	private static void printEmptyMarkerPublications()
+	{
+		for(File file : FileCollectionUtil.getResultFiles())
+		{
+			Publication publication = PublicationUtil.getPublicationFromFile(file);
+
+			int refEmptyCount = 0;
+			int refNotEmptyCount = 0;
+			for(Reference reference : publication.getReferences())
+			{
+				if(StringUtil.isEmpty(reference.getMarker()))
+				{
+					// System.out.println(reference.getKeyString());
+					refEmptyCount++;
+				}
+				else
+				{
+					refNotEmptyCount++;
+					// System.out.println(reference.getKeyString());
+				}
+			}
+			boolean allMarkerEmpty = publication.getReferences().size() == refEmptyCount;
+			boolean allMarkerNotEmpty = publication.getReferences().size() == refNotEmptyCount;
+			// System.out.println(publication.getKeyString() + ": " + refEmptyCount + " from " + publication.getReferences().size() + " empty, all empty: " + allMarkerEmpty);
+			// if(allMarkerEmpty)
+			{
+				System.out.println(publication.getKeyString() + "\t" + allMarkerNotEmpty);
+			}
+		}
+	}
+
 	private static void setPublicationTypeFromMap(List<File> resultFiles)
 	{
 		Map<String, PublicationType> map = new HashMap<>();
@@ -335,7 +460,7 @@ public class StepsHistory
 					System.err.println("no type found for " + publication.getId());
 				}
 
-				XStreamUtil.convertToXmL(publication, file, System.out, true);
+				XStreamUtil.convertToXml(publication, file, System.out, true);
 			}
 			catch(Exception e)
 			{
@@ -380,9 +505,81 @@ public class StepsHistory
 			// publication.setKeywords(null);
 			// }
 
-			XStreamUtil.convertToXmL(publication, file, System.out, true);
+			XStreamUtil.convertToXml(publication, file, System.out, true);
 		}
 
+	}
+
+	private static void printNotes()
+	{
+		List<File> files = FileCollectionUtil.getResultFiles();
+
+		for(File file : files)
+		{
+			Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
+
+			for(Reference reference : publication.getReferences())
+			{
+				if(StringUtil.isNotEmpty(reference.getPublicationYear()))
+				{
+					if(reference.getPublicationYear().length() == 5)
+					{
+						// reference.setPublicationYear(reference.getNote());
+						// reference.getYear(null);
+
+						reference.setPublicationYearSuffix(reference.getPublicationYear().substring(4, 5));
+						reference.setPublicationYear(reference.getPublicationYear().substring(0, 4));
+						System.out.println(reference.getKeyString());
+						System.out.println(reference.getPublicationYear());
+					}
+				}
+			}
+			XStreamUtil.convertToXml(publication, file, System.out, true);
+			ReplaceNewlines.replaceNewlines(file);
+		}
+	}
+
+	private static void printEtAlAuthors()
+	{
+		List<File> files = FileCollectionUtil.getResultFiles();
+
+		for(File file : files)
+		{
+			Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
+
+			for(Reference reference : publication.getReferences())
+			{
+				if(CollectionUtil.isNotEmpty(reference.getAuthors())) for(ReferenceAuthor author : reference.getAuthors())
+				{
+					if(StringUtil.isNotEmpty(author.getLastName()) && author.getLastName().startsWith("al"))
+					{
+						System.out.println(reference.getKeyString());
+						// System.out.println(author.getFullName());
+					}
+				}
+			}
+
+		}
+	}
+
+	private static void printYearSuffixes()
+	{
+		List<File> files = FileCollectionUtil.getResultFiles();
+
+		for(File file : files)
+		{
+			Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
+
+			for(Reference reference : publication.getReferences())
+			{
+				if(StringUtil.isNotEmpty(reference.getPublicationYearSuffix()))
+				{
+					System.out.print(reference.getKeyString());
+					System.out.println(reference.getPublicationYearSuffix());
+				}
+			}
+
+		}
 	}
 
 	private static void findNotProcessedParscitFiles()
@@ -514,7 +711,7 @@ public class StepsHistory
 						}
 					}
 				}
-				XStreamUtil.convertToXmL(publication, file, System.out, true);
+				XStreamUtil.convertToXml(publication, file, System.out, true);
 				// if(affiliations.size() > 2)
 				// {
 				// Desktop.getDesktop().open(file);
@@ -588,7 +785,7 @@ public class StepsHistory
 				// Publication publication = new ResultMapperXStreamStyle().unmarshall(file);
 
 				// new ResultMapper().marshall(publication, file);
-				XStreamUtil.convertToXmL(publication, file, System.out, true);
+				XStreamUtil.convertToXml(publication, file, System.out, true);
 				break;
 			}
 			catch(Exception e)
@@ -623,17 +820,27 @@ public class StepsHistory
 			}
 		}
 
-		XStreamUtil.convertToXmL(publication, file, System.out, true);
+		XStreamUtil.convertToXml(publication, file, System.out, true);
 	}
 
 	private static void setMarkersByReferenceStyle(File file)
 	{
 		Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
-		AbstractMarkerStyle markerStyle = markerStyleMap.get(publication.getId());
+		setMarkerForPublication(publication);
+	}
 
+	private static void setMarkerForPublication(Publication publication)
+	{
+		AbstractMarkerStyle markerStyle = markerStyleMap.get(publication.getIdString());
+		setMarkerStyleForPublicationAndMarkerStyle(publication, markerStyle);
+	}
+
+	private static void setMarkerStyleForPublicationAndMarkerStyle(Publication publication, AbstractMarkerStyle markerStyle)
+	{
 		if(markerStyle == null)
 		{
-			System.err.println("markerStyle not set for " + file);
+			System.err.println("markerStyle not set for " + publication.getIdString());
+			return;
 		}
 
 		// Setzt die Marker an den Referencen in den Referencen
@@ -646,12 +853,14 @@ public class StepsHistory
 				// {
 				// marker = "[" + reference.getSource() + ", " + (StringUtils.isEmpty(reference.getNote()) ? reference.getPublicationYear() : reference.getNote()) + "]";
 				// }
+				System.out.println(reference.getKeyString());
 				reference.setMarker(marker);
 			}
 		}
 
-		XStreamUtil.convertToXmL(publication, file, System.out, true);
-
+		File file = FileCollectionUtil.getGroundTruthResultFileById(publication.getIdString());
+		XStreamUtil.convertToXml(publication, file, System.out, true);
+		ReplaceNewlines.replaceNewlines(file);
 	}
 
 	private static void setKeywords(File directory)
@@ -672,7 +881,7 @@ public class StepsHistory
 
 						publication.setKeywords(Arrays.asList(section.getLevel().split(", ")));
 						iterator.remove();
-						XStreamUtil.convertToXmL(publication, file, System.err, true);
+						XStreamUtil.convertToXml(publication, file, System.err, true);
 						Desktop.getDesktop().open(file);
 						return;
 					}
@@ -714,7 +923,7 @@ public class StepsHistory
 
 				publication.setAffiliations(null);
 
-				XStreamUtil.convertToXmL(publication, file, System.err, true);
+				XStreamUtil.convertToXml(publication, file, System.err, true);
 			}
 			catch(Exception e)
 			{
@@ -815,7 +1024,7 @@ public class StepsHistory
 			reference.setMarker("[" + markers[x++] + "]");
 		}
 
-		XStreamUtil.convertToXmL(publication, file, System.out, true);
+		XStreamUtil.convertToXml(publication, file, System.out, true);
 	}
 
 	private static String printAllFirstLastNames(File file)
@@ -848,7 +1057,7 @@ public class StepsHistory
 				reference.setSource(null);
 			}
 		}
-		XStreamUtil.convertToXmL(publication, file, System.out, true);
+		XStreamUtil.convertToXml(publication, file, System.out, true);
 	}
 
 	private static void replaceReferenceMarkersWithIdsInSections(File file)
@@ -881,7 +1090,7 @@ public class StepsHistory
 				}
 			}
 		}
-		XStreamUtil.convertToXmL(publication, file, System.out, true);
+		XStreamUtil.convertToXml(publication, file, System.out, true);
 	}
 
 	private static void createFirstAndLastNameFromName(File file)
@@ -930,7 +1139,7 @@ public class StepsHistory
 			}
 		}
 
-		XStreamUtil.convertToXmL(publication, file, System.out, true);
+		XStreamUtil.convertToXml(publication, file, System.out, true);
 
 	}
 
@@ -949,7 +1158,7 @@ public class StepsHistory
 			}
 		}
 
-		XStreamUtil.convertToXmL(publication, file, System.out, true);
+		XStreamUtil.convertToXml(publication, file, System.out, true);
 
 	}
 
@@ -963,7 +1172,7 @@ public class StepsHistory
 			reference.setId(new Id(x++));
 		}
 
-		XStreamUtil.convertToXmL(publication, file, System.out, true);
+		XStreamUtil.convertToXml(publication, file, System.out, true);
 
 	}
 
@@ -996,7 +1205,7 @@ public class StepsHistory
 				}
 			}
 
-			XStreamUtil.convertToXmL(publication, file, System.out, true);
+			XStreamUtil.convertToXml(publication, file, System.out, true);
 		}
 		catch(
 
@@ -1034,7 +1243,7 @@ public class StepsHistory
 			}
 		}
 
-		XStreamUtil.convertToXmL(publication, file, System.err, true);
+		XStreamUtil.convertToXml(publication, file, System.err, true);
 
 	}
 
@@ -1117,7 +1326,7 @@ public class StepsHistory
 			}
 		}
 
-		XStreamUtil.convertToXmL(publication, file, System.err, true);
+		XStreamUtil.convertToXml(publication, file, System.err, true);
 
 	}
 
@@ -1148,7 +1357,7 @@ public class StepsHistory
 
 			}
 		}
-		XStreamUtil.convertToXmL(publication, file, System.err, true);
+		XStreamUtil.convertToXml(publication, file, System.err, true);
 	}
 
 	/**
@@ -1188,7 +1397,7 @@ public class StepsHistory
 
 			}
 		}
-		XStreamUtil.convertToXmL(publication, file, System.err, true);
+		XStreamUtil.convertToXml(publication, file, System.err, true);
 	}
 
 	private static void splitNames(String string)
@@ -1226,7 +1435,7 @@ public class StepsHistory
 
 		authors.add(a);
 
-		XStreamUtil.convertToXmL(authors, System.err, System.err, true);
+		XStreamUtil.convertToXml(authors, System.err, System.err, true);
 	}
 
 	private static void setRefCounter(File file, int i)
@@ -1286,7 +1495,7 @@ public class StepsHistory
 				}
 			}
 		}
-		XStreamUtil.convertToXmL(publication, file, System.out, true);
+		XStreamUtil.convertToXml(publication, file, System.out, true);
 	}
 
 	private static void rotateReferenceNames(File file)
@@ -1364,7 +1573,7 @@ public class StepsHistory
 			}
 		}
 
-		XStreamUtil.convertToXmL(publication, file, System.out, true);
+		XStreamUtil.convertToXml(publication, file, System.out, true);
 
 	}
 
@@ -1448,7 +1657,7 @@ public class StepsHistory
 			}
 		}
 
-		XStreamUtil.convertToXmL(publication, file, System.out, true);
+		XStreamUtil.convertToXml(publication, file, System.out, true);
 
 	}
 
@@ -1465,7 +1674,7 @@ public class StepsHistory
 			}
 		}
 
-		XStreamUtil.convertToXmL(publication, file, System.out, true);
+		XStreamUtil.convertToXml(publication, file, System.out, true);
 
 	}
 
@@ -1509,7 +1718,7 @@ public class StepsHistory
 				}
 			}
 
-			XStreamUtil.convertToXmL(publication, file, System.out, true);
+			XStreamUtil.convertToXml(publication, file, System.out, true);
 		}
 		catch(
 
@@ -1568,7 +1777,7 @@ public class StepsHistory
 				}
 			}
 
-			XStreamUtil.convertToXmL(publication, file, System.out, true);
+			XStreamUtil.convertToXml(publication, file, System.out, true);
 		}
 		catch(
 
@@ -1588,6 +1797,17 @@ public class StepsHistory
 			System.out.println(file);
 		}
 
+	}
+
+	private static void printReferencesAuthorCount(Publication publication)
+	{
+		for(Reference reference : publication.getReferences())
+		{
+			if(reference.getAuthors() != null)
+				System.out.println(reference.getKeyString() + ": " + reference.getAuthors().size());
+			else
+				System.out.println(reference.getKeyString() + ": " + null);
+		}
 	}
 
 	private static List<String> getResultPubIdsFromDirectory()
@@ -1682,7 +1902,7 @@ public class StepsHistory
 	{
 		Publication publication = XStreamUtil.convertFromXML(file, Publication.class);
 		worker.doWork(publication);
-		XStreamUtil.convertToXmL(publication, file, System.out, true);
+		XStreamUtil.convertToXml(publication, file, System.out, true);
 	}
 
 	private static void affiliationsToAffiliationList(File directory)
@@ -1698,7 +1918,7 @@ public class StepsHistory
 					// author.setAffiliations(new ArrayList(Arrays.asList(author.affiliation)));
 					// author.affiliation = null;
 				}
-				XStreamUtil.convertToXmL(publication, file, System.out, true);
+				XStreamUtil.convertToXml(publication, file, System.out, true);
 			}
 			catch(Exception e)
 			{
@@ -1756,7 +1976,7 @@ public class StepsHistory
 					}
 				}
 
-				XStreamUtil.convertToXmL(publication, file, System.out, true);
+				XStreamUtil.convertToXml(publication, file, System.out, true);
 			}
 			catch(Exception e)
 			{
@@ -1782,7 +2002,7 @@ public class StepsHistory
 			{
 				AbstractMetaPublication publication = XStreamUtil.convertFromXML(file, Publication.class);
 
-				XStreamUtil.convertToXmL(publication, file, System.out, true);
+				XStreamUtil.convertToXml(publication, file, System.out, true);
 			}
 			catch(Exception e)
 			{
@@ -1889,7 +2109,7 @@ public class StepsHistory
 						}
 					}
 				}
-				XStreamUtil.convertToXmL(publication, file, System.out, true);
+				XStreamUtil.convertToXml(publication, file, System.out, true);
 			}
 			catch(Exception e)
 			{
@@ -2020,7 +2240,7 @@ public class StepsHistory
 		new AuthorNameConcatenationWorker().doWork(publication);
 		new ReferenceAuthorNameConcatenationWorker().doWork(publication);
 
-		XStreamUtil.convertToXmL(publication, file, System.out, true);
+		XStreamUtil.convertToXml(publication, file, System.out, true);
 
 	}
 
@@ -2060,7 +2280,7 @@ public class StepsHistory
 			}
 		}
 
-		XStreamUtil.convertToXmL(publication, resultFile, System.out, true);
+		XStreamUtil.convertToXml(publication, resultFile, System.out, true);
 
 	}
 
@@ -2140,7 +2360,7 @@ public class StepsHistory
 	{
 		AbstractMetaPublication p2 = PublicationFactory.createPublication();
 
-		XStreamUtil.convertToXmL(p2, file2, System.out, true);
+		XStreamUtil.convertToXml(p2, file2, System.out, true);
 
 	}
 
@@ -2153,40 +2373,106 @@ public class StepsHistory
 	static Map<String, AbstractMarkerStyle> markerStyleMap = new HashMap<>();
 	static
 	{
-		markerStyleMap.put("TUW-137078", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("TUW-138011", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("TUW-138447", new SuperscriptNumberedMarkerStyle());
-		markerStyleMap.put("TUW-138544", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("TUW-138547", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("TUW-139299", new SquareBracketNameYearMarkerStyle());
-		markerStyleMap.put("TUW-139761", new SquareBracketNameYearShortMarkerStyle());// new SquareBracketNameYearShortMarkerStyle());
-		markerStyleMap.put("TUW-139769", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("TUW-139781", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("TUW-139785", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("TUW-140047", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("TUW-140048", new SquareBracketNameYearShortMarkerStyle());
-		markerStyleMap.put("TUW-140229", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("TUW-140253", new RoundBracketNameYearMarkerStyle());
-		markerStyleMap.put("TUW-140308", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("TUW-140533", new NameSquareBracketYearMarkerStyle());
-		markerStyleMap.put("TUW-140867", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("TUW-140895", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("TUW-140983", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("TUW-141024", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("TUW-141065", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("TUW-141121", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("TUW-141140", new RoundBracketNameYearMarkerStyle());
-		markerStyleMap.put("TUW-141336", new RoundBracketNameYearMarkerStyle());
-		markerStyleMap.put("TUW-141618", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("TUW-141758", new SquareBracketNameYearMarkerStyle());
-		markerStyleMap.put("TUW-168222", new SquareBracketNumberedMarkerStyle());
-		markerStyleMap.put("TUW-182899", new RoundBracketNameYearMarkerStyle());
+		markerStyleMap.put("203409", null);
+		markerStyleMap.put("251544", null);
+		markerStyleMap.put("174216", null); // SquareBracketNameComaYearMarkerStyle());
+		markerStyleMap.put("247743", null); // SquareBracketNameShortYearShortMarkerStyle());
+		markerStyleMap.put("245336", null); // NameSquareBracketYearMarkerStyle());
+		markerStyleMap.put("182414", null); // SquareBracketLastNameShortYearShortMarkerStyle());
+		markerStyleMap.put("205933", null); // SquareBracketNameComaYearMarkerStyle());
+		markerStyleMap.put("140048", null); // SquareBracketNameShortYearShortMarkerStyle());
+		markerStyleMap.put("168482", null); // SquareBracketNameShortYearShortMarkerStyle());
+		markerStyleMap.put("200950", null); // SquareBracketNameShortYearShortMarkerStyle());
+		markerStyleMap.put("226016", null); // SquareBracketNameShortYearShortMarkerStyle());
+		markerStyleMap.put("198401", new RoundBracketNameYearMarkerStyle());
+		markerStyleMap.put("228620", new RoundBracketNameYearMarkerWithoutComaStyle());
+		markerStyleMap.put("139761", new SquareBracketNameShortYearShortMarkerStyle());
+		markerStyleMap.put("197422", new SquareBracketNameShortYearShortMarkerStyle());
+		markerStyleMap.put("256654", new SquareBracketNameShortYearShortMarkerStyle());
+		markerStyleMap.put("194085", new NameRoundBracketYearMarkerStyle());
+		markerStyleMap.put("140533", new NameSquareBracketYearMarkerStyle());
+		markerStyleMap.put("169511", new NumberedMarkerStyle());
+		markerStyleMap.put("181199", new NumberedMarkerStyle());
+		markerStyleMap.put("191715", new NumberedMarkerStyle());
+		markerStyleMap.put("191977", new NumberedMarkerStyle());
+		markerStyleMap.put("192724", new NumberedMarkerStyle());
+		markerStyleMap.put("201066", new NumberedMarkerStyle());
+		markerStyleMap.put("201160", new NumberedMarkerStyle());
+		markerStyleMap.put("201167", new NumberedMarkerStyle());
+		markerStyleMap.put("201821", new NumberedMarkerStyle());
+		markerStyleMap.put("204724", new NumberedMarkerStyle());
+		markerStyleMap.put("205557", new NumberedMarkerStyle());
+		markerStyleMap.put("213513", new NumberedMarkerStyle());
+		markerStyleMap.put("223973", new NumberedMarkerStyle());
+		markerStyleMap.put("225252", new NumberedMarkerStyle());
+		markerStyleMap.put("236120", new NumberedMarkerStyle());
+		markerStyleMap.put("240858", new NumberedMarkerStyle());
+		markerStyleMap.put("247301", new NumberedMarkerStyle());
+		markerStyleMap.put("257397", new NumberedMarkerStyle());
+		markerStyleMap.put("257870", new NumberedMarkerStyle());
+		markerStyleMap.put("141336", new RoundBracketNameAmpYearMarkerStyle());
+		markerStyleMap.put("140253", new RoundBracketNameYearMarkerStyle());
+		markerStyleMap.put("182899", new RoundBracketNameYearMarkerWithoutComaStyle());
+		markerStyleMap.put("231707", new RoundBracketNameYearMarkerWithoutComaStyle());
+		markerStyleMap.put("255712", new RoundBracketShortNameYearMarkerWithoutComaStyle2());
+		markerStyleMap.put("139299", new SquareBracketNameComaYearMarkerStyle());
+		markerStyleMap.put("141758", new SquareBracketNameComaYearMarkerStyle());
+		markerStyleMap.put("197852", new SquareBracketNameShortYearShortMarkerStyle());
+		markerStyleMap.put("198408", new SquareBracketNameYearMarkerWithoutWhitespaceStyle());
+		markerStyleMap.put("137078", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("138011", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("138544", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("138547", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("139769", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("139781", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("139785", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("140047", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("140229", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("140308", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("140867", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("140895", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("140983", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("141024", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("141065", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("141121", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("141140", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("141618", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("168222", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("172697", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("175428", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("176087", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("177140", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("179146", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("180162", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("185321", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("185441", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("186227", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("189842", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("194561", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("194660", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("198400", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("198405", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("200745", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("200748", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("200948", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("200959", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("202034", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("202824", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("203924", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("216744", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("217690", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("217971", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("221215", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("223906", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("226000", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("233317", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("233657", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("236063", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("237297", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("245799", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("247741", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("252847", new SquareBracketNumberedMarkerStyle());
+		markerStyleMap.put("138447", new SuperscriptNumberedMarkerStyle());
 
-		markerStyleMap.put("TUW-192724", new SquareBracketNameYearMarkerStyle());
-		markerStyleMap.put("TUW-194085", new NameSquareBracketYearMarkerStyle());
-		markerStyleMap.put("TUW-204724", new RoundBracketNameYearMarkerStyle());
-		markerStyleMap.put("TUW-228620", new RoundBracketNameYearMarkerWithoutComaStyle());
-		markerStyleMap.put("TUW-245336", new NameSquareBracketYearMarkerStyle());
-		markerStyleMap.put("TUW-255712", new RoundBracketShortNameYearMarkerWithoutComaStyle2());
 	}
 }

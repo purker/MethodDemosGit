@@ -2,9 +2,12 @@ package mapping.markers;
 
 import mapping.result.Reference;
 import utils.PublicationUtil;
+import utils.StringUtil;
 
 /**
- * (Modgil and Bench-Capon 2011)
+ * 1: (acatech 2011)<br>
+ * 2: (Modgil and Bench-Capon 2011)<br>
+ * >=3: (Riemer et al. 2009)
  */
 public class RoundBracketNameYearMarkerWithoutComaStyle extends AbstractMarkerStyle
 {
@@ -14,10 +17,10 @@ public class RoundBracketNameYearMarkerWithoutComaStyle extends AbstractMarkerSt
 	{
 		StringBuffer sb = new StringBuffer();
 		sb.append("(");
-		String names = PublicationUtil.getConcatinatedLastNamesOfAuthors(reference.getAuthors());
+		String names = PublicationUtil.getConcatinatedLastNamesOfAuthors(reference.getAuthors(), " and ");
 
 		String pre = null;
-		if(names != null)
+		if(StringUtil.isNotEmpty(names))
 		{
 			pre = names;
 		}
@@ -32,6 +35,11 @@ public class RoundBracketNameYearMarkerWithoutComaStyle extends AbstractMarkerSt
 				{
 					pre = reference.getEditors();
 				}
+				else
+					if(reference.getTitle() != null)
+					{
+						pre = reference.getTitle();
+					}
 		}
 		if(pre != null)
 		{

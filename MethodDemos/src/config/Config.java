@@ -17,10 +17,15 @@ public interface Config
 	File parsCitOutputDir = new File("output/extracted/parscit");
 	File pdfxOutputDir = new File("output/extracted/pdfx");
 
+	File archiveDir = new File("output/archive");
+
 	File loggingDir = new File("output/");
 
-	String pGrobidHome = "D:/Java/git/grobid-0.5.1/grobid-home";
+	String pGrobidOrigin = "D:/Java/git/grobid-0.4.4/";
+	String pGrobidHome = pGrobidOrigin + "grobid-home";
 	String pGrobidProperties = pGrobidHome + "/config/grobid.properties";
+
+	String pGrobidTrainer = pGrobidOrigin + "/grobid-trainer";
 
 	String xStreamFileExtension = "-xstream.xml";
 
@@ -35,11 +40,11 @@ public interface Config
 	// <evaltype> = ABSTRACT | AFFILIATIONS | ...
 	//
 	String statisticsFolder = "output/statistics/";
-	String CSVperIdFile = statisticsFolder + "<method>-per-id-<type>-statistics.<fileext>";
-	String CSVperFileAndEvalTypeFile = statisticsFolder + "<method>-per-id-and-evaltype-<type>-statistics.<fileext>";
-	String CSVperPublicationTypeFile = statisticsFolder + "<method>-per-publicationtype-<type>-statistics.<fileext>";
 	String CSVperEvalTypeFile = statisticsFolder + "<method>-per-evaltype-<type>-statistics.<fileext>";
-	String CSVperFileWithEvalTypeValueFile = statisticsFolder + "singlevalues/<method>-<evaltype>-<type>-statistics.<fileext>";
+	String CSVperPublicationTypeFile = statisticsFolder + "<method>-per-publicationtype-<type>-statistics.<fileext>";
+	String CSVperIdFile = statisticsFolder + "<method>-per-id-<type>-statistics.<fileext>";
+	String CSVperIdAndEvalTypeFile = statisticsFolder + "<method>-per-id-and-evaltype-<type>-statistics.<fileext>";
+	String CSVperIdWithEvalTypeValueFile = statisticsFolder + "singlevalues/<method>-<evaltype>-<type>-statistics.<fileext>";
 
 	DecimalFormat decimalFormatter = new DecimalFormat("#,##0.00");
 	int decimalPlaces = 2;
@@ -61,9 +66,22 @@ public interface Config
 	File allPerEvalTypePublication = new File(Config.statisticsFolder + "all-per-evaltype-publication-statistics.xls");
 	File allPerEvalTypeReference = new File(Config.statisticsFolder + "all-per-evaltype-reference-statistics.xls");
 
-	File allBestPerEvalTypePublication = new File(Config.statisticsFolder + "all-best-method-per-evaltype-publication-statistics.xls");
-	File allBestPerEvalTypeReference = new File(Config.statisticsFolder + "all-best-method-per-evaltype-reference-statistics.xls");
+	File allBestPerEvalTypePublication = new File(Config.statisticsFolder + "all-best-method-per-evaltype-publication-statistics.xlsx");
+	File allBestPerEvalTypeReference = new File(Config.statisticsFolder + "all-best-method-per-evaltype-reference-statistics.xlsx");
 
 	File allDeltaPublication = new File(Config.statisticsFolder + "all-delta-precision-recall-publication-statistics.xlsx");
 	File allDeltaReference = new File(Config.statisticsFolder + "all-delta-precision-recall-reference-statistics.xlsx");
+
+	File grobidOverview = new File(Config.statisticsFolder + "grobid-overview.xlsx");
+
+	// training
+	String trainingInput = "output/training/input";
+	String trainingOutput = "output/training/output/work";
+	String trainingError = "output/training/error";
+	String trainingDumpedModels = "output/training/dumpedmodels";
+
+	String filenameExtendedModels = "model.wapiti.extended";
+	String filenameOriginalModels = "original-model.wapiti";
+	String filenameUsedModels = "model.wapiti";
+
 }
