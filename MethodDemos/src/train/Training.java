@@ -102,8 +102,8 @@ public class Training
 		// copy extracted grobid files
 		File archiveExtracted = new File(dir, "grobid");
 		FileUtils.copyDirectory(Config.grobidOutputDir, archiveExtracted);
-		System.out.println(Config.grobidOutputDir);
-		System.out.println(archiveExtracted);
+		System.out.println("Copied: " + Config.grobidOutputDir);
+		System.out.println("To: " + archiveExtracted);
 
 		// copy statistics
 		File archiveStatistics = new File(dir, "statistics");
@@ -119,8 +119,8 @@ public class Training
 					return true;
 			}
 		});
-		System.out.println(Config.statisticsFolder);
-		System.out.println(archiveStatistics);
+		System.out.println("Copied: " + Config.statisticsFolder);
+		System.out.println("To: " + archiveStatistics);
 	}
 
 
