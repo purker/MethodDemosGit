@@ -17,11 +17,11 @@ public interface Config
 	File parsCitOutputDir = new File("output/extracted/parscit");
 	File pdfxOutputDir = new File("output/extracted/pdfx");
 
-	File archiveDir = new File("output/archive");
+	File archiveDir = new File("D:/Java/git/grobid-archive/");
 
 	File loggingDir = new File("output/");
 
-	String pGrobidOrigin = "D:/Java/git/grobid-0.4.4/";
+	String pGrobidOrigin = "D:/Java/git/grobid-0.5.6/";
 	String pGrobidHome = pGrobidOrigin + "grobid-home";
 	String pGrobidProperties = pGrobidHome + "/config/grobid.properties";
 
