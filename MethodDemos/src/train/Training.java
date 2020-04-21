@@ -1,32 +1,20 @@
 package train;
 
-import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.IOFileFilter;
-import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.grobid.core.GrobidModel;
 import org.grobid.core.GrobidModels;
-import org.grobid.core.engines.Duration;
-import org.grobid.core.engines.DurationEnum;
-import org.grobid.core.engines.Engine;
-import org.grobid.core.jni.WapitiModel;
 import org.grobid.core.utilities.GrobidProperties;
 import org.grobid.trainer.AbstractTrainer;
 
 import config.Config;
-import demos.Demos;
-import demos.GrobidDemo;
 
 /**
  * data for training: grobid-trainer/resources/dataset/<MODEL>/corpus/ </br>
