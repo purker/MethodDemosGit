@@ -17,7 +17,7 @@ public interface Config
 	File parsCitOutputDir = new File("output/extracted/parscit");
 	File pdfxOutputDir = new File("output/extracted/pdfx");
 
-	File archiveDir = new File("output/archive");
+	File archiveDir = new File("D:/Java/git/grobid-archive/");
 
 	File loggingDir = new File("output/");
 
