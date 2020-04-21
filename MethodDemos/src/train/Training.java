@@ -1,7 +1,10 @@
 package train;
 
+import java.awt.Toolkit;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -17,12 +20,14 @@ import org.grobid.core.IGrobidModel;
 import org.grobid.core.engines.Duration;
 import org.grobid.core.engines.DurationEnum;
 import org.grobid.core.engines.Engine;
+import org.grobid.core.engines.training.TrainingSteps;
 import org.grobid.core.jni.WapitiModel;
 import org.grobid.core.mock.MockContext;
 import org.grobid.core.utilities.GrobidProperties;
 import org.grobid.trainer.AbstractTrainer;
 
 import config.Config;
+import demos.Demos;
 import demos.GrobidDemo;
 
 /**
