@@ -21,7 +21,7 @@ public interface Config
 
 	File loggingDir = new File("output/");
 
-	String pGrobidOrigin = "D:/Java/git/grobid-0.4.4/";
+	String pGrobidOrigin = "D:/Java/git/grobid-0.5.6/";
 	String pGrobidHome = pGrobidOrigin + "grobid-home";
 	String pGrobidProperties = pGrobidHome + "/config/grobid.properties";
 
