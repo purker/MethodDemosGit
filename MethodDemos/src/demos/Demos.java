@@ -19,7 +19,9 @@ import mapping.pdfx.PDFXMapper;
 import misc.Duration;
 import misc.DurationEnum;
 import misc.SetDateAndGrobidVersion;
+import train.Training;
 import utils.FileCollectionUtil;
+import utils.StringUtil;
 
 /**
  * Runs all Demos with Ground Truth files from inputDir
