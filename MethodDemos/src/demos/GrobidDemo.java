@@ -4,14 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.grobid.core.engines.Engine;
 import org.grobid.core.engines.config.GrobidAnalysisConfig;
 import org.grobid.core.factory.GrobidFactory;
-import org.grobid.core.main.GrobidHomeFinder;
+import org.grobid.core.mock.MockContext;
 import org.grobid.core.utilities.GrobidProperties;
 
 import config.Config;
@@ -31,9 +30,9 @@ public class GrobidDemo extends AbstractDemo implements AutoCloseable
 	private Engine engine;
 	private GrobidAnalysisConfig config;
 
-	private int consolidate = 0;
-	private int consolidateCitations = consolidate;
-	private int consolidateHeader = consolidate;
+	private boolean consolidate = false;
+	private boolean consolidateCitations = consolidate;
+	private boolean consolidateHeader = consolidate;
 
 	public GrobidDemo()
 	{
@@ -81,8 +80,11 @@ public class GrobidDemo extends AbstractDemo implements AutoCloseable
 	{
 		try
 		{
-			GrobidHomeFinder grobidHomeFinder = new GrobidHomeFinder(Arrays.asList(Config.pGrobidHome));
-			GrobidProperties.getInstance(grobidHomeFinder);
+			// in old version
+			MockContext.setInitialContext(Config.pGrobidHome, Config.pGrobidProperties);
+			GrobidProperties.getInstance();
+			// GrobidHomeFinder grobidHomeFinder = new GrobidHomeFinder(Arrays.asList(Config.pGrobidHome));
+			// GrobidProperties.getInstance(grobidHomeFinder);
 		}
 		catch(Exception e)
 		{
