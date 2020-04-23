@@ -1,5 +1,8 @@
 package evaluation.tools;
 
+import java.math.BigDecimal;
+
+import config.Config;
 import evaluation.informationresults.SingleInformationResult;
 import utils.FormatingUtil;
 
@@ -7,17 +10,17 @@ public class EvaluationResult
 {
 	private Integer hasExpectedCount = 0;
 
-	private Double precisionSum = 0.;
-	private Double recallSum = 0.;
-	private Double f1Sum = 0.;
+	private BigDecimal precisionSum = new BigDecimal(0);
+	private BigDecimal recallSum = new BigDecimal(0);
+	private BigDecimal f1Sum = new BigDecimal(0);
 
-	private Double precisionCount = 0.;
-	private Double recallCount = 0.;
-	private Double f1Count = 0.;
+	private int precisionCount = 0;
+	private int recallCount = 0;
+	private int f1Count = 0;
 
-	private Double averagePrecision;
-	private Double averageRecall;
-	private Double averageF1;
+	private BigDecimal averagePrecision;
+	private BigDecimal averageRecall;
+	private BigDecimal averageF1;
 
 	void addResult(SingleInformationResult<?> sResult)
 	{
@@ -29,17 +32,17 @@ public class EvaluationResult
 			}
 			if(sResult.getPrecision() != null)
 			{
-				precisionSum += sResult.getPrecision();
+				precisionSum = precisionSum.add(sResult.getPrecision());
 				precisionCount++;
 			}
 			if(sResult.getRecall() != null)
 			{
-				recallSum += sResult.getRecall();
+				recallSum = recallSum.add(sResult.getRecall());
 				recallCount++;
 			}
 			if(sResult.getF1() != null)
 			{
-				f1Sum += sResult.getF1();
+				f1Sum = f1Sum.add(sResult.getF1());
 				f1Count++;
 			}
 		}
@@ -47,9 +50,15 @@ public class EvaluationResult
 
 	void evaluate()
 	{
-		averagePrecision = FormatingUtil.x100AndRound(precisionSum / precisionCount);
-		averageRecall = FormatingUtil.x100AndRound(recallSum / recallCount);
-		averageF1 = FormatingUtil.x100AndRound(f1Sum / f1Count);
+		if (precisionCount != 0) {
+			averagePrecision = FormatingUtil.x100AndRound(precisionSum.divide(new BigDecimal(precisionCount), Config.bigDecimalScale, Config.bigDecimalRoundingMode));
+		}
+		if (recallCount != 0) {
+			averageRecall = FormatingUtil.x100AndRound(recallSum.divide(new BigDecimal(recallCount), Config.bigDecimalScale, Config.bigDecimalRoundingMode));
+		}
+		if (f1Count != 0) {
+			averageF1 = FormatingUtil.x100AndRound(f1Sum.divide(new BigDecimal(f1Count), Config.bigDecimalScale, Config.bigDecimalRoundingMode));
+		}
 	}
 
 	public Integer getHasExpectedCount()
@@ -62,34 +71,34 @@ public class EvaluationResult
 		this.hasExpectedCount = hasExpectedCount;
 	}
 
-	public Double getAveragePrecision()
+	public BigDecimal getAveragePrecision()
 	{
 		return averagePrecision;
 	}
 
 	public String getAveragePrecisionFormatted()
 	{
-		return FormatingUtil.formatDouble(averagePrecision);
+		return FormatingUtil.formatBigDecimal(averagePrecision);
 	}
 
-	public Double getAverageRecall()
+	public BigDecimal getAverageRecall()
 	{
 		return averageRecall;
 	}
 
 	public String getAverageRecallFormatted()
 	{
-		return FormatingUtil.formatDouble(averageRecall);
+		return FormatingUtil.formatBigDecimal(averageRecall);
 	}
 
-	public Double getAverageF1()
+	public BigDecimal getAverageF1()
 	{
 		return averageF1;
 	}
 
 	public String getAverageF1Formatted()
 	{
-		return FormatingUtil.formatDouble(averageF1);
+		return FormatingUtil.formatBigDecimal(averageF1);
 	}
 
 }
