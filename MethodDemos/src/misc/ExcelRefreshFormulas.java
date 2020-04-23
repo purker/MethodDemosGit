@@ -2,6 +2,7 @@ package misc;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +23,7 @@ public class ExcelRefreshFormulas
 
 	static
 	{
+		// key file is dependent from value files
 		files.put(Config.allPerEvalTypePublicationFormatedArrows, Arrays.asList(Config.allPerEvalTypePublication));
 		files.put(Config.allPerEvalTypePublicationFormatedBars, Arrays.asList(Config.allPerEvalTypePublication));
 		files.put(Config.allPerEvalTypePublicationFormatedColors, Arrays.asList(Config.allPerEvalTypePublication));
@@ -36,7 +38,12 @@ public class ExcelRefreshFormulas
 		files.put(Config.allDeltaPublication, Arrays.asList(Config.allPerEvalTypePublication));
 		files.put(Config.allDeltaReference, Arrays.asList(Config.allPerEvalTypeReference));
 
-		files.put(Config.grobidOverview, Arrays.asList(new File(Config.statisticsFolder, "grobid-per-evaltype-publication-statistics.xls"), new File(Config.statisticsFolder, "grobid-per-id-publication-statistics.xls"), new File(Config.statisticsFolder, "grobid-per-evaltype-reference-statistics.xls"), new File(Config.statisticsFolder, "grobid-per-id-reference-statistics.xls")));
+		List<File> grobidFiles = new ArrayList<>();
+		grobidFiles.add(new File(Config.statisticsFolder, "grobid-per-evaltype-publication-statistics.xls"));
+		grobidFiles.add(new File(Config.statisticsFolder, "grobid-per-id-publication-statistics.xls"));
+		grobidFiles.add(new File(Config.statisticsFolder, "grobid-per-evaltype-reference-statistics.xls"));
+		grobidFiles.add(new File(Config.statisticsFolder, "grobid-per-id-reference-statistics.xls"));
+		files.put(Config.grobidOverview, grobidFiles);
 	}
 
 	public static void main(String[] args)

@@ -124,6 +124,12 @@ public class Publication extends AbstractMetaPublication
 	{
 		this.id = PublicationUtil.getPublicationIdFromFileNameAsInteger(inputFileXML);
 	}
+	
+	@Override
+	public void setId(Id id) {
+		assert id.getId().toString().length() == 6 : "it has to have 6 digits";
+		super.setId(id);
+	}
 
 	@Override
 	public Integer getPublicationId()
