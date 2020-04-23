@@ -37,7 +37,7 @@ public class PublicationFactory
 		publication.setPageTo("5");
 		publication.setPublicationYear("2017");
 		publication.setSections(Arrays.asList(createSection()));
-		publication.setReferences(Arrays.asList(createReference()));
+		publication.setReferences(Arrays.asList(createReference(publication)));
 
 		publication.setDoi("10.1000/182");
 		publication.setUrl("http://dx.doi.org/10.1000/182");
@@ -108,31 +108,57 @@ public class PublicationFactory
 		return section;
 	}
 
-	public static Reference createReference()
+	public static Reference createReference(Publication publication)
 	{
 		Reference reference = new Reference();
 		reference.setId(new Id(1));
+		reference.setMarker("[1]");
 		reference.setAuthors(Arrays.asList(createReferenceAuthor()));
 		reference.setTitle("referencetitle");
+		reference.setSource("reference source");
+		reference.setPublisher("reference publisher");
+		reference.setEditors("reference editor");
+		reference.setEdition("Edition 1");
+		reference.setLocation("Vienna, Austria");
+		reference.setVolume("Vol. 1");
+		reference.setIssue("Issue 1");
+		reference.setChapter("Chapter 1");
+		reference.setNote("reference note");
 		reference.setPageFrom("1");
 		reference.setPageTo("2");
-		reference.setPublicationDate(new Date());
-		reference.setPublicationYear("2001");
+		reference.setPublicationDateString("2001");
+		reference.setDoi("test:doi:01");
+		reference.setUrl("test.url.com");
+		
+		reference.setPublication(publication);
 
 		return reference;
 	}
 
-	public static Reference createReferenceTwoAuthors()
+	public static Reference createReferenceTwoAuthors(Publication publication)
 	{
 		Reference reference = new Reference();
 		reference.setId(new Id(1));
+		reference.setMarker("[1]");
 		reference.setAuthors(Arrays.asList(createReferenceAuthor(), createReferenceAuthor2()));
 		reference.setTitle("referencetitle");
+		reference.setSource("reference source");
+		reference.setPublisher("reference publisher");
+		reference.setEditors("reference editor");
+		reference.setEdition("Edition 1");
+		reference.setLocation("Vienna, Austria");
+		reference.setVolume("Vol. 1");
+		reference.setIssue("Issue 1");
+		reference.setChapter("Chapter 1");
+		reference.setNote("reference note");
 		reference.setPageFrom("1");
 		reference.setPageTo("2");
-		reference.setPublicationDate(new Date());
-		reference.setPublicationYear("2001");
+		reference.setPublicationDateString("2001");
+		reference.setDoi("test:doi:01");
+		reference.setUrl("test.url.com");
 
+		reference.setPublication(publication);
+		
 		return reference;
 	}
 }

@@ -1,6 +1,7 @@
 package evaluation.tools;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -10,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import config.Config;
 import evaluation.EvaluationMode;
 import evaluation.informationresults.SingleInformationResult;
 import method.Method;
@@ -28,9 +30,9 @@ public class SetResult<T>
 	// TODO private
 	public Map<T, EvaluationResult> map = new LinkedHashMap<>();
 
-	private Double averagePrecision;
-	private Double averageRecall;
-	private Double averageF1;
+	private BigDecimal averagePrecision;
+	private BigDecimal averageRecall;
+	private BigDecimal averageF1;
 
 	private WriterWrapper writer;
 
@@ -77,19 +79,19 @@ public class SetResult<T>
 		averageF1 = getAverage(map.values().stream().map(f -> f.getAverageF1()).collect(Collectors.toList()));
 	}
 
-	private Double getAverage(Collection<Double> values)
+	private BigDecimal getAverage(Collection<BigDecimal> values)
 	{
-		double avgSum = 0;
+		BigDecimal avgSum = new BigDecimal(0);
 		int avgCount = 0;
-		for(Double f : values)
+		for(BigDecimal f : values)
 		{
-			if(!f.isNaN())
+			if(f != null && f.compareTo(new BigDecimal(-1)) != 0)
 			{
-				avgSum += f;
+				avgSum = avgSum.add(f);
 				avgCount++;
 			}
 		}
-		return FormatingUtil.round(avgSum / avgCount);
+		return FormatingUtil.round(avgSum.divide(new BigDecimal(avgCount), Config.bigDecimalScale, Config.bigDecimalRoundingMode));
 	}
 
 	public EvaluationResult getResultForKey(Object key)
@@ -97,34 +99,34 @@ public class SetResult<T>
 		return map.get(key);
 	}
 
-	public Double getAveragePrecision()
+	public BigDecimal getAveragePrecision()
 	{
 		return averagePrecision;
 	}
 
-	public Double getAverageRecall()
+	public BigDecimal getAverageRecall()
 	{
 		return averageRecall;
 	}
 
-	public Double getAverageF1()
+	public BigDecimal getAverageF1()
 	{
 		return averageF1;
 	}
 
 	public String getAveragePrecisionFormated()
 	{
-		return FormatingUtil.formatDouble(getAveragePrecision());
+		return FormatingUtil.formatBigDecimal(getAveragePrecision());
 	}
 
 	public String getAverageRecallFormated()
 	{
-		return FormatingUtil.formatDouble(getAverageRecall());
+		return FormatingUtil.formatBigDecimal(getAverageRecall());
 	}
 
 	public String getAverageF1Formated()
 	{
-		return FormatingUtil.formatDouble(getAverageF1());
+		return FormatingUtil.formatBigDecimal(getAverageF1());
 	}
 
 	public void printKeyEntry(T key)

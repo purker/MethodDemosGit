@@ -19,8 +19,10 @@
 package evaluation.informationresults;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Comparator;
 
+import config.Config;
 import evaluation.tools.EvalInformationType;
 import utils.FailureUtil;
 import utils.FormatingUtil;
@@ -38,8 +40,8 @@ public abstract class AbstractSingleInformationResult<T> implements SingleInform
 	protected T extractedValue;
 
 	// initialisation in evaluate()
-	protected Double precision;
-	protected Double recall;
+	protected BigDecimal precision;
+	protected BigDecimal recall;
 	protected Boolean correct;
 
 	protected Comparator<String> comp;
@@ -47,13 +49,13 @@ public abstract class AbstractSingleInformationResult<T> implements SingleInform
 	protected abstract boolean checkValueEmpty(T value);
 
 	@Override
-	public Double getPrecision()
+	public BigDecimal getPrecision()
 	{
 		return precision;
 	}
 
 	@Override
-	public Double getRecall()
+	public BigDecimal getRecall()
 	{
 		return recall;
 	}
@@ -109,7 +111,7 @@ public abstract class AbstractSingleInformationResult<T> implements SingleInform
 		{
 			if(!hasExtracted() || !hasExpected())
 			{
-				return FormatingUtil.roundAndFormatX100(0.);
+				return FormatingUtil.roundAndFormatX100(new BigDecimal(0));
 			}
 			else
 			{
@@ -129,7 +131,7 @@ public abstract class AbstractSingleInformationResult<T> implements SingleInform
 		{
 			if(!hasExtracted() || !hasExpected())
 			{
-				return FormatingUtil.roundAndFormat(0.);
+				return FormatingUtil.roundAndFormat(new BigDecimal(0));
 			}
 			else
 			{
@@ -139,21 +141,21 @@ public abstract class AbstractSingleInformationResult<T> implements SingleInform
 	}
 
 	@Override
-	public Double getF1()
+	public BigDecimal getF1()
 	{
 		if(getPrecision() == null && getRecall() == null)
 		{
 			return null;
 		}
-		if(getPrecision() == null || getRecall() == null || getPrecision() + getRecall() == 0)
+		if(getPrecision() == null || getRecall() == null || getPrecision().add(getRecall()).compareTo(new BigDecimal(0)) == 0)
 		{
-			return 0.;
+			return new BigDecimal(0);
 		}
-		if(getPrecision() == Double.NaN || getRecall() == Double.NaN)
+		if(new BigDecimal(-1).compareTo(getPrecision()) == 0 || new BigDecimal(-1).compareTo(getRecall()) == 0)
 		{
-			return Double.NaN;
+			return new BigDecimal(-1);
 		}
-		return 2 * getPrecision() * getRecall() / (getPrecision() + getRecall());
+		return new BigDecimal(2).multiply(getPrecision().multiply(getRecall())).divide(getPrecision().add(getRecall()), Config.bigDecimalScale, Config.bigDecimalRoundingMode);
 	}
 
 	@Override

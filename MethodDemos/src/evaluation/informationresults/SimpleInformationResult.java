@@ -18,6 +18,7 @@
 
 package evaluation.informationresults;
 
+import java.math.BigDecimal;
 import java.util.function.Function;
 
 import evaluation.tools.EvalInformationType;
@@ -73,8 +74,8 @@ public class SimpleInformationResult extends AbstractSingleInformationResult<Str
 		}
 		correct = (correctCount == 1);
 
-		if(hasExtracted()) precision = getCorrect() ? 1. : 0.;
-		if(hasExpected()) recall = getCorrect() ? 1. : 0.;
+		if(hasExtracted()) precision = getCorrect() ? new BigDecimal(1) : new BigDecimal(0);
+		if(hasExpected()) recall = getCorrect() ? new BigDecimal(1) : new BigDecimal(0);
 	}
 
 	public int equalExpectedAndExtractedValueCount()

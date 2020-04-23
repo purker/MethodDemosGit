@@ -56,18 +56,18 @@ public class Demos
 		List<String> idList = Config.groundTruthIds;
 		// List<String> idList = Arrays.asList("228620");
 
-		boolean runDemos = true;
+		boolean runDemos = false;
 		boolean runCermineDemo = false;
-		boolean runGrobidDemo = true;
+		boolean runGrobidDemo = false;
 		boolean runParsCitDemo = false;
 		boolean runPdfxDemo = false;
 		boolean runCermineMapper = false;
-		boolean runGrobidMapper = true;
+		boolean runGrobidMapper = false;
 		boolean runParsCitMapper = false;
 		boolean runPdfxMapper = false;
 
 		boolean startEvaluation = true;
-		String archiveDirName = "with heuristic"; // if not null -> directory with this name will be created in output/archive
+		String archiveDirName = "0.4.4 branch with bigdecimal"; // if not null -> directory with this name will be created in output/archive
 
 		// List<File> groundTruthFiles = FileCollectionUtil.getExtractedFilesByMethod(method)
 		List<File> groundTruthFiles = FileCollectionUtil.getAllGroundTruthFilesByIds(idList);
@@ -128,7 +128,7 @@ public class Demos
 
 		Duration.addEnd(DurationEnum.ALL);
 
-		if(StringUtil.isNotEmpty(archiveDirName)) Training.copyExtractedAndStatisticsToArchive(archiveDirName);
+		if(StringUtil.isNotEmpty(archiveDirName)) Training.copyExtractedAndStatisticsToArchive(true, archiveDirName);
 	}
 
 	private static void cleanOrCreateDirectory(File outputDir) throws IOException

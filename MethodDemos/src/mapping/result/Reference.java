@@ -103,7 +103,7 @@ public class Reference extends AbstractMetaPublication
 	@Override
 	public String getKeyString()
 	{
-		return Config.publicationPrefix + getPublication().getId().getId() + "-" + Config.referencePrefix + +id.getId();
+		return getPublication().getKeyString() + "-" + getRefString();
 	}
 
 	public static Integer getReferenceIdFromKeyString(String keyString)
