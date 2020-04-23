@@ -83,30 +83,49 @@ public class Training {
 //		Toolkit.getDefaultToolkit().beep();
 //	}
 
-	public static void copyExtractedAndStatisticsToArchive(String dirName) throws IOException {
+	/**
+	 * @param move true: move, false: copy
+	 * @param dirName
+	 * @throws IOException
+	 */
+	public static void copyExtractedAndStatisticsToArchive(boolean move, String dirName) throws IOException {
 		File dir = new File(Config.archiveDir, dirName);
+		
+		dir.delete();
 
 		// copy extracted grobid files
 		File archiveExtracted = new File(dir, "grobid");
-		FileUtils.copyDirectory(Config.grobidOutputDir, archiveExtracted);
-		System.out.println("Copied: " + Config.grobidOutputDir);
+		if (move) {
+			FileUtils.moveDirectory(Config.grobidOutputDir, archiveExtracted);			
+		} else {
+			FileUtils.copyDirectory(Config.grobidOutputDir, archiveExtracted);
+		}
+		System.out.println(move ? "Moved: " : "Copied: " + Config.grobidOutputDir);
 		System.out.println("To: " + archiveExtracted);
 
 		// copy statistics
 		File archiveStatistics = new File(dir, "statistics");
-		FileUtils.copyDirectory(new File(Config.statisticsFolder), archiveStatistics, new FileFilter() {
-
-			@Override
-			public boolean accept(File file) {
-				if (file.isFile())
-					return file.getName().startsWith("grobid");
-				else
-					return true;
-			}
-		});
-		System.out.println("Copied: " + Config.statisticsFolder);
+		if (move) {
+			FileUtils.copyDirectory(new File(Config.statisticsFolder), archiveStatistics, new CopyFileFilter());		
+		} else {
+			FileUtils.copyDirectory(new File(Config.statisticsFolder), archiveStatistics, new CopyFileFilter());
+		}
+		
+		System.out.println(move ? "Moved: " : "Copied: " + Config.statisticsFolder);
 		System.out.println("To: " + archiveStatistics);
 	}
+	
+	static class CopyFileFilter implements FileFilter {
+
+		@Override
+		public boolean accept(File file) {
+			if (file.isFile())
+				return file.getName().startsWith("grobid");
+			else
+				return true;
+		}
+	}
+
 
 	/**
 	 * deletes all corpus/[tei|raw] directories

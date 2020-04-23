@@ -19,6 +19,7 @@
 package evaluation.informationresults;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
 import evaluation.tools.EvalInformationType;
 
@@ -49,11 +50,14 @@ public interface SingleInformationResult<T>
 
 	void setExtracted(T extracted);
 
-	Double getPrecision();
+	BigDecimal getPrecision();
 
-	Double getRecall();
+	BigDecimal getRecall();
 
-	Double getF1();
+	/*
+	 * See: {@link evaluation.informationresults#getF1 label}
+	 */
+	BigDecimal getF1(); 
 
 	Boolean getCorrect();
 

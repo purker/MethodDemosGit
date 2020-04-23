@@ -17,7 +17,15 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
-        </plugins>
+			<plugin>
+	            <artifactId>maven-surefire-plugin</artifactId>
+	            <version>2.22.2</version>
+	        </plugin>
+	        <plugin>
+	            <artifactId>maven-failsafe-plugin</artifactId>
+	            <version>2.22.2</version>
+	        </plugin>
+		</plugins>
     </build>
     <dependencies>
         <!-- in Mavenordner von http://maven.icm.edu.pl/artifactory/repo/pl/edu/icm/cermine/cermine-tools/1.13-SNAPSHOT/
@@ -117,14 +125,6 @@
             <version>3.17</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/pl.pragmatists/JUnitParams -->
-        <dependency>
-            <groupId>pl.pragmatists</groupId>
-            <artifactId>JUnitParams</artifactId>
-            <version>1.1.1</version>
-            <scope>test</scope>
-        </dependency>
-
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-core -->
         <!-- for ReflectionUtil -->
         <dependency>
@@ -154,11 +154,38 @@
             <type>pom</type>
         </dependency> -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-        </dependency>
+	        <groupId>org.junit.jupiter</groupId>
+	        <artifactId>junit-jupiter-api</artifactId>
+	        <version>5.6.2</version>
+	        <scope>test</scope>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.junit.jupiter</groupId>
+	        <artifactId>junit-jupiter-engine</artifactId>
+	        <version>5.6.2</version>
+	        <scope>test</scope>
+	    </dependency>
+	    <!-- in order that eclipse finds test cases -->
+	    <dependency>
+		    <groupId>org.junit.platform</groupId>
+		    <artifactId>junit-platform-launcher</artifactId>
+		    <version>1.6.2</version>
+		    <scope>test</scope>
+		</dependency>  
+	    <dependency>
+		    <groupId>org.junit.jupiter</groupId>
+		    <artifactId>junit-jupiter-params</artifactId>
+		    <version>5.6.2</version>
+		    <scope>test</scope>
+		</dependency>
 
+		<!-- for BigDecimal assertions in junit tests -->
+		<dependency>
+		    <groupId>org.hamcrest</groupId>
+		    <artifactId>hamcrest-junit</artifactId>
+		    <version>2.0.0.0</version>
+		    <scope>test</scope>
+		</dependency>
 
     </dependencies>
     <repositories>
