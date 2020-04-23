@@ -1,27 +1,27 @@
 import static org.junit.Assert.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertThat;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.Test;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.runner.RunWith;
 
 import evaluation.tools.AbstractCollectionResult;
+import evaluation.tools.CollectionEnum;
 import evaluation.tools.EvalInformationType;
 import evaluation.tools.EvaluationResult;
 import evaluation.tools.PublicationIterator;
 import factory.PublicationFactory;
-import junitparams.JUnitParamsRunner;
 import mapping.result.Publication;
 import utils.FileCollectionUtil;
 import utils.XStreamUtil;
 
-@RunWith(JUnitParamsRunner.class)
 public abstract class AbstractFileEvaluatorTest extends AbstractTest
 {
 	private static boolean DEFAULT_PRINT_RESULTS = false;
@@ -32,59 +32,81 @@ public abstract class AbstractFileEvaluatorTest extends AbstractTest
 	@Test
 	void testDocumentResult100() throws IOException
 	{
-		Publication originalPub = PublicationFactory.createPublication("1");
-		Publication extractedPub = PublicationFactory.createPublication("1");
+		Publication originalPub = PublicationFactory.createPublication("100001");
+		Publication extractedPub = PublicationFactory.createPublication("100001");
 
 		PublicationIterator iter = new PublicationIterator(originalPub, extractedPub);
 		AbstractCollectionResult<?> result = getEvalutator().evaluate(iter, DEFAULT_PRINT_RESULTS);
 
-		assertEquals(new Double(100.), result.getDocumentResult().getAveragePrecision(), "average precsision");
-		assertEquals(new Double(100.), result.getDocumentResult().getAverageRecall(), "average recall");
-		assertEquals(new Double(100.), result.getDocumentResult().getAverageF1(), "average F1");
+		assertThat("average precsision", new BigDecimal(100), Matchers.comparesEqualTo(result.getDocumentResult().getAveragePrecision()));
+		assertThat("average recall", new BigDecimal(100), Matchers.comparesEqualTo(result.getDocumentResult().getAverageRecall()));
+		assertThat("average F1", new BigDecimal(100), Matchers.comparesEqualTo(result.getDocumentResult().getAverageF1()));
 	}
 
 	@Test
 	void testDocumentResult0() throws IOException
 	{
-		Publication originalPub = PublicationFactory.createPublication("1");
+		Publication originalPub = PublicationFactory.createPublication("100001");
 		Publication extractedPub = new Publication();
 
 		PublicationIterator iter = new PublicationIterator(originalPub, extractedPub);
 		AbstractCollectionResult<?> result = getEvalutator().evaluate(iter, DEFAULT_PRINT_RESULTS);
 
 		EvaluationResult evaluationResult = result.getDocumentResult();
-		assertEquals(new Double(Double.NaN), evaluationResult.getAveragePrecision(), "average precsision");
-		assertEquals(new Double(0.), evaluationResult.getAverageRecall(), "average recall");
-		assertEquals(new Double(0.), evaluationResult.getAverageF1(), "average F1");
+		assertThat("average precsision", new BigDecimal(Double.NaN), Matchers.comparesEqualTo(evaluationResult.getAveragePrecision()));
+		assertThat("average recall", new BigDecimal(0), Matchers.comparesEqualTo(evaluationResult.getAverageRecall()));
+		assertThat("average F1", new BigDecimal(0), Matchers.comparesEqualTo(evaluationResult.getAverageF1()));
 	}
-	//
-	// @Test
-	// @Parameters({"TITLE"})
 
 	@ParameterizedTest
-	@MethodSource(value = "evalInformationTypeValues")
-	// @ValueSource(strings = {"TITLE"}) also works
-	void testTitle100(EvalInformationType evalInfoType) throws IOException
+	@MethodSource(value = "evalInformationTypeValuesPublication")
+	//@ValueSource(strings = {"PAGES"}) //also works
+	void testEvalutionType100Publication(EvalInformationType evalInfoType) throws IOException
 	{
-		Publication originalPub = PublicationFactory.createPublication("1");
-		Publication extractedPub = PublicationFactory.createPublication("1");
+		Publication originalPub = PublicationFactory.createPublication("100001");
+		Publication extractedPub = PublicationFactory.createPublication("100001");
 
 		PublicationIterator iter = new PublicationIterator(originalPub, extractedPub);
-		AbstractCollectionResult<?> result = getEvalutator().evaluate(iter, DEFAULT_PRINT_RESULTS);
+		getEvalutator().evaluate(iter, DEFAULT_PRINT_RESULTS);
+		AbstractCollectionResult<?> result = getEvalutator().getCollectionResultByCollectionEnum(CollectionEnum.PUBLICATION);
 
-		// EvalInformationType evalInfoType = EvalInformationType.TITLE;
 		EvaluationResult evaluationResult = result.getPerType().getResultForKey(evalInfoType);
 		assertNotNull(evaluationResult);
-		assertEquals(new Double(100.), evaluationResult.getAveragePrecision(), evalInfoType + " average precsision");
-		assertEquals(new Double(100.), evaluationResult.getAverageRecall(), evalInfoType + " average recall");
-		assertEquals(new Double(100.), evaluationResult.getAverageF1(), evalInfoType + " average F1");
+		assertThat(evalInfoType + " average precsision", new BigDecimal(100), Matchers.comparesEqualTo(evaluationResult.getAveragePrecision()));
+		assertThat(evalInfoType + " average recall", new BigDecimal(100), Matchers.comparesEqualTo(evaluationResult.getAverageRecall()));
+		assertThat(evalInfoType + " average F1", new BigDecimal(100), Matchers.comparesEqualTo(evaluationResult.getAverageF1()));
 	}
-
-	private static Stream<EvalInformationType> evalInformationTypeValues()
+	
+	@ParameterizedTest
+	@MethodSource(value = "evalInformationTypeValuesReference")
+	void testEvalutionType100Reference(EvalInformationType evalInfoType) throws IOException
 	{
-		return Stream.of(EvalInformationType.values());
+		Publication originalPub = PublicationFactory.createPublication("100001");
+		Publication extractedPub = PublicationFactory.createPublication("100001");
+
+		PublicationIterator iter = new PublicationIterator(originalPub, extractedPub);
+		getEvalutator().evaluate(iter, DEFAULT_PRINT_RESULTS);
+		AbstractCollectionResult<?> result = getEvalutator().getCollectionResultByCollectionEnum(CollectionEnum.REFERENCE);
+
+		EvaluationResult evaluationResult = result.getPerType().getResultForKey(evalInfoType);
+		assertNotNull(evaluationResult);
+		assertThat(evalInfoType + " average precsision", new BigDecimal(100), Matchers.comparesEqualTo(evaluationResult.getAveragePrecision()));
+		assertThat(evalInfoType + " average recall", new BigDecimal(100), Matchers.comparesEqualTo(evaluationResult.getAverageRecall()));
+		assertThat(evalInfoType + " average F1", new BigDecimal(100), Matchers.comparesEqualTo(evaluationResult.getAverageF1()));
 	}
 
+	@SuppressWarnings("unused")
+	private static Stream<EvalInformationType> evalInformationTypeValuesPublication()
+	{
+		return EvalInformationType.getTypesForPublications().stream();
+	}
+
+	@SuppressWarnings("unused")
+	private static Stream<EvalInformationType> evalInformationTypeValuesReference()
+	{
+		return EvalInformationType.getTypesForReferences().stream();
+	}
+	
 	@Test
 	void testPublicationSetOnReferences() throws IOException
 	{
@@ -98,16 +120,16 @@ public abstract class AbstractFileEvaluatorTest extends AbstractTest
 	// @Test
 	// void test() throws EvaluationException, IOException
 	// {
-	// Publication originalPub = PublicationFactory.createPublication("1");
-	// Publication extractedPub = PublicationFactory.createPublication("1");
+	// Publication originalPub = PublicationFactory.createPublication("100001");
+	// Publication extractedPub = PublicationFactory.createPublication("100001");
 	//
 	// extractedPub.setPageTo(null);
 	//
 	// PublicationIterator iter = new PublicationIterator(originalPub, extractedPub);
 	// DocumentSetResult result = e.evaluate(modes, iter);
 	//
-	// assertEquals(new Double(0.), result.getDocumentResult().getAveragePrecision(), "average precsision");
-	// assertEquals(new Double(0.), result.getDocumentResult().getAverageRecall(), "average recall");
-	// assertEquals(new Double(0.), result.getDocumentResult().getAverageF1(), "average F1");
+	// assertThat("average precsision", new BigDecimal(0), Matchers.comparesEqualTo(result.getDocumentResult().getAveragePrecision()));
+	// assertThat("average recall", new BigDecimal(0), Matchers.comparesEqualTo(result.getDocumentResult().getAverageRecall()));
+	// assertThat("average F1", new BigDecimal(0), Matchers.comparesEqualTo(result.getDocumentResult().getAverageF1()));
 	// }
 }

@@ -1,6 +1,7 @@
 package config;
 
 import java.io.File;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
@@ -83,5 +84,8 @@ public interface Config
 	String filenameExtendedModels = "model.wapiti.extended";
 	String filenameOriginalModels = "original-model.wapiti";
 	String filenameUsedModels = "model.wapiti";
+	
+	int bigDecimalScale = 5;
+	RoundingMode bigDecimalRoundingMode = RoundingMode.DOWN;
 
 }

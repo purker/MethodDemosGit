@@ -7,37 +7,40 @@ import config.Config;
 
 public class FormatingUtil
 {
-	public static String formatDouble(Double value)
+	public static String formatBigDecimal(BigDecimal value)
 	{
-		if(value.isNaN())
-		{
+		if(value == null) {
+			return "not defined";
+		}
+		if (new BigDecimal(-1).compareTo(value) == 0) {
 			return "NAN";
 		}
 		return Config.decimalFormatter.format(value);
 	}
 
-	public static String roundAndFormat(Double value)
+	public static String roundAndFormat(BigDecimal value)
 	{
-		return formatDouble(round(value));
+		return formatBigDecimal(round(value));
 	}
 
-	public static String roundAndFormatX100(Double value)
+	public static String roundAndFormatX100(BigDecimal value)
 	{
-		return roundAndFormat(value * 100);
+		return roundAndFormat(value.multiply(new BigDecimal(100)));
 	}
 
-	public static Double round(Double value)
+	public static BigDecimal round(BigDecimal value)
 	{
 		// if(places < 0) throw new IllegalArgumentException();
-		if(value.isNaN()) return value;
+		if(new BigDecimal(-1).compareTo(value) == 0) {
+			return value;
+		}
 
-		BigDecimal bd = new BigDecimal(value);
-		bd = bd.setScale(Config.decimalPlaces, RoundingMode.HALF_UP);
-		return bd.doubleValue();
+		value = value.setScale(Config.decimalPlaces, RoundingMode.HALF_UP);
+		return value;
 	}
 
-	public static Double x100AndRound(double value)
+	public static BigDecimal x100AndRound(BigDecimal value)
 	{
-		return round(value * 100);
+		return round(value.multiply(new BigDecimal(100)));
 	}
 }

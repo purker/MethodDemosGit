@@ -2,6 +2,7 @@ package misc;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +91,7 @@ public class XlsxToCsv
 
 							if(cellValue.contains(".") && cellValue.replace("-", "").replace(".", "").replace(",", "").matches("\\d*"))
 							{
-								cellValue = FormatingUtil.formatDouble(new Double(cellValue));
+								cellValue = FormatingUtil.formatBigDecimal(new BigDecimal(cellValue));
 							}
 						}
 						sb.append("\"" + cellValue + "\";");

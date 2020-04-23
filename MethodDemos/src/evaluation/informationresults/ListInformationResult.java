@@ -18,11 +18,13 @@
 
 package evaluation.informationresults;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+import config.Config;
 import evaluation.tools.EvalInformationType;
 import evaluation.tools.EvalInformationTypeComparatorMapping;
 import utils.CollectionUtil;
@@ -159,9 +161,9 @@ public class ListInformationResult extends AbstractSingleInformationResult<List<
 	{
 		int correctCount = equalExpectedAndExtractedValueCount();
 
-		if(hasExpected()) recall = (double)correctCount / expectedValue.size();
-		if(hasExtracted()) precision = (double)correctCount / extractedValue.size();
-		correct = hasExpected() && hasExtracted() && new Double(1).equals(getF1());
+		if(hasExpected()) recall = new BigDecimal(correctCount).divide(new BigDecimal(expectedValue.size()), Config.bigDecimalScale, Config.bigDecimalRoundingMode);
+		if(hasExtracted()) precision = new BigDecimal(correctCount).divide(new BigDecimal(extractedValue.size()), Config.bigDecimalScale, Config.bigDecimalRoundingMode);
+		correct = hasExpected() && hasExtracted() && new BigDecimal(1).compareTo(getF1()) == 0;
 	}
 
 	public int equalExpectedAndExtractedValueCount()

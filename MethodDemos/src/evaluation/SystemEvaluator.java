@@ -101,8 +101,8 @@ public abstract class SystemEvaluator
 		System.out.println("Collecing Files Evaluation: " + getMethod());
 		this.iter = new PublicationIterator(getOriginalFiles(), getExtractedFiles());
 
-		System.out.println("Starting Evaluation: " + getMethod() + " (" + iter.size() + " files)");
-		evaluate(iter, printResults);
+		System.out.println("Starting Evaluation: " + getMethod() + " (" + this.iter.size() + " files)");
+		evaluate(this.iter, printResults);
 	}
 
 	protected Collection<EvalInformationType> getTypes()
@@ -123,10 +123,10 @@ public abstract class SystemEvaluator
 	 * @return
 	 * @throws IOException
 	 */
-	public AbstractCollectionResult<?> evaluate(PublicationIterator files, boolean printResults) throws IOException
+	public AbstractCollectionResult<?> evaluate(PublicationIterator fileIterator, boolean printResults) throws IOException
 	{
 		int i = 0;
-		for(PublicationPair pair : iter)
+		for(PublicationPair pair : fileIterator)
 		{
 			i++;
 
@@ -498,7 +498,7 @@ public abstract class SystemEvaluator
 		writer.close();
 	}
 
-	protected AbstractCollectionResult<?> getCollectionResultByCollectionEnum(CollectionEnum setResultEnum)
+	public AbstractCollectionResult<?> getCollectionResultByCollectionEnum(CollectionEnum setResultEnum)
 	{
 		AbstractCollectionResult<?> abstractSetResult = null;
 		if(setResultEnum.equals(CollectionEnum.PUBLICATION))
