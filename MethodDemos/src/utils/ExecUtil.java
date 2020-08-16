@@ -11,12 +11,12 @@ import java.util.List;
 
 public class ExecUtil
 {
-	public static String exec(List<String> command) throws IOException
+	public static Process exec(List<String> command) throws IOException
 	{
 		return execInWorkingDir(null, command);
 	}
 
-	public static String execInWorkingDir(File workingDirectory, List<String> command) throws IOException
+	public static Process execInWorkingDir(File workingDirectory, List<String> command) throws IOException
 	{
 		Process p = null;
 
@@ -28,7 +28,15 @@ public class ExecUtil
 		System.out.println(getRunnableCommand(pb));
 		p = pb.start();
 
+		return p;
+	}
+	
+	public static String getErrorText(Process p) throws IOException {
 		return IOUtils.toString(p.getErrorStream(), StandardCharsets.UTF_8);
+	}
+	
+	public static String getOutputText(Process p) throws IOException {
+		return IOUtils.toString(p.getInputStream(), StandardCharsets.UTF_8);
 	}
 
 	private static String getRunnableCommand(ProcessBuilder processBuilder)

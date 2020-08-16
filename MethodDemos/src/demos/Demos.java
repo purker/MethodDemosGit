@@ -2,6 +2,7 @@ package demos;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,6 +21,7 @@ import misc.Duration;
 import misc.DurationEnum;
 import misc.SetDateAndGrobidVersion;
 import train.Training;
+import utils.ExecUtil;
 import utils.FileCollectionUtil;
 import utils.StringUtil;
 
@@ -58,7 +60,7 @@ public class Demos
 
 		boolean runDemos = false;
 		boolean runCermineDemo = false;
-		boolean runGrobidDemo = false;
+		boolean runGrobidDemo = true;
 		boolean runParsCitDemo = false;
 		boolean runPdfxDemo = false;
 		boolean runCermineMapper = false;
@@ -128,7 +130,21 @@ public class Demos
 
 		Duration.addEnd(DurationEnum.ALL);
 
-		if(StringUtil.isNotEmpty(archiveDirName)) Training.copyExtractedAndStatisticsToArchive(true, archiveDirName);
+		if(StringUtil.isNotEmpty(archiveDirName)) {
+			File archiveDir = new File(Config.archiveDir, archiveDirName);
+			Training.copyExtractedAndStatisticsToArchive(true, archiveDir);
+			writeRevisionToFile(new File("."), new File(archiveDir.getPath(), "git revision - MethodDemos.txt"));
+			writeRevisionToFile(new File(Config.pGrobidOrigin), new File(archiveDir.getPath(), "git revision - grobid.txt"));			
+		}
+	}
+	
+	private static void writeRevisionToFile(File workingDir, File file) throws IOException {
+		Process p1 = ExecUtil.exec(Arrays.asList("git", "branch", "--show-current"));
+		FileUtils.writeStringToFile(file, ExecUtil.getOutputText(p1), StandardCharsets.UTF_8, true);
+		Process p2 = ExecUtil.exec(Arrays.asList("git", "rev-parse", "HEAD"));
+		FileUtils.writeStringToFile(file, ExecUtil.getOutputText(p2), StandardCharsets.UTF_8);
+		Process p3 = ExecUtil.exec(Arrays.asList("git", "config", "--get", "remote.origin.url"));
+		FileUtils.writeStringToFile(file, ExecUtil.getOutputText(p3), StandardCharsets.UTF_8, true);
 	}
 
 	private static void cleanOrCreateDirectory(File outputDir) throws IOException
