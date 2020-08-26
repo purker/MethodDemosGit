@@ -31,12 +31,7 @@ import utils.StringUtil;
  */
 public class Demos
 {
-	private static final boolean USE_SPECIFIC_OUTPUTDIR = true;
-
 	public static File inputDir = Config.groundTruth;
-
-	// public static File inputDir = new File("D:/output/nosubdir");
-	// public static File inputDirTxt = new File("D:/output/methods/Cermine");
 
 	public static File cermineOutputDir = Config.cermineOutputDir;
 	public static File grobIdOutputDir = Config.grobidOutputDir;
@@ -58,54 +53,29 @@ public class Demos
 		List<String> idList = Config.groundTruthIds;
 		// List<String> idList = Arrays.asList("228620");
 
-		boolean runDemos = false;
+		boolean runDemos = true;
 		boolean runCermineDemo = false;
 		boolean runGrobidDemo = true;
 		boolean runParsCitDemo = false;
 		boolean runPdfxDemo = false;
-		boolean runCermineMapper = false;
-		boolean runGrobidMapper = false;
-		boolean runParsCitMapper = false;
-		boolean runPdfxMapper = false;
+		boolean runCermineMapper = true;
+		boolean runGrobidMapper = true;
+		boolean runParsCitMapper = true;
+		boolean runPdfxMapper = true;
 
 		boolean startEvaluation = true;
-		String archiveDirName = "0.4.4 branch with bigdecimal"; // if not null -> directory with this name will be created in output/archive
-
-		// List<File> groundTruthFiles = FileCollectionUtil.getExtractedFilesByMethod(method)
+		
 		List<File> groundTruthFiles = FileCollectionUtil.getAllGroundTruthFilesByIds(idList);
 		List<File> groundTruthFilesOmnipage = FileCollectionUtil.getAllGroundTruthFilesOmnipageById(idList);
 
-		// set directories and clean
-		if(!USE_SPECIFIC_OUTPUTDIR)
-		{
-			if(runDemos)
-			{
-				cleanOrCreateDirectory(allOutputDir);
-			}
-			deleteResultAndErrorFiles(allOutputDir);
-
-			cermineOutputDir = allOutputDir;
-			grobIdOutputDir = allOutputDir;
-			parsCitOutputDir = allOutputDir;
-			pdfxOutputDir = allOutputDir;
-		}
-		else
-		{
-			if(runDemos)
-			{
-				// pdf -> xml
-				if(runCermineDemo) cleanOrCreateDirectory(cermineOutputDir);
-				if(runGrobidDemo) cleanOrCreateDirectory(grobIdOutputDir);
-				if(runParsCitDemo) cleanOrCreateDirectory(parsCitOutputDir);
-				if(runPdfxDemo) cleanOrCreateDirectory(pdfxOutputDir);
-			}
-			if(runCermineMapper) deleteResultAndErrorFiles(cermineOutputDir);
-			if(runGrobidMapper) deleteResultAndErrorFiles(grobIdOutputDir);
-			if(runParsCitMapper) deleteResultAndErrorFiles(parsCitOutputDir);
-			if(runPdfxMapper) deleteResultAndErrorFiles(pdfxOutputDir);
-		}
 		if(runDemos)
 		{
+			// pdf -> xml
+			if(runCermineDemo) cleanOrCreateDirectory(cermineOutputDir);
+			if(runGrobidDemo) cleanOrCreateDirectory(grobIdOutputDir);
+			if(runParsCitDemo) cleanOrCreateDirectory(parsCitOutputDir);
+			if(runPdfxDemo) cleanOrCreateDirectory(pdfxOutputDir);
+			
 			if(runCermineDemo) new CermineDemo().runDemoList(groundTruthFiles, cermineOutputDir);
 			if(runGrobidDemo)
 			{
@@ -116,8 +86,13 @@ public class Demos
 				SetDateAndGrobidVersion.replaceDateAndGrobidVersion();
 			}
 			if(runParsCitDemo) new ParscitDemo().runDemoList(groundTruthFilesOmnipage, parsCitOutputDir);
-			if(runPdfxDemo) new PdfxDemo().runDemoList(groundTruthFiles, pdfxOutputDir);
+			if(runPdfxDemo) new PdfxDemo().runDemoList(groundTruthFiles, pdfxOutputDir);			
 		}
+
+		if(runCermineMapper) deleteResultAndErrorFiles(cermineOutputDir);
+		if(runGrobidMapper) deleteResultAndErrorFiles(grobIdOutputDir);
+		if(runParsCitMapper) deleteResultAndErrorFiles(parsCitOutputDir);
+		if(runPdfxMapper) deleteResultAndErrorFiles(pdfxOutputDir);
 
 		// xml -> xstream.xml
 		if(runCermineMapper) new CermineMapper().unmarshallFilesWithId(idList);
@@ -130,9 +105,9 @@ public class Demos
 
 		Duration.addEnd(DurationEnum.ALL);
 
-		if(StringUtil.isNotEmpty(archiveDirName)) {
-			File archiveDir = new File(Config.archiveDir, archiveDirName);
-			Training.copyExtractedAndStatisticsToArchive(true, archiveDir);
+		if(StringUtil.isNotEmpty(Config.archiveDirName)) {
+			File archiveDir = new File(Config.archiveDir, Config.archiveDirName);
+			Training.copyExtractedAndStatisticsToArchive(false, archiveDir);
 			writeRevisionToFile(new File("."), new File(archiveDir.getPath(), "git revision - MethodDemos.txt"));
 			writeRevisionToFile(new File(Config.pGrobidOrigin), new File(archiveDir.getPath(), "git revision - grobid.txt"));			
 		}
@@ -140,9 +115,9 @@ public class Demos
 	
 	private static void writeRevisionToFile(File workingDir, File file) throws IOException {
 		Process p1 = ExecUtil.exec(Arrays.asList("git", "branch", "--show-current"));
-		FileUtils.writeStringToFile(file, ExecUtil.getOutputText(p1), StandardCharsets.UTF_8, true);
+		FileUtils.writeStringToFile(file, ExecUtil.getOutputText(p1), StandardCharsets.UTF_8);
 		Process p2 = ExecUtil.exec(Arrays.asList("git", "rev-parse", "HEAD"));
-		FileUtils.writeStringToFile(file, ExecUtil.getOutputText(p2), StandardCharsets.UTF_8);
+		FileUtils.writeStringToFile(file, ExecUtil.getOutputText(p2), StandardCharsets.UTF_8, true);
 		Process p3 = ExecUtil.exec(Arrays.asList("git", "config", "--get", "remote.origin.url"));
 		FileUtils.writeStringToFile(file, ExecUtil.getOutputText(p3), StandardCharsets.UTF_8, true);
 	}

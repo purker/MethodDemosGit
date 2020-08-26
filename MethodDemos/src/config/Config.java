@@ -19,6 +19,7 @@ public interface Config
 	File pdfxOutputDir = new File("output/extracted/pdfx");
 
 	File archiveDir = new File("D:/Java/git/grobid-archive/");
+	String archiveDirName = "0.4.4 branch"; // if not null -> directory with this name will be created in output/archive
 
 	File loggingDir = new File("output/");
 

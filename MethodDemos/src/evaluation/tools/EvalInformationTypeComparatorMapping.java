@@ -14,6 +14,7 @@ public class EvalInformationTypeComparatorMapping
 	static
 	{
 		map.put(EvalInformationType.TITLE, EvaluationUtils.swComparator);
+		map.put(EvalInformationType.PUBLICATIONTYPE, EvaluationUtils.defaultComparator);
 		map.put(EvalInformationType.ABSTRACT, (EvaluationUtils.swComparator));
 		map.put(EvalInformationType.ABSTRACTGERMAN, (EvaluationUtils.swComparator));
 		map.put(EvalInformationType.KEYWORDS, EvaluationUtils.defaultComparator);
@@ -27,6 +28,7 @@ public class EvalInformationTypeComparatorMapping
 		map.put(EvalInformationType.ISSUE, EvaluationUtils.defaultComparator);
 		map.put(EvalInformationType.PAGE_FROM, EvaluationUtils.defaultComparator);
 		map.put(EvalInformationType.PAGE_TO, EvaluationUtils.defaultComparator);
+		map.put(EvalInformationType.LOCATION, EvaluationUtils.defaultComparator);
 		map.put(EvalInformationType.YEAR, EvaluationUtils.defaultComparator);
 		map.put(EvalInformationType.DOI, EvaluationUtils.defaultComparator);
 		map.put(EvalInformationType.SECTIONS, EvaluationUtils.swComparator);
@@ -45,7 +47,6 @@ public class EvalInformationTypeComparatorMapping
 		map.put(EvalInformationType.REFERENCE_EDITOR, EvaluationUtils.defaultComparator);
 		map.put(EvalInformationType.REFERENCE_AUTHORS, EvaluationUtils.authorComparator);
 		map.put(EvalInformationType.REFERENCE_EDITION, EvaluationUtils.defaultComparator);
-		map.put(EvalInformationType.REFERENCE_LOCATION, EvaluationUtils.defaultComparator);
 		map.put(EvalInformationType.REFERENCE_VOLUME, EvaluationUtils.defaultComparator);
 		map.put(EvalInformationType.REFERENCE_ISSUE, EvaluationUtils.defaultComparator);
 		map.put(EvalInformationType.REFERENCE_CHAPTER, EvaluationUtils.defaultComparator);
@@ -53,6 +54,7 @@ public class EvalInformationTypeComparatorMapping
 		map.put(EvalInformationType.REFERENCE_PAGES, EvaluationUtils.defaultComparator);
 		map.put(EvalInformationType.REFERENCE_PAGEFROM, EvaluationUtils.defaultComparator);
 		map.put(EvalInformationType.REFERENCE_PAGETO, EvaluationUtils.defaultComparator);
+		map.put(EvalInformationType.REFERENCE_LOCATION, EvaluationUtils.defaultComparator);
 		map.put(EvalInformationType.REFERENCE_DATE, EvaluationUtils.defaultComparator);
 		map.put(EvalInformationType.REFERENCE_DOI, EvaluationUtils.defaultComparator);
 		map.put(EvalInformationType.REFERENCE_URL, EvaluationUtils.defaultComparator);
