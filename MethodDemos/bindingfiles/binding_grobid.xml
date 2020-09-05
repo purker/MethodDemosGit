@@ -17,7 +17,9 @@
             <java-attributes>
                 <!-- TODO <xml-element java-attribute="id" xml-transient="true"/> -->
                 <xml-element java-attribute="title" xml-path="teiHeader/fileDesc/titleStmt/title/text()"/>
-                <xml-element java-attribute="publicationType" xml-transient="true"/>
+                <xml-attribute java-attribute="publicationType" xml-path="teiHeader/fileDesc/titleStmt/title/@level">
+                	<xml-java-type-adapter value="mapping.grobid.PublicationTypeAdapter"/>
+                </xml-attribute>
             	<xml-element java-attribute="abstractText" xml-path="teiHeader/profileDesc/abstract/p/text()"/>
             	<xml-element java-attribute="abstractTextGerman" />
                	<!-- TODO -->               <xml-element xml-transient="true" java-attribute="editors"/>

@@ -29,6 +29,7 @@ import mapping.result.Label;
 public enum EvalInformationType implements Label
 {
 	TITLE("Title"),
+	PUBLICATIONTYPE("Publicationtype"),
 	ABSTRACT("Abstract"),
 	ABSTRACTGERMAN("Abstract (german)"),
 	KEYWORDS("Keywords"),
@@ -43,6 +44,7 @@ public enum EvalInformationType implements Label
 	PAGES("Pages"),
 	PAGE_FROM(PAGES, "Page from"),
 	PAGE_TO(PAGES, "Page to"),
+	LOCATION("Location"),
 	YEAR("Year"),
 	DOI("Doi"),
 	SECTIONS("Sections"),
@@ -58,7 +60,6 @@ public enum EvalInformationType implements Label
 	REFERENCE_EDITOR(REFERENCES, "Editor"),
 	REFERENCE_AUTHORS(REFERENCES, "Authors"),
 	REFERENCE_EDITION(REFERENCES, "Edition"),
-	REFERENCE_LOCATION(REFERENCES, "Location"),
 	REFERENCE_VOLUME(REFERENCES, "Volume"),
 	REFERENCE_ISSUE(REFERENCES, "Issue"),
 	REFERENCE_CHAPTER(REFERENCES, "Chapter"),
@@ -66,6 +67,7 @@ public enum EvalInformationType implements Label
 	REFERENCE_PAGES(REFERENCES, "Pages"),
 	REFERENCE_PAGEFROM(REFERENCE_PAGES, "Page from"),
 	REFERENCE_PAGETO(REFERENCE_PAGES, "Page to"),
+	REFERENCE_LOCATION(REFERENCES, "Location"),
 	REFERENCE_DATE(REFERENCES, "Date"),
 	REFERENCE_DOI(REFERENCES, "Doi"),
 	REFERENCE_URL(REFERENCES, "Url");
@@ -114,6 +116,7 @@ public enum EvalInformationType implements Label
 		List<EvalInformationType> types;
 		types = new ArrayList<>();
 		types.add(EvalInformationType.TITLE);
+		types.add(EvalInformationType.PUBLICATIONTYPE);
 		types.add(EvalInformationType.ABSTRACT);
 		types.add(EvalInformationType.ABSTRACTGERMAN);
 		types.add(EvalInformationType.KEYWORDS);
@@ -127,6 +130,7 @@ public enum EvalInformationType implements Label
 		types.add(EvalInformationType.ISSUE);
 		types.add(EvalInformationType.PAGE_FROM);
 		types.add(EvalInformationType.PAGE_TO);
+		types.add(EvalInformationType.LOCATION);
 		types.add(EvalInformationType.YEAR);
 		types.add(EvalInformationType.DOI);
 		types.add(EvalInformationType.SECTIONS);
@@ -149,7 +153,6 @@ public enum EvalInformationType implements Label
 		types.add(EvalInformationType.REFERENCE_EDITOR);
 		types.add(EvalInformationType.REFERENCE_AUTHORS);
 		types.add(EvalInformationType.REFERENCE_EDITION);
-		types.add(EvalInformationType.REFERENCE_LOCATION);
 		types.add(EvalInformationType.REFERENCE_VOLUME);
 		types.add(EvalInformationType.REFERENCE_ISSUE);
 		types.add(EvalInformationType.REFERENCE_CHAPTER);
@@ -157,6 +160,7 @@ public enum EvalInformationType implements Label
 		// TODO types.add(EvalInformationType.REFERENCE_PAGES);
 		types.add(EvalInformationType.REFERENCE_PAGEFROM);
 		types.add(EvalInformationType.REFERENCE_PAGETO);
+		types.add(EvalInformationType.REFERENCE_LOCATION);
 		types.add(EvalInformationType.REFERENCE_DATE);
 		types.add(EvalInformationType.REFERENCE_DOI);
 		types.add(EvalInformationType.REFERENCE_URL);
