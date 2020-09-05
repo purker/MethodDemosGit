@@ -223,11 +223,8 @@ public abstract class SystemEvaluator
 				return new SimpleInformationResult(type, reference, reference2, Reference::getEditors);
 			case REFERENCE_AUTHORS:
 				return new ListInformationResult(type, reference, reference2, Reference::getAuthors, ReferenceAuthor::toString);
-
 			case REFERENCE_EDITION:
 				return new SimpleInformationResult(type, reference, reference2, Reference::getEdition);
-			case REFERENCE_LOCATION:
-				return new SimpleInformationResult(type, reference, reference2, Reference::getLocation);
 			case REFERENCE_VOLUME:
 				return new SimpleInformationResult(type, reference, reference2, Reference::getVolume);
 			case REFERENCE_ISSUE:
@@ -236,14 +233,14 @@ public abstract class SystemEvaluator
 				return new SimpleInformationResult(type, reference, reference2, Reference::getChapter);
 			case REFERENCE_NOTE:
 				return new SimpleInformationResult(type, reference, reference2, Reference::getNote);
-			// TODO case REFERENCE_PAGES:
-			// return new SimpleInformationResult(type, reference, reference2, Reference::getPage);
 			case REFERENCE_PAGEFROM:
 				return new SimpleInformationResult(type, reference, reference2, Reference::getPageFrom);
 			case REFERENCE_PAGETO:
 				return new SimpleInformationResult(type, reference, reference2, Reference::getPageTo);
+			case REFERENCE_LOCATION:
+				return new SimpleInformationResult(type, reference, reference2, Reference::getLocation);
 			case REFERENCE_DATE:
-				return new SimpleInformationResult(type, reference, reference2, Reference::getPublicationDateString); // TODO?
+				return new SimpleInformationResult(type, reference, reference2, Reference::getPublicationDateString);
 			case REFERENCE_DOI:
 				return new SimpleInformationResult(type, reference, reference2, Reference::getDoi);
 			case REFERENCE_URL:
@@ -261,6 +258,9 @@ public abstract class SystemEvaluator
 		{
 			case TITLE:
 				return new SimpleInformationResult(type, origPub, testPub, Publication::getTitle);
+				
+			case PUBLICATIONTYPE:
+				return new SimpleInformationResult(type, origPub, testPub, p -> (p.getPublicationType() != null ? p.getPublicationType().name() : null));
 
 			case ABSTRACT:
 				return new SimpleInformationResult(type, origPub, testPub, Publication::getAbstractText);
@@ -335,6 +335,9 @@ public abstract class SystemEvaluator
 			case PAGE_TO:
 				return new SimpleInformationResult(type, origPub, testPub, Publication::getPageTo);
 
+			case LOCATION:
+				return new SimpleInformationResult(type, origPub, testPub, Publication::getLocation);
+				
 			case YEAR:
 				return new SimpleInformationResult(type, origPub, testPub, Publication::getPublicationYear);
 
@@ -343,7 +346,7 @@ public abstract class SystemEvaluator
 
 			case SECTIONS:
 				// Sections which are Acknowledgements are ignored
-				return new ListInformationResult(type, origPub, testPub, Publication::getSections, Section::getTitle, s -> !s.getTitle().matches(Section.acknowledgementRegex));
+				return new ListInformationResult(type, origPub, testPub, Publication::getSections, Section::getTitle, null);//s -> s != null && !s.getTitle().matches(Section.acknowledgementRegex));
 
 			case SECTION_LEVELS:
 				Set<StringRelation> headersOrig = new HashSet<>();
@@ -458,7 +461,6 @@ public abstract class SystemEvaluator
 		// SINGLE lines for each element
 		for(Object key : elements)
 		{
-			// TODO delete System.out.println(key);
 			List<String> columns = new ArrayList<>();
 			columns.add(StringUtil.getLabelIfPresent(key));
 			for(SystemEvaluator evaluator : evaluators)
