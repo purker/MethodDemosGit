@@ -330,8 +330,8 @@ public abstract class SystemEvaluator
 			case LOCATION:
 				return new SimpleInformationResult(type, origPub, testPub, Publication::getLocation);
 				
-			case YEAR:
-				return new SimpleInformationResult(type, origPub, testPub, Publication::getPublicationYear);
+			case DATE:
+				return new SimpleInformationResult(type, origPub, testPub, Publication::getPublicationDateString);
 
 			case DOI:
 				return new SimpleInformationResult(type, origPub, testPub, Publication::getDoi);
