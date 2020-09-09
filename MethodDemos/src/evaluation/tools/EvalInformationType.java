@@ -44,7 +44,6 @@ public enum EvalInformationType implements Label
 	PAGES("Pages"),
 	PAGE_FROM(PAGES, "Page from"),
 	PAGE_TO(PAGES, "Page to"),
-	LOCATION("Location"),
 	YEAR("Year"),
 	DOI("Doi"),
 	SECTIONS("Sections"),
@@ -129,7 +128,6 @@ public enum EvalInformationType implements Label
 		types.add(EvalInformationType.ISSUE);
 		types.add(EvalInformationType.PAGE_FROM);
 		types.add(EvalInformationType.PAGE_TO);
-		types.add(EvalInformationType.LOCATION);
 		types.add(EvalInformationType.YEAR);
 		types.add(EvalInformationType.DOI);
 		types.add(EvalInformationType.SECTIONS);

@@ -331,9 +331,6 @@ public abstract class SystemEvaluator
 
 			case PAGE_TO:
 				return new SimpleInformationResult(type, origPub, testPub, Publication::getPageTo);
-
-			case LOCATION:
-				return new SimpleInformationResult(type, origPub, testPub, Publication::getLocation);
 				
 			case YEAR:
 				return new SimpleInformationResult(type, origPub, testPub, Publication::getPublicationYear);

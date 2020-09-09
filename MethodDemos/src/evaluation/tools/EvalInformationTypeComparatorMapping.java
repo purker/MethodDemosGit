@@ -27,7 +27,6 @@ public class EvalInformationTypeComparatorMapping
 		map.put(EvalInformationType.ISSUE, EvaluationUtils.defaultComparator);
 		map.put(EvalInformationType.PAGE_FROM, EvaluationUtils.defaultComparator);
 		map.put(EvalInformationType.PAGE_TO, EvaluationUtils.defaultComparator);
-		map.put(EvalInformationType.LOCATION, EvaluationUtils.defaultComparator);
 		map.put(EvalInformationType.YEAR, EvaluationUtils.defaultComparator);
 		map.put(EvalInformationType.DOI, EvaluationUtils.defaultComparator);
 		map.put(EvalInformationType.SECTIONS, EvaluationUtils.swComparator);
