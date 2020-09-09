@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.commons.collections4.ListUtils;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
@@ -23,20 +24,35 @@ public class ExcelRefreshFormulas
 
 	static
 	{
+		List<File> methodPub = new ArrayList<>();
+		methodPub.add(new File(Config.statisticsFolder, "cermine-per-evaltype-publication-statistics.xls"));
+		methodPub.add(new File(Config.statisticsFolder, "grobid-per-evaltype-publication-statistics.xls"));
+		methodPub.add(new File(Config.statisticsFolder, "parscit-per-evaltype-publication-statistics.xls"));
+		methodPub.add(new File(Config.statisticsFolder, "pdfx-per-evaltype-publication-statistics.xls"));
+		methodPub.add(Config.allPerEvalTypePublication);
+		
+
+		List<File> methodRef = new ArrayList<>();
+		methodRef.add(new File(Config.statisticsFolder, "cermine-per-evaltype-reference-statistics.xls"));
+		methodRef.add(new File(Config.statisticsFolder, "grobid-per-evaltype-reference-statistics.xls"));
+		methodRef.add(new File(Config.statisticsFolder, "parscit-per-evaltype-reference-statistics.xls"));
+		methodRef.add(new File(Config.statisticsFolder, "pdfx-per-evaltype-reference-statistics.xls"));
+		methodRef.add(Config.allPerEvalTypePublication);
+		
 		// key file is dependent from value files
-		files.put(Config.allPerEvalTypePublicationFormatedArrows, Arrays.asList(Config.allPerEvalTypePublication));
-		files.put(Config.allPerEvalTypePublicationFormatedBars, Arrays.asList(Config.allPerEvalTypePublication));
-		files.put(Config.allPerEvalTypePublicationFormatedColors, Arrays.asList(Config.allPerEvalTypePublication));
+		files.put(Config.allPerEvalTypePublicationFormatedArrows, ListUtils.union(methodPub, Arrays.asList(Config.allPerEvalTypePublication)));
+		files.put(Config.allPerEvalTypePublicationFormatedBars, ListUtils.union(methodPub, Arrays.asList(Config.allPerEvalTypePublication)));
+		files.put(Config.allPerEvalTypePublicationFormatedColors, ListUtils.union(methodPub, Arrays.asList(Config.allPerEvalTypePublication)));
 
-		files.put(Config.allPerEvalTypeReferenceFormatedArrows, Arrays.asList(Config.allPerEvalTypeReference));
-		files.put(Config.allPerEvalTypeReferenceFormatedBars, Arrays.asList(Config.allPerEvalTypeReference));
-		files.put(Config.allPerEvalTypeReferenceFormatedColors, Arrays.asList(Config.allPerEvalTypeReference));
+		files.put(Config.allPerEvalTypeReferenceFormatedArrows, ListUtils.union(methodRef, Arrays.asList(Config.allPerEvalTypeReference)));
+		files.put(Config.allPerEvalTypeReferenceFormatedBars, ListUtils.union(methodRef, Arrays.asList(Config.allPerEvalTypeReference)));
+		files.put(Config.allPerEvalTypeReferenceFormatedColors, ListUtils.union(methodRef, Arrays.asList(Config.allPerEvalTypeReference)));
 
-		files.put(Config.allBestPerEvalTypePublication, Arrays.asList(Config.allPerEvalTypePublicationFormatedArrows));
-		files.put(Config.allBestPerEvalTypeReference, Arrays.asList(Config.allPerEvalTypeReferenceFormatedArrows));
+		files.put(Config.allBestPerEvalTypePublication, ListUtils.union(methodPub, Arrays.asList(Config.allPerEvalTypePublicationFormatedArrows)));
+		files.put(Config.allBestPerEvalTypeReference, ListUtils.union(methodRef, Arrays.asList(Config.allPerEvalTypeReferenceFormatedArrows)));
 
-		files.put(Config.allDeltaPublication, Arrays.asList(Config.allPerEvalTypePublication));
-		files.put(Config.allDeltaReference, Arrays.asList(Config.allPerEvalTypeReference));
+		files.put(Config.allDeltaPublication, ListUtils.union(methodPub, Arrays.asList(Config.allPerEvalTypePublication)));
+		files.put(Config.allDeltaReference, ListUtils.union(methodRef, Arrays.asList(Config.allPerEvalTypeReference)));
 
 		List<File> grobidFiles = new ArrayList<>();
 		grobidFiles.add(new File(Config.statisticsFolder, "grobid-per-evaltype-publication-statistics.xls"));
