@@ -44,7 +44,7 @@ public enum EvalInformationType implements Label
 	PAGES("Pages"),
 	PAGE_FROM(PAGES, "Page from"),
 	PAGE_TO(PAGES, "Page to"),
-	DATE("Year"),
+	DATE("Date"),
 	DOI("Doi"),
 	SECTIONS("Sections"),
 	SECTION_LEVELS("Section-Levels"),
