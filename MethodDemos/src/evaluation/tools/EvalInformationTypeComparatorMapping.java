@@ -16,7 +16,6 @@ public class EvalInformationTypeComparatorMapping
 		map.put(EvalInformationType.TITLE, EvaluationUtils.swComparator);
 		map.put(EvalInformationType.PUBLICATIONTYPE, EvaluationUtils.defaultComparator);
 		map.put(EvalInformationType.ABSTRACT, (EvaluationUtils.swComparator));
-		map.put(EvalInformationType.ABSTRACTGERMAN, (EvaluationUtils.swComparator));
 		map.put(EvalInformationType.KEYWORDS, EvaluationUtils.defaultComparator);
 		map.put(EvalInformationType.AUTHORS, EvaluationUtils.authorComparator);
 		map.put(EvalInformationType.EMAILS, EvaluationUtils.emailComparator);

@@ -118,7 +118,6 @@ public enum EvalInformationType implements Label
 		types.add(EvalInformationType.TITLE);
 		types.add(EvalInformationType.PUBLICATIONTYPE);
 		types.add(EvalInformationType.ABSTRACT);
-		types.add(EvalInformationType.ABSTRACTGERMAN);
 		types.add(EvalInformationType.KEYWORDS);
 		types.add(EvalInformationType.AUTHORS);
 		types.add(EvalInformationType.EMAILS);

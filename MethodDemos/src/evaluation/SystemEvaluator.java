@@ -265,9 +265,6 @@ public abstract class SystemEvaluator
 			case ABSTRACT:
 				return new SimpleInformationResult(type, origPub, testPub, Publication::getAbstractText);
 
-			case ABSTRACTGERMAN:
-				return new SimpleInformationResult(type, origPub, testPub, Publication::getAbstractTextGerman);
-
 			case KEYWORDS:
 				return new ListInformationResult(type, origPub, testPub, Publication::getKeywords, String::toString);
 
