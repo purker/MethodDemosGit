@@ -51,17 +51,17 @@ public class Demos
 		Duration.addStart(DurationEnum.ALL);
 
 		List<String> idList = Config.groundTruthIds;
-		// List<String> idList = Arrays.asList("228620");
+		// List<String> idList = Arrays.asList("182899");
 
-		boolean runDemos = false;
+		boolean runDemos = true;
 		boolean runCermineDemo = false;
 		boolean runGrobidDemo = true;
 		boolean runParsCitDemo = false;
 		boolean runPdfxDemo = false;
-		boolean runCermineMapper = false;
+		boolean runCermineMapper = true;
 		boolean runGrobidMapper = true;
-		boolean runParsCitMapper = false;
-		boolean runPdfxMapper = false;
+		boolean runParsCitMapper = true;
+		boolean runPdfxMapper = true;
 
 		boolean startEvaluation = true;
 		
@@ -143,10 +143,12 @@ public class Demos
 
 	private static void deleteResultAndErrorFiles(File directory)
 	{
-		List<File> resultOrErrorFiles = Arrays.stream(directory.listFiles()).filter(file -> file.getName().endsWith("mapping.errxml") || file.getName().endsWith("-xstream.xml")).collect(Collectors.toList());
-		for(File file : resultOrErrorFiles)
-		{
-			file.delete();
+		if(directory.exists()) {
+			List<File> resultOrErrorFiles = Arrays.stream(directory.listFiles()).filter(file -> file.getName().endsWith("mapping.errxml") || file.getName().endsWith("-xstream.xml")).collect(Collectors.toList());
+			for(File file : resultOrErrorFiles)
+			{
+				file.delete();
+			}
 		}
 	}
 

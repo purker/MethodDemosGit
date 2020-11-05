@@ -47,7 +47,8 @@ public class PdfxDemo extends AbstractDemo
 		List<String> commandWithParameters = new ArrayList<>(command);
 		commandWithParameters.set(3, "@\"" + inputFile.toString() + "\"");
 		commandWithParameters.add("\"" + outputFile.toString() + "\"");
-		String errorString = ExecUtil.exec(commandWithParameters);
+		Process p = ExecUtil.exec(commandWithParameters);
+		String errorString = ExecUtil.getErrorText(p);
 		log(getMethodName() + ": " + String.join(" ", commandWithParameters));
 
 		try

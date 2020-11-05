@@ -44,9 +44,10 @@ public class ParscitDemo extends AbstractDemo
 		}
 		commandWithParameters.add(inputFile.getAbsolutePath());
 		commandWithParameters.add(outputFile.getAbsolutePath());
-		String err = ExecUtil.execInWorkingDir(new File(PARSCIT_HOME), commandWithParameters);
+		Process p = ExecUtil.execInWorkingDir(new File(PARSCIT_HOME), commandWithParameters);
+		String errorString = ExecUtil.getErrorText(p);
 
-		return err;
+		return errorString;
 	}
 
 	@Override

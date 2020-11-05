@@ -206,7 +206,7 @@ public class SetResult<T>
 
 	public void printCSVStatistics() throws IOException
 	{
-		printCSVStatistics(false);
+		printCSVStatistics(true);
 	}
 
 	public void printCSVStatistics(boolean printExpectedCount) throws IOException

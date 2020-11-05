@@ -88,10 +88,8 @@ public class Training {
 	 * @param dirName
 	 * @throws IOException
 	 */
-	public static void copyExtractedAndStatisticsToArchive(boolean move, String dirName) throws IOException {
-		File dir = new File(Config.archiveDir, dirName);
-		
-		dir.delete();
+	public static void copyExtractedAndStatisticsToArchive(boolean move, File dir) throws IOException {
+		FileUtils.deleteDirectory(dir);
 
 		// copy extracted grobid files
 		File archiveExtracted = new File(dir, "grobid");
@@ -106,9 +104,9 @@ public class Training {
 		// copy statistics
 		File archiveStatistics = new File(dir, "statistics");
 		if (move) {
-			FileUtils.copyDirectory(new File(Config.statisticsFolder), archiveStatistics, new CopyFileFilter());		
+			FileUtils.copyDirectory(new File(Config.statisticsFolder), archiveStatistics, true);		
 		} else {
-			FileUtils.copyDirectory(new File(Config.statisticsFolder), archiveStatistics, new CopyFileFilter());
+			FileUtils.copyDirectory(new File(Config.statisticsFolder), archiveStatistics, true);
 		}
 		
 		System.out.println(move ? "Moved: " : "Copied: " + Config.statisticsFolder);
@@ -125,7 +123,7 @@ public class Training {
 				return true;
 		}
 	}
-
+	
 	/**
 	 * deletes all corpus/[tei|raw] directories
 	 */
