@@ -4,10 +4,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import config.Config;
 import demos.Demos;
 import mapping.Mapper;
 import mapping.ReferenceSetPublicationWorker;
 import mapping.Worker;
+import mapping.parscit.ParsCitMapper;
 import mapping.parscit.SectionTypeNormalizerWorker;
 import method.Method;
 
@@ -25,12 +27,15 @@ public class PDFXMapper extends Mapper
 
 	public static void main(String[] args) throws Exception
 	{
-		List<File> files = new ArrayList<>();
-		files.add(new File("D:\\output\\methods\\pdfx\\pdfx-TUW-247743.xml"));
+//		List<File> files = new ArrayList<>();
+//		files.add(new File("D:\\output\\methods\\pdfx\\pdfx-TUW-247743.xml"));
+//
+//		new PDFXMapper().unmarshallFiles(files);
+//
+//		// grobidMapper.marshall(PublicationFactory.createPublication());
 
-		new PDFXMapper().unmarshallFiles(files);
-
-		// grobidMapper.marshall(PublicationFactory.createPublication());
+		List<String> idList = Config.groundTruthIds;
+		new PDFXMapper().unmarshallFilesWithId(idList);
 	}
 
 	@Override

@@ -99,7 +99,7 @@ public class StepsHistory
 	static File file7 = new File(Demos.pdfxOutputDir, "pdfx-TUW-140048.xml");
 	static File file8 = new File("D:/output/methods/resultsource/result-TUW-140048-xstream.xml");
 	static File file9 = new File("D:/output/methods/resultsource/result-TUW-140253-xstream.xml");
-	static File resultFileDirectory = new File("D:/Java/git/MethodDemosGit/MethodDemos/output/result");
+	static File resultFileDirectory = Config.groundTruthResults;
 	static File result10_141336 = new File("D:/output/methods/resultsource/result-TUW-141336-xstream.xml");
 	static File result11_141618 = new File("D:/output/methods/resultsource/result-TUW-141618-xstream.xml");
 	static File result12_141758 = new File("D:/output/methods/resultsource/result-TUW-141758-xstream.xml");
@@ -148,6 +148,7 @@ public class StepsHistory
 
 	public static void main(String[] args) throws Exception
 	{
+		printPDFXReferenceIds();
 		//printMarkersOfReferences();
 		//printEncoding(FileCollectionUtil.getStatisticsCSVFiles());
 		// GrobidDemo.init();
@@ -839,6 +840,20 @@ public class StepsHistory
 				System.out.println(file);
 				e.printStackTrace();
 				break;
+			}
+		}
+	}
+	
+
+	private static void printPDFXReferenceIds() throws IOException {
+		for (File file : FileCollectionUtil.getPdfxResultFiles()) {
+			Publication publication = PublicationUtil.getPublicationFromFile(file);
+
+			System.out.println("---------"+publication.getId().getId());
+			for (Reference r : publication.getReferences()) {
+				System.out.println("idstring" +r.getIdString());
+
+				System.out.println(r.getId().getId());
 			}
 		}
 	}

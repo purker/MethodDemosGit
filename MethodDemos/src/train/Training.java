@@ -11,10 +11,15 @@ import java.util.Map;
 import org.apache.commons.io.FileUtils;
 import org.grobid.core.GrobidModel;
 import org.grobid.core.GrobidModels;
+import org.grobid.core.IGrobidModel;
+import org.grobid.core.engines.Duration;
+import org.grobid.core.engines.DurationEnum;
+import org.grobid.core.engines.Engine;
 import org.grobid.core.utilities.GrobidProperties;
 import org.grobid.trainer.AbstractTrainer;
 
 import config.Config;
+import demos.GrobidDemo;
 
 /**
  * data for training: grobid-trainer/resources/dataset/<MODEL>/corpus/ </br>
@@ -27,11 +32,11 @@ public class Training {
 	private static File correctedTrainingData = new File(new File(Config.trainingOutput).getParent(), "done");
 	private static List<AbstractTrainer> trainers = new ArrayList<>();
 //
-//	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception {
 //		// File file = new File(Config.trainingOutput);
 //		// FileUtils.cleanDirectory(file);
 //		// FileUtils.copyDirectory(correctedTrainingData, file);
-//		// createTrainingData();
+		 createTrainingData();
 //
 //		// trainAndEvaluate();
 //		// deleteExistingTrainingData();
@@ -44,7 +49,7 @@ public class Training {
 //		// dumpModels();
 //
 //		renameModels(Config.filenameOriginalModels, Config.filenameUsedModels, false);
-//	}
+	}
 //
 //	/**
 //	 * test extended models one by one
@@ -129,7 +134,7 @@ public class Training {
 	 * deletes all corpus/[tei|raw] directories
 	 */
 	private static void deleteExistingTrainingData() throws IOException {
-		for (GrobidModel model : GrobidModels.values()) {
+		for (GrobidModels model : GrobidModels.values()) {
 			File corpusFile = GrobidProperties.getCorpusPath(resources, model);
 			File teiCorpusPath = new File(corpusFile, "tei");
 			File rawCorpusPath = new File(corpusFile, "raw");
@@ -184,15 +189,16 @@ public class Training {
 		// trainers.add(new PatentParserTrainer());
 	}
 
-//	private static void createTrainingData() throws Exception {
-//		Engine engine = GrobidDemo.initEngine();
-//
-//		Duration.addStart(DurationEnum.ALL);
-//
-//		engine.batchCreateTraining(Config.trainingInput, Config.trainingOutput, Config.trainingError, 2);
-//
-//		Duration.addEnd(DurationEnum.ALL);
-//	}
+	private static void createTrainingData() throws Exception {
+		Engine engine = GrobidDemo.initEngine();
+
+		Duration.addStart(DurationEnum.ALL);
+
+		//engine.batchCreateTraining(Config.trainingInput, Config.trainingOutput, Config.trainingError, 2);
+		engine.createTraining(new File(Config.trainingInput, "TUW-137078.pdf"), Config.trainingOutput, Config.trainingOutput, Config.trainingError, 2);
+
+		Duration.addEnd(DurationEnum.ALL);
+	}
 
 //	private static void trainAndEvaluate() throws Exception {
 //		GrobidDemo.init();
@@ -276,7 +282,7 @@ public class Training {
 	 * @param modelType
 	 * @return
 	 */
-	private static GrobidModel getModelFor(String modelType) {
+	private static IGrobidModel getModelFor(String modelType) {
 		if (modelType.endsWith(".tei.xml")) {
 			modelType = modelType.replace(".tei.xml", "");
 		} else {

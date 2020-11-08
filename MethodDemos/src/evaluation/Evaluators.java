@@ -34,10 +34,10 @@ import misc.XlsxToCsv;
  */
 public class Evaluators
 {
-	private static final boolean printCermineResults = false;
+	private static final boolean printCermineResults = true;
 	private static final boolean printGrobidResults = true;
-	private static final boolean printParscitResults = false;
-	private static final boolean printPdfxResults = false;
+	private static final boolean printParscitResults = true;
+	private static final boolean printPdfxResults = true;
 
 	public static void main(String[] args)
 	{
