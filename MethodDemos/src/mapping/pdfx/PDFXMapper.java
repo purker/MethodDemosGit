@@ -9,6 +9,7 @@ import demos.Demos;
 import mapping.Mapper;
 import mapping.ReferenceSetPublicationWorker;
 import mapping.Worker;
+import mapping.parscit.ParsCitMapper;
 import mapping.parscit.SectionTypeNormalizerWorker;
 import method.Method;
 

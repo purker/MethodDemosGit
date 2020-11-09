@@ -2,6 +2,8 @@ package mapping.result;
 
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
+
 public abstract class AbstractMetaPublication extends BaseEntity implements KeyStringInterface
 {
 	private static final long serialVersionUID = 5037061578663513484L;
@@ -242,9 +244,10 @@ public abstract class AbstractMetaPublication extends BaseEntity implements KeyS
 		this.doi = doi;
 	}
 
-	public String getIdString()
-	{
-		return getId().getId().toString();
+	public String getIdString() {
+		if (getId() != null && getId().getId() != null)
+			return getId().getId().toString();
+		else
+			return null;
 	}
-
 }
