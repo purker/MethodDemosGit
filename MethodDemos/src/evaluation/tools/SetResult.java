@@ -206,14 +206,13 @@ public class SetResult<T>
 
 	public void printCSVStatistics() throws IOException
 	{
-		printCSVStatistics(false);
+		printCSVStatistics(true);
 	}
 
 	public void printCSVStatistics(boolean printExpectedCount) throws IOException
 	{
 		for(T key : getKeysSet())
 		{
-			// TODO löschen System.out.println(key);
 			printKeyEntryCSV(key, printExpectedCount);
 		}
 		printSummaryCSV();
