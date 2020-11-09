@@ -19,6 +19,21 @@ import mapping.result.Reference;
 
 public class PublicationUtil
 {
+	public static String getTransientDate(Publication publication) {
+		StringBuilder sb = new StringBuilder();
+		if(publication.getPublicationYear()!=null) sb.append(publication.getPublicationYear());
+		if(sb.length()!=0 && publication.getPublicationMonth()!=null) {
+			try {
+				sb.append(String.format("-%02d", new Integer(publication.getPublicationMonth())));
+			} catch(NumberFormatException ne) {}
+		}
+		if(sb.length()!=0 && publication.getPublicationDay()!=null) {
+			try {
+				sb.append(String.format("-%02d", new Integer(publication.getPublicationDay())));
+			} catch(NumberFormatException ne) {}
+		}
+		return sb.toString();
+	}
 
 	public static String getIdFromFileWithoutPrefix(File file)
 	{

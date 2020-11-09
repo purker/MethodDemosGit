@@ -56,6 +56,7 @@ import method.Method;
 import utils.CollectionUtil;
 import utils.FailureUtil;
 import utils.FileCollectionUtil;
+import utils.PublicationUtil;
 import utils.StringUtil;
 
 /**
@@ -331,7 +332,7 @@ public abstract class SystemEvaluator
 				return new SimpleInformationResult(type, origPub, testPub, Publication::getLocation);
 				
 			case DATE:
-				return new SimpleInformationResult(type, origPub, testPub, Publication::getPublicationDateString);
+				return new SimpleInformationResult(type, origPub, testPub, PublicationUtil::getTransientDate);
 
 			case DOI:
 				return new SimpleInformationResult(type, origPub, testPub, Publication::getDoi);
