@@ -27,8 +27,10 @@ public class ExecUtil
 		if(workingDirectory != null) pb.directory(workingDirectory);
 		System.out.println(getRunnableCommand(pb));
 		p = pb.start();
-		System.out.println(getOutputText(p));
-		System.err.println(getErrorText(p));
+		// get*Text() can only be called once
+		// System.out.println(getOutputText(p));
+		// System.out.println(getOutputText(p));
+		// System.err.println(getErrorText(p));
 
 		return p;
 	}
