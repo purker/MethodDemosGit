@@ -13,12 +13,16 @@ public class ReferenceIdInitializerPdfx extends Worker
 	@Override
 	public void doWork(Publication publication)
 	{
+		System.out.println("---------"+publication.getId().getId());
 		try
 		{
 			List<Reference> references = publication.getReferences();
 			for(Reference r : references)
 			{
-				r.setId(new Id(r.getReferenceIdString()));
+				if(r.getId()!=null)
+				{
+					r.setId(new Id(r.getReferenceIdString()));
+				}
 			}
 		}
 		catch(Exception e)
